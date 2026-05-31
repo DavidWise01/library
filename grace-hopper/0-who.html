@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grace Hopper — Vol. 0: Who She Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04080f;
+      --navy: #1e40af;
+      --gold: #eab308;
+      --gold-dim: rgba(234,179,8,0.18);
+      --gold-border: rgba(234,179,8,0.35);
+      --text: #d4d8e2;
+      --text-muted: #8b92a5;
+      --text-bright: #eef1f7;
+      --surface: #090f1a;
+      --surface2: #0d1525;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── STICKY NAV ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,8,15,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 2rem;
+    }
+    .site-nav__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      height: 52px;
+      flex-wrap: wrap;
+    }
+    .site-nav__series {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
+    .site-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.7rem;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .site-nav a:hover,
+    .site-nav a.active {
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .site-nav a.active {
+      border: 1px solid var(--gold-border);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      background: linear-gradient(160deg, #060c1a 0%, #0a1428 40%, #0d1c3a 100%);
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(30,64,175,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(234,179,8,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero__content {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero__vol {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+    .hero__subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+    .hero__lede {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+    .hero__dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── RELAY ANIMATION (the Bug) ── */
+    .relay-scene {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--gold-border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .relay-scene__label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .section-head {
+      margin-bottom: 2.5rem;
+    }
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── BAND ── */
+    .band {
+      background: var(--navy);
+      color: var(--text-bright);
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .band__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .card__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.96rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+      border-left: 2px solid var(--gold-border);
+      margin-top: 1.5rem;
+    }
+    .timeline__item {
+      position: relative;
+      margin-bottom: 2.2rem;
+    }
+    .timeline__item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--paper);
+    }
+    .timeline__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.2rem;
+    }
+    .timeline__event {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-bottom: 0.3rem;
+    }
+    .timeline__desc {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── PULLQUOTE ── */
+    .pullquote {
+      border-left: 4px solid var(--gold);
+      margin: 2.5rem 0;
+      padding: 1.2rem 2rem;
+      background: var(--surface2);
+      border-radius: 0 6px 6px 0;
+    }
+    .pullquote__text {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-bright);
+      line-height: 1.65;
+      margin-bottom: 0.6rem;
+    }
+    .pullquote__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── NANOSECOND BOX ── */
+    .nano-box {
+      background: var(--surface2);
+      border: 1px solid var(--gold-border);
+      border-radius: 6px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .nano-wire {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nano-wire__line {
+      width: 4px;
+      height: 120px;
+      background: linear-gradient(180deg, var(--gold) 0%, rgba(234,179,8,0.3) 100%);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    .nano-wire__line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 30%;
+      background: rgba(255,255,255,0.6);
+      animation: light-travel 2.2s linear infinite;
+    }
+    @keyframes light-travel {
+      0% { top: -30%; }
+      100% { top: 130%; }
+    }
+    .nano-wire__label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+    .nano-box__text h3 {
+      color: var(--text-bright);
+      font-size: 1.05rem;
+    }
+    .nano-box__text p {
+      font-size: 0.96rem;
+      margin-top: 0.5rem;
+      line-height: 1.75;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.4rem;
+      text-align: center;
+    }
+    .stat__num {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold);
+      display: block;
+    }
+    .stat__label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* ── PROSE ── */
+    .prose p {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      background: var(--surface);
+      border-top: 1px solid var(--gold-border);
+      padding: 2rem;
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .colophon__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+    .colophon__attr a { color: var(--gold); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero__content {
+        grid-template-columns: 1fr;
+      }
+      .relay-scene { max-width: 100%; }
+      .nano-box { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="site-nav" aria-label="Series navigation">
+  <div class="site-nav__inner">
+    <span class="site-nav__series">Grace Hopper</span>
+    <a href="0-who.html" class="active">Vol. 0 — Who</a>
+    <a href="1-compiler.html">Vol. 1 — Compiler</a>
+    <a href="2-world.html">Vol. 2 — World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__content">
+    <div>
+      <span class="hero__vol">Volume 0 of 4</span>
+      <h1 class="hero__title">Grace Murray<br>Hopper</h1>
+      <p class="hero__subtitle">Rear Admiral · Mathematician · Compiler Pioneer</p>
+      <p class="hero__lede">She taught machines to understand language. She handed out wires to teach humans to understand time. She wore her uniform until she was 79 years old and the Navy begged her to stay.</p>
+      <p class="hero__dates">B. 1906, New York City &nbsp;·&nbsp; D. January 1, 1992, Arlington, Virginia</p>
+    </div>
+
+    <!-- ══ ANIMATED RELAY WITH MOTH ══ -->
+    <div class="relay-scene">
+      <span class="relay-scene__label">Mark II Relay — Panel F, Relay 70 — Sept. 9, 1947</span>
+      <svg width="420" height="260" viewBox="0 0 420 260" aria-label="Animated relay with moth — the first computer bug">
+        <defs>
+          <radialGradient id="glow-gold" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#eab308" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#eab308" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur-sm">
+            <feGaussianBlur stdDeviation="2"/>
+          </filter>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Moth wing shape -->
+          <path id="wing-l" d="M0,0 C-18,-14 -28,-4 -20,10 C-12,20 -4,16 0,0Z"/>
+          <path id="wing-r" d="M0,0 C18,-14 28,-4 20,10 C12,20 4,16 0,0Z"/>
+        </defs>
+
+        <!-- Background plate -->
+        <rect x="20" y="20" width="380" height="220" rx="6" fill="#090f1a" stroke="#1e40af" stroke-width="1.5"/>
+
+        <!-- Circuit traces -->
+        <line x1="60" y1="130" x2="160" y2="130" stroke="#1e3a6e" stroke-width="2"/>
+        <line x1="260" y1="130" x2="360" y2="130" stroke="#1e3a6e" stroke-width="2"/>
+        <line x1="210" y1="60" x2="210" y2="100" stroke="#1e3a6e" stroke-width="2"/>
+        <line x1="210" y1="160" x2="210" y2="200" stroke="#1e3a6e" stroke-width="2"/>
+
+        <!-- Current pulse along left wire -->
+        <circle r="4" fill="#eab308" filter="url(#glow)" opacity="0.9">
+          <animateMotion dur="1.8s" repeatCount="indefinite" path="M60,130 L155,130"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Relay housing -->
+        <rect x="160" y="90" width="100" height="80" rx="4" fill="#0d1525" stroke="#eab308" stroke-width="1.5"/>
+        <text x="210" y="84" font-family="Space Mono,monospace" font-size="9" fill="#eab308" text-anchor="middle" letter-spacing="1">RELAY 70</text>
+
+        <!-- Relay coil -->
+        <rect x="172" y="102" width="30" height="56" rx="3" fill="#12203a" stroke="#1e40af" stroke-width="1"/>
+        <line x1="178" y1="108" x2="196" y2="108" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="114" x2="196" y2="114" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="120" x2="196" y2="120" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="126" x2="196" y2="126" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="132" x2="196" y2="132" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="138" x2="196" y2="138" stroke="#2a5cba" stroke-width="1.5"/>
+        <line x1="178" y1="144" x2="196" y2="144" stroke="#2a5cba" stroke-width="1.5"/>
+
+        <!-- Relay arm (animated click) -->
+        <g>
+          <line x1="220" y1="100" x2="248" y2="120" stroke="#eab308" stroke-width="3" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate"
+              values="0 220 100; -18 220 100; -18 220 100; 0 220 100"
+              dur="3s" repeatCount="indefinite"
+              keyTimes="0; 0.2; 0.7; 1"/>
+          </line>
+          <!-- Contact point glow when arm closes -->
+          <circle cx="248" cy="150" r="5" fill="#eab308" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="3s" repeatCount="indefinite" keyTimes="0;0.19;0.21;0.7;0.72"/>
+          </circle>
+          <circle cx="248" cy="150" r="10" fill="url(#glow-gold)" opacity="0">
+            <animate attributeName="opacity" values="0;0;0.8;0.8;0" dur="3s" repeatCount="indefinite" keyTimes="0;0.19;0.21;0.7;0.72"/>
+          </circle>
+          <!-- Fixed contact -->
+          <circle cx="248" cy="150" r="4" fill="#2a5cba" stroke="#eab308" stroke-width="1"/>
+        </g>
+
+        <!-- Current pulse along right wire (only when closed) -->
+        <circle r="4" fill="#eab308" filter="url(#glow)">
+          <animateMotion dur="1.4s" repeatCount="indefinite" begin="0.6s" path="M260,130 L355,130"/>
+          <animate attributeName="opacity" values="0;0;1;1;0;0" dur="3s" repeatCount="indefinite" keyTimes="0;0.2;0.25;0.68;0.72;1"/>
+        </circle>
+
+        <!-- THE MOTH -->
+        <g id="moth">
+          <!-- Body -->
+          <ellipse cx="210" cy="125" rx="5" ry="9" fill="#3d2b0a" stroke="#7a5a1a" stroke-width="0.8"/>
+          <!-- Antennae -->
+          <line x1="208" y1="116" x2="202" y2="108" stroke="#7a5a1a" stroke-width="0.8"/>
+          <line x1="212" y1="116" x2="218" y2="108" stroke="#7a5a1a" stroke-width="0.8"/>
+          <!-- Wing segments -->
+          <ellipse cx="200" cy="122" rx="12" ry="7" fill="#5a3e10" stroke="#7a5a1a" stroke-width="0.5" opacity="0.85">
+            <!-- Wing flutter -->
+            <animateTransform attributeName="transform" type="rotate"
+              values="0 210 125; 8 210 125; 0 210 125; -8 210 125; 0 210 125"
+              dur="0.4s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="220" cy="122" rx="12" ry="7" fill="#5a3e10" stroke="#7a5a1a" stroke-width="0.5" opacity="0.85">
+            <animateTransform attributeName="transform" type="rotate"
+              values="0 210 125; -8 210 125; 0 210 125; 8 210 125; 0 210 125"
+              dur="0.4s" repeatCount="indefinite"/>
+          </ellipse>
+          <!-- Wing detail lines -->
+          <line x1="200" y1="119" x2="192" y2="123" stroke="#7a5a1a" stroke-width="0.5" opacity="0.6"/>
+          <line x1="200" y1="122" x2="190" y2="125" stroke="#7a5a1a" stroke-width="0.5" opacity="0.6"/>
+          <!-- Tape strips holding moth to log -->
+          <rect x="200" y="130" width="8" height="3" rx="1" fill="rgba(200,190,160,0.3)" stroke="rgba(200,190,160,0.5)" stroke-width="0.5"/>
+          <rect x="212" y="130" width="8" height="3" rx="1" fill="rgba(200,190,160,0.3)" stroke="rgba(200,190,160,0.5)" stroke-width="0.5"/>
+        </g>
+
+        <!-- Log tape label -->
+        <rect x="155" y="175" width="110" height="28" rx="3" fill="rgba(200,185,140,0.08)" stroke="rgba(200,185,140,0.25)" stroke-width="1"/>
+        <text x="210" y="185" font-family="Space Mono,monospace" font-size="6.5" fill="rgba(200,185,140,0.7)" text-anchor="middle">"First actual case of</text>
+        <text x="210" y="196" font-family="Space Mono,monospace" font-size="6.5" fill="rgba(200,185,140,0.7)" text-anchor="middle">bug being found."</text>
+
+        <!-- Error indicator -->
+        <text x="340" y="80" font-family="Space Mono,monospace" font-size="9" fill="#ef4444">FAULT</text>
+        <circle cx="365" cy="76" r="5" fill="#ef4444" opacity="0.9">
+          <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Panel label -->
+        <text x="40" y="240" font-family="Space Mono,monospace" font-size="8" fill="#1e40af" letter-spacing="1">PANEL F — HARVARD MARK II — 09 SEPT 1947</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main class="main">
+
+  <!-- STAT ROW -->
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat__num">86</span>
+      <span class="stat__label">Years of Life</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num">42</span>
+      <span class="stat__label">Years in the Navy</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num">PhD</span>
+      <span class="stat__label">Yale, 1934</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num">★★</span>
+      <span class="stat__label">Rear Admiral (Lower Half)</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num">11.8"</span>
+      <span class="stat__label">The Nanosecond</span>
+    </div>
+  </div>
+
+  <!-- EARLY LIFE -->
+  <section style="margin-top:3rem;">
+    <div class="section-head">
+      <span class="kick">Origin</span>
+      <h2>The Making of a Mathematician</h2>
+    </div>
+    <div class="prose">
+      <p>Grace Brewster Murray was born on December 9, 1906, in New York City. Her father, Walter Fletcher Murray, was an insurance broker who lost both legs to arteriosclerosis when Grace was a child and refused to let his disability define his life — a disposition his daughter inherited in full. Her mother, Mary Campbell Van Horne, was fascinated by mathematics and encouraged Grace and her two siblings to explore the sciences freely. At seven, Grace dismantled every alarm clock in the house to understand how they worked. Her mother let her.</p>
+      <p>She attended Vassar College, graduating in 1928 with a degree in mathematics and physics — a combination that was unusual for women students at the time. She returned to Vassar as an instructor while simultaneously pursuing graduate studies. In 1930, she married Vincent Foster Hopper, a professor of English at New York University. They divorced in 1945; she kept his name.</p>
+      <p>In 1934, Grace Hopper received her doctorate in mathematics from Yale University. Her dissertation, "New Types of Irreducibility Criteria," examined conditions under which polynomials were irreducible over integers. She was one of a very small number of women to hold a mathematics PhD from an elite American university in that era. She returned to Vassar as an associate professor and built a reputation as an unusually gifted teacher — someone who cared deeply about how ideas were communicated, not just whether they were correct.</p>
+    </div>
+  </section>
+
+  <!-- THE WAR CHANGES EVERYTHING -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">1943–1945</span>
+      <h2 style="margin-bottom:1rem;">The War Changes Everything</h2>
+      <div class="prose">
+        <p>After Pearl Harbor, Grace Hopper attempted to enlist in the Navy. She was rejected twice. At 37, she was deemed too old. At 105 pounds, she was too light. The Navy told her to stay at Vassar and teach mathematics to officers. She sought a waiver. She pulled every string she could find.</p>
+        <p>In 1943, she was granted a leave of absence from Vassar and sworn into the United States Naval Reserve as a Lieutenant (junior grade). She was assigned to the Bureau of Ships Computation Project at Harvard University — specifically to work under Commander Howard Aiken on the Harvard Mark I, a machine the Navy had co-developed with IBM to perform ballistic and other calculations for the war effort.</p>
+        <p>The Mark I was 51 feet long, 8 feet tall, and weighed five tons. It was an electromechanical calculator — driven by a 50-foot camshaft connected to a 5-horsepower motor. It could perform three additions per second, one multiplication per second. It filled the entire room with a sound like ten thousand knitting needles. When Hopper arrived, Aiken handed her the 500-page logbook of the Mark I and said: "Here. Compute the interpolation coefficients for the arctangent." She had never seen a computer. She spent two months figuring it out. She wrote the first programming manual for the Mark I.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <section>
+    <div class="section-head">
+      <span class="kick">Life Chronology</span>
+      <h2>The Long Arc</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline__item">
+        <div class="timeline__year">December 9, 1906</div>
+        <div class="timeline__event">Born, New York City</div>
+        <div class="timeline__desc">Born to Walter Fletcher Murray and Mary Van Horne. Grew up on the Upper West Side of Manhattan.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1928</div>
+        <div class="timeline__event">B.A., Vassar College</div>
+        <div class="timeline__desc">Graduated Phi Beta Kappa with degrees in mathematics and physics. Won a Vassar fellowship to continue graduate work.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1930</div>
+        <div class="timeline__event">Married Vincent Foster Hopper</div>
+        <div class="timeline__desc">NYU English professor. They divorced in 1945. She retained the name Hopper for the rest of her life.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1934</div>
+        <div class="timeline__event">Ph.D. Mathematics, Yale University</div>
+        <div class="timeline__desc">Dissertation: "New Types of Irreducibility Criteria." One of the first women to earn a mathematics doctorate from Yale.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1934–1943</div>
+        <div class="timeline__event">Associate Professor, Vassar College</div>
+        <div class="timeline__desc">Built an outstanding reputation as a teacher. Turned down a tenured chair at Barnard — the mathematics department there was too small, she said.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">December 1943</div>
+        <div class="timeline__event">Sworn into United States Naval Reserve</div>
+        <div class="timeline__desc">Commissioned as Lieutenant (jg). Assigned to Harvard Bureau of Ships Computation Project. Begins work on the Mark I.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">September 9, 1947</div>
+        <div class="timeline__event">The Bug</div>
+        <div class="timeline__desc">A moth is found in Relay 70, Panel F of the Mark II computer. Hopper's team tapes it into the logbook. "First actual case of bug being found." The log is now at the Smithsonian.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1949</div>
+        <div class="timeline__event">Joins Eckert-Mauchly Computer Corporation</div>
+        <div class="timeline__desc">Leaves Harvard to work on UNIVAC — the first commercial electronic computer — at the company later acquired by Remington Rand.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1952</div>
+        <div class="timeline__event">A-0 Compiler — First in History</div>
+        <div class="timeline__desc">Demonstrates that a computer can write its own programs. Colleagues refuse to believe it. She runs it again.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1955–1959</div>
+        <div class="timeline__event">FLOW-MATIC → COBOL</div>
+        <div class="timeline__desc">Develops the first English-language programming language. Chairs the CODASYL committee that creates COBOL — still the language of global finance.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1966</div>
+        <div class="timeline__event">Forced Retirement — Age 60</div>
+        <div class="timeline__desc">The Navy retires her at the mandatory age. She considers it the saddest day of her life. Within eight months, they call her back.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">1983</div>
+        <div class="timeline__event">Promoted to Commodore (later Rear Admiral)</div>
+        <div class="timeline__desc">By special act of Congress and presidential appointment. In 1985, the rank of Commodore was redesignated Rear Admiral (Lower Half).</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">August 14, 1986</div>
+        <div class="timeline__event">Final Retirement Ceremony, USS Constitution</div>
+        <div class="timeline__desc">Retired at age 79 — the oldest active-duty officer in the United States Navy. The ceremony was held aboard Old Ironsides in Boston Harbor.</div>
+      </div>
+      <div class="timeline__item">
+        <div class="timeline__year">January 1, 1992</div>
+        <div class="timeline__event">Died, Arlington, Virginia</div>
+        <div class="timeline__desc">Died in her sleep of natural causes. She is buried with full military honors in Arlington National Cemetery.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE NANOSECOND -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The Nanosecond</span>
+      <h2>A Wire Eleven Point Eight Inches Long</h2>
+    </div>
+    <div class="nano-box">
+      <div class="nano-wire">
+        <div class="nano-wire__line"></div>
+        <span class="nano-wire__label">11.8 in<br>1 nanosecond</span>
+      </div>
+      <div class="nano-box__text">
+        <h3>What Light Travels in One Billionth of a Second</h3>
+        <p>Grace Hopper grew tired of programmers who didn't understand why speed mattered, who wasted time in ways they couldn't visualize. So she made it visible. She had a technician cut lengths of wire — each one 11.8 inches, 29.9 centimeters — exactly the distance light travels in one nanosecond in a vacuum. She carried a handful wherever she went and handed them out to admirals and engineers alike.</p>
+        <p>"When I try to tell them how fast the machine works, they say 'What's a nanosecond?' So I brought them this." She also kept a coil of wire representing a microsecond — 984 feet of wire — so people could see the difference. "Every microsecond you waste," she told them, "you're throwing away 984 feet of light."</p>
+        <p>The wires were her pedagogical weapon of choice. They were physical proof that computation was physics, that time was a resource you could hold in your hand and measure in inches. She handed out hundreds of them over her career. They are the most elegant teaching aid ever deployed by a Rear Admiral.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAVID LETTERMAN 1986 -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">Late Night, 1986</span>
+      <h2>The Letterman Interview</h2>
+    </div>
+    <div class="prose">
+      <p>In 1986, a few weeks before her retirement ceremony, Grace Hopper appeared on <em>Late Night with David Letterman</em>. She was 79 years old, in full Navy uniform, with her chest full of medals and a bundle of nanosecond wires in her pocket. Letterman, who did not know what to make of her, was reduced to genuine delight.</p>
+      <p>She handed him a nanosecond. He held it up. "So this is a nanosecond?" "That's a nanosecond." The audience laughed. He asked her to explain what she did for a living. She said she had spent most of her career trying to get human beings and computers to communicate with each other. She said the computer industry was too young and too fast to understand how it had gotten where it was.</p>
+      <p>Letterman asked her if computers would ever be smarter than people. She said they were already faster than people, which was not the same thing. She said the important thing was not how fast the machine was, but whether you gave it the right problem to solve. The studio audience applauded. Letterman looked slightly confused and entirely charmed.</p>
+      <p>The appearance captured something essential about Hopper: the combination of absolute technical authority and a gift for making difficult ideas land in an ordinary room. She was simultaneously the most credentialed person on that stage and the most accessible communicator. She had been doing this her whole life.</p>
+    </div>
+
+    <div class="pullquote">
+      <div class="pullquote__text">"The most dangerous phrase in the language is 'We've always done it this way.'"</div>
+      <div class="pullquote__attr">Grace Hopper — repeated throughout her career</div>
+    </div>
+  </section>
+
+  <!-- CHARACTER CARDS -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">Character</span>
+      <h2>The Person, In Fragments</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card__year">The Contrarian</div>
+        <h3>She Asked Forgiveness, Not Permission</h3>
+        <p>Hopper was famously impatient with bureaucratic clearance processes. She would begin a project, prove it worked, and then ask for approval. "It's easier to ask forgiveness than it is to get permission" — a phrase she is credited with coining — was not a joke. It was her operating procedure.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">The Teacher</div>
+        <h3>She Cared About Clarity Above All</h3>
+        <p>Former students at Vassar remembered her as a teacher who demanded precision but rewarded questions. She despised empty jargon. She believed every concept, no matter how technical, had to be translatable into plain language. If you couldn't explain it simply, you didn't fully understand it.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">The Officer</div>
+        <h3>Loyal to the Institution That Doubted Her</h3>
+        <p>The Navy was not uniformly welcoming to women in her era. She was repeatedly told she was too old, too light, too female, too academic. She found the Navy's bureaucracy infuriating and its mission indispensable. She served it anyway — longer than almost anyone. Her retirement ceremony was aboard the USS Constitution.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">The Democratizer</div>
+        <h3>She Believed Everyone Should Program</h3>
+        <p>Hopper's entire career in language design — from A-0 to FLOW-MATIC to COBOL — was animated by a single conviction: that computing should not be the exclusive property of mathematicians. If businesses were going to run on computers, then businesspeople had to be able to write the programs. She gave them English.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">The Realist</div>
+        <h3>She Understood That Technology Was Moral</h3>
+        <p>Late in her career, Hopper gave hundreds of lectures at universities and military bases. She consistently argued that the engineers and programmers building information systems had a moral responsibility for what those systems did. Speed and power were not virtues in themselves. How you used them was.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">The Admiral</div>
+        <h3>She Was Recalled to Active Duty — Twice</h3>
+        <p>When the Navy forced her into retirement at 60, she said it was the saddest day of her life. Eight months later, they recalled her to help standardize COBOL across Navy systems. She stayed for another twenty years — recalled, extended, and eventually promoted all the way to Rear Admiral by an act of Congress.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULLQUOTE 2 -->
+  <div class="pullquote" style="margin-top:3rem;">
+    <div class="pullquote__text">"A ship in port is safe, but that's not what ships are built for."</div>
+    <div class="pullquote__attr">Grace Hopper — commencement addresses, repeated</div>
+  </div>
+
+  <!-- FURTHER READING BAND -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">Continue Reading</span>
+      <h2 style="margin-bottom:1rem;">Four Volumes — One Life</h2>
+      <div class="card-grid">
+        <div class="card" style="background:rgba(255,255,255,0.05);">
+          <div class="card__year">Vol. 0 — This Volume</div>
+          <h3>Who She Was</h3>
+          <p>The person: mathematician, naval officer, teacher, iconoclast. Her life from New York to Arlington National Cemetery.</p>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.05);">
+          <div class="card__year">Vol. 1</div>
+          <h3><a href="1-compiler.html" style="color:var(--gold);text-decoration:none;">The Compiler Work</a></h3>
+          <p>A-0, FLOW-MATIC, COBOL, and the Bug. How she changed what computers were understood to be capable of.</p>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.05);">
+          <div class="card__year">Vol. 2</div>
+          <h3><a href="2-world.html" style="color:var(--gold);text-decoration:none;">Her World</a></h3>
+          <p>WWII computing, the transition from electromechanical to electronic, UNIVAC, the Cold War, mainframes, and the Navy.</p>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,0.05);">
+          <div class="card__year">Vol. 3</div>
+          <h3><a href="3-legacy.html" style="color:var(--gold);text-decoration:none;">The Long Afterlife</a></h3>
+          <p>220 billion lines of COBOL. The compiler lineage. The destroyer named for her. The Presidential Medal of Freedom.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ COLOPHON ══ -->
+<footer class="colophon">
+  <p class="colophon__attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank" rel="noopener">CC-BY-ND-4.0</a>
+    <br>
+    Grace Hopper Series — Volume 0: Who She Was &nbsp;·&nbsp; Historical record compiled in good faith from public domain sources
+    <br>
+    All rights to original arrangement and design reserved · No derivative works without attribution
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Darwin — Vol. 3: Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#05080a;
+    --card:#0d1410;
+    --ink:#e8e4d8;
+    --dim:#7a8070;
+    --green:#16a34a;
+    --earth:#92400e;
+    --line:rgba(22,163,74,0.16);
+    --earthline:rgba(146,64,14,0.22);
+    --greentint:rgba(22,163,74,0.07);
+    --earthtint:rgba(146,64,14,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(22,163,74,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#05080a;}
+  a{color:var(--green);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--greentint);color:var(--green);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(32px,7vw,72px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* SVG ANIMATIONS */
+  @keyframes grow1{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes grow2{0%{stroke-dashoffset:160}100%{stroke-dashoffset:0}}
+  @keyframes grow3{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+  @keyframes grow5{0%{stroke-dashoffset:70}100%{stroke-dashoffset:0}}
+  @keyframes leafpop{0%,80%{opacity:0;r:0}100%{opacity:1;r:4}}
+  .trunk{stroke-dasharray:200;stroke-dashoffset:200;animation:grow1 1.2s cubic-bezier(.2,.8,.2,1) .1s forwards;}
+  .b1{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) .9s forwards;}
+  .b2{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) 1.0s forwards;}
+  .b3{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.5s forwards;}
+  .b4{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.6s forwards;}
+  .b5{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.7s forwards;}
+  .b6{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.8s forwards;}
+  .t1{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.2s forwards;}
+  .t2{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.3s forwards;}
+  .t3{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.4s forwards;}
+  .t4{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.5s forwards;}
+  .t5{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.6s forwards;}
+  .t6{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.7s forwards;}
+  .t7{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.8s forwards;}
+  .t8{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.9s forwards;}
+  .leaf{opacity:0;animation:leafpop 0.4s ease 3.2s forwards;}
+  .leaf2{opacity:0;animation:leafpop 0.4s ease 3.35s forwards;}
+  .leaf3{opacity:0;animation:leafpop 0.4s ease 3.5s forwards;}
+  .leaf4{opacity:0;animation:leafpop 0.4s ease 3.65s forwards;}
+  .leaf5{opacity:0;animation:leafpop 0.4s ease 3.8s forwards;}
+  .leaf6{opacity:0;animation:leafpop 0.4s ease 3.95s forwards;}
+  .leaf7{opacity:0;animation:leafpop 0.4s ease 4.1s forwards;}
+  .leaf8{opacity:0;animation:leafpop 0.4s ease 4.25s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .trunk,.b1,.b2,.b3,.b4,.b5,.b6,.t1,.t2,.t3,.t4,.t5,.t6,.t7,.t8{animation:none;stroke-dashoffset:0;}
+    .leaf,.leaf2,.leaf3,.leaf4,.leaf5,.leaf6,.leaf7,.leaf8{animation:none;opacity:1;}
+  }
+
+  /* DNA HELIX ANIMATION */
+  @keyframes helixspin{
+    0%{transform:scaleX(1)}
+    50%{transform:scaleX(0.15)}
+    100%{transform:scaleX(1)}
+  }
+  .helix-rung{transform-origin:center;animation:helixspin 2s ease-in-out infinite;}
+  .helix-rung:nth-child(2){animation-delay:0.15s;}
+  .helix-rung:nth-child(3){animation-delay:0.3s;}
+  .helix-rung:nth-child(4){animation-delay:0.45s;}
+  .helix-rung:nth-child(5){animation-delay:0.6s;}
+  .helix-rung:nth-child(6){animation-delay:0.75s;}
+  .helix-rung:nth-child(7){animation-delay:0.9s;}
+  .helix-rung:nth-child(8){animation-delay:1.05s;}
+  @media(prefers-reduced-motion:reduce){.helix-rung{animation:none;}}
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--green);
+    color:#05080a;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.earth{background:var(--earth);color:#e8e4d8;}
+  .band.dim{background:#162012;color:var(--green);border:1px solid var(--line);}
+  .band.warn{background:#3a1206;color:#f87171;border:1px solid rgba(239,68,68,0.3);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--green);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--green);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card.e:hover{box-shadow:5px 5px 0 var(--earth);}
+  .card.r{border-color:rgba(239,68,68,0.2);}
+  .card.r:hover{box-shadow:5px 5px 0 #ef4444;}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--green);
+  }
+  .card.e .num{color:var(--earth);}
+  .card.r .num{color:#ef4444;}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.e .meta b{color:var(--earth);}
+  .card.r .meta b{color:#ef4444;}
+
+  /* PULL QUOTE */
+  .pull{
+    border-left:4px solid var(--green);padding:14px 20px;margin:22px 0;
+    background:var(--greentint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull.earth{border-left-color:var(--earth);background:var(--earthtint);}
+  .pull.center{text-align:center;border-left:none;border:1px solid var(--line);font-size:20px;}
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* SYNTHESIS TIMELINE */
+  .synth-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;background:var(--line);}
+  .synth-step{background:var(--card);padding:14px 15px;}
+  .synth-step .yr{font-family:"Space Mono",monospace;font-size:10px;font-weight:700;color:var(--green);letter-spacing:0.12em;display:block;margin-bottom:5px;}
+  .synth-step h4{font-family:"Cinzel";font-weight:600;font-size:14px;margin:0 0 5px;color:var(--ink);}
+  .synth-step p{font-size:13px;color:#b0ac9c;margin:0;line-height:1.5;}
+
+  /* TWO-COL PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* STATS */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{background:var(--card);border:1px solid var(--line);padding:12px 16px;flex:1;min-width:130px;}
+  .stat .n{font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--green);display:block;line-height:1;}
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Darwin series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-origin.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">darwin series · volume 3 · the long afterlife</span>
+    <div class="masthead">
+      <div>
+        <h1>Darwin's <em>Long Afterlife</em></h1>
+        <p class="dek">Darwin died in 1882. His idea is still growing. From the Modern Synthesis to phylogenomics, from evolutionary medicine to the Selfish Gene, from eugenics to algorithmic evolution — <b>one idea, 140 years of consequences.</b></p>
+      </div>
+      <!-- DNA helix SVG hero -->
+      <svg class="art" width="200" height="200" viewBox="0 0 200 200" role="img"
+           aria-label="Animated phylogenetic tree with DNA-helix rungs — Darwin's legacy">
+        <text x="100" y="198" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#7a8070" letter-spacing="0.1em">4 BILLION YEARS</text>
+        <!-- Trunk -->
+        <line class="trunk" x1="100" y1="190" x2="100" y2="130" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Left spine helix -->
+        <line x1="50" y1="170" x2="50" y2="30" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Right spine helix -->
+        <line x1="80" y1="170" x2="80" y2="30" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Rungs — animate with CSS scaleX -->
+        <line class="helix-rung" x1="50" y1="165" x2="80" y2="165" stroke="#92400e" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="151" x2="80" y2="151" stroke="#16a34a" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="137" x2="80" y2="137" stroke="#92400e" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="123" x2="80" y2="123" stroke="#16a34a" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="109" x2="80" y2="109" stroke="#92400e" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="95" x2="80" y2="95" stroke="#16a34a" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="81" x2="80" y2="81" stroke="#92400e" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="67" x2="80" y2="67" stroke="#16a34a" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="53" x2="80" y2="53" stroke="#92400e" stroke-width="1.5"/>
+        <line class="helix-rung" x1="50" y1="39" x2="80" y2="39" stroke="#16a34a" stroke-width="1.5"/>
+        <!-- Tree branches on the right -->
+        <line class="b1" x1="100" y1="130" x2="130" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b2" x1="100" y1="130" x2="170" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b3" x1="130" y1="90" x2="120" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b4" x1="130" y1="90" x2="145" y2="58" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b5" x1="170" y1="90" x2="160" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b6" x1="170" y1="90" x2="185" y2="60" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="t1" x1="120" y1="55" x2="112" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t2" x1="120" y1="55" x2="125" y2="28" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t3" x1="145" y1="58" x2="138" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t4" x1="145" y1="58" x2="152" y2="28" stroke="#16a34a" stroke-width="1" stroke-linecap="round"/>
+        <line class="t5" x1="160" y1="55" x2="155" y2="28" stroke="#16a34a" stroke-width="1" stroke-linecap="round"/>
+        <line class="t6" x1="160" y1="55" x2="165" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t7" x1="185" y1="60" x2="179" y2="33" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t8" x1="185" y1="60" x2="192" y2="36" stroke="#16a34a" stroke-width="1" stroke-linecap="round"/>
+        <circle class="leaf"  cx="112" cy="26"  r="4" fill="#16a34a"/>
+        <circle class="leaf2" cx="125" cy="24"  r="4" fill="#16a34a"/>
+        <circle class="leaf3" cx="138" cy="26"  r="4" fill="#16a34a"/>
+        <circle class="leaf4" cx="152" cy="24"  r="4" fill="#92400e"/>
+        <circle class="leaf5" cx="155" cy="24"  r="4" fill="#92400e"/>
+        <circle class="leaf6" cx="165" cy="26"  r="4" fill="#16a34a"/>
+        <circle class="leaf7" cx="179" cy="29"  r="4" fill="#16a34a"/>
+        <circle class="leaf8" cx="192" cy="32"  r="4" fill="#92400e"/>
+        <circle cx="100" cy="190" r="4" fill="#92400e"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- DOBZHANSKY QUOTE -->
+  <div class="pull center reveal" style="animation-delay:.05s;">
+    "Nothing in biology makes sense except in the light of evolution."
+    <cite>— Theodosius Dobzhansky, American Biology Teacher, 1973</cite>
+  </div>
+
+  <!-- SECTION 1: MODERN SYNTHESIS -->
+  <div class="band">I. The Modern Evolutionary Synthesis</div>
+  <div class="reveal" style="animation-delay:.1s">
+    <p>Darwin's natural selection mechanism had a critical gap: it had no theory of inheritance. Darwin knew traits were heritable, but not how. His own attempt — the "pangenesis" hypothesis of 1868 — was quickly disproved. Without a theory of inheritance, the "swamping problem" was fatal: if a beneficial variant arose, wouldn't it be diluted by mating with ordinary individuals until it disappeared? This objection was mathematically sound and kept many biologists skeptical of natural selection as a primary mechanism until well into the twentieth century.</p>
+    <p>The resolution came in stages. In 1900, Hugo de Vries, Carl Correns, and Erich von Tschermak independently rediscovered Gregor Mendel's 1866 papers on pea hybridization — showing that inheritance was <em>particulate</em>, not blending. Genes (as Johanssen named them in 1909) came in discrete packages that maintained their identity generation after generation. A beneficial variant would not be diluted; it would be preserved intact.</p>
+
+    <div class="synth-steps">
+      <div class="synth-step">
+        <span class="yr">1859</span>
+        <h4>Darwin</h4>
+        <p>Natural selection + common descent. Mechanism without inheritance theory.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1866</span>
+        <h4>Mendel</h4>
+        <p>Particulate inheritance. Genes don't blend — they segregate. Unknown until 1900.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1900</span>
+        <h4>Rediscovery</h4>
+        <p>De Vries, Correns, Tschermak independently re-find Mendel. Genetics begins.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1918–32</span>
+        <h4>Fisher, Haldane, Wright</h4>
+        <p>Population genetics. Mathematical proof that Mendelian genetics is compatible with Darwinian selection. The "swamping problem" solved.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1937–50</span>
+        <h4>The Synthesis</h4>
+        <p>Dobzhansky (<em>Genetics and the Origin of Species</em>, 1937), Mayr, Simpson, Huxley. Darwin + Mendel unified into the Modern Synthesis.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1953</span>
+        <h4>Watson &amp; Crick</h4>
+        <p>Double helix. DNA as the molecular substrate of heredity. The gene acquires a physical structure.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">1970s–</span>
+        <h4>Molecular Clock</h4>
+        <p>DNA sequence divergence as a measure of evolutionary time. Phylogenetics becomes quantitative.</p>
+      </div>
+      <div class="synth-step">
+        <span class="yr">2000s–</span>
+        <h4>Genomics</h4>
+        <p>Full genome sequencing. Phylogenomics: reading the tree of life from DNA directly. LUCA confirmed in its deep structure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: LUCA & GENOMICS -->
+  <div class="band">II. LUCA, Phylogenomics &amp; the Tree of Life</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <div class="prose-2">
+      <div>
+        <h2>LUCA — <em>Last Universal Common Ancestor</em></h2>
+        <p>Darwin's "one long argument" pointed toward a single common ancestor for all life. We now have evidence for this in molecular biology. Certain features are universal across all living cells: the genetic code (the triplet codons mapping to amino acids), ribosomes, ATP synthesis, the basic chemistry of DNA replication. These conserved universals are best explained by common descent from a single ancestral population — LUCA, the Last Universal Common Ancestor.</p>
+        <p>LUCA was not the first life — it was the most recent ancestor shared by all living lineages. It likely existed approximately 3.5–4 billion years ago. Genomic analysis suggests it was probably a prokaryote-like organism living in a hydrothermal vent environment, with a surprising number of genes already present for nitrogen metabolism and hydrogen metabolism. It was not simple.</p>
+      </div>
+      <div>
+        <h2>Phylogenomics — <em>Reading the Tree</em></h2>
+        <p>The modern phylogenetic tree of life is no longer built from anatomical characteristics but from DNA and RNA sequences. By comparing the sequences of conserved genes across thousands of organisms, we can reconstruct the branching order of evolutionary lineages with statistical rigor — and date the branches using the molecular clock (the roughly constant rate of neutral mutation accumulation over time).</p>
+        <p>The major surprise of molecular phylogenetics was the discovery of the Archaea — a third domain of life (alongside Bacteria and Eukaryotes) proposed by Carl Woese in 1977, based on ribosomal RNA sequences. Before Woese, all life was divided into prokaryotes and eukaryotes. After Woese, the deepest split in life turned out to be between Bacteria and the Archaea+Eukaryotes clade. Humans are, in molecular terms, more closely related to methane-producing microbes in deep-sea vents than those vents' inhabitants are to bacteria.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: EVOLUTIONARY MEDICINE -->
+  <div class="band earth">III. Evolutionary Medicine</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <p>Evolutionary biology is not merely a historical science — it has direct practical applications in medicine. Evolutionary medicine asks: why did natural selection leave us with bodies that get sick in the ways they do? The answers are often counterintuitive and always illuminating.</p>
+    <div class="grid">
+      <div class="card e">
+        <span class="num">01</span>
+        <h3>Antibiotic Resistance</h3>
+        <p class="what">The evolution of antibiotic-resistant bacteria is natural selection observed in real time, in hospital wards. A population of bacteria exposed to antibiotics contains rare resistant variants. Antibiotics kill susceptible individuals; resistant ones reproduce. Within days, the population is dominated by resistant strains. Darwin's mechanism, Darwin's timeline: rapid because bacterial generations are measured in hours.</p>
+        <div class="meta"><b>Scale:</b> ~700,000 deaths/year globally from antimicrobial resistance (2019 est.)</div>
+      </div>
+      <div class="card e">
+        <span class="num">02</span>
+        <h3>Cancer as Evolution</h3>
+        <p class="what">A tumor is a population of cells undergoing somatic evolution. Cells acquire mutations (variation), some mutations increase proliferation (fitness advantage in the tumor microenvironment), those cells divide faster and pass on their mutations (heritable). Treatment selects for resistant clones. Darwinian models of tumor evolution are now informing treatment strategies — hitting multiple targets simultaneously to prevent resistance evolution.</p>
+        <div class="meta"><b>Field:</b> Somatic evolution / oncology &nbsp;·&nbsp; <b>Key figure:</b> Mel Greaves</div>
+      </div>
+      <div class="card e">
+        <span class="num">03</span>
+        <h3>Fever as Adaptation</h3>
+        <p class="what">Nesse and Williams's <em>Why We Get Sick</em> (1994) — the founding text of evolutionary medicine — argued that many symptoms are not disease itself but adaptive responses. Fever raises body temperature to inhibit pathogen growth; suppressing it with antipyretics may sometimes prolong infection. The evolved immune response is shaped by millions of years of host-pathogen coevolution.</p>
+        <div class="meta"><b>Book:</b> Nesse &amp; Williams, <em>Why We Get Sick</em>, 1994</div>
+      </div>
+      <div class="card e">
+        <span class="num">04</span>
+        <h3>The Mismatch Problem</h3>
+        <p class="what">Our bodies were shaped by selection in Pleistocene environments — high physical activity, whole foods, no refined sugar, no electric light. Many modern diseases (type 2 diabetes, coronary artery disease, myopia, many mental health conditions) can be understood as mismatches between evolved physiology and novel environments. Our cravings for fat and sugar made sense on the savanna; they are maladaptive in the supermarket.</p>
+        <div class="meta"><b>Concept:</b> Evolutionary mismatch / discordance hypothesis</div>
+      </div>
+      <div class="card e">
+        <span class="num">05</span>
+        <h3>Parasite–Host Coevolution</h3>
+        <p class="what">The Red Queen hypothesis (Van Valen, 1973): species must keep evolving just to maintain their fitness relative to co-evolving parasites and competitors. Sexual reproduction — costly in evolutionary terms — may exist primarily to generate the genetic diversity that outpaces parasite adaptation. The geographic variation in human immune genes (MHC) maps closely onto historic pathogen diversity.</p>
+        <div class="meta"><b>Lewis Carroll:</b> "It takes all the running you can do to keep in the same place"</div>
+      </div>
+      <div class="card e">
+        <span class="num">06</span>
+        <h3>Artificial Selection in Agriculture</h3>
+        <p class="what">Darwin opened <em>Origin</em> with a chapter on domestic breeds — artificial selection as proof of concept for natural selection. Modern agriculture continues the experiment at industrial scale: crop breeding programs have produced cereal varieties with 10× the yield of their wild ancestors. CRISPR gene editing accelerates artificial selection by allowing targeted variation rather than waiting for random mutation.</p>
+        <div class="meta"><b>Continuation:</b> From Darwin's pigeons to CRISPR wheat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: COMPUTING -->
+  <div class="band dim">IV. Evolutionary Algorithms</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <p>Darwin's algorithm — variation + selection + inheritance — is substrate-independent. If you can instantiate those three operations in a computer, you can evolve solutions to problems no human could design directly. Evolutionary algorithms (genetic algorithms, genetic programming, neuroevolution) have been applied to engineering design, drug discovery, neural network architecture search, game-playing AI, and logistics optimization.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="num">1954</span>
+        <h3>Turing's Evolutionary Proposal</h3>
+        <p class="what">Alan Turing, in a 1950 paper on machine intelligence, proposed that machine learning could proceed by something analogous to evolution — a process of random mutation and selection rather than explicit programming. He called it "evolutionary or genetic search."</p>
+        <div class="meta"><b>Paper:</b> Computing Machinery and Intelligence, 1950</div>
+      </div>
+      <div class="card">
+        <span class="num">1975</span>
+        <h3>Holland's Genetic Algorithms</h3>
+        <p class="what">John Holland's <em>Adaptation in Natural and Artificial Systems</em> (1975) formalized genetic algorithms: populations of encoded solutions that recombine (crossover) and mutate, with selection based on fitness functions. Showed that Darwinian selection converges on good solutions without exhaustive search.</p>
+        <div class="meta"><b>Application:</b> Optimization, design, scheduling</div>
+      </div>
+      <div class="card">
+        <span class="num">2017–</span>
+        <h3>Neural Architecture Search</h3>
+        <p class="what">Google Brain and OpenAI demonstrated that evolutionary algorithms could discover neural network architectures outperforming those designed by humans. AutoML systems now use evolutionary strategies to search for optimal model structures — letting Darwinian processes design the AI systems themselves.</p>
+        <div class="meta"><b>Result:</b> Sometimes surpasses human-designed architectures</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: THE SELFISH GENE & GOULD -->
+  <div class="band">V. Synthesis Debates — Dawkins, Gould, Eldredge</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <div class="prose-2">
+      <div>
+        <h2>The Selfish Gene — <em>Dawkins, 1976</em></h2>
+        <p>Richard Dawkins's <em>The Selfish Gene</em> (1976) reformulated evolutionary theory from the gene's-eye view. Instead of asking what is good for the organism or the species, ask what is good for the gene. Genes that increase their own frequency in the population will spread, regardless of whether this benefits organisms. An organism is, on this view, a gene's way of making more genes.</p>
+        <p>The book introduced the term <strong>meme</strong> (a unit of cultural replication analogous to a gene), the concept of <strong>the extended phenotype</strong> (a gene's effects extend beyond the body it inhabits — a beaver's dam is part of the beaver's phenotype), and a clear explanation of <strong>kin selection</strong> (Hamilton's rule: you share genes with relatives, so helping relatives reproduce spreads copies of your own genes). <em>The Selfish Gene</em> is the most widely read book in evolutionary biology and the most culturally influential since <em>Origin</em> itself.</p>
+      </div>
+      <div>
+        <h2>Punctuated Equilibrium — <em>Gould &amp; Eldredge, 1972</em></h2>
+        <p>Stephen Jay Gould and Niles Eldredge proposed in 1972 that evolution proceeds not by the gradual accumulation of tiny changes that Darwin envisioned, but in a pattern of long stasis punctuated by rapid bursts of change (rapid in geological terms — thousands to tens of thousands of years). The fossil record, they argued, showed species appearing suddenly, remaining stable for millions of years, and then either going extinct or rapidly transforming.</p>
+        <p>Punctuated equilibrium sparked a fierce debate within evolutionary biology. Neo-Darwinians (Dawkins, Maynard Smith) argued it was a quibble about tempo, not mechanism — natural selection still drove change during the rapid bursts. Gould argued it required revisions to the theory at higher levels. The debate clarified much and was never fully resolved. Gould's broader project — <em>The Structure of Evolutionary Theory</em> (2002) — was a 1,400-page attempt to revise and expand the Modern Synthesis; it remains influential and contested.</p>
+      </div>
+    </div>
+    <div class="pull">
+      "The history of life is more adequately represented by a picture of 'punctuated equilibria' than by the notion of phyletic gradualism."
+      <cite>— Gould &amp; Eldredge, Paleobiology, 1977</cite>
+    </div>
+  </div>
+
+  <!-- SECTION 6: EUGENICS — THE DARK LEGACY -->
+  <div class="band warn">VI. The Dark Legacy — Eugenics</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <p>The most morally consequential misuse of Darwin's ideas came from his own cousin. <strong>Francis Galton</strong> (1822–1911) — statistician, explorer, and polymath — read <em>Origin</em> in 1859 and immediately asked: if natural selection shapes populations, why not guide human evolution by controlling who reproduces? He coined the word <strong>eugenics</strong> in 1883 (from Greek: "good birth") and spent decades developing the statistical tools and the ideological framework for a program of directed human breeding.</p>
+
+    <div class="grid">
+      <div class="card r">
+        <span class="num">!</span>
+        <h3>Galton's Eugenics</h3>
+        <p class="what">Galton proposed encouraging reproduction among "gifted" families (positive eugenics) and discouraging or preventing reproduction among those deemed "unfit" (negative eugenics). His statistical work was often brilliant; his conclusions about who was "fit" reflected the class and racial biases of Victorian England almost perfectly.</p>
+        <div class="meta"><b>Key error:</b> Conflated social class with genetic fitness</div>
+      </div>
+      <div class="card r">
+        <span class="num">!</span>
+        <h3>American Eugenics</h3>
+        <p class="what">The United States ran the most aggressive eugenics program of any democracy: 33 states enacted compulsory sterilization laws; approximately 60,000 Americans were sterilized under these laws, disproportionately targeting the poor, disabled, imprisoned, and racial minorities. The Supreme Court upheld forced sterilization in <em>Buck v. Bell</em> (1927) — a precedent never explicitly overturned.</p>
+        <div class="meta"><b>SCOTUS:</b> Buck v. Bell, 1927 — "three generations of imbeciles are enough"</div>
+      </div>
+      <div class="card r">
+        <span class="num">!</span>
+        <h3>Nazi Eugenics</h3>
+        <p class="what">The Nazi regime explicitly cited American eugenics programs as precedents. Between 1933 and 1945, approximately 400,000 Germans were forcibly sterilized and a further 200,000+ disabled people were killed in the T4 euthanasia program — directly applying eugenics ideology. The Holocaust was not eugenics per se but emerged from the same ideological complex of racial hygiene and scientific racism.</p>
+        <div class="meta"><b>Consequence:</b> Eugenics became politically unacceptable post-1945</div>
+      </div>
+      <div class="card r">
+        <span class="num">✗</span>
+        <h3>Why Eugenics Was Wrong</h3>
+        <p class="what">Eugenics committed multiple scientific errors: it conflated genotype and phenotype (complex traits like intelligence are influenced by thousands of genes interacting with environment); it ignored that most genetic variation is maintained by heterozygote advantage and frequency-dependent selection; it falsely assumed "fitness" could be read off from socioeconomic status; it missed that genetic diversity itself is adaptive. Darwin's theory does not support eugenics — it undermines its premises.</p>
+        <div class="meta"><b>The irony:</b> Evolutionary biology ultimately refutes eugenics</div>
+      </div>
+    </div>
+
+    <p>It is important to note that Darwin himself was not a eugenicist in Galton's sense. In <em>The Descent of Man</em>, Darwin expressed ambivalence about whether civilized societies' tendency to keep "weak" members alive would harm the species — a passage often quoted out of context — but immediately followed it by saying that any eugenic suggestion would be rejected by "our sympathetic instincts" and that the instinct of sympathy was itself a product of evolution and a mark of civilization's highest achievement. Darwin was not Galton.</p>
+  </div>
+
+  <!-- SECTION 7: CREATIONISM -->
+  <div class="band earth">VII. Creationism &amp; Intelligent Design — The Political Legacy</div>
+  <div class="reveal" style="animation-delay:.4s">
+    <div class="prose-2">
+      <div>
+        <h2>The <em>Scopes Trial</em>, 1925</h2>
+        <p>In July 1925, John Scopes, a high school biology teacher in Dayton, Tennessee, was tried under the Butler Act for teaching evolution. Clarence Darrow defended him; William Jennings Bryan — three-time Democratic presidential candidate — prosecuted. Scopes was convicted and fined $100. Bryan died five days after the trial.</p>
+        <p>The Scopes Trial made anti-evolution politics a durable feature of American public life in a way that had no equivalent in Britain, Canada, Australia, or Western Europe. The political and theological conditions were distinctively American: evangelical Protestantism's cultural dominance in the South, populist suspicion of expert knowledge, and the equation of evolution with Social Darwinist social philosophy.</p>
+      </div>
+      <div>
+        <h2>The Discovery Institute &amp; <em>Intelligent Design</em></h2>
+        <p>After the Supreme Court ruled in 1987 (<em>Edwards v. Aguillard</em>) that creationism could not be taught in public schools as science, the Discovery Institute began promoting <strong>Intelligent Design</strong> — the argument that certain biological structures are too complex to have evolved by natural selection and must have been designed by an intelligent agent. ID avoids naming the designer.</p>
+        <p>In 2005, Federal Judge John E. Jones III ruled in <em>Kitzmiller v. Dover Area School District</em> that ID was "essentially religious in nature" and not science. His 139-page opinion is a detailed demolition of the ID argument. The scientific consensus remains absolute: there is no credible evidence for ID and overwhelming evidence for evolution. The debate is political and theological, not scientific.</p>
+      </div>
+    </div>
+
+    <div class="stats" style="margin-top:16px;">
+      <div class="stat"><span class="n">1987</span><span class="l">Creationism Banned from Schools — Edwards v. Aguillard</span></div>
+      <div class="stat"><span class="n">2005</span><span class="l">ID Ruled Non-Science — Kitzmiller v. Dover</span></div>
+      <div class="stat"><span class="n">~40%</span><span class="l">Americans Accept Evolution Fully (Gallup, 2019)</span></div>
+      <div class="stat"><span class="n">~97%</span><span class="l">Biologists Accept Evolution</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: THE WHOLE PICTURE -->
+  <div class="band">VIII. Four Billion Years — One Tree — One Process</div>
+  <div class="reveal" style="animation-delay:.45s">
+    <p>Darwin's idea is now the organizing framework of the entire life sciences. Molecular biology, genomics, ecology, paleontology, medicine, agriculture, psychology — all are informed by evolutionary thinking. The tree of life, which Darwin first sketched in 1837 with the words "I think" above it, now encompasses billions of species across 4 billion years, with its branching structure read from the genomes of living organisms and the chemistry of ancient rocks.</p>
+    <p>Every cell in your body carries the evolutionary history of life in its DNA. Your mitochondria were once free-living bacteria — endosymbiosed into a eukaryotic ancestor more than a billion years ago. Eight percent of the human genome is viral DNA — fragments of retroviruses that infected our ancestors and were incorporated into our germ line. The same Hox genes that determine the body axes in a fly determine them in a human. The cytochrome c protein that manages electron transport in your mitochondria is functionally interchangeable with that in a yeast cell.</p>
+    <p>The unity of life is not a metaphor. It is the empirical consequence of common descent from a single ancestor. And the process that generated this diversity from that unity — variation, heritability, differential survival — is still operating, in every population on Earth, at every moment. Darwin's long argument was correct. The tree is real.</p>
+
+    <div class="grid wide">
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Theodosius Dobzhansky</h3>
+        <p class="what">Russian-American geneticist, author of <em>Genetics and the Origin of Species</em> (1937) — the book that fused Mendelian genetics with Darwinian evolution into the Modern Synthesis. A devout Eastern Orthodox Christian and a rigorous evolutionist; he saw no contradiction. His 1973 essay "Nothing in Biology Makes Sense Except in the Light of Evolution" is the most-reprinted essay in biology education.</p>
+        <div class="meta"><b>Legacy:</b> The synthesis itself; the most-quoted statement in biology education</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Richard Dawkins</h3>
+        <p class="what"><em>The Selfish Gene</em> (1976), <em>The Extended Phenotype</em> (1982), <em>The Blind Watchmaker</em> (1986). Gene-centered view of evolution; cultural popularization of Darwinism; "meme" as a concept. Also the leading public atheist in the evolution-religion debate since the 1990s — which has entangled the science with a culture war Darwin would have found distressing.</p>
+        <div class="meta"><b>Core contribution:</b> Gene's-eye view; meme concept</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Stephen Jay Gould</h3>
+        <p class="what">Punctuated equilibrium; spandrels; the critique of adaptationism; evolutionary constraints; the proper scope of evolutionary theory. Gould insisted that evolution was more complex, more contingent, and more interesting than the "ultra-Darwinian" adaptationist program allowed. His popular essays in <em>Natural History</em> magazine (1974–2001) made evolution accessible to a generation of general readers.</p>
+        <div class="meta"><b>Core contribution:</b> Punctuated equilibrium; evolutionary constraints; science communication</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Peter &amp; Rosemary Grant</h3>
+        <p class="what">Forty years studying Darwin's finches on Daphne Major in the Galápagos. They measured natural selection operating in real time — during the 1977 drought, average beak depth in <em>Geospiza fortis</em> increased measurably within one generation as small-seeded plants died off. The first direct demonstration of natural selection as a measurable evolutionary force in a wild population.</p>
+        <div class="meta"><b>Book:</b> <em>40 Years of Evolution</em> (2014)</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Carl Woese</h3>
+        <p class="what">Proposed the three-domain tree of life (Bacteria, Archaea, Eukaryota) in 1977, based on ribosomal RNA sequencing. Overturned two centuries of taxonomy in a single paper. The discovery of Archaea as a distinct domain is the most significant revision of the tree of life since Darwin drew the first sketch.</p>
+        <div class="meta"><b>Paper:</b> Woese &amp; Fox, 1977 — ribosomal RNA phylogeny</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Francis Crick &amp; James Watson</h3>
+        <p class="what">The double helix structure of DNA (1953) — with critical contributions from Rosalind Franklin and Raymond Gosling's X-ray crystallography. The discovery gave the gene a physical structure and explained how genetic information was copied, expressed, and occasionally mutated. Darwin had the process; Watson and Crick found the molecule it ran on.</p>
+        <div class="meta"><b>Paper:</b> Watson &amp; Crick, Nature, 25 April 1953</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="pull center reveal" style="animation-delay:.5s;">
+    "Four billion years of life. One tree. One process. Darwin got the shape right in 1859 — before genetics, before DNA, before plate tectonics, before the deep fossil record. That is what makes him extraordinary."
+    <cite>— compiled synthesis</cite>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Darwin Series · Vol. 3 of 4 · <em>The Long Afterlife</em> &nbsp;·&nbsp; Series: charles-darwin</div>
+    <div style="margin-top:4px;font-size:9px;">Primary sources: Dobzhansky (1973); Dawkins, <em>The Selfish Gene</em> (1976); Gould &amp; Eldredge (1977); Nesse &amp; Williams (1994); Grant &amp; Grant (2014); Woese &amp; Fox (1977); <em>Kitzmiller v. Dover</em> (2005) ruling.</div>
+  </div>
+
+</div>
+</body>
+</html>

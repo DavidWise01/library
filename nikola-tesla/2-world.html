@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Vol. 2 — His World | War of Currents, Westinghouse, Wardenclyffe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #06080f;
+    --electric: #3b82f6;
+    --violet: #8b5cf6;
+    --gold: #f59e0b;
+    --crimson: #ef4444;
+    --text: #d1d5db;
+    --text-dim: #6b7280;
+    --border: rgba(59,130,246,0.25);
+    --card-bg: rgba(59,130,246,0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,8,15,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--electric);
+    margin-right: 2rem;
+    white-space: nowrap;
+  }
+  .site-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .site-nav a:hover, .site-nav a.active {
+    color: var(--electric);
+    border-color: var(--border);
+    background: rgba(59,130,246,0.08);
+  }
+  .site-nav a.active { color: #fff; border-color: var(--electric); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero-svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(700px, 100vw);
+    height: min(700px, 100vw);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 820px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7.5vw, 5.5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(139,92,246,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero .sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+    color: var(--violet);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .hero p.lede {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 620px;
+    margin: 0 auto 2rem;
+  }
+  .vol-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--gold);
+    color: #000;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── SVG ANIMATIONS ── */
+  @keyframes tower-glow {
+    0%,100% { filter: drop-shadow(0 0 6px #3b82f6); }
+    50% { filter: drop-shadow(0 0 20px #8b5cf6) drop-shadow(0 0 40px #3b82f6); }
+  }
+  @keyframes discharge-1 {
+    0%,100% { opacity: 0; stroke-dashoffset: 400; }
+    20%,40% { opacity: 0.95; stroke-dashoffset: 0; }
+    60% { opacity: 0; }
+  }
+  @keyframes discharge-2 {
+    0%,45%,100% { opacity: 0; stroke-dashoffset: 400; }
+    60%,80% { opacity: 0.9; stroke-dashoffset: 0; }
+  }
+  @keyframes discharge-3 {
+    0%,70%,100% { opacity: 0; stroke-dashoffset: 400; }
+    80%,95% { opacity: 0.85; stroke-dashoffset: 0; }
+  }
+  @keyframes wave-out {
+    0% { r: 30; opacity: 0.7; stroke-width: 2; }
+    100% { r: 280; opacity: 0; stroke-width: 0.5; }
+  }
+  @keyframes fair-lamp-pulse {
+    0%,100% { fill: rgba(255,244,100,0.15); }
+    50% { fill: rgba(255,244,100,0.5); }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--electric);
+    margin: 2rem 0 0.75rem;
+  }
+  p { margin-bottom: 1.25rem; }
+  em { color: #e5e7eb; }
+  strong { color: #fff; font-weight: 600; }
+
+  .section-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--violet);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--electric);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--violet);
+    margin-bottom: 0.4rem;
+  }
+  .card h3 { margin-top: 0; font-size: 1rem; color: #fff; }
+  .card p { font-size: 0.9rem; color: var(--text-dim); margin: 0; }
+
+  /* ── WAR CARD (RED BORDER) ── */
+  .card.war {
+    border-color: rgba(239,68,68,0.4);
+    background: rgba(239,68,68,0.05);
+  }
+  .card.war:hover { box-shadow: 4px 4px 0 var(--crimson); }
+  .card.war .card-label { color: var(--crimson); }
+  .card.war h3 { color: #fca5a5; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--electric);
+    margin: 2.5rem 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #e5e7eb;
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    font-style: normal;
+  }
+  .pull-quote.violet { border-left-color: var(--violet); }
+
+  /* ── BAND ── */
+  .band {
+    background: var(--electric);
+    color: #000;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 4rem 0;
+  }
+  .band h2 { color: #000; font-size: clamp(1.3rem, 3vw, 2rem); }
+  .band p { color: rgba(0,0,0,0.75); font-size: 1rem; max-width: 640px; margin: 1rem auto 0; }
+  .band .kick { color: rgba(0,0,0,0.55); }
+
+  /* ── EXPLAINER ── */
+  .explainer {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--electric);
+    border-radius: 0 4px 4px 0;
+    padding: 1.75rem 2rem;
+    margin: 2rem 0;
+  }
+  .explainer .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.5rem;
+  }
+  .explainer h3 { margin-top: 0; color: #fff; }
+
+  /* ── PERSON CARD ── */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .person-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    background: rgba(139,92,246,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .person-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--violet);
+  }
+  .person-card .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .person-card h3 { margin-top: 0; color: #fff; font-size: 1.05rem; }
+  .person-card p { font-size: 0.9rem; color: var(--text-dim); margin: 0; }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .colophon a { color: var(--electric); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .card-grid, .person-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="site-nav" aria-label="Series navigation">
+  <span class="series-label">Tesla / 4 Vols.</span>
+  <a href="0-who.html">Vol. 0 — The Man</a>
+  <a href="1-ac.html">Vol. 1 — The Work</a>
+  <a href="2-world.html" class="active">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- ── HERO with Wardenclyffe / Colorado Springs SVG ── -->
+<header class="hero">
+  <!-- Wardenclyffe Tower + Lightning SVG -->
+  <svg class="hero-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="wardGrad" cx="50%" cy="40%" r="55%">
+        <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Radio waves from tower top -->
+    <circle cx="350" cy="220" r="30" fill="none" stroke="#3b82f6" stroke-width="1.5"
+      style="animation: wave-out 4s ease-out infinite; transform-origin: 350px 220px;"/>
+    <circle cx="350" cy="220" r="30" fill="none" stroke="#8b5cf6" stroke-width="1.5"
+      style="animation: wave-out 4s ease-out infinite 1.3s; transform-origin: 350px 220px;"/>
+    <circle cx="350" cy="220" r="30" fill="none" stroke="#3b82f6" stroke-width="1"
+      style="animation: wave-out 4s ease-out infinite 2.6s; transform-origin: 350px 220px;"/>
+
+    <!-- Tower structure -->
+    <g filter="url(#glow2)" style="animation: tower-glow 3s ease-in-out infinite; transform-origin: 350px 400px;">
+      <!-- Lattice tower base legs -->
+      <line x1="290" y1="550" x2="325" y2="380" stroke="#3b82f6" stroke-width="2" opacity="0.8"/>
+      <line x1="410" y1="550" x2="375" y2="380" stroke="#3b82f6" stroke-width="2" opacity="0.8"/>
+      <line x1="260" y1="550" x2="315" y2="400" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+      <line x1="440" y1="550" x2="385" y2="400" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+
+      <!-- Cross braces -->
+      <line x1="295" y1="520" x2="395" y2="430" stroke="#8b5cf6" stroke-width="1" opacity="0.5"/>
+      <line x1="395" y1="520" x2="295" y2="430" stroke="#8b5cf6" stroke-width="1" opacity="0.5"/>
+      <line x1="300" y1="460" x2="400" y2="400" stroke="#8b5cf6" stroke-width="1" opacity="0.4"/>
+      <line x1="400" y1="460" x2="300" y2="400" stroke="#8b5cf6" stroke-width="1" opacity="0.4"/>
+
+      <!-- Tower shaft -->
+      <line x1="330" y1="380" x2="338" y2="240" stroke="#8b5cf6" stroke-width="2" opacity="0.9"/>
+      <line x1="370" y1="380" x2="362" y2="240" stroke="#8b5cf6" stroke-width="2" opacity="0.9"/>
+
+      <!-- Platform -->
+      <rect x="318" y="373" width="64" height="14" rx="2" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" stroke-width="1.5"/>
+
+      <!-- Mushroom dome / terminal -->
+      <ellipse cx="350" cy="228" rx="44" ry="22" fill="rgba(59,130,246,0.2)" stroke="#3b82f6" stroke-width="2" opacity="0.9"/>
+      <ellipse cx="350" cy="220" rx="30" ry="15" fill="rgba(139,92,246,0.3)" stroke="#8b5cf6" stroke-width="2"/>
+      <ellipse cx="350" cy="214" rx="16" ry="8" fill="rgba(255,255,255,0.1)" stroke="#fff" stroke-width="1.5" opacity="0.8"/>
+
+      <!-- Ground circle -->
+      <ellipse cx="350" cy="555" rx="90" ry="12" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.4"/>
+    </g>
+
+    <!-- Discharge arcs -->
+    <path d="M350,205 L290,140 L305,130 L255,70 L270,60 L210,20"
+      fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round"
+      stroke-dasharray="350" stroke-dashoffset="350"
+      style="animation: discharge-1 5s ease-in-out infinite;"/>
+    <path d="M360,208 L430,155 L418,143 L490,95 L478,83 L540,40"
+      fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"
+      stroke-dasharray="350" stroke-dashoffset="350"
+      style="animation: discharge-2 5s ease-in-out infinite;"/>
+    <path d="M345,202 L250,200 L255,188 L180,186 L185,173 L110,172"
+      fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="350" stroke-dashoffset="350"
+      style="animation: discharge-3 5s ease-in-out infinite;"/>
+    <path d="M355,202 L450,198 L445,186 L530,182 L525,170 L600,165"
+      fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="350" stroke-dashoffset="350"
+      style="animation: discharge-1 5s ease-in-out infinite 1.5s;"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="vol-badge">Volume 2 of 4</span>
+    <span class="kick">Nikola Tesla &mdash; Context &amp; Conflict</span>
+    <h1>His World</h1>
+    <p class="sub">The War of Currents &mdash; Westinghouse &mdash; JP Morgan &mdash; Wardenclyffe</p>
+    <p class="lede">The men who backed him. The men who betrayed him. The dream of wireless power that was strangled in its cradle.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- ── WAR OF CURRENTS ── -->
+<section class="section" id="war">
+  <div class="container">
+    <p class="section-intro">1887–1895</p>
+    <h2>The War of Currents</h2>
+    <p>The conflict between Edison's direct current system and Tesla's alternating current system is remembered as the "War of Currents." It was not a scientific debate — the physics strongly favored AC for any power distribution network that needed to reach beyond a few city blocks. It was a commercial and political war, and Edison fought it with a ferocity that has permanently damaged his historical reputation.</p>
+    <p><strong>Thomas Edison</strong> had invested enormous capital, credibility, and infrastructure in DC. His Pearl Street Station in New York (1882) was the world's first central generating station. His system of DC generation, distribution, and metering was already installed across lower Manhattan. When Tesla's AC patents appeared, backed by Westinghouse's capital, Edison faced not merely technological obsolescence but the collapse of a major investment.</p>
+    <p>He responded by directing his staff — and, historians believe, personally overseeing — a systematic public-relations campaign to discredit AC as fatally dangerous. The strategy included public demonstrations designed to create maximum horror.</p>
+
+    <h3>Topsy, Kemmler, and the Theater of Fear</h3>
+    <p>Edison's team, led by his engineer Harold P. Brown (with financial support that Edison did not publicly acknowledge), began publicly <strong>electrocuting animals with AC</strong>. Dogs were purchased from local children and killed on stage. Calves and horses were executed at demonstrations attended by journalists. The stated purpose was to demonstrate the danger of alternating current.</p>
+    <p>The most notorious episode: on 4 January 1903, a circus elephant named <strong>Topsy</strong> was electrocuted at Coney Island using AC current. Edison's team was not directly involved in this later event — Topsy had attacked and killed three handlers and the Coney Island owners had already condemned her — but the AC current used to kill her drew directly on the precedent Edison's team had established, and the event was filmed (the footage survives).</p>
+    <p>The campaign culminated in the <strong>electric chair</strong>. Brown and Edison lobbied to have AC used for the first electrocution execution in New York State — William Kemmler in 1890 — precisely because they wanted "death by Westinghouse current" to enter public consciousness. The chair used a Westinghouse AC generator. Westinghouse had refused to sell equipment for executions; the generator was obtained through intermediaries. Kemmler's execution was gruesome. Edison achieved his desired headlines.</p>
+
+    <div class="card-grid">
+      <div class="card war">
+        <p class="card-label">Edison's Campaign</p>
+        <h3>Animal Electrocutions</h3>
+        <p>Dogs, calves, and horses publicly killed with AC to demonstrate its "danger." Staged for journalists. Paid for covertly by Edison while he maintained public distance.</p>
+      </div>
+      <div class="card war">
+        <p class="card-label">Edison's Campaign</p>
+        <h3>The Electric Chair</h3>
+        <p>Lobbied to use Westinghouse AC generators for executions. Wanted "Westinghoused" to become a synonym for electrocution-execution. Failed: AC became the world standard regardless.</p>
+      </div>
+      <div class="card war">
+        <p class="card-label">Edison's Campaign</p>
+        <h3>Patent Interference</h3>
+        <p>Funded legal challenges to Tesla's patents and Westinghouse's license arrangements, attempting to tie up AC deployment in litigation while DC infrastructure was extended.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">The Verdict</p>
+        <h3>AC Wins</h3>
+        <p>The 1893 Chicago World's Fair, the 1896 Niagara Falls power plant, and the economies of transmission physics settled the question. Edison's DC system was phased out within two decades.</p>
+      </div>
+    </div>
+
+    <p>The irony is complete: the Edison Electric Illuminating Company eventually became General Electric, which promptly moved to manufacture AC equipment. By 1900, even Edison's own companies were building AC systems. Edison himself rarely spoke of the War of Currents in later life, and in his final decade reportedly acknowledged that his insistence on DC had been a mistake.</p>
+  </div>
+</section>
+
+<!-- ── WESTINGHOUSE ── -->
+<section class="section" id="westinghouse">
+  <div class="container">
+    <p class="section-intro">The Ally / 1888–1897</p>
+    <h2>George Westinghouse</h2>
+    <p><strong>George Westinghouse</strong> (1846–1914) was the most important ally of Tesla's career. Unlike Edison, who was a self-made research entrepreneur operating from a vertically integrated laboratory-to-product model, Westinghouse was an industrialist of a different type: a systematizer and a builder of manufacturing capacity at scale. He had made his first fortune from the air brake for railway trains — a safety device that had saved thousands of lives and made him nationally famous by 1885.</p>
+    <p>When Westinghouse attended Tesla's 1888 AIEE demonstration and reviewed the patents, he moved rapidly. He purchased Tesla's polyphase AC patents for $60,000 cash plus $2.50 per horsepower of installed capacity. He sent engineers to work with Tesla on scaling the technology for manufacturing. He committed Westinghouse Electric to the AC standard at a moment when it was commercially risky — Edison had institutional momentum, existing customers, and enormous prestige.</p>
+
+    <div class="pull-quote">
+      "George Westinghouse was, in my opinion, the only man on this globe who could take my alternating current system under the circumstances then existing and win the battle against prejudice and money power."
+      <cite>— Nikola Tesla</cite>
+    </div>
+
+    <h3>The Royalty Sacrifice</h3>
+    <p>In 1891, Westinghouse Electric was in serious financial difficulty. The company had over-leveraged in the AC expansion and faced a credit crisis. Westinghouse came to Tesla personally and explained the situation: if Tesla enforced his royalty contract, Westinghouse would likely be unable to continue — and the AC electrification program would stall, possibly for decades.</p>
+    <p>Tesla tore up his royalty contract on the spot. He handed back rights worth, at conservative estimates, between $12 million and $17 million in 1891 dollars — equivalent to hundreds of millions today. He told Westinghouse: <em>"You have been my friend. You believed in me when others had no faith. I want you to go ahead."</em></p>
+    <p>This decision made Tesla's poverty in old age financially inevitable. It also saved the AC electrification program. Whether it was noble, foolish, or both is a question historians continue to debate. Tesla himself never expressed regret.</p>
+
+    <h3>The Columbian Exposition, 1893</h3>
+    <p>The <strong>World's Columbian Exposition</strong> — the Chicago World's Fair of 1893, celebrating the 400th anniversary of Columbus's voyage — was the most heavily attended event in American history to that point. Twenty-seven million visitors came to a purpose-built city of exhibition halls on the Chicago lakefront: the "White City."</p>
+    <p>The Exposition was lit entirely by <strong>Tesla/Westinghouse AC power</strong>. One hundred thousand incandescent lamps. The AC generators supplied by Westinghouse were the most powerful yet built. The competing bid, from GE using Edison's DC system, had been rejected because DC simply could not light a campus that large from a central generating station at competitive cost.</p>
+    <p>The visual effect — a vast city glowing in the dark, powered invisibly by this new current — was transformative for millions of visitors who had never seen electric light at scale. The Columbian Exposition is credited by historians as the single most effective demonstration event in the adoption of AC power, more influential even than the Niagara Falls plant.</p>
+    <p>Tesla himself demonstrated his high-frequency coil experiments at the fair, illuminating phosphorescent tubes and passing currents through his own body. He was, for a few years in the 1890s, the most celebrated inventor in America — mobbed at exhibitions, profiled in newspapers, the subject of popular fascination.</p>
+  </div>
+</section>
+
+<!-- ── JP MORGAN ── -->
+<section class="section" id="morgan">
+  <div class="container">
+    <p class="section-intro">The Patron and Betrayer / 1901–1905</p>
+    <h2>JP Morgan and Wardenclyffe Tower</h2>
+    <p><strong>John Pierpont Morgan</strong> (1837–1913) was the dominant financier of the Gilded Age — the man who organized US Steel, who had rescued the US government's gold reserves in 1895, who effectively controlled the financial infrastructure of the American economy. He was also the principal investor in General Electric (Edison's company, reorganized) and thus had a direct financial stake in the electrical power business.</p>
+    <p>In 1901, Tesla approached Morgan with an extraordinary proposal: a global wireless communication system to be built around a massive transmission tower at Shoreham, Long Island — <strong>Wardenclyffe Tower</strong>. Morgan invested $150,000 (approximately $5 million today) and held a 51% interest in Tesla's patents for the project.</p>
+
+    <div class="explainer">
+      <p class="label">The Project</p>
+      <h3>What Wardenclyffe Was Supposed to Be</h3>
+      <p>Tesla's stated purpose was a worldwide wireless telegraphy and telephony network — a single tower capable of transmitting messages, voice, and eventually images to any point on earth. He described the system using the earth itself as a conductor, with the tower radiating energy into the earth's electromagnetic resonance cavity (the ionosphere-to-earth gap that modern physicists do call the Schumann resonance cavity).</p>
+      <p>Tesla's private notebooks and letters suggest his actual ambition was larger: <em>wireless power transmission</em>. He believed he could broadcast electrical energy — not just signals, but usable electricity — to receivers anywhere on earth, without wires, essentially for free once the tower was built. It is this aspect of the project that ended it.</p>
+    </div>
+
+    <h3>Why Morgan Stopped</h3>
+    <p>In 1903, as Wardenclyffe was still under construction, Guglielmo Marconi successfully transmitted a wireless signal across the Atlantic. This was precisely the commercial service Tesla had promised Morgan — and Marconi had beaten him to it. Morgan wrote to Tesla asking how the project differed from Marconi's. Tesla's reply was revealing: he was not merely building a communication system. He was building a power-transmission system. Electrical energy, not just signals, would be broadcast globally.</p>
+    <p>Morgan's response was swift and final. He declined to provide further funding. When Tesla sought other investors, Morgan reportedly made clear — through the informal channels of New York financial society — that he was not interested in seeing the project funded. The biographer W. Bernard Carlson, working from Morgan's private correspondence, found no smoking gun of explicit intervention, but the effect was the same: no major capital was forthcoming, and Wardenclyffe stalled.</p>
+
+    <div class="pull-quote violet">
+      "If Tesla were able to transmit power without wires, the whole commercial basis of the electrical business would be destroyed — and our investment with it."
+      <cite>— Reconstructed reasoning; Morgan's correspondence, cited in Carlson (2013)</cite>
+    </div>
+
+    <p>The logic was impeccable from Morgan's point of view. Power companies sold electricity by the kilowatt-hour. Metering was the entire commercial model. A system that broadcast power freely into the atmosphere — that any receiving device could tap at will — had no revenue model. It was the equivalent of a water company proposing to dissolve water in the atmosphere and let everyone drink from the air. Morgan had invested in Edison's DC infrastructure, in Westinghouse's AC competitors, in the copper wire industry that carried electrical current. He had not invested to make those investments worthless.</p>
+
+    <p>The tower was never completed as Tesla designed it. After Morgan's withdrawal, Tesla spent years trying to find alternative funding, moving between optimism and despair. In 1917 the US government demolished the tower — they had become concerned it could be used by German agents to transmit intelligence. Tesla was devastated. He described the destruction of Wardenclyffe as the moment he gave up entirely on the dream of wireless power.</p>
+  </div>
+</section>
+
+<!-- ── COLORADO SPRINGS ── -->
+<section class="section" id="colorado">
+  <div class="container">
+    <p class="section-intro">Experiments / 1899</p>
+    <h2>Colorado Springs</h2>
+    <p>In the spring of 1899, before Wardenclyffe, Tesla secured funding from Colonel John Jacob Astor IV and others to build an experimental station in Colorado Springs, Colorado. The high altitude — 6,000 feet — offered thinner, more electrically conductive air. The broad, flat terrain provided space for his giant magnifying transmitter.</p>
+    <p>Tesla's Colorado Springs experiments remain the most dramatic and, to some degree, the most mysterious episode of his career. Over eight months he constructed a massive Tesla coil — the "magnifying transmitter" — with a primary coil 51 feet in diameter. He claimed to have:</p>
+    <ul style="margin: 0 0 1.25rem 1.5rem; color: var(--text-dim);">
+      <li style="margin-bottom:0.5rem;">Transmitted 100 million volts into the earth and received them back coherently — demonstrating the earth's electromagnetic resonance</li>
+      <li style="margin-bottom:0.5rem;">Lit 200 incandescent lamps wirelessly from a distance of 25 miles</li>
+      <li style="margin-bottom:0.5rem;">Produced lightning bolts 130 feet long — the longest artificial lightning ever created — audible 15 miles away</li>
+      <li style="margin-bottom:0.5rem;">Detected what he interpreted as signals of extraterrestrial origin in his receiver — rhythmic pulses he believed were too regular to be natural</li>
+    </ul>
+    <p>The Colorado Springs Power Company cut Tesla's power supply after one night of his full-power experiments blew out their generator. Tesla repaired the generator at his own expense and apologized. The rhythmic signals he detected were almost certainly natural atmospheric phenomena — possibly the electromagnetic signature of the great Martian dust storms of 1899, possibly simply Schumann resonance oscillations, possibly interference from other sources. He never conclusively established their origin.</p>
+    <p>His Colorado Springs notebook survives and was published in facsimile in 1978. It is dense, brilliant, and often difficult to interpret — mixing precise experimental data with speculative extrapolation in a way that makes it hard to determine exactly what he did and did not establish empirically.</p>
+  </div>
+</section>
+
+<!-- ── ASSOCIATES ── -->
+<section class="section" id="people">
+  <div class="container">
+    <p class="section-intro">His Circle</p>
+    <h2>The People Around Him</h2>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <p class="role">Ally / Industrialist</p>
+        <h3>George Westinghouse</h3>
+        <p>The one businessman Tesla fully trusted. Bought his patents, backed his system against Edison's campaign, and received Tesla's royalties as a gift when the company was in crisis. Died 1914 — before Tesla's poverty became extreme.</p>
+      </div>
+      <div class="person-card">
+        <p class="role">Patron / Betrayer</p>
+        <h3>JP Morgan</h3>
+        <p>America's dominant financier. Funded Wardenclyffe, then withdrew when he grasped its free-power implications. Did not destroy Tesla — but stopped him from completing the one project that might have been his masterwork.</p>
+      </div>
+      <div class="person-card">
+        <p class="role">Rival / Innovator</p>
+        <h3>Thomas Edison</h3>
+        <p>The man who wouldn't pay the $50,000. The man who electrocuted animals. Also a genuine innovator — the phonograph, the practical incandescent lamp, the motion picture camera — who fought AC with methods that embarrassed him historically. The two men never reconciled.</p>
+      </div>
+      <div class="person-card">
+        <p class="role">Friend / Writer</p>
+        <h3>Mark Twain</h3>
+        <p>Samuel Clemens was a frequent visitor to Tesla's South Fifth Avenue laboratory in the 1890s. He was photographed there, delighted with Tesla's high-frequency demonstrations. They shared a sharp intelligence, a contempt for fraud, and a habit of financial misadventure. Twain died in 1910; Tesla outlived him by 33 years.</p>
+      </div>
+      <div class="person-card">
+        <p class="role">Competitor</p>
+        <h3>Guglielmo Marconi</h3>
+        <p>Built the radio industry using, in the Supreme Court's 1943 judgment, Tesla's foundational patents. Was awarded the Nobel Prize in Physics in 1909 for radio. Tesla was not. Marconi received the Nobel; Tesla received, eventually, a Supreme Court ruling that came four months after his death.</p>
+      </div>
+      <div class="person-card">
+        <p class="role">Companion</p>
+        <h3>The White Pigeon</h3>
+        <p>In his final years, Tesla fed pigeons daily in Bryant Park and at the New York Public Library. A white female pigeon became his most constant companion. He described his feelings for her as "those of a man for a woman he loves" — a statement that has generated much interpretation and a little compassion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="container">
+    <span class="kick">The Columbian Exposition / Chicago 1893</span>
+    <h2>The Night That Settled the Future</h2>
+    <p>On the evening of 1 May 1893, President Grover Cleveland pressed a button and 100,000 AC-powered lamps lit the White City of the Columbian Exposition. Twenty-seven million people attended over six months. Most had never seen electric light at scale. The future of power — and whose system would deliver it — was decided not in a laboratory but in that crowd's collective gasp.</p>
+  </div>
+</div>
+
+<!-- ── ISOLATION ── -->
+<section class="section" id="isolation">
+  <div class="container">
+    <p class="section-intro">Final Decades / 1917–1943</p>
+    <h2>The Long Solitude</h2>
+    <p>After the demolition of Wardenclyffe in 1917, Tesla continued to work, continued to issue press releases about ambitious new inventions — a "death beam," a new turbine principle, a new way to photograph thought — but the era of his productive experimental work was essentially over. He had no laboratory of scale, no consistent funding, and increasingly no institutional allies.</p>
+    <p>He moved from hotel to hotel. For a period in the 1920s he stayed at the Hotel St. Regis; then the Hotel Marguery; then the Hotel Governor Clinton; finally, from 1933 until his death, the Hotel New Yorker, where Westinghouse Electric paid his rent as a kind of quiet pension in recognition of the patents he had given away.</p>
+    <p>His daily routine became the pigeon route: Bryant Park in the morning, the New York Public Library steps at noon, the pigeons on the ledge outside his hotel room window in the evening. He spent days working over notebooks and writing papers that were increasingly theoretical, increasingly untethered from the experimental apparatus he could no longer afford to build.</p>
+    <p>He was not entirely forgotten — he remained a figure of public fascination, and journalists sought him out. But his announcements of grand new inventions were increasingly treated with gentle skepticism by the press, and he was not invited to the major conferences and institutions that occupied the center of American physics in the 1930s, which had moved decisively toward quantum mechanics and relativity — a world Tesla distrusted and never entered.</p>
+
+    <div class="pull-quote">
+      "The present is theirs. The future, for which I really worked, is mine."
+      <cite>— Nikola Tesla</cite>
+    </div>
+
+    <p>He died on 7 January 1943, of coronary thrombosis, in Room 3327 of the Hotel New Yorker. He had asked not to be disturbed. He had been dining alone for weeks, subsisting mostly on warm milk and honey. The maid found him when she came in the morning. He was 86 years old.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <div class="container">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Nikola Tesla Series &mdash; Volume 2 of 4 &nbsp;|&nbsp; <a href="1-ac.html">&larr; Vol. 1: The Work</a> &nbsp;&nbsp; <a href="3-legacy.html">Vol. 3: Legacy &rarr;</a></p>
+    <p style="margin-top:0.5rem; font-size:0.55rem; opacity:0.5;">Sources: W. Bernard Carlson, "Tesla: Inventor of the Electrical Age" (Princeton UP, 2013); Jill Jonnes, "Empires of Light" (2003); Colorado Springs Notes 1899–1900 (Nikola Tesla Museum, 1978).</p>
+  </div>
+</footer>
+
+</body>
+</html>

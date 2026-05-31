@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leibniz — Vol. 3: Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0a0a0f;
+    --card:#12121a;
+    --surface:#1a1a26;
+    --silver:#94a3b8;
+    --gold:#d97706;
+    --ink:#e8e8f0;
+    --dim:#6b7280;
+    --silvertint:rgba(148,163,184,0.08);
+    --goldtint:rgba(217,119,6,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background:var(--paper);
+    font-family:"Newsreader",Georgia,serif;line-height:1.7;}
+  ::selection{background:var(--gold);color:#000;}
+  .zine{max-width:1080px;margin:0 auto;padding:0 22px 80px;}
+
+  /* NAV */
+  .sitenav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.96);
+    backdrop-filter:blur(8px);border-bottom:1px solid rgba(148,163,184,0.18);
+    padding:0 22px;}
+  .sitenav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;
+    gap:0;height:46px;}
+  .sitenav a{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--dim);text-decoration:none;padding:0 14px;
+    height:100%;display:flex;align-items:center;border-right:1px solid rgba(148,163,184,0.12);
+    transition:color .15s,background .15s;}
+  .sitenav a:first-child{border-left:1px solid rgba(148,163,184,0.12);}
+  .sitenav a:hover{color:var(--gold);background:var(--goldtint);}
+  .sitenav a.active{color:var(--gold);border-bottom:2px solid var(--gold);}
+  .sitenav-series{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--dim);margin-right:auto;padding-right:20px;}
+
+  /* HERO */
+  .hero{padding:60px 0 48px;border-bottom:1px solid rgba(148,163,184,0.15);}
+  .hero-inner{display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+  .hero-text{flex:1;min-width:280px;}
+  .vol-label{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-family:"Cinzel";font-weight:800;
+    font-size:clamp(44px,9vw,90px);line-height:0.9;letter-spacing:0.01em;
+    text-transform:uppercase;margin:0 0 20px;color:var(--ink);}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero-dek{font-size:clamp(15px,2vw,18px);max-width:600px;color:var(--silver);
+    margin:0;line-height:1.65;}
+  .hero-dek b{color:var(--ink);font-weight:500;}
+  .hero-art{flex:0 0 auto;}
+
+  /* Binary counter animation (final vol — full 0→15 running) */
+  @keyframes glowpulse{
+    0%,100%{filter:drop-shadow(0 0 3px rgba(217,119,6,.3));opacity:.6;}
+    50%{filter:drop-shadow(0 0 14px rgba(217,119,6,.9));opacity:1;}
+  }
+  @keyframes riseIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .legacy-bit{animation:glowpulse 2s ease-in-out infinite;}
+  .legacy-bit:nth-child(2){animation-delay:.5s;}
+  .legacy-bit:nth-child(3){animation-delay:1s;}
+  .legacy-bit:nth-child(4){animation-delay:1.5s;}
+  .chain-line{animation:riseIn 1s ease both;}
+  .chain-line:nth-child(2){animation-delay:.3s;}
+  .chain-line:nth-child(3){animation-delay:.6s;}
+  .chain-line:nth-child(4){animation-delay:.9s;}
+  .chain-line:nth-child(5){animation-delay:1.2s;}
+  @media(prefers-reduced-motion:reduce){
+    .legacy-bit,.chain-line{animation:none;opacity:1;}
+  }
+
+  /* KICK / BAND */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--silver);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--silver);
+    color:#0a0a0f;padding:5px 14px;margin:36px 0 14px;}
+  .band.gold{background:var(--gold);color:#000;}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid rgba(148,163,184,0.22);background:var(--card);
+    padding:16px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--silver);}
+  .card.gold:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 0 8px;letter-spacing:0.02em;color:var(--ink);}
+  .card p{font-size:14px;margin:0;color:var(--silver);line-height:1.55;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(148,163,184,0.3);
+    color:var(--dim);padding:2px 7px;margin-top:9px;}
+  .card .tag.gold{border-color:rgba(217,119,6,0.4);color:var(--gold);}
+
+  /* PROSE */
+  .prose{max-width:720px;}
+  .prose p{font-size:16px;margin:0 0 18px;color:var(--silver);line-height:1.75;}
+  .prose p strong{color:var(--ink);font-weight:500;}
+  .prose p em{color:var(--gold);font-style:italic;}
+  .prose blockquote{border-left:3px solid var(--gold);margin:24px 0;
+    padding:12px 20px;background:var(--goldtint);}
+  .prose blockquote p{margin:0;font-style:italic;font-size:17px;color:var(--ink);}
+  .prose blockquote cite{display:block;font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:8px;}
+
+  /* BLOCK */
+  .block{border:1px solid rgba(148,163,184,0.2);background:var(--surface);
+    padding:20px 22px;margin-top:6px;}
+  .block.gold{border-color:rgba(217,119,6,0.3);background:var(--goldtint);}
+
+  /* CHAIN TABLE — the intellectual descent */
+  .chain{list-style:none;padding:0;margin:0;position:relative;}
+  .chain::before{content:'';position:absolute;left:20px;top:12px;bottom:12px;
+    width:2px;background:linear-gradient(to bottom,rgba(217,119,6,.6),rgba(148,163,184,.2));}
+  .chain-item{position:relative;padding:16px 0 16px 56px;
+    border-bottom:1px solid rgba(148,163,184,0.08);}
+  .chain-item:last-child{border-bottom:none;}
+  .chain-item::before{content:'';position:absolute;left:14px;top:24px;
+    width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);
+    background:var(--paper);}
+  .chain-item .ci-who{font-family:"Cinzel";font-weight:700;font-size:16px;
+    color:var(--gold);margin-bottom:3px;}
+  .chain-item .ci-when{font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+  .chain-item .ci-what{font-size:14.5px;color:var(--silver);line-height:1.65;}
+  .chain-item .ci-what strong{color:var(--ink);}
+  .chain-item .ci-leibniz{font-family:"Space Mono",monospace;font-size:11px;
+    color:rgba(217,119,6,.7);margin-top:6px;line-height:1.5;}
+
+  /* SCORE COMPARISON */
+  .scorebox{display:grid;grid-template-columns:1fr 1fr;gap:1px;
+    background:rgba(148,163,184,0.15);border:1px solid rgba(148,163,184,0.15);}
+  .scorecol{background:var(--card);padding:20px 22px;}
+  .scorecol h4{font-family:"Cinzel";font-weight:700;font-size:16px;letter-spacing:0.04em;
+    margin:0 0 14px;color:var(--ink);}
+  .scorecol ul{list-style:none;padding:0;margin:0;}
+  .scorecol ul li{font-size:14px;color:var(--silver);padding:6px 0;
+    border-bottom:1px solid rgba(148,163,184,0.08);line-height:1.5;}
+  .scorecol ul li:last-child{border-bottom:none;}
+  .scorecol ul li::before{content:'→ ';color:var(--gold);font-family:"Space Mono",monospace;
+    font-size:12px;}
+  @media(max-width:560px){.scorebox{grid-template-columns:1fr;}}
+
+  /* FINAL QUOTE */
+  .finale{margin-top:54px;padding:36px 40px;border:1px solid rgba(217,119,6,.35);
+    background:var(--goldtint);text-align:center;}
+  .finale blockquote{margin:0;padding:0;border:none;background:none;}
+  .finale blockquote p{font-family:"Newsreader",Georgia,serif;font-style:italic;
+    font-size:clamp(18px,3vw,26px);color:var(--ink);line-height:1.5;margin:0 0 16px;}
+  .finale cite{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--gold);}
+
+  /* NUMBERS ROW */
+  .numrow{display:flex;flex-wrap:wrap;gap:0;border:1px solid rgba(148,163,184,0.2);}
+  .numcell{flex:1;min-width:140px;padding:18px 20px;
+    border-right:1px solid rgba(148,163,184,0.18);}
+  .numcell:last-child{border-right:none;}
+  .nc-label{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.15em;
+    text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+  .nc-val{font-family:"Cinzel";font-weight:800;font-size:28px;color:var(--gold);
+    line-height:1;}
+  .nc-sub{font-size:12.5px;color:var(--silver);margin-top:5px;line-height:1.5;}
+
+  /* COLOPHON */
+  .colophon{margin-top:70px;padding-top:28px;border-top:1px solid rgba(148,163,184,0.2);
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.08em;
+    color:var(--dim);line-height:1.8;}
+  .colophon a{color:var(--silver);text-decoration:none;}
+  .colophon a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Series navigation">
+  <div class="sitenav-inner">
+    <span class="sitenav-series">Leibniz</span>
+    <a href="0-who.html">Vol. 0 — The Man</a>
+    <a href="1-calculus.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<div class="zine">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="vol-label">Vol. 3 / 3 &nbsp;·&nbsp; Gottfried Wilhelm Leibniz</div>
+        <h1>The <em>Legacy</em></h1>
+        <p class="hero-dek">
+          His notation won. His binary won. His dream of a machine that reasons
+          is running on every device on earth. <b>He was buried without ceremony
+          and became the architect of the modern world.</b>
+        </p>
+      </div>
+      <div class="hero-art">
+        <!-- Binary counter running faster in the legacy volume -->
+        <svg viewBox="0 0 220 200" width="220" height="200"
+             aria-label="Binary counter representing Leibniz legacy in computing" role="img">
+          <defs>
+            <filter id="glow3">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="220" height="200" fill="none"
+                stroke="rgba(148,163,184,0.08)" stroke-width="1"/>
+
+          <!-- Chain of inheritance: Leibniz → Boole → Turing → Computer -->
+          <line x1="50" y1="36" x2="50" y2="170"
+                stroke="rgba(217,119,6,0.35)" stroke-width="1.5"
+                stroke-dasharray="4,3"/>
+
+          <!-- Nodes -->
+          <circle class="chain-line" cx="50" cy="42" r="6" fill="#d97706"
+                  filter="url(#glow3)"/>
+          <circle class="chain-line" cx="50" cy="82" r="6" fill="none"
+                  stroke="#d97706" stroke-width="2"/>
+          <circle class="chain-line" cx="50" cy="122" r="6" fill="none"
+                  stroke="#d97706" stroke-width="2"/>
+          <circle class="chain-line" cx="50" cy="162" r="6" fill="none"
+                  stroke="#94a3b8" stroke-width="2"/>
+
+          <!-- Labels -->
+          <text class="chain-line" x="68" y="46" font-family="'Cinzel'" font-weight="700"
+                font-size="12" fill="#d97706">LEIBNIZ</text>
+          <text x="68" y="57" font-family="'Space Mono',monospace"
+                font-size="8" fill="rgba(148,163,184,0.5)">1703 — Binary</text>
+
+          <text class="chain-line" x="68" y="86" font-family="'Cinzel'" font-weight="700"
+                font-size="12" fill="#d97706">BOOLE</text>
+          <text x="68" y="97" font-family="'Space Mono',monospace"
+                font-size="8" fill="rgba(148,163,184,0.5)">1854 — Logic</text>
+
+          <text class="chain-line" x="68" y="126" font-family="'Cinzel'" font-weight="700"
+                font-size="12" fill="#d97706">TURING</text>
+          <text x="68" y="137" font-family="'Space Mono',monospace"
+                font-size="8" fill="rgba(148,163,184,0.5)">1936 — Computable</text>
+
+          <text class="chain-line" x="68" y="166" font-family="'Cinzel'" font-weight="700"
+                font-size="12" fill="#94a3b8">THE MACHINE</text>
+          <text x="68" y="177" font-family="'Space Mono',monospace"
+                font-size="8" fill="rgba(148,163,184,0.5)">1945 — Running</text>
+
+          <!-- Binary digits floating -->
+          <text class="legacy-bit" x="18" y="56" font-family="'Space Mono',monospace"
+                font-size="11" fill="#d97706" filter="url(#glow3)">1</text>
+          <text class="legacy-bit" x="18" y="96" font-family="'Space Mono',monospace"
+                font-size="11" fill="#d97706" filter="url(#glow3)">0</text>
+          <text class="legacy-bit" x="18" y="136" font-family="'Space Mono',monospace"
+                font-size="11" fill="#d97706" filter="url(#glow3)">1</text>
+          <text class="legacy-bit" x="18" y="176" font-family="'Space Mono',monospace"
+                font-size="11" fill="#94a3b8" filter="url(#glow3)">1</text>
+
+          <!-- Top label -->
+          <text x="110" y="20" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="8.5" letter-spacing="3" fill="rgba(148,163,184,0.4)">LINEAGE</text>
+
+          <!-- Corner marks -->
+          <polyline points="4,4 4,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,4 18,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 202,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 216,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 4,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 18,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 202,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 216,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- NUMBERS AT A GLANCE -->
+  <div class="band gold" style="margin-top:44px;">What Leibniz Left</div>
+  <div class="numrow">
+    <div class="numcell">
+      <div class="nc-label">Calculus notation</div>
+      <div class="nc-val">100%</div>
+      <div class="nc-sub">Every calculus textbook on earth uses Leibniz's ∫ and dy/dx</div>
+    </div>
+    <div class="numcell">
+      <div class="nc-label">Binary arithmetic</div>
+      <div class="nc-val">0 &amp; 1</div>
+      <div class="nc-sub">The operating language of every digital device ever built</div>
+    </div>
+    <div class="numcell">
+      <div class="nc-label">Years notation took to win</div>
+      <div class="nc-val">~100</div>
+      <div class="nc-sub">After Leibniz's death, British math stagnated using Newton's dots</div>
+    </div>
+    <div class="numcell">
+      <div class="nc-label">Unpublished manuscripts</div>
+      <div class="nc-val">40K+</div>
+      <div class="nc-sub">Pages in the Hanover Archive, still not fully published</div>
+    </div>
+    <div class="numcell">
+      <div class="nc-label">Years grave unmarked</div>
+      <div class="nc-val">50</div>
+      <div class="nc-sub">The Neustädter Hof- und Stadtkirche finally added a marker in 1790</div>
+    </div>
+  </div>
+
+  <!-- CALCULUS NOTATION: WHY IT WON -->
+  <div class="band" style="margin-top:44px;">The Notation Wars: Why Leibniz Won</div>
+  <div class="prose">
+    <p>
+      When Leibniz died in 1716, the calculus dispute was not yet settled. British mathematicians, loyal to Newton and to Newton's dot notation, refused to use Leibniz's dy/dx. Continental mathematicians — the Bernoullis, Euler, d'Alembert, Lagrange — used Leibniz's notation exclusively, because it worked better.
+    </p>
+    <p>
+      The difference was not merely aesthetic. <strong>Leibniz's notation is compositional</strong>: it carries information about what variables are involved, what is being differentiated with respect to what. The chain rule in Leibniz notation reads as a fraction cancellation: dy/du · du/dx = dy/dx. It's not rigorously a fraction, but it behaves like one, and this behavior is exactly right. British mathematicians using Newton's ẏ notation had to keep track of what each dot meant verbally, separately, outside the notation.
+    </p>
+    <p>
+      For about a century after Newton's and Leibniz's deaths (roughly 1720–1820), <strong>British mathematics fell behind the continent</strong>. The great advances in calculus, differential equations, and mathematical physics came from France, Switzerland, and Germany — from Euler, Lagrange, Laplace, and Cauchy — all working in Leibniz's notation.
+    </p>
+    <p>
+      By the early nineteenth century the situation had become embarrassing. In 1812, Cambridge undergraduate students Charles Babbage, John Herschel, and George Peacock founded the <strong>Analytical Society</strong>, explicitly dedicated to introducing Leibniz's <em>d-ism</em> to replace Newton's <em>dot-age</em>. They succeeded. By 1820 Cambridge had switched to Leibniz notation. The switch was over.
+    </p>
+    <p>
+      Newton had priority of invention. Leibniz won the notation. And notation, in mathematics, is everything: it shapes thought, enables discovery, determines what can be said clearly and what must be said clumsily. Leibniz understood this. He spent years on notation, revising, testing, thinking about what symbols would make mathematics most powerful.
+    </p>
+  </div>
+
+  <div class="scorebox">
+    <div class="scorecol">
+      <h4>Newton's Notation (Dots)</h4>
+      <ul>
+        <li>ẋ, ẍ — velocity, acceleration</li>
+        <li>Still used in classical mechanics and engineering</li>
+        <li>Opaque: doesn't show the variables explicitly</li>
+        <li>Cannot be extended to partial derivatives cleanly</li>
+        <li>Chain rule requires verbal statement</li>
+        <li>British mathematics stagnated for ~100 years using it</li>
+      </ul>
+    </div>
+    <div class="scorecol">
+      <h4>Leibniz's Notation (d, ∫)</h4>
+      <ul>
+        <li>dy/dx, d²y/dx² — derivative, second derivative</li>
+        <li>Used in every calculus textbook on earth</li>
+        <li>Explicit: variables and operations stated in the symbol</li>
+        <li>Extends to ∂y/∂x for partial derivatives naturally</li>
+        <li>Chain rule: dy/du · du/dx = dy/dx (visually)</li>
+        <li>Enabled 18th-century mathematical revolution on the continent</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BINARY TO COMPUTING -->
+  <div class="band gold" style="margin-top:44px;">Binary: 1703 to Everywhere</div>
+  <div class="prose">
+    <p>
+      Leibniz published his binary arithmetic in 1703. He believed it was philosophically significant — a demonstration that all things resolved to 0 and 1, Being and Nothing, creation from the void. He tried to interest the Emperor of China with it, proposing that the I Ching's sixty-four hexagrams were binary combinations and therefore that Chinese and European thought shared a common mathematical foundation.
+    </p>
+    <p>
+      He did not know that binary would become the operating language of all modern computation. He could not have known — the concept of an electronic computer was more than two centuries away. But he did know that binary had a particular property decimal lacked: <strong>all operations in binary reduce to combinations of the simplest possible moves</strong>. Addition is just carrying 1s. Multiplication is shifting and adding. There is no simpler arithmetic.
+    </p>
+    <p>
+      <strong>John von Neumann</strong>, one of the architects of the modern computer, knew Leibniz's binary work. He cited it. He understood that the binary choice — 0 or 1, off or on, false or true — was the natural basis for the digital machines he was designing at Princeton in the 1940s.
+    </p>
+    <p>
+      The transistor implements binary: it is either on (1) or off (0). A modern CPU contains billions of transistors, all switching between 0 and 1 billions of times per second. Every file on every computer is a sequence of 0s and 1s. Every pixel of this page is encoded in binary. Leibniz's 1703 paper runs on every device that has ever run software.
+    </p>
+    <blockquote>
+      <p>"Binary arithmetic seems useless, but it will serve in the future for machines that do calculations by running, since it is in binary that its results can be expressed most easily."</p>
+      <cite>— Leibniz, letter to Duke Rudolf August, 1697</cite>
+    </blockquote>
+  </div>
+
+  <!-- THE INTELLECTUAL CHAIN -->
+  <div class="band">The Chain: Leibniz to the Computer</div>
+  <ul class="chain">
+    <li class="chain-item">
+      <div class="ci-who">Gottfried Wilhelm Leibniz</div>
+      <div class="ci-when">1646–1716 &nbsp;·&nbsp; Leipzig / Paris / Hanover</div>
+      <div class="ci-what">
+        <strong>Binary arithmetic (1703).</strong> <strong>Characteristica Universalis</strong> — the dream of a universal symbolic language that could settle all arguments by calculation. <em>"Calculemus"</em>. Also the first design for a general-purpose mechanical calculator performing all four operations.
+      </div>
+      <div class="ci-leibniz">Foundation: 0 and 1, and the dream of mechanical reasoning</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">George Boole</div>
+      <div class="ci-when">1815–1864 &nbsp;·&nbsp; Lincoln / Cork</div>
+      <div class="ci-what">
+        <strong><em>The Laws of Thought</em> (1854).</strong> Boolean algebra: a formal system for logical reasoning using symbols 0 and 1 and operations AND, OR, NOT. The first concrete realization of Leibniz's project in a specific domain. Boole knew of Leibniz's combinatorial logic and cited him as an inspiration.
+      </div>
+      <div class="ci-leibniz">Leibniz connection: Boole explicitly models his algebra on Leibniz's combinatorial calculus</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">Gottlob Frege</div>
+      <div class="ci-when">1848–1925 &nbsp;·&nbsp; Jena</div>
+      <div class="ci-what">
+        <strong><em>Begriffsschrift</em> — Concept Script (1879).</strong> Formal predicate logic: a complete notation for logical relationships that could express any mathematical argument. Frege dedicates his work to the project Leibniz envisioned. His preface explicitly names Leibniz's <em>Characteristica Universalis</em> as the motivation.
+      </div>
+      <div class="ci-leibniz">Leibniz connection: Frege names the Characteristica Universalis as his direct inspiration</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">Bertrand Russell &amp; Alfred North Whitehead</div>
+      <div class="ci-when">1872–1970; 1861–1947 &nbsp;·&nbsp; Cambridge</div>
+      <div class="ci-what">
+        <strong><em>Principia Mathematica</em> (1910–1913).</strong> The attempt to derive all of mathematics from logical axioms — the full implementation of Leibniz's dream for the domain of mathematics. It took three volumes and 362 pages to prove that 1 + 1 = 2. Leibniz would have approved of the ambition.
+      </div>
+      <div class="ci-leibniz">Russell also wrote a book on Leibniz's philosophy (1900), rating him among the greatest logicians before Frege</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">Kurt Gödel</div>
+      <div class="ci-when">1906–1978 &nbsp;·&nbsp; Vienna / Princeton</div>
+      <div class="ci-what">
+        <strong>Incompleteness Theorems (1931).</strong> Proved that any formal system powerful enough to express arithmetic contains true statements that cannot be proved within the system. The <em>Characteristica Universalis</em> cannot be completed — not because of a technical failure, but because of a fundamental limit. Leibniz's dream hits a wall. The wall is real.
+      </div>
+      <div class="ci-leibniz">Gödel's proof uses techniques Leibniz would have recognized: encoding statements as numbers, then reasoning about them arithmetically</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">Alan Turing</div>
+      <div class="ci-when">1912–1954 &nbsp;·&nbsp; Cambridge / Manchester</div>
+      <div class="ci-what">
+        <strong>"On Computable Numbers" (1936).</strong> The theoretical universal computer — a machine that can simulate any other machine that operates on symbols according to rules. Leibniz's <em>Calculemus</em> becomes a formal specification. Turing doesn't solve the <em>Entscheidungsproblem</em> (decision problem); he proves it unsolvable, and in doing so defines the computer.
+      </div>
+      <div class="ci-leibniz">The Turing machine is the direct theoretical heir of Leibniz's dream of mechanical reasoning</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">John von Neumann</div>
+      <div class="ci-when">1903–1957 &nbsp;·&nbsp; Budapest / Princeton</div>
+      <div class="ci-what">
+        <strong>First Draft of a Report on the EDVAC (1945).</strong> The architecture of the modern stored-program computer. Running on binary arithmetic (Leibniz, 1703). Executing Boolean logic (Boole, 1854). Von Neumann knew Leibniz's binary work and acknowledged it. The machine runs. The Calculemus calculates.
+      </div>
+      <div class="ci-leibniz">Von Neumann cited Leibniz's binary arithmetic explicitly in discussions of computer design</div>
+    </li>
+    <li class="chain-item">
+      <div class="ci-who">The Digital Computer</div>
+      <div class="ci-when">1945–present &nbsp;·&nbsp; Everywhere</div>
+      <div class="ci-what">
+        <strong>Every computer ever built.</strong> Runs on binary (Leibniz, 1703). Executes Boolean logic (Boole, 1854). Designed on Turing's theoretical framework (1936). Programmed with formal languages descended from Frege's predicate logic (1879). The <em>Characteristica Universalis</em> runs. Not completely — Gödel showed it cannot be complete. But it runs.
+      </div>
+      <div class="ci-leibniz">The computer is Leibniz's Calculemus, finally running. He is the silent architect of every digital calculation on earth.</div>
+    </li>
+  </ul>
+
+  <!-- THE CALCULUS WARS AFTERMATH -->
+  <div class="band" style="margin-top:44px;">The Calculus Wars: Aftermath</div>
+  <div class="prose">
+    <p>
+      The Newton-Leibniz priority dispute is the founding moment of the modern concept of intellectual ownership — the first great controversy about who discovered what first, carried out in the full glare of international correspondence and institutional investigation.
+    </p>
+    <p>
+      <strong>The modern historical consensus:</strong> Newton invented calculus first (c. 1666), using his method of fluxions. Leibniz invented it independently (1675–1676), using a completely different approach and notation. Both were genuine, original discoveries. Leibniz was not a plagiarist. The Royal Society's 1712 <em>Commercium Epistolicum</em> — which found against Leibniz — was not impartial; it was organized and largely written by Newton himself, who used his position as President to stack the investigating committee.
+    </p>
+    <p>
+      The poisoned fruit of this dispute: British mathematics spent roughly a century (1720–1820) isolated from the continental advances in calculus, differential equations, and mathematical physics, because British mathematicians refused to use Leibniz's notation out of loyalty to Newton. The calculus war cost Britain a century of mathematical progress.
+    </p>
+    <p>
+      When Cambridge finally adopted Leibniz notation in the 1820s, British mathematics rejoined the continental tradition and flourished again. The list of great nineteenth-century British mathematicians — Cayley, Sylvester, Hamilton, Maxwell, Boole — are products of the world after the switch.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card gold">
+      <h3>Newton: Priority of Invention</h3>
+      <p>Developed fluxional calculus c. 1666 in Cambridge during the plague years. First to the idea. Did not publish for two decades. His priority was real — and was used against Leibniz in a dispute Newton essentially organized himself.</p>
+      <span class="tag gold">1666</span>
+    </div>
+    <div class="card gold">
+      <h3>Leibniz: Priority of Publication</h3>
+      <p>Published first — <em>Nova Methodus</em> in 1684. The first public account of calculus in history. His notation — ∫, dy/dx — is what every mathematician uses. He lost the priority battle and won the notational war permanently.</p>
+      <span class="tag gold">1684</span>
+    </div>
+    <div class="card">
+      <h3>The British Century of Loss</h3>
+      <p>1720–1820: Continental mathematicians advance calculus, differential equations, and mechanics rapidly using Leibniz notation. British mathematicians, using Newton's dot notation, fall behind. 100 years of relative stagnation, reversed only when Cambridge adopts Leibniz notation.</p>
+      <span class="tag">Cost of Loyalty</span>
+    </div>
+    <div class="card">
+      <h3>Modern Verdict</h3>
+      <p>Independent co-discovery. Newton first in time; Leibniz first in print; Leibniz's notation universal. The Royal Society's investigation was compromised. There is no evidence of plagiarism. The dispute was not about mathematics — it was about national pride and personal honor.</p>
+      <span class="tag">Historiography</span>
+    </div>
+  </div>
+
+  <!-- THE MONADOLOGIE LEGACY -->
+  <div class="band gold" style="margin-top:44px;">The Monadologie and Its Critics</div>
+  <div class="prose">
+    <p>
+      Leibniz argued in the <em>Monadologie</em> and the <em>Théodicée</em> that this is the best of all possible worlds. God, being omniscient and perfectly good, surveyed all possible configurations of the universe and chose the best one. The evil and suffering we observe are necessary features of the best achievable arrangement — because a world without them would be worse overall.
+    </p>
+    <p>
+      <strong>Voltaire's response</strong> was <em>Candide</em> (1759), written partly in reaction to the Lisbon earthquake of 1755, which killed between 30,000 and 60,000 people. Dr. Pangloss — Voltaire's Leibniz stand-in — continues to insist through disaster after disaster that "all is for the best in this best of all possible worlds." The satire is devastating and funny. It made Leibniz's optimism into a byword for willful blindness.
+    </p>
+    <p>
+      Leibniz's actual argument is more subtle than Voltaire's parody. He does not claim that every individual event is good. He claims that the total configuration of the world — including its free rational creatures, their freedom, their ability to choose good or evil — is the best overall arrangement possible given the constraints of logic and the goodness of God. This is a coherent, if disputable, theological position. Voltaire was not interested in disputing it carefully; he was interested in destroying it entertainingly.
+    </p>
+    <p>
+      The <em>Monadologie</em>'s actual influence on subsequent philosophy is significant. <strong>Kant</strong> studied Leibniz closely and engaged critically with his metaphysics throughout his career. <strong>Hegel</strong>'s notion of the Absolute unfolds some of Leibniz's ideas about the relationship between parts and wholes. <strong>Russell</strong>'s early philosophy of logical atomism is partly a response to Leibniz's monads. The monads are strange — but they are productive strangeness.
+    </p>
+  </div>
+
+  <!-- FINAL ACCOUNTING -->
+  <div class="band" style="margin-top:44px;">The Final Accounting</div>
+  <div class="block gold">
+    <p class="kick" style="margin:0 0 14px;">What Leibniz Got Right</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <ul style="list-style:none;padding:0;margin:0;font-size:14.5px;color:var(--ink);line-height:1.8;">
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">∫ and dy/dx notation — universal in all calculus</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Binary arithmetic — runs every computer</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Calculus independently — confirmed by historians</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">The dream of formal reasoning — realized by Boole→Turing</li>
+        <li style="padding:5px 0;">Principle of Sufficient Reason — still in philosophy</li>
+      </ul>
+      <ul style="list-style:none;padding:0;margin:0;font-size:14.5px;color:var(--ink);line-height:1.8;">
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Mechanical calculator design — used for 280+ years</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Berlin Academy of Sciences — still exists</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Principle of Identity of Indiscernibles — philosophical canon</li>
+        <li style="padding:5px 0;border-bottom:1px solid rgba(217,119,6,.2);">Pre-established harmony — addressed by every subsequent philosopher</li>
+        <li style="padding:5px 0;">The Republic of Letters — sustained European intellectual life</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="block" style="margin-top:14px;">
+    <p class="kick" style="margin:0 0 14px;">What Leibniz Got Wrong (or Left Unfinished)</p>
+    <ul style="list-style:none;padding:0;margin:0;font-size:14.5px;color:var(--silver);line-height:1.8;">
+      <li style="padding:5px 0;border-bottom:1px solid rgba(148,163,184,.1);">The Characteristica Universalis — not completable; Gödel proved why</li>
+      <li style="padding:5px 0;border-bottom:1px solid rgba(148,163,184,.1);">The House of Hanover genealogy — never finished, thirty years of work</li>
+      <li style="padding:5px 0;border-bottom:1px solid rgba(148,163,184,.1);">"Best of all possible worlds" — Voltaire made it a punchline; the argument has serious problems</li>
+      <li style="padding:5px 0;">The calculus priority dispute — he spent his last decade fighting it instead of doing mathematics</li>
+    </ul>
+  </div>
+
+  <!-- FINAL QUOTE -->
+  <div class="finale">
+    <blockquote>
+      <p>"It is unworthy of excellent men to lose hours like slaves in the labor of calculation which could safely be relegated to anyone else if machines were used."</p>
+      <cite>— Leibniz, 1685 &nbsp;·&nbsp; The machines are now built. They run on his mathematics.</cite>
+    </blockquote>
+  </div>
+
+  <!-- SERIES OVERVIEW CARDS -->
+  <div class="band" style="margin-top:52px;">The Four Volumes</div>
+  <div class="grid">
+    <div class="card gold">
+      <div class="num">0</div>
+      <h3>The Man</h3>
+      <p>Born Leipzig 1646. Father died when he was six. Self-taught from a library. Law degree at twenty. Court counselor and librarian to the House of Hanover for forty years. Died in an unmarked grave. His employer was busy being King of Great Britain.</p>
+      <a href="0-who.html" class="tag gold" style="display:inline-block;text-decoration:none;">Read Vol. 0 →</a>
+    </div>
+    <div class="card">
+      <div class="num">1</div>
+      <h3>The Work</h3>
+      <p>Calculus (1675–1684). Binary arithmetic (1703). The Stepped Reckoner (1694). The Monadologie (1714). The Characteristica Universalis (unfinished). Five inventions that shaped mathematics, philosophy, and the digital age.</p>
+      <a href="1-calculus.html" class="tag" style="display:inline-block;text-decoration:none;">Read Vol. 1 →</a>
+    </div>
+    <div class="card">
+      <div class="num">2</div>
+      <h3>His World</h3>
+      <p>The Thirty Years' War's aftermath. Louis XIV's France. The Republic of Letters. The Hanover court. The Newton priority dispute. Spinoza in Amsterdam. The War of Spanish Succession. The world that shaped him and the world he failed to change.</p>
+      <a href="2-world.html" class="tag" style="display:inline-block;text-decoration:none;">Read Vol. 2 →</a>
+    </div>
+    <div class="card gold">
+      <div class="num">3</div>
+      <h3>Legacy</h3>
+      <p>His notation won. His binary won. The calculus war cost Britain a century. Boole → Frege → Russell → Gödel → Turing → von Neumann → the computer. The Characteristica Universalis is running on every device on earth. You are reading it now.</p>
+      <a href="3-legacy.html" class="tag gold" style="display:inline-block;text-decoration:none;">You are here</a>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: <strong>David Lee Wise</strong> / ROOT0 / TriPod LLC</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a></div>
+    <div>Series: Gottfried Wilhelm Leibniz, 1646–1716 &nbsp;·&nbsp; Vol. 3: Legacy</div>
+    <div style="margin-top:10px;">
+      <a href="0-who.html">Vol. 0</a> &nbsp;·&nbsp;
+      <a href="1-calculus.html">Vol. 1</a> &nbsp;·&nbsp;
+      <a href="2-world.html">Vol. 2</a> &nbsp;·&nbsp;
+      <a href="3-legacy.html">Vol. 3</a>
+    </div>
+  </div>
+
+</div><!-- /zine -->
+
+<script>
+// Vol. 3 binary counter — runs on the legacy page, confirming the machine runs
+(function(){
+  // Find all text elements with id matching b*d pattern from vol 0 if present
+  // This page uses a different SVG structure; instead we animate opacity of the chain lines
+  // The SVG animation is handled by CSS in this volume
+})();
+</script>
+</body>
+</html>

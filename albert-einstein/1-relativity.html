@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einstein — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #090808;
+    --light: #f59e0b;
+    --blue: #3b82f6;
+    --text: #e8e0d0;
+    --muted: #8a7f72;
+    --border: #2a2520;
+    --card-bg: #110f0e;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,8,8,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--light);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--light); border-color: var(--light); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 50%, #060a18 0%, var(--paper) 75%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 820px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--light);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(59,130,246,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blue);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--light);
+    color: #0d0b08;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--light); font-style: italic; }
+  /* EQUATION BLOCK */
+  .equation-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+  }
+  .equation {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .equation-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+  /* FIELD EQUATION */
+  .field-eq-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--light);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+  }
+  .field-eq {
+    font-family: 'Newsreader', serif;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    font-weight: 600;
+    color: var(--light);
+    letter-spacing: 0.03em;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  /* MIRACLE YEAR CARDS */
+  .miracle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .miracle-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .miracle-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--light);
+  }
+  .miracle-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--light);
+  }
+  .miracle-card .date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--blue);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .miracle-card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+  .miracle-card .journal {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .miracle-card p { font-size: 0.9rem; margin: 0; opacity: 0.85; }
+  /* CONSEQUENCE CARDS */
+  .consequence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .consequence-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .consequence-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--blue);
+  }
+  .consequence-card .year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--light);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .consequence-card h5 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .consequence-card p { font-size: 0.85rem; margin: 0; opacity: 0.8; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--light);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DERIVATION TABLE */
+  .derivation {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  .derivation-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 1.25rem;
+  }
+  .deriv-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .deriv-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .deriv-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    min-width: 1.5rem;
+    padding-top: 0.2rem;
+  }
+  .deriv-math {
+    font-family: 'Newsreader', serif;
+    font-size: 1.2rem;
+    color: var(--light);
+    min-width: 180px;
+  }
+  .deriv-explain { font-size: 0.9rem; color: var(--text); opacity: 0.85; }
+  /* TERM GLOSSARY */
+  .glossary { margin-top: 1.5rem; }
+  .glossary-item {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .glossary-term {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .glossary-def { font-size: 0.95rem; color: var(--text); opacity: 0.85; }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: var(--light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--light); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Einstein</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-relativity.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Gravitational Lensing Arc -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glowB" cx="50%" cy="50%" r="40%">
+        <stop offset="0%" stop-color="#1e3a6e" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#090808" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="massGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+        <stop offset="60%" stop-color="#b45309" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#090808" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="gblur">
+        <feGaussianBlur stdDeviation="3"/>
+      </filter>
+      <filter id="gblur2">
+        <feGaussianBlur stdDeviation="8"/>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#glowB)"/>
+    <!-- Background grid -->
+    <g stroke="#3b82f6" stroke-width="0.5" fill="none" opacity="0.3">
+      <line x1="0" y1="100" x2="900" y2="100"/>
+      <line x1="0" y1="180" x2="900" y2="180"/>
+      <line x1="0" y1="260" x2="900" y2="260"/>
+      <line x1="0" y1="340" x2="900" y2="340"/>
+      <line x1="0" y1="420" x2="900" y2="420"/>
+      <line x1="150" y1="0" x2="150" y2="520"/>
+      <line x1="300" y1="0" x2="300" y2="520"/>
+      <line x1="450" y1="0" x2="450" y2="520"/>
+      <line x1="600" y1="0" x2="600" y2="520"/>
+      <line x1="750" y1="0" x2="750" y2="520"/>
+    </g>
+    <!-- Lensing arcs — animated -->
+    <!-- Upper arc -->
+    <path fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.85">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+        values="M 180,230 Q 350,100 450,100 Q 550,100 720,230;
+                M 180,230 Q 350,88 450,85 Q 550,88 720,230;
+                M 180,230 Q 350,100 450,100 Q 550,100 720,230"/>
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="6s" repeatCount="indefinite"/>
+    </path>
+    <!-- Lower arc -->
+    <path fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.85">
+      <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+        values="M 180,290 Q 350,420 450,420 Q 550,420 720,290;
+                M 180,290 Q 350,432 450,435 Q 550,432 720,290;
+                M 180,290 Q 350,420 450,420 Q 550,420 720,290"/>
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="6s" repeatCount="indefinite"/>
+    </path>
+    <!-- Einstein ring (full circle, faint) -->
+    <circle cx="450" cy="260" r="138" fill="none" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.35">
+      <animateTransform attributeName="transform" type="rotate" from="0 450 260" to="360 450 260" dur="30s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Central mass glow -->
+    <circle cx="450" cy="260" r="60" fill="url(#massGlow)" filter="url(#gblur2)">
+      <animate attributeName="r" values="55;65;55" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <!-- Central mass body -->
+    <circle cx="450" cy="260" r="22" fill="#1a0d02" stroke="#f59e0b" stroke-width="1.5" opacity="0.95">
+      <animate attributeName="r" values="20;24;20" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <!-- Light ray left -->
+    <line x1="0" y1="260" x2="388" y2="260" stroke="#f59e0b" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,6"/>
+    <!-- Light ray right -->
+    <line x1="512" y1="260" x2="900" y2="260" stroke="#f59e0b" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,6"/>
+    <!-- Photon dot traversing upper arc -->
+    <circle r="4" fill="#f59e0b" opacity="0.9">
+      <animateMotion dur="6s" repeatCount="indefinite">
+        <mpath href="#photon-path"/>
+      </animateMotion>
+    </circle>
+    <path id="photon-path" d="M180,230 Q350,95 450,92 Q550,95 720,230" fill="none" visibility="hidden"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Albert Einstein · The Work · Volume One</span>
+    <h1 class="hero-title">The Physics</h1>
+    <p class="hero-subtitle">Special Relativity · General Relativity · Quantum Theory · The Proof of Atoms</p>
+    <p class="hero-lead">Four papers. One year. The complete restructuring of how the universe works — written at a wooden desk in a Swiss patent office, after the children were asleep.</p>
+  </div>
+</div>
+
+<div class="band">Photoelectric Effect · Brownian Motion · Special Relativity · E=mc² · General Relativity · Gravitational Waves</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">Papers 1905</span></div>
+    <div class="stat"><span class="stat-num">1905</span><span class="stat-label">Special Relativity</span></div>
+    <div class="stat"><span class="stat-num">1915</span><span class="stat-label">General Relativity</span></div>
+    <div class="stat"><span class="stat-num">1919</span><span class="stat-label">Confirmed: Lensing</span></div>
+    <div class="stat"><span class="stat-num">1921</span><span class="stat-label">Nobel Prize</span></div>
+    <div class="stat"><span class="stat-num">2015</span><span class="stat-label">LIGO: Grav. Waves</span></div>
+  </div>
+
+  <!-- THE FOUR MIRACLE-YEAR PAPERS -->
+  <section id="miracle">
+    <span class="section-label">I — Annus Mirabilis</span>
+    <h2>The Four Papers of 1905</h2>
+    <p>In 1905, working without institutional support, laboratory, or collaborators, Einstein published four papers that each resolved a fundamental crisis in physics. The journal <em>Annalen der Physik</em> received the first in March and the last in September. The intellectual distance covered in seven months had taken the entire physics community a generation to approach.</p>
+
+    <div class="miracle-grid">
+      <div class="miracle-card">
+        <span class="date">March 18, 1905</span>
+        <h4>On a Heuristic Point of View Concerning the Production and Transformation of Light</h4>
+        <span class="journal">Annalen der Physik, 17 — Photoelectric Effect</span>
+        <p>Light is not a continuous wave — it travels as discrete packets of energy. A single photon of sufficient frequency ejects an electron; below that threshold, no intensity of light suffices. Explained the photoelectric effect. Launched quantum mechanics. <strong>Won the 1921 Nobel Prize.</strong></p>
+      </div>
+      <div class="miracle-card">
+        <span class="date">May 11, 1905</span>
+        <h4>On the Motion of Small Particles Suspended in a Stationary Liquid</h4>
+        <span class="journal">Annalen der Physik, 17 — Brownian Motion</span>
+        <p>The random jittering of pollen grains in water — observed by Robert Brown in 1827 — is caused by statistical collisions with individual molecules. The quantitative prediction matched observation precisely. This paper put to rest the last serious scientific denial: <strong>atoms are real.</strong></p>
+      </div>
+      <div class="miracle-card">
+        <span class="date">June 30, 1905</span>
+        <h4>On the Electrodynamics of Moving Bodies</h4>
+        <span class="journal">Annalen der Physik, 17 — Special Relativity</span>
+        <p>There is no privileged reference frame. The laws of physics are identical for all observers moving at constant velocity. The speed of light is the same for every observer, regardless of the motion of the source. Time is not universal — it dilates. Length is not absolute — it contracts. <strong>Space and time are one fabric.</strong></p>
+      </div>
+      <div class="miracle-card">
+        <span class="date">September 27, 1905</span>
+        <h4>Does the Inertia of a Body Depend Upon Its Energy Content?</h4>
+        <span class="journal">Annalen der Physik, 18 — Mass-Energy Equivalence</span>
+        <p>A three-page follow-on to the June paper. If a body emits energy as radiation, its mass decreases by that energy divided by c². Therefore: <strong>E = mc².</strong> Mass and energy are two forms of the same thing. A gram of matter contains ninety trillion joules.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIAL RELATIVITY -->
+  <section id="special">
+    <span class="section-label">II — The June Paper</span>
+    <h2>Special Relativity</h2>
+    <p>The core problem Einstein addressed was a contradiction. Maxwell's equations for electromagnetism predicted that light travels at a fixed speed — roughly 300,000 km/s. But Newtonian mechanics required that speeds add. If you fire a cannon from a moving train, the cannonball travels faster relative to the ground than if the train were stationary. So what happens when you shine a light from a moving train? Does light add velocities?</p>
+    <p>The Michelson-Morley experiment of 1887 had already shown, to general consternation, that the answer was no — light's speed appeared constant regardless of the motion of the Earth through the proposed "luminiferous aether." Physicists had spent eighteen years trying to explain this away. Einstein dissolved the problem by accepting it as a fundamental fact and following the consequences ruthlessly.</p>
+
+    <h3>The Two Postulates</h3>
+    <p><strong>Postulate 1:</strong> The laws of physics are the same in all inertial (non-accelerating) reference frames. No experiment can distinguish between being at rest and moving at constant velocity.</p>
+    <p><strong>Postulate 2:</strong> The speed of light in a vacuum is the same for all observers, regardless of the motion of the light source or the observer.</p>
+    <p>From these two postulates — and nothing else — Einstein derived the entire structure of Special Relativity. The mathematics required was not advanced: Lorentz transformations, already known. What Einstein supplied was the physical interpretation, and the courage to take that interpretation seriously.</p>
+
+    <h3>Time Dilation</h3>
+    <p>If the speed of light is constant for all observers, and velocity = distance / time, then when an observer in motion measures the same light pulse as an observer at rest, either their distances or their times must differ. The derivation shows: <strong>moving clocks run slow.</strong> A clock on a spacecraft moving at 0.87c (87% the speed of light) ticks at half the rate of a stationary clock. This is not an illusion, not a measurement artifact — it is a physical fact confirmed by atomic clocks on aircraft, by the measured half-lives of muons in cosmic rays, and by GPS satellites every second of every day.</p>
+
+    <div class="equation-block">
+      <span class="equation">t' = t / √(1 − v²/c²)</span>
+      <div class="equation-label">Time Dilation — t' is the dilated time, t the proper time, v the relative velocity, c the speed of light</div>
+    </div>
+
+    <h3>Length Contraction</h3>
+    <p>An object in motion along the direction of travel contracts in length as measured by a stationary observer. The object itself does not "feel" compressed — in its own reference frame, it is unchanged. But a ruler moving at relativistic speed is genuinely shorter, from the perspective of the observer it passes.</p>
+
+    <div class="equation-block">
+      <span class="equation">L' = L₀ √(1 − v²/c²)</span>
+      <div class="equation-label">Length Contraction — L' is the contracted length, L₀ the rest length</div>
+    </div>
+
+    <h3>The Famous Equation: A Derivation Sketch</h3>
+    <p>The mass-energy relation follows directly from the June paper's mechanics. Einstein considered an object emitting two light pulses in opposite directions with equal energy. He computed the object's kinetic energy in two reference frames — one at rest, one moving — and compared. The difference was a term: ½(E/c²)v², which looks exactly like ½mv² — kinetic energy — with m replaced by E/c². Therefore the emitted energy must carry mass E/c², and by extension, any energy E corresponds to a mass m = E/c², or equivalently:</p>
+
+    <div class="equation-block" style="border-left-color: var(--light);">
+      <span class="equation" style="font-size: clamp(3rem,8vw,5rem); color: var(--light);">E = mc²</span>
+      <div class="equation-label">Mass-Energy Equivalence · Einstein, September 1905 · Annalen der Physik vol. 18</div>
+    </div>
+
+    <div class="derivation">
+      <div class="derivation-title">Derivation Sketch — E = mc²</div>
+      <div class="deriv-step">
+        <span class="deriv-num">1.</span>
+        <span class="deriv-math">E = hf</span>
+        <span class="deriv-explain">A photon's energy is proportional to its frequency f, where h is Planck's constant (from the March paper).</span>
+      </div>
+      <div class="deriv-step">
+        <span class="deriv-num">2.</span>
+        <span class="deriv-math">p = E/c</span>
+        <span class="deriv-explain">A photon carries momentum p = E/c (from Maxwell's electromagnetism — even massless light has momentum).</span>
+      </div>
+      <div class="deriv-step">
+        <span class="deriv-num">3.</span>
+        <span class="deriv-math">KE = ½mv²</span>
+        <span class="deriv-explain">The low-velocity limit of relativistic kinetic energy — the familiar Newtonian expression, valid as v ≪ c.</span>
+      </div>
+      <div class="deriv-step">
+        <span class="deriv-num">4.</span>
+        <span class="deriv-math">E² = (pc)² + (mc²)²</span>
+        <span class="deriv-explain">The full relativistic energy-momentum relation. For a photon (m=0), E = pc. For a stationary object (p=0), E = mc².</span>
+      </div>
+      <div class="deriv-step">
+        <span class="deriv-num">5.</span>
+        <span class="deriv-math" style="color: var(--light);">E = mc²</span>
+        <span class="deriv-explain">Setting p = 0 (object at rest), the energy-momentum relation reduces to E = mc². Rest mass is stored energy. The conversion factor is c², the square of the speed of light — roughly 9 × 10¹⁶ J/kg. One gram of matter contains the energy of a 20-kiloton nuclear explosion.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOELECTRIC EFFECT -->
+  <section id="photoelectric">
+    <span class="section-label">III — The March Paper</span>
+    <h2>The Photoelectric Effect — Why It Won the Nobel</h2>
+    <p>When ultraviolet light strikes a metal surface, electrons are ejected. This much was known by 1905. The puzzle was the behavior: <strong>the energy of the ejected electrons depended on the frequency of the light, not its intensity.</strong> Shine dim violet light on the metal and electrons come out. Shine brilliant red light and nothing happens at all — no matter how bright. Classical wave theory had no explanation. More light should mean more energy delivered to the metal; frequency should be irrelevant.</p>
+    <p>Einstein's solution was radical. Light, he proposed, is not a continuous wave. It arrives in discrete packets — quanta — each carrying energy proportional to its frequency: <strong>E = hf</strong>. A photon of ultraviolet light has enough energy to knock an electron loose from its metal binding. A photon of red light, regardless of how many there are, does not — because each individual photon is below the threshold energy. The intensity of red light just means more photons, each still below threshold.</p>
+
+    <div class="equation-block">
+      <span class="equation">E = hf</span>
+      <div class="equation-label">Photon Energy · E = energy of one photon · h = Planck's constant (6.626 × 10⁻³⁴ J·s) · f = frequency of light</div>
+    </div>
+
+    <p>This was a direct extension of Max Planck's 1900 paper, in which Planck had introduced quantized energy as a mathematical trick to solve the blackbody radiation problem. Einstein took Planck's mathematics seriously as physics. Light is not just sometimes quantized — it is always quantized. Photons are real. This is the paper the Nobel Committee eventually awarded, in 1921 — not the relativity papers, which they still considered controversial. The photoelectric effect was experimentally confirmed and useful: it underpins the photoelectric cells, solar panels, digital cameras, and every photosensor in the modern world.</p>
+
+    <div class="pull-quote">
+      <blockquote>"On the quantum theory of radiation and the constitution of radiation... I have thought a great deal about this... it seems to me that every emission and absorption of light occurs only in a quantum of energy hν."</blockquote>
+      <cite>— Einstein to Conrad Habicht, May 1905</cite>
+    </div>
+  </section>
+
+  <!-- BROWNIAN MOTION -->
+  <section id="brownian">
+    <span class="section-label">IV — The May Paper</span>
+    <h2>Brownian Motion — Proof That Atoms Exist</h2>
+    <p>In 1827, botanist Robert Brown watched pollen grains suspended in water under a microscope. They jiggled, ceaselessly and randomly. He ruled out biological motion, electrical currents, convection. The movement was unexplained for nearly eighty years. Various physicists had speculated it might be caused by the thermal motion of liquid molecules bombarding the pollen, but no one had produced a quantitative theory that could be tested.</p>
+    <p>Einstein derived the statistics of Brownian motion from first principles, treating the liquid as consisting of discrete molecules, each moving with thermal kinetic energy. He predicted the exact statistical distribution of displacements over time — a formula that gave the root-mean-square displacement of a particle as a function of time, temperature, viscosity, and particle size. He could not see atoms directly. He could predict exactly how their unseen collisions would move a visible grain.</p>
+
+    <div class="equation-block">
+      <span class="equation">⟨x²⟩ = 2Dt</span>
+      <div class="equation-label">Mean-square displacement · D = diffusion coefficient (depends on temperature, viscosity, particle size) · t = time elapsed</div>
+    </div>
+
+    <p>In 1908, Jean Perrin measured Brownian motion with precision and confirmed Einstein's prediction exactly. More importantly, Perrin used the data to calculate Avogadro's number — the number of atoms in a mole of substance — and obtained a value consistent with all other known methods. The holdout skeptics, including the influential German chemist Wilhelm Ostwald, conceded. Atoms were no longer a useful fiction. They were real. Einstein's paper had, indirectly, ended the last major scientific debate about the atomic theory of matter.</p>
+  </section>
+
+  <!-- GENERAL RELATIVITY -->
+  <section id="general">
+    <span class="section-label">V — The Decade of Work</span>
+    <h2>General Relativity — Gravity as Geometry</h2>
+    <p>Special Relativity handled observers moving at constant velocity. But what about acceleration? And what about gravity? Newton's law of gravitation was incompatible with Special Relativity — it assumed an instantaneous action at a distance, which would require forces to travel faster than light. Something had to give. Einstein spent ten years, from 1905 to 1915, finding out what.</p>
+    <p>The key insight came in 1907: <em>the equivalence principle.</em> A person in a closed room being accelerated upward at 9.8 m/s² cannot distinguish their situation from standing still in Earth's gravitational field. Gravity and acceleration are locally identical. This was not just a formal analogy — it was a physical identity. And it had a startling consequence: <strong>if acceleration bends the path of light (which it does, in an accelerating reference frame), then gravity must also bend the path of light.</strong></p>
+    <p>The mathematics required was not the algebra of Special Relativity. It was Riemannian geometry — the geometry of curved surfaces, developed by Bernhard Riemann in the 1850s for purely abstract reasons. Einstein had to learn it, did so with the help of his mathematician friend Marcel Grossmann, and spent several agonizing years trying to make the physics fit the geometry without violating conservation laws. He arrived at the final, correct field equations in November 1915 — one week before David Hilbert, who had been pursuing a parallel mathematical path and came close to beating Einstein to his own theory.</p>
+
+    <div class="field-eq-block">
+      <span class="field-eq">G<sub>μν</sub> + Λg<sub>μν</sub> = (8πG/c⁴) T<sub>μν</sub></span>
+      <div class="equation-label">Einstein Field Equations of General Relativity · November 1915</div>
+    </div>
+
+    <div class="glossary">
+      <div class="glossary-item">
+        <span class="glossary-term">G<sub>μν</sub></span>
+        <span class="glossary-def">The Einstein tensor — encodes the curvature of spacetime. It is a compact notation for ten coupled partial differential equations describing how spacetime bends.</span>
+      </div>
+      <div class="glossary-item">
+        <span class="glossary-term">Λg<sub>μν</sub></span>
+        <span class="glossary-def">The cosmological constant term. Einstein added Λ (lambda) in 1917 to allow a static universe. He later called it his greatest blunder. It turned out to describe dark energy — the observed accelerating expansion of the universe.</span>
+      </div>
+      <div class="glossary-item">
+        <span class="glossary-term">(8πG/c⁴)</span>
+        <span class="glossary-def">The coupling constant relating matter-energy to curvature. G is Newton's gravitational constant; c is the speed of light. This constant is extraordinarily small — gravity is a very weak force — which is why spacetime curvature is only measurable near very massive objects.</span>
+      </div>
+      <div class="glossary-item">
+        <span class="glossary-term">T<sub>μν</sub></span>
+        <span class="glossary-def">The stress-energy tensor — encodes the distribution of mass, energy, momentum, and pressure at each point in spacetime. The matter and energy content of the universe. "Matter tells spacetime how to curve; spacetime tells matter how to move."</span>
+      </div>
+    </div>
+
+    <h3>What General Relativity Predicted</h3>
+    <p>The equations made predictions that Newton's theory could not and that no prior theory had imagined. Every one of them has been confirmed.</p>
+
+    <div class="consequence-grid">
+      <div class="consequence-card">
+        <span class="year">Predicted 1915 · Confirmed 1919</span>
+        <h5>Gravitational Lensing</h5>
+        <p>Massive objects bend the path of light. Eddington measured star positions during a solar eclipse and confirmed the bending exactly matched GR's prediction, not Newton's.</p>
+      </div>
+      <div class="consequence-card">
+        <span class="year">Predicted 1915 · Explained 1859</span>
+        <h5>Mercury's Perihelion Precession</h5>
+        <p>Mercury's orbit precesses 43 arc-seconds per century more than Newton's theory predicted. GR explains it exactly. This was the first confirmation of the theory.</p>
+      </div>
+      <div class="consequence-card">
+        <span class="year">Predicted 1916 · Confirmed 2015</span>
+        <h5>Gravitational Waves</h5>
+        <p>Accelerating masses create ripples in spacetime. LIGO detected the merger of two black holes 1.3 billion light-years away on September 14, 2015 — 60 years after Einstein's death.</p>
+      </div>
+      <div class="consequence-card">
+        <span class="year">Predicted 1916 · Term coined 1967</span>
+        <h5>Black Holes</h5>
+        <p>Sufficiently concentrated mass warps spacetime beyond escape velocity for light. The Event Horizon Telescope photographed the black hole M87* in 2019.</p>
+      </div>
+      <div class="consequence-card">
+        <span class="year">Predicted 1917 · Confirmed 1998</span>
+        <h5>Expanding (or Accelerating) Universe</h5>
+        <p>The field equations naturally predict a dynamic universe — expanding or contracting. The cosmological constant Λ governs this expansion. Confirmed by Hubble (1929) and supernova surveys (1998).</p>
+      </div>
+      <div class="consequence-card">
+        <span class="year">Predicted 1916 · Applied Daily</span>
+        <h5>Gravitational Time Dilation</h5>
+        <p>Clocks run slower in stronger gravitational fields. GPS satellites must account for this effect — along with SR time dilation — or navigation errors accumulate at 10 km/day.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUANTUM AND BEYOND -->
+  <section id="quantum">
+    <span class="section-label">VI — The Ambivalent Father</span>
+    <h2>Einstein and Quantum Mechanics</h2>
+    <p>It is one of the great ironies of scientific history. Einstein launched quantum mechanics with the 1905 photoelectric paper, contributed the laser principle (stimulated emission, 1917), and co-discovered Bose-Einstein statistics and Bose-Einstein condensates (1924–1925). And then he spent the last thirty years of his life trying to prove quantum mechanics was incomplete.</p>
+    <p>His objection was not to the mathematics but to the interpretation. The Copenhagen interpretation, championed by Niels Bohr, held that quantum mechanics described everything that could be known about a system — that the wave function was not a map of incomplete knowledge but a complete description of physical reality, in which properties like position and momentum do not exist until measured. Einstein found this philosophically intolerable. "God does not play dice," he said — meaning the universe must have definite, deterministic properties whether or not we observe them.</p>
+    <p>In 1935, with Boris Podolsky and Nathan Rosen, he published the EPR paper — arguing that quantum mechanics predicted "spooky action at a distance": measurements on entangled particles would appear to correlate instantaneously, regardless of separation. Einstein intended this as a proof of incompleteness. Instead, it turned out to be a correct prediction. John Bell formalized the test in 1964. Alain Aspect performed the experiment in 1982. The correlations are real. Quantum entanglement exists. Einstein was right about the phenomenon and wrong about its implication: nature is, in fact, nonlocal in exactly the way he found absurd. Quantum entanglement now underlies quantum cryptography, quantum computing, and quantum teleportation.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I am convinced God does not play dice with the universe. But it is possible that God is subtler than I imagine."</blockquote>
+      <cite>— Einstein, paraphrased from letters to Max Born, 1926–1944</cite>
+    </div>
+  </section>
+
+  <!-- UNIFIED FIELD THEORY -->
+  <section id="unified">
+    <span class="section-label">VII — The Last Quest</span>
+    <h2>The Unified Field Theory — The Road Not Finished</h2>
+    <p>From roughly 1925 until his death in 1955, Einstein devoted the largest part of his intellectual energy to a problem he never solved: the unification of general relativity and electromagnetism into a single geometric field theory. He believed — with a conviction that became increasingly isolated from the mainstream physics community — that the correct theory of nature must be continuous and deterministic, not statistical, and that quantum mechanics must emerge from a deeper classical structure.</p>
+    <p>He produced several approaches — the teleparallel theory, the non-symmetric unified field theory — none of which yielded the physics he sought. His Princeton colleagues, busy constructing quantum field theory, regarded his efforts with respectful frustration. He was the greatest physicist alive, spending his last decades on a program that most of his colleagues believed was philosophically motivated and technically unpromising. When he died, he left the last page of calculations on his hospital bedside table, still working.</p>
+    <p>The unification problem he identified remains unsolved. String theory, loop quantum gravity, and a dozen other approaches are the contemporary heirs to the question he refused to stop asking. The difficulty of the question does not diminish the asker. In choosing to die working on the hardest problem in physics, he behaved exactly as he always had.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Albert Einstein Series · Volume 1: The Work · albert-einstein/1-relativity.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

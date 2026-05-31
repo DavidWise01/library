@@ -337,6 +337,42 @@ const LIBRARY = [
   },
 
   {
+    slug: "gottfried-leibniz",
+    name: "Gottfried Leibniz",
+    era: "1646–1716",
+    eraSort: 1646,
+    place: "Leipzig · Paris · Hanover",
+    role: "Mathematician · Calculus Notation · Binary Arithmetic",
+    desc: "Invented the calculus notation every textbook still uses — ∫, dy/dx. Invented binary arithmetic in 1703, connected it to the I Ching, dreamed of a universal logical language. Died alone, unmourned, in an unmarked grave. His notation beat Newton's. His binary became every computer.",
+    color: "#94a3b8",
+    entry: "gottfried-leibniz/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"gottfried-leibniz/0-who.html" },
+      { n:"1", title:"The Calculus",        href:"gottfried-leibniz/1-calculus.html" },
+      { n:"2", title:"His World",           href:"gottfried-leibniz/2-world.html" },
+      { n:"3", title:"His Long Afterlife",  href:"gottfried-leibniz/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "charles-darwin",
+    name: "Charles Darwin",
+    era: "1809–1882",
+    eraSort: 1809,
+    place: "Shrewsbury · The Beagle · Down House",
+    role: "Naturalist · Evolution by Natural Selection",
+    desc: "Spent 5 years on HMS Beagle, 20 more years in silence at Down House before publishing On the Origin of Species (1859). Natural selection: variation exists, it's heritable, more are born than survive, advantageous traits spread. Four premises. All of biology follows. Buried next to Newton.",
+    color: "#16a34a",
+    entry: "charles-darwin/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"charles-darwin/0-who.html" },
+      { n:"1", title:"The Origin",         href:"charles-darwin/1-origin.html" },
+      { n:"2", title:"His World",          href:"charles-darwin/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"charles-darwin/3-legacy.html" },
+    ]
+  },
+
+  {
     slug: "george-boole",
     name: "George Boole",
     era: "1815–1864",
@@ -369,6 +405,60 @@ const LIBRARY = [
       { n:"1", title:"The Four Equations", href:"james-maxwell/1-equations.html" },
       { n:"2", title:"His World",          href:"james-maxwell/2-world.html" },
       { n:"3", title:"His Long Afterlife", href:"james-maxwell/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "nikola-tesla",
+    name: "Nikola Tesla",
+    era: "1856–1943",
+    eraSort: 1856,
+    place: "Smiljan · New York · Colorado Springs",
+    role: "Inventor · AC Motor · Radio · Rotating Magnetic Field",
+    desc: "Built the AC induction motor (1888) — the rotating magnetic field that powers every washing machine, fan, and industrial pump. The Niagara Falls AC power plant (1895). The Tesla coil. The War of Currents against Edison. Died alone in Room 3327 of the New Yorker Hotel. The global AC power grid is his.",
+    color: "#3b82f6",
+    entry: "nikola-tesla/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"nikola-tesla/0-who.html" },
+      { n:"1", title:"The AC System",      href:"nikola-tesla/1-ac.html" },
+      { n:"2", title:"His World",          href:"nikola-tesla/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"nikola-tesla/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "marie-curie",
+    name: "Marie Curie",
+    era: "1867–1934",
+    eraSort: 1867,
+    place: "Warsaw · Paris · Sorbonne",
+    role: "Physicist & Chemist · Radioactivity · Two Nobel Prizes",
+    desc: "Coined the word \"radioactivity.\" Discovered polonium and radium (1898). First person to win two Nobel Prizes. Her notebooks are still too radioactive to handle without lead gloves — stored in lead boxes in Paris. Drove mobile X-ray units to WWI front lines. Died of the radiation that made her famous.",
+    color: "#4ade80",
+    entry: "marie-curie/0-who.html",
+    works: [
+      { n:"0", title:"Who She Was",        href:"marie-curie/0-who.html" },
+      { n:"1", title:"The Radioactivity",  href:"marie-curie/1-radioactivity.html" },
+      { n:"2", title:"Her World",          href:"marie-curie/2-world.html" },
+      { n:"3", title:"Her Long Afterlife", href:"marie-curie/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "albert-einstein",
+    name: "Albert Einstein",
+    era: "1879–1955",
+    eraSort: 1879,
+    place: "Ulm · Bern · Berlin · Princeton",
+    role: "Physicist · Relativity · E=mc² · Photoelectric Effect",
+    desc: "Patent clerk third class. Published four papers in 1905: special relativity, E=mc², photoelectric effect (the one that won the Nobel), Brownian motion. General relativity 1915. GPS requires both relativistic corrections — without Einstein, it drifts 10km/day. LIGO confirmed gravitational waves in 2015, 60 years after his death.",
+    color: "#f59e0b",
+    entry: "albert-einstein/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"albert-einstein/0-who.html" },
+      { n:"1", title:"The Relativity",     href:"albert-einstein/1-relativity.html" },
+      { n:"2", title:"His World",          href:"albert-einstein/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"albert-einstein/3-legacy.html" },
     ]
   },
 
@@ -428,6 +518,24 @@ const LIBRARY = [
       { n:"1", title:"The Architecture",   href:"john-von-neumann/1-architecture.html" },
       { n:"2", title:"His World",          href:"john-von-neumann/2-world.html" },
       { n:"3", title:"His Long Afterlife", href:"john-von-neumann/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "grace-hopper",
+    name: "Grace Hopper",
+    era: "1906–1992",
+    eraSort: 1906,
+    place: "New York · Harvard · Navy",
+    role: "Rear Admiral · First Compiler · COBOL · The Bug",
+    desc: "Built the first compiler (A-0, 1952) — proved a computer could translate human-readable language into machine code. Co-created COBOL, which still runs ~$3 trillion/day in financial transactions. Found the first literal computer bug (a moth, Relay 70, September 9 1947). Handed out nanosecond wires: 11.8 inches — the distance light travels in one nanosecond.",
+    color: "#eab308",
+    entry: "grace-hopper/0-who.html",
+    works: [
+      { n:"0", title:"Who She Was",        href:"grace-hopper/0-who.html" },
+      { n:"1", title:"The Compiler",       href:"grace-hopper/1-compiler.html" },
+      { n:"2", title:"Her World",          href:"grace-hopper/2-world.html" },
+      { n:"3", title:"Her Long Afterlife", href:"grace-hopper/3-legacy.html" },
     ]
   },
 

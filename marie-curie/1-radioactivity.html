@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marie Curie — Vol. 1: The Work | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080d08;
+      --radium: #4ade80;
+      --violet: #a855f7;
+      --dim: #1a2a1a;
+      --mid: #2a3a2a;
+      --text: #d4e8d4;
+      --muted: #7a9a7a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* NAV */
+    nav.series-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #050a05ee; backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--radium);
+      display: flex; align-items: center;
+      padding: 0 1.5rem; height: 48px; overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--radium); white-space: nowrap;
+      margin-right: 1.5rem; opacity: 0.7;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); text-decoration: none;
+      padding: 0 1rem; height: 48px; display: flex; align-items: center;
+      border-right: 1px solid #1a2a1a; white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid #1a2a1a; }
+    nav.series-nav a:hover { color: var(--radium); background: #0d1a0d; }
+    nav.series-nav a.active { color: var(--radium); border-bottom: 2px solid var(--radium); }
+
+    /* HERO */
+    .hero {
+      position: relative; min-height: 520px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 4rem 2rem 3rem; overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 40%, #0d2a1090 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.decay-anim {
+      width: min(460px, 92vw); height: min(300px, 55vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 20px #4ade8055);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--radium); margin-bottom: 0.8rem; opacity: 0.8;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif; font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.1;
+      text-align: center; color: #fff;
+      text-shadow: 0 0 40px #4ade8044; margin-bottom: 0.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--radium); }
+    .hero-sub {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 1.15rem; color: var(--muted);
+      text-align: center; max-width: 560px; margin-top: 0.6rem;
+    }
+
+    /* LAYOUT */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff; margin-bottom: 1.2rem; line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 1.1rem; color: var(--radium);
+      margin-bottom: 0.7rem; margin-top: 2rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .kick {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted);
+    }
+    .band {
+      background: var(--radium); color: #080d08;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem; display: inline-block;
+    }
+
+    /* CARDS */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.2rem; margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim); border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s; cursor: default;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--radium); }
+    .card .card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--radium); margin-bottom: 0.5rem;
+    }
+    .card .card-date {
+      font-family: 'Cinzel', serif; font-size: 1.5rem;
+      font-weight: 700; color: #fff; line-height: 1; margin-bottom: 0.5rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;
+      color: var(--radium); margin-bottom: 0.4rem;
+    }
+    .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+
+    blockquote.pull {
+      border-left: 3px solid var(--radium);
+      padding: 1.2rem 1.5rem; margin: 2rem 0; background: #0d1a0d;
+    }
+    blockquote.pull p {
+      font-style: italic; font-size: 1.15rem;
+      color: #c8ddc8; margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted);
+    }
+
+    .highlight-box {
+      border: 1px solid var(--violet); background: #150a20;
+      padding: 1.4rem 1.5rem; margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--violet); margin-bottom: 0.6rem;
+    }
+
+    /* PROCESS DIAGRAM */
+    .process-steps {
+      display: flex; flex-direction: column; gap: 0;
+      margin: 2rem 0;
+    }
+    .process-step {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.2rem 1.3rem; background: var(--dim);
+      border: 1px solid var(--mid); border-top: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .process-step:first-child { border-top: 1px solid var(--mid); }
+    .process-step:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--radium); }
+    .process-step .step-num {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 1.8rem; color: var(--radium);
+      line-height: 1; min-width: 2rem; padding-top: 0.1rem;
+    }
+    .process-step .step-content {}
+    .process-step .step-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--muted); margin-bottom: 0.3rem;
+    }
+    .process-step .step-title {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 1rem; color: #fff; margin-bottom: 0.4rem;
+    }
+    .process-step p { font-size: 0.9rem; color: var(--text); margin-bottom: 0; }
+
+    .stat-row {
+      display: flex; flex-wrap: wrap; gap: 1px;
+      margin: 2rem 0; background: var(--mid); border: 1px solid var(--mid);
+    }
+    .stat-cell {
+      flex: 1; min-width: 130px; background: var(--dim);
+      padding: 1.2rem; text-align: center;
+    }
+    .stat-cell .stat-num {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 2rem; color: var(--radium); display: block; line-height: 1;
+    }
+    .stat-cell .stat-desc {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); display: block; margin-top: 0.4rem;
+    }
+
+    /* WWI SECTION */
+    .petites-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.2rem; margin: 1.8rem 0;
+    }
+    .petite-card {
+      background: var(--dim); border: 1px solid var(--mid);
+      padding: 1.2rem; text-align: center;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .petite-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--radium); }
+    .petite-card .pc-icon {
+      font-size: 2rem; line-height: 1; margin-bottom: 0.5rem;
+      filter: hue-rotate(90deg);
+    }
+    .petite-card .pc-num {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 1.8rem; color: var(--radium); line-height: 1.1;
+    }
+    .petite-card .pc-desc {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); margin-top: 0.3rem;
+    }
+
+    footer.colophon {
+      border-top: 1px solid var(--mid); padding: 2.5rem 1.5rem;
+      text-align: center; background: #050a05;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--muted); line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--radium); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block; border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem; margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      color: var(--muted); letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Marie Curie</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-radioactivity.html" class="active">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO with atomic decay SVG -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Radioactive decay diagram -->
+  <svg class="decay-anim" viewBox="0 0 460 295" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Background faint orbital rings -->
+    <ellipse cx="230" cy="148" rx="180" ry="120" stroke="#1a3a1a" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="230" cy="148" rx="130" ry="85" stroke="#1a3a1a" stroke-width="0.8" opacity="0.4"/>
+    <ellipse cx="230" cy="148" rx="75" ry="50" stroke="#2a4a2a" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Nucleus -->
+    <circle cx="230" cy="148" r="22" fill="#0d2a0d" stroke="#4ade80" stroke-width="1.5"/>
+    <circle cx="223" cy="143" r="5" fill="#4ade80" opacity="0.9"/>
+    <circle cx="233" cy="140" r="4.5" fill="#a855f7" opacity="0.8"/>
+    <circle cx="238" cy="150" r="5" fill="#4ade80" opacity="0.9"/>
+    <circle cx="225" cy="153" r="4.5" fill="#a855f7" opacity="0.8"/>
+    <circle cx="231" cy="148" r="3.5" fill="#4ade80" opacity="0.7"/>
+
+    <!-- Alpha particle emission (top-right) -->
+    <g>
+      <circle cx="230" cy="148" r="8" fill="#4ade80" opacity="0">
+        <animate attributeName="cx" values="230;350;400" dur="2.8s" repeatCount="indefinite" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="cy" values="148;80;50" dur="2.8s" repeatCount="indefinite" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" values="0;0.9;0" dur="2.8s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="8;5;3" dur="2.8s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Alpha trail arc -->
+      <path d="M 248 133 Q 310 95 365 60" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-dasharray="4 6" opacity="0.3"/>
+      <text x="370" y="55" fill="#4ade80" font-family="monospace" font-size="10" opacity="0.6">α</text>
+    </g>
+
+    <!-- Beta particle emission (bottom-right) -->
+    <g>
+      <circle cx="230" cy="148" r="4" fill="#a855f7" opacity="0">
+        <animate attributeName="cx" values="230;360;430" dur="2.1s" begin="0.9s" repeatCount="indefinite" calcMode="spline" keySplines="0.1 0 0.9 1"/>
+        <animate attributeName="cy" values="148;190;220" dur="2.1s" begin="0.9s" repeatCount="indefinite" calcMode="spline" keySplines="0.1 0 0.9 1"/>
+        <animate attributeName="opacity" values="0;0.9;0" dur="2.1s" begin="0.9s" repeatCount="indefinite"/>
+      </circle>
+      <path d="M 248 160 Q 340 190 420 215" stroke="#a855f7" stroke-width="1.2" fill="none" stroke-dasharray="3 7" opacity="0.3"/>
+      <text x="425" y="220" fill="#a855f7" font-family="monospace" font-size="10" opacity="0.6">β</text>
+    </g>
+
+    <!-- Gamma ray emission (left) -->
+    <g>
+      <!-- Wavy gamma line -->
+      <path d="M 208 148 Q 190 138 175 148 Q 160 158 145 148 Q 130 138 115 148 Q 100 158 85 148 Q 70 138 55 148" stroke="#fff" stroke-width="1.5" fill="none" opacity="0">
+        <animate attributeName="opacity" values="0;0.7;0" dur="2.5s" begin="0.4s" repeatCount="indefinite"/>
+      </path>
+      <text x="35" y="143" fill="#ffffee" font-family="monospace" font-size="10" opacity="0.5">γ</text>
+    </g>
+
+    <!-- Orbiting electron 1 -->
+    <circle r="3" fill="#4ade80" opacity="0.7">
+      <animateMotion dur="3s" repeatCount="indefinite">
+        <mpath href="#orbit1"/>
+      </animateMotion>
+    </circle>
+    <ellipse id="orbit1" cx="230" cy="148" rx="75" ry="50" fill="none" stroke="none"/>
+
+    <!-- Orbiting electron 2 -->
+    <circle r="2.5" fill="#a855f7" opacity="0.6">
+      <animateMotion dur="4.5s" repeatCount="indefinite" begin="1.5s">
+        <mpath href="#orbit2"/>
+      </animateMotion>
+    </circle>
+    <ellipse id="orbit2" cx="230" cy="148" rx="130" ry="85" fill="none" stroke="none"/>
+
+    <!-- Labels -->
+    <text x="230" y="280" fill="#4ade80" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.5" letter-spacing="3">RADIOACTIVE DECAY — CURIE 1898</text>
+
+    <!-- Radiation symbol overlay faint -->
+    <circle cx="230" cy="148" r="55" fill="none" stroke="#4ade80" stroke-width="0.5" opacity="0.15"/>
+    <circle cx="230" cy="148" r="100" fill="none" stroke="#4ade80" stroke-width="0.5" opacity="0.08">
+      <animate attributeName="r" values="55;110;55" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.08;0.04;0.08" dur="5s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Marie Curie Series &mdash; Volume 1</p>
+  <h1>The <em>Work</em></h1>
+  <p class="hero-sub">Radioactivity, polonium, radium, mobile X-ray units, and the Curie Institute — what she actually built.</p>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SECTION 1: COINING THE TERM -->
+  <section id="radioactivity">
+    <div class="container">
+      <p class="kick">Nomenclature as Claim</p>
+      <h2>The Word She Invented</h2>
+      <p>In December 1897, Marie Curie began her doctoral research by surveying a peculiar phenomenon that Henri Becquerel had reported the previous year: uranium salts emitted invisible rays that could fog a photographic plate without any external light source. Becquerel had noted this, published it, and moved on. Curie decided to measure it.</p>
+      <p>She needed precise measurement. She used an electrometer — a device for measuring very small electrical charges — developed by Pierre and his brother Jacques. Her method was systematic: she measured the electrical conductivity of the air around uranium compounds, quantifying the ionizing effect of the emissions. This was new. Becquerel had observed; Curie measured.</p>
+      <p>Her measurements produced a term. She needed a word for the property being measured — the capacity of certain elements to spontaneously emit these penetrating rays. She chose <em>radioactivité</em>. The word entered science in her 1898 paper. It has never left.</p>
+
+      <blockquote class="pull">
+        <p>"I found that radioactivity is an atomic property of matter and depends only on the amount of uranium present."</p>
+        <cite>— Marie Curie, doctoral thesis, 1903</cite>
+      </blockquote>
+
+      <h3>The Atomic Property — What She Proved</h3>
+      <p>Curie's most important early finding was not a discovery of a new element but a reframing of existing knowledge. By measuring the radioactivity of uranium compounds carefully, she demonstrated that the intensity of emissions was directly proportional to the amount of uranium present — and was completely unaffected by chemical state, temperature, or whether the uranium was combined with other elements.</p>
+      <p>This was foundational. If radioactivity were a chemical reaction, it would change with chemical conditions. It did not. It could only be a property of the atom itself — of the nucleus, though the nucleus had not yet been theorized. Curie's measurement overturned the dominant 19th-century model that atoms were indivisible, inert, and invariant. The atom was doing something. It was active. It was, in the word she had coined, radioactive.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: POLONIUM AND RADIUM -->
+  <section id="elements">
+    <div class="container">
+      <p class="kick">New Elements — 1898</p>
+      <h2>Polonium &amp; Radium</h2>
+      <p>While measuring pitchblende — a mineral ore of uranium — Curie found something she had not expected: the ore was more radioactive than pure uranium. This was logically impossible if uranium were the only radioactive element in it. It was not. The pitchblende contained at least one other, unknown, highly radioactive element.</p>
+      <p>Curie and Pierre began the painstaking work of chemical separation. They would isolate the unknown element by treating pitchblende with acids, evaporating the liquids, testing each fraction for radioactivity, and following the radioactivity through each chemical step. The process was chemical detective work, where the clue was invisible and had to be measured with an electrometer.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">Discovery</p>
+          <p class="card-date">July 1898</p>
+          <p class="card-title">Polonium (Po-84)</p>
+          <p>Named for occupied Poland. The first new element the Curies announced. Five months before radium. A political act encoded in chemistry — the naming was deliberate, a declaration of Polish existence to a scientific world.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Discovery</p>
+          <p class="card-date">Dec. 1898</p>
+          <p class="card-title">Radium (Ra-88)</p>
+          <p>From the Latin <em>radius</em>, ray. Approximately one million times more radioactive than uranium. Marie proposed it. Pierre confirmed it. Their announcement to the French Academy of Sciences on December 26, 1898 introduced the element to the world.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">The Glow</p>
+          <p class="card-date">Blue-green</p>
+          <p class="card-title">Cherenkov Luminescence</p>
+          <p>Radium solutions glow faintly in the dark — the ionizing radiation excites surrounding molecules. Marie kept a sample on her bedside table and described the glow as beautiful. It was also lethal.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Element 84</p>
+          <p class="card-date">Po</p>
+          <p class="card-title">A Political Element</p>
+          <p>Polonium was the first element named after a country. No such country officially existed in 1898. The name was chosen so that the word "Poland" would appear in every chemistry paper, every textbook, every periodic table in every language on Earth.</p>
+        </div>
+      </div>
+
+      <h3>The Isolation Process: Tons to Grams</h3>
+      <p>Announcing a new element and proving its existence were different things. The scientific community — including Lord Kelvin — remained skeptical until an isolated sample could be weighed and its atomic weight determined. Isolating radium required processing pitchblende at industrial scale.</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <span class="step-num">01</span>
+          <div class="step-content">
+            <p class="step-label">Raw Material</p>
+            <p class="step-title">Ton-scale Pitchblende from Joachimsthal</p>
+            <p>The Austrian government supplied the Curies with discarded pitchblende residue from the Joachimsthal uranium mines (now Jáchymov, Czech Republic). The residue was considered waste — uranium had already been extracted. The Curies worked with it in a leaking, unheated shed that was previously used as a dissecting room. Pierre's notes describe the roof as "inadequate."</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">02</span>
+          <div class="step-content">
+            <p class="step-label">Acid Dissolution</p>
+            <p class="step-title">Chemical Fractionation</p>
+            <p>The pitchblende was dissolved in acids. The resulting liquids were tested fraction by fraction with the electrometer. Fractions showing high radioactivity were retained and further separated. Marie processed the material herself — boiling large quantities of ore in cast-iron vats, stirring with an iron rod taller than she was. Pierre's health declined; he helped when he could.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">03</span>
+          <div class="step-content">
+            <p class="step-label">Progressive Concentration</p>
+            <p class="step-title">Thousands of Recrystallizations</p>
+            <p>The concentrated fractions were repeatedly recrystallized — dissolved, evaporated, and allowed to recrystallize — each cycle enriching the radioactive fraction. The process took four years. It produced a continuous cloud of radioactive dust in the shed. Both Marie and Pierre coughed chronically throughout this period.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">04</span>
+          <div class="step-content">
+            <p class="step-label">Isolation Result</p>
+            <p class="step-title">0.1 grams of Radium Chloride</p>
+            <p>From approximately ten tons of pitchblende ore, the Curies isolated roughly 0.1 grams of radium chloride — enough to weigh, enough to determine an atomic weight of approximately 225 (modern value: 226.025). This confirmed radium as a new element. The year was 1902. They had been working on this since 1898.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">05</span>
+          <div class="step-content">
+            <p class="step-label">Scale in Perspective</p>
+            <p class="step-title">10,000 kg ore → 0.1 g radium</p>
+            <p>The concentration ratio of radium in pitchblende is approximately 1 part per million by mass. To produce one gram of radium requires processing roughly ten metric tons of raw ore. The Curies did this manually, in a shed, over four years, without adequate ventilation, without shielding, without any understanding that the particles being emitted were destroying their bodies at the cellular level.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <span class="stat-num">10T</span>
+          <span class="stat-desc">Pitchblende to isolate 0.1g radium</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">4 yrs</span>
+          <span class="stat-desc">Duration of isolation work</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">226</span>
+          <span class="stat-desc">Atomic mass of Ra-226</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">1M×</span>
+          <span class="stat-desc">More radioactive than uranium</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: WWI -->
+  <section id="petites-curies">
+    <div class="container">
+      <p class="kick">World War I — 1914–1918</p>
+      <h2>Les Petites Curies</h2>
+      <p>When war was declared in August 1914, Marie Curie was forty-six years old, a widow, the director of the Radium Institute's physics laboratory, and the most famous scientist in France. She did not observe the war from Paris. She understood immediately that mobile X-ray units could save lives — surgeons near the front had no way to locate shrapnel, assess fractures, or avoid severing arteries during emergency surgery without them.</p>
+      <p>She designed a mobile radiography unit that could be fitted into a van or ambulance: an X-ray generator powered by a dynamo connected to the vehicle's engine, photographic plates, and a folding table for the patient. She called them <em>voitures radiologiques</em>. The soldiers called them <em>petites Curies</em>.</p>
+      <p>She also raised the money for them herself, soliciting donations from wealthy French families and the government. She drove one of the first units to the front herself — she had learned to drive specifically for this purpose. She also learned basic anatomy and X-ray technique so that she could train others.</p>
+
+      <div class="petites-grid">
+        <div class="petite-card">
+          <div class="pc-num">20</div>
+          <div class="pc-desc">Mobile radiography units deployed</div>
+        </div>
+        <div class="petite-card">
+          <div class="pc-num">150</div>
+          <div class="pc-desc">Women trained as radiographers</div>
+        </div>
+        <div class="petite-card">
+          <div class="pc-num">~1M</div>
+          <div class="pc-desc">Estimated X-ray procedures performed</div>
+        </div>
+        <div class="petite-card">
+          <div class="pc-num">200+</div>
+          <div class="pc-desc">Fixed radiology posts established</div>
+        </div>
+      </div>
+
+      <p>Marie trained the operators herself, including her daughter Irène, who was seventeen when the war began and who drove units to the front at an age when she was still technically a minor. Irène Curie would later recall that her mother's instruction was characteristically direct: learn anatomy, learn the machine, be accurate. Lives depended on the image.</p>
+      <p>The women operators were called "les dames de radiologie." They were civilians who worked in field hospitals under artillery fire. Several were injured. The program created the infrastructure and trained personnel for a permanent radiological service in the French military, and established the principle — which Marie argued for explicitly — that medical imaging was a clinical discipline requiring trained practitioners, not an occasional curiosity.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">What Curie Refused</p>
+        <p>In 1914, Marie Curie melted down her own gold Nobel Prize medals and offered the gold to the French government for the war effort. The Bank of France declined — they would not melt Nobel medals. She also offered her Nobel Prize money certificates (approximately 70,000 francs) for war bonds. She wrote: "I wanted to do my part." She kept working. She did not want to be a symbol. She wanted to be useful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE INSTITUTES -->
+  <section id="institutes">
+    <div class="container">
+      <p class="kick">Institutional Legacy — 1920 &amp; 1932</p>
+      <h2>The Curie Institutes</h2>
+      <p>In 1920, Marie Curie co-founded the Institut du Radium (Radium Institute) in Paris, in partnership with the Institut Pasteur and the University of Paris. It was designed as a dual institution: one wing for basic research in radioactivity (her domain), one wing for biological and medical research into cancer treatment using radiation (led by Claudius Regaud). The two wings — physics and medicine — shared a courtyard and could not ignore each other.</p>
+      <p>The design was deliberate. Curie understood that radiation that killed cancer cells was the same radiation she had been studying. She could not treat patients herself — she was a physicist, not a physician — but she could build an institution where physicists and physicians were forced into proximity, where discoveries in one wing would immediately be available in the other.</p>
+      <p>In 1932, twelve years later and two years before her death, she founded the Radium Institute in Warsaw — built on the site of the Flying University tradition she had been part of as a girl. She raised the money internationally, including a major American fundraising tour. She laid the cornerstone herself. The institute treated its first cancer patients while she was still alive.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">Founded</p>
+          <p class="card-date">1920</p>
+          <p class="card-title">Institut Curie, Paris</p>
+          <p>Still operating. One of Europe's leading cancer research and treatment centers. The laboratory building where Marie worked is a UNESCO-listed historic site. Over 3,000 patients treated annually in its oncology hospital.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Founded</p>
+          <p class="card-date">1932</p>
+          <p class="card-title">Radium Institute, Warsaw</p>
+          <p>Now the Maria Skłodowska-Curie National Research Institute of Oncology — Poland's leading cancer center. Her sister Bronia was its first director. The institute opened two years before Marie's death.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Research output</p>
+          <p class="card-date">1000s</p>
+          <p class="card-title">Cancer Trials Active</p>
+          <p>The Institut Curie in Paris today runs hundreds of active clinical trials in oncology. The radiation therapy units in both institutes are direct institutional descendants of Marie Curie's program of quantifying and applying ionizing radiation.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Structural Insight</p>
+          <p class="card-date">1920</p>
+          <p class="card-title">Physics + Medicine</p>
+          <p>The deliberate co-location of physics research and cancer treatment under one roof was Marie Curie's architectural decision. No such institution had existed before. The model — bench to bedside in ionizing radiation — is now standard globally.</p>
+        </div>
+      </div>
+
+      <blockquote class="pull">
+        <p>"We must not forget that when radium was discovered no one knew that it would prove useful in hospitals. The work was one of pure science. And this is a proof that scientific work must not be considered from the point of view of the direct usefulness of it."</p>
+        <cite>— Marie Curie, 1921 lecture tour, United States</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 5: DISCOVERIES GRID -->
+  <section id="discoveries">
+    <div class="container">
+      <p class="kick">Catalogue of Work</p>
+      <h2>Major Discoveries &amp; Contributions</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">Term Coined — 1898</p>
+          <p class="card-date">1898</p>
+          <p class="card-title">Radioactivity</p>
+          <p>The term and the proof that it is an atomic, not chemical, property. Fundamental to all subsequent nuclear and atomic physics.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Element — July 1898</p>
+          <p class="card-date">Po 84</p>
+          <p class="card-title">Polonium</p>
+          <p>First new element discovered by measuring radioactivity rather than spectroscopy. Named for partitioned Poland.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Element — Dec. 1898</p>
+          <p class="card-date">Ra 88</p>
+          <p class="card-title">Radium</p>
+          <p>Isolated 1902 after four years of processing. One gram from ten metric tons of pitchblende. Atomic weight determined: 225 (revised to 226.025).</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Measurement Method</p>
+          <p class="card-date">1897–</p>
+          <p class="card-title">Electrometric Technique</p>
+          <p>Applied the piezoelectric electrometer to quantitative measurement of radioactivity — the methodological foundation for all subsequent radioactivity assay.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Medical Application — 1914</p>
+          <p class="card-date">1914</p>
+          <p class="card-title">Mobile Radiography</p>
+          <p>Designed, funded, staffed, and drove mobile X-ray units in WWI. Direct ancestor of battlefield and emergency medicine radiography.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Institution — 1920</p>
+          <p class="card-date">1920</p>
+          <p class="card-title">Institut Curie</p>
+          <p>Founded the world's first institution explicitly linking radiation physics with cancer medicine. Both wings still operate.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Doctoral Thesis — 1903</p>
+          <p class="card-date">1903</p>
+          <p class="card-title">Research on Radioactive Substances</p>
+          <p>Her doctoral thesis, the first awarded to a woman at the Sorbonne for science, is considered one of the most important doctoral theses in the history of physics.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Nobel — 1903</p>
+          <p class="card-date">Physics</p>
+          <p class="card-title">Nobel Prize in Physics</p>
+          <p>Shared with Pierre Curie and Henri Becquerel for the discovery of spontaneous radioactivity. First Nobel awarded to a woman in any field.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Nobel — 1911</p>
+          <p class="card-date">Chemistry</p>
+          <p class="card-title">Nobel Prize in Chemistry</p>
+          <p>Sole recipient, for the discovery of polonium and radium and the isolation of radium. Second Nobel Prize — the first person in history to win two.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="container">
+    <p class="col-attr">
+      ROOT0-ATTRIBUTION-v1.0<br/>
+      David Lee Wise / ROOT0 / TriPod LLC<br/>
+      Marie Curie Series — Volume 1: The Work<br/>
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a> — Share freely, do not modify without attribution
+    </p>
+    <div class="col-lic">CC-BY-ND-4.0 | ROOT0 | TriPod LLC</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Vol. 1 — The Work | Inventions &amp; Patents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #06080f;
+    --electric: #3b82f6;
+    --violet: #8b5cf6;
+    --gold: #f59e0b;
+    --text: #d1d5db;
+    --text-dim: #6b7280;
+    --border: rgba(59,130,246,0.25);
+    --card-bg: rgba(59,130,246,0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,8,15,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--electric);
+    margin-right: 2rem;
+    white-space: nowrap;
+  }
+  .site-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .site-nav a:hover, .site-nav a.active {
+    color: var(--electric);
+    border-color: var(--border);
+    background: rgba(59,130,246,0.08);
+  }
+  .site-nav a.active { color: #fff; border-color: var(--electric); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero-svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(720px, 100vw);
+    height: min(720px, 100vw);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(139,92,246,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero .sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--violet);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .hero p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  .vol-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--violet);
+    color: #fff;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── ROTATING FIELD ANIMATIONS ── */
+  @keyframes rotate-field {
+    from { transform: rotate(0deg); transform-origin: 360px 360px; }
+    to { transform: rotate(360deg); transform-origin: 360px 360px; }
+  }
+  @keyframes coil-pulse-a {
+    0%,100% { stroke: #3b82f6; stroke-width: 3; }
+    33% { stroke: #fff; stroke-width: 5; }
+    66% { stroke: #8b5cf6; stroke-width: 3; }
+  }
+  @keyframes coil-pulse-b {
+    0%,100% { stroke: #8b5cf6; stroke-width: 3; }
+    33% { stroke: #3b82f6; stroke-width: 3; }
+    66% { stroke: #fff; stroke-width: 5; }
+  }
+  @keyframes coil-pulse-c {
+    0%,100% { stroke: #fff; stroke-width: 3; }
+    33% { stroke: #8b5cf6; stroke-width: 3; }
+    66% { stroke: #3b82f6; stroke-width: 5; }
+  }
+  @keyframes field-arrow {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+  @keyframes ring-expand {
+    0% { r: 60; opacity: 0.8; }
+    100% { r: 200; opacity: 0; }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--electric);
+    margin: 2rem 0 0.75rem;
+  }
+  p { margin-bottom: 1.25rem; }
+  em { color: #e5e7eb; }
+  strong { color: #fff; font-weight: 600; }
+
+  .section-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--violet);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── PATENT CARD GRID ── */
+  .patent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  .patent-card {
+    background: rgba(139,92,246,0.05);
+    border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .patent-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--electric);
+  }
+  .patent-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .patent-card h3 {
+    margin-top: 0;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .patent-card .year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--electric);
+    margin-bottom: 0.75rem;
+  }
+  .patent-card p { font-size: 0.875rem; color: var(--text-dim); margin: 0; }
+
+  /* ── TECH EXPLAINER BOX ── */
+  .explainer {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--electric);
+    border-radius: 0 4px 4px 0;
+    padding: 1.75rem 2rem;
+    margin: 2rem 0;
+  }
+  .explainer .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.5rem;
+  }
+  .explainer h3 { margin-top: 0; color: #fff; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.925rem;
+  }
+  .compare-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--electric);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+  .compare-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(59,130,246,0.1);
+    color: var(--text);
+  }
+  .compare-table tr:hover td { background: rgba(59,130,246,0.04); }
+  .compare-table td:first-child { color: var(--text-dim); font-style: italic; }
+
+  /* ── DIAGRAM SVG SECTION ── */
+  .diagram-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem 0;
+  }
+  .diagram-wrap svg {
+    width: min(500px, 100%);
+    height: auto;
+  }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--violet);
+    margin: 2.5rem 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #e5e7eb;
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    font-style: normal;
+  }
+
+  /* ── BAND ── */
+  .band {
+    background: var(--electric);
+    color: #000;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 4rem 0;
+  }
+  .band h2 { color: #000; font-size: clamp(1.3rem, 3vw, 2rem); }
+  .band p { color: rgba(0,0,0,0.75); font-size: 1rem; max-width: 640px; margin: 1rem auto 0; }
+  .band .kick { color: rgba(0,0,0,0.6); }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .colophon a { color: var(--electric); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .patent-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="site-nav" aria-label="Series navigation">
+  <span class="series-label">Tesla / 4 Vols.</span>
+  <a href="0-who.html">Vol. 0 — The Man</a>
+  <a href="1-ac.html" class="active">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- ── HERO with Rotating Magnetic Field SVG ── -->
+<header class="hero">
+  <!-- Animated Rotating Magnetic Field Diagram -->
+  <svg class="hero-svg" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#3b82f6" opacity="0.9"/>
+      </marker>
+      <marker id="arrowV" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#8b5cf6" opacity="0.9"/>
+      </marker>
+      <marker id="arrowW" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#ffffff" opacity="0.9"/>
+      </marker>
+      <radialGradient id="rotorGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Stator field lines (static background) -->
+    <circle cx="360" cy="360" r="240" fill="none" stroke="#3b82f6" stroke-width="0.5" opacity="0.15"/>
+    <circle cx="360" cy="360" r="180" fill="none" stroke="#8b5cf6" stroke-width="0.5" opacity="0.15"/>
+    <circle cx="360" cy="360" r="120" fill="none" stroke="#3b82f6" stroke-width="0.5" opacity="0.2"/>
+
+    <!-- Pulsing ring -->
+    <circle cx="360" cy="360" r="60" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.6"
+      style="animation: ring-expand 3s ease-out infinite;"/>
+    <circle cx="360" cy="360" r="60" fill="none" stroke="#8b5cf6" stroke-width="1" opacity="0.5"
+      style="animation: ring-expand 3s ease-out infinite 1s;"/>
+    <circle cx="360" cy="360" r="60" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.4"
+      style="animation: ring-expand 3s ease-out infinite 2s;"/>
+
+    <!-- Rotor (rotating) -->
+    <g style="animation: rotate-field 3s linear infinite;">
+      <!-- Rotating field arrows — 3-phase -->
+      <!-- Phase A arrows -->
+      <line x1="360" y1="360" x2="360" y2="200" stroke="#3b82f6" stroke-width="3"
+        marker-end="url(#arrowB)"
+        style="animation: coil-pulse-a 3s ease-in-out infinite; transform-origin: 360px 360px;"/>
+      <line x1="360" y1="360" x2="360" y2="520" stroke="#3b82f6" stroke-width="2" opacity="0.4"
+        style="transform-origin: 360px 360px;"/>
+
+      <!-- Phase B arrows (120 degrees) -->
+      <line x1="360" y1="360" x2="221" y2="430" stroke="#8b5cf6" stroke-width="3"
+        marker-end="url(#arrowV)"
+        style="animation: coil-pulse-b 3s ease-in-out infinite; transform-origin: 360px 360px;"/>
+      <line x1="360" y1="360" x2="499" y2="290" stroke="#8b5cf6" stroke-width="2" opacity="0.4"
+        style="transform-origin: 360px 360px;"/>
+
+      <!-- Phase C arrows (240 degrees) -->
+      <line x1="360" y1="360" x2="499" y2="430" stroke="#ffffff" stroke-width="3"
+        marker-end="url(#arrowW)"
+        style="animation: coil-pulse-c 3s ease-in-out infinite; transform-origin: 360px 360px;"/>
+      <line x1="360" y1="360" x2="221" y2="290" stroke="#ffffff" stroke-width="2" opacity="0.4"
+        style="transform-origin: 360px 360px;"/>
+    </g>
+
+    <!-- Stator coils (3 positions, 120° apart) -->
+    <!-- Coil A (top) -->
+    <ellipse cx="360" cy="160" rx="28" ry="14" fill="none"
+      stroke="#3b82f6" stroke-width="3"
+      style="animation: coil-pulse-a 3s ease-in-out infinite;"/>
+    <ellipse cx="360" cy="160" rx="20" ry="9" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.6"/>
+    <!-- Coil B (lower-left) -->
+    <ellipse cx="240" cy="522" rx="14" ry="28" fill="none"
+      stroke="#8b5cf6" stroke-width="3"
+      style="animation: coil-pulse-b 3s ease-in-out infinite;" transform="rotate(-30,240,522)"/>
+    <!-- Coil C (lower-right) -->
+    <ellipse cx="480" cy="522" rx="14" ry="28" fill="none"
+      stroke="#ffffff" stroke-width="3"
+      style="animation: coil-pulse-c 3s ease-in-out infinite;" transform="rotate(30,480,522)"/>
+
+    <!-- Center rotor disc -->
+    <circle cx="360" cy="360" r="50" fill="url(#rotorGrad)" stroke="#8b5cf6" stroke-width="2" opacity="0.8"/>
+    <circle cx="360" cy="360" r="20" fill="rgba(59,130,246,0.4)" stroke="#3b82f6" stroke-width="2"/>
+    <circle cx="360" cy="360" r="8" fill="#fff" opacity="0.9"/>
+
+    <!-- Phase labels -->
+    <text x="360" y="135" text-anchor="middle" font-family="monospace" font-size="14" fill="#3b82f6" opacity="0.7">φA</text>
+    <text x="218" y="540" text-anchor="middle" font-family="monospace" font-size="14" fill="#8b5cf6" opacity="0.7">φB</text>
+    <text x="502" y="540" text-anchor="middle" font-family="monospace" font-size="14" fill="#ffffff" opacity="0.7">φC</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="vol-badge">Volume 1 of 4</span>
+    <span class="kick">Nikola Tesla &mdash; Inventions &amp; Patents</span>
+    <h1>The Work</h1>
+    <p class="sub">Rotating Magnetic Fields, AC Power, the Tesla Coil, Radio</p>
+    <p>The inventions that rewired civilization — and the patents that history almost buried.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- ── AC INDUCTION MOTOR ── -->
+<section class="section" id="motor">
+  <div class="container">
+    <p class="section-intro">Invention I / 1888</p>
+    <h2>The AC Induction Motor</h2>
+    <p>Of all Tesla's inventions, the <strong>AC induction motor</strong> is the most consequential and the most ubiquitous. It is almost certainly the device you have used most today — in your refrigerator compressor, your air conditioning fan, the pump in your dishwasher, the ventilation system in the building you are in, every industrial conveyor and lathe and drill press within a hundred miles.</p>
+    <p>The key insight was the <strong>rotating magnetic field</strong>. If you arrange multiple electromagnets around a circular stator (the stationary outer ring) and feed them alternating currents that are offset from each other in time — by 120 degrees in a three-phase system — the combined magnetic field rotates smoothly at the frequency of the AC supply. A metal rotor placed in the center of this rotating field has currents induced in it by electromagnetic induction; those induced currents create their own magnetic field, which chases the rotating stator field, and the rotor turns.</p>
+
+    <div class="explainer">
+      <p class="label">Technical Principle</p>
+      <h3>Why No Brushes — Why It Matters</h3>
+      <p>All DC motors of Tesla's era required brushes — physical sliding contacts that connected the stationary power supply to the rotating armature. Brushes spark, wear, overheat, and require constant maintenance. They limited motor speed, generated radio interference, and were a perpetual source of industrial failure.</p>
+      <p>The induction motor requires <em>no electrical contact whatsoever</em> between the stator and the rotor. Power transfers by electromagnetic induction across an air gap. The rotor has no windings connected to any external circuit. There is nothing to wear, nothing to spark, nothing to maintain. Tesla's motor was not merely more efficient — it was architecturally simpler and categorically more reliable.</p>
+    </div>
+
+    <!-- Rotating field inline diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 500 460" xmlns="http://www.w3.org/2000/svg" aria-label="Rotating magnetic field diagram — 3 phase stator coils with animated rotating field arrow">
+        <defs>
+          <marker id="fieldArrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+          </marker>
+        </defs>
+        <!-- Stator housing -->
+        <circle cx="250" cy="230" r="160" fill="none" stroke="rgba(59,130,246,0.3)" stroke-width="2"/>
+        <circle cx="250" cy="230" r="140" fill="none" stroke="rgba(59,130,246,0.15)" stroke-width="1"/>
+
+        <!-- Phase coil indicators -->
+        <rect x="225" y="68" width="50" height="22" rx="3" fill="rgba(59,130,246,0.2)" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="250" y="83" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#3b82f6">φ A</text>
+
+        <rect x="76" y="305" width="50" height="22" rx="3" fill="rgba(139,92,246,0.2)" stroke="#8b5cf6" stroke-width="1.5"/>
+        <text x="101" y="320" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#8b5cf6">φ B</text>
+
+        <rect x="374" y="305" width="50" height="22" rx="3" fill="rgba(255,255,255,0.1)" stroke="#9ca3af" stroke-width="1.5"/>
+        <text x="399" y="320" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#9ca3af">φ C</text>
+
+        <!-- Rotor disk -->
+        <circle cx="250" cy="230" r="75" fill="rgba(59,130,246,0.07)" stroke="rgba(139,92,246,0.5)" stroke-width="2"/>
+        <circle cx="250" cy="230" r="40" fill="rgba(6,8,15,1)" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"/>
+        <text x="250" y="235" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#6b7280">ROTOR</text>
+
+        <!-- Rotating field arrow (CSS animated) -->
+        <g style="animation: rotate-field 3s linear infinite; transform-origin: 250px 230px;">
+          <line x1="250" y1="230" x2="250" y2="165" stroke="#3b82f6" stroke-width="3" marker-end="url(#fieldArrow)"/>
+        </g>
+
+        <!-- Axis lines (static) -->
+        <line x1="250" y1="90" x2="250" y2="120" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+        <line x1="116" y1="312" x2="139" y2="298" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+        <line x1="384" y1="312" x2="361" y2="298" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+
+        <!-- Label -->
+        <text x="250" y="420" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#4b5563" text-transform="uppercase">
+          3-PHASE ROTATING MAGNETIC FIELD
+        </text>
+        <text x="250" y="438" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#374151">
+          Field arrow completes one rotation per AC cycle
+        </text>
+      </svg>
+    </div>
+
+    <p>The demonstration of the motor before the American Institute of Electrical Engineers on <strong>16 May 1888</strong> was a defining moment in the history of technology. Physicist and AIEE member William Anthony called it "the most important contribution to electrical science since Faraday." Within a year, Westinghouse had purchased Tesla's AC motor patents for $60,000 cash plus $2.50 per horsepower of installed capacity — terms that should have made Tesla fabulously wealthy.</p>
+
+    <h3>The Three-Phase System</h3>
+    <p>Tesla developed not just the motor but a complete <strong>polyphase AC system</strong>: three-phase generation, three-phase transmission, and the motors that used it. Three phases — three sets of windings in the generator, three wires in the transmission line, three sets of stator coils in the motor — provided smooth, continuous power delivery rather than the pulsing of single-phase AC. The three-phase system is what runs every factory, every large building, every electric railway on earth today.</p>
+    <p>US Patents 381,968 through 381,970 (filed 1887, granted 1888) cover the induction motor. Patent 382,279 covers the AC transmission system. These five patents are among the most commercially significant ever issued.</p>
+  </div>
+</section>
+
+<!-- ── AC POWER TRANSMISSION ── -->
+<section class="section" id="transmission">
+  <div class="container">
+    <p class="section-intro">Invention II / 1888–1895</p>
+    <h2>AC Power Transmission</h2>
+    <p>The motor was only half the revolution. The other half was demonstrating that AC could be <em>transmitted</em> — sent over long distances at high voltage, then stepped down to safe working levels at the destination. This was impossible with DC, which lost catastrophic amounts of power over any wire longer than about a mile.</p>
+
+    <div class="explainer">
+      <p class="label">Physics: Why High Voltage Wins</p>
+      <h3>Power Loss in Transmission</h3>
+      <p>Power loss in a wire is <em>P = I² × R</em> — proportional to the square of the current, times the resistance of the wire. If you double the voltage and halve the current while keeping the same power transmitted, you reduce line losses by a factor of four. Step up to ten times the voltage, and you reduce losses by a factor of one hundred.</p>
+      <p>Transformers — which only work on AC, not DC — make this effortless: a step-up transformer at the generating station raises voltage from 5,000V to 100,000V; step-down transformers at substations reduce it to 11,000V for neighborhoods, then to 240V or 120V at the meter. Edison's DC system had no equivalent mechanism. At the voltages safe enough to distribute in a city, DC simply could not travel.</p>
+    </div>
+
+    <h3>Niagara Falls, 1895</h3>
+    <p>The proof was Niagara Falls. The <strong>Edward Dean Adams Power Station</strong> — built by Westinghouse Electric, using Tesla's patents — began generating power on <strong>16 November 1896</strong>. It was the first large-scale AC hydroelectric power plant in the world. Ten thousand horsepower of turbine-driven generation sent power to Buffalo, New York, 26 miles away.</p>
+    <p>This was not merely an engineering milestone. It was a proof-of-concept for the modern world. If you could harness the energy of Niagara Falls and deliver it to a city 26 miles distant — reliably, economically, and at scale — you could build the electric civilization. The Adams Station was the prototype for every hydroelectric plant, every long-distance transmission line, every regional grid built since.</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Factor</th>
+          <th>Edison DC (1884)</th>
+          <th>Tesla AC (1888)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Transmission range</td>
+          <td>~1 mile from station</td>
+          <td>Hundreds of miles</td>
+        </tr>
+        <tr>
+          <td>Voltage flexibility</td>
+          <td>Fixed — no transformer</td>
+          <td>Step up/down freely</td>
+        </tr>
+        <tr>
+          <td>Transmission efficiency</td>
+          <td>Heavy losses over distance</td>
+          <td>~95%+ at high voltage</td>
+        </tr>
+        <tr>
+          <td>Motor design</td>
+          <td>Brushes required — wear, sparks</td>
+          <td>Brushless induction — none</td>
+        </tr>
+        <tr>
+          <td>Three-phase power</td>
+          <td>Not available</td>
+          <td>Smooth continuous power</td>
+        </tr>
+        <tr>
+          <td>Worldwide adoption today</td>
+          <td>No major power grids</td>
+          <td>Every AC power grid on earth</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── TESLA COIL ── -->
+<section class="section" id="coil">
+  <div class="container">
+    <p class="section-intro">Invention III / 1891</p>
+    <h2>The Tesla Coil</h2>
+    <p>In 1891 Tesla patented the <strong>Tesla coil</strong> — a resonant air-core transformer capable of producing extremely high voltages at high frequencies. The device consists of a primary coil, a secondary coil, a spark gap, and a capacitor. When the spark gap fires, energy oscillates between the capacitor and the primary coil at resonant frequency; the secondary coil, tuned to the same resonant frequency, steps this voltage up enormously — sometimes to millions of volts.</p>
+    <p>US Patent 454,622 (1891). The Tesla coil was not a toy, though Tesla used it theatrically. It was the first practical apparatus for generating high-frequency, high-voltage electricity — a domain that had been theoretically accessible but practically unreachable.</p>
+    <p>The coil became the basis of everything involving high-frequency electromagnetic resonance: <strong>radio transmitters</strong>, <strong>wireless telegraphy</strong>, early <strong>radar</strong>, and the spark gap transmitters used in every radio station until the 1920s. The fluorescent lighting Tesla demonstrated — tubes of gas glowing without any external contact, energized by the high-frequency field of his coil — presaged every fluorescent and neon tube made since.</p>
+
+    <div class="pull-quote">
+      "The day science begins to study non-physical phenomena, it will make more progress in one decade than in all the previous centuries of its existence."
+      <cite>— Attributed to Tesla (widely circulated; sourcing disputed)</cite>
+    </div>
+
+    <h3>High-Frequency Experiments</h3>
+    <p>Tesla's high-frequency work in the early 1890s was genuinely ahead of its time. He demonstrated transmission of electrical energy without wires — lighting lamps at a distance from the coil using only the radiated electromagnetic field. He passed high-frequency current through his own body to light lamps held in his hands, demonstrating that at sufficiently high frequency, the current oscillates so rapidly it flows along the surface of conductors (the "skin effect") rather than through them, making it far less dangerous to biological tissue.</p>
+    <p>He also pioneered what he called "electrotherapy" — using high-frequency currents for medical applications — a field that has direct descendants in modern diathermy and high-frequency surgery.</p>
+  </div>
+</section>
+
+<!-- ── RADIO ── -->
+<section class="section" id="radio">
+  <div class="container">
+    <p class="section-intro">Invention IV / 1893–1943</p>
+    <h2>Radio — The Contested Invention</h2>
+    <p>The question of who invented radio is one of the most contested priority disputes in the history of technology. The short answer, as settled by the United States Supreme Court, is: <strong>Tesla</strong>.</p>
+    <p>In 1893, Tesla delivered a lecture to the National Electric Light Association in St. Louis in which he demonstrated the fundamental apparatus of radio communication — a tuned transmitter, a tuned receiver, electromagnetic wave propagation — two years before Guglielmo Marconi filed his first radio patents. Tesla's 1897 patents (US 645,576 and 649,621) covered the complete system of tuned wireless transmission and reception.</p>
+    <p>Marconi filed his first British radio patent in 1896 and his first US patent application in 1900. The US Patent Office initially rejected his applications on the grounds that they duplicated Tesla's prior work. Marconi re-filed with modifications, and after Edison and Andrew Carnegie provided financial backing, the patent was granted in 1904 — in a politically influenced reversal of the earlier rejection.</p>
+
+    <div class="explainer">
+      <p class="label">Legal History</p>
+      <h3>Marconi Wireless Telegraph Co. v. United States (1943)</h3>
+      <p>In 1943, the US Supreme Court ruled in <em>Marconi Wireless Telegraph Co. v. United States</em> that Marconi's key radio patents were invalid because they had been anticipated by prior art — specifically, Tesla's patents. The ruling restored Tesla's priority as the foundational inventor of practical radio communication. The ruling came four months after Tesla's death. He never knew.</p>
+      <p>The legal reasoning was narrow: the Court found Marconi's 1904 patent for tuned radio transmission was anticipated by Tesla's 1900 patent application (filed 1897). The ruling did not adjudicate the broader history of radio development — it was a wartime case about patent infringement fees. But its legal effect was clear.</p>
+    </div>
+
+    <p>The historiography of radio is genuinely complex. Marconi was an extraordinary entrepreneur who built the practical radio industry. Heinrich Hertz demonstrated electromagnetic waves experimentally in 1888. Oliver Lodge demonstrated wireless transmission in 1894. Karl Ferdinand Braun improved Marconi's transmitters and shared the 1909 Nobel Prize with him. Radio was built by many hands. But the foundational tuned-circuit architecture — the thing that made radio communication reliable and selective rather than a single-channel broadcast that interfered with everything else — that was Tesla's.</p>
+  </div>
+</section>
+
+<!-- ── PATENT GRID ── -->
+<section class="section" id="patents">
+  <div class="container">
+    <p class="section-intro">Selected Patents</p>
+    <h2>The Invention Catalog</h2>
+    <p>Tesla held approximately 300 patents across 26 countries. The following represent the most technically and historically significant.</p>
+
+    <div class="patent-grid">
+      <div class="patent-card">
+        <p class="patent-num">US 381,968–381,970</p>
+        <h3>AC Induction Motor</h3>
+        <p class="year">Filed 1887 · Granted 1888</p>
+        <p>The polyphase AC induction motor with rotating magnetic field. No brushes, no commutator. Three-phase stator windings. The motor in every major appliance and industrial machine.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 382,279</p>
+        <h3>AC Transmission System</h3>
+        <p class="year">Granted 1888</p>
+        <p>Complete polyphase AC power generation and transmission system. The architecture of every electrical grid on earth.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 454,622</p>
+        <h3>Tesla Coil</h3>
+        <p class="year">Granted 1891</p>
+        <p>Resonant transformer for high-frequency high-voltage generation. Basis of radio, radar, and high-frequency applications.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 645,576 / 649,621</p>
+        <h3>System of Transmission of Electrical Energy</h3>
+        <p class="year">Filed 1897 · Granted 1900</p>
+        <p>Tuned wireless transmission and reception. The patents the Supreme Court used to invalidate Marconi's radio priority in 1943.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 613,809</p>
+        <h3>Method of and Apparatus for Controlling Mechanism of Moving Vessels</h3>
+        <p class="year">Granted 1898</p>
+        <p>The world's first radio-controlled vehicle: a radio-controlled boat demonstrated at Madison Square Garden. The ancestor of every drone, radio-controlled device, and remotely operated vehicle.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 685,957</p>
+        <h3>Apparatus for the Utilization of Radiant Energy</h3>
+        <p class="year">Granted 1901</p>
+        <p>Early patent on capturing electromagnetic energy from the atmosphere. Related to Tesla's Wardenclyffe wireless transmission experiments.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 1,061,206</p>
+        <h3>Turbine (Bladeless)</h3>
+        <p class="year">Granted 1913</p>
+        <p>The Tesla turbine uses smooth parallel disks and fluid viscosity rather than blades. Efficient in theory; difficult to manufacture at scale in his era. Now used in specialized applications.</p>
+      </div>
+      <div class="patent-card">
+        <p class="patent-num">US 568,178</p>
+        <h3>Electrical Transformer</h3>
+        <p class="year">Granted 1896</p>
+        <p>Improvements to the air-core resonant transformer design. Directly applied to the Niagara Falls generating station.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REMOTE CONTROL ── -->
+<section class="section" id="teleautomation">
+  <div class="container">
+    <p class="section-intro">Invention V / 1898</p>
+    <h2>The First Robot: Teleautomation</h2>
+    <p>In September 1898, Tesla demonstrated a radio-controlled boat — which he called a "teleautomaton" — at an electrical exhibition in Madison Square Garden. The vessel was about four feet long, navigated a pool of water, executed turns and stops, and had a small light that could be switched on and off by radio command from the audience. Spectators were baffled; some thought it was being controlled by a trained monkey inside, or by telepathy.</p>
+    <p>Tesla patented the device as US 613,809: <em>"Method of and Apparatus for Controlling Mechanism of Moving Vessels or Vehicles."</em> He envisioned the principle scaling to torpedoes, automated ships, and eventually to autonomous machines of all kinds. He was describing, in 1898, the conceptual architecture of robotics and drone warfare — fields that would not see practical development for another half-century.</p>
+    <p>The remote-controlled boat is the direct ancestor of every radio-controlled vehicle, drone, remotely piloted aircraft, and autonomous underwater vehicle. Tesla's patent predates any other by decades.</p>
+  </div>
+</section>
+
+<div class="band">
+  <div class="container">
+    <span class="kick">Scale of Impact</span>
+    <h2>The Number That Matters</h2>
+    <p>An estimated 4 billion AC induction motors are in operation globally at this moment. Every one of them descends architecturally from Tesla's 1888 patents. The global electric power grid — 50 Hz or 60 Hz AC, step-up transmission, step-down distribution — is his architecture, realized at planetary scale.</p>
+  </div>
+</div>
+
+<!-- ── X-RAY / FLUORESCENT ── -->
+<section class="section" id="misc">
+  <div class="container">
+    <p class="section-intro">Other Work</p>
+    <h2>X-Rays, Fluorescent Lighting, and the Bladeless Turbine</h2>
+
+    <h3>X-Ray Experiments (1894–1896)</h3>
+    <p>Before Wilhelm Röntgen published his discovery of X-rays in December 1895, Tesla had been producing X-ray images using his high-frequency apparatus. He observed what he called "radiant matter" penetrating objects and creating images on photographic film. He called the radiation "shadowgraphs." He sent some to Röntgen after the official discovery announcement; Röntgen replied with compliments and inquiries.</p>
+    <p>Tesla did not publish his X-ray work before Röntgen, which is why Röntgen received the credit and the 1901 Nobel Prize. Tesla lost much of his X-ray experimental data and equipment in a devastating laboratory fire in March 1895 — six months before Röntgen's announcement.</p>
+
+    <h3>Fluorescent and Neon Lighting (1890s)</h3>
+    <p>Tesla demonstrated fluorescent tubes — glass tubes filled with gas that glow when excited by high-frequency electromagnetic fields — well before they entered commercial production. He made his tubes into artistic shapes and letter forms, producing, essentially, neon signs in his laboratory in the early 1890s. The first commercial fluorescent lamps did not appear until the 1930s; the technology sat dormant for decades after Tesla's demonstrations.</p>
+
+    <h3>The Bladeless Turbine (1913)</h3>
+    <p>Tesla's turbine (US 1,061,206) replaced conventional bladed rotors with a series of smooth, closely spaced disks. Fluid entering the turbine flows between the disks and transfers energy via viscous drag rather than impact. The design was efficient in theory and elegant in principle, but manufacturing tolerances of the era could not hold the precise disk spacing required for optimal performance. Modern manufacturing has produced working Tesla turbines for niche applications — microfluid pumps, certain high-efficiency steam applications.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <div class="container">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Nikola Tesla Series &mdash; Volume 1 of 4 &nbsp;|&nbsp; <a href="0-who.html">&larr; Vol. 0: The Man</a> &nbsp;&nbsp; <a href="2-world.html">Vol. 2: His World &rarr;</a></p>
+    <p style="margin-top:0.5rem; font-size:0.55rem; opacity:0.5;">Patent data: United States Patent and Trademark Office. Legal history: Marconi Wireless Telegraph Co. v. United States, 320 U.S. 1 (1943).</p>
+  </div>
+</footer>
+
+</body>
+</html>

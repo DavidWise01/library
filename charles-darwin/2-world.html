@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Darwin — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#05080a;
+    --card:#0d1410;
+    --ink:#e8e4d8;
+    --dim:#7a8070;
+    --green:#16a34a;
+    --earth:#92400e;
+    --line:rgba(22,163,74,0.16);
+    --earthline:rgba(146,64,14,0.22);
+    --greentint:rgba(22,163,74,0.07);
+    --earthtint:rgba(146,64,14,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(22,163,74,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#05080a;}
+  a{color:var(--green);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--greentint);color:var(--green);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(32px,7vw,72px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* SVG ANIMATIONS — finch beak variation diagram */
+  @keyframes grow1{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes grow2{0%{stroke-dashoffset:160}100%{stroke-dashoffset:0}}
+  @keyframes grow3{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+  @keyframes grow5{0%{stroke-dashoffset:70}100%{stroke-dashoffset:0}}
+  @keyframes leafpop{0%,80%{opacity:0;r:0}100%{opacity:1;r:4}}
+  .trunk{stroke-dasharray:200;stroke-dashoffset:200;animation:grow1 1.2s cubic-bezier(.2,.8,.2,1) .1s forwards;}
+  .b1{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) .9s forwards;}
+  .b2{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) 1.0s forwards;}
+  .b3{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.5s forwards;}
+  .b4{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.6s forwards;}
+  .b5{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.7s forwards;}
+  .b6{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.8s forwards;}
+  .t1{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.2s forwards;}
+  .t2{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.3s forwards;}
+  .t3{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.4s forwards;}
+  .t4{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.5s forwards;}
+  .t5{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.6s forwards;}
+  .t6{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.7s forwards;}
+  .t7{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.8s forwards;}
+  .t8{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.9s forwards;}
+  .leaf{opacity:0;animation:leafpop 0.4s ease 3.2s forwards;}
+  .leaf2{opacity:0;animation:leafpop 0.4s ease 3.35s forwards;}
+  .leaf3{opacity:0;animation:leafpop 0.4s ease 3.5s forwards;}
+  .leaf4{opacity:0;animation:leafpop 0.4s ease 3.65s forwards;}
+  .leaf5{opacity:0;animation:leafpop 0.4s ease 3.8s forwards;}
+  .leaf6{opacity:0;animation:leafpop 0.4s ease 3.95s forwards;}
+  .leaf7{opacity:0;animation:leafpop 0.4s ease 4.1s forwards;}
+  .leaf8{opacity:0;animation:leafpop 0.4s ease 4.25s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .trunk,.b1,.b2,.b3,.b4,.b5,.b6,.t1,.t2,.t3,.t4,.t5,.t6,.t7,.t8{animation:none;stroke-dashoffset:0;}
+    .leaf,.leaf2,.leaf3,.leaf4,.leaf5,.leaf6,.leaf7,.leaf8{animation:none;opacity:1;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--green);
+    color:#05080a;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.earth{background:var(--earth);color:#e8e4d8;}
+  .band.dim{background:#162012;color:var(--green);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--green);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--green);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card.e:hover{box-shadow:5px 5px 0 var(--earth);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--green);
+  }
+  .card.e .num{color:var(--earth);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.e .meta b{color:var(--earth);}
+
+  /* PULL QUOTE */
+  .pull{
+    border-left:4px solid var(--green);padding:14px 20px;margin:22px 0;
+    background:var(--greentint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull.earth{border-left-color:var(--earth);background:var(--earthtint);}
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COL PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* MAP PATH SVG — Beagle route */
+  @keyframes routedraw{0%{stroke-dashoffset:1400}100%{stroke-dashoffset:0}}
+  .route{stroke-dasharray:1400;stroke-dashoffset:1400;animation:routedraw 4s cubic-bezier(.2,.8,.2,1) .5s forwards;}
+  @media(prefers-reduced-motion:reduce){.route{animation:none;stroke-dashoffset:0;}}
+
+  /* DEBATE SECTION */
+  .debate{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);}
+  .debate-side{padding:20px 22px;}
+  .debate-side.wilberforce{border-right:1px solid var(--line);background:var(--earthtint);}
+  .debate-side.huxley{background:var(--greentint);}
+  .debate-side .speaker{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;}
+  .debate-side.wilberforce .speaker{color:var(--earth);}
+  .debate-side.huxley .speaker{color:var(--green);}
+  .debate-side p{font-size:14.5px;color:#c8c4b4;}
+  @media(max-width:600px){.debate{grid-template-columns:1fr;}.debate-side.wilberforce{border-right:none;border-bottom:1px solid var(--line);}}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{background:var(--card);border:1px solid var(--line);padding:12px 16px;flex:1;min-width:130px;}
+  .stat .n{font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--green);display:block;line-height:1;}
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Darwin series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-origin.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">darwin series · volume 2 · his world</span>
+    <div class="masthead">
+      <div>
+        <h1>Victorian <em>England</em></h1>
+        <p class="dek">Darwin did not think in a vacuum. He thought inside <b>Victorian England</b> — its geology, its natural history mania, its empire, its theology, and its confrontation with the industrial age. Understanding the world he moved through illuminates why his idea took the shape it did.</p>
+      </div>
+      <!-- Animated tree SVG — same motif, world context -->
+      <svg class="art" width="200" height="200" viewBox="0 0 200 200" role="img"
+           aria-label="Animated phylogenetic tree — world context">
+        <text x="100" y="198" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#7a8070" letter-spacing="0.1em">ORIGINS</text>
+        <line class="trunk" x1="100" y1="190" x2="100" y2="130" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+        <line class="b1" x1="100" y1="130" x2="55" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b2" x1="100" y1="130" x2="145" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b3" x1="55" y1="90" x2="30" y2="58" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b4" x1="55" y1="90" x2="68" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b5" x1="145" y1="90" x2="132" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b6" x1="145" y1="90" x2="170" y2="58" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="t1" x1="30" y1="58" x2="16" y2="36" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t2" x1="30" y1="58" x2="36" y2="33" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t3" x1="68" y1="55" x2="58" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t4" x1="68" y1="55" x2="78" y2="28" stroke="#16a34a" stroke-width="1" stroke-linecap="round"/>
+        <line class="t5" x1="132" y1="55" x2="122" y2="28" stroke="#16a34a" stroke-width="1" stroke-linecap="round"/>
+        <line class="t6" x1="132" y1="55" x2="142" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t7" x1="170" y1="58" x2="164" y2="33" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t8" x1="170" y1="58" x2="184" y2="36" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <circle class="leaf" cx="16" cy="32" r="4" fill="#92400e"/>
+        <circle class="leaf2" cx="36" cy="29" r="4" fill="#92400e"/>
+        <circle class="leaf3" cx="58" cy="26" r="4" fill="#92400e"/>
+        <circle class="leaf4" cx="78" cy="24" r="4" fill="#16a34a"/>
+        <circle class="leaf5" cx="122" cy="24" r="4" fill="#16a34a"/>
+        <circle class="leaf6" cx="142" cy="26" r="4" fill="#92400e"/>
+        <circle class="leaf7" cx="164" cy="29" r="4" fill="#92400e"/>
+        <circle class="leaf8" cx="184" cy="32" r="4" fill="#92400e"/>
+        <circle cx="100" cy="190" r="4" fill="#92400e"/>
+        <text x="107" y="127" font-family="Newsreader,serif" font-size="8" font-style="italic" fill="#7a8070">I think</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VICTORIAN ENGLAND -->
+  <div class="band">I. Victorian England</div>
+  <div class="reveal" style="animation-delay:.1s">
+    <div class="prose-2">
+      <div>
+        <h2>The <em>Industrializing</em> North</h2>
+        <p>Darwin was born in the same year as Abraham Lincoln and the same decade as the steam locomotive. The England of his lifetime transformed almost beyond recognition. The industrializing North — Manchester, Birmingham, Leeds — was becoming the workshop of the world: coal-driven, iron-built, densely urbanized, and crawling with the kind of concentrated poverty that Malthus had analyzed and Dickens would depict. Child labor was commonplace until the Factory Acts; cholera epidemics swept London four times in Darwin's lifetime.</p>
+        <p>This industrial disruption mattered to Darwin's theory in at least two ways. First, it made the population mathematics of Malthus viscerally real — you could <em>see</em> overcrowding and its consequences in Manchester's slums in a way no English country gentleman could ignore. Second, the breeding and improvement of livestock — a key practical concern of industrialized agriculture — demonstrated natural selection's analog, artificial selection, at a scale too obvious to miss.</p>
+      </div>
+      <div>
+        <h2>The <em>Landed</em> South</h2>
+        <p>Darwin himself inhabited a different England — the landed gentry South. His family was wealthy, educated, and Dissenting (non-Anglican Protestant), which gave them a certain intellectual independence from Church of England orthodoxy. The country house, the naturalist's garden, the amateur collector's cabinet: these were the material conditions of Darwin's thought.</p>
+        <p>Natural history was, in this world, a respectable hobby — even an aristocratic one. Gilbert White's <em>Natural History of Selborne</em> (1789) had made close observation of one's local landscape fashionable. The Zoological Society of London (founded 1826), the British Museum's natural history collections, and the Royal Botanic Gardens at Kew were expanding. Darwin's world was one in which a gentleman could be a serious scientist without professional appointment — and did not need university employment to conduct original research.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="n">1837</span><span class="l">Victoria Crowned</span></div>
+      <div class="stat"><span class="n">1830s</span><span class="l">Railway Revolution Begins</span></div>
+      <div class="stat"><span class="n">1859</span><span class="l">Year of Origin</span></div>
+      <div class="stat"><span class="n">1851</span><span class="l">Great Exhibition, Crystal Palace</span></div>
+    </div>
+  </div>
+
+  <!-- THE BEAGLE -->
+  <div class="band earth">II. HMS Beagle — The Voyage</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <p>HMS Beagle was a 10-gun brig-sloop of 90 feet. It was not a grand ship — Darwin was violently seasick for most of the voyage and slept in a hammock in the chart room, his feet resting against the collection drawers. The vessel carried 74 people in a space designed for 65. The mission was cartographic: FitzRoy was completing a survey of South American coastal waters begun on the first Beagle voyage.</p>
+    <p>Darwin's official role was ambiguous. He was not the ship's surgeon (that was Robert McCormick, who left the voyage early in a dispute about collecting rights). He was FitzRoy's gentleman companion — a social role that kept the Captain from the isolation that had driven his predecessor to suicide — and a naturalist, though not formally employed as one. His salary was zero; his father financed the trip.</p>
+
+    <!-- Simplified world route SVG -->
+    <div style="margin:20px 0;background:var(--card);border:1px solid var(--line);padding:10px;">
+      <svg width="100%" viewBox="0 0 700 280" role="img" aria-label="Schematic map showing the route of HMS Beagle 1831-1836">
+        <!-- Ocean background -->
+        <rect width="700" height="280" fill="#0a1208"/>
+        <!-- Simplified continent outlines -->
+        <!-- Americas rough -->
+        <path d="M90,30 L100,50 L95,70 L105,90 L100,120 L110,150 L105,180 L115,210 L105,240 L100,265" stroke="#3a4a38" stroke-width="1.5" fill="none"/>
+        <!-- Europe/Africa rough -->
+        <path d="M320,25 L330,45 L325,70 L335,100 L330,130 L340,165 L330,200 L340,240 L330,265" stroke="#3a4a38" stroke-width="1.5" fill="none"/>
+        <!-- Australia rough -->
+        <path d="M570,110 L590,100 L620,110 L630,130 L620,155 L595,165 L570,155 L560,135 Z" stroke="#3a4a38" stroke-width="1.5" fill="none"/>
+
+        <!-- Route of Beagle — schematic -->
+        <path class="route"
+          d="M 140,70
+             C 180,60 230,58 260,65
+             C 290,72 305,88 290,105
+             C 240,130 210,145 200,175
+             C 195,200 200,230 210,255
+             C 230,240 250,200 260,175
+             C 270,155 265,135 280,120
+             C 300,100 330,95 355,100
+             C 370,105 375,120 365,135
+             C 355,148 340,145 340,145
+             C 360,135 390,125 430,115
+             C 480,103 530,105 570,120
+             C 600,132 620,148 610,168
+             C 595,190 560,195 545,185
+             C 530,175 535,155 550,145
+             C 570,130 600,125 625,135
+             C 650,145 660,165 640,180
+             C 610,200 570,205 545,210
+             C 510,218 480,215 450,205
+             C 410,192 390,175 370,168
+             C 340,158 305,160 285,170
+             C 260,182 255,200 270,210
+             C 290,222 320,218 330,205
+             C 345,188 330,170 300,178
+             C 270,186 255,200 250,218
+             C 245,235 250,252 260,260"
+          stroke="#16a34a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Key stops -->
+        <circle cx="140" cy="70" r="4" fill="#92400e"/>
+        <text x="143" y="68" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">Plymouth</text>
+        <circle cx="200" cy="145" r="3" fill="#16a34a"/>
+        <text x="203" y="143" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">Brazil</text>
+        <circle cx="210" cy="235" r="3" fill="#16a34a"/>
+        <text x="213" y="233" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">Patagonia</text>
+        <circle cx="365" cy="135" r="3" fill="#16a34a"/>
+        <text x="345" y="128" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">Cape Verde</text>
+        <circle cx="580" cy="145" r="4" fill="#92400e"/>
+        <text x="555" y="140" font-family="Space Mono,monospace" font-size="7" fill="#e8e4d8">Galápagos</text>
+        <circle cx="610" cy="168" r="3" fill="#16a34a"/>
+        <text x="612" y="167" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">Tahiti</text>
+        <circle cx="555" cy="185" r="3" fill="#16a34a"/>
+        <text x="540" y="198" font-family="Space Mono,monospace" font-size="7" fill="#7a8070">NZ/Aus</text>
+
+        <!-- Title -->
+        <text x="10" y="270" font-family="Space Mono,monospace" font-size="8" fill="#7a8070" letter-spacing="0.08em">HMS BEAGLE ROUTE — 1831–1836 (SCHEMATIC)</text>
+      </svg>
+    </div>
+
+    <div class="grid">
+      <div class="card e">
+        <span class="num">★</span>
+        <h3>Captain Robert FitzRoy</h3>
+        <p class="what">26 years old at departure. Brilliant cartographer, devout evangelical Christian, reformist on slavery (unlike his aristocratic Tory family). He and Darwin got on well for most of the voyage despite disagreements on slavery. FitzRoy later became a pioneer of meteorology, inventing the weather forecast. He died by suicide in 1865, tormented partly by the feeling that he had helped Darwin's heresy reach the world.</p>
+        <div class="meta"><b>Later:</b> Founded UK Meteorological Office, 1854</div>
+      </div>
+      <div class="card e">
+        <span class="num">★</span>
+        <h3>The Galápagos — 5 Weeks</h3>
+        <p class="what">The Galápagos occupies only 5 weeks of a 5-year voyage — September 17 to October 20, 1835. Darwin visited four islands: San Cristóbal, Floreana, Isabela, and Santiago. He collected 68 bird specimens, many tortoises, iguanas, and plants. He did not label specimens by island, which would later frustrate his analysis. The insight about island variation came after, in London, from Gould's bird identifications and the Vice-Governor's comment about tortoise shells.</p>
+        <div class="meta"><b>Duration:</b> 5 weeks &nbsp;·&nbsp; <b>Islands:</b> 4 of 13</div>
+      </div>
+      <div class="card e">
+        <span class="num">★</span>
+        <h3>The Geological Revelation</h3>
+        <p class="what">Darwin carried Charles Lyell's just-published <em>Principles of Geology</em> (1830–33) on the voyage. Lyell argued for an ancient Earth shaped by slow, uniform processes still operating today — uniformitarianism. This deep time was essential to Darwin: natural selection is too slow to matter without millions of years. Darwin's coral reef theory, worked out on the voyage, was Lyellian geology applied to the Pacific.</p>
+        <div class="meta"><b>Lyell:</b> Lifelong friend; eventually Darwin's advocate</div>
+      </div>
+      <div class="card e">
+        <span class="num">★</span>
+        <h3>The Fossil Revelation</h3>
+        <p class="what">In Patagonian cliffs at Punta Alta in 1832, Darwin found fossil bones of giant extinct mammals: Megatherium (giant ground sloth), Glyptodon (armored mammal like a Volkswagen Beetle), Toxodon, and Macrauchenia. All were extinct, all resembled living South American animals, and all were in South American strata. Why would God create and then destroy species that were replaced by similar ones in the same place? The biogeographic pattern implied continuity, not creation.</p>
+        <div class="meta"><b>Location:</b> Punta Alta, Argentina, 1832</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MALTHUS -->
+  <div class="band">III. Thomas Malthus — The Missing Piece</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <div class="prose-2">
+      <div>
+        <h2>The <em>Essay on Population</em></h2>
+        <p>In October 1838 — two years after returning from the Beagle, more than a year after opening his transmutation notebook — Darwin read Thomas Robert Malthus's <em>An Essay on the Principle of Population</em> (1798). <em>"In October 1838,"</em> Darwin wrote in his Autobiography, <em>"I happened to read for amusement Malthus on Population, and being well prepared to appreciate the struggle for existence which everywhere goes on from long-continued observation of the habits of animals and plants, it at once struck me that under these circumstances favourable variations would tend to be preserved, and unfavourable ones to be destroyed."</em></p>
+        <p>Malthus had argued that human populations tend to increase geometrically (2→4→8→16) while food supplies increase arithmetically (2→4→6→8). The consequence is a perpetual "struggle for existence" in which pestilence, famine, and war check population growth. His work was intended as a conservative political argument against poor relief — if poverty is a natural check on overpopulation, charity is counterproductive.</p>
+      </div>
+      <div>
+        <h2>What Darwin <em>Did</em> With It</h2>
+        <p>Darwin stripped Malthus of his politics and generalized his mathematics. The struggle for existence was not merely a human problem — it was universal. Every species overproduces; every environment is limited. Competition is therefore ubiquitous and continuous. And given that struggling individuals vary, those that vary advantageously will disproportionately survive — and pass on their variations.</p>
+        <p>This was the click. Darwin had the variation (from his observations of domestic breeds and wild populations). He had deep time (from Lyell). He had biogeographic distribution patterns (from the Beagle). What he needed was the demographic pressure that would make selection <em>inevitable</em> rather than optional. Malthus provided it.</p>
+        <p>Alfred Russel Wallace, working independently in the Malay Archipelago in 1858, also cited reading Malthus as the moment his own theory crystallized. Two men, on opposite sides of the Earth, read the same economist in feverish intellectual states and independently derived the same biological mechanism. It was almost certainly the most consequential political economy paper in the history of biology.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WALLACE -->
+  <div class="band earth">IV. Alfred Russel Wallace — The Joint Discovery</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <p>On 18 June 1858, Darwin received a letter from Alfred Russel Wallace — a professional specimen collector working in the Malay Archipelago — enclosing a paper titled <em>On the Tendency of Varieties to Depart Indefinitely from the Original Type.</em> Darwin read it and felt the floor fall away. Wallace had independently derived natural selection in almost exactly the same form Darwin had been nursing for twenty years.</p>
+    <p>Wallace, twelve years younger than Darwin, had grown up working-class, left school at fourteen, and worked as a land surveyor before becoming a professional naturalist collecting specimens for sale to European museums. He lacked Darwin's social capital but matched him in powers of observation. His 1855 paper (<em>"On the Law which has Regulated the Introduction of New Species"</em>) had already sketched the biogeographic patterns that implied evolution — Darwin had read it, recognized the direction, but hoped Wallace hadn't yet found the mechanism.</p>
+    <p>Now he had. Darwin was distraught — he told Lyell he felt like he had been anticipated, would be seen as a plagiarist if he published now. Friends Joseph Hooker and Charles Lyell arranged a joint presentation. On 1 July 1858, both Darwin's and Wallace's papers were read at the Linnean Society of London — Darwin's extracts from 1844 and 1857 letters, and Wallace's new paper. Neither man was present. The audience was underwhelmed; the Linnean Society president that year later wrote that 1858 had not been a year of any great discoveries.</p>
+
+    <div class="pull earth">
+      "I was then living with some Dyaks, and one day something brought to my recollection Malthus's 'Principles of Population,' which I had read about twelve years before. I thought of his clear exposition of 'the positive checks to increase' — disease, accidents, war, and famine — which keep down the population of savage races... and suddenly there flashed upon me the idea of the survival of the fittest."
+      <cite>— Alfred Russel Wallace, My Life, 1905</cite>
+    </div>
+
+    <div class="grid wide">
+      <div class="card">
+        <span class="num">1858</span>
+        <h3>The Joint Paper</h3>
+        <p class="what">Read at the Linnean Society, 1 July 1858. Darwin contributed extracts from his 1844 essay and an 1857 letter to Asa Gray. Wallace contributed his 1858 paper. Priority was established for Darwin through the earlier documents; Wallace later said he considered the arrangement fair and was honored to be associated with Darwin. The two remained friends for life.</p>
+        <div class="meta"><b>Venue:</b> Linnean Society, London &nbsp;·&nbsp; <b>Audience reaction:</b> Polite; unimpressed</div>
+      </div>
+      <div class="card">
+        <span class="num">✦</span>
+        <h3>Wallace's Divergences</h3>
+        <p class="what">Wallace later diverged from Darwin on key points: he believed natural selection could not explain the human mind (which he attributed to supernatural intervention) and rejected sexual selection as a mechanism. He also became a committed spiritualist in old age. Darwin found these later views inexplicable. Despite divergences, Wallace championed Darwinian evolution publicly throughout his long life (he died in 1913, aged 90).</p>
+        <div class="meta"><b>Agreement:</b> Natural selection for most traits &nbsp;·&nbsp; <b>Divergence:</b> Human mind, spiritualism</div>
+      </div>
+      <div class="card">
+        <span class="num">✦</span>
+        <h3>Priority and Character</h3>
+        <p class="what">Wallace never publicly contested priority and repeatedly credited Darwin as the primary theorist of natural selection. Some later historians have suggested the Linnean Society arrangement gave Darwin priority he might not have earned in open competition; others note that Darwin's 20 years of documented private work clearly established his independent derivation. The balance of historical evidence supports the joint-discovery characterization.</p>
+        <div class="meta"><b>Wallace's verdict:</b> "Darwin's greatest work was the evidence"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OXFORD DEBATE -->
+  <div class="band">V. The 1860 Oxford Debate</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <p>On 30 June 1860, seven months after the publication of <em>Origin</em>, the British Association for the Advancement of Science held a meeting in Oxford. Bishop Samuel Wilberforce — nicknamed "Soapy Sam" for his smooth eloquence — had been briefed by Richard Owen and was prepared to demolish Darwinism. Thomas Henry Huxley — "Darwin's bulldog," who had made it his personal mission to advance evolutionary science — was present and ready to respond.</p>
+
+    <div class="debate">
+      <div class="debate-side wilberforce">
+        <div class="speaker">Samuel Wilberforce — Bishop of Oxford</div>
+        <p>Wilberforce delivered a polished, scientifically engaged (if ultimately mistaken) critique of natural selection, arguing it was empirically unsupported and logically incoherent. Then, reportedly turning to Huxley with a smile, he asked whether it was through his grandfather or his grandmother that Huxley claimed descent from a monkey.</p>
+        <p>The question was intended as a devastating rhetorical blow — invoking the Victorian horror at the suggestion of simian ancestry as a reductio ad absurdum of the theory.</p>
+      </div>
+      <div class="debate-side huxley">
+        <div class="speaker">Thomas Henry Huxley — "Darwin's Bulldog"</div>
+        <p>Huxley's reported reply (the exact words are disputed — we have no transcript): <em>"I would not be ashamed to have a monkey for my ancestor; but I would be ashamed to be connected with a man who used great gifts to obscure the truth."</em></p>
+        <p>The room erupted. A woman reportedly fainted. One naval officer (FitzRoy himself, who had come to the meeting) stood and waved a Bible, shouting that the book answered all questions. It was the most dramatic public moment in the history of evolutionary biology.</p>
+      </div>
+    </div>
+
+    <div class="pull" style="margin-top:22px;">
+      "The interest of the audience was divided between the logical quality of the arguments and the social drama of a bishop and a scientist in direct public conflict — a confrontation that Victorian propriety normally prevented."
+      <cite>— Janet Browne, Charles Darwin: The Power of Place, 2002</cite>
+    </div>
+
+    <p>The drama of the Oxford debate has been greatly amplified by subsequent retelling. No one at the meeting took stenographic notes; accounts vary significantly. What is historically certain is that the public conflict made evolution newsworthy in a new way — no longer confined to specialist journals but fought out in lecture halls, newspapers, and eventually parlors across Britain.</p>
+  </div>
+
+  <!-- RECEPTION -->
+  <div class="band dim">VI. Reception — Scientific and Theological</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="prose-2">
+      <div>
+        <h2>Scientific <em>Acceptance</em></h2>
+        <p>The popular memory of evolution's reception focuses on religious resistance. The scientific picture is more interesting: acceptance among professional naturalists was <em>rapid</em> by historical standards. Within a decade of publication, common descent from a shared ancestor was accepted by the overwhelming majority of professional biologists in Britain, Europe, and North America.</p>
+        <p>What scientists were more skeptical of was the <em>mechanism</em> — natural selection specifically. The objection was not theological but mathematical: without a theory of inheritance, selection seemed unable to preserve small advantages because blending inheritance (the dominant model before Mendel) would average out any new variation within a few generations. This "swamping problem" was not resolved until the rediscovery of Mendel's particulate inheritance in 1900 and the mathematical work of Fisher, Haldane, and Wright in the 1920s–30s.</p>
+      </div>
+      <div>
+        <h2>Theological <em>Response</em></h2>
+        <p>The popular narrative of immediate, total theological rejection is a later mythology. The actual Victorian theological response was far more diverse. Many Anglican clergymen — including Henslow himself — accepted common descent relatively quickly, reading evolution as God's method of creation. The idea of a "warfare between science and religion" was itself partly a rhetorical construction of the 1870s–80s, promoted by figures like John William Draper and Andrew Dickson White as part of a campaign for scientific professionalization.</p>
+        <p>The more significant and durable resistance came not from mainstream Anglican theology but from conservative evangelical and fundamentalist traditions — particularly in the United States, where the cultural conditions for sustained anti-evolution politics were different. The 1925 Scopes Trial was an American phenomenon. In Britain, the Church of England had largely accommodated evolution by the late nineteenth century.</p>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:8px;">
+      <div class="card">
+        <span class="num">✓</span>
+        <h3>Early Supporters</h3>
+        <p class="what">T. H. Huxley, Joseph Dalton Hooker (botanist, Director of Kew), Asa Gray (Harvard botanist, American champion), Ernst Haeckel (Germany), Charles Lyell (geology). Most leading British naturalists within a decade.</p>
+        <div class="meta"><b>Acceptance:</b> Common descent rapid &nbsp;·&nbsp; <b>Skepticism:</b> Natural selection mechanism</div>
+      </div>
+      <div class="card">
+        <span class="num">✗</span>
+        <h3>Early Opponents</h3>
+        <p class="what">Richard Owen (comparative anatomist, Darwin's former ally — turned bitter opponent). Adam Sedgwick (Cambridge geologist who had taught Darwin). Louis Agassiz (Harvard, America's leading naturalist — resisted to his death in 1873). Wilberforce (theological-scientific hybrid objection).</p>
+        <div class="meta"><b>Owen's motive:</b> Partly professional jealousy &nbsp;·&nbsp; <b>Agassiz:</b> Never accepted</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Darwin's Response to Critics</h3>
+        <p class="what">Darwin revised <em>Origin</em> through six editions specifically to address objections. He added "survival of the fittest" at Spencer's urging, added a historical sketch of predecessors, and expanded the chapter on objections. Each revision also introduced minor retreats — more latitude for use-inheritance (Lamarckism) — that later editions needed to walk back. The 1st edition is generally considered the sharpest.</p>
+        <div class="meta"><b>Editions:</b> 6 in Darwin's lifetime (1859–1872)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Darwin Series · Vol. 2 of 4 · <em>His World</em> &nbsp;·&nbsp; Series: charles-darwin</div>
+    <div style="margin-top:4px;font-size:9px;">Primary sources: Browne, <em>Charles Darwin: Voyaging</em> (1995); <em>The Power of Place</em> (2002); Numbers, <em>Darwinism Comes to America</em> (1998); Raby, <em>Alfred Russel Wallace: A Life</em> (2001).</div>
+  </div>
+
+</div>
+</body>
+</html>

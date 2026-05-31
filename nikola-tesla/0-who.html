@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Vol. 0 — The Man | Nikola Tesla 1856–1943</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #06080f;
+    --electric: #3b82f6;
+    --violet: #8b5cf6;
+    --gold: #f59e0b;
+    --text: #d1d5db;
+    --text-dim: #6b7280;
+    --border: rgba(59,130,246,0.25);
+    --card-bg: rgba(59,130,246,0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,8,15,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--electric);
+    margin-right: 2rem;
+    white-space: nowrap;
+  }
+  .site-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .site-nav a:hover, .site-nav a.active {
+    color: var(--electric);
+    border-color: var(--border);
+    background: rgba(59,130,246,0.08);
+  }
+  .site-nav a.active { color: #fff; border-color: var(--electric); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero-svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(700px, 100vw);
+    height: min(700px, 100vw);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(139,92,246,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero .dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 1.5rem;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  .vol-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--electric);
+    color: #000;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── COIL SVG ANIMATIONS ── */
+  @keyframes arc-pulse {
+    0%,100% { opacity: 0; stroke-dashoffset: 200; }
+    30%,70% { opacity: 1; stroke-dashoffset: 0; }
+  }
+  @keyframes spark-fly {
+    0% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+    100% { opacity: 0; transform: scale(0) rotate(360deg); }
+  }
+  @keyframes ring-pulse {
+    0%,100% { r: 80; opacity: 0.6; }
+    50% { r: 140; opacity: 0; }
+  }
+  @keyframes coil-glow {
+    0%,100% { filter: drop-shadow(0 0 8px #3b82f6); }
+    50% { filter: drop-shadow(0 0 24px #8b5cf6) drop-shadow(0 0 48px #3b82f6); }
+  }
+  @keyframes lightning-1 {
+    0%,100% { opacity: 0; stroke-dashoffset: 300; }
+    15%,35% { opacity: 0.9; stroke-dashoffset: 0; }
+    50% { opacity: 0; }
+  }
+  @keyframes lightning-2 {
+    0%,40%,100% { opacity: 0; stroke-dashoffset: 300; }
+    55%,75% { opacity: 0.9; stroke-dashoffset: 0; }
+    90% { opacity: 0; }
+  }
+  @keyframes lightning-3 {
+    0%,65%,100% { opacity: 0; stroke-dashoffset: 300; }
+    70%,85% { opacity: 0.85; stroke-dashoffset: 0; }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--electric);
+    margin: 2rem 0 0.75rem;
+  }
+  p { margin-bottom: 1.25rem; }
+  em { color: #e5e7eb; }
+  strong { color: #fff; font-weight: 600; }
+
+  .section-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--violet);
+    margin-bottom: 1.25rem;
+  }
+  .band {
+    background: var(--electric);
+    color: #000;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 4rem 0;
+  }
+  .band h2 { color: #000; font-size: clamp(1.4rem, 3vw, 2rem); }
+  .band p { color: rgba(0,0,0,0.75); font-size: 1.05rem; max-width: 640px; margin: 1rem auto 0; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--electric);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.5rem;
+  }
+  .card h3 { margin-top: 0; font-size: 1rem; }
+  .card p { font-size: 0.925rem; color: var(--text-dim); margin-bottom: 0; }
+
+  /* ── TIMELINE ── */
+  .timeline { margin: 2.5rem 0; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 89px;
+    top: 0; bottom: -2rem;
+    width: 1px;
+    background: var(--border);
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--electric);
+    padding-top: 0.15rem;
+    text-align: right;
+  }
+  .tl-body h3 { margin-top: 0; font-size: 1rem; }
+  .tl-body p { font-size: 0.925rem; color: var(--text-dim); margin: 0; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--electric);
+    margin: 2.5rem 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: #e5e7eb;
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    font-style: normal;
+  }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .colophon a { color: var(--electric); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .tl-item { grid-template-columns: 60px 1fr; gap: 1rem; }
+    .tl-item::before { left: 59px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="site-nav" aria-label="Series navigation">
+  <span class="series-label">Tesla / 4 Vols.</span>
+  <a href="0-who.html" class="active">Vol. 0 — The Man</a>
+  <a href="1-ac.html">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <!-- Animated Tesla Coil SVG -->
+  <svg class="hero-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="coilGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#8b5cf6" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Pulsing rings -->
+    <circle cx="350" cy="350" r="80" fill="none" stroke="#3b82f6" stroke-width="1"
+      style="animation: ring-pulse 3s ease-out infinite; transform-origin: 350px 350px;" opacity="0.5"/>
+    <circle cx="350" cy="350" r="80" fill="none" stroke="#8b5cf6" stroke-width="1"
+      style="animation: ring-pulse 3s ease-out infinite 1s; transform-origin: 350px 350px;" opacity="0.4"/>
+    <circle cx="350" cy="350" r="80" fill="none" stroke="#3b82f6" stroke-width="1"
+      style="animation: ring-pulse 3s ease-out infinite 2s; transform-origin: 350px 350px;" opacity="0.3"/>
+
+    <!-- Coil body -->
+    <g filter="url(#glow)" style="animation: coil-glow 2.5s ease-in-out infinite; transform-origin: 350px 350px;">
+      <!-- Primary coil (base) -->
+      <ellipse cx="350" cy="440" rx="90" ry="22" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.9"/>
+      <ellipse cx="350" cy="458" rx="85" ry="20" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.7"/>
+      <ellipse cx="350" cy="476" rx="80" ry="18" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+
+      <!-- Secondary coil (tower) -->
+      <line x1="260" y1="440" x2="295" y2="250" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+      <line x1="440" y1="440" x2="405" y2="250" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+
+      <!-- Coil windings -->
+      <path d="M295,430 Q350,415 405,430" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.8"/>
+      <path d="M293,415 Q350,400 407,415" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.75"/>
+      <path d="M291,400 Q350,385 409,400" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.7"/>
+      <path d="M290,385 Q350,370 410,385" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.65"/>
+      <path d="M290,370 Q350,355 410,370" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>
+      <path d="M291,355 Q350,340 409,355" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.55"/>
+      <path d="M293,340 Q350,325 407,340" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.5"/>
+      <path d="M295,325 Q350,310 405,325" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.45"/>
+      <path d="M297,310 Q350,295 403,310" fill="none" stroke="#8b5cf6" stroke-width="1.5" opacity="0.4"/>
+      <path d="M298,295 Q350,280 402,295" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+      <path d="M299,280 Q350,265 401,280" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.55"/>
+      <path d="M299,265 Q350,250 401,265" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.6"/>
+
+      <!-- Terminal sphere -->
+      <circle cx="350" cy="240" r="28" fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.9"/>
+      <circle cx="350" cy="240" r="14" fill="rgba(59,130,246,0.3)" stroke="#8b5cf6" stroke-width="1.5"/>
+      <circle cx="350" cy="240" r="6" fill="#fff" opacity="0.9"/>
+    </g>
+
+    <!-- Lightning bolts radiating outward -->
+    <!-- Bolt 1: upper-right -->
+    <path d="M370,225 L420,175 L410,165 L470,130 L455,120 L510,90"
+      fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-1 4s ease-in-out infinite;"/>
+
+    <!-- Bolt 2: right -->
+    <path d="M376,242 L440,235 L435,225 L500,220 L495,208 L560,200"
+      fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-2 4s ease-in-out infinite;"/>
+
+    <!-- Bolt 3: upper-left -->
+    <path d="M330,225 L280,175 L290,162 L230,125 L242,112 L185,80"
+      fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-3 4s ease-in-out infinite;"/>
+
+    <!-- Bolt 4: left -->
+    <path d="M325,242 L260,238 L265,226 L195,224 L200,210 L130,208"
+      fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-1 4s ease-in-out infinite 1.3s;"/>
+
+    <!-- Bolt 5: upward -->
+    <path d="M348,212 L340,160 L352,155 L345,100 L358,95 L350,40"
+      fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-2 4s ease-in-out infinite 0.7s;"/>
+
+    <!-- Bolt 6: lower-right diagonal -->
+    <path d="M374,258 L430,310 L418,318 L475,365 L462,372 L520,420"
+      fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: lightning-3 4s ease-in-out infinite 2s;"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="vol-badge">Volume 0 of 4</span>
+    <span class="kick">Nikola Tesla &mdash; Complete History</span>
+    <h1>The Man</h1>
+    <p class="dates">1856 &ndash; 1943</p>
+    <p>Born in a Serbian village during a lightning storm. Died alone in a New York hotel room. Between those two poles, he rewired the world.</p>
+  </div>
+</header>
+
+<!-- ── ORIGINS ── -->
+<main>
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Origins / 1856–1875</p>
+    <h2>Smiljan, 1856</h2>
+    <p>Nikola Tesla was born on <strong>10 July 1856</strong> in Smiljan, a small Serbian village in the Austrian Empire — today's Croatia. The birth came at midnight during a thunderstorm, a detail that would acquire an almost mythological resonance over the course of his life. He was the fourth of five children.</p>
+    <p>His father, <strong>Reverend Milutin Tesla</strong>, was an Orthodox Christian priest and a writer of sermons, a man of considerable learning and rhetorical force. His mother, <strong>Georgina Ana Tesla</strong> (née Mandić), was illiterate in the formal sense but possessed a remarkable mechanical ingenuity: she spent her evenings inventing and building tools for the household — looms, churns, and devices that simplified the grinding labor of peasant domestic life. Tesla would later credit her as the true origin of his inventive temperament, saying she was "an inventor of the first order."</p>
+
+    <div class="pull-quote">
+      "My mother was an inventor of the first order and would, I believe, have achieved great things had she not been born at a time and place that denied her the opportunity."
+      <cite>— Nikola Tesla, "My Inventions" (1919)</cite>
+    </div>
+
+    <p>The village of Smiljan sat at the edge of the Dinaric Alps. The landscape was electric — in both senses. Lightning storms rolled in off the Adriatic. The young Nikola was transfixed by natural phenomena: static electricity from the fur of his cat Macak, the shimmering of ice crystals in cold air, the mechanical properties of water wheels on the nearby stream. He was not simply curious — he was constitutionally compelled. He claimed that when he observed the flickering of his cat's coat in the dark, and saw the sparks of static, he recognized electricity as something alive and cosmic, not merely a laboratory curiosity.</p>
+
+    <h3>The Family Mind</h3>
+    <p>Tesla's older brother <strong>Dane</strong> was widely considered the more gifted of the two, the family favorite, a prodigy of memory and intelligence. Dane died in a riding accident when Nikola was five. The grief fell heavily on the household. Tesla spent decades believing his parents saw Dane's ghost when they looked at him — a shadow of inadequacy he could never quite escape, no matter how vast his achievements became.</p>
+    <p>His memory was extraordinary — what we would now call <strong>eidetic</strong>. He could memorize entire books, recite passages verbatim years later, and — crucially — visualize three-dimensional mechanical systems with such precision that he could run them mentally, observe wear, detect imbalance, and correct errors, all without a drawing or a model. He later described this as his primary method: he never built a machine until it was <em>complete and perfected</em> in his mind. His lab notebooks, when they survive, show finished designs, not iterative sketches.</p>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Education / 1875–1882</p>
+    <h2>Graz &amp; Prague</h2>
+    <p>Tesla received his early schooling in Smiljan and Gospić. His intellect was obvious and alarming to his teachers. He could solve calculus problems in his head so rapidly that they suspected him of cheating. His father had planned a career in the priesthood for him; Nikola had other intentions.</p>
+    <p>In <strong>1875</strong>, Tesla enrolled at the <em>Joanneum Polytechnic School</em> (today Graz University of Technology) in Graz, Austria. He threw himself into the coursework with a ferocity that alarmed even his professors. He reportedly studied 20 hours a day in his first year, mastering nine languages (he would eventually speak eight fluently), and audited courses he had no requirement to attend. He received the highest possible grades in nearly every subject his first year.</p>
+    <p>Then he collapsed — physically, financially, and academically. He lost a scholarship. He became addicted to billiards and cards. He dropped out before completing his degree, a fact he concealed for most of his life. The University of Graz has no record of his graduation, a biographical detail his early hagiographers smoothed over. Tesla himself encouraged the belief that he had graduated with honors.</p>
+
+    <h3>The Rotating Magnetic Field — A Vision in the Park</h3>
+    <p>In 1882, while walking in a Budapest park at dusk and reciting from <em>Faust</em>, Tesla experienced a sudden visionary episode. He stopped mid-stride, seized a stick, and drew in the dirt the diagram of what would become the <strong>AC induction motor</strong>. The concept arrived whole: a rotating magnetic field produced by alternating currents in multiple coils, spinning a rotor without brushes, without sparks, without the mechanical friction that crippled all existing DC motors. He saw it completely. He had been thinking about the problem of brushless motor commutation for years; it resolved itself in a single flash of perception.</p>
+    <p>This was not a mystical event — it was the fruit of years of accumulated, obsessive technical thinking. But Tesla processed and retrieved ideas in a way that was qualitatively different from his peers. The vision in the park was real. It preceded his first working model by six years.</p>
+
+    <p>He moved to Prague but never formally enrolled at Charles University there. He audited lectures, studied independently, and continued working for a telegraph company. His formal education was, by the standards of the day, incomplete. His actual education was something else entirely.</p>
+  </div>
+</section>
+
+<!-- ── EDISON ── -->
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Edison / 1882–1885</p>
+    <h2>Paris, Then New York</h2>
+    <p>In 1882 Tesla took a job with the <strong>Continental Edison Company</strong> in Paris, working on DC electrical installations across Europe. He was quickly recognized as exceptional. Charles Batchelor, Edison's chief aide in Paris, wrote of him: <em>"I know two great men and you are one of them; the other is this young man."</em></p>
+    <p>In <strong>1884</strong>, Batchelor sent Tesla to New York with a letter of introduction. Tesla arrived on 6 June 1884 with four cents in his pocket, a poem he had been writing, and a set of calculations for a flying machine. He had been robbed en route. He went immediately to Edison's lab at Pearl Street.</p>
+
+    <div class="pull-quote">
+      "I was a mere animal at work during those days. I rarely slept. I never ate a meal without working. I was, for that period, a slave."
+      <cite>— Tesla, on his time at Edison's lab</cite>
+    </div>
+
+    <h3>The Edison Promise</h3>
+    <p>Edison put Tesla to work immediately on the problems that plagued his DC generating stations. Tesla worked 18-hour days, redesigning dynamos, solving problems that had stumped Edison's entire engineering staff. Edison reportedly told him: <em>"There's fifty thousand dollars in it for you — if you can do it."</em> Tesla did it. When he asked for the money, Edison laughed. <em>"Tesla,"</em> he said, <em>"you don't understand our American humor."</em> He offered a modest salary increase instead.</p>
+    <p>Tesla quit. He walked out of Edison's employ in 1885 and never returned. The breach was permanent — professional, philosophical, and personal. What followed would become the most consequential rivalry in the history of electrical engineering: the <strong>War of Currents</strong>.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-label">Key Difference</p>
+        <h3>Edison's DC</h3>
+        <p>Direct current — steady flow in one direction. Efficient in local loops but loses power rapidly over long distances. Voltage cannot be stepped up or down by a transformer.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Tesla's AC</p>
+        <h3>Alternating Current</h3>
+        <p>Current that reverses direction at a fixed frequency. Voltage is transformable — step up for long-distance transmission, step down for safe household use. Scales to any distance.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">The Consequence</p>
+        <h3>The World's Power Grid</h3>
+        <p>Every electrical outlet in the world today runs on AC at 50 or 60 Hz. Tesla's architecture won — decades after his death.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE BREAK ── -->
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Independence / 1886–1900</p>
+    <h2>His Own Lab</h2>
+    <p>After leaving Edison, Tesla faced a period of grinding poverty. He dug ditches for the Edison Electric Company — one of the cruelest ironies in the history of invention. Investors who had promised to fund his AC motor experiments pulled out. He lived in boarding houses and survived on the charity of acquaintances.</p>
+    <p>The turn came in <strong>1887</strong> when Alfred Brown of the Western Union Telegraph Company and attorney Charles Peck agreed to back him. Tesla opened a laboratory on South Fifth Avenue in Manhattan. Within a year he had constructed and demonstrated working models of <strong>the polyphase AC induction motor</strong> and <strong>transformer system</strong>.</p>
+    <p>In 1888 he delivered a lecture to the American Institute of Electrical Engineers that was, by all accounts, a thunderclap. He laid out the complete polyphase AC system — motor, generator, transformer, transmission — in precise theoretical and practical detail. George Westinghouse, who attended or received reports of the lecture, immediately understood its significance. He visited Tesla's lab, and within months had acquired Tesla's patents for $60,000 plus royalties.</p>
+
+    <h3>Westinghouse and the World's Fair</h3>
+    <p>The partnership with <strong>George Westinghouse</strong> was among the most productive in Tesla's life. Westinghouse was not a scientist — he was an industrialist, an organizer of manufacturing and capital on a vast scale. He understood that Tesla's AC system was not merely better than Edison's DC; it was categorically superior for any network that needed to reach beyond a few city blocks. Westinghouse put his company's full weight behind Tesla's patents.</p>
+    <p>The climax came at the <strong>World's Columbian Exposition</strong> of 1893 in Chicago — more fully covered in Volume 2. Westinghouse and Tesla lit the entire exposition with AC power, demonstrating the technology to 27 million visitors. The visual effect — of a city lit entirely by this invisible current, controlled and transmitted through a system Tesla had conceived in a Budapest park — was decisive. The future was settled.</p>
+
+    <p>Then, under financial pressure from Westinghouse during a period of corporate crisis, Tesla <strong>tore up his royalty contract</strong>. He handed back his royalties — potentially hundreds of millions of dollars — because he believed in Westinghouse's mission and did not want a legal battle over patent fees to slow the electrification of the world. "You have been my friend," he told Westinghouse. He would die in debt.</p>
+  </div>
+</section>
+
+<!-- ── LATE LIFE ── -->
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Decline / 1900–1943</p>
+    <h2>Wardenclyffe and the Long Falling</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1899</div>
+        <div class="tl-body">
+          <h3>Colorado Springs</h3>
+          <p>Builds a massive experimental station in Colorado. Claims to have transmitted electrical power wirelessly to lamps 25 miles distant. Creates artificial lightning bolts 130 feet long, knocking out the Colorado Springs power grid.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1901</div>
+        <div class="tl-body">
+          <h3>JP Morgan, Wardenclyffe Tower</h3>
+          <p>Morgan funds a wireless transmission tower on Long Island. Tesla's stated goal: global wireless communication. His private goal: global wireless power transmission — free electricity broadcast to the world. Morgan cuts funding when he grasps the implications for profit metering.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1917</div>
+        <div class="tl-body">
+          <h3>Wardenclyffe Demolished</h3>
+          <p>The Wardenclyffe Tower is demolished by the US government, which suspected it could be used for enemy communication during WWI. Tesla's financial ruin is complete.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1920s–30s</div>
+        <div class="tl-body">
+          <h3>Isolation and Pigeons</h3>
+          <p>Tesla moves through a series of New York hotels, running up unpaid bills, surviving on a modest salary from Westinghouse. He feeds pigeons daily in Bryant Park and at the New York Public Library. A white female pigeon becomes his closest companion. He is largely forgotten by the public.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1943</div>
+        <div class="tl-body">
+          <h3>Room 3327, Hotel New Yorker</h3>
+          <p>On 7 January 1943, a maid discovers Tesla dead in his room on the 33rd floor of the Hotel New Yorker. He was 86. Within hours, the FBI — acting through the Office of Alien Property — seized his papers, notes, and experimental materials. His belongings were impounded and classified for years.</p>
+        </div>
+      </div>
+    </div>
+
+    <p>The seizure of his papers by the US government after his death has generated decades of speculation. The FBI files, when eventually released, showed agents scrambling to determine whether his theoretical notes on a "death beam" — a particle-beam weapon he had publicized in the 1930s — contained any technically actionable weapon designs. The consensus of engineers who later reviewed the documents: they did not. The classified period ended without a weapon. The papers eventually passed to Yugoslavia and are now housed at the <strong>Nikola Tesla Museum</strong> in Belgrade.</p>
+  </div>
+</section>
+
+<div class="band">
+  <div class="container">
+    <h2>The Mind Behind the Machines</h2>
+    <p>Tesla held approximately 300 patents across 26 countries. He spoke eight languages. He had no heirs, left no estate worth speaking of, and died owing four months' rent to the Hotel New Yorker — which quietly forgave the debt. The world he had built hums through every electrical socket on earth.</p>
+  </div>
+</div>
+
+<!-- ── CHARACTER PORTRAIT ── -->
+<section class="section">
+  <div class="container">
+    <p class="section-intro">Character</p>
+    <h2>The Inner Man</h2>
+    <p>Tesla was obsessive-compulsive before the term existed. He would not touch other people's hair. He required everything on his dining table to be divisible by three. He counted his steps. He experienced severe sensory overloads — lights, sounds, smells could be physically painful to him. A pearl necklace on a woman's throat could cause him to leave a room.</p>
+    <p>He was also a showman of extraordinary flair. His laboratory demonstrations — high-frequency currents flowing through his body to light fluorescent tubes, sparks exploding from his Tesla coil in theatrical arcs, his ability to explain the most complex electromagnetic theory in vivid, accessible language — made him a celebrity in the 1890s. Mark Twain was a frequent visitor to his lab; their friendship, between the most celebrated writer and the most celebrated inventor of their age, was warm and genuine.</p>
+    <p>He never married. He kept late hours and worked in isolation for long stretches. In old age he was gaunt, hawk-nosed, and dressed in impeccable though threadbare suits. He dined alone at Delmonico's, then later at the Hotel New Yorker restaurant, where waiters kept his reserved table. He had a gift for friendship — with Twain, with architect Stanford White, with various journalists — but his intimacy was always with his work and, in the end, with his pigeons.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-label">Memory</p>
+        <h3>Eidetic Visualization</h3>
+        <p>Could design machines entirely in his mind, run them mentally to test for wear and failure, and then build them — exactly as visualized — without blueprints.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Languages</p>
+        <h3>Polyglot</h3>
+        <p>Fluent in Serbian, Czech, German, French, English, Italian, Hungarian, and Latin. Recited Goethe's Faust from memory in German while walking in Budapest parks.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Sensitivity</p>
+        <h3>Sensory Extremes</h3>
+        <p>Extreme sensitivity to light, sound, and touch — likely what we now call sensory processing differences. He experienced sensory input at a different intensity than most people.</p>
+      </div>
+      <div class="card">
+        <p class="card-label">Work Ethic</p>
+        <h3>Total Immersion</h3>
+        <p>Routinely worked 18–20 hours a day for years at a stretch. Rarely took holidays. Described sleep as a waste of time, though he reportedly dreamed in vivid technical color.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <div class="container">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Nikola Tesla Series &mdash; Volume 0 of 4 &nbsp;|&nbsp; <a href="1-ac.html">Continue to Vol. 1: The Work &rarr;</a></p>
+    <p style="margin-top:0.5rem; font-size:0.55rem; opacity:0.5;">Historical scholarship. Sources: Tesla's "My Inventions" (1919); W. Bernard Carlson, "Tesla: Inventor of the Electrical Age" (Princeton, 2013); Marc Seifer, "Wizard" (1996); Nikola Tesla Museum, Belgrade.</p>
+  </div>
+</footer>
+
+</body>
+</html>

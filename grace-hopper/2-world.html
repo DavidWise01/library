@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grace Hopper — Vol. 2: Her World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04080f;
+      --navy: #1e40af;
+      --gold: #eab308;
+      --gold-dim: rgba(234,179,8,0.18);
+      --gold-border: rgba(234,179,8,0.35);
+      --text: #d4d8e2;
+      --text-muted: #8b92a5;
+      --text-bright: #eef1f7;
+      --surface: #090f1a;
+      --surface2: #0d1525;
+      --border: rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(4,8,15,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 2rem;
+    }
+    .site-nav__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      gap: 0.25rem; height: 52px; flex-wrap: wrap;
+    }
+    .site-nav__series {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; color: var(--gold);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-right: 1rem; white-space: nowrap;
+    }
+    .site-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--text-muted);
+      text-decoration: none; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.35rem 0.7rem;
+      border-radius: 3px; transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--gold); background: var(--gold-dim); }
+    .site-nav a.active { border: 1px solid var(--gold-border); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #060a18 0%, #0a1430 50%, #0d1c40 100%);
+      overflow: hidden; padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--gold-border);
+      position: relative;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 60% at 80% 30%, rgba(30,64,175,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero__content { position: relative; max-width: 1100px; margin: 0 auto; }
+    .hero__vol {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--gold);
+      letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800; color: var(--text-bright);
+      line-height: 1.1; margin-bottom: 0.6rem;
+    }
+    .hero__subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; font-weight: 500; color: var(--gold);
+      letter-spacing: 0.08em; margin-bottom: 1.5rem;
+    }
+    .hero__lede {
+      font-size: 1.1rem; font-style: italic;
+      color: var(--text); max-width: 700px; line-height: 1.8;
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--gold);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: block; margin-bottom: 0.4rem;
+    }
+    .section-head { margin-bottom: 2.5rem; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--text-bright); line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .band {
+      background: var(--navy); color: var(--text-bright);
+      padding: 3rem 2rem; margin: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .band__inner { max-width: 1100px; margin: 0 auto; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.5rem 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .card__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--gold);
+      letter-spacing: 0.12em; margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.96rem; color: var(--text); line-height: 1.7; }
+
+    .pullquote {
+      border-left: 4px solid var(--gold);
+      margin: 2.5rem 0; padding: 1.2rem 2rem;
+      background: var(--surface2);
+      border-radius: 0 6px 6px 0;
+    }
+    .pullquote__text {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem; font-style: italic;
+      color: var(--text-bright); line-height: 1.65; margin-bottom: 0.6rem;
+    }
+    .pullquote__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--text-muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ── ERA TABLE ── */
+    .era-table {
+      width: 100%; border-collapse: collapse; margin: 2rem 0;
+      font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    }
+    .era-table th {
+      background: var(--navy); color: var(--text-bright);
+      padding: 0.7rem 1rem; text-align: left;
+      font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+      border-bottom: 2px solid var(--gold-border);
+    }
+    .era-table td {
+      padding: 0.7rem 1rem; border-bottom: 1px solid var(--border);
+      color: var(--text); vertical-align: top; line-height: 1.5;
+    }
+    .era-table tr:hover td { background: var(--surface2); }
+    .era-table .td-year { color: var(--gold); white-space: nowrap; }
+    .era-table .td-machine { color: var(--text-bright); font-weight: 700; }
+
+    /* ── WORLD MAP SECTION ── */
+    .world-section {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+    }
+    .world-section__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    /* ── PERSON CARDS ── */
+    .person-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 1.3rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .person-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .person-card__name {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-bright); margin-bottom: 0.25rem;
+    }
+    .person-card__role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .person-card p { font-size: 0.9rem; color: var(--text); line-height: 1.65; }
+
+    .prose p { margin-bottom: 1.25rem; font-size: 1rem; line-height: 1.8; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── TIMELINE-H (horizontal era display) ── */
+    .era-bar {
+      position: relative;
+      margin: 2.5rem 0 3rem;
+    }
+    .era-bar__track {
+      height: 6px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    .era-bar__markers {
+      display: flex;
+      justify-content: space-between;
+    }
+    .era-bar__marker {
+      text-align: center;
+      flex: 1;
+    }
+    .era-bar__marker-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+    .era-bar__marker-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      margin-top: 0.15rem;
+    }
+
+    .colophon {
+      background: var(--surface);
+      border-top: 1px solid var(--gold-border);
+      padding: 2rem; margin-top: 5rem; text-align: center;
+    }
+    .colophon__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; color: var(--text-muted);
+      letter-spacing: 0.1em; line-height: 2;
+    }
+    .colophon__attr a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .world-section__grid { grid-template-columns: 1fr; }
+      .era-table { font-size: 0.72rem; }
+      .era-table th, .era-table td { padding: 0.5rem 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="site-nav" aria-label="Series navigation">
+  <div class="site-nav__inner">
+    <span class="site-nav__series">Grace Hopper</span>
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-compiler.html">Vol. 1 — Compiler</a>
+    <a href="2-world.html" class="active">Vol. 2 — World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__content">
+    <span class="hero__vol">Volume 2 of 4</span>
+    <h1 class="hero__title">Her World</h1>
+    <p class="hero__subtitle">WWII · ENIAC · UNIVAC · Cold War · Mainframes · The Navy</p>
+    <p class="hero__lede">Grace Hopper did not invent computing in a vacuum. She operated inside a specific historical moment: a global war, a transition from mechanical to electronic machines, a Navy that needed computation to survive, and an industry that was building itself from nothing. Understanding her work requires understanding that world.</p>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- ERA BAR -->
+  <section>
+    <div class="section-head">
+      <span class="kick">Historical Arc</span>
+      <h2>The Computing Era She Lived Through</h2>
+    </div>
+    <div class="era-bar">
+      <div class="era-bar__track"></div>
+      <div class="era-bar__markers">
+        <div class="era-bar__marker">
+          <div class="era-bar__marker-year">1939–45</div>
+          <div class="era-bar__marker-label">WWII / Electro-<br>mechanical</div>
+        </div>
+        <div class="era-bar__marker">
+          <div class="era-bar__marker-year">1945–55</div>
+          <div class="era-bar__marker-label">First electronic<br>computers</div>
+        </div>
+        <div class="era-bar__marker">
+          <div class="era-bar__marker-year">1955–65</div>
+          <div class="era-bar__marker-label">Commercial<br>computing</div>
+        </div>
+        <div class="era-bar__marker">
+          <div class="era-bar__marker-year">1965–75</div>
+          <div class="era-bar__marker-label">Mainframe era /<br>Cold War buildup</div>
+        </div>
+        <div class="era-bar__marker">
+          <div class="era-bar__marker-year">1975–86</div>
+          <div class="era-bar__marker-label">Minicomputer /<br>Hopper's Navy tenure</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WWII COMPUTING -->
+  <section style="margin-top:2rem;">
+    <div class="section-head">
+      <span class="kick">1943–1945</span>
+      <h2>WWII and the Electromechanical Machine</h2>
+    </div>
+    <div class="prose">
+      <p>The Second World War created the conditions for modern computing. Not because the war caused clever people to start thinking about computation — such thinking was already underway, from Turing's theoretical work to the analog differential analyzers at MIT — but because the war gave those projects something they had never had before: urgency, funding, and a clear military customer.</p>
+      <p>The Navy's problem was ballistics. A naval gun elevated at a given angle, with a given powder charge, against a target moving at a given speed in a given wind — the calculation of where the shell would land required tables of trigonometric functions computed to high precision. These tables took months to produce by hand. The Mark I — officially the IBM Automatic Sequence Controlled Calculator — was built at Harvard in a partnership between Howard Aiken and IBM, funded by the Navy, specifically to generate those tables faster.</p>
+      <p>The Mark I was an extraordinary machine. It was 51 feet long and 8 feet tall. It contained 765,000 components: 530 miles of wire, 3,500 relays, 2,225 counters, and 1,464 rotary switches. It weighed five tons. It could perform three addition or subtraction operations per second, one multiplication per second, and one division per twelve seconds. It ran continuously, day and night, seven days a week. The sound it made — thousands of mechanical relays clicking — was audible from outside the building. It sounded, people said, like a room full of telephone exchanges.</p>
+      <p>Grace Hopper was assigned to this machine in December 1943. She had no experience with computers. She was handed a logbook and a set of firing table specifications and told to compute. She spent two months reading the manual. Then she began writing programs, and within a year she was writing the manual herself.</p>
+    </div>
+  </section>
+
+  <!-- MACHINE TABLE -->
+  <table class="era-table" aria-label="Key computers in Grace Hopper's career">
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Machine</th>
+        <th>Type</th>
+        <th>Location</th>
+        <th>Hopper's Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-year">1944–1945</td>
+        <td class="td-machine">Harvard Mark I</td>
+        <td>Electromechanical relay calculator</td>
+        <td>Harvard, Cambridge MA</td>
+        <td>Programmer, co-author of operating manual</td>
+      </tr>
+      <tr>
+        <td class="td-year">1947–1949</td>
+        <td class="td-machine">Harvard Mark II</td>
+        <td>Electromechanical relay (improved)</td>
+        <td>Harvard, Cambridge MA</td>
+        <td>Lead programmer — site of The Bug, Sept. 9, 1947</td>
+      </tr>
+      <tr>
+        <td class="td-year">1949</td>
+        <td class="td-machine">ENIAC (context)</td>
+        <td>First general-purpose electronic computer</td>
+        <td>University of Pennsylvania</td>
+        <td>Not directly — but its designers (Eckert-Mauchly) hired her</td>
+      </tr>
+      <tr>
+        <td class="td-year">1949–1952</td>
+        <td class="td-machine">BINAC / UNIVAC I</td>
+        <td>Electronic vacuum tube computer</td>
+        <td>Eckert-Mauchly, Philadelphia</td>
+        <td>Senior programmer — wrote A-0 compiler on UNIVAC</td>
+      </tr>
+      <tr>
+        <td class="td-year">1952–1959</td>
+        <td class="td-machine">UNIVAC I / II</td>
+        <td>Commercial electronic computer</td>
+        <td>Remington Rand, Sperry Rand</td>
+        <td>Director of automatic programming — A-0, FLOW-MATIC, COBOL foundation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- THE TRANSITION TO ELECTRONIC -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The Great Transition</span>
+      <h2>From Relays to Electrons</h2>
+    </div>
+    <div class="prose">
+      <p>The Mark I was a relay computer. Each logical operation was performed by a physical relay — a tiny electromagnetic switch that clicked open or closed thousands of times per second. Relays were reliable. They were visible. When something went wrong, you could often hear it — a relay that failed to close had a distinctive sound. You could open the panel and see the problem. Literally, in one famous case, with a flashlight and a pair of tweezers.</p>
+      <p>The move to electronic computing — vacuum tubes replacing mechanical relays — changed the scale of everything. Vacuum tubes switched in microseconds rather than milliseconds, making computers a thousand times faster. But tubes burned out constantly, ran hot, and consumed enormous amounts of power. ENIAC, completed in 1945 at the University of Pennsylvania by J. Presper Eckert and John Mauchly, used 17,468 vacuum tubes. It required a dedicated power plant and a dedicated air conditioning system. When ENIAC ran, the lights dimmed in West Philadelphia.</p>
+      <p>The important thing for Hopper's trajectory was that Eckert and Mauchly left Penn after ENIAC to found their own company — the Eckert-Mauchly Computer Corporation — with the goal of building the first commercial electronic computer. That machine was UNIVAC. When Hopper left Harvard in 1949, she joined them. She had made the transition from relay to electronic computing at exactly the right moment, in exactly the right company, with exactly the right problem to solve: how do you program something this fast without requiring every programmer to speak machine code?</p>
+    </div>
+  </section>
+
+  <!-- REMINGTON RAND AND COMMERCIAL COMPUTING BAND -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">The Commercial Era</span>
+      <h2 style="margin-bottom:1rem;">UNIVAC, Remington Rand, and the First Market</h2>
+      <div class="prose">
+        <p>Eckert-Mauchly was acquired by Remington Rand in 1950. Remington Rand — known for electric shavers, typewriters, and office equipment — became the first company to deliver a commercial electronic computer to a paying customer: UNIVAC I was delivered to the United States Census Bureau on March 31, 1951.</p>
+        <p>This moment matters for understanding Hopper's work. The Census Bureau was not a physics laboratory. It processed demographic data, employment figures, economic statistics. The people who ran those processes were not mathematicians. They were statisticians, clerks, administrators. If they were going to use UNIVAC, someone had to figure out how to make programming accessible to non-specialists. That was Hopper's problem to solve, and she knew it.</p>
+        <p>Remington Rand's competitor was IBM. IBM had been the dominant supplier of tabulating machines to American business for decades, and it moved aggressively into electronic computing in the early 1950s with the IBM 700 series. IBM's sales force was legendary. Where Remington Rand had a better machine, IBM had better relationships. By the late 1950s, IBM had taken the commanding position in commercial computing that it would hold for the next two decades. The standardization work that produced COBOL — with Hopper at the center — was partly a response to IBM's power: if COBOL ran on every vendor's machine, no single vendor could lock customers in by controlling the programming language.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVY AND COLD WAR SECTION -->
+  <section>
+    <div class="section-head">
+      <span class="kick">Military Computing</span>
+      <h2>The Navy's Problem and the Cold War's Demands</h2>
+    </div>
+    <div class="prose">
+      <p>The United States Navy after World War II faced a computing challenge that dwarfed its wartime needs. The Cold War required tracking Soviet submarines, coordinating global logistics for fleets stationed from Norfolk to Yokosuka, managing payroll and personnel records for hundreds of thousands of sailors, and computing ballistics for weapons systems whose complexity made the wartime firing tables look simple. These were not physics problems. They were data problems — exactly the kind of problem COBOL was designed to solve.</p>
+      <p>Hopper spent much of her post-retirement Navy career after 1966 standardizing the Navy's use of COBOL. When she was recalled to active duty in 1967, ostensibly for six months, she found a situation that would occupy her for the next twenty years: dozens of Navy installations running incompatible versions of COBOL on incompatible hardware. A program that ran at the Naval Supply Center in Oakland would not run at the Naval Air Systems Command in Patuxent River. Data could not be shared. Reports could not be consolidated. The bureaucracy had calcified around its computers rather than around its mission.</p>
+      <p>Hopper's response was characteristically direct. She developed and enforced standards for COBOL implementations across the Navy, working with the National Bureau of Standards (now NIST) to create formal tests for compiler compliance. If your COBOL compiler passed the test suite, your programs would run everywhere. This work — unglamorous, technical, bureaucratically difficult — is one of the most underappreciated contributions of her career. She was essentially building the software infrastructure of the American military, one standardized compiler at a time.</p>
+    </div>
+  </section>
+
+  <!-- KEY PEOPLE SECTION -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The People Around Her</span>
+      <h2>Who She Worked With and Against</h2>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">Howard Aiken</div>
+      <div class="person-card__role">Commander, USN · Harvard Mark I Architect</div>
+      <p>The Navy officer who built the Mark I and assigned Hopper to it. A brilliant engineer with a difficult personality — famously dismissive of competitors and, at times, of his own staff. He told Hopper the computer only did arithmetic. She proved him wrong. They had a complicated professional relationship for the rest of his life. He was her first mentor in computing, and she outgrew him within five years.</p>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">J. Presper Eckert &amp; John Mauchly</div>
+      <div class="person-card__role">Founders · Eckert-Mauchly Computer Corporation</div>
+      <p>The builders of ENIAC and UNIVAC. Eckert was the engineer, Mauchly the visionary. They hired Hopper away from Harvard in 1949 because they understood that the commercial computer market needed programming tools, and Hopper was the person building them. Their company was bought by Remington Rand in 1950. Hopper stayed through the acquisition and continued her compiler work under the new corporate structure.</p>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">Admiral Hyman Rickover</div>
+      <div class="person-card__role">Rear Admiral · Father of the Nuclear Navy</div>
+      <p>Rickover built the nuclear submarine program through sheer force of will against institutional resistance — a pattern Hopper recognized and respected. Both were naval officers who succeeded by refusing to accept that the existing way was the only way. Rickover's support for Hopper's work within the Navy was significant; they shared a conviction that technology was a strategic asset that required people who understood it deeply, not just managers who could procure it.</p>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">CODASYL Committee — 1959</div>
+      <div class="person-card__role">Industry Consortium · DoD-Convened</div>
+      <p>The Conference on Data Systems Languages was a rare industry-government collaboration: the Department of Defense ordered computer vendors to cooperate on a common language or lose government contracts. Representatives from IBM, Sperry Rand, Honeywell, RCA, and others sat with government representatives and, under Hopper's leadership of the Short Range Committee, produced the COBOL specification in a matter of months. The speed was remarkable; the politics were brutal. Hopper kept it together.</p>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">John von Neumann</div>
+      <div class="person-card__role">Mathematician · IAS Princeton</div>
+      <p>Von Neumann's 1945 paper on stored-program architecture — the idea that a computer's program could be stored in the same memory as its data — was the theoretical foundation of all modern computers. Hopper's work built on this directly: a compiler could only exist in a stored-program computer, where the program itself could be treated as data to be operated on. She and von Neumann never closely collaborated, but her practical work and his theoretical framework were deeply intertwined.</p>
+    </div>
+
+    <div class="person-card">
+      <div class="person-card__name">Margaret Hamilton</div>
+      <div class="person-card__role">MIT Instrumentation Laboratory · Apollo Software Lead</div>
+      <p>A generation younger than Hopper, Hamilton built on the foundations Hopper laid. The Apollo guidance computer software that put humans on the Moon in 1969 was written in a high-level assembly language that would not have existed without Hopper's proof that compilers were possible. Hamilton is the more famous name in popular culture today; in the technical lineage, Hopper comes first.</p>
+    </div>
+  </section>
+
+  <!-- CODASYL SECTION -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The Standardization Wars</span>
+      <h2>CODASYL and the Politics of a Common Language</h2>
+    </div>
+    <div class="prose">
+      <p>The story of COBOL is not just a technical story — it is a political one. In 1959, the United States Department of Defense was the largest single purchaser of computers in the world. It was buying machines from IBM, Remington Rand, Honeywell, RCA, and others. Each vendor had its own programming language, which meant that a program written for one machine had to be completely rewritten for another. This was expensive, inefficient, and a security risk: vendor lock-in gave private companies leverage over military systems.</p>
+      <p>Charles Phillips, director of the DoD's data systems policy office, convened a meeting in May 1959 at the Pentagon. He invited the major computer manufacturers and presented a simple ultimatum: either the industry produced a common business-oriented programming language that could run on multiple platforms, or the DoD would stop buying from vendors who refused to cooperate. The threat was credible. DoD represented 30% of the commercial computer market.</p>
+      <p>CODASYL was formed. Hopper chaired the Short Range Committee — the group responsible for producing an actual language specification, as opposed to the policy frameworks produced by the other committees. She had FLOW-MATIC as her working foundation and a team that spanned corporate competitors. By December 1959, the first COBOL specification was done. By 1960, it was running on UNIVAC and RCA machines. By 1961, IBM had implemented it as well. The standardization worked because the threat was real, the technical foundation was solid, and Hopper knew how to build consensus without sacrificing precision.</p>
+    </div>
+  </section>
+
+  <!-- GENDER SECTION -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The Institutional Context</span>
+      <h2>A Woman Officer in a Male Institution</h2>
+    </div>
+    <div class="prose">
+      <p>Grace Hopper entered the United States Naval Reserve in 1943 as part of the WAVES — Women Accepted for Volunteer Emergency Service. The WAVES were a wartime expedient: the Navy needed skilled people and the war had depleted its supply of available men. Women could serve as officers in administrative, technical, and support roles, but not at sea and not in combat. The formal barriers were explicit and extensive.</p>
+      <p>Within those barriers, Hopper operated with a combination of tactical compliance and strategic subversion. She wore her uniform correctly. She observed the protocols. She addressed senior officers as required. And she built things that nobody thought were possible, in ways nobody had told her she couldn't try, because she had read her orders carefully enough to know what they didn't say. The Navy's orders told her to compute. They didn't tell her how.</p>
+      <p>When the war ended, she was not automatically demobilized. She requested to remain on active duty. The Navy declined — she was too old, they said, at 38. She took a civilian position at Harvard while remaining in the Naval Reserve, and continued her computing work at Eckert-Mauchly. Her Navy career was a sequence of near-separations, recalls, extensions, and eventual extraordinary advancement. By the time she was promoted to Rear Admiral by presidential appointment in 1983, she had served in a Navy that had repeatedly tried to stop her career and was now giving her its second-highest technical distinction.</p>
+      <p>She did not speak much about gender discrimination in her public presentations. She preferred to talk about computing. But she was keenly aware of the barriers, and she consistently mentored young women in the field — not by emphasizing the obstacles, but by demonstrating that the obstacles were surmountable. Her most common advice was practical: do the work. Keep the logbook. Run it again. Document what happened. The record would do the arguing.</p>
+    </div>
+
+    <div class="pullquote">
+      <div class="pullquote__text">"You manage things; you lead people. We went astray by getting confused about that."</div>
+      <div class="pullquote__attr">Grace Hopper — on leadership, management lectures, c. 1975</div>
+    </div>
+  </section>
+
+  <!-- IBM DOMINANCE BAND -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">The Mainframe Era</span>
+      <h2 style="margin-bottom:1rem;">IBM's Rise and What It Meant</h2>
+      <div class="prose">
+        <p>By the early 1960s, IBM had established a dominance in commercial computing that would last until the personal computer revolution. The IBM 360, announced in 1964, was perhaps the most important product announcement in the history of the computer industry: a family of compatible machines spanning a 50-to-1 range of computing power, all running the same software, all addressing the same peripherals. You wrote your program once, and it ran on the smallest machine in the mailroom and the largest machine in the data center.</p>
+        <p>This was exactly the portability argument that Hopper had been making since the early 1950s. IBM implemented it in hardware and architecture; Hopper had been trying to implement it in language. COBOL on the 360 became the dominant combination for American business computing through the 1960s and 1970s. The language Hopper designed ran on the hardware IBM built, and together they created the infrastructure of the American commercial economy: payroll, inventory, billing, accounting, banking, insurance, government benefits.</p>
+        <p>Hopper's relationship with IBM was characteristically ambivalent. She respected the company's engineering, resisted its pricing power and vendor lock-in tactics, and spent years working to ensure that COBOL standards were maintained against IBM's attempts to extend the language in proprietary directions. The battle between open standards and proprietary extension is as old as COBOL itself — and Hopper fought it from inside the Navy, with the leverage that government contracts provided.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPUTING AND MORAL RESPONSIBILITY -->
+  <section>
+    <div class="section-head">
+      <span class="kick">The Moral Dimension</span>
+      <h2>Computers as a Responsibility, Not Just a Tool</h2>
+    </div>
+    <div class="prose">
+      <p>In the 1970s and 1980s, Grace Hopper gave hundreds of lectures at universities, military bases, and industry conferences. A consistent theme emerged in the later years: computing was not morally neutral. The systems being built were being used to make consequential decisions — credit approvals, military targeting, government benefit calculations — and the people building those systems had a responsibility to understand the consequences.</p>
+      <p>She was particularly concerned about the myth that computers made objective decisions. A computer did exactly what its program told it to do, and programs were written by human beings with human assumptions, human biases, and human errors. The output of a computation had only as much validity as the program that produced it and the data that fed it. When organizations treated computer output as authoritative without examining the underlying logic, they were substituting the appearance of objectivity for actual analysis. This was not a technological problem. It was a management and education problem.</p>
+      <p>Hopper argued consistently that the democratization of programming — which she had spent her career advancing — was a necessary precondition for responsible computing. If only specialists could read programs, then most people who used the outputs of programs were flying blind. The readability of COBOL was not just a usability feature; it was a governance feature. An auditor who could read the code could verify what the system was actually doing. An executive who could follow a COBOL procedure division could ask meaningful questions about it. Opacity was a form of organizational risk.</p>
+      <p>These arguments were ahead of their time in the 1970s. They are entirely mainstream — and widely ignored in practice — today.</p>
+    </div>
+  </section>
+
+  <!-- CONTEXT CARDS -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">Forces in Her World</span>
+      <h2>The Contexts That Shaped Her Work</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card__year">1941–1945</div>
+        <h3>World War II</h3>
+        <p>Created the funding and urgency for large-scale computing. The Navy needed ballistics tables. Harvard needed the Navy's money. The intersection produced the Mark I and Grace Hopper's entry into computing.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1947–1991</div>
+        <h3>Cold War Military Computing</h3>
+        <p>Soviet submarines, intercontinental ballistics, nuclear weapons logistics — the Cold War required computing at a scale that made the government the dominant buyer. Hopper's Navy work was military infrastructure as much as computer science.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1950s</div>
+        <h3>Early Commercial Market</h3>
+        <p>Eckert-Mauchly, Remington Rand, Sperry Rand, Honeywell, RCA, IBM — the commercial computer industry was a fierce, rapidly consolidating market. Hopper navigated it as a Navy officer on leave and a civilian technical director simultaneously.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1959</div>
+        <h3>CODASYL / DoD Standardization</h3>
+        <p>The DoD's decision to force standardization through CODASYL was a policy intervention that shaped the entire software industry. Hopper was both the technical architect and the political navigator of that process.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1964+</div>
+        <h3>IBM 360 and Mainframe Dominance</h3>
+        <p>IBM's family architecture defined business computing for two decades. COBOL on the 360 became the default for American commercial computing — the language Hopper designed running on the hardware IBM built.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1943–1986</div>
+        <h3>The WAVES and Women in the Navy</h3>
+        <p>Hopper entered through a wartime exception, stayed through persistence, and rose through extraordinary merit and congressional action. Her career was a sustained argument, made entirely in deeds, that the Navy's formal barriers were wrong.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ COLOPHON ══ -->
+<footer class="colophon">
+  <p class="colophon__attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank" rel="noopener">CC-BY-ND-4.0</a>
+    <br>
+    Grace Hopper Series — Volume 2: Her World &nbsp;·&nbsp; Historical record compiled in good faith from public domain sources
+    <br>
+    All rights to original arrangement and design reserved · No derivative works without attribution
+  </p>
+</footer>
+
+</body>
+</html>

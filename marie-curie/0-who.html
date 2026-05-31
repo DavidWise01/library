@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marie Curie — Vol. 0: The Person | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080d08;
+      --radium: #4ade80;
+      --violet: #a855f7;
+      --dim: #1a2a1a;
+      --mid: #2a3a2a;
+      --text: #d4e8d4;
+      --muted: #7a9a7a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #050a05ee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--radium);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--radium);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.7;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid #1a2a1a;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid #1a2a1a; }
+    nav.series-nav a:hover { color: var(--radium); background: #0d1a0d; }
+    nav.series-nav a.active { color: var(--radium); border-bottom: 2px solid var(--radium); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 40%, #0d2a1090 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.decay-anim {
+      width: min(420px, 90vw);
+      height: min(280px, 50vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 18px #4ade8055);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--radium);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #4ade8044;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--radium);
+    }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 520px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--violet);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--radium);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── KICK / BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+    .band {
+      background: var(--radium);
+      color: #080d08;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--radium);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--radium);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-year {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--radium);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #0d1a0d;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #c8ddc8;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { list-style: none; padding: 0; margin: 1.5rem 0; }
+    .timeline li {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--dim);
+      align-items: flex-start;
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .timeline .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--radium);
+      white-space: nowrap;
+      padding-top: 0.15rem;
+      min-width: 52px;
+    }
+    .timeline .tl-event { font-size: 0.95rem; color: var(--text); }
+    .timeline .tl-event strong { color: #fff; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--violet);
+      background: #150a20;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── STAT BAND ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+      margin: 2rem 0;
+      background: var(--mid);
+      border: 1px solid var(--mid);
+    }
+    .stat-cell {
+      flex: 1;
+      min-width: 130px;
+      background: var(--dim);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-cell .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--radium);
+      display: block;
+      line-height: 1;
+    }
+    .stat-cell .stat-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #050a05;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--radium); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Marie Curie</span>
+  <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+  <a href="1-radioactivity.html">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Geiger counter needle with pulse -->
+  <svg class="decay-anim" viewBox="0 0 420 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Geiger counter body -->
+    <rect x="30" y="140" width="360" height="90" rx="8" fill="#0d1a0d" stroke="#4ade80" stroke-width="1"/>
+    <!-- Dial face -->
+    <ellipse cx="210" cy="130" rx="130" ry="115" fill="#0a160a" stroke="#4ade80" stroke-width="1.2"/>
+    <!-- Dial arc markers -->
+    <path d="M 100 170 A 120 120 0 0 1 320 170" stroke="#1a3a1a" stroke-width="1" fill="none"/>
+    <!-- Tick marks -->
+    <line x1="96" y1="158" x2="88" y2="148" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <line x1="122" y1="120" x2="113" y2="113" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <line x1="165" y1="95" x2="162" y2="84" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <line x1="210" y1="88" x2="210" y2="76" stroke="#4ade80" stroke-width="1.4" opacity="0.8"/>
+    <line x1="255" y1="95" x2="258" y2="84" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <line x1="298" y1="120" x2="307" y2="113" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <line x1="324" y1="158" x2="332" y2="148" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <!-- Scale labels -->
+    <text x="80" y="185" fill="#4ade80" font-family="monospace" font-size="9" opacity="0.6">0</text>
+    <text x="188" y="72" fill="#4ade80" font-family="monospace" font-size="9" opacity="0.6">50</text>
+    <text x="326" y="185" fill="#4ade80" font-family="monospace" font-size="9" opacity="0.6">100</text>
+    <!-- Radiation symbol at center -->
+    <circle cx="210" cy="165" r="6" fill="#4ade80" opacity="0.3"/>
+    <circle cx="210" cy="165" r="2.5" fill="#4ade80"/>
+    <!-- Needle pivot -->
+    <circle cx="210" cy="165" r="5" fill="#1a3a1a" stroke="#4ade80" stroke-width="1"/>
+    <!-- Animated Needle -->
+    <line id="needle" x1="210" y1="165" x2="150" y2="100" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="0 210 165; 15 210 165; -5 210 165; 40 210 165; 10 210 165; 55 210 165; 20 210 165; 35 210 165; 5 210 165; 0 210 165"
+        keyTimes="0; 0.1; 0.2; 0.35; 0.45; 0.6; 0.7; 0.8; 0.9; 1"
+        dur="4.5s"
+        repeatCount="indefinite"
+        calcMode="spline"
+        keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1"
+      />
+    </line>
+    <!-- Glow pulse around needle tip -->
+    <circle cx="150" cy="100" r="4" fill="#4ade80" opacity="0">
+      <animate attributeName="opacity" values="0;0.8;0" dur="0.8s" repeatCount="indefinite"/>
+      <animateMotion dur="4.5s" repeatCount="indefinite">
+        <mpath href="#needle-path"/>
+      </animateMotion>
+    </circle>
+    <!-- Pulse rings on click/detection events -->
+    <circle cx="210" cy="165" r="20" fill="none" stroke="#4ade80" stroke-width="1" opacity="0">
+      <animate attributeName="r" values="20;55" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="opacity" values="0.5;0" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+    <circle cx="210" cy="165" r="20" fill="none" stroke="#a855f7" stroke-width="0.8" opacity="0">
+      <animate attributeName="r" values="20;70" dur="2s" repeatCount="indefinite" begin="0.75s"/>
+      <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite" begin="0.75s"/>
+    </circle>
+    <!-- Label -->
+    <text x="210" y="225" fill="#4ade80" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.5" letter-spacing="3">GEIGER — MÜLLER COUNTER</text>
+    <!-- Speaker dots -->
+    <circle cx="340" cy="175" r="3" fill="#4ade80" opacity="0.3"/>
+    <circle cx="350" cy="175" r="3" fill="#4ade80" opacity="0.3"/>
+    <circle cx="360" cy="175" r="3" fill="#4ade80" opacity="0.3"/>
+    <circle cx="340" cy="185" r="3" fill="#4ade80" opacity="0.3"/>
+    <circle cx="350" cy="185" r="3" fill="#4ade80" opacity="0.3"/>
+    <circle cx="360" cy="185" r="3" fill="#4ade80" opacity="0.3"/>
+    <!-- Knob -->
+    <circle cx="80" cy="180" r="12" fill="#0d1a0d" stroke="#4ade80" stroke-width="1"/>
+    <line x1="80" y1="172" x2="80" y2="168" stroke="#4ade80" stroke-width="1.5"/>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Marie Curie Series &mdash; Volume 0</p>
+  <h1>Maria <em>Skłodowska</em>-Curie</h1>
+  <p class="hero-sub">The woman who measured the invisible, named the unnamed, and refused to stop.</p>
+  <p class="hero-dates">1867 – 1934</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: ORIGINS -->
+  <section id="origins">
+    <div class="container">
+      <p class="kick">Warsaw, Russian Empire</p>
+      <h2>Born Under Occupation</h2>
+      <p>Maria Skłodowska came into the world on November 7, 1867, in Warsaw — a city then under the iron grip of the Russian Empire. Poland as a political entity had not existed since 1795, partitioned among Russia, Prussia, and Austria. Warsaw was Russian. The Polish language was suppressed in schools by decree. To be educated in one's own tongue was an act of resistance.</p>
+      <p>Her father, Władysław Skłodowski, was a physics and mathematics teacher — a man who kept a barometer, a spectroscope, and mineral specimens in the family apartment, objects of curiosity that a small girl named Maria could examine. Her mother, Bronisława, ran a boarding school for girls until tuberculosis forced her to give it up. Maria was the youngest of five children. By the time she was ten, her mother was dead. By eleven, her eldest sister Zofia had died of typhus. Grief and intellect shaped her in equal measure.</p>
+      <p>The Russian educational system in Warsaw tolerated secondary education for girls in Polish but barred them from university. Higher education — real higher education — meant leaving Poland. And leaving Poland required money that the Skłodowski family did not have.</p>
+
+      <blockquote class="pull">
+        <p>"I was taught that the way of progress was neither swift nor easy."</p>
+        <cite>— Marie Curie</cite>
+      </blockquote>
+
+      <h3>The Flying University</h3>
+      <p>Before Paris, there was the Floating University — in Polish, <em>Uniwersytet Latający</em>. A clandestine network of educators and students who met in private apartments, rotating locations so the Russian authorities could not find them. Maria Skłodowska attended, studying chemistry, anatomy, and sociology in secret. The penalty for participants was deportation to Siberia. They came anyway.</p>
+      <p>This was not merely education. It was an assertion that Polish minds belonged to Polish people. It shaped in Marie a conviction she would carry for the rest of her life: that knowledge is a form of freedom, and that its restriction is a form of violence.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE PACT -->
+  <section id="pact">
+    <div class="container">
+      <p class="kick">The Skłodowska Pact</p>
+      <h2>An Agreement Between Sisters</h2>
+      <p>Maria's elder sister Bronisława — Bronia — wanted to study medicine in Paris. The École de Médecine at the Sorbonne was one of very few universities in Europe that formally admitted women. But a passage to Paris and years of tuition and lodging cost more than either sister possessed.</p>
+      <p>They made an agreement. Maria would work as a governess in Poland — a position she found socially diminishing but economically necessary — and send the bulk of her wages to Paris to support Bronia through medical school. Once Bronia qualified, she would support Maria's own studies in turn.</p>
+      <p>For five years, from 1886 to 1891, Maria Skłodowska worked in the houses of the wealthy, teaching their children, fighting the loneliness of rural Poland, and studying on her own in the evenings. She wrote letters to Bronia. She read mathematics by lamplight. She kept a promise.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">The Governess Years — What She Taught Herself</p>
+        <p>During her years in service, Maria studied sociology, anatomy, and physics from textbooks. She also ran informal lessons for the children of local peasants — this too was a punishable act under Russian law. She did it anyway. "I describe my situation as it really is," she wrote to her brother, "so that you do not think I am satisfied, while in reality I feel a great emptiness and depression."</p>
+      </div>
+
+      <p>In 1891, Bronia wrote: come now. She was married, qualified, practicing medicine in Paris. She had a room. Maria, twenty-four years old, packed everything she owned and boarded a train for a four-day journey west across Europe, sitting in fourth class to save money, wrapped in a blanket she had brought from Warsaw.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: PARIS -->
+  <section id="paris">
+    <div class="container">
+      <p class="kick">Paris, 1891</p>
+      <h2>The Sorbonne</h2>
+      <p>She enrolled in the Faculty of Sciences at the University of Paris — known universally as the Sorbonne — in November 1891, registering as "Marie" rather than "Maria," a small Gallicization she adopted and kept. She was one of only twenty-three women in the entire Faculty of Sciences. Many of her male classmates were younger than her. None of them had lived in secret education.</p>
+      <p>She moved into a sixth-floor garret in the Latin Quarter, closer to the university than Bronia's apartment in La Villette. In winter the water in her wash basin froze. She sometimes fainted from hunger during lectures because she had forgotten to eat. She earned her <em>licence</em> in physics in 1893, first in her class. She earned her <em>licence</em> in mathematics in 1894, second in her class.</p>
+      <p>She had intended to return to Poland. A fellowship had been established to bring Polish students to Paris for a year; she had used it. She had planned to go home, to find a teaching position in Warsaw, to contribute to the national resistance by educating Polish children. She stayed in Paris because of a steel manufacturer's commission — and because of Pierre Curie.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">Achievement</p>
+          <p class="card-year">1st</p>
+          <p>In her class for the Licence ès Sciences Physiques, 1893 — the first woman to earn this degree at the Sorbonne.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Achievement</p>
+          <p class="card-year">2nd</p>
+          <p>In her class for the Licence ès Sciences Mathématiques, 1894 — one year after physics.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Living Conditions</p>
+          <p class="card-year">6°F</p>
+          <p>Temperature in her unheated garret on winter mornings. She piled her clothes on the bed at night for warmth.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Daily Budget</p>
+          <p class="card-year">2F</p>
+          <p>Her budget for food per day at the Sorbonne — approximately 40 centimes per meal. Chocolate was the cheapest caloric option.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PIERRE -->
+  <section id="pierre">
+    <div class="container">
+      <p class="kick">A Scientific Marriage</p>
+      <h2>Pierre Curie</h2>
+      <p>They met in the spring of 1894, introduced by a Polish physicist named Józef Kowalski who knew that Marie needed laboratory space and that Pierre, head of the laboratory at the School of Physics and Chemistry of the City of Paris, had it. Pierre was thirty-four. Marie was twenty-six. He had already discovered piezoelectricity with his brother Jacques. He was, like Marie, singularly devoted to science — and, by the standards of his time, unusually uninterested in the social performance of masculinity that surrounded it.</p>
+      <p>He wrote to her: "It would be a beautiful thing, a thing I dare not hope, if we could spend our life near each other, hypnotized by our dreams: your patriotic dream, our humanitarian dream, and our scientific dream." She went back to Poland that summer. He wrote more letters. She returned.</p>
+      <p>They married on July 26, 1895, in a civil ceremony in Sceaux. Marie wore a dark blue dress — chosen deliberately for practicality, so she could return to the laboratory in it afterward. No wedding rings. No church. A bicycle trip in Brittany for a honeymoon, funded by a small inheritance. They rode every day, stopped at farms for bread and milk, and carried scientific papers in their panniers.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">The Collaboration</p>
+        <p>Pierre and Marie Curie were not a scientist and his wife. They were two scientists who chose each other as partners in work and in life, which in their case were largely the same thing. When Pierre's notebooks and Marie's are compared — as historians have done — the handwriting shifts mid-experiment, mid-thought. They worked simultaneously on the same datum, checked each other's readings, argued in the margins. It was a genuinely shared scientific enterprise, rare in any era.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: DAUGHTERS AND WIDOWHOOD -->
+  <section id="daughters">
+    <div class="container">
+      <p class="kick">Family</p>
+      <h2>Irène, Ève, and the Cart Horse</h2>
+      <p>Their first daughter, Irène, was born in September 1897. Marie took eleven days away from the laboratory. She returned to weighing pitchblende. Irène was raised in part by Pierre's father, Eugène Curie, who moved in with them when Pierre's mother died. The household was a scientific commune: a grandfather who had been a physician, two parents who spent their evenings reading research papers, a child who grew up assuming that science was simply what adults did.</p>
+      <p>Their second daughter, Ève, was born in December 1904. Ève did not become a scientist. She became a journalist and writer, and she wrote what remains the most intimate biography of her mother — <em>Madame Curie</em>, published in 1937, three years after Marie's death.</p>
+      <p>On April 19, 1906, Pierre Curie walked across the Rue Dauphine in heavy rain, preoccupied, possibly blinded by his umbrella, and was struck by a horse-drawn wagon loaded with military supplies. He died instantly of a fractured skull. He was forty-six.</p>
+
+      <blockquote class="pull">
+        <p>"Everything is over. Pierre is dead. Dead. Dead. What is there to say? I am nothing but a wretched creature, lost, blind, feeble, who can only say: I am suffering. I suffer so much. I never knew how much Pierre meant to me."</p>
+        <cite>— Marie Curie, private journal, April 1906</cite>
+      </blockquote>
+
+      <p>The University of Paris offered Pierre's chair in physics to Marie. It was unprecedented. No woman had ever held a professorship at the Sorbonne. She accepted. Her first lecture, on November 5, 1906, continued Pierre's last lecture — at exactly the point where he had stopped. She did not mention him by name. The hall was packed with journalists, photographers, curious Parisians, students who had come to witness history, and a woman in black who stood at the blackboard and began discussing ionization theory.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 6: THE NOTEBOOKS -->
+  <section id="notebooks">
+    <div class="container">
+      <p class="kick">Material Consequence</p>
+      <h2>The Radioactive Notebooks</h2>
+      <p>Marie Curie died on July 4, 1934, in a sanatorium in Passy, in the French Alps. The cause of death was aplastic anemia — a bone marrow failure caused by decades of exposure to ionizing radiation. Her notebooks, her personal belongings, her cookbooks, the doorknobs of her laboratory: all remain radioactive today. The primary isotope responsible is radium-226, with a half-life of 1,601 years.</p>
+      <p>Her research notebooks are stored at the Bibliothèque nationale de France in lead-lined boxes. Researchers who wish to examine them must sign a liability waiver acknowledging the health risks. They are provided with protective equipment. The notebooks glow with an energy that Marie Curie spent her life measuring, naming, and deploying — and that her body absorbed without her knowing the mechanism of its lethality.</p>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <span class="stat-num">1,601</span>
+          <span class="stat-desc">Half-life of Ra-226 in years</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2026</span>
+          <span class="stat-desc">Year — notebooks still dangerously active</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2</span>
+          <span class="stat-desc">Nobel Prizes — Physics 1903, Chemistry 1911</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">1st</span>
+          <span class="stat-desc">Person to win two Nobel Prizes</span>
+        </div>
+      </div>
+
+      <p>She never wore gloves in the laboratory. She carried test tubes of radioactive isotopes in her coat pockets. She described radium as having "a beautiful glow in the dark" — she kept a piece of it on her bedside table to look at at night. She was not ignorant of the dangers in the abstract; she knew radiation burned the skin, knew it caused the persistent sores on her hands. She did not know, and could not have known in the scientific framework available to her, that it was destroying her marrow.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">First Person — Two Nobel Prizes</p>
+        <p>Marie Curie is the only person in history to have won Nobel Prizes in two different scientific disciplines. She won the Physics Prize in 1903 — shared with Pierre Curie and Henri Becquerel — for the discovery of radioactivity. She won the Chemistry Prize in 1911, alone, for the isolation of radium and polonium. The Nobel Committee attempted in 1903 to award the prize only to Pierre and Becquerel. Pierre refused, writing to the committee that Marie's contribution was foundational. She was included. In 1911, with Pierre dead, there was no question of attribution. The prize was hers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <p class="kick">Chronology</p>
+      <h2>A Life in Years</h2>
+      <ul class="timeline">
+        <li><span class="tl-year">1867</span><span class="tl-event"><strong>November 7:</strong> Maria Skłodowska born in Warsaw, Russian-occupied Poland. Fifth child of Władysław and Bronisława Skłodowski.</span></li>
+        <li><span class="tl-year">1878</span><span class="tl-event"><strong>Mother dies</strong> of tuberculosis. Maria is ten years old.</span></li>
+        <li><span class="tl-year">1881</span><span class="tl-event"><strong>Zofia, eldest sister, dies</strong> of typhus. Maria, fourteen, experiences her second major bereavement.</span></li>
+        <li><span class="tl-year">1883</span><span class="tl-event"><strong>Graduates secondary school</strong> with gold medal. Begins attending the clandestine Flying University.</span></li>
+        <li><span class="tl-year">1886</span><span class="tl-event"><strong>Begins governess work</strong> in rural Poland. Sends wages to sister Bronia in Paris. Studies privately at night.</span></li>
+        <li><span class="tl-year">1891</span><span class="tl-event"><strong>Arrives Paris.</strong> Enrolls at the Sorbonne Faculty of Sciences. One of 23 women in the faculty.</span></li>
+        <li><span class="tl-year">1893</span><span class="tl-event"><strong>First in class</strong> for the Licence ès Sciences Physiques — the first woman to earn this degree at the Sorbonne.</span></li>
+        <li><span class="tl-year">1894</span><span class="tl-event"><strong>Meets Pierre Curie.</strong> Earns second Licence, in mathematics.</span></li>
+        <li><span class="tl-year">1895</span><span class="tl-event"><strong>Marries Pierre Curie,</strong> July 26. Civil ceremony. Dark blue dress. Bicycle honeymoon.</span></li>
+        <li><span class="tl-year">1897</span><span class="tl-event"><strong>Irène Curie born,</strong> September 12. Marie returns to laboratory within two weeks.</span></li>
+        <li><span class="tl-year">1898</span><span class="tl-event"><strong>Discovers polonium and radium.</strong> Coins the term "radioactivity." Two announcements to the Academy of Sciences.</span></li>
+        <li><span class="tl-year">1903</span><span class="tl-event"><strong>Nobel Prize in Physics</strong> — shared with Pierre and Becquerel. First Nobel awarded to a woman. Awarded her doctorate from the Sorbonne the same year.</span></li>
+        <li><span class="tl-year">1904</span><span class="tl-event"><strong>Ève Curie born,</strong> December 6.</span></li>
+        <li><span class="tl-year">1906</span><span class="tl-event"><strong>Pierre killed</strong> by horse-drawn wagon, April 19. Marie appointed to his professorship — first woman professor at the Sorbonne.</span></li>
+        <li><span class="tl-year">1911</span><span class="tl-event"><strong>Nobel Prize in Chemistry,</strong> alone, for isolation of radium and polonium. Refused membership to the French Academy of Sciences by two votes. Targeted by French press.</span></li>
+        <li><span class="tl-year">1914–18</span><span class="tl-event"><strong>Develops mobile X-ray units</strong> — the "petites Curies." Trains 150 women radiographers. Approximately one million X-ray procedures performed.</span></li>
+        <li><span class="tl-year">1920</span><span class="tl-event"><strong>Founds the Curie Institute,</strong> Paris.</span></li>
+        <li><span class="tl-year">1932</span><span class="tl-event"><strong>Founds the Radium Institute,</strong> Warsaw — now the Maria Skłodowska-Curie Institute of Oncology.</span></li>
+        <li><span class="tl-year">1934</span><span class="tl-event"><strong>Dies July 4</strong> of aplastic anemia, Sancellemoz sanatorium, Passy. Cause: radiation exposure accumulated over decades of work.</span></li>
+        <li><span class="tl-year">1995</span><span class="tl-event"><strong>Reinterred</strong> at the Panthéon in Paris, the first woman honored on her own merit.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION: IRÈNE -->
+  <section id="irene">
+    <div class="container">
+      <p class="kick">The Second Nobel</p>
+      <h2>Irène Joliot-Curie</h2>
+      <p>Irène Curie grew up in a household that treated science as a natural language. She assisted her mother with the mobile X-ray units during the First World War, beginning at age seventeen. She studied physics and chemistry at the Sorbonne. She married Frédéric Joliot in 1926; they worked together, as her parents had, and took the hyphenated name Joliot-Curie.</p>
+      <p>In 1935, one year after Marie's death, Irène and Frédéric Joliot-Curie received the Nobel Prize in Chemistry for the synthesis of new radioactive elements — artificial radioactivity. Marie Curie had won two Nobel Prizes. Her daughter won one. No other family in history has produced two Nobel laureate generations in the sciences.</p>
+      <p>Irène Joliot-Curie died in 1956 of leukemia, almost certainly caused by radiation exposure. She had assisted her mother with the X-ray units. She had worked with radioactive materials her entire adult life. The radiation that her mother had discovered and named, that had killed her mother, killed her too.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="container">
+    <p class="col-attr">
+      ROOT0-ATTRIBUTION-v1.0<br/>
+      David Lee Wise / ROOT0 / TriPod LLC<br/>
+      Marie Curie Series — Volume 0: The Person<br/>
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a> — Share freely, do not modify without attribution
+    </p>
+    <div class="col-lic">CC-BY-ND-4.0 | ROOT0 | TriPod LLC</div>
+  </div>
+</footer>
+
+</body>
+</html>

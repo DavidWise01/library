@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marie Curie — Vol. 2: Her World | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080d08;
+      --radium: #4ade80;
+      --violet: #a855f7;
+      --dim: #1a2a1a;
+      --mid: #2a3a2a;
+      --text: #d4e8d4;
+      --muted: #7a9a7a;
+      --amber: #f59e0b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px; line-height: 1.72;
+    }
+
+    nav.series-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #050a05ee; backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--radium);
+      display: flex; align-items: center;
+      padding: 0 1.5rem; height: 48px; overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.18em;
+      color: var(--radium); white-space: nowrap;
+      margin-right: 1.5rem; opacity: 0.7;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); text-decoration: none;
+      padding: 0 1rem; height: 48px; display: flex; align-items: center;
+      border-right: 1px solid #1a2a1a; white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid #1a2a1a; }
+    nav.series-nav a:hover { color: var(--radium); background: #0d1a0d; }
+    nav.series-nav a.active { color: var(--radium); border-bottom: 2px solid var(--radium); }
+
+    .hero {
+      position: relative; min-height: 500px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 4rem 2rem 3rem; overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 40%, #1a0a2a80 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.world-anim {
+      width: min(460px, 92vw); height: min(280px, 52vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 18px #a855f744);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.22em;
+      color: var(--radium); margin-bottom: 0.8rem; opacity: 0.8;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif; font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1.1;
+      text-align: center; color: #fff;
+      text-shadow: 0 0 40px #a855f744; margin-bottom: 0.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--violet); }
+    .hero-sub {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 1.15rem; color: var(--muted);
+      text-align: center; max-width: 560px; margin-top: 0.6rem;
+    }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff; margin-bottom: 1.2rem; line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 1.1rem; color: var(--violet);
+      margin-bottom: 0.7rem; margin-top: 2rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .kick {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted);
+      margin-bottom: 0.5rem; display: block;
+    }
+    .band {
+      background: var(--radium); color: #080d08;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem; display: inline-block;
+    }
+    .band-violet {
+      background: var(--violet); color: #fff;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem; display: inline-block;
+    }
+
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.2rem; margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim); border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s; cursor: default;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--radium); }
+    .card .card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--radium); margin-bottom: 0.5rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;
+      color: #fff; margin-bottom: 0.4rem; line-height: 1.3;
+    }
+    .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+
+    /* Violet-themed cards for obstacles */
+    .card.obstacle { border-color: #3a1a5a; background: #120a1e; }
+    .card.obstacle:hover { box-shadow: 6px 6px 0 var(--violet); }
+    .card.obstacle .card-label { color: var(--violet); }
+    .card.obstacle .card-title { color: var(--violet); }
+
+    blockquote.pull {
+      border-left: 3px solid var(--radium);
+      padding: 1.2rem 1.5rem; margin: 2rem 0; background: #0d1a0d;
+    }
+    blockquote.pull p {
+      font-style: italic; font-size: 1.15rem;
+      color: #c8ddc8; margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted);
+    }
+
+    blockquote.pull.hostile {
+      border-left-color: var(--violet); background: #120a1e;
+    }
+    blockquote.pull.hostile p { color: #d8c8e8; }
+
+    .highlight-box {
+      border: 1px solid var(--violet); background: #150a20;
+      padding: 1.4rem 1.5rem; margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--violet); margin-bottom: 0.6rem;
+    }
+
+    .highlight-box.radium-box {
+      border-color: var(--radium); background: #0a160a;
+    }
+    .highlight-box.radium-box .hb-label { color: var(--radium); }
+
+    /* Newspaper mockup */
+    .newspaper {
+      border: 2px solid var(--muted);
+      padding: 1.5rem 2rem; margin: 2rem 0;
+      background: #0d0d08;
+      font-family: 'Newsreader', serif;
+    }
+    .newspaper .np-flag {
+      font-family: 'Cinzel', serif; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.3em;
+      color: var(--muted); border-bottom: 1px solid var(--muted);
+      padding-bottom: 0.5rem; margin-bottom: 0.8rem;
+    }
+    .newspaper .np-headline {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 1.4rem; color: var(--text); line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .newspaper .np-body {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.6;
+    }
+    .newspaper .np-note {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--violet); margin-top: 0.8rem; padding-top: 0.6rem;
+      border-top: 1px solid #2a1a4a;
+    }
+
+    /* Radium craze grid */
+    .craze-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1px; background: var(--mid); border: 1px solid var(--mid);
+      margin: 1.8rem 0;
+    }
+    .craze-item {
+      background: var(--dim); padding: 1.2rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .craze-item:hover { transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--radium); position: relative; z-index:1; }
+    .craze-item .ci-product {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: 0.95rem; color: #fff; margin-bottom: 0.3rem;
+    }
+    .craze-item .ci-claim {
+      font-family: 'Space Mono', monospace; font-size: 0.58rem;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--radium); margin-bottom: 0.4rem;
+    }
+    .craze-item p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0; }
+
+    footer.colophon {
+      border-top: 1px solid var(--mid); padding: 2.5rem 1.5rem;
+      text-align: center; background: #050a05;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--muted); line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--radium); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block; border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem; margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      color: var(--muted); letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Marie Curie</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-radioactivity.html">Vol. 1 — The Work</a>
+  <a href="2-world.html" class="active">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO with animated alpha particle decay diagram -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- SVG: World context visualization — city/press/academy crosshatch -->
+  <svg class="world-anim" viewBox="0 0 460 275" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Background grid (city streets / map) -->
+    <line x1="0" y1="55" x2="460" y2="55" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="0" y1="110" x2="460" y2="110" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="0" y1="165" x2="460" y2="165" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="0" y1="220" x2="460" y2="220" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="92" y1="0" x2="92" y2="275" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="184" y1="0" x2="184" y2="275" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="276" y1="0" x2="276" y2="275" stroke="#1a2a1a" stroke-width="0.6"/>
+    <line x1="368" y1="0" x2="368" y2="275" stroke="#1a2a1a" stroke-width="0.6"/>
+
+    <!-- Eiffel tower silhouette (Paris) -->
+    <polygon points="230,20 222,75 218,80 242,80 238,75" fill="none" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+    <line x1="230" y1="20" x2="230" y2="14" stroke="#4ade80" stroke-width="1.5" opacity="0.5"/>
+    <rect x="218" y="80" width="24" height="4" fill="none" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <!-- Warsaw notation -->
+    <text x="55" y="48" fill="#4ade80" font-family="monospace" font-size="8" opacity="0.5" letter-spacing="1">WARSZAWA</text>
+    <text x="200" y="14" fill="#4ade80" font-family="monospace" font-size="8" opacity="0.5" letter-spacing="1">PARIS</text>
+
+    <!-- Academy doors — closed (barring entry) -->
+    <rect x="330" y="90" width="80" height="100" fill="#0d1a0d" stroke="#a855f7" stroke-width="1.5" opacity="0.7"/>
+    <line x1="370" y1="90" x2="370" y2="190" stroke="#a855f7" stroke-width="1" opacity="0.7"/>
+    <!-- Door handle — locked -->
+    <circle cx="362" cy="142" r="3" fill="none" stroke="#a855f7" stroke-width="1.5"/>
+    <line x1="362" y1="145" x2="362" y2="152" stroke="#a855f7" stroke-width="1.5"/>
+    <!-- Academy label -->
+    <text x="340" y="205" fill="#a855f7" font-family="monospace" font-size="7" opacity="0.6" letter-spacing="1">ACADÉMIE</text>
+    <text x="343" y="215" fill="#a855f7" font-family="monospace" font-size="7" opacity="0.6" letter-spacing="1">DES SCIENCES</text>
+
+    <!-- Rejected ballot "X" -->
+    <text x="348" y="155" fill="#a855f7" font-family="monospace" font-size="28" font-weight="bold" opacity="0">
+      ✗
+      <animate attributeName="opacity" values="0;0.7;0.7;0" dur="3s" repeatCount="indefinite" begin="1s"/>
+    </text>
+
+    <!-- Press/newspaper flying particles -->
+    <rect x="30" y="110" width="42" height="30" fill="#0d0d08" stroke="#f59e0b" stroke-width="1" opacity="0.7" rx="1"/>
+    <line x1="35" y1="118" x2="67" y2="118" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    <line x1="35" y1="124" x2="67" y2="124" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    <line x1="35" y1="130" x2="55" y2="130" stroke="#f59e0b" stroke-width="0.8" opacity="0.5"/>
+    <text x="35" y="116" fill="#f59e0b" font-family="monospace" font-size="6" opacity="0.6">LE FIGARO</text>
+
+    <!-- Flying newspaper -->
+    <rect x="30" y="110" width="42" height="30" fill="#0d0d08" stroke="#f59e0b" stroke-width="1" rx="1" opacity="0">
+      <animate attributeName="opacity" values="0;0.6;0" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+      <animate attributeName="x" values="30;200;380" dur="4s" repeatCount="indefinite" begin="0.5s" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+      <animate attributeName="y" values="110;90;140" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+    </rect>
+
+    <!-- Radiation glow from woman figure center -->
+    <circle cx="184" cy="165" r="3" fill="#4ade80"/>
+    <circle cx="184" cy="165" r="18" fill="none" stroke="#4ade80" stroke-width="1" opacity="0">
+      <animate attributeName="r" values="3;35;3" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Pitchblende vat symbol -->
+    <ellipse cx="120" cy="220" rx="25" ry="10" fill="#0d1a0d" stroke="#4ade80" stroke-width="1" opacity="0.5"/>
+    <rect x="95" y="200" width="50" height="20" fill="#0d1a0d" stroke="#4ade80" stroke-width="1" opacity="0.5" rx="2"/>
+    <text x="97" y="253" fill="#4ade80" font-family="monospace" font-size="6" opacity="0.4" letter-spacing="1">PITCHBLENDE</text>
+
+    <!-- Year markers -->
+    <text x="5" y="272" fill="#4ade80" font-family="monospace" font-size="7" opacity="0.3" letter-spacing="2">1867 ——————————————————————————————————————————————————————— 1934</text>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Marie Curie Series &mdash; Volume 2</p>
+  <h1>Her <em>World</em></h1>
+  <p class="hero-sub">Occupation, exclusion, scandal, and the craze that turned radiation into a luxury good — the forces that shaped and resisted her.</p>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SECTION 1: OCCUPIED WARSAW -->
+  <section id="warsaw">
+    <div class="container">
+      <p class="kick">Russian Empire, 1867–1891</p>
+      <h2>Warsaw Under Occupation</h2>
+      <p>To be born in Warsaw in 1867 was to be born into a state that did not exist. Poland had been partitioned out of existence in 1795 by Russia, Prussia, and Austria. The city of Warsaw fell to Russia. For the Skłodowski family, Polish identity was both private necessity and dangerous public claim — to speak Polish in school, to teach Polish history, to gather in unregistered groups was to risk arrest and deportation to Siberia.</p>
+      <p>The Russian administrative system imposed Russian as the language of instruction in all schools. A generation of Polish children were being educated in a language not their own, in a history not their own, under teachers who were sometimes Russian officials rather than educators. This was not incidental — it was policy. The suppression of language was the suppression of identity, and both the Russian authorities and the Polish resistance understood this perfectly.</p>
+
+      <h3>The Flying University</h3>
+      <p>The response was the <em>Uniwersytet Latający</em> — the Flying University, also translated as the Floating University. From approximately 1882 onward, a clandestine network of educators offered courses in Polish history, natural science, sociology, and literature in private apartments across Warsaw. The courses moved constantly — hence "flying" — to avoid the tsarist police who would have arrested participants for illegal assembly and unlicensed education.</p>
+      <p>Maria Skłodowska attended these sessions beginning around 1882–83. She studied chemistry, anatomy, and sociology from Polish educators who were risking their freedom to teach her. The experience was formative in a way that transcended curriculum: she learned that education conducted in defiance of the state is still education; that knowledge survives suppression if people carry it in their bodies; that the act of learning is inherently political when it is forbidden.</p>
+
+      <div class="highlight-box radium-box">
+        <p class="hb-label">The Flying University Today</p>
+        <p>The Flying University operated intermittently in Warsaw until Polish independence in 1918. It reconstituted itself in some form during every occupation — including the Nazi occupation of 1939–45, when Polish educators ran clandestine university-level courses under penalty of death. The model that Maria Skłodowska participated in as a teenager became a recurring pattern of Polish intellectual resistance. The Radium Institute she founded in Warsaw in 1932 was, in a sense, its institutional heir.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE SORBONNE IN THE 1890s -->
+  <section id="sorbonne-world">
+    <div class="container">
+      <p class="kick">Paris, 1891</p>
+      <h2>The Sorbonne — Barely Open to Women</h2>
+      <p>When Marie arrived at the University of Paris in 1891, the institution had been formally admitting women since 1868 — but the formal and the social were different categories entirely. Women attended lectures where male students sometimes shouted at them. Women could not enter many of the laboratories on equal terms with men. The cités universitaires, student residences, did not admit women. Women could earn degrees; they could not easily become professors, because the title of professor at the Sorbonne was a civil service position and women were barred from most French civil service roles.</p>
+      <p>Paris in the 1890s was the center of several overlapping crises. The Dreyfus Affair — the wrongful conviction of Jewish army officer Alfred Dreyfus on fabricated treason charges — was dividing France along lines of nationalism, antisemitism, and institutional loyalty. The affair began in 1894 and did not resolve until 1906. It polarized French intellectual life: on one side, the monarchists, the military establishment, the Catholic Church, and the nationalist press; on the other, the republicans, the scientists, the writers — Émile Zola published his famous "J'Accuse" letter in 1898, the year the Curies discovered radium.</p>
+      <p>Marie Curie lived in this Paris. She knew Zola's work. Pierre was openly republican. The scientific community she moved in was, broadly, Dreyfusard — which meant it was also the community most subject to nationalist hostility when she needed the same community's institutional support.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE ACADEMY REJECTION -->
+  <section id="academy">
+    <div class="container">
+      <p class="kick">Institutional Sexism — 1911</p>
+      <h2>The Academy Vote</h2>
+      <p>In 1911, Marie Curie was proposed for membership in the French Academy of Sciences. She was at this point the most decorated scientist in France and arguably in the world: holder of two Nobel Prizes, chair of physics at the Sorbonne, director of the Radium Institute. There was no scientific argument against her membership. The argument against her membership was that she was a woman.</p>
+      <p>The Academy held a vote. In January 1911, the result was 28 for admission, 30 against. She was rejected by two votes. The discussion in the Academy's closed session had included explicit statements that the founding statutes of the organization had envisioned only male members — and that women's admission would change the character of the institution in ways some members found unacceptable.</p>
+
+      <div class="card-grid">
+        <div class="card obstacle">
+          <p class="card-label">Vote — January 1911</p>
+          <p class="card-title">28 for / 30 against</p>
+          <p>The margin was two votes. She was the most decorated scientist in France. The explicit argument against admission was her sex. She never applied again — a choice that says as much about the institution as about her.</p>
+        </div>
+        <div class="card obstacle">
+          <p class="card-label">The Nobel — 1903</p>
+          <p class="card-title">Pierre Refused Without Her</p>
+          <p>The Nobel Committee initially proposed awarding the 1903 Physics Prize to Pierre Curie and Henri Becquerel alone. Pierre wrote to the committee that Marie's contribution was "the basis of our common work" and refused the nomination unless she was included. She was included.</p>
+        </div>
+        <div class="card obstacle">
+          <p class="card-label">The Professorship — 1906</p>
+          <p class="card-title">First Woman at the Sorbonne</p>
+          <p>After Pierre's death, the Sorbonne offered Marie his chair — the first professorship ever held by a woman at the university. Her first lecture drew crowds of journalists and spectators as if it were a spectacle. She continued exactly where Pierre had stopped.</p>
+        </div>
+        <div class="card obstacle">
+          <p class="card-label">Women in French Science</p>
+          <p class="card-title">No Women in Academy Until 1962</p>
+          <p>The French Academy of Sciences did not admit its first female member until 1962 — Marguerite Perey, who had been Marie Curie's laboratory assistant and who discovered the element francium. The institution that rejected Marie Curie eventually admitted the woman she had trained.</p>
+        </div>
+      </div>
+
+      <blockquote class="pull">
+        <p>"I have no desire to be admitted to the Academy. The work is what matters. Recognition by the Academy would not change the work."</p>
+        <cite>— Marie Curie (attributed), after the 1911 vote</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PRESS VILIFICATION -->
+  <section id="press">
+    <div class="container">
+      <p class="kick">1911 — The Langevin Affair</p>
+      <h2>The French Press Campaign</h2>
+      <p>In November 1911 — the same month she received her second Nobel Prize — the French press launched a sustained campaign of vilification against Marie Curie. The pretext was her personal friendship with physicist Paul Langevin, a former student of Pierre's who was separated (though not divorced) from his wife. Letters that may have been stolen from Langevin's apartment were published in the nationalist newspaper <em>Le Journal</em>.</p>
+      <p>The language used about Marie Curie in the French press of November–December 1911 was explicit and deliberate in its choices. She was called a "foreign woman," a "Polish woman," a destroyer of French families, a seductress — and in several publications, a "Jewish foreigner," despite the fact that she was neither Jewish nor, by then, a foreigner. She had been a French citizen since her marriage to Pierre. The antisemitic accusation was freely deployed against her regardless of its inaccuracy: she was foreign, she was intellectual, she was prominent, and she was a woman — the nationalist press required no more than this.</p>
+
+      <div class="newspaper">
+        <p class="np-flag">Reconstituted Press Tone — November 1911</p>
+        <p class="np-headline">"Mme. Curie — The Foreign Destroyer of the French Family"</p>
+        <p class="np-body">In the register of actual headlines and editorial voices from Le Journal, Le Petit Journal, and Le Figaro in November 1911, Marie Curie was described as a "Polish foreigner," a woman whose presence had corrupted a French scientist's home, and implicitly as a Jewish seductress — this last charge with no factual basis whatsoever. The campaign was coordinated with her candidacy for the Academy of Sciences and her receipt of the Nobel Prize in Chemistry. When she received the Nobel in Stockholm in December 1911, the Swedish Academy had privately asked her not to attend, citing the scandal. She attended.</p>
+        <p class="np-note">NOTE: The actual headlines are too vicious to reproduce directly. The register above represents the documented editorial tone, verified by historians including Susan Quinn (Marie Curie: A Life, 1995) and Naomi Pasachoff.</p>
+      </div>
+
+      <h3>Her Response</h3>
+      <p>Her response to the press campaign was public, brief, and categorical. She wrote a letter to <em>Le Temps</em>: "I find it impossible to concede that this affair concerns the public. The value of my scientific work cannot be tainted by slander and libel. I have devoted my life to science. Nothing will change this." She then traveled to Stockholm and accepted her Nobel Prize in person.</p>
+      <p>Henri Poincaré, the mathematician, wrote to the Nobel Committee defending her. Albert Einstein, who had met her at the first Solvay Conference weeks earlier, wrote to her privately: "I am outraged by the way in which you are now being treated by the crowd. But I know that you hold all of this in contempt." Einstein's letter is preserved in the archives of the Bibliothèque nationale de France.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE RADIUM CRAZE -->
+  <section id="craze">
+    <div class="container">
+      <p class="kick">Popular Culture — 1900–1930</p>
+      <h2>The Radium Craze</h2>
+      <p>Radium was not only a scientific discovery. It was, in the years between 1900 and the late 1920s, a cultural event. The element that glowed in the dark, that seemed to emit energy indefinitely without consuming itself, that could kill cancer cells — this became in the popular imagination a symbol of vitality, youth, and purity. It was marketed accordingly.</p>
+      <p>The Radium Age saw a proliferation of consumer products containing radium, thorium, or uranium compounds — or merely labeled with the words "radium" or "radio" as a marketing device. The manufacturers understood that consumers associated these words with energy, health, and modernity. Many of the products contained genuine radioactive material. The deaths from them came later.</p>
+
+      <div class="craze-grid">
+        <div class="craze-item">
+          <p class="ci-product">Radium Toothpaste</p>
+          <p class="ci-claim">Marketed benefit: whitens teeth, vitalizes gums</p>
+          <p>German "Doramad" toothpaste contained thorium compound and was marketed with a radium-glow logo. Active into the 1940s.</p>
+        </div>
+        <div class="craze-item">
+          <p class="ci-product">Radium Face Cream</p>
+          <p class="ci-claim">Marketed benefit: revitalizes aging skin</p>
+          <p>Several French and American brands marketed radium creams for "cellular renewal." Some contained real radium compounds. Consumers applied them nightly.</p>
+        </div>
+        <div class="craze-item">
+          <p class="ci-product">Radium Water</p>
+          <p class="ci-claim">Marketed benefit: health tonic, energy restorer</p>
+          <p>Radithor — radium water sold in the US — was a genuine radium solution (Ra-226 and Ra-228). Its most famous victim, Eben Byers, consumed ~1,400 bottles. He died in 1932 of radiation poisoning. His jaw had dissolved.</p>
+        </div>
+        <div class="craze-item">
+          <p class="ci-product">Luminous Paint</p>
+          <p class="ci-claim">Application: watch dials, aircraft instruments</p>
+          <p>Undium / Radiolite — radium-based luminous paint applied to watch dials by "Radium Girls" who were instructed to point their brushes on their lips. Dozens died of jaw cancer and radiation necrosis in the 1920s–30s.</p>
+        </div>
+        <div class="craze-item">
+          <p class="ci-product">Radium Clothing</p>
+          <p class="ci-claim">Marketed benefit: warmth, vitality</p>
+          <p>A Paris fashion house marketed undergarments threaded with "radium fabric." The radium content was minimal and the marketing was largely fraudulent — but the appetite for the product was real.</p>
+        </div>
+        <div class="craze-item">
+          <p class="ci-product">Radioactive Spas</p>
+          <p class="ci-claim">Marketed benefit: cure for arthritis, neurasthenia</p>
+          <p>Natural radon-rich springs had been known since antiquity. After 1898, they were rebranded as "radioactive spas." Some remain in operation today, now described more cautiously.</p>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p class="hb-label">Curie's Position on the Craze</p>
+        <p>Marie Curie was not a passive figure in the radium economy. She and Pierre had made the deliberate decision not to patent their isolation process for radium — a decision that made them no money but ensured the technique was freely available to other researchers and, eventually, manufacturers. She was aware of the commercial market for radium products and was publicly skeptical of therapeutic claims she considered unproven. She wrote in 1921: "The applications of radioactivity to medicine are still in their early stages; much of what is claimed has not been scientifically verified." This was a measured statement. She knew the element could kill. She had seen what it did to the skin.</p>
+      </div>
+
+      <h3>The Radium Girls</h3>
+      <p>The human cost of the radium craze was borne primarily by working-class women. At the US Radium Corporation (formerly Radium Luminous Materials Corporation) in Orange, New Jersey, and at other dial-painting factories, young women applied radium-based luminescent paint to watch and instrument dials. Factory supervisors instructed them to point their brushes with their lips for precision. They were told the radium was harmless.</p>
+      <p>By the mid-1920s, the dial painters — known collectively as the Radium Girls — were dying. Their bones were dissolving. Their jaws were falling apart. Several developed severe anemia — the same aplastic anemia that would kill Marie Curie herself in 1934. The US Radium Corporation suppressed medical reports, denied liability, and offered the dying women settlements in exchange for silence. Five women sued. In 1928, the case was settled for $10,000 each plus a $600 annual pension. The legal principle established — that an employer could be held liable for occupational radiation exposure — was new. It had been made possible, in part, by Marie Curie's discovery that radium was dangerous; and it was also enabled by the commercial exploitation of her work that she had tried to prevent by refusing to patent it.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 6: THE SOLVAY CONFERENCE -->
+  <section id="solvay">
+    <div class="container">
+      <p class="kick">Brussels, October 1911</p>
+      <h2>The First Solvay Conference</h2>
+      <p>Three weeks before the French press campaign began, Marie Curie attended the first Solvay Conference on Physics in Brussels — one of twenty-four invitees selected from all of Europe and the United States as the most significant physicists of the age. The photograph of that conference is among the most analyzed in the history of science: seated in the front row are Henri Poincaré, Marie Curie (the only woman), and Ernest Rutherford. Standing in the back row: a young Albert Einstein, Max Planck, and others who would collectively remake physics in the next twenty years.</p>
+      <p>Einstein and Curie met for the first time at the Solvay Conference. They became friends — genuine friends, not the celebrity-proximity that their contemporary fame sometimes produced. Einstein would later write of her: "Of all celebrated beings, she is the one whom fame has not corrupted." They took a walking holiday in the Swiss Alps with their families in 1913, and Einstein wrote to a friend: "She has the soul of a herring — in the best possible sense. That is to say: she has the clearest head of anyone I have met."</p>
+
+      <blockquote class="pull">
+        <p>"Madame Curie is, of all celebrated beings, the only one whom fame has not corrupted."</p>
+        <cite>— Albert Einstein, private correspondence, c. 1913</cite>
+      </blockquote>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="container">
+    <p class="col-attr">
+      ROOT0-ATTRIBUTION-v1.0<br/>
+      David Lee Wise / ROOT0 / TriPod LLC<br/>
+      Marie Curie Series — Volume 2: Her World<br/>
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a> — Share freely, do not modify without attribution
+    </p>
+    <div class="col-lic">CC-BY-ND-4.0 | ROOT0 | TriPod LLC</div>
+  </div>
+</footer>
+
+</body>
+</html>

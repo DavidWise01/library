@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesla Vol. 3 — Legacy | The Long Afterlife of Nikola Tesla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #06080f;
+    --electric: #3b82f6;
+    --violet: #8b5cf6;
+    --gold: #f59e0b;
+    --green: #10b981;
+    --text: #d1d5db;
+    --text-dim: #6b7280;
+    --border: rgba(59,130,246,0.25);
+    --card-bg: rgba(59,130,246,0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,8,15,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .site-nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--electric);
+    margin-right: 2rem;
+    white-space: nowrap;
+  }
+  .site-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .site-nav a:hover, .site-nav a.active {
+    color: var(--electric);
+    border-color: var(--border);
+    background: rgba(59,130,246,0.08);
+  }
+  .site-nav a.active { color: #fff; border-color: var(--electric); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero-svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(700px, 100vw);
+    height: min(700px, 100vw);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 840px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--electric);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(59,130,246,0.5), 0 0 120px rgba(139,92,246,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero .sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2vw, 1.25rem);
+    color: var(--violet);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .hero p.lede {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 650px;
+    margin: 0 auto 2rem;
+  }
+  .vol-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    background: var(--green);
+    color: #000;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── HERO SVG ANIMATIONS ── */
+  @keyframes globe-rotate {
+    from { transform: rotate(0deg); transform-origin: 350px 350px; }
+    to { transform: rotate(360deg); transform-origin: 350px 350px; }
+  }
+  @keyframes arc-legacy {
+    0%,100% { opacity: 0; stroke-dashoffset: 300; }
+    25%,55% { opacity: 0.85; stroke-dashoffset: 0; }
+    80% { opacity: 0; }
+  }
+  @keyframes pulse-ring {
+    0% { r: 40; opacity: 0.6; }
+    100% { r: 220; opacity: 0; }
+  }
+  @keyframes tesla-unit-flash {
+    0%,100% { fill: #3b82f6; }
+    50% { fill: #fff; }
+  }
+  @keyframes grid-line-pulse {
+    0%,100% { stroke-opacity: 0.15; }
+    50% { stroke-opacity: 0.5; }
+  }
+  @keyframes node-blink {
+    0%,100% { r: 4; fill: #3b82f6; }
+    50% { r: 7; fill: #fff; }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 5rem 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--electric);
+    margin: 2rem 0 0.75rem;
+  }
+  p { margin-bottom: 1.25rem; }
+  em { color: #e5e7eb; }
+  strong { color: #fff; font-weight: 600; }
+
+  .section-intro {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--violet);
+    margin-bottom: 1.25rem;
+  }
+
+  /* ── FACT VS MYTH GRID ── */
+  .truth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  @media (max-width: 620px) { .truth-grid { grid-template-columns: 1fr; } }
+
+  .truth-card {
+    border-radius: 4px;
+    padding: 1.5rem;
+    border: 1px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .truth-card:hover { transform: translate(-3px, -3px); }
+  .truth-card.fact {
+    border-color: rgba(16,185,129,0.4);
+    background: rgba(16,185,129,0.05);
+  }
+  .truth-card.fact:hover { box-shadow: 4px 4px 0 var(--green); }
+  .truth-card.myth {
+    border-color: rgba(239,68,68,0.4);
+    background: rgba(239,68,68,0.05);
+  }
+  .truth-card.myth:hover { box-shadow: 4px 4px 0 #ef4444; }
+  .tc-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.5rem;
+  }
+  .truth-card.fact .tc-label { color: var(--green); }
+  .truth-card.myth .tc-label { color: #ef4444; }
+  .truth-card h3 { margin-top: 0; font-size: 0.95rem; color: #fff; }
+  .truth-card p { font-size: 0.875rem; color: var(--text-dim); margin: 0; }
+
+  /* ── LEGACY CARDS ── */
+  .legacy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin: 2.5rem 0;
+  }
+  .legacy-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .legacy-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--electric);
+  }
+  .lc-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .legacy-card h3 { margin-top: 0; font-size: 0.95rem; color: #fff; }
+  .legacy-card p { font-size: 0.875rem; color: var(--text-dim); margin: 0; }
+
+  /* ── SI UNIT CALLOUT ── */
+  .si-callout {
+    border: 2px solid var(--electric);
+    border-radius: 6px;
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(59,130,246,0.06);
+    flex-wrap: wrap;
+  }
+  .si-symbol {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 4.5rem;
+    color: var(--electric);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(59,130,246,0.6);
+    flex-shrink: 0;
+    style: "animation: tesla-unit-flash 2s ease-in-out infinite;";
+  }
+  .si-info h3 { margin-top: 0; color: #fff; }
+  .si-info p { color: var(--text-dim); font-size: 0.925rem; margin: 0; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--electric);
+    margin: 2.5rem 0;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #e5e7eb;
+  }
+  .pull-quote cite {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 0.75rem;
+    font-style: normal;
+  }
+  .pull-quote.green { border-left-color: var(--green); }
+
+  /* ── BAND ── */
+  .band {
+    background: var(--electric);
+    color: #000;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 4rem 0;
+  }
+  .band h2 { color: #000; font-size: clamp(1.3rem, 3vw, 2rem); }
+  .band p { color: rgba(0,0,0,0.75); font-size: 1rem; max-width: 640px; margin: 1rem auto 0; }
+  .band .kick { color: rgba(0,0,0,0.55); }
+
+  /* ── EXPLAINER ── */
+  .explainer {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--electric);
+    border-radius: 0 4px 4px 0;
+    padding: 1.75rem 2rem;
+    margin: 2rem 0;
+  }
+  .explainer .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.5rem;
+  }
+  .explainer h3 { margin-top: 0; color: #fff; }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+  .colophon a { color: var(--electric); text-decoration: none; }
+
+  /* ── TIMELINE ── */
+  .timeline { margin: 2.5rem 0; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 89px;
+    top: 0; bottom: -2rem;
+    width: 1px;
+    background: var(--border);
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--electric);
+    padding-top: 0.15rem;
+    text-align: right;
+  }
+  .tl-body h3 { margin-top: 0; font-size: 1rem; }
+  .tl-body p { font-size: 0.925rem; color: var(--text-dim); margin: 0; }
+  @media (max-width: 640px) {
+    .tl-item { grid-template-columns: 60px 1fr; gap: 1rem; }
+    .tl-item::before { left: 59px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="site-nav" aria-label="Series navigation">
+  <span class="series-label">Tesla / 4 Vols.</span>
+  <a href="0-who.html">Vol. 0 — The Man</a>
+  <a href="1-ac.html">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- ── HERO with Global Grid / Network SVG ── -->
+<header class="hero">
+  <!-- Animated global power grid / network SVG -->
+  <svg class="hero-svg" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="gridGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3"/>
+        <stop offset="70%" stop-color="#8b5cf6" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="transparent"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Globe outline -->
+    <circle cx="350" cy="350" r="240" fill="none" stroke="#3b82f6" stroke-width="1" opacity="0.3"/>
+    <circle cx="350" cy="350" r="240" fill="url(#gridGrad)" opacity="0.4"/>
+
+    <!-- Latitude lines -->
+    <ellipse cx="350" cy="350" rx="240" ry="60" fill="none" stroke="#3b82f6" stroke-width="0.5"
+      style="animation: grid-line-pulse 3s ease-in-out infinite;"/>
+    <ellipse cx="350" cy="350" rx="235" ry="130" fill="none" stroke="#3b82f6" stroke-width="0.5"
+      style="animation: grid-line-pulse 3s ease-in-out infinite 0.5s;"/>
+    <ellipse cx="350" cy="350" rx="220" ry="190" fill="none" stroke="#8b5cf6" stroke-width="0.5"
+      style="animation: grid-line-pulse 3s ease-in-out infinite 1s;"/>
+    <ellipse cx="350" cy="350" rx="195" ry="230" fill="none" stroke="#3b82f6" stroke-width="0.5"
+      style="animation: grid-line-pulse 3s ease-in-out infinite 1.5s;"/>
+
+    <!-- Longitude lines (rotating group to simulate globe spin) -->
+    <g style="animation: globe-rotate 20s linear infinite; transform-origin: 350px 350px;">
+      <ellipse cx="350" cy="350" rx="60" ry="240" fill="none" stroke="#8b5cf6" stroke-width="0.5" opacity="0.4"/>
+      <ellipse cx="350" cy="350" rx="130" ry="240" fill="none" stroke="#8b5cf6" stroke-width="0.5" opacity="0.35"/>
+      <ellipse cx="350" cy="350" rx="200" ry="240" fill="none" stroke="#8b5cf6" stroke-width="0.5" opacity="0.3"/>
+    </g>
+
+    <!-- Network nodes — major cities / power grid nodes -->
+    <!-- Node: New York -->
+    <circle cx="280" cy="290" r="4" fill="#3b82f6" style="animation: node-blink 2.5s ease-in-out infinite;"/>
+    <!-- Node: London -->
+    <circle cx="350" cy="255" r="4" fill="#8b5cf6" style="animation: node-blink 2.5s ease-in-out infinite 0.4s;"/>
+    <!-- Node: Tokyo -->
+    <circle cx="490" cy="295" r="4" fill="#3b82f6" style="animation: node-blink 2.5s ease-in-out infinite 0.8s;"/>
+    <!-- Node: Sydney -->
+    <circle cx="470" cy="430" r="4" fill="#8b5cf6" style="animation: node-blink 2.5s ease-in-out infinite 1.2s;"/>
+    <!-- Node: Niagara -->
+    <circle cx="255" cy="278" r="5" fill="#fff" style="animation: node-blink 2s ease-in-out infinite 0.2s;"/>
+    <!-- Node: Chicago -->
+    <circle cx="245" cy="303" r="4" fill="#3b82f6" style="animation: node-blink 2.5s ease-in-out infinite 1.6s;"/>
+    <!-- Node: Berlin -->
+    <circle cx="365" cy="258" r="4" fill="#8b5cf6" style="animation: node-blink 2.5s ease-in-out infinite 2s;"/>
+
+    <!-- Power transmission lines -->
+    <line x1="280" y1="290" x2="350" y2="255" stroke="#3b82f6" stroke-width="1" opacity="0.5"
+      stroke-dasharray="4,4"/>
+    <line x1="350" y1="255" x2="490" y2="295" stroke="#8b5cf6" stroke-width="1" opacity="0.5"
+      stroke-dasharray="4,4"/>
+    <line x1="255" y1="278" x2="280" y2="290" stroke="#fff" stroke-width="1.5" opacity="0.6"
+      stroke-dasharray="3,3"/>
+    <line x1="245" y1="303" x2="280" y2="290" stroke="#3b82f6" stroke-width="1" opacity="0.4"
+      stroke-dasharray="4,4"/>
+    <line x1="490" y1="295" x2="470" y2="430" stroke="#8b5cf6" stroke-width="1" opacity="0.4"
+      stroke-dasharray="4,4"/>
+    <line x1="365" y1="258" x2="350" y2="255" stroke="#8b5cf6" stroke-width="1" opacity="0.5"
+      stroke-dasharray="3,3"/>
+
+    <!-- Pulse rings from Niagara node -->
+    <circle cx="255" cy="278" r="10" fill="none" stroke="#fff" stroke-width="1"
+      style="animation: pulse-ring 3s ease-out infinite; transform-origin: 255px 278px;"/>
+    <circle cx="255" cy="278" r="10" fill="none" stroke="#3b82f6" stroke-width="1"
+      style="animation: pulse-ring 3s ease-out infinite 1.5s; transform-origin: 255px 278px;"/>
+
+    <!-- Center: Tesla T -->
+    <circle cx="350" cy="350" r="38" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="2" opacity="0.9"/>
+    <text x="350" y="361" text-anchor="middle" font-family="Cinzel, serif" font-weight="800"
+      font-size="28" fill="#3b82f6" style="animation: tesla-unit-flash 2s ease-in-out infinite;">T</text>
+
+    <!-- Arc discharges (legacy sparks) -->
+    <path d="M350,312 L310,260 L322,252 L282,200"
+      fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: arc-legacy 5s ease-in-out infinite;"/>
+    <path d="M362,318 L420,275 L410,263 L468,222"
+      fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: arc-legacy 5s ease-in-out infinite 1.5s;"/>
+    <path d="M365,355 L430,345 L426,334 L492,324"
+      fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+      stroke-dasharray="200" stroke-dashoffset="200"
+      style="animation: arc-legacy 5s ease-in-out infinite 3s;"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="vol-badge">Volume 3 of 4</span>
+    <span class="kick">Nikola Tesla &mdash; The Long Afterlife</span>
+    <h1>Legacy</h1>
+    <p class="sub">The Unit, The Grid, The Cult, The Record</p>
+    <p class="lede">He died in debt, in obscurity, in a hotel room. The world he built hums through every circuit on earth. How do we measure what we actually owe him?</p>
+  </div>
+</header>
+
+<main>
+
+<!-- ── SI UNIT ── -->
+<section class="section" id="unit">
+  <div class="container">
+    <p class="section-intro">The Name in Physics</p>
+    <h2>The Tesla Unit</h2>
+    <p>In 1960, the International System of Units (SI) named the unit of <strong>magnetic flux density</strong> the <em>tesla</em> (symbol: T). One tesla is defined as one weber per square meter — the magnetic flux density that induces an electromotive force of one volt across a conductor moving at one meter per second perpendicular to the field.</p>
+
+    <div class="si-callout">
+      <div class="si-symbol">T</div>
+      <div class="si-info">
+        <h3>The Tesla (SI Unit)</h3>
+        <p>Magnetic flux density / magnetic field strength.<br>
+        <strong>1 T = 1 Wb/m² = 1 kg/(A·s²)</strong><br><br>
+        The Earth's magnetic field: ~50 microtesla (0.00005 T).<br>
+        A refrigerator magnet: ~5 millitesla (0.005 T).<br>
+        An MRI machine: 1.5 to 7 tesla.<br>
+        The strongest continuous magnetic field produced in a lab: ~45 T.<br>
+        National High Magnetic Field Laboratory pulsed record: ~100 T.</p>
+      </div>
+    </div>
+
+    <p>The tesla is used daily by physicists, engineers, and radiologists worldwide. Every MRI scan — millions performed every year — is calibrated in units bearing his name. The measure of the earth's own magnetic field is stated in microteslas. The magnetic fields that guide particle accelerators at CERN are measured in teslas. His name is embedded in the language of physics, permanently.</p>
+  </div>
+</section>
+
+<!-- ── THE GRID ── -->
+<section class="section" id="grid">
+  <div class="container">
+    <p class="section-intro">The Physical Legacy</p>
+    <h2>Every Socket on Earth</h2>
+    <p>The most concrete measure of Tesla's legacy is also the least glamorous: the global alternating-current power grid. Every kilowatt-hour of electricity generated and distributed in the world today — with the exception of a small fraction from DC-only experimental installations and HVDC long-distance links (which themselves require AC generation and conversion) — moves through a system whose fundamental architecture is Tesla's polyphase AC transmission design of 1888.</p>
+
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <p class="lc-label">Scale</p>
+        <h3>~28,000 TWh / year</h3>
+        <p>Approximate global electricity generation annually. Every unit of it generated by AC alternators, transmitted over AC grids, or converted from AC sources. This is the physical monument to the 1888 patents.</p>
+      </div>
+      <div class="legacy-card">
+        <p class="lc-label">Motors</p>
+        <h3>~4 Billion AC Induction Motors</h3>
+        <p>Estimated number of AC induction motors in operation globally. Refrigerators, air conditioners, factory machines, water pumps, fans, electric vehicles' traction drives. All descend from Tesla's 1888 design.</p>
+      </div>
+      <div class="legacy-card">
+        <p class="lc-label">Niagara Falls</p>
+        <h3>The Proof Facility, 1896</h3>
+        <p>The Adams Power Plant, Niagara Falls. First large-scale AC hydroelectric plant. Still partially operational in modernized form. Commemorated with a Tesla monument unveiled in 2014.</p>
+      </div>
+      <div class="legacy-card">
+        <p class="lc-label">Radio</p>
+        <h3>The Recovered Priority</h3>
+        <p>US Supreme Court ruling 1943: Tesla's patents invalidate Marconi's radio priority claims. Every radio, every WiFi router, every cell tower descends from the high-frequency resonant circuit work Tesla pioneered in 1891–1897.</p>
+      </div>
+      <div class="legacy-card">
+        <p class="lc-label">Wireless</p>
+        <h3>High-Frequency Foundations</h3>
+        <p>The high-frequency electromagnetic principles Tesla developed for his coil are the theoretical foundation of radio communication, microwave technology, radar, and wireless networking. Not a direct line — but an essential one.</p>
+      </div>
+      <div class="legacy-card">
+        <p class="lc-label">Naming</p>
+        <h3>Tesla Inc. (2003–)</h3>
+        <p>The electric vehicle company named for him. Founded 2003 by Martin Eberhard and Marc Tarpenning; Elon Musk joined as chairman and major investor in 2004. The company's AC induction motor was, in early models, architecturally related to Tesla's design.</p>
+      </div>
+    </div>
+
+    <h3>The Patents, Freed and Reclaimed</h3>
+    <p>Tesla's fundamental AC patents expired in the 1900s and entered the public domain. They were immediately and extensively used by everyone building AC systems — including Marconi's radio company, which used Tesla's resonant circuit patents without license or acknowledgment for years before the 1943 Supreme Court ruling. The patents that should have made Tesla wealthy in life were used freely by others while he was alive, and his priority was restored only after he was dead.</p>
+    <p>This is not a unique story in the history of invention — many foundational patents were underpaid, circumvented, or expired before their full commercial value was realized. But the scale of Tesla's case is particularly stark: the architecture of global electrical civilization was patented by a man who died owing four months' hotel rent.</p>
+  </div>
+</section>
+
+<!-- ── THE FBI ── -->
+<section class="section" id="fbi">
+  <div class="container">
+    <p class="section-intro">The Papers / 1943</p>
+    <h2>The FBI Seizure</h2>
+    <p>Within hours of Tesla's death on 7 January 1943, agents of the <strong>Office of Alien Property</strong> (OAP) — acting in coordination with the FBI under J. Edgar Hoover — arrived at Room 3327 of the Hotel New Yorker and seized Tesla's papers, notebooks, correspondence, and experimental materials. His safe-deposit boxes at the Governor Clinton Hotel were also opened and their contents removed.</p>
+    <p>The legal basis was that Tesla, although he had been a US citizen since 1891, was classified as an "enemy alien" for purposes of the wartime Alien Property Custodian Act — presumably because of his Serbian birth and Yugoslav nationality ties. This classification was legally questionable. Tesla had been an American citizen for 52 years at the time of his death.</p>
+
+    <div class="explainer">
+      <p class="label">What They Found</p>
+      <h3>The "Death Ray" — and the Verdict</h3>
+      <p>The primary concern driving the seizure was Tesla's publicized claims in the 1930s about a "teleforce" weapon — what the press called a "death beam." Tesla had written papers and given interviews claiming he had conceived of a particle-beam weapon capable of destroying aircraft at distances of hundreds of miles. He had offered the design to several governments, including Yugoslavia, the Soviet Union, and the United States.</p>
+      <p>The FBI commissioned physicist John G. Trump — uncle of Donald Trump, a professor at MIT — to review Tesla's confiscated papers for any technically actionable weapon designs. Trump's report, declassified decades later, concluded that Tesla's notes contained <em>"no new, unpublished discoveries of value to the war effort"</em> and that his teleforce weapon was theoretically speculative without experimental backing. The classified materials were eventually transferred to Yugoslavia (Tesla's homeland) and are now held at the <strong>Nikola Tesla Museum</strong> in Belgrade, which was established in 1952.</p>
+    </div>
+
+    <p>The seizure has been a source of Tesla conspiracy theories for decades. The short version: the US government seized his papers, classified them, held them for years, and found nothing of practical military value. The papers they eventually released contain what appears to be the full record — dense experimental notebooks, theoretical correspondence, and the speculative late-career writings on the teleforce weapon that contained no workable engineering.</p>
+    <p>The conspiracy version — that the government suppressed free-energy technology, death-ray weapons, or advanced physics — has no support in the released documents. This does not mean conspiracy theories will stop circulating; they are too entertaining and too emotionally satisfying to people who want Tesla's genius to have been even more extraordinary than the documented record shows.</p>
+  </div>
+</section>
+
+<!-- ── REHABILITATION ── -->
+<section class="section" id="rehab">
+  <div class="container">
+    <p class="section-intro">Recognition / Post-1943</p>
+    <h2>The Long Rehabilitation</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1943</div>
+        <div class="tl-body">
+          <h3>Supreme Court Ruling</h3>
+          <p>Marconi Wireless Telegraph Co. v. United States restores Tesla's priority as inventor of practical radio. Four months after his death.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1952</div>
+        <div class="tl-body">
+          <h3>Nikola Tesla Museum, Belgrade</h3>
+          <p>Established in his birth country of Yugoslavia (now Serbia). Holds Tesla's personal papers, correspondence, technical drawings, and artifacts — including many items from the US government seizure.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1960</div>
+        <div class="tl-body">
+          <h3>SI Unit Named "Tesla"</h3>
+          <p>The International System of Units names the unit of magnetic flux density the tesla (T). Tesla becomes a permanent fixture in the language of physics.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1975</div>
+        <div class="tl-body">
+          <h3>IEEE Nikola Tesla Award Established</h3>
+          <p>The Institute of Electrical and Electronics Engineers establishes the annual Nikola Tesla Award for outstanding contributions to the generation or utilization of electric power.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2003</div>
+        <div class="tl-body">
+          <h3>Tesla Inc. Founded</h3>
+          <p>Electric vehicle company named for Tesla. Early models used AC induction motors. Tesla's name enters mainstream commercial culture — though with mixed accuracy about what he actually invented.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2014</div>
+        <div class="tl-body">
+          <h3>Tesla Monument, Niagara Falls</h3>
+          <p>A bronze statue of Tesla is unveiled at Niagara Falls State Park, New York — at the site of the Adams Power Plant that proved his AC system. Funded largely by donations from Tesla Inc. and fans worldwide.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-body">
+          <h3>Wardenclyffe Site Acquired</h3>
+          <p>The Tesla Science Center at Wardenclyffe acquires the original Wardenclyffe site in Shoreham, Long Island — the location of the unfinished tower. Restoration and museum development ongoing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FACT VS MYTH ── -->
+<section class="section" id="record">
+  <div class="container">
+    <p class="section-intro">The Measured Record</p>
+    <h2>What He Actually Invented — vs. What Is Attributed to Him</h2>
+    <p>The popular culture of Tesla has produced a figure who is simultaneously more mythologized and less understood than the documented inventor. The following distinguishes what the historical and technical record actually supports from what has been added by hagiography and internet mythology.</p>
+
+    <div class="truth-grid">
+      <div class="truth-card fact">
+        <p class="tc-label">Documented Fact</p>
+        <h3>AC Induction Motor</h3>
+        <p>Tesla invented the practical polyphase AC induction motor (1887–1888). This is documented, patented, and technically verified. He did not invent the concept of a rotating magnetic field — that was preceded by Walter Baily (1879) — but he was the first to build a practical, scalable implementation.</p>
+      </div>
+      <div class="truth-card myth">
+        <p class="tc-label">Overclaimed</p>
+        <h3>Inventor of Alternating Current</h3>
+        <p>Tesla did NOT invent alternating current itself. AC as a phenomenon was known since Michael Faraday. Hippolyte Pixii built the first AC generator in 1832. What Tesla invented was the practical AC motor, transformer system, and polyphase transmission architecture — which is enormously significant, but different.</p>
+      </div>
+      <div class="truth-card fact">
+        <p class="tc-label">Documented Fact</p>
+        <h3>Radio Priority (Tuned Circuits)</h3>
+        <p>Tesla's patents for tuned wireless transmission (1897) predate Marconi's comparable patents. The US Supreme Court confirmed this in 1943. Tesla pioneered the key resonant-circuit architecture that made practical radio communication possible.</p>
+      </div>
+      <div class="truth-card myth">
+        <p class="tc-label">Overclaimed</p>
+        <h3>Sole Inventor of Radio</h3>
+        <p>Radio was built by many people: Hertz (wave demonstration, 1888), Lodge (wireless transmission demo, 1894), Marconi (commercial radio industry), Braun (antenna improvements). Tesla's contribution was foundational but not singular. The field is genuinely multi-authored.</p>
+      </div>
+      <div class="truth-card fact">
+        <p class="tc-label">Documented Fact</p>
+        <h3>First Radio-Controlled Vehicle</h3>
+        <p>Tesla's 1898 radio-controlled boat (US Patent 613,809) is the earliest documented radio-controlled vehicle. No earlier patent exists. He demonstrated it publicly at Madison Square Garden.</p>
+      </div>
+      <div class="truth-card myth">
+        <p class="tc-label">Unsubstantiated</p>
+        <h3>Free Energy / Suppressed Tech</h3>
+        <p>Claims that Tesla invented devices for free unlimited energy that were suppressed by Morgan or the US government have no support in his technical papers, patents, or the released FBI files. Wireless power transmission over short distances is real; "free energy from the aether" is not documented anywhere in his authenticated work.</p>
+      </div>
+      <div class="truth-card fact">
+        <p class="tc-label">Documented Fact</p>
+        <h3>X-Ray Priority (Pre-Röntgen)</h3>
+        <p>Tesla produced X-ray images before Röntgen's 1895 announcement but did not publish them in time to establish priority. His laboratory fire of March 1895 destroyed much of his early X-ray experimental record. Röntgen's priority is technically secure because he published first.</p>
+      </div>
+      <div class="truth-card myth">
+        <p class="tc-label">Unsubstantiated</p>
+        <h3>Earthquake Machine / Death Ray</h3>
+        <p>Tesla claimed in interviews to have built an oscillator that could cause resonant earthquakes in buildings. No independent verification exists. His "death beam" / teleforce weapon was never built; the concept was speculative and the FBI review found no workable engineering behind it.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote green">
+      "The history of Tesla is best served not by inflation but by accuracy. The documented record is extraordinary enough that it requires no embellishment — and embellishment, paradoxically, diminishes him by suggesting his real work needs supplementation."
+      <cite>— W. Bernard Carlson, Tesla biographer</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE CULT ── -->
+<section class="section" id="cult">
+  <div class="container">
+    <p class="section-intro">Cultural Afterlife</p>
+    <h2>The Cult of Tesla</h2>
+    <p>The popular rehabilitation of Tesla's reputation — which accelerated sharply after 2008, driven in part by webcomics, Wikipedia, and the naming of the electric car company — has produced a cultural figure who is simultaneously more heroic and more distorted than the historical person.</p>
+    <p>In the popular narrative, Tesla is the genius betrayed by capitalism — a pure inventor whose gifts to humanity were stolen by Morgan, Edison, and Marconi while he died in poverty. This narrative contains real truth: he was underpaid for his patents, his royalties were waived under financial duress, his Wardenclyffe project was killed by a financier who recognized its anti-commercial implications, and his radio priority was denied for four decades by patent politics.</p>
+    <p>But the narrative also inflates him into a kind of secular saint of invention — credited with things he did not invent, attributed with powers he did not claim, and positioned as the victim of a conspiracy of stupidity and greed that withheld his gifts from humanity. This is not accurate, and it is not respectful of the actual man, whose documented achievements are already among the most significant in the history of electrical engineering.</p>
+
+    <h3>The Edison Comparison</h3>
+    <p>Part of the Tesla cult operates through the demonization of Edison — the "businessman inventor" who stole credit, electrocuted animals, and lied about paying Tesla. This also overcorrects. Edison was a genuine inventor: the phonograph was his, the practical incandescent lamp was his (with the caveat that Joseph Swan held a prior British patent), the motion picture camera was his laboratory's work. He was also ruthless, commercially focused, and capable of the kind of dirty campaigning the War of Currents demonstrates.</p>
+    <p>The framing of Edison as pure villain and Tesla as pure hero serves the emotional narrative but not the history. Both men were extraordinary. Both made mistakes. The most consequential difference between them was not moral character but physics: Tesla's AC system was correct, and Edison's DC bet was wrong, and no amount of animal electrocutions or patent politics could change the thermodynamics of long-distance power transmission.</p>
+  </div>
+</section>
+
+<div class="band">
+  <div class="container">
+    <span class="kick">Final Measure</span>
+    <h2>What the Record Supports</h2>
+    <p>Tesla designed the AC induction motor and polyphase transmission system that powers the world. He pioneered the high-frequency electromagnetic work that underlies radio. He built the first radio-controlled vehicle. He advanced fluorescent lighting, X-ray imaging, and resonant transformer technology. He envisioned wireless power transmission a century before it entered research. He died in debt. He is owed a great deal. That is enough. It is more than enough.</p>
+  </div>
+</div>
+
+<!-- ── MEASURE OF THE MAN ── -->
+<section class="section" id="measure">
+  <div class="container">
+    <p class="section-intro">Conclusion</p>
+    <h2>The Measure of the Man</h2>
+    <p>Nikola Tesla was born during a lightning storm in a Serbian village in 1856. He died alone in a New York hotel room in 1943. In between, he redesigned the electromagnetic infrastructure of civilization from first principles — from a vision in a Budapest park that he scratched in the dirt with a stick and never, in its essentials, had to revise.</p>
+    <p>The AC induction motor. The polyphase transmission system. The Tesla coil. The foundational patents for radio. The first radio-controlled vehicle. The X-ray experiments. The fluorescent tube. The bladeless turbine. The global demonstration at the 1893 World's Fair. The Niagara Falls power plant. Three hundred patents across twenty-six countries.</p>
+    <p>The man who conceived all of this in eidetic detail before building any of it. The man who gave away his royalties because he believed in his partner's mission. The man who fed pigeons in Bryant Park in old age as the world he had built ran electric with his invisible current.</p>
+    <p>Eighty years after his death, his name is on the unit physicists use to measure the magnetic force that holds the universe together. His architecture carries every kilowatt-hour of electricity generated anywhere on earth. Every motor that turns without brushes runs on his rotating field. Every tuned radio circuit resonates at the frequency he defined.</p>
+    <p>He is not a myth. He does not need to be. The documented record, read clearly, is among the most extraordinary in the history of human invention. It simply requires that we <em>read it clearly</em> — without embellishment, without conspiracy, without the sentimental need to make genius into sainthood.</p>
+    <p>What he built, he built. What he imagined and could not build, he imagined clearly and honestly. What is attributed to him beyond the record — let that go. The record is enough.</p>
+
+    <div class="pull-quote">
+      "Let the future tell the truth, and evaluate each one according to his work and accomplishments. The present is theirs; the future, for which I really worked, is mine."
+      <cite>— Nikola Tesla</cite>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <div class="container">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Nikola Tesla Series &mdash; Volume 3 of 4 (Final) &nbsp;|&nbsp; <a href="2-world.html">&larr; Vol. 2: His World</a> &nbsp;&nbsp; <a href="0-who.html">Return to Vol. 0: The Man &uarr;</a></p>
+    <p style="margin-top:0.5rem; font-size:0.55rem; opacity:0.5;">Sources: W. Bernard Carlson, "Tesla: Inventor of the Electrical Age" (Princeton UP, 2013); John G. Trump report (FBI FOIA release); Marconi Wireless v. United States, 320 U.S. 1 (1943); BIPM SI Brochure (2019 rev.); Nikola Tesla Museum, Belgrade.</p>
+    <p style="margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid rgba(59,130,246,0.15);">
+      Complete Series: &nbsp;
+      <a href="0-who.html">0 — The Man</a> &nbsp;·&nbsp;
+      <a href="1-ac.html">1 — The Work</a> &nbsp;·&nbsp;
+      <a href="2-world.html">2 — His World</a> &nbsp;·&nbsp;
+      <a href="3-legacy.html">3 — Legacy</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

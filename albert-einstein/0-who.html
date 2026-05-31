@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einstein — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #090808;
+    --light: #f59e0b;
+    --blue: #3b82f6;
+    --text: #e8e0d0;
+    --muted: #8a7f72;
+    --border: #2a2520;
+    --card-bg: #110f0e;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,8,8,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--light);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--light);
+    border-color: var(--light);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #1a1008 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--light);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(245,158,11,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--light);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  /* BAND */
+  .band {
+    background: var(--light);
+    color: #0d0b08;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section {
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--light); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--light);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(245,158,11,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--light);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    opacity: 0.82;
+    margin: 0;
+  }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--light);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--light);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+  /* COLOPHON */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--light); }
+
+  /* Animations */
+  @keyframes warp {
+    0%, 100% { d: path("M 200 100 Q 300 160 400 100"); }
+    50% { d: path("M 200 100 Q 300 180 400 100"); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Einstein</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-relativity.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Spacetime Curvature Grid -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow0" cx="50%" cy="55%" r="38%">
+        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#090808" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="blur0">
+        <feGaussianBlur stdDeviation="2.5"/>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#glow0)"/>
+    <!-- Horizontal warp lines -->
+    <g stroke="#3b82f6" stroke-width="0.7" fill="none" opacity="0.6">
+      <!-- Row 1 -->
+      <path d="M0,80 Q225,80 400,80 Q450,80 500,80 Q675,80 900,80">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,80 Q225,80 400,80 Q450,80 500,80 Q675,80 900,80;
+                  M0,80 Q225,82 400,84 Q450,85 500,84 Q675,82 900,80;
+                  M0,80 Q225,80 400,80 Q450,80 500,80 Q675,80 900,80"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Row 2 -->
+      <path d="M0,140 Q225,140 400,140 Q450,140 500,140 Q675,140 900,140">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,140 Q225,140 400,140 Q450,140 500,140 Q675,140 900,140;
+                  M0,140 Q225,144 400,152 Q450,158 500,152 Q675,144 900,140;
+                  M0,140 Q225,140 400,140 Q450,140 500,140 Q675,140 900,140"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Row 3 (deepest warp) -->
+      <path d="M0,200 Q225,200 400,200 Q450,200 500,200 Q675,200 900,200">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,200 Q225,202 400,212 Q450,230 500,212 Q675,202 900,200;
+                  M0,200 Q225,206 400,232 Q450,260 500,232 Q675,206 900,200;
+                  M0,200 Q225,202 400,212 Q450,230 500,212 Q675,202 900,200"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Row 4 -->
+      <path d="M0,270 Q225,270 400,270 Q450,270 500,270 Q675,270 900,270">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,270 Q225,270 400,274 Q450,282 500,274 Q675,270 900,270;
+                  M0,270 Q225,272 400,284 Q450,298 500,284 Q675,272 900,270;
+                  M0,270 Q225,270 400,274 Q450,282 500,274 Q675,270 900,270"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Row 5 -->
+      <path d="M0,330 Q225,330 400,330 Q450,330 500,330 Q675,330 900,330">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,330 Q225,330 400,332 Q450,336 500,332 Q675,330 900,330;
+                  M0,330 Q225,331 400,336 Q450,342 500,336 Q675,331 900,330;
+                  M0,330 Q225,330 400,332 Q450,336 500,332 Q675,330 900,330"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Row 6 -->
+      <path d="M0,390 Q450,390 900,390">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M0,390 Q450,390 900,390;M0,390 Q450,392 900,390;M0,390 Q450,390 900,390"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+    </g>
+    <!-- Vertical warp lines -->
+    <g stroke="#3b82f6" stroke-width="0.7" fill="none" opacity="0.6">
+      <path d="M150,0 Q150,200 150,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M150,0 Q150,200 150,520;M150,0 Q152,200 150,520;M150,0 Q150,200 150,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M300,0 Q300,200 300,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M300,0 Q300,200 300,520;M300,0 Q306,200 300,520;M300,0 Q300,200 300,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <!-- Deep warp verticals near center -->
+      <path d="M400,0 Q400,200 400,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M400,0 Q406,200 400,520;M400,0 Q418,200 400,520;M400,0 Q406,200 400,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M450,0 Q450,200 450,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M450,0 Q450,260 450,520;M450,0 Q450,290 450,520;M450,0 Q450,260 450,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M500,0 Q494,200 500,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M500,0 Q494,200 500,520;M500,0 Q482,200 500,520;M500,0 Q494,200 500,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M600,0 Q600,200 600,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M600,0 Q594,200 600,520;M600,0 Q582,200 600,520;M600,0 Q594,200 600,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M750,0 Q750,200 750,520">
+        <animate attributeName="d" dur="5s" repeatCount="indefinite"
+          values="M750,0 Q748,200 750,520;M750,0 Q744,200 750,520;M750,0 Q748,200 750,520"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+    </g>
+    <!-- Central mass -->
+    <circle cx="450" cy="230" r="18" fill="#f59e0b" opacity="0.9" filter="url(#blur0)">
+      <animate attributeName="r" values="16;22;16" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="230" r="7" fill="#fff" opacity="0.95"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Albert Einstein · 1879–1955 · Volume Zero</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Patent Clerk. Refugee. Genius. Human.</p>
+    <p class="hero-lead">A child born in Ulm who failed an entrance exam, sat in a Swiss patent office, and rewrote the laws of the universe — then watched his country burn his books.</p>
+  </div>
+</div>
+
+<div class="band">Ulm 1879 · Bern Patent Office · Annus Mirabilis 1905 · Princeton 1933–1955</div>
+
+<main>
+
+  <!-- STATS ROW -->
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1879</span>
+      <span class="stat-label">Born, Ulm, Germany</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1905</span>
+      <span class="stat-label">Annus Mirabilis</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Papers in One Year</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1921</span>
+      <span class="stat-label">Nobel Prize</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1933</span>
+      <span class="stat-label">Citizenship Stripped</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1955</span>
+      <span class="stat-label">Died, Princeton</span>
+    </div>
+  </div>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <span class="section-label">I — Origins</span>
+    <h2>Born in Ulm, Raised in Munich</h2>
+    <p>On the fourteenth of March, 1879, in the southwestern German city of Ulm, a boy was born to Hermann Einstein and Pauline Koch. The family was German Jewish, secular in observance, and commercially minded — Hermann ran a small electrical engineering company. The Einsteins relocated to Munich before Albert's first birthday, and it was there, in the beer-hall capital of Bavaria, that his earliest curiosity was kindled.</p>
+    <p>At five, his father gave him a compass. The needle's invisible allegiance to magnetic north struck the boy as something close to miraculous — <em>"a deep and lasting impression,"</em> he later recalled. The universe was hiding something, and he intended to find it. A family friend, Max Talmud, gave the twelve-year-old a geometry textbook. He devoured it in a single week, calling it <strong>the sacred little geometry book</strong>.</p>
+    <p>He was not a prodigy in the conventional mold. He spoke late, repeated phrases to himself, and sat outside the social life of his school. His classical gymnasium education bored him deeply — he resented rote learning, authoritarian instruction, and the Prussian insistence on discipline over understanding. These were complaints he would carry for the rest of his life.</p>
+
+    <h3>The Family Moves — And He Does Not Follow</h3>
+    <p>When Albert was fifteen, Hermann's business failed and the family relocated to Pavia, Italy, seeking fresh commercial ground. Albert was left behind in Munich to complete his schooling. He lasted six months before convincing a doctor to certify nervous exhaustion, dropped out, and followed his family to Italy. He would never receive his German secondary diploma. He renounced his German citizenship voluntarily in 1896 — at seventeen, stateless by choice, to avoid military conscription. He would spend years as a citizen of nowhere.</p>
+  </section>
+
+  <!-- ENTRANCE EXAM -->
+  <section id="exam">
+    <span class="section-label">II — The Exam</span>
+    <h2>Failing the Door In</h2>
+    <p>In 1895, at sixteen, Einstein applied to the Swiss Federal Polytechnic School in Zurich — known today as ETH Zurich. He failed the entrance examination. His French and botany were inadequate. His mathematics and physics were exceptional, noticed by the physics professor Heinrich Friedrich Weber, who suggested he stay and attend his lectures informally. But the failure was the failure.</p>
+    <p>He spent a year at a cantonal school in Aarau, Switzerland, boarding with the Winteler family, studying in an atmosphere that was the opposite of Munich — progressive, discussion-based, intellectually open. He flourished. It was here, during long walks in the Swiss foothills, that he began to formulate a thought experiment that would occupy him for a decade: <em>what would the world look like if you could ride alongside a beam of light?</em></p>
+    <p>He retook the examination in 1896 and was admitted to ETH. He was seventeen years old, and the only student in his cohort without a secondary school diploma. He was also, by most accounts, an exasperating student — brilliant, argumentative, and constitutionally unable to submit to authority he hadn't earned.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The secret to creativity is knowing how to hide your sources."</blockquote>
+      <cite>— Albert Einstein (attributed)</cite>
+    </div>
+  </section>
+
+  <!-- PATENT OFFICE -->
+  <section id="bern">
+    <span class="section-label">III — The Patent Office</span>
+    <h2>Third-Class Technical Expert, Bern</h2>
+    <p>He graduated from ETH in 1900, but could not find an academic post. His professors — particularly Weber, who had once admired him — declined to write recommendations. He was too insolent, too likely to challenge, too unwilling to perform the customary deference. He tutored, substitute-taught, and applied to every university position in the German-speaking world. Every application was rejected.</p>
+    <p>In 1902, a friend's father pulled a favor at the Swiss Federal Patent Office in Bern. Einstein was hired as a <strong>technical expert, third class</strong> — the lowest rung. He evaluated patent applications for electrical devices, learned to assess mechanical feasibility quickly, trained himself to find the kernel of an idea beneath layers of technical language.</p>
+    <p>He was, by his own later testimony, ideally placed. The work engaged just enough of his mind to keep him alert but left the deeper machinery free. He worked eight hours a day, went home, and spent his evenings and early mornings on the physics he could not stop thinking about. He called the patent office <em>"that worldly cloister where I hatched my most beautiful ideas."</em></p>
+    <p>He married Mileva Marić in 1903, his Serbian classmate from ETH — one of the few women to study physics at a European polytechnic in that era. They had a daughter, Lieserl, born before the marriage, whose fate remains unknown — likely given up for adoption or dead in infancy. They would have two sons together: Hans Albert and Eduard.</p>
+  </section>
+
+  <!-- MIRACLE YEAR -->
+  <section id="annus">
+    <span class="section-label">IV — The Miracle Year</span>
+    <h2>1905: Annus Mirabilis</h2>
+    <p>In the spring of 1905, Albert Einstein was twenty-six years old, a patent clerk in Bern, with no university affiliation, no laboratory, no graduate students, no institutional support. Between March and September of that year, he submitted <strong>four papers</strong> to the journal <em>Annalen der Physik</em> — any one of which would have secured a major scientific reputation. Together, they rebuilt the foundations of physics.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">March 1905</span>
+        <h4>The Photoelectric Effect</h4>
+        <p>Light travels as discrete packets of energy — quanta. This paper launched quantum mechanics and won the 1921 Nobel Prize in Physics. Not relativity — this.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">May 1905</span>
+        <h4>Brownian Motion</h4>
+        <p>The random jiggling of pollen grains in water is caused by collisions with individual molecules. This paper proved, definitively, that atoms exist.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">June 1905</span>
+        <h4>Special Relativity</h4>
+        <p>There is no absolute frame of reference. The speed of light is constant for all observers. Time dilates. Length contracts. The universe is not what it seemed.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">September 1905</span>
+        <h4>Mass-Energy Equivalence</h4>
+        <p>E = mc². Energy and mass are interchangeable. A small quantity of mass contains an enormous quantity of energy, locked in the fabric of matter itself.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">He submitted his doctoral dissertation to the University of Zurich the same year, on the determination of molecular dimensions from the viscosity of sugar solutions in water. It was accepted. He was awarded a Ph.D. He remained a patent clerk for three more years before academia could absorb what it had missed.</p>
+  </section>
+
+  <!-- ACADEMIC CAREER -->
+  <section id="career">
+    <span class="section-label">V — Academic Life</span>
+    <h2>From Clerk to Continent's Greatest Mind</h2>
+    <p>Recognition came slowly, then all at once. In 1908 he became a <em>Privatdozent</em> at the University of Bern — an unsalaried lecturer permitted to charge students directly. In 1909 he was appointed associate professor at the University of Zurich. In 1911, full professor at the German University in Prague. In 1912, back to ETH Zurich as full professor. By 1914 he had been called to the Prussian Academy of Sciences in Berlin — the most prestigious scientific position in the German-speaking world — at a salary requiring no teaching obligations whatsoever. He was thirty-five.</p>
+    <p>His marriage to Mileva had been deteriorating for years. The isolation of his intellectual world, his growing international celebrity, his affairs — the marriage could not hold. In 1919, two years after their legal separation, he married his cousin Elsa Löwenthal, a warm, socially capable woman who organized his life and shielded him from the administrative demands of fame. He relied on her enormously, even if his deeper emotional world remained largely closed to her.</p>
+    <p>In November 1919, the results of Arthur Eddington's eclipse expedition were announced at the Royal Society in London: starlight bent by the sun's gravity, exactly as predicted by General Relativity. Einstein woke up the next morning <strong>the most famous scientist in the world.</strong> He found it faintly ridiculous, and said so.</p>
+  </section>
+
+  <!-- EXILE -->
+  <section id="exile">
+    <span class="section-label">VI — Exile</span>
+    <h2>Germany Burns His Books</h2>
+    <p>Adolf Hitler became Chancellor of Germany on January 30, 1933. Einstein was at the California Institute of Technology in Pasadena when the news reached him. He knew immediately that he would not return. He resigned from the Prussian Academy by letter before they could expel him. In April, Nazi Germany enacted laws stripping Jewish civil servants of their positions. In May, students and SA troops burned books in public squares across Germany — including Einstein's works. The headlines: <em>"Jewish physics."</em></p>
+    <p>In October 1933 he arrived at Princeton, New Jersey, to take up a position at the newly founded Institute for Advanced Study. He lived at 112 Mercer Street for the remaining twenty-two years of his life. He was granted U.S. citizenship in 1940. He never returned to Europe.</p>
+    <p>In 1952, following the death of Israel's first president Chaim Weizmann, Einstein was offered the presidency of the State of Israel. He declined: <em>"I am deeply moved by the offer from our State of Israel, and at once saddened and ashamed that I cannot accept it."</em> He was seventy-three, in poor health, and knew that political administration was not a role he could fill with competence or honesty.</p>
+  </section>
+
+  <!-- MILEVA / PRIVATE LIFE -->
+  <section id="private">
+    <span class="section-label">VII — Private Life</span>
+    <h2>The Man Behind the Equations</h2>
+    <p>Mileva Marić remains a complicated figure in the Einstein story. She was one of the first women to study physics at ETH Zurich. She and Einstein corresponded intensely during their student years, and some historians have argued — controversially — that her contributions to the 1905 papers were greater than acknowledged. The historical consensus holds that the ideas were Einstein's, but that the intellectual partnership was real and that she was his most significant sounding board in the crucial years.</p>
+    <p>Their divorce settlement in 1919 included a remarkable clause: Einstein pledged his future Nobel Prize money to Mileva if and when he received it. He was that confident — and in 1922, he paid. She used it to buy three apartment buildings in Zurich, which she managed until her death in 1948.</p>
+    <p>His younger son Eduard developed schizophrenia and spent much of his adult life in a psychiatric institution in Zurich. Einstein never saw him after leaving Europe in 1933. It was a grief he carried quietly. He was not, by his own admission, a particularly attentive father. His attention lived elsewhere, always.</p>
+    <p>He played violin — Beethoven, Mozart — throughout his life, badly enough to irritate and well enough to play chamber music at informal gatherings. He sailed small boats on lakes with conspicuous lack of navigational skill. He walked everywhere he could, thinking as he walked. He rarely wore socks.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I live in that solitude which is painful in youth, but delicious in the years of maturity."</blockquote>
+      <cite>— Albert Einstein, 1932</cite>
+    </div>
+  </section>
+
+  <!-- BRAIN + DEATH -->
+  <section id="death">
+    <span class="section-label">VIII — The End</span>
+    <h2>April 18, 1955</h2>
+    <p>An aortic aneurysm had been known about since 1948. On the night of April 17–18, 1955, it ruptured. Einstein refused surgery: <em>"I want to go when I want to go. It is tasteless to prolong life artificially. I have done my share, it is time to go. I will do it elegantly."</em> He died at 1:15 a.m. on April 18 at Princeton Hospital, age seventy-six.</p>
+    <p>Thomas Harvey, the pathologist on duty, removed Einstein's brain during the autopsy — <strong>without the consent of his family or his own stated wishes</strong>. He kept it in a jar. He took it with him when he left Princeton, eventually driving it across the United States in a Buick in 1997, with a journalist named Michael Paterniti, looking for Einstein's granddaughter. Harvey was eighty-four. The brain eventually reached the Princeton University Medical Center and the National Museum of Health and Medicine.</p>
+    <p>Over forty years of study, researchers reported a higher density of glial cells in certain regions, an unusual inferior parietal lobe — the area associated with spatial and mathematical reasoning — and a missing groove (the lateral sulcus) that may have allowed greater neural connectivity. The findings remain contested. What the jar could not contain was the method: to observe carefully, to think without constraint, to trust the imagination more than received authority.</p>
+    <p>His ashes were scattered at an undisclosed location. He left no grave marker. He had asked for none.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">IX — Chronology</span>
+    <h2>A Life in Time</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">14 March 1879</div>
+        <div class="timeline-title">Born in Ulm, Kingdom of Württemberg</div>
+        <div class="timeline-body">Second child of Hermann Einstein and Pauline Koch. The family is secular German-Jewish.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1880</div>
+        <div class="timeline-title">Family relocates to Munich</div>
+        <div class="timeline-body">Hermann and his brother Jakob establish an electrical engineering firm. Albert grows up in a scientifically curious household.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1895</div>
+        <div class="timeline-title">Fails ETH Zurich entrance examination</div>
+        <div class="timeline-body">Inadequate in French and botany. Spends a year at school in Aarau, Switzerland. Formulates the light-beam thought experiment.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1896</div>
+        <div class="timeline-title">Renounces German citizenship; admitted to ETH</div>
+        <div class="timeline-body">Stateless by choice until Swiss citizenship in 1901. Meets Mileva Marić at ETH.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1900–1902</div>
+        <div class="timeline-title">Academic rejection; patent office appointment</div>
+        <div class="timeline-body">All academic applications fail. Joins the Swiss Federal Patent Office as Technical Expert, Third Class, in June 1902.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1903</div>
+        <div class="timeline-title">Marries Mileva Marić</div>
+        <div class="timeline-body">A daughter, Lieserl, had been born the previous year; her fate is unknown. Sons Hans Albert (1904) and Eduard (1910) follow.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1905</div>
+        <div class="timeline-title">Annus Mirabilis — four papers, one year</div>
+        <div class="timeline-body">Photoelectric effect, Brownian motion, Special Relativity, and E=mc². Doctoral dissertation accepted by the University of Zurich. Age: 26.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1909–1914</div>
+        <div class="timeline-title">Academic ascent: Zurich, Prague, Berlin</div>
+        <div class="timeline-body">Rapidly climbs academic ranks. Appointed to the Prussian Academy of Sciences, Berlin, 1914 — the pinnacle of German science.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1915</div>
+        <div class="timeline-title">General Relativity completed</div>
+        <div class="timeline-body">After ten years of work, the field equations of General Relativity are published in November. Gravity is the curvature of spacetime.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1919</div>
+        <div class="timeline-title">Eclipse confirms General Relativity; world fame overnight</div>
+        <div class="timeline-body">Eddington's solar eclipse expedition measures the bending of starlight. The Times of London: "Revolution in Science — Newtonian Ideas Overthrown."</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1921</div>
+        <div class="timeline-title">Nobel Prize in Physics</div>
+        <div class="timeline-body">Awarded for the photoelectric effect, not relativity, which the Nobel Committee considered too speculative. Prize money goes to Mileva per divorce agreement.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1933</div>
+        <div class="timeline-title">Germany strips his citizenship; Einstein emigrates permanently</div>
+        <div class="timeline-body">Already in California when Hitler takes power. His books are burned. He joins the Institute for Advanced Study, Princeton.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1939</div>
+        <div class="timeline-title">Einstein–Szilard letter to Roosevelt</div>
+        <div class="timeline-body">Warns the President that Germany may be developing atomic weapons. Triggers the Manhattan Project — though Einstein himself plays no role in it.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1940</div>
+        <div class="timeline-title">U.S. citizenship granted</div>
+        <div class="timeline-body">Takes the oath of citizenship on October 1, 1940, in Trenton, New Jersey.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1952</div>
+        <div class="timeline-title">Declines presidency of Israel</div>
+        <div class="timeline-body">"I lack both the natural aptitude and the experience to deal properly with people and to exercise official functions."</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">18 April 1955</div>
+        <div class="timeline-title">Dies in Princeton, age 76</div>
+        <div class="timeline-body">Ruptured aortic aneurysm. Refuses surgery. His brain is removed without consent. His ashes are scattered at an undisclosed location.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Albert Einstein Series · Volume 0: The Person · albert-einstein/0-who.html<br>
+    Series continues: <a href="1-relativity.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

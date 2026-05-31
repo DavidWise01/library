@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grace Hopper — Vol. 1: The Compiler Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04080f;
+      --navy: #1e40af;
+      --gold: #eab308;
+      --gold-dim: rgba(234,179,8,0.18);
+      --gold-border: rgba(234,179,8,0.35);
+      --text: #d4d8e2;
+      --text-muted: #8b92a5;
+      --text-bright: #eef1f7;
+      --surface: #090f1a;
+      --surface2: #0d1525;
+      --border: rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,8,15,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 2rem;
+    }
+    .site-nav__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      height: 52px;
+      flex-wrap: wrap;
+    }
+    .site-nav__series {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
+    .site-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.7rem;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .site-nav a:hover, .site-nav a.active {
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+    .site-nav a.active { border: 1px solid var(--gold-border); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #050d1a 0%, #081428 50%, #0a1c38 100%);
+      overflow: hidden;
+      padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--gold-border);
+      position: relative;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(30,64,175,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero__content {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero__vol {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+    }
+    .hero__subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.5rem;
+    }
+    .hero__lede {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      max-width: 700px;
+      line-height: 1.8;
+    }
+
+    /* ── COMPILER PIPELINE SVG SECTION ── */
+    .pipeline-section {
+      background: var(--surface2);
+      border-top: 1px solid var(--gold-border);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 3rem 2rem;
+      overflow-x: auto;
+    }
+    .pipeline-section__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .section-head { margin-bottom: 2.5rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .band {
+      background: var(--navy);
+      color: var(--text-bright);
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .band__inner { max-width: 1100px; margin: 0 auto; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .card__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.96rem; color: var(--text); line-height: 1.7; }
+
+    .pullquote {
+      border-left: 4px solid var(--gold);
+      margin: 2.5rem 0;
+      padding: 1.2rem 2rem;
+      background: var(--surface2);
+      border-radius: 0 6px 6px 0;
+    }
+    .pullquote__text {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--text-bright);
+      line-height: 1.65;
+      margin-bottom: 0.6rem;
+    }
+    .pullquote__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #020507;
+      border: 1px solid var(--gold-border);
+      border-radius: 6px;
+      padding: 1.5rem 1.8rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .code-block__label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .code-block pre {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: #a8d8a8;
+      tab-size: 4;
+    }
+    .code-kw { color: #7eb8d4; }
+    .code-str { color: #e8b88a; }
+    .code-cmt { color: #5a7a5a; font-style: italic; }
+    .code-num { color: #d4a8e8; }
+    .code-op  { color: var(--gold); }
+
+    /* ── MILESTONE BOXES ── */
+    .milestone {
+      background: var(--surface2);
+      border: 1px solid var(--gold-border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 1.5rem;
+    }
+    .milestone__num {
+      font-family: 'Cinzel', serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      opacity: 0.35;
+      line-height: 1;
+      align-self: center;
+    }
+    .milestone__body h3 { margin-bottom: 0.4rem; }
+    .milestone__body p { font-size: 0.97rem; line-height: 1.75; color: var(--text); }
+    .milestone__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+
+    .prose p { margin-bottom: 1.25rem; font-size: 1rem; line-height: 1.8; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── BUG LOG ── */
+    .bug-log {
+      background: rgba(200,185,140,0.05);
+      border: 1px solid rgba(200,185,140,0.2);
+      border-radius: 6px;
+      padding: 1.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: rgba(200,185,140,0.75);
+      margin: 2rem 0;
+    }
+    .bug-log__header {
+      color: rgba(200,185,140,0.5);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .bug-log__entry { color: rgba(200,185,140,0.85); }
+    .bug-log__note { color: var(--gold); font-weight: 700; }
+
+    .colophon {
+      background: var(--surface);
+      border-top: 1px solid var(--gold-border);
+      padding: 2rem;
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .colophon__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      line-height: 2;
+    }
+    .colophon__attr a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .milestone { grid-template-columns: 1fr; }
+      .milestone__num { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="site-nav" aria-label="Series navigation">
+  <div class="site-nav__inner">
+    <span class="site-nav__series">Grace Hopper</span>
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-compiler.html" class="active">Vol. 1 — Compiler</a>
+    <a href="2-world.html">Vol. 2 — World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__content">
+    <span class="hero__vol">Volume 1 of 4</span>
+    <h1 class="hero__title">The Compiler Work</h1>
+    <p class="hero__subtitle">A-0 · FLOW-MATIC · COBOL · The Bug</p>
+    <p class="hero__lede">Before 1952, the universal assumption was that computers performed arithmetic — and only arithmetic. Grace Hopper proved that a machine could read symbolic instructions, translate them, and write its own programs. Her colleagues told her it couldn't work. She ran it again.</p>
+  </div>
+</header>
+
+<!-- ══ ANIMATED COMPILER PIPELINE ══ -->
+<section class="pipeline-section" aria-label="Animated compiler pipeline diagram">
+  <div class="pipeline-section__inner">
+    <div style="margin-bottom:1rem;">
+      <span class="kick">The A-0 Concept Visualized</span>
+      <h2 style="margin-bottom:0.4rem;">The Compiler Pipeline</h2>
+      <p style="font-size:0.9rem;color:var(--text-muted);font-family:'Space Mono',monospace;">Source tokens flow left-to-right through each stage — as Hopper's A-0 first demonstrated in 1952</p>
+    </div>
+
+    <svg width="1060" height="300" viewBox="0 0 1060 300" style="max-width:100%;display:block;margin:0 auto;"
+         aria-label="Animated compiler pipeline: source code → lexer → parser → assembler → machine code">
+      <defs>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-soft">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <!-- Arrow marker -->
+        <marker id="arrow-gold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 Z" fill="#eab308" opacity="0.8"/>
+        </marker>
+        <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 Z" fill="#3b82f6" opacity="0.6"/>
+        </marker>
+        <!-- Stage gradients -->
+        <linearGradient id="stage-src" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a2a4a"/>
+          <stop offset="100%" stop-color="#0d1a30"/>
+        </linearGradient>
+        <linearGradient id="stage-active" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1e3a6e"/>
+          <stop offset="100%" stop-color="#12254a"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Pipeline background rail -->
+      <rect x="20" y="115" width="1020" height="70" rx="6" fill="rgba(14,22,40,0.7)" stroke="rgba(30,64,175,0.3)" stroke-width="1"/>
+
+      <!-- ── Stage boxes ── -->
+      <!-- SOURCE CODE -->
+      <g id="stage-source">
+        <rect x="28" y="122" width="145" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(234,179,8,0.4)" stroke-width="1.5"/>
+        <text x="100" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">SOURCE CODE</text>
+        <text x="100" y="156" font-family="Space Mono,monospace" font-size="9" fill="#7eb8d4" text-anchor="middle">COMPUTE</text>
+        <text x="100" y="168" font-family="Space Mono,monospace" font-size="9" fill="#7eb8d4" text-anchor="middle">ARCTAN(X)</text>
+      </g>
+
+      <!-- LEXER -->
+      <g id="stage-lexer">
+        <rect x="218" y="122" width="130" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(30,64,175,0.5)" stroke-width="1.5">
+          <animate attributeName="stroke" values="rgba(30,64,175,0.5);rgba(234,179,8,0.8);rgba(30,64,175,0.5)" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+        </rect>
+        <text x="283" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">LEXER</text>
+        <text x="283" y="156" font-family="Space Mono,monospace" font-size="9" fill="#d4d8e2" text-anchor="middle">TOKENIZE</text>
+        <text x="283" y="168" font-family="Space Mono,monospace" font-size="9" fill="#5a7a9a" text-anchor="middle">SCAN · SPLIT</text>
+      </g>
+
+      <!-- PARSER -->
+      <g id="stage-parser">
+        <rect x="393" y="122" width="130" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(30,64,175,0.5)" stroke-width="1.5">
+          <animate attributeName="stroke" values="rgba(30,64,175,0.5);rgba(234,179,8,0.8);rgba(30,64,175,0.5)" dur="4s" repeatCount="indefinite" begin="1.2s"/>
+        </rect>
+        <text x="458" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">PARSER</text>
+        <text x="458" y="156" font-family="Space Mono,monospace" font-size="9" fill="#d4d8e2" text-anchor="middle">SYNTAX TREE</text>
+        <text x="458" y="168" font-family="Space Mono,monospace" font-size="9" fill="#5a7a9a" text-anchor="middle">GRAMMAR</text>
+      </g>
+
+      <!-- OPTIMIZER -->
+      <g id="stage-opt">
+        <rect x="568" y="122" width="130" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(30,64,175,0.5)" stroke-width="1.5">
+          <animate attributeName="stroke" values="rgba(30,64,175,0.5);rgba(234,179,8,0.8);rgba(30,64,175,0.5)" dur="4s" repeatCount="indefinite" begin="2.0s"/>
+        </rect>
+        <text x="633" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">OPTIMIZER</text>
+        <text x="633" y="156" font-family="Space Mono,monospace" font-size="9" fill="#d4d8e2" text-anchor="middle">SUBROUTINES</text>
+        <text x="633" y="168" font-family="Space Mono,monospace" font-size="9" fill="#5a7a9a" text-anchor="middle">REUSE · FOLD</text>
+      </g>
+
+      <!-- ASSEMBLER / CODE GEN -->
+      <g id="stage-asm">
+        <rect x="743" y="122" width="130" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(30,64,175,0.5)" stroke-width="1.5">
+          <animate attributeName="stroke" values="rgba(30,64,175,0.5);rgba(234,179,8,0.8);rgba(30,64,175,0.5)" dur="4s" repeatCount="indefinite" begin="2.7s"/>
+        </rect>
+        <text x="808" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">ASSEMBLER</text>
+        <text x="808" y="156" font-family="Space Mono,monospace" font-size="9" fill="#d4d8e2" text-anchor="middle">CODE GEN</text>
+        <text x="808" y="168" font-family="Space Mono,monospace" font-size="9" fill="#5a7a9a" text-anchor="middle">ADDR · LINK</text>
+      </g>
+
+      <!-- MACHINE CODE (OUTPUT) -->
+      <g id="stage-mach">
+        <rect x="890" y="122" width="145" height="56" rx="5" fill="url(#stage-src)" stroke="rgba(234,179,8,0.4)" stroke-width="1.5"/>
+        <text x="962" y="142" font-family="Space Mono,monospace" font-size="8" fill="#eab308" text-anchor="middle" letter-spacing="1.5">MACHINE CODE</text>
+        <text x="962" y="156" font-family="Space Mono,monospace" font-size="9" fill="#a8d8a8" text-anchor="middle">01001101</text>
+        <text x="962" y="168" font-family="Space Mono,monospace" font-size="9" fill="#a8d8a8" text-anchor="middle">10110010</text>
+      </g>
+
+      <!-- ── Connecting arrows ── -->
+      <line x1="173" y1="150" x2="215" y2="150" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-gold)" opacity="0.7"/>
+      <line x1="348" y1="150" x2="390" y2="150" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-gold)" opacity="0.7"/>
+      <line x1="523" y1="150" x2="565" y2="150" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-gold)" opacity="0.7"/>
+      <line x1="698" y1="150" x2="740" y2="150" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-gold)" opacity="0.7"/>
+      <line x1="873" y1="150" x2="887" y2="150" stroke="#eab308" stroke-width="1.5" marker-end="url(#arrow-gold)" opacity="0.7"/>
+
+      <!-- ── Animated TOKEN flowing through pipeline ── -->
+      <!-- Token 1 -->
+      <g filter="url(#glow2)">
+        <circle r="6" fill="#7eb8d4">
+          <animateMotion dur="5s" repeatCount="indefinite" begin="0s"
+            path="M90,150 L215,150 L283,150 L390,150 L458,150 L565,150 L633,150 L740,150 L808,150 L887,150 L962,150"/>
+        </circle>
+        <circle r="10" fill="rgba(126,184,212,0.2)">
+          <animateMotion dur="5s" repeatCount="indefinite" begin="0s"
+            path="M90,150 L215,150 L283,150 L390,150 L458,150 L565,150 L633,150 L740,150 L808,150 L887,150 L962,150"/>
+        </circle>
+      </g>
+      <!-- Token 2 (offset) -->
+      <g filter="url(#glow2)" opacity="0.7">
+        <circle r="5" fill="#e8b88a">
+          <animateMotion dur="5s" repeatCount="indefinite" begin="1.5s"
+            path="M90,150 L215,150 L283,150 L390,150 L458,150 L565,150 L633,150 L740,150 L808,150 L887,150 L962,150"/>
+        </circle>
+      </g>
+      <!-- Token 3 (offset) -->
+      <g filter="url(#glow2)" opacity="0.5">
+        <circle r="4" fill="#a8d8a8">
+          <animateMotion dur="5s" repeatCount="indefinite" begin="3s"
+            path="M90,150 L215,150 L283,150 L390,150 L458,150 L565,150 L633,150 L740,150 L808,150 L887,150 L962,150"/>
+        </circle>
+      </g>
+
+      <!-- ── Labels above stages ── -->
+      <text x="100" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">INPUT</text>
+      <text x="283" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">STAGE 1</text>
+      <text x="458" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">STAGE 2</text>
+      <text x="633" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">STAGE 3</text>
+      <text x="808" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">STAGE 4</text>
+      <text x="962" y="112" font-family="Space Mono,monospace" font-size="7.5" fill="#5a7a9a" text-anchor="middle">OUTPUT</text>
+
+      <!-- ── Bottom: A-0 annotation ── -->
+      <text x="530" y="220" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,179,8,0.45)" text-anchor="middle" letter-spacing="1">
+        A-0 COMPILER — GRACE HOPPER — ECKERT-MAUCHLY / REMINGTON RAND — 1952
+      </text>
+      <text x="530" y="235" font-family="Space Mono,monospace" font-size="7.5" fill="rgba(100,120,160,0.6)" text-anchor="middle">
+        "Everyone said it couldn't be done. We ran it again."
+      </text>
+
+      <!-- Active stage pulse background -->
+      <rect x="218" y="122" width="130" height="56" rx="5" fill="rgba(234,179,8,0.04)">
+        <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+      </rect>
+      <rect x="393" y="122" width="130" height="56" rx="5" fill="rgba(234,179,8,0.04)">
+        <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" begin="1.2s"/>
+      </rect>
+      <rect x="568" y="122" width="130" height="56" rx="5" fill="rgba(234,179,8,0.04)">
+        <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" begin="2.0s"/>
+      </rect>
+      <rect x="743" y="122" width="130" height="56" rx="5" fill="rgba(234,179,8,0.04)">
+        <animate attributeName="opacity" values="0;1;0" dur="4s" repeatCount="indefinite" begin="2.7s"/>
+      </rect>
+    </svg>
+  </div>
+</section>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main class="main">
+
+  <!-- THE IDEA NOBODY BELIEVED -->
+  <section>
+    <div class="section-head">
+      <span class="kick">The Premise</span>
+      <h2>The Assumption Everyone Made — and She Didn't</h2>
+    </div>
+    <div class="prose">
+      <p>In 1949, when Grace Hopper joined the Eckert-Mauchly Computer Corporation to work on UNIVAC, the received wisdom of the computing world was immovable: computers did arithmetic. They added, subtracted, multiplied, and divided. They operated on numbers. They did not, and could not, operate on language. If you wanted a computer to do something, you wrote in its native instruction set — binary machine code, or at best, symbolic assembly language. You, the programmer, were the translator.</p>
+      <p>Hopper thought this was absurd. Not as a matter of aesthetics, but as a matter of engineering. Programmers spent enormous amounts of time writing the same subroutines over and over — square roots, trigonometric functions, logarithms. Every program that needed a square root got a hand-written square root. She thought: why not write those subroutines once, store them in a library, and have the machine retrieve and link them on demand? The machine would be doing the translation. The programmer would be calling functions instead of writing them from scratch.</p>
+      <p>Her colleagues told her this was impossible. You couldn't have a machine write its own programs. The computer would never know what code was supposed to be data and what was supposed to be executed. The whole idea was confused, they said. Hopper disagreed. She ran a demonstration. They said it worked by accident. She ran it again.</p>
+    </div>
+
+    <div class="pullquote">
+      <div class="pullquote__text">"I had a running compiler and nobody would touch it. They told me computers could only do arithmetic."</div>
+      <div class="pullquote__attr">Grace Hopper, recalling the reception of A-0 in 1952</div>
+    </div>
+  </section>
+
+  <!-- MILESTONE 1: A-0 -->
+  <div class="milestone">
+    <div class="milestone__num">01</div>
+    <div class="milestone__body">
+      <div class="milestone__year">1952</div>
+      <h3>A-0 — The First Compiler</h3>
+      <p>The A-0 system was not a modern compiler in the full sense — it was more accurately a linker and loader that assembled programs from pre-written subroutines called by a shorthand code. You wrote a three-digit number representing a mathematical function and a set of arguments; the A-0 retrieved the subroutine from its library and linked it into the executable program. But the essential conceptual leap was there: a program that writes a program. Symbolic instructions that the computer itself translated into machine code. The boundary between "code" and "data" was shown to be a design choice, not a physical law.</p>
+      <p>Hopper followed A-0 with A-1 and A-2, each more capable than the last. By A-2, she had what she would later call a true programming system: a machine that could read mathematical notation and produce executable machine instructions. Nobody celebrated. The computing establishment was skeptical. She kept building.</p>
+    </div>
+  </div>
+
+  <!-- MILESTONE 2: FLOW-MATIC -->
+  <div class="milestone">
+    <div class="milestone__num">02</div>
+    <div class="milestone__body">
+      <div class="milestone__year">1955</div>
+      <h3>FLOW-MATIC — The First English-Language Programming Language</h3>
+      <p>If the A-0 proved that machines could do symbolic translation, FLOW-MATIC asked a more audacious question: why should the symbols be mathematical? Why not English? Hopper's insight was that the largest emerging market for computers was not physics laboratories, but businesses — and businesspeople did not speak machine code. They spoke English. If you wanted computers to run payroll, manage inventory, and process insurance claims, the people running those businesses had to be able to understand and eventually write the programs.</p>
+      <p>FLOW-MATIC, developed between 1955 and 1958, was the first programming language to use English words as commands. COMPARE, READ, WRITE, STOP — the vocabulary was drawn from business operations. A FLOW-MATIC program looked like a set of instructions you might give to a capable clerk. This was the whole point. Hopper was not simplifying computing; she was democratizing it. FLOW-MATIC was used in real Remington Rand UNIVAC applications and demonstrated that English-language programming was not just possible but practical.</p>
+    </div>
+  </div>
+
+  <!-- FLOW-MATIC CODE SAMPLE -->
+  <div class="code-block">
+    <div class="code-block__label">FLOW-MATIC — c. 1957 — First English-language program (reconstructed)</div>
+    <pre>
+<span class="code-cmt">(0) READ-ITEM INVENTORY-RECORD; WRITE-ITEM NEW-RECORD ;</span>
+<span class="code-cmt">(1) COMPARE PRODUCT-PRICE (A) WITH MAX-PRICE (B) ;</span>
+<span class="code-kw">    IF GREATER</span> GO TO OPERATION <span class="code-num">5</span> ;
+<span class="code-kw">    IF EQUAL</span>   GO TO OPERATION <span class="code-num">3</span> ;
+<span class="code-kw">    IF LESS</span>    GO TO OPERATION <span class="code-num">2</span> ;
+<span class="code-cmt">(2) TRANSFER PRODUCT-PRICE TO ADJUSTED-PRICE ;</span>
+<span class="code-cmt">    GO TO OPERATION 4 ;</span>
+<span class="code-cmt">(3) MOVE PRODUCT-NAME TO OUTPUT-BUFFER ;</span>
+<span class="code-cmt">(4) WRITE-ITEM REPORT-LINE ;</span>
+<span class="code-cmt">(5) STOP ;</span>
+</pre>
+  </div>
+
+  <!-- MILESTONE 3: COBOL -->
+  <div class="milestone">
+    <div class="milestone__num">03</div>
+    <div class="milestone__body">
+      <div class="milestone__year">1959</div>
+      <h3>COBOL — The Language That Still Runs the World</h3>
+      <p>In 1959, the United States Department of Defense convened the Conference on Data Systems Languages — CODASYL — to create a common business-oriented programming language that could run on multiple manufacturers' computers. The DoD was alarmed that every vendor had its own incompatible programming system; switching computers meant rewriting every program. Hopper chaired the Short Range Committee, which drew heavily on FLOW-MATIC. The result was COBOL: Common Business-Oriented Language.</p>
+      <p>COBOL was remarkable for its time in ways that still matter: it separated data definitions from procedures, it used a hierarchical data structure that matched how businesses actually organized their records, and it was explicitly designed to be readable by non-programmers — managers, auditors, regulators. A COBOL program was supposed to be its own documentation. You could read it and understand what the business process was doing.</p>
+      <p>COBOL shipped in 1960. By the mid-1960s it was the most widely used programming language in the world. It has never stopped being widely used. Today, an estimated 220 billion lines of COBOL remain in production — more than any other language — running approximately $3 trillion in daily financial transactions. Every time you use a bank, pay taxes, or receive a government benefit, you are almost certainly touching a system with COBOL in its core.</p>
+    </div>
+  </div>
+
+  <!-- COBOL CODE SAMPLE -->
+  <div class="code-block">
+    <div class="code-block__label">COBOL — c. 1960 — The language she co-designed, still in production</div>
+    <pre>
+<span class="code-kw">IDENTIFICATION DIVISION.</span>
+  <span class="code-kw">PROGRAM-ID.</span>    <span class="code-str">PAYROLL-PROCESS</span>.
+  <span class="code-kw">AUTHOR.</span>        <span class="code-str">GRACE-HOPPER-TEAM</span>.
+  <span class="code-kw">DATE-WRITTEN.</span>  <span class="code-str">1959</span>.
+
+<span class="code-kw">DATA DIVISION.</span>
+  <span class="code-kw">WORKING-STORAGE SECTION.</span>
+  <span class="code-num">01</span> EMPLOYEE-RECORD.
+     <span class="code-num">05</span> EMPLOYEE-ID      <span class="code-kw">PIC</span> <span class="code-str">9(6)</span>.
+     <span class="code-num">05</span> EMPLOYEE-NAME    <span class="code-kw">PIC</span> <span class="code-str">X(30)</span>.
+     <span class="code-num">05</span> HOURS-WORKED     <span class="code-kw">PIC</span> <span class="code-str">99V99</span>.
+     <span class="code-num">05</span> HOURLY-RATE      <span class="code-kw">PIC</span> <span class="code-str">99V99</span>.
+     <span class="code-num">05</span> GROSS-PAY        <span class="code-kw">PIC</span> <span class="code-str">9(6)V99</span>.
+
+<span class="code-kw">PROCEDURE DIVISION.</span>
+  <span class="code-cmt">    * COMPUTE WEEKLY GROSS PAY</span>
+      <span class="code-kw">MULTIPLY</span> HOURS-WORKED <span class="code-kw">BY</span> HOURLY-RATE
+                <span class="code-kw">GIVING</span> GROSS-PAY
+      <span class="code-kw">DISPLAY</span> <span class="code-str">"EMPLOYEE: "</span> EMPLOYEE-NAME
+      <span class="code-kw">DISPLAY</span> <span class="code-str">"GROSS PAY: $"</span> GROSS-PAY
+      <span class="code-kw">STOP RUN</span>.
+</pre>
+  </div>
+
+  <!-- THE BUG SECTION -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">September 9, 1947</span>
+      <h2>The Bug — First Actual Case</h2>
+    </div>
+    <div class="prose">
+      <p>The word "bug" to mean a technical malfunction predates Hopper — Thomas Edison used it in 1878, and electrical engineers had used it casually for decades. But the logbook entry from the Mark II, made by Hopper's team on September 9, 1947, is the moment the term became permanently embedded in programming culture.</p>
+      <p>The Mark II was malfunctioning. The operators traced the fault to Relay 70 in Panel F — one of the thousands of electromechanical switches that made up the machine's logic circuits. They opened the panel. A moth was caught in the relay contacts, preventing them from closing properly. Someone — the exact hand is disputed, though Grace Hopper is most commonly credited — removed the moth with tweezers, taped it into the logbook, and wrote the entry that has been reproduced in textbooks ever since.</p>
+    </div>
+
+    <div class="bug-log">
+      <div class="bug-log__header">Harvard Mark II Logbook — Bureau of Ordnance Computation Project — Cambridge, Massachusetts</div>
+      <div class="bug-log__entry">
+        DATE: 0900 · 09 SEPT 1947<br>
+        OPERATOR: HOPPER TEAM · PANEL F<br><br>
+        09:43  Relay 70 · Panel F · fault on output register test<br>
+        09:47  Opened Panel F · inspected relay contacts<br>
+        09:51  <span class="bug-log__note">Found moth trapped in relay contacts · removed with tweezers</span><br>
+        09:52  <span class="bug-log__note">Taped moth into log · [see below]</span><br>
+        09:54  System test resumed · register output correct<br><br>
+        <span class="bug-log__note">"FIRST ACTUAL CASE OF BUG BEING FOUND."</span><br><br>
+        <span style="opacity:0.45;font-size:0.72rem;">— Logbook now in the permanent collection of the National Museum of American History, Smithsonian Institution, Washington D.C.</span>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>The moth and its logbook page are now at the Smithsonian's National Museum of American History. They are among the most viewed artifacts in the history of computing. The physical object — a small moth, taped to yellowing paper, in a 78-year-old notebook — is, in a certain light, the most consequential insect in human history.</p>
+      <p>Hopper did not invent the word "bug" and she never claimed to. What she did was ensure the incident was documented precisely, humorously, and permanently — in a way that reflected her deepest instinct about engineering: keep a record. Show your work. Note the anomaly. The logbook was her instrument for making the invisible visible, and she applied it to a moth with the same rigor she applied to everything else.</p>
+    </div>
+  </section>
+
+  <!-- WHY IT MATTERS BAND -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">The Chain of Consequence</span>
+      <h2 style="margin-bottom:1rem;">What the Compiler Made Possible</h2>
+      <div class="prose" style="max-width:720px;">
+        <p>Before 1952: to use a computer, you had to speak the computer's language. That meant binary instruction codes, memory addresses in decimal, hand-linking subroutines. Programming was the exclusive domain of mathematicians and engineers with the patience to operate at the machine's level of abstraction.</p>
+        <p>After 1952: the machine could learn to speak a human-readable language. This was not a convenience feature. It was a civilizational inflection point. Every high-level programming language — FORTRAN, LISP, ALGOL, C, BASIC, Pascal, Ada, C++, Java, Python, JavaScript, Rust — exists because Grace Hopper demonstrated that a compiler was possible. Every interpreter, every transpiler, every just-in-time compiler, every domain-specific language running inside any application anywhere in the world is a descendant of A-0.</p>
+        <p>The compiler is not one of many inventions in computer science. It is the invention that made all other programming inventions accessible to non-experts — and therefore the invention that made the software industry possible.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVENTION CARDS -->
+  <section>
+    <div class="section-head">
+      <span class="kick">The Four Contributions</span>
+      <h2>Her Technical Legacy in Brief</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card__year">1952 — A-0</div>
+        <h3>The First Compiler</h3>
+        <p>Proved that a computer could perform symbolic translation — reading shorthand codes and assembling a program from pre-written subroutines. The foundational proof of concept for all compiler theory.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1955–1958 — FLOW-MATIC</div>
+        <h3>The First English-Language Language</h3>
+        <p>Demonstrated that programming commands could be English words rather than symbols or machine opcodes. Changed the target audience for computing from mathematicians to business operators.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">1959–1960 — COBOL</div>
+        <h3>The Language of Global Commerce</h3>
+        <p>Co-designed the language that still processes trillions of dollars in daily transactions. Readable, hierarchical, portable across vendors. 220 billion lines still in production.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">September 9, 1947</div>
+        <h3>The Bug</h3>
+        <p>The moth in Relay 70, Panel F — logged with precision and humor — gave programmers everywhere a permanent shorthand for hardware/software failure and established the discipline of meticulous fault documentation.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ COLOPHON ══ -->
+<footer class="colophon">
+  <p class="colophon__attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank" rel="noopener">CC-BY-ND-4.0</a>
+    <br>
+    Grace Hopper Series — Volume 1: The Compiler Work &nbsp;·&nbsp; Historical record compiled in good faith from public domain sources
+    <br>
+    All rights to original arrangement and design reserved · No derivative works without attribution
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Einstein — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #090808;
+    --light: #f59e0b;
+    --blue: #3b82f6;
+    --text: #e8e0d0;
+    --muted: #8a7f72;
+    --border: #2a2520;
+    --card-bg: #110f0e;
+    --green: #10b981;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9,8,8,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+    color: var(--light); letter-spacing: 0.08em; margin-right: 2rem; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; padding: 0.35rem 0.85rem; border: 1px solid transparent; transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--light); border-color: var(--light); }
+  /* HERO */
+  .hero {
+    position: relative; width: 100%; min-height: 520px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 40%, #0a0c12 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.18em; color: var(--light); margin-bottom: 1.2rem; display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; color: #fff;
+    text-shadow: 0 0 60px rgba(16,185,129,0.3); margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif; font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--green);
+    letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .hero-lead { font-style: italic; font-size: 1.15rem; color: var(--text); max-width: 640px; margin: 0 auto; opacity: 0.85; }
+  .band {
+    background: var(--light); color: #0d0b08; padding: 0.6rem 2rem;
+    text-align: center; font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--light); margin-bottom: 0.75rem; display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.2rem;
+    color: var(--light); margin-bottom: 0.75rem; margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--light); font-style: italic; }
+  /* LEGACY CARDS */
+  .legacy-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .legacy-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+    overflow: hidden;
+  }
+  .legacy-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--green); opacity: 0.6;
+  }
+  .legacy-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--light); }
+  .legacy-card .era {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--blue); margin-bottom: 0.4rem; display: block;
+  }
+  .legacy-card h4 {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 0.6rem;
+  }
+  .legacy-card p { font-size: 0.88rem; margin: 0; opacity: 0.85; }
+  /* APPLICATION CARDS */
+  .app-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .app-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 2rem 1.75rem; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .app-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--blue); }
+  .app-card .origin {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--light); margin-bottom: 0.4rem; display: block;
+  }
+  .app-card h4 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem;
+  }
+  .app-card p { font-size: 0.9rem; margin: 0; opacity: 0.85; }
+  /* GPS SECTION */
+  .gps-table {
+    background: var(--card-bg); border: 1px solid var(--border); margin: 2rem 0; overflow-x: auto;
+  }
+  .gps-table table {
+    width: 100%; border-collapse: collapse;
+  }
+  .gps-table th {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--blue); padding: 1rem 1.25rem; text-align: left;
+    border-bottom: 1px solid var(--border); background: #0d0b08;
+  }
+  .gps-table td {
+    padding: 0.9rem 1.25rem; font-size: 0.9rem; color: var(--text); border-bottom: 1px solid var(--border);
+  }
+  .gps-table tr:last-child td { border-bottom: none; }
+  .gps-table td:first-child { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--light); }
+  .gps-table tr:hover td { background: #160e08; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--light); padding: 1.5rem 2rem; margin: 3rem 0; background: var(--card-bg);
+  }
+  .pull-quote blockquote { font-style: italic; font-size: 1.35rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem; }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* EQUATION BLOCK */
+  .equation-block {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-left: 4px solid var(--light); padding: 2rem 2.5rem; margin: 2.5rem 0; text-align: center;
+  }
+  .equation {
+    font-family: 'Newsreader', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600;
+    color: #fff; display: block; margin-bottom: 0.6rem;
+  }
+  .equation-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 2rem; color: var(--light);
+    display: block; line-height: 1; margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+  }
+  /* HIGHLIGHT */
+  .highlight {
+    background: #050e08; border: 1px solid #0d3b20; padding: 1.75rem 2rem; margin: 2rem 0;
+  }
+  .highlight-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--green); margin-bottom: 0.75rem; display: block;
+  }
+  .highlight p { font-size: 0.97rem; margin: 0; }
+  /* QUOTE FINAL */
+  .final-quote {
+    text-align: center; padding: 4rem 2rem; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); margin: 4rem 0;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.45; color: #fff;
+    max-width: 700px; margin: 0 auto 1.5rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--light);
+  }
+  footer {
+    border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--light); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Einstein</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-relativity.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Expanding ripple waves (gravitational waves) -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glowL" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#071a0f" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#090808" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="lblur"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="lblur2"><feGaussianBlur stdDeviation="6"/></filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#glowL)"/>
+    <!-- Background grid, very faint -->
+    <g stroke="#3b82f6" stroke-width="0.4" fill="none" opacity="0.18">
+      <line x1="0" y1="130" x2="900" y2="130"/>
+      <line x1="0" y1="260" x2="900" y2="260"/>
+      <line x1="0" y1="390" x2="900" y2="390"/>
+      <line x1="225" y1="0" x2="225" y2="520"/>
+      <line x1="450" y1="0" x2="450" y2="520"/>
+      <line x1="675" y1="0" x2="675" y2="520"/>
+    </g>
+    <!-- Gravitational wave ripples — expanding rings from merger point -->
+    <!-- Ring 1 - closest / newest -->
+    <ellipse cx="450" cy="260" rx="30" ry="15" fill="none" stroke="#10b981" stroke-width="1.8" opacity="0">
+      <animate attributeName="rx" values="0;400" dur="4s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="ry" values="0;200" dur="4s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="opacity" values="0.9;0" dur="4s" repeatCount="indefinite" begin="0s" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+    </ellipse>
+    <!-- Ring 2 -->
+    <ellipse cx="450" cy="260" rx="0" ry="0" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0">
+      <animate attributeName="rx" values="0;400" dur="4s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="ry" values="0;200" dur="4s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="opacity" values="0.75;0" dur="4s" repeatCount="indefinite" begin="1s" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+    </ellipse>
+    <!-- Ring 3 -->
+    <ellipse cx="450" cy="260" rx="0" ry="0" fill="none" stroke="#3b82f6" stroke-width="1.3" opacity="0">
+      <animate attributeName="rx" values="0;400" dur="4s" repeatCount="indefinite" begin="2s"/>
+      <animate attributeName="ry" values="0;200" dur="4s" repeatCount="indefinite" begin="2s"/>
+      <animate attributeName="opacity" values="0.6;0" dur="4s" repeatCount="indefinite" begin="2s" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+    </ellipse>
+    <!-- Ring 4 -->
+    <ellipse cx="450" cy="260" rx="0" ry="0" fill="none" stroke="#3b82f6" stroke-width="1.1" opacity="0">
+      <animate attributeName="rx" values="0;400" dur="4s" repeatCount="indefinite" begin="3s"/>
+      <animate attributeName="ry" values="0;200" dur="4s" repeatCount="indefinite" begin="3s"/>
+      <animate attributeName="opacity" values="0.5;0" dur="4s" repeatCount="indefinite" begin="3s" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+    </ellipse>
+    <!-- Two merging masses -->
+    <circle cx="420" cy="260" r="12" fill="#1a1208" stroke="#f59e0b" stroke-width="1.5">
+      <animate attributeName="cx" values="420;440;420" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="11;13;11" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <circle cx="480" cy="260" r="10" fill="#1a1208" stroke="#f59e0b" stroke-width="1.5">
+      <animate attributeName="cx" values="480;460;480" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="r" values="9;11;9" dur="1.2s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <!-- Merger glow -->
+    <circle cx="450" cy="260" r="40" fill="#f59e0b" opacity="0.06" filter="url(#lblur2)">
+      <animate attributeName="r" values="35;50;35" dur="1.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.04;0.1;0.04" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- LIGO label -->
+    <text x="450" y="175" font-family="monospace" font-size="10" fill="#10b981" text-anchor="middle" opacity="0.7">LIGO · GW150914 · SEPT 14, 2015</text>
+    <text x="450" y="192" font-family="monospace" font-size="9" fill="#8a7f72" text-anchor="middle" opacity="0.6">GRAVITATIONAL WAVES CONFIRMED · 1.3 BILLION LIGHT-YEARS</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Albert Einstein · Long Afterlife · Volume Three</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">GPS · LIGO · Black Holes · Dark Energy · Quantum Computing · Solar Panels</p>
+    <p class="hero-lead">He has been dead since 1955. His equations navigate every satellite, power every solar panel, explain every black hole, and run in every GPS device on earth. The afterlife of a theory has no expiration date.</p>
+  </div>
+</div>
+
+<div class="band">GPS Corrections · Gravitational Waves 2015 · Black Hole Photo 2019 · Dark Energy · Quantum Entanglement · E=mc² → Nuclear Power</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat"><span class="stat-num">1955</span><span class="stat-label">Year He Died</span></div>
+    <div class="stat"><span class="stat-num">2015</span><span class="stat-label">LIGO: Grav. Waves</span></div>
+    <div class="stat"><span class="stat-num">2019</span><span class="stat-label">Black Hole Photo</span></div>
+    <div class="stat"><span class="stat-num">10km</span><span class="stat-label">GPS Drift/Day w/o GR</span></div>
+    <div class="stat"><span class="stat-num">438</span><span class="stat-label">GW Events (LIGO, 2024)</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Confirmations Pending</span></div>
+  </div>
+
+  <!-- GPS -->
+  <section id="gps">
+    <span class="section-label">I — The Satellite Age</span>
+    <h2>GPS: Einstein's Corrections Run in Every Device</h2>
+    <p>The Global Positioning System consists of approximately 31 active satellites in medium Earth orbit, at an altitude of roughly 20,200 km. Each satellite carries atomic clocks and broadcasts precise time signals. A GPS receiver on the ground calculates its position by measuring the time delay between signals received from multiple satellites and using the differences to triangulate location. The accuracy of the entire system depends on the accuracy of the time measurements.</p>
+    <p>The problem: physics. Einstein's theories predict that the atomic clocks aboard GPS satellites run at different rates than identical clocks on the ground — for two distinct reasons, acting in opposite directions.</p>
+
+    <div class="gps-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Effect</th>
+            <th>Theory</th>
+            <th>Direction</th>
+            <th>Magnitude</th>
+            <th>Consequence If Ignored</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Velocity time dilation</td>
+            <td>Special Relativity (1905)</td>
+            <td>Satellite clocks run slow</td>
+            <td>–7.2 μs per day</td>
+            <td>Clocks lose 7.2 microseconds/day</td>
+          </tr>
+          <tr>
+            <td>Gravitational time dilation</td>
+            <td>General Relativity (1915)</td>
+            <td>Satellite clocks run fast (weaker gravity at altitude)</td>
+            <td>+45.9 μs per day</td>
+            <td>Clocks gain 45.9 microseconds/day</td>
+          </tr>
+          <tr>
+            <td>Net relativistic correction</td>
+            <td>SR + GR combined</td>
+            <td>Satellite clocks run fast (net)</td>
+            <td>+38.4 μs per day</td>
+            <td>Position error ~10 km/day (accumulating)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>At 38.4 microseconds per day of uncorrected clock drift, and given that GPS position is calculated from light-travel time at 300,000 km/s, the position error accumulates at roughly <strong>10 kilometers per day</strong>. A GPS system ignoring relativistic corrections would be useless within hours of operation. Every GPS device — in every phone, every car, every aircraft, every ship, every delivery drone — runs Einstein's relativistic correction factors continuously. Special Relativity and General Relativity are not abstractions. They are infrastructure.</p>
+
+    <div class="highlight">
+      <span class="highlight-label">Historical note</span>
+      <p>When the first GPS satellite was launched in 1977, there was genuine internal debate at the U.S. Naval Research Laboratory about whether to include relativistic corrections in the satellite clocks. Some engineers believed the effects were too small to matter. The relativistic correction was included in the design, and when the satellite was turned on, the corrected signal matched predictions precisely. The uncorrected clock, run as a test in parallel, drifted exactly as Einstein predicted.</p>
+    </div>
+  </section>
+
+  <!-- GRAVITATIONAL WAVES -->
+  <section id="ligo">
+    <span class="section-label">II — The Hundred-Year Wait</span>
+    <h2>LIGO and the Detection of Gravitational Waves</h2>
+    <p>In 1916, one year after publishing the General Relativity field equations, Einstein predicted that accelerating masses should produce ripples in the fabric of spacetime — waves of curvature propagating outward at the speed of light. He calculated their properties, doubted whether they could ever be detected, and published the prediction as a theoretical consequence of GR. It took exactly ninety-nine years to prove him right.</p>
+    <p>On September 14, 2015, at 5:51 a.m. Eastern time, the Laser Interferometer Gravitational-Wave Observatory (LIGO) simultaneously detected a gravitational wave signal at its two facilities — one in Livingston, Louisiana, and one in Hanford, Washington. The signal lasted 0.2 seconds. Its frequency swept upward from 35 Hz to 150 Hz. Its amplitude was a fractional change in length of approximately <strong>10⁻²¹</strong> — a displacement of one-thousandth the diameter of a proton across a 4-kilometer detector arm.</p>
+    <p>The source: the merger of two black holes, approximately 29 and 36 solar masses each, at a distance of about 1.3 billion light-years. The event — designated GW150914 — released three solar masses worth of energy as gravitational radiation in a fraction of a second. The entire energy output of all the visible stars in the observable universe, sustained for 50 milliseconds.</p>
+
+    <div class="equation-block">
+      <span class="equation">h = ΔL / L ≈ 10⁻²¹</span>
+      <div class="equation-label">Gravitational Wave Strain · h is the strain amplitude · ΔL is the change in detector arm length · L is the detector arm length (4 km)</div>
+    </div>
+
+    <p>Einstein had predicted this in 1916. He died in 1955. LIGO confirmed the prediction in 2015, sixty years after his death. The Nobel Prize in Physics for 2017 was awarded to Kip Thorne, Rainer Weiss, and Barry Barish for the LIGO detection. As of 2024, LIGO and its partner detector Virgo have recorded over <strong>400 confirmed gravitational wave events</strong> — merging black holes, merging neutron stars, and mixed systems. Gravitational wave astronomy is now a mature field of observational science.</p>
+  </section>
+
+  <!-- BLACK HOLES -->
+  <section id="blackholes">
+    <span class="section-label">III — The Dark Prediction</span>
+    <h2>Black Holes — From Equation to Image</h2>
+    <p>The General Relativity field equations predict, among other things, a class of solutions in which spacetime curvature becomes so extreme that nothing — not matter, not light — can escape once it crosses a critical boundary called the event horizon. Einstein knew of this solution, derived by Karl Schwarzschild in 1916, and was troubled by it. He argued, in a 1939 paper, that such objects could not actually form in nature. He was wrong about that.</p>
+    <p>By the 1960s and 1970s, the astrophysical evidence for the existence of extremely compact massive objects was accumulating in X-ray binary systems. The theoretical work of Roger Penrose, Stephen Hawking, and Kip Thorne showed that black holes were not only possible within GR but were inevitable endpoints of sufficiently massive stellar evolution. The term "black hole" was coined by John Archibald Wheeler in 1967.</p>
+
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <span class="era">1971 — Discovered</span>
+        <h4>Cygnus X-1</h4>
+        <p>The first strong black hole candidate, identified in X-ray observations. A stellar-mass black hole in a binary system, accreting mass from a companion star. The bet between Hawking and Thorne on its nature — Hawking bet against — was conceded by Hawking in 1990.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">1994 — Confirmed</span>
+        <h4>Sagittarius A*</h4>
+        <p>The supermassive black hole at the center of the Milky Way, approximately 4 million solar masses, 26,000 light-years from Earth. Confirmed by decades of stellar orbit tracking. Imaged by the Event Horizon Telescope in 2022.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">April 10, 2019</span>
+        <h4>M87* — First Black Hole Photo</h4>
+        <p>The Event Horizon Telescope collaboration released the first image of a black hole shadow: M87*, a supermassive black hole 6.5 billion solar masses in the galaxy M87, 55 million light-years away. The image matched GR predictions in every detail.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">Ongoing — Hawking Radiation</span>
+        <h4>The Evaporation Prediction</h4>
+        <p>Stephen Hawking showed in 1974 that quantum effects cause black holes to slowly radiate energy and eventually evaporate — a prediction combining GR and quantum mechanics. Not yet observed, but theoretically robust. Einstein's geometry meets quantum physics.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSMOLOGICAL CONSTANT -->
+  <section id="lambda">
+    <span class="section-label">IV — The Accidental Prophecy</span>
+    <h2>The Cosmological Constant — "His Greatest Blunder" Was Right</h2>
+    <p>In 1917, Einstein applied his General Relativity field equations to the universe as a whole and found a problem: the equations predicted a dynamic universe — either expanding or contracting. This contradicted the astronomical consensus of the time, which held that the universe was static and eternal. Einstein modified his own equations by adding a term — the cosmological constant Λ (lambda) — a kind of repulsive pressure built into spacetime itself, which could precisely balance gravity and produce a static solution.</p>
+    <p>In 1929, Edwin Hubble published observations showing that distant galaxies are receding from Earth, with recession velocity proportional to distance. The universe is expanding. There was no need for the cosmological constant to prevent collapse — the universe wasn't collapsing. Einstein called the addition of Λ his <em>"greatest blunder."</em> He removed it from his equations. He believed that was the end of the matter.</p>
+
+    <div class="pull-quote">
+      <blockquote>"If Hubble's expansion had been discovered at the time of the creation of the general theory of relativity, the cosmological constant would never have been introduced."</blockquote>
+      <cite>— Einstein, as recalled by George Gamow, 1956</cite>
+    </div>
+
+    <p>In 1998, two independent teams of astronomers — the High-Z Supernova Search Team and the Supernova Cosmology Project — measured the distances to Type Ia supernovae and discovered that the expansion of the universe is <strong>accelerating.</strong> Something is pushing the universe apart. That something has the mathematical properties of a cosmological constant — a form of energy intrinsic to space itself, now called <em>dark energy.</em> It constitutes approximately 68% of the total energy content of the observable universe.</p>
+    <p>Einstein's "greatest blunder" turns out to be the dominant form of energy in the universe. The constant he added for the wrong reason, and then removed, is real — or something with exactly its mathematical properties is real. The current best value of Λ, from Planck Collaboration data, is approximately 1.1 × 10⁻⁵² m⁻². The universe is, as it happens, doing exactly what Einstein's original modified equations said it would do.</p>
+
+    <div class="equation-block">
+      <span class="equation">G<sub>μν</sub> + Λg<sub>μν</sub> = (8πG/c⁴)T<sub>μν</sub></span>
+      <div class="equation-label">The field equations with Λ — Einstein's "blunder" term — now understood as dark energy, the dominant energy component of the universe</div>
+    </div>
+  </section>
+
+  <!-- QUANTUM ENTANGLEMENT -->
+  <section id="entanglement">
+    <span class="section-label">V — The Spooky Action Vindicated</span>
+    <h2>Quantum Entanglement — From EPR to Quantum Computing</h2>
+    <p>Einstein's 1935 EPR paper was intended as a proof that quantum mechanics was incomplete. The "spooky action at a distance" that he described — instantaneous correlations between measurements on spatially separated entangled particles — was, in his view, a symptom of an underlying deterministic reality that quantum mechanics failed to capture. He spent his last twenty years searching for a deeper, "complete" theory.</p>
+    <p>John Bell's 1964 theorem transformed the debate from philosophical to experimental. Bell derived inequalities that any "local hidden variable" theory must satisfy — inequalities that quantum mechanics predicts should be violated. In 1972, John Clauser performed the first rough experimental test. In 1982, Alain Aspect and his team conducted the definitive experiments, with detector settings changed while the photons were in flight to prevent any classical communication between them. The results violated Bell's inequalities. Quantum mechanics was confirmed. Einstein's intuition about local realism was wrong.</p>
+
+    <div class="highlight">
+      <span class="highlight-label">Bell's Theorem — The Numbers</span>
+      <p>Local hidden variable theories predict a maximum correlation coefficient (CHSH value) of <strong>2.0</strong>. Quantum mechanics predicts a maximum of <strong>2√2 ≈ 2.83</strong>. Aspect's 1982 experiment measured <strong>2.697 ± 0.015</strong> — violating Bell's inequality by 46 standard deviations. The universe is nonlocal. Einstein was wrong about hidden variables and right about the phenomenon's existence.</p>
+    </div>
+
+    <p>The consequences have been transformative. Quantum entanglement is not a curiosity — it is a resource. Quantum key distribution (QKD) uses entanglement to create cryptographic keys that are provably secure: any eavesdropping disturbs the quantum state and is detectable. Quantum teleportation uses entanglement to transmit quantum states between distant locations. Quantum computing uses entangled qubits to perform certain computations exponentially faster than classical computers. Every one of these applications flows directly from the "spooky action" Einstein identified in 1935 as evidence of quantum mechanics' incompleteness.</p>
+    <p>In 2022, Alain Aspect, John Clauser, and Anton Zeilinger received the Nobel Prize in Physics for experiments on entangled photons and the establishment of violations of Bell inequalities. The Nobel citation explicitly acknowledged Einstein's EPR paper as the conceptual origin of the work. The man who described the phenomenon in order to discredit it became the grandfather of a Nobel Prize and an entire field of quantum technology.</p>
+  </section>
+
+  <!-- E=MC2 APPLICATIONS -->
+  <section id="emc2">
+    <span class="section-label">VI — The Equation Made Real</span>
+    <h2>E = mc² — From Theory to Civilization</h2>
+    <p>When Einstein wrote the three-page paper in September 1905 deriving E=mc², he was doing pure theoretical physics. The technological consequences were not his concern. The equation states that mass and energy are interchangeable at a conversion rate of c² — the square of the speed of light, approximately 9 × 10¹⁶ joules per kilogram. This is an enormous number. A single gram of matter, if fully converted to energy, releases more energy than a 20-kiloton nuclear weapon.</p>
+    <p>The practical consequence arrived forty years later, in July 1945, in the New Mexico desert. The Trinity test converted approximately one gram of plutonium mass into energy. The yield was 20 kilotons. Hiroshima and Nagasaki followed. The equation that had been a theoretical derivation in a Swiss patent clerk's notebook was now the organizing principle of a new kind of power — destructive and generative.</p>
+
+    <div class="app-grid">
+      <div class="app-card">
+        <span class="origin">E = mc² · 1905 → 1945</span>
+        <h4>Nuclear Weapons</h4>
+        <p>Fission and fusion convert small fractions of nuclear mass to energy. The mass defect in a uranium-235 nucleus splitting releases 200 MeV per fission event. E=mc² predicts this with exact precision. Einstein signed the letter initiating the program; he was never permitted inside it.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">E = mc² · 1905 → 1954</span>
+        <h4>Nuclear Power Reactors</h4>
+        <p>Controlled nuclear fission releases the binding energy of atomic nuclei as heat, producing steam, producing electricity. Nuclear power currently generates approximately 10% of world electricity, with zero direct CO₂ emissions. Every watt flows from Einstein's three-page 1905 appendix.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Photoelectric Effect · 1905 → 1954</span>
+        <h4>Solar Panels</h4>
+        <p>The photovoltaic effect — photons ejecting electrons from semiconductor material to create current — is the photoelectric effect in a solid-state device. Silicon solar panels use the same mechanism Einstein explained and was awarded the Nobel Prize for. Global solar capacity exceeded 1,600 GW in 2024.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Photoelectric Effect · 1905 → 1969</span>
+        <h4>Digital Cameras and Photosensors</h4>
+        <p>CCD and CMOS image sensors — in every smartphone, every digital camera, every medical scanner, every telescope — work by collecting photoelectrons ejected by incoming photons. The Nobel-winning mechanism of 1921 is the image capture technology of the 21st century.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Stimulated Emission · 1917 → 1960</span>
+        <h4>Lasers</h4>
+        <p>Einstein's 1917 paper on radiation described three interactions of photons with atoms: absorption, spontaneous emission, and stimulated emission. Stimulated emission — one photon triggering another identical photon — is the operating principle of the laser, proposed by Theodore Maiman in 1960. Every laser, from barcode scanners to surgical tools to fiber optic cables, runs on Einstein's 1917 calculation.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Brownian Motion · 1905 → Ongoing</span>
+        <h4>Statistical Mechanics and Materials Science</h4>
+        <p>Einstein's Brownian motion paper established the mathematical framework for diffusion in random media. It underlies financial mathematics (the Black-Scholes model), polymer physics, materials science, atmospheric chemistry, and the quantitative analysis of any system driven by random thermal fluctuations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK ENERGY AND EXPANSION -->
+  <section id="dark">
+    <span class="section-label">VII — The Unknown Universe</span>
+    <h2>Dark Matter, Dark Energy, and What Remains</h2>
+    <p>General Relativity describes the relationship between the geometry of spacetime and the matter and energy it contains. The precision of its predictions — tested to extraordinary accuracy in the solar system, in binary pulsars, in gravitational wave events — establishes it as the correct classical theory of gravity. And yet the universe, as observed, does not add up.</p>
+    <p>Approximately <strong>27%</strong> of the universe's mass-energy content consists of dark matter — matter that interacts gravitationally but not electromagnetically, never observed directly, known only through its effects on galaxy rotation curves, galaxy cluster dynamics, and the large-scale structure of the universe. General Relativity predicts its gravitational effects correctly once you include it; it cannot explain what it is.</p>
+    <p>Approximately <strong>68%</strong> of the universe's mass-energy content is dark energy — the cosmological constant term Λ, driving the accelerating expansion. Its value is extraordinarily small compared to what quantum field theory would naively predict (by a factor of 10¹²⁰ — the largest known discrepancy between theory and observation in physics). It is real, it drives the expansion of the universe, and no one knows what it is at the microscopic level.</p>
+    <p>Only about <strong>5%</strong> of the universe is ordinary matter — protons, neutrons, electrons, atoms, molecules, stars, planets, people. Everything we have ever seen, touched, measured, or described in science accounts for 5% of what exists. The other 95% is described by Einstein's equations and not explained by anything.</p>
+  </section>
+
+  <!-- ONGOING CONFIRMATIONS -->
+  <section id="confirmations">
+    <span class="section-label">VIII — Still Being Confirmed</span>
+    <h2>The Ongoing Verification</h2>
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <span class="era">2015 — Confirmed</span>
+        <h4>Gravitational Waves (GW150914)</h4>
+        <p>First direct detection by LIGO. Black hole merger 1.3 billion light-years distant. Predicted by Einstein in 1916. Nobel Prize 2017 to Weiss, Barish, Thorne.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">2017 — Confirmed</span>
+        <h4>Neutron Star Merger (GW170817)</h4>
+        <p>First multi-messenger gravitational wave event — observed simultaneously in gravitational waves, gamma rays, X-rays, visible light, and radio. Confirmed that gravitational waves travel at exactly the speed of light (to within 10⁻¹⁵).</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">2019 — Confirmed</span>
+        <h4>M87* Black Hole Image</h4>
+        <p>Event Horizon Telescope, 8 telescopes across 4 continents. Image of the photon ring around the supermassive black hole M87*, 6.5 billion solar masses. Shadow geometry matched GR predictions within measurement uncertainty.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">2022 — Confirmed</span>
+        <h4>Sagittarius A* Image</h4>
+        <p>EHT imaged the black hole at the center of the Milky Way. At 4 million solar masses, it is smaller and faster-varying than M87*. Again, shadow geometry consistent with GR. Einstein's equations operate at the center of our own galaxy.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">2023 — Confirmed</span>
+        <h4>Gravitational Wave Background (NANOGrav)</h4>
+        <p>The North American Nanohertz Observatory for Gravitational Waves detected evidence of a stochastic gravitational wave background — likely the sum of gravitational waves from billions of merging supermassive black hole pairs throughout the universe's history. Einstein predicted gravitational waves in 1916.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">Daily — Applied</span>
+        <h4>Gravitational Lensing Surveys</h4>
+        <p>The Hubble Space Telescope, the James Webb Space Telescope, and ground-based wide-field surveys use gravitational lensing — the bending of light by mass, predicted by Einstein in 1915 and confirmed in 1919 — as a routine tool for mapping dark matter and measuring the Hubble constant.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE UNFINISHED BUSINESS -->
+  <section id="unfinished">
+    <span class="section-label">IX — What Einstein Left Open</span>
+    <h2>The Problem He Couldn't Solve</h2>
+    <p>Einstein spent his last thirty years searching for a unified field theory — a single mathematical framework that would incorporate both General Relativity and electromagnetism, and from which quantum mechanics might emerge as an approximation. He did not find it. The search continues, now greatly complicated by the fact that two additional forces — the strong nuclear force and the weak nuclear force — must also be incorporated.</p>
+    <p>The Standard Model of particle physics describes the electromagnetic, strong, and weak forces using quantum field theory with extraordinary precision. General Relativity describes gravity with extraordinary precision. They are incompatible at the mathematical level. At the smallest scales — the Planck length, approximately 10⁻³⁵ meters — quantum effects and gravitational effects are both important, and neither theory is valid. We do not have a theory of quantum gravity.</p>
+    <p>String theory, loop quantum gravity, causal set theory, and many other approaches are the living heirs to Einstein's unification program. None has yet produced testable predictions that distinguish it from its competitors. The problem Einstein identified in the 1920s is the deepest open problem in fundamental physics. It has been open for a century. It has not been resolved for lack of trying. It waits for the next person who can hold the incompatible things in mind long enough to see how they fit.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The most beautiful thing we can experience is the mysterious. It is the source of all true art and science."</blockquote>
+      <cite>— Albert Einstein, "What I Believe," Forum and Century, 1930</cite>
+    </div>
+  </section>
+
+  <!-- CLOSING QUOTE -->
+  <div class="final-quote">
+    <blockquote>"Imagination is more important than knowledge. For knowledge is limited, whereas imagination embraces the entire world, stimulating progress, giving birth to evolution."</blockquote>
+    <cite>— Albert Einstein, interview with George Sylvester Viereck, 1929</cite>
+  </div>
+
+  <!-- SERIES NAVIGATION -->
+  <section id="series">
+    <span class="section-label">Complete Series</span>
+    <h2>All Four Volumes</h2>
+    <div class="app-grid">
+      <div class="app-card">
+        <span class="origin">Volume Zero</span>
+        <h4><a href="0-who.html" style="color:inherit;text-decoration:none;">The Person</a></h4>
+        <p>Born Ulm 1879. Patent clerk. Annus mirabilis. Nobel Prize. Exile from Nazi Germany. Princeton. The brain in a jar. The man behind the equations.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Volume One</span>
+        <h4><a href="1-relativity.html" style="color:inherit;text-decoration:none;">The Work</a></h4>
+        <p>The four miracle-year papers. Special Relativity. E=mc² derivation. The photoelectric effect. Brownian motion. General Relativity. The field equations. All predictions.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Volume Two</span>
+        <h4><a href="2-world.html" style="color:inherit;text-decoration:none;">His World</a></h4>
+        <p>Wilhelmine Germany. Weimar Berlin. The 1919 eclipse. The Nobel prize politics. Book burnings. The Einstein–Szilard letter. Friendship with Gödel. The EPR paradox.</p>
+      </div>
+      <div class="app-card">
+        <span class="origin">Volume Three</span>
+        <h4>The Legacy</h4>
+        <p>GPS requires his corrections. LIGO confirmed gravitational waves 60 years after his death. The cosmological constant turned out to describe dark energy. Every solar panel runs on his Nobel-winning mechanism.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Albert Einstein Series · Volume 3: The Legacy · albert-einstein/3-legacy.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-relativity.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a>
+  </div>
+</footer>
+
+</body>
+</html>

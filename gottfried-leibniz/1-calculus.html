@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leibniz — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0a0a0f;
+    --card:#12121a;
+    --surface:#1a1a26;
+    --silver:#94a3b8;
+    --gold:#d97706;
+    --ink:#e8e8f0;
+    --dim:#6b7280;
+    --silvertint:rgba(148,163,184,0.08);
+    --goldtint:rgba(217,119,6,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background:var(--paper);
+    font-family:"Newsreader",Georgia,serif;line-height:1.7;}
+  ::selection{background:var(--gold);color:#000;}
+  .zine{max-width:1080px;margin:0 auto;padding:0 22px 80px;}
+
+  /* NAV */
+  .sitenav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.96);
+    backdrop-filter:blur(8px);border-bottom:1px solid rgba(148,163,184,0.18);
+    padding:0 22px;}
+  .sitenav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;
+    gap:0;height:46px;}
+  .sitenav a{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--dim);text-decoration:none;padding:0 14px;
+    height:100%;display:flex;align-items:center;border-right:1px solid rgba(148,163,184,0.12);
+    transition:color .15s,background .15s;}
+  .sitenav a:first-child{border-left:1px solid rgba(148,163,184,0.12);}
+  .sitenav a:hover{color:var(--gold);background:var(--goldtint);}
+  .sitenav a.active{color:var(--gold);border-bottom:2px solid var(--gold);}
+  .sitenav-series{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--dim);margin-right:auto;padding-right:20px;}
+
+  /* HERO */
+  .hero{padding:60px 0 48px;border-bottom:1px solid rgba(148,163,184,0.15);}
+  .hero-inner{display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+  .hero-text{flex:1;min-width:280px;}
+  .vol-label{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-family:"Cinzel";font-weight:800;
+    font-size:clamp(44px,9vw,90px);line-height:0.9;letter-spacing:0.01em;
+    text-transform:uppercase;margin:0 0 20px;color:var(--ink);}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero-dek{font-size:clamp(15px,2vw,18px);max-width:600px;color:var(--silver);
+    margin:0;line-height:1.65;}
+  .hero-dek b{color:var(--ink);font-weight:500;}
+  .hero-art{flex:0 0 auto;}
+
+  /* dy/dx SVG animation */
+  @keyframes strokeIn{from{stroke-dashoffset:300}to{stroke-dashoffset:0}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes glowpulse{
+    0%,100%{opacity:.5;filter:drop-shadow(0 0 4px rgba(217,119,6,.3));}
+    50%{opacity:1;filter:drop-shadow(0 0 14px rgba(217,119,6,.7));}
+  }
+  .dvx-path{stroke-dasharray:300;stroke-dashoffset:300;animation:strokeIn 2.2s ease forwards;}
+  .dvx-d1{animation:fadeUp 0.6s ease 0.2s both;}
+  .dvx-d2{animation:fadeUp 0.6s ease 0.8s both;}
+  .dvx-y{animation:fadeUp 0.6s ease 1.2s both;}
+  .dvx-x{animation:fadeUp 0.6s ease 1.6s both;}
+  .dvx-glow{animation:glowpulse 3s ease-in-out infinite 2.5s;}
+  @media(prefers-reduced-motion:reduce){
+    .dvx-path{stroke-dashoffset:0;animation:none;}
+    .dvx-d1,.dvx-d2,.dvx-y,.dvx-x{animation:none;opacity:1;}
+    .dvx-glow{animation:none;opacity:1;}
+  }
+
+  /* KICK / BAND */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--silver);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--silver);
+    color:#0a0a0f;padding:5px 14px;margin:36px 0 14px;}
+  .band.gold{background:var(--gold);color:#000;}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid rgba(148,163,184,0.22);background:var(--card);
+    padding:16px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--silver);}
+  .card.gold:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 0 8px;letter-spacing:0.02em;color:var(--ink);}
+  .card p{font-size:14px;margin:0;color:var(--silver);line-height:1.55;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(148,163,184,0.3);
+    color:var(--dim);padding:2px 7px;margin-top:9px;}
+  .card .tag.gold{border-color:rgba(217,119,6,0.4);color:var(--gold);}
+
+  /* MATH DISPLAY */
+  .mathbox{background:var(--surface);border:1px solid rgba(217,119,6,0.3);
+    padding:22px 26px;margin:16px 0;font-family:"Space Mono",monospace;}
+  .mathbox .meq{font-size:clamp(18px,3.5vw,28px);color:var(--gold);
+    letter-spacing:0.04em;line-height:1.6;}
+  .mathbox .mlabel{font-size:11px;color:var(--dim);letter-spacing:0.15em;
+    text-transform:uppercase;margin-top:8px;}
+  .mathbox .msub{font-size:14px;color:var(--silver);margin-top:10px;line-height:1.6;}
+
+  /* BINARY TABLE */
+  .bintable{width:100%;border-collapse:collapse;font-family:"Space Mono",monospace;}
+  .bintable th{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);border-bottom:1px solid rgba(148,163,184,0.2);
+    padding:8px 12px;text-align:left;}
+  .bintable td{font-size:14px;padding:8px 12px;border-bottom:1px solid rgba(148,163,184,0.1);}
+  .bintable td.dec{color:var(--silver);}
+  .bintable td.bin{color:var(--gold);letter-spacing:0.15em;}
+  .bintable td.note{font-size:13px;color:var(--dim);}
+  .bintable tr:hover td{background:var(--silvertint);}
+
+  /* PROSE */
+  .prose{max-width:720px;}
+  .prose p{font-size:16px;margin:0 0 18px;color:var(--silver);line-height:1.75;}
+  .prose p strong{color:var(--ink);font-weight:500;}
+  .prose p em{color:var(--gold);font-style:italic;}
+  .prose blockquote{border-left:3px solid var(--gold);margin:24px 0;
+    padding:12px 20px;background:var(--goldtint);}
+  .prose blockquote p{margin:0;font-style:italic;font-size:17px;color:var(--ink);}
+  .prose blockquote cite{display:block;font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:8px;}
+
+  /* COMPARE TABLE */
+  .cmptable{width:100%;border-collapse:collapse;}
+  .cmptable th{background:var(--surface);font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--silver);
+    padding:12px 16px;border:1px solid rgba(148,163,184,0.15);text-align:left;}
+  .cmptable td{padding:12px 16px;border:1px solid rgba(148,163,184,0.12);
+    font-size:14.5px;color:var(--silver);vertical-align:top;line-height:1.6;}
+  .cmptable td strong{color:var(--ink);}
+  .cmptable td.gold{color:var(--gold);}
+  .cmptable tr:hover td{background:var(--silvertint);}
+
+  /* BLOCK */
+  .block{border:1px solid rgba(148,163,184,0.2);background:var(--surface);
+    padding:20px 22px;margin-top:6px;}
+  .block.gold{border-color:rgba(217,119,6,0.3);background:var(--goldtint);}
+
+  /* STEP LIST */
+  .steps{list-style:none;padding:0;margin:0;counter-reset:steps;}
+  .steps li{counter-increment:steps;display:grid;grid-template-columns:40px 1fr;gap:14px;
+    padding:14px 0;border-bottom:1px solid rgba(148,163,184,0.1);}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{content:counter(steps);font-family:"Space Mono",monospace;
+    font-weight:700;font-size:16px;color:var(--gold);padding-top:2px;}
+  .step-body{font-size:14.5px;color:var(--silver);line-height:1.65;}
+  .step-body strong{color:var(--ink);}
+
+  /* COLOPHON */
+  .colophon{margin-top:70px;padding-top:28px;border-top:1px solid rgba(148,163,184,0.2);
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.08em;
+    color:var(--dim);line-height:1.8;}
+  .colophon a{color:var(--silver);text-decoration:none;}
+  .colophon a:hover{color:var(--gold);}
+
+  @media(max-width:640px){
+    .hero-inner{flex-direction:column;}
+    .cmptable th:last-child,.cmptable td:last-child{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Series navigation">
+  <div class="sitenav-inner">
+    <span class="sitenav-series">Leibniz</span>
+    <a href="0-who.html">Vol. 0 — The Man</a>
+    <a href="1-calculus.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<div class="zine">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="vol-label">Vol. 1 / 3 &nbsp;·&nbsp; Gottfried Wilhelm Leibniz</div>
+        <h1>The <em>Work</em></h1>
+        <p class="hero-dek">
+          Calculus. Binary. The mechanical calculator. The Monadologie.<br>
+          <b>A universal symbolic language for all human reasoning.</b><br>
+          Five inventions that reshaped mathematics, philosophy, and computing.
+        </p>
+      </div>
+      <div class="hero-art">
+        <!-- dy/dx notation appearing stroke by stroke -->
+        <svg viewBox="0 0 220 200" width="220" height="200"
+             aria-label="dy over dx calculus notation" role="img">
+          <defs>
+            <filter id="glow1">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Background -->
+          <rect width="220" height="200" fill="none"
+                stroke="rgba(148,163,184,0.08)" stroke-width="1"/>
+          <!-- The fraction bar — draws in -->
+          <line x1="54" y1="106" x2="168" y2="106"
+                stroke="#d97706" stroke-width="2.5"
+                stroke-dasharray="120" stroke-dashoffset="120"
+                class="dvx-path">
+            <animate attributeName="stroke-dashoffset"
+                     from="120" to="0" dur="1.2s" begin="1.0s" fill="freeze"/>
+          </line>
+          <!-- d numerator -->
+          <text class="dvx-d1 dvx-glow" x="62" y="92" font-family="'Newsreader',Georgia,serif"
+                font-size="38" font-style="italic" fill="#d97706"
+                filter="url(#glow1)">d</text>
+          <!-- y numerator -->
+          <text class="dvx-y dvx-glow" x="94" y="92" font-family="'Newsreader',Georgia,serif"
+                font-size="38" font-style="italic" fill="#e8e8f0">y</text>
+          <!-- d denominator -->
+          <text class="dvx-d2" x="62" y="146" font-family="'Newsreader',Georgia,serif"
+                font-size="38" font-style="italic" fill="#d97706">d</text>
+          <!-- x denominator -->
+          <text class="dvx-x" x="96" y="146" font-family="'Newsreader',Georgia,serif"
+                font-size="38" font-style="italic" fill="#e8e8f0">x</text>
+
+          <!-- Small label top -->
+          <text x="110" y="22" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="8.5" letter-spacing="3" fill="rgba(148,163,184,0.4)">LEIBNIZ 1675</text>
+
+          <!-- Year marker -->
+          <text x="110" y="186" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="9" letter-spacing="2" fill="rgba(217,119,6,0.5)">DIFFERENTIAL</text>
+
+          <!-- Corner marks -->
+          <polyline points="4,4 4,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,4 18,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 202,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 216,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 4,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 18,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 202,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 216,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1: CALCULUS
+  ══════════════════════════════════════════════ -->
+  <div class="band gold" style="margin-top:44px;">I. The Calculus, 1675–1684</div>
+  <div class="prose">
+    <p>
+      In the autumn of 1675, working in Paris, Leibniz wrote in his notebook the elongated S that would become the most powerful symbol in the history of mathematics. He called it the <em>summa</em> sign — ∫ — an elongated S for the Latin word meaning "sum." It denoted the summation of infinitely many infinitely thin quantities: areas, volumes, accumulations.
+    </p>
+    <p>
+      On 11 November 1675, he wrote: <em>"Utile erit scribi ∫ pro omnia."</em> — "It will be useful to write ∫ for 'all.'" This date is, by most accounts, the birthday of integral calculus as a notational system.
+    </p>
+    <p>
+      In the same notebook, in the same months, he developed the <strong>d notation</strong> for differentials — the infinitesimal differences that capture rates of change. The derivative of y with respect to x became dy/dx. A quantity's rate of change became something you could write, manipulate, cancel, and reason about as if it were ordinary algebra.
+    </p>
+  </div>
+
+  <!-- NOTATION COMPARISON -->
+  <div class="band">Newton vs. Leibniz Notation</div>
+  <table class="cmptable">
+    <thead>
+      <tr>
+        <th>Concept</th>
+        <th>Newton's Notation</th>
+        <th>Leibniz's Notation</th>
+        <th>Used today?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Derivative of y w.r.t. time</td>
+        <td><strong>ẏ</strong> (dot over letter)</td>
+        <td class="gold"><strong>dy/dt</strong></td>
+        <td>Leibniz wins. Newton's dots survive only in physics (velocity ẋ).</td>
+      </tr>
+      <tr>
+        <td>Second derivative</td>
+        <td><strong>ÿ</strong> (double dot)</td>
+        <td class="gold"><strong>d²y/dt²</strong></td>
+        <td>Leibniz wins completely in calculus textbooks.</td>
+      </tr>
+      <tr>
+        <td>Integral (area under curve)</td>
+        <td>No dedicated symbol (used rectangles)</td>
+        <td class="gold"><strong>∫ f(x) dx</strong></td>
+        <td>Leibniz wins. The ∫ symbol is universal.</td>
+      </tr>
+      <tr>
+        <td>Chain rule</td>
+        <td>Requires separate statement</td>
+        <td class="gold"><strong>dy/dx = (dy/du)(du/dx)</strong></td>
+        <td>Leibniz: fractions cancel visually. Pedagogically cleaner.</td>
+      </tr>
+      <tr>
+        <td>Partial derivative</td>
+        <td>No clean notation</td>
+        <td class="gold"><strong>∂y/∂x</strong></td>
+        <td>Leibniz framework extended naturally to partial derivatives.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- WHY LEIBNIZ NOTATION WON -->
+  <div class="band">Why Leibniz's Notation Won</div>
+  <div class="mathbox">
+    <div class="meq">Chain Rule: dy/dx = (dy/du) · (du/dx)</div>
+    <div class="mlabel">The Leibniz Argument</div>
+    <div class="msub">
+      In Leibniz's notation, the chain rule looks like cancellation of fractions:<br>
+      <span style="color:var(--gold);">dy/du · du/dx</span> — the <em>du</em> terms "cancel."<br>
+      This is not rigorous in a strict mathematical sense, but it is <strong>memorable, compositional, and correct</strong>.<br>
+      Newton's dot notation has no such visual logic. The chain rule in dot notation requires a separate verbal statement.<br>
+      Leibniz built a notation that teaches the mathematics. That is why every calculus textbook in the world uses it.
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top:14px;">
+    <div class="card gold">
+      <div class="num">1675</div>
+      <h3>The ∫ Symbol</h3>
+      <p>November 11, 1675: Leibniz writes ∫ for the first time. An elongated S for <em>summa</em>. The symbol for the sum of infinitely many infinitely thin slices. Every integral sign in every calculus textbook ever printed descends from this stroke of his pen.</p>
+      <span class="tag gold">Integral</span>
+    </div>
+    <div class="card gold">
+      <div class="num">1675</div>
+      <h3>The d Notation</h3>
+      <p>The same autumn: the differential d. Written dy/dx, it captures the ratio of infinitesimal changes. Compositional, manipulable, and visually obvious in the chain rule. Newton's dot notation couldn't do this. Leibniz's could.</p>
+      <span class="tag gold">Differential</span>
+    </div>
+    <div class="card">
+      <div class="num">1684</div>
+      <h3>First Publication</h3>
+      <p><em>"Nova Methodus pro Maximis et Minimis"</em> — the first published account of calculus in history. Newton had invented it earlier but left it unpublished. Leibniz published first. The priority dispute would consume his final years.</p>
+      <span class="tag">Publication</span>
+    </div>
+    <div class="card">
+      <div class="num">1686</div>
+      <h3>Integral Calculus Published</h3>
+      <p><em>"De Geometria Recondita"</em> — the first published account of integral calculus. The ∫ symbol appears in print. Continental mathematicians immediately adopt the notation. British mathematicians, loyal to Newton's dots, will fall behind the continent for a century.</p>
+      <span class="tag">History</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2: BINARY
+  ══════════════════════════════════════════════ -->
+  <div class="band gold" style="margin-top:52px;">II. Binary Arithmetic, 1679–1703</div>
+  <div class="prose">
+    <p>
+      In 1679, working in Hanover, Leibniz wrote a manuscript on a new system of arithmetic using only two symbols: 0 and 1. He had been thinking about it for years — driven by a philosophical conviction that all things could ultimately be expressed in terms of Being (1) and Nothing (0), and that God created the world from nothing (0) by the power of unity (1).
+    </p>
+    <p>
+      He didn't publish it immediately. He was, as always, trying to connect it to something larger. In the 1690s he became fascinated by the <em>I Ching</em> — the ancient Chinese Book of Changes, with its 64 hexagrams formed from combinations of broken (yin) and unbroken (yang) lines. Leibniz wrote to the Jesuit missionary Joachim Bouvet in China, who confirmed that the hexagrams were binary combinations. Leibniz saw this as confirmation of a universal underlying structure.
+    </p>
+    <p>
+      In 1703 he published <em>"Explication de l'Arithmétique Binaire"</em> in the <em>Mémoires de l'Académie Royale des Sciences.</em> He showed that all arithmetic operations could be performed in base-2. Every number that could be expressed in decimal could be expressed in binary. And binary arithmetic had a particular property that decimal did not: it reduced all computation to the simplest possible operations — combinations of 1 and 0.
+    </p>
+    <p>
+      He did not know, and could not have known, that this would become the operating language of every computer, every phone, every digital device ever built. But he did know that he had found something fundamental.
+    </p>
+  </div>
+
+  <!-- BINARY TABLE -->
+  <div class="band">Decimal to Binary: Leibniz's Table</div>
+  <div style="overflow-x:auto;">
+    <table class="bintable">
+      <thead>
+        <tr>
+          <th>Decimal</th>
+          <th>Binary</th>
+          <th>Leibniz's Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="dec">0</td><td class="bin">0000</td><td class="note">Nothing — the void from which creation proceeds</td></tr>
+        <tr><td class="dec">1</td><td class="bin">0001</td><td class="note">Unity — the monad, the simplest being</td></tr>
+        <tr><td class="dec">2</td><td class="bin">0010</td><td class="note">The first compound — unity plus nothing</td></tr>
+        <tr><td class="dec">3</td><td class="bin">0011</td><td class="note">Three in two digits</td></tr>
+        <tr><td class="dec">4</td><td class="bin">0100</td><td class="note">A new place opens</td></tr>
+        <tr><td class="dec">7</td><td class="bin">0111</td><td class="note">All ones in three positions</td></tr>
+        <tr><td class="dec">8</td><td class="bin">1000</td><td class="note">Powers of two are the purest numbers</td></tr>
+        <tr><td class="dec">10</td><td class="bin">1010</td><td class="note">Ten — the decimal base — expressed in binary</td></tr>
+        <tr><td class="dec">15</td><td class="bin">1111</td><td class="note">The maximum of four binary places</td></tr>
+        <tr><td class="dec">64</td><td class="bin">1000000</td><td class="note">The number of I Ching hexagrams — Leibniz's confirmation</td></tr>
+        <tr><td class="dec">255</td><td class="bin">11111111</td><td class="note">Eight bits — the byte of all modern computing</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="block gold" style="margin-top:16px;">
+    <p class="kick" style="margin:0 0 12px;">The I Ching Connection</p>
+    <p style="font-size:15px;color:var(--ink);line-height:1.7;margin:0 0 12px;">
+      The <em>I Ching</em> has 64 hexagrams — each a stack of six broken (yin = 0) or unbroken (yang = 1) lines. 64 = 2⁶. Every possible six-bit binary combination appears exactly once.
+    </p>
+    <p style="font-size:15px;color:var(--ink);line-height:1.7;margin:0;">
+      When the Jesuit missionary Bouvet sent Leibniz an image of the hexagrams arranged in order, Leibniz immediately recognized his own binary table. He believed this proved the universality of binary arithmetic — that the ancient Chinese had independently discovered the same fundamental structure. He was not wrong about the structure. He may have been wrong about the Chinese intent.
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3: MECHANICAL CALCULATOR
+  ══════════════════════════════════════════════ -->
+  <div class="band" style="margin-top:52px;">III. The Stepped Reckoner, 1673–1694</div>
+  <div class="prose">
+    <p>
+      Pascal had built a mechanical calculator in 1642 — the <em>Pascaline</em> — that could add and subtract. Leibniz wanted to do more. He wanted a machine that could multiply and divide.
+    </p>
+    <p>
+      The key innovation was the <strong>Leibniz wheel</strong>: a cylinder with nine teeth of incrementally increasing length around its circumference. By rotating this cylinder, you could add any number from 1 to 9 to a running total in a single operation. Multiple wheels, connected by a carriage, allowed multiplication as repeated addition — mechanically, automatically.
+    </p>
+    <p>
+      The machine was demonstrated to the Royal Society in 1673. A more refined version was demonstrated at the Berlin Academy in 1694. It was the first machine that could perform all four arithmetic operations: addition, subtraction, multiplication, and <em>division</em>.
+    </p>
+    <blockquote>
+      <p>"It is unworthy of excellent men to lose hours like slaves in the labor of calculation which could safely be relegated to anyone else if machines were used."</p>
+      <cite>— Leibniz, 1685</cite>
+    </blockquote>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>The Leibniz Wheel</h3>
+      <p>A cylinder with nine teeth of graduated length. Rotating it by one click added 1; by nine clicks added 9. The design solved the central problem of mechanical multiplication: how to add variable amounts without changing gears.</p>
+      <span class="tag">Mechanism</span>
+    </div>
+    <div class="card gold">
+      <h3>First Four-Operation Machine</h3>
+      <p>Pascal's machine could only add and subtract. Leibniz's Stepped Reckoner could multiply by performing repeated addition automatically, and divide by repeated subtraction. A genuine advance in mechanical computation.</p>
+      <span class="tag gold">Innovation</span>
+    </div>
+    <div class="card">
+      <h3>The Leibniz Wheel's Descendants</h3>
+      <p>The Leibniz wheel design was used in mechanical calculators from 1694 until the 1970s — nearly three centuries. The Curta calculator (1948), beloved by rally drivers and engineers, used a variant of the design. The wheel outlasted Leibniz by 260 years.</p>
+      <span class="tag">Legacy</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4: MONADOLOGIE
+  ══════════════════════════════════════════════ -->
+  <div class="band gold" style="margin-top:52px;">IV. The Monadologie, 1714</div>
+  <div class="prose">
+    <p>
+      Written in Vienna in 1714 and published posthumously, the <em>Monadologie</em> is Leibniz's most complete statement of his philosophy. It is ninety short numbered paragraphs — dense, strange, and not easily dismissed.
+    </p>
+    <p>
+      The central claim: the universe consists of an infinite number of simple, indivisible substances called <strong>monads</strong>. Each monad is a self-contained unit of perception and appetite — a kind of point of view on the universe. Crucially, <em>"the monads have no windows through which anything may come in or go out."</em> They do not interact causally. Yet they all unfold in perfect harmony, because God — the supreme monad — pre-established their trajectories at creation to be mutually consistent.
+    </p>
+    <p>
+      This doctrine of <strong>pre-established harmony</strong> is Leibniz's solution to the mind-body problem: how do mental events (I decide to raise my hand) correspond perfectly to physical events (my hand rises) without one causing the other? Answer: they were synchronized from the beginning, like two perfectly made clocks set to the same time.
+    </p>
+    <p>
+      It also leads to the most mocked line in the history of philosophy: <em>"this is the best of all possible worlds."</em> God, being perfectly good and omnipotent, necessarily chose to create the best of all logically possible configurations of the universe. Voltaire's <em>Candide</em> (1759) is largely a systematic destruction of this claim through the evidence of earthquakes, war, and human cruelty.
+    </p>
+  </div>
+  <div class="mathbox" style="margin-top:0;">
+    <div class="meq" style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:clamp(14px,2.5vw,20px);">
+      "The monad has no windows through which anything may come in or go out."
+    </div>
+    <div class="mlabel">Monadologie, §7 — Leibniz, 1714</div>
+    <div class="msub">
+      <strong>Pre-established Harmony:</strong> God synchronizes all monads at creation.<br>
+      Mind and body, like two perfect clocks, keep the same time without touching.<br>
+      <strong>Principle of Sufficient Reason:</strong> Nothing happens without a reason.<br>
+      <strong>Principle of Identity of Indiscernibles:</strong> No two things are perfectly identical.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5: CHARACTERISTICA UNIVERSALIS
+  ══════════════════════════════════════════════ -->
+  <div class="band" style="margin-top:52px;">V. Characteristica Universalis: The Dream</div>
+  <div class="prose">
+    <p>
+      The most ambitious project Leibniz never finished was also, arguably, the most important idea he ever had: a <strong>universal symbolic language</strong> — the <em>Characteristica Universalis</em> — in which all human concepts could be expressed as combinations of primitive symbols, and all arguments could be settled by calculation.
+    </p>
+    <p>
+      The dream was this: just as algebra lets us solve equations by symbol manipulation, the <em>Characteristica</em> would let us reason about philosophy, law, theology, and science by symbol manipulation. Disputes between thinkers would be resolved not by rhetoric but by computation. <em>"Calculemus"</em> — let us calculate — he wrote. Sit down. Compute. Settle it.
+    </p>
+    <p>
+      He never built it. The project required a complete taxonomy of all human concepts, a system of primitive symbols for each concept, and rules of combination. It was, in retrospect, not completable. But the dream was precise, and the dream was right in a way that took two centuries to understand:
+    </p>
+    <p>
+      <strong>Boole</strong> built Boolean algebra (1854). <strong>Frege</strong> built formal logic (1879). <strong>Russell and Whitehead</strong> tried to reduce all mathematics to logic (1910). <strong>Gödel</strong> proved the limits of formal systems (1931). <strong>Turing</strong> built the theory of the universal machine (1936). <strong>Von Neumann</strong> built it in hardware (1945). The computer is, among other things, Leibniz's <em>Calculemus</em> — finally running.
+    </p>
+  </div>
+
+  <ol class="steps">
+    <li><div class="step-body"><strong>1666 — Dissertatio de Arte Combinatoria.</strong> The first sketch: a combinatorial calculus of concepts. Every idea decomposable into primitive components; every argument a combination of those components. Leibniz is twenty years old.</div></li>
+    <li><div class="step-body"><strong>1679–1686 — Development of the Characteristica.</strong> He works on the project in Hanover, identifying candidate primitive concepts, developing a notation, drafting examples. It is never finished. There are always more concepts to enumerate.</div></li>
+    <li><div class="step-body"><strong>1854 — George Boole, <em>Laws of Thought.</em></strong> Boolean algebra: a formal system for logical reasoning using symbols 0 and 1 and operations AND, OR, NOT. The first realization of Leibniz's dream in a specific domain.</div></li>
+    <li><div class="step-body"><strong>1879 — Gottlob Frege, <em>Begriffsschrift.</em></strong> Formal predicate logic: a notation for logical relationships between propositions. Leibniz is cited as the inspiration. Frege dedicates his work to the memory of Leibniz's project.</div></li>
+    <li><div class="step-body"><strong>1936 — Alan Turing, "On Computable Numbers."</strong> The theoretical universal computer — a machine that can compute any function that can be formally specified. Leibniz's <em>Calculemus</em> becomes a machine specification.</div></li>
+    <li><div class="step-body"><strong>1945–present — The digital computer.</strong> Running on binary arithmetic (Leibniz, 1703), executing Boolean logic (Boole, 1854), built on Turing's theoretical framework (1936). The <em>Characteristica</em> runs in every smartphone, every server, every CPU on the planet.</div></li>
+  </ol>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: <strong>David Lee Wise</strong> / ROOT0 / TriPod LLC</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a></div>
+    <div>Series: Gottfried Wilhelm Leibniz, 1646–1716 &nbsp;·&nbsp; Vol. 1: The Work</div>
+    <div style="margin-top:10px;">
+      <a href="0-who.html">Vol. 0</a> &nbsp;·&nbsp;
+      <a href="1-calculus.html">Vol. 1</a> &nbsp;·&nbsp;
+      <a href="2-world.html">Vol. 2</a> &nbsp;·&nbsp;
+      <a href="3-legacy.html">Vol. 3</a>
+    </div>
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>

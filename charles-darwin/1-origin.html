@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Darwin — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#05080a;
+    --card:#0d1410;
+    --ink:#e8e4d8;
+    --dim:#7a8070;
+    --green:#16a34a;
+    --earth:#92400e;
+    --line:rgba(22,163,74,0.16);
+    --earthline:rgba(146,64,14,0.22);
+    --greentint:rgba(22,163,74,0.07);
+    --earthtint:rgba(146,64,14,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(22,163,74,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#05080a;}
+  a{color:var(--green);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--greentint);color:var(--green);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(32px,7vw,72px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* SVG ANIMATIONS */
+  @keyframes grow1{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes grow2{0%{stroke-dashoffset:160}100%{stroke-dashoffset:0}}
+  @keyframes grow3{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+  @keyframes grow5{0%{stroke-dashoffset:70}100%{stroke-dashoffset:0}}
+  @keyframes leafpop{0%,80%{opacity:0;r:0}100%{opacity:1;r:4}}
+  .trunk{stroke-dasharray:200;stroke-dashoffset:200;animation:grow1 1.2s cubic-bezier(.2,.8,.2,1) .1s forwards;}
+  .b1{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) .9s forwards;}
+  .b2{stroke-dasharray:160;stroke-dashoffset:160;animation:grow2 1s cubic-bezier(.2,.8,.2,1) 1.0s forwards;}
+  .b3{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.5s forwards;}
+  .b4{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.6s forwards;}
+  .b5{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.7s forwards;}
+  .b6{stroke-dasharray:120;stroke-dashoffset:120;animation:grow3 0.9s cubic-bezier(.2,.8,.2,1) 1.8s forwards;}
+  .t1{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.2s forwards;}
+  .t2{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.3s forwards;}
+  .t3{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.4s forwards;}
+  .t4{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.5s forwards;}
+  .t5{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.6s forwards;}
+  .t6{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.7s forwards;}
+  .t7{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.8s forwards;}
+  .t8{stroke-dasharray:70;stroke-dashoffset:70;animation:grow5 0.7s cubic-bezier(.2,.8,.2,1) 2.9s forwards;}
+  .leaf{opacity:0;animation:leafpop 0.4s ease 3.2s forwards;}
+  .leaf2{opacity:0;animation:leafpop 0.4s ease 3.35s forwards;}
+  .leaf3{opacity:0;animation:leafpop 0.4s ease 3.5s forwards;}
+  .leaf4{opacity:0;animation:leafpop 0.4s ease 3.65s forwards;}
+  .leaf5{opacity:0;animation:leafpop 0.4s ease 3.8s forwards;}
+  .leaf6{opacity:0;animation:leafpop 0.4s ease 3.95s forwards;}
+  .leaf7{opacity:0;animation:leafpop 0.4s ease 4.1s forwards;}
+  .leaf8{opacity:0;animation:leafpop 0.4s ease 4.25s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .trunk,.b1,.b2,.b3,.b4,.b5,.b6,.t1,.t2,.t3,.t4,.t5,.t6,.t7,.t8{animation:none;stroke-dashoffset:0;}
+    .leaf,.leaf2,.leaf3,.leaf4,.leaf5,.leaf6,.leaf7,.leaf8{animation:none;opacity:1;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--green);
+    color:#05080a;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.earth{background:var(--earth);color:#e8e4d8;}
+  .band.dim{background:#162012;color:var(--green);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--green);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--green);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* FOUR PREMISES BOX */
+  .premises{counter-reset:prem;list-style:none;padding:0;margin:0;}
+  .premises li{
+    counter-increment:prem;position:relative;
+    padding:14px 16px 14px 60px;border-bottom:1px solid var(--line);
+    background:var(--card);font-size:15.5px;
+  }
+  .premises li:last-child{border-bottom:none;}
+  .premises li::before{
+    content:counter(prem,"0" decimal-leading-zero);
+    position:absolute;left:16px;top:14px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:20px;
+    color:var(--green);line-height:1;
+  }
+  .premises li strong{color:var(--green);font-weight:500;}
+  .premises li span{display:block;font-size:13px;color:var(--dim);margin-top:4px;font-family:"Space Mono",monospace;letter-spacing:0.05em;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.finches{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card.e:hover{box-shadow:5px 5px 0 var(--earth);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--green);
+  }
+  .card.e .num{color:var(--earth);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.e .meta b{color:var(--earth);}
+
+  /* BEAK SVG INLINE BADGE */
+  .beak-badge{display:inline-block;vertical-align:middle;margin-right:6px;}
+
+  /* PULL QUOTE */
+  .pull{
+    border-left:4px solid var(--green);padding:14px 20px;margin:22px 0;
+    background:var(--greentint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull.earth{border-left-color:var(--earth);background:var(--earthtint);}
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COL PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* MISCONCEPTION TABLE */
+  .myth-table{width:100%;border-collapse:collapse;font-size:14.5px;}
+  .myth-table th{
+    font-family:"Cinzel";font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
+    padding:8px 12px;text-align:left;border-bottom:2px solid var(--green);color:var(--green);
+  }
+  .myth-table td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .myth-table tr:last-child td{border-bottom:none;}
+  .myth-table .myth{color:#c87878;}
+  .myth-table .fact{color:#a8d4b8;}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{background:var(--card);border:1px solid var(--line);padding:12px 16px;flex:1;min-width:130px;}
+  .stat .n{font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--green);display:block;line-height:1;}
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Darwin series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-origin.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">darwin series · volume 1 · the work</span>
+    <div class="masthead">
+      <div>
+        <h1>On the <em>Origin</em> of Species</h1>
+        <p class="dek"><b>Natural selection. Common descent. One long argument.</b> Darwin's central ideas, what they actually say, what they don't say, and the full body of work surrounding the 1859 masterpiece — from barnacle monographs to worm studies.</p>
+      </div>
+      <!-- ANIMATED TREE HERO — same phylogenetic tree as vol 0 -->
+      <svg class="art" width="200" height="200" viewBox="0 0 200 200" role="img"
+           aria-label="Animated tree of life growing from common ancestor">
+        <text x="100" y="198" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#7a8070" letter-spacing="0.1em">ANCESTOR</text>
+        <line class="trunk" x1="100" y1="190" x2="100" y2="130" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
+        <line class="b1" x1="100" y1="130" x2="55" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b2" x1="100" y1="130" x2="145" y2="90" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+        <line class="b3" x1="55" y1="90" x2="30" y2="58" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b4" x1="55" y1="90" x2="68" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b5" x1="145" y1="90" x2="132" y2="55" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="b6" x1="145" y1="90" x2="170" y2="58" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="t1" x1="30" y1="58" x2="16" y2="36" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t2" x1="30" y1="58" x2="36" y2="33" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t3" x1="68" y1="55" x2="58" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t4" x1="68" y1="55" x2="78" y2="28" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t5" x1="132" y1="55" x2="122" y2="28" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t6" x1="132" y1="55" x2="142" y2="30" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t7" x1="170" y1="58" x2="164" y2="33" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <line class="t8" x1="170" y1="58" x2="184" y2="36" stroke="#92400e" stroke-width="1" stroke-linecap="round"/>
+        <circle class="leaf"  cx="16"  cy="32"  r="4" fill="#92400e"/>
+        <circle class="leaf2" cx="36"  cy="29"  r="4" fill="#92400e"/>
+        <circle class="leaf3" cx="58"  cy="26"  r="4" fill="#92400e"/>
+        <circle class="leaf4" cx="78"  cy="24"  r="4" fill="#92400e"/>
+        <circle class="leaf5" cx="122" cy="24"  r="4" fill="#16a34a"/>
+        <circle class="leaf6" cx="142" cy="26"  r="4" fill="#16a34a"/>
+        <circle class="leaf7" cx="164" cy="29"  r="4" fill="#16a34a"/>
+        <circle class="leaf8" cx="184" cy="32"  r="4" fill="#16a34a"/>
+        <circle cx="100" cy="190" r="4" fill="#92400e"/>
+        <text x="107" y="127" font-family="Newsreader,serif" font-size="8" font-style="italic" fill="#7a8070">I think</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- SECTION 1: NATURAL SELECTION -->
+  <div class="band">I. Natural Selection — The Mechanism</div>
+  <div class="reveal" style="animation-delay:.1s">
+    <p>Natural selection is not a single insight — it is a logical argument assembled from four independently observable premises. If all four premises are true, the conclusion follows necessarily. Darwin recognized this structure; his achievement was assembling the empirical evidence that all four were, in fact, true.</p>
+
+    <ul class="premises">
+      <li>
+        <strong>Variation:</strong> Individuals within any population differ from one another in heritable traits — size, colour, disease resistance, behaviour.
+        <span>Observable: any litter of dogs, any field of wild plants</span>
+      </li>
+      <li>
+        <strong>Heritability:</strong> Much of that variation is passed from parents to offspring. Like tends to produce like, though not exactly.
+        <span>Observable: farmers had known this for millennia — selective breeding works</span>
+      </li>
+      <li>
+        <strong>Overproduction:</strong> All organisms produce more offspring than can possibly survive. A single oyster can produce 100 million eggs per year. A single elm tree produces thousands of seeds. Most die.
+        <span>Malthus (1798) provided the demographic framework; Darwin applied it universally</span>
+      </li>
+      <li>
+        <strong>Differential Survival &amp; Reproduction:</strong> Those individuals whose heritable variations give them even a slight advantage in a given environment will, on average, survive longer and leave more offspring. Over generations, advantageous traits become more common — the population changes.
+        <span>The conclusion: the population is, in effect, "selected" by the environment</span>
+      </li>
+    </ul>
+
+    <div class="pull">
+      "Can it be thought improbable, seeing that variations useful to man have undoubtedly occurred, that other variations useful in some way to each being in the great and complex battle of life, should sometimes occur in the course of thousands of generations?"
+      <cite>— Darwin, On the Origin of Species, 1859, Ch. IV</cite>
+    </div>
+
+    <p>Notice what natural selection is <em>not</em>: it is not a plan, a will, a direction, or a progressive force toward complexity. It is simply the statistical consequence of variation, heritability, and differential survival. Given those conditions, change is mathematically inevitable.</p>
+  </div>
+
+  <!-- SECTION 2: COMMON DESCENT -->
+  <div class="band">II. Common Descent — The Architecture</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <div class="prose-2">
+      <div>
+        <h2>One <em>Tree</em></h2>
+        <p>Common descent is the second great pillar of Darwin's theory, logically independent of natural selection but historically derived from the same evidence. If natural selection has operated across geological time, starting from the first living organisms, the result must be a single branching tree in which all living things share common ancestors at some depth of time.</p>
+        <p>Darwin saw this structure in the fossil record (life gets simpler as you go deeper in the strata), in biogeography (related forms live near each other, as if they had spread from a common point), in embryology (the embryos of very different vertebrates are nearly identical in early stages), and in comparative anatomy (the human hand, the bat's wing, the whale's flipper, and the horse's leg all share the same underlying bones — a common structural inheritance).</p>
+      </div>
+      <div>
+        <h2>The <em>"I Think"</em> Sketch</h2>
+        <p>In July 1837, in Transmutation Notebook B, Darwin drew a rough branching diagram — irregular, asymmetric — and wrote above it the words <em>"I think."</em> It is one of the most important sketches in the history of science: the first explicit representation of the tree of life as a branching diagram of common descent.</p>
+        <p>The structure of the diagram is directly at odds with the "chain of being" that had dominated natural history thinking — the linear ladder from simple to complex. Darwin's tree branches laterally, diverges, goes extinct (dotted lines that end), and has no single "top." Humans are not at the apex of a hierarchy; they are one twig on one branch of an enormously ramified bush. The tree is the idea's most radical visual representation.</p>
+        <p>In <em>On the Origin of Species</em> (1859), the only illustration in the entire book is a branching diagram — a direct descendant of the 1837 sketch.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="n">~4B</span><span class="l">Years of Life on Earth</span></div>
+      <div class="stat"><span class="n">1</span><span class="l">Common Ancestor (LUCA)</span></div>
+      <div class="stat"><span class="n">~8.7M</span><span class="l">Estimated Living Species</span></div>
+      <div class="stat"><span class="n">~99%</span><span class="l">Species Ever Lived — Now Extinct</span></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: THE BOOK -->
+  <div class="band earth">III. On the Origin of Species, 1859</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <p><em>On the Origin of Species by Means of Natural Selection, or the Preservation of Favoured Races in the Struggle for Life</em> was published on <strong>24 November 1859</strong> by John Murray of London. The first print run was <strong>1,250 copies</strong>. The book sold out before official publication day — every copy had been pre-ordered by booksellers. Murray immediately ordered a second edition (3,000 copies) for January 1860.</p>
+    <p>The book is 490 pages of prose argument with one diagram. Darwin later said he thought of it as an "abstract" of a much larger work he had planned; indeed, he had been working on a multi-volume tome called "Natural Selection" when Wallace's letter arrived and forced him to publish. <em>Origin</em> went through six editions in Darwin's lifetime; the sixth (1872) is the most commonly reprinted today, though purists prefer the first for its unguarded directness.</p>
+
+    <div class="band dim" style="margin-top:18px;">What It Actually Says vs. Common Misreadings</div>
+    <table class="myth-table">
+      <thead>
+        <tr>
+          <th>Common Misreading</th>
+          <th>What Darwin Actually Wrote</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="myth">"Survival of the fittest" is Darwin's phrase</td>
+          <td class="fact">Herbert Spencer coined "survival of the fittest" in 1864. Darwin adopted it reluctantly in the 5th edition (1869) as a shorthand for natural selection — and regretted it, because "fit" implies design or goal, which selection does not.</td>
+        </tr>
+        <tr>
+          <td class="myth">Darwin said humans descended from apes</td>
+          <td class="fact"><em>Origin</em> contains exactly one sentence about humans: "Light will be thrown on the origin of man and his history." Darwin waited until 1871 (<em>The Descent of Man</em>) to address human evolution explicitly. He said humans and apes share a common ancestor, not that one descended from the other.</td>
+        </tr>
+        <tr>
+          <td class="myth">Evolution means progress toward complexity</td>
+          <td class="fact">Darwin explicitly rejected this. Natural selection selects for fitness to a particular environment, which may mean simplification. Parasites often lose organs their free-living ancestors had. Complexity is not the goal.</td>
+        </tr>
+        <tr>
+          <td class="myth">Darwin invented evolution</td>
+          <td class="fact">The idea of biological change over time (transmutation) was circulating before Darwin — Lamarck, Erasmus Darwin, Robert Chambers. Darwin's contribution was the <em>mechanism</em> (natural selection) and the <em>evidence</em> — the meticulous empirical case that actually convinced the scientific community.</td>
+        </tr>
+        <tr>
+          <td class="myth">The Galápagos finches were Darwin's primary inspiration</td>
+          <td class="fact">Darwin mislabelled his Galápagos birds and did not grasp their significance during the voyage. The key insight came in 1837 when ornithologist John Gould identified them as 13 species of finch. The Galápagos mockingbirds were actually more important to Darwin's thinking at the time.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GALAPAGOS FINCHES GRID -->
+  <div class="band">Galápagos Finches — 14 Species, Beak &amp; Diet</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <p>Darwin's Galápagos finches — formally <em>Darwin's finches</em>, subfamily Geospizinae — are the most famous example of adaptive radiation: the divergence of a single ancestral species into multiple species filling different ecological niches. All 14–15 species (count varies by taxonomy) descend from a single ancestral finch that colonized the Galápagos from South America roughly 2 million years ago. The primary axis of variation is beak morphology — shaped by diet.</p>
+
+    <div class="grid finches">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Large Ground-Finch</h3>
+        <p class="what"><em>Geospiza magnirostris.</em> Large, deep, powerful beak. Cracks the hardest seeds and nuts on the islands. The crusher.</p>
+        <div class="meta"><b>Beak:</b> Very large, deep &nbsp;·&nbsp; <b>Diet:</b> Large hard seeds</div>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Medium Ground-Finch</h3>
+        <p class="what"><em>Geospiza fortis.</em> The species in which Peter and Rosemary Grant documented natural selection in real time during the 1977 Galápagos drought — beak size shifted measurably within one generation.</p>
+        <div class="meta"><b>Beak:</b> Medium, deep &nbsp;·&nbsp; <b>Diet:</b> Medium seeds</div>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>Small Ground-Finch</h3>
+        <p class="what"><em>Geospiza fuliginosa.</em> Small beak for small seeds. The most abundant ground finch across the archipelago.</p>
+        <div class="meta"><b>Beak:</b> Small, rounded &nbsp;·&nbsp; <b>Diet:</b> Small seeds, insects</div>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>Sharp-Beaked Ground-Finch</h3>
+        <p class="what"><em>Geospiza difficilis.</em> On some islands preys on seabird eggs by rolling them or piercing boobies to drink blood — giving rise to the colloquial name "Vampire Finch."</p>
+        <div class="meta"><b>Beak:</b> Sharp, pointed &nbsp;·&nbsp; <b>Diet:</b> Seeds, blood, eggs</div>
+      </div>
+      <div class="card">
+        <span class="num">05</span>
+        <h3>Common Cactus-Finch</h3>
+        <p class="what"><em>Geospiza scandens.</em> Long, pointed, slightly decurved beak adapted for probing cactus flowers and extracting seeds from cactus pads. Fortunes tied to the health of prickly pear (<em>Opuntia</em>) cactus.</p>
+        <div class="meta"><b>Beak:</b> Long, pointed &nbsp;·&nbsp; <b>Diet:</b> Cactus seeds &amp; nectar</div>
+      </div>
+      <div class="card">
+        <span class="num">06</span>
+        <h3>Large Cactus-Finch</h3>
+        <p class="what"><em>Geospiza conirostris.</em> Restricted to Española and Genovesa. Even longer beak for probing deeper cactus structures. Island-specific specialization.</p>
+        <div class="meta"><b>Beak:</b> Very long, curved &nbsp;·&nbsp; <b>Diet:</b> Deep cactus</div>
+      </div>
+      <div class="card">
+        <span class="num">07</span>
+        <h3>Vegetarian Finch</h3>
+        <p class="what"><em>Platyspiza crassirostris.</em> Parrot-like beak. Feeds on buds, leaves, and fruit rather than seeds. A dietary outlier among Darwin's finches — more like a parrot in ecology than a sparrow.</p>
+        <div class="meta"><b>Beak:</b> Hooked, parrot-like &nbsp;·&nbsp; <b>Diet:</b> Buds, leaves, fruit</div>
+      </div>
+      <div class="card">
+        <span class="num">08</span>
+        <h3>Large Tree-Finch</h3>
+        <p class="what"><em>Camarhynchus psittacula.</em> Strong beak for tearing bark and catching large insects in trees. The tree finches represent a separate adaptive radiation within Darwin's finches — colonizing the arboreal insect niche.</p>
+        <div class="meta"><b>Beak:</b> Large, stout &nbsp;·&nbsp; <b>Diet:</b> Large insects</div>
+      </div>
+      <div class="card">
+        <span class="num">09</span>
+        <h3>Medium Tree-Finch</h3>
+        <p class="what"><em>Camarhynchus pauper.</em> Found only on Floreana, now critically endangered. Medium beak for medium-sized insects. The island-specific endemic showing how isolation drives speciation.</p>
+        <div class="meta"><b>Beak:</b> Medium &nbsp;·&nbsp; <b>Diet:</b> Insects, larvae</div>
+      </div>
+      <div class="card">
+        <span class="num">10</span>
+        <h3>Small Tree-Finch</h3>
+        <p class="what"><em>Camarhynchus parvulus.</em> Small beak for small insects. Often found gleaning insects from leaves and small branches. Common throughout the highlands.</p>
+        <div class="meta"><b>Beak:</b> Small &nbsp;·&nbsp; <b>Diet:</b> Small insects</div>
+      </div>
+      <div class="card">
+        <span class="num">11</span>
+        <h3>Woodpecker Finch</h3>
+        <p class="what"><em>Camarhynchus pallidus.</em> One of the world's few tool-using birds — uses a cactus spine or twig to lever insects out of bark crevices. A dramatic example of behavioral evolution filling the woodpecker niche in the absence of actual woodpeckers.</p>
+        <div class="meta"><b>Beak:</b> Long, pointed &nbsp;·&nbsp; <b>Diet:</b> Wood-boring insects (tool use)</div>
+      </div>
+      <div class="card">
+        <span class="num">12</span>
+        <h3>Mangrove Finch</h3>
+        <p class="what"><em>Camarhynchus heliobates.</em> Restricted to mangrove forests on Isabela — one of the world's rarest birds, fewer than 100 individuals. Also uses tools to probe bark. Critically threatened by introduced predators and parasitic flies.</p>
+        <div class="meta"><b>Beak:</b> Long &nbsp;·&nbsp; <b>Diet:</b> Insects in mangrove</div>
+      </div>
+      <div class="card">
+        <span class="num">13</span>
+        <h3>Warbler Finch</h3>
+        <p class="what"><em>Certhidea olivacea</em> (green) and <em>C. fusca</em> (grey), now split. Thin, warbler-like beak for picking tiny insects from foliage. So different in form from the ground finches that Darwin didn't recognize them as finches at all on first collection.</p>
+        <div class="meta"><b>Beak:</b> Very thin, pointed &nbsp;·&nbsp; <b>Diet:</b> Tiny insects</div>
+      </div>
+      <div class="card">
+        <span class="num">14</span>
+        <h3>Cocos Island Finch</h3>
+        <p class="what"><em>Pinaroloxias inornata.</em> The most geographically isolated — found only on Cocos Island, 550 km northeast of the Galápagos, to which it is the only land bird. Highly generalist; individuals specialize on different foods. Evolution in extreme isolation.</p>
+        <div class="meta"><b>Beak:</b> Variable &nbsp;·&nbsp; <b>Diet:</b> Highly variable per individual</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: DESCENT OF MAN -->
+  <div class="band earth">IV. The Descent of Man, 1871</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <div class="prose-2">
+      <div>
+        <h2>Human <em>Evolution</em></h2>
+        <p>Darwin had deliberately avoided the subject of human origins in <em>Origin</em> — one sentence was all he permitted himself. By 1871 the scientific conversation had moved far enough that he felt compelled to make the case explicitly. <em>The Descent of Man, and Selection in Relation to Sex</em> (1871) argued that humans were descended from earlier primates and that the difference between human and animal minds was one of degree, not kind.</p>
+        <p>The book is actually two books: the first half addresses human evolution and our primate ancestry; the second introduces <strong>sexual selection</strong> as a second mechanism of evolutionary change alongside natural selection — the idea that traits can evolve not because they aid survival but because they make their bearer more attractive as a mate. The peacock's tail, the elk's antlers, the songbird's elaborate song: all explained by mate choice and competition for mates rather than predator pressure.</p>
+      </div>
+      <div>
+        <h2>Sexual <em>Selection</em></h2>
+        <p>Sexual selection, Darwin proposed, operates in two ways: <strong>intrasexual selection</strong> (competition between members of one sex — usually males — for access to mates, producing weapons like antlers) and <strong>intersexual selection</strong> (mate choice, where one sex — usually female — chooses among competing mates, producing ornaments like peacock tails).</p>
+        <p>This second mode was more controversial than Darwin anticipated: the idea that females actively choose mates — exercising aesthetic judgment — was too much for many Victorian readers to accept. Alfred Russel Wallace rejected intersexual selection; Darwin's friend George Romanes called it "the most debated point in Darwinian theory." The debate was not resolved until the mathematical genetics work of R. A. Fisher in the 1930s validated female mate choice as evolutionarily coherent, and not fully confirmed empirically until the late twentieth century.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: OTHER WORKS -->
+  <div class="band">V. The Other Works</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="grid">
+      <div class="card e">
+        <span class="num">1839</span>
+        <h3>Journal of Researches (The Voyage of the Beagle)</h3>
+        <p class="what">Darwin's narrative account of the Beagle voyage, published first as part of <em>The Narrative of the Surveying Voyages of HMS Adventure and Beagle</em>, then as a standalone volume in 1845. Still readable as adventure literature — vivid descriptions of landscapes, animals, peoples, geology.</p>
+        <div class="meta"><b>Legacy:</b> A genuine popular classic; still in print</div>
+      </div>
+      <div class="card e">
+        <span class="num">1846–54</span>
+        <h3>Monograph on the Cirripedia (Barnacles)</h3>
+        <p class="what">Four volumes on barnacle taxonomy — two on living species, two on fossil species. Exhaustive, technical, and essential. Darwin needed the barnacle work to understand variation, as well as to establish credentials as a serious systematic naturalist before publishing on evolution. His children reportedly asked visitors: "And where does your father do his barnacles?"</p>
+        <div class="meta"><b>Volumes:</b> 4 &nbsp;·&nbsp; <b>Duration:</b> 8 years</div>
+      </div>
+      <div class="card e">
+        <span class="num">1862</span>
+        <h3>On the Various Contrivances by Which Orchids Are Fertilised by Insects</h3>
+        <p class="what">Darwin's favorite of his own books. Showed how orchid flower structures were exquisitely adapted to specific pollinating insects — evidence for natural selection's power to produce apparent "design." Famously predicted a Madagascar orchid (with a 30cm nectar spur) must have a moth with a 30cm proboscis — dismissed as absurd, confirmed in 1903.</p>
+        <div class="meta"><b>Prediction:</b> <em>Xanthopan morganii praedicta</em>, confirmed 1903</div>
+      </div>
+      <div class="card e">
+        <span class="num">1868</span>
+        <h3>The Variation of Animals and Plants under Domestication</h3>
+        <p class="what">Two volumes of evidence for heritable variation under artificial selection — the evidence base that underpins the first premise of natural selection. Exhaustive catalogues of domestic breeds, garden varieties, and the effects of selection. Also where Darwin proposed his unfortunate "pangenesis" hypothesis for the mechanism of heredity — superseded by Mendelian genetics.</p>
+        <div class="meta"><b>Size:</b> 2 volumes &nbsp;·&nbsp; <b>Central error:</b> Pangenesis hypothesis</div>
+      </div>
+      <div class="card e">
+        <span class="num">1872</span>
+        <h3>The Expression of the Emotions in Man and Animals</h3>
+        <p class="what">Darwin argued that emotional expressions (fear, anger, joy, disgust) are evolutionarily continuous across humans and other animals — evidence for common descent in the domain of behavior. The first major work to use photographs as scientific evidence. Founding text of comparative psychology and evolutionary psychology.</p>
+        <div class="meta"><b>Method:</b> Photographs + correspondence questionnaire</div>
+      </div>
+      <div class="card e">
+        <span class="num">1875</span>
+        <h3>Insectivorous Plants</h3>
+        <p class="what">Detailed study of the Venus flytrap, sundews, pitcher plants, and other carnivorous plants. Darwin was delighted by the apparent paradox of a plant that "eats" animals. He conducted careful experiments on his living specimens at Down House, timing trap closure and measuring digestion of different substances.</p>
+        <div class="meta"><b>Favorite subject:</b> "More wonderful than the most wonderful animal"</div>
+      </div>
+      <div class="card e">
+        <span class="num">1876</span>
+        <h3>The Effects of Cross and Self-Fertilisation in the Vegetable Kingdom</h3>
+        <p class="what">Eleven years of experiments on hybridization in plants. Darwin showed that cross-fertilization (outcrossing) consistently produced more vigorous offspring than self-fertilization — evidence for the adaptive significance of sexual reproduction, a question that remains active in evolutionary biology.</p>
+        <div class="meta"><b>Duration:</b> 11 years of experiments</div>
+      </div>
+      <div class="card e">
+        <span class="num">1881</span>
+        <h3>The Formation of Vegetable Mould through the Action of Worms</h3>
+        <p class="what">Darwin's last book. A meticulous study of earthworm behavior — how they turn over soil, their sensory capabilities, the aggregate effect of billions of worms on landscape formation. He estimated that worms process several tons of soil per acre per year. Sold 6,000 copies in its first year — a bestseller.</p>
+        <div class="meta"><b>Published:</b> October 1881 &nbsp;·&nbsp; <b>Darwin died:</b> April 1882</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Darwin Series · Vol. 1 of 4 · <em>The Work</em> &nbsp;·&nbsp; Series: charles-darwin</div>
+    <div style="margin-top:4px;font-size:9px;">Primary sources: Darwin Online (darwin-online.org.uk); Browne, <em>Charles Darwin: The Power of Place</em> (2002); Weiner, <em>The Beak of the Finch</em> (1994); Grant &amp; Grant, <em>40 Years of Evolution</em> (2014).</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grace Hopper — Vol. 3: The Long Afterlife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04080f;
+      --navy: #1e40af;
+      --gold: #eab308;
+      --gold-dim: rgba(234,179,8,0.18);
+      --gold-border: rgba(234,179,8,0.35);
+      --text: #d4d8e2;
+      --text-muted: #8b92a5;
+      --text-bright: #eef1f7;
+      --surface: #090f1a;
+      --surface2: #0d1525;
+      --border: rgba(255,255,255,0.07);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(4,8,15,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 2rem;
+    }
+    .site-nav__inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center;
+      gap: 0.25rem; height: 52px; flex-wrap: wrap;
+    }
+    .site-nav__series {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; color: var(--gold);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-right: 1rem; white-space: nowrap;
+    }
+    .site-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--text-muted);
+      text-decoration: none; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.35rem 0.7rem;
+      border-radius: 3px; transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--gold); background: var(--gold-dim); }
+    .site-nav a.active { border: 1px solid var(--gold-border); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #04080f 0%, #06101e 40%, #08152e 100%);
+      overflow: hidden; padding: 5rem 2rem 4rem;
+      border-bottom: 1px solid var(--gold-border);
+      position: relative;
+    }
+    .hero__grid {
+      position: relative;
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 500px;
+      gap: 3rem; align-items: center;
+    }
+    .hero__vol {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem; color: var(--gold);
+      letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem;
+    }
+    .hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800; color: var(--text-bright);
+      line-height: 1.1; margin-bottom: 0.6rem;
+    }
+    .hero__subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; font-weight: 500; color: var(--gold);
+      letter-spacing: 0.08em; margin-bottom: 1.5rem;
+    }
+    .hero__lede {
+      font-size: 1.1rem; font-style: italic;
+      color: var(--text); max-width: 600px; line-height: 1.8;
+    }
+
+    /* ── MAIN ── */
+    .main { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--gold);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: block; margin-bottom: 0.4rem;
+    }
+    .section-head { margin-bottom: 2.5rem; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--text-bright); line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem; font-weight: 600; color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .band {
+      background: var(--navy); color: var(--text-bright);
+      padding: 3rem 2rem; margin: 3rem 0;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .band__inner { max-width: 1100px; margin: 0 auto; }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.5rem 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .card__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--gold);
+      letter-spacing: 0.12em; margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.96rem; color: var(--text); line-height: 1.7; }
+
+    .pullquote {
+      border-left: 4px solid var(--gold);
+      margin: 2.5rem 0; padding: 1.2rem 2rem;
+      background: var(--surface2);
+      border-radius: 0 6px 6px 0;
+    }
+    .pullquote__text {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem; font-style: italic;
+      color: var(--text-bright); line-height: 1.65; margin-bottom: 0.6rem;
+    }
+    .pullquote__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; color: var(--text-muted);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ── BIG STAT HERO ── */
+    .big-stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .big-stat {
+      background: var(--surface2);
+      border: 1px solid var(--gold-border);
+      border-radius: 8px;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .big-stat:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .big-stat__num {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: var(--gold);
+      display: block;
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .big-stat__label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+
+    /* ── LINEAGE TREE ── */
+    .lineage-section {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2.5rem 0;
+      overflow-x: auto;
+    }
+
+    /* ── HONOR CARDS ── */
+    .honor-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 0 0 6px 6px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .honor-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--gold);
+    }
+    .honor-card__title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 0.25rem;
+    }
+    .honor-card__year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .honor-card p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .prose p { margin-bottom: 1.25rem; font-size: 1rem; line-height: 1.8; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── COMPILER LINEAGE SVG ── */
+    .lineage-svg-wrap { overflow-x: auto; }
+
+    /* ── FINAL SECTION ── */
+    .final-section {
+      background: var(--surface2);
+      border: 1px solid var(--gold-border);
+      border-radius: 8px;
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+    .final-section h2 {
+      margin-bottom: 1.5rem;
+    }
+    .final-section p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      max-width: 680px;
+      margin: 0 auto 1.25rem;
+      color: var(--text);
+    }
+
+    .colophon {
+      background: var(--surface);
+      border-top: 1px solid var(--gold-border);
+      padding: 2rem; margin-top: 5rem; text-align: center;
+    }
+    .colophon__attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem; color: var(--text-muted);
+      letter-spacing: 0.1em; line-height: 2;
+    }
+    .colophon__attr a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .hero__grid { grid-template-columns: 1fr; }
+      .big-stat-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY NAV ══ -->
+<nav class="site-nav" aria-label="Series navigation">
+  <div class="site-nav__inner">
+    <span class="site-nav__series">Grace Hopper</span>
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-compiler.html">Vol. 1 — Compiler</a>
+    <a href="2-world.html">Vol. 2 — World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO with COMPILER LINEAGE ANIMATION ══ -->
+<header class="hero">
+  <div class="hero__grid">
+    <div>
+      <span class="hero__vol">Volume 3 of 4</span>
+      <h1 class="hero__title">The Long<br>Afterlife</h1>
+      <p class="hero__subtitle">COBOL · Compilers · The Destroyer · The Medal</p>
+      <p class="hero__lede">She died January 1, 1992. Her code did not. 220 billion lines of the language she designed still run in production today. The compiler concept she proved possible in 1952 underlies every modern programming language on Earth. The wires she handed out are still teaching.</p>
+    </div>
+
+    <!-- ══ COMPILER LINEAGE ANIMATED SVG ══ -->
+    <div style="background:var(--surface);border:1px solid var(--gold-border);border-radius:8px;padding:1.5rem;">
+      <span class="kick" style="margin-bottom:0.8rem;display:block;">Compiler Lineage — 1952 → Present</span>
+      <svg width="460" height="340" viewBox="0 0 460 340" style="max-width:100%;display:block;"
+           aria-label="Compiler lineage tree from Grace Hopper A-0 1952 to modern languages">
+        <defs>
+          <filter id="glow3">
+            <feGaussianBlur stdDeviation="2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <marker id="arr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3Z" fill="rgba(234,179,8,0.5)"/>
+          </marker>
+        </defs>
+
+        <!-- ROOT: A-0 1952 -->
+        <rect x="165" y="10" width="130" height="38" rx="5"
+              fill="#0d1525" stroke="#eab308" stroke-width="2"/>
+        <text x="230" y="24" font-family="Space Mono,monospace" font-size="9" fill="#eab308" text-anchor="middle" font-weight="700" letter-spacing="1.5">A-0 COMPILER</text>
+        <text x="230" y="38" font-family="Space Mono,monospace" font-size="8" fill="#7eb8d4" text-anchor="middle">Grace Hopper · 1952</text>
+
+        <!-- Animated pulse down from root -->
+        <circle r="4" fill="#eab308" filter="url(#glow3)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" path="M230,48 L230,80"/>
+          <animate attributeName="opacity" values="1;0.3;1" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Level 2 lines -->
+        <line x1="230" y1="48" x2="230" y2="80" stroke="rgba(234,179,8,0.3)" stroke-width="1.5"/>
+        <line x1="100" y1="80" x2="360" y2="80" stroke="rgba(234,179,8,0.25)" stroke-width="1.5"/>
+        <line x1="100" y1="80" x2="100" y2="105" stroke="rgba(234,179,8,0.25)" stroke-width="1.5"/>
+        <line x1="230" y1="80" x2="230" y2="105" stroke="rgba(234,179,8,0.25)" stroke-width="1.5"/>
+        <line x1="360" y1="80" x2="360" y2="105" stroke="rgba(234,179,8,0.25)" stroke-width="1.5"/>
+
+        <!-- Level 2: FLOW-MATIC / FORTRAN / COBOL -->
+        <rect x="42" y="105" width="116" height="34" rx="4" fill="#0d1525" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="100" y="119" font-family="Space Mono,monospace" font-size="8.5" fill="#7eb8d4" text-anchor="middle">FLOW-MATIC</text>
+        <text x="100" y="131" font-family="Space Mono,monospace" font-size="7" fill="#5a7a9a" text-anchor="middle">Hopper · 1955</text>
+
+        <rect x="172" y="105" width="116" height="34" rx="4" fill="#0d1525" stroke="#3b82f6" stroke-width="1.5"/>
+        <text x="230" y="119" font-family="Space Mono,monospace" font-size="8.5" fill="#7eb8d4" text-anchor="middle">FORTRAN</text>
+        <text x="230" y="131" font-family="Space Mono,monospace" font-size="7" fill="#5a7a9a" text-anchor="middle">Backus · IBM · 1957</text>
+
+        <rect x="302" y="105" width="116" height="34" rx="4" fill="#0d1525" stroke="#eab308" stroke-width="1.5"/>
+        <text x="360" y="119" font-family="Space Mono,monospace" font-size="8.5" fill="#eab308" text-anchor="middle">COBOL</text>
+        <text x="360" y="131" font-family="Space Mono,monospace" font-size="7" fill="#5a7a9a" text-anchor="middle">Hopper / CODASYL · 1960</text>
+
+        <!-- Level 3 lines -->
+        <line x1="100" y1="139" x2="100" y2="165" stroke="rgba(100,130,180,0.3)" stroke-width="1.5"/>
+        <line x1="230" y1="139" x2="230" y2="165" stroke="rgba(100,130,180,0.3)" stroke-width="1.5"/>
+        <line x1="360" y1="139" x2="360" y2="165" stroke="rgba(100,130,180,0.3)" stroke-width="1.5"/>
+        <!-- Cross-lines -->
+        <line x1="100" y1="165" x2="360" y2="165" stroke="rgba(100,130,180,0.2)" stroke-width="1"/>
+        <line x1="70" y1="165" x2="70" y2="190" stroke="rgba(100,130,180,0.25)" stroke-width="1.5"/>
+        <line x1="170" y1="165" x2="170" y2="190" stroke="rgba(100,130,180,0.25)" stroke-width="1.5"/>
+        <line x1="270" y1="165" x2="270" y2="190" stroke="rgba(100,130,180,0.25)" stroke-width="1.5"/>
+        <line x1="370" y1="165" x2="370" y2="190" stroke="rgba(100,130,180,0.25)" stroke-width="1.5"/>
+
+        <!-- Level 3: ALGOL / LISP / C / ADA -->
+        <rect x="28" y="190" width="84" height="30" rx="3" fill="#0a1520" stroke="#2a5cba" stroke-width="1"/>
+        <text x="70" y="200" font-family="Space Mono,monospace" font-size="7.5" fill="#7eb8d4" text-anchor="middle">ALGOL</text>
+        <text x="70" y="213" font-family="Space Mono,monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">1958</text>
+
+        <rect x="128" y="190" width="84" height="30" rx="3" fill="#0a1520" stroke="#2a5cba" stroke-width="1"/>
+        <text x="170" y="200" font-family="Space Mono,monospace" font-size="7.5" fill="#7eb8d4" text-anchor="middle">LISP</text>
+        <text x="170" y="213" font-family="Space Mono,monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">McCarthy 1958</text>
+
+        <rect x="228" y="190" width="84" height="30" rx="3" fill="#0a1520" stroke="#2a5cba" stroke-width="1"/>
+        <text x="270" y="200" font-family="Space Mono,monospace" font-size="7.5" fill="#7eb8d4" text-anchor="middle">C / UNIX</text>
+        <text x="270" y="213" font-family="Space Mono,monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">Ritchie · 1972</text>
+
+        <rect x="328" y="190" width="84" height="30" rx="3" fill="#0a1520" stroke="#eab308" stroke-width="1"/>
+        <text x="370" y="200" font-family="Space Mono,monospace" font-size="7.5" fill="#eab308" text-anchor="middle">ADA</text>
+        <text x="370" y="213" font-family="Space Mono,monospace" font-size="6.5" fill="#4a6a8a" text-anchor="middle">DoD · 1980</text>
+
+        <!-- Level 4 lines and boxes -->
+        <line x1="230" y1="248" x2="230" y2="265" stroke="rgba(100,130,180,0.2)" stroke-width="1.5"/>
+        <line x1="60" y1="248" x2="400" y2="248" stroke="rgba(100,130,180,0.15)" stroke-width="1"/>
+        <line x1="60" y1="248" x2="60" y2="265" stroke="rgba(100,130,180,0.2)" stroke-width="1"/>
+        <line x1="130" y1="248" x2="130" y2="265" stroke="rgba(100,130,180,0.2)" stroke-width="1"/>
+        <line x1="330" y1="248" x2="330" y2="265" stroke="rgba(100,130,180,0.2)" stroke-width="1"/>
+        <line x1="400" y1="248" x2="400" y2="265" stroke="rgba(100,130,180,0.2)" stroke-width="1"/>
+
+        <!-- Level 4: Modern languages -->
+        <rect x="22" y="265" width="76" height="28" rx="3" fill="#060e1a" stroke="#1e3a6e" stroke-width="1"/>
+        <text x="60" y="275" font-family="Space Mono,monospace" font-size="7" fill="#5a8ab4" text-anchor="middle">Python</text>
+        <text x="60" y="285" font-family="Space Mono,monospace" font-size="6" fill="#3a5a7a" text-anchor="middle">1991</text>
+
+        <rect x="92" y="265" width="76" height="28" rx="3" fill="#060e1a" stroke="#1e3a6e" stroke-width="1"/>
+        <text x="130" y="275" font-family="Space Mono,monospace" font-size="7" fill="#5a8ab4" text-anchor="middle">Java / JVM</text>
+        <text x="130" y="285" font-family="Space Mono,monospace" font-size="6" fill="#3a5a7a" text-anchor="middle">1995</text>
+
+        <rect x="192" y="265" width="76" height="28" rx="3" fill="#060e1a" stroke="#1e3a6e" stroke-width="1"/>
+        <text x="230" y="275" font-family="Space Mono,monospace" font-size="7" fill="#5a8ab4" text-anchor="middle">JavaScript</text>
+        <text x="230" y="285" font-family="Space Mono,monospace" font-size="6" fill="#3a5a7a" text-anchor="middle">1995</text>
+
+        <rect x="292" y="265" width="76" height="28" rx="3" fill="#060e1a" stroke="#1e3a6e" stroke-width="1"/>
+        <text x="330" y="275" font-family="Space Mono,monospace" font-size="7" fill="#5a8ab4" text-anchor="middle">Rust / Go</text>
+        <text x="330" y="285" font-family="Space Mono,monospace" font-size="6" fill="#3a5a7a" text-anchor="middle">2009 / 2015</text>
+
+        <rect x="362" y="265" width="76" height="28" rx="3" fill="#060e1a" stroke="#eab308" stroke-width="1"/>
+        <text x="400" y="275" font-family="Space Mono,monospace" font-size="7" fill="#c0890a" text-anchor="middle">COBOL</text>
+        <text x="400" y="285" font-family="Space Mono,monospace" font-size="6" fill="#c0890a" text-anchor="middle">still running</text>
+
+        <!-- Flowing animation — level 3 to 4 -->
+        <circle r="3" fill="#7eb8d4" opacity="0.7" filter="url(#glow3)">
+          <animateMotion dur="3s" repeatCount="indefinite" begin="0.5s"
+            path="M230,139 L230,165 L60,165 L60,190 L60,248 L60,265"/>
+        </circle>
+        <circle r="3" fill="#a8d8a8" opacity="0.7" filter="url(#glow3)">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1s"
+            path="M230,139 L230,165 L270,165 L270,190 L270,248 L230,265"/>
+        </circle>
+        <circle r="3" fill="#eab308" opacity="0.9" filter="url(#glow3)">
+          <animateMotion dur="4s" repeatCount="indefinite" begin="0s"
+            path="M360,139 L360,165 L400,165 L400,248 L400,265"/>
+        </circle>
+
+        <!-- Footer label -->
+        <text x="230" y="318" font-family="Space Mono,monospace" font-size="7" fill="rgba(234,179,8,0.35)" text-anchor="middle" letter-spacing="0.5">EVERY COMPILER ON EARTH DESCENDS FROM A-0 · 1952</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- BIG STATS -->
+  <div class="big-stat-row">
+    <div class="big-stat">
+      <span class="big-stat__num">220B</span>
+      <span class="big-stat__label">Lines of COBOL<br>in production today</span>
+    </div>
+    <div class="big-stat">
+      <span class="big-stat__num">$3T</span>
+      <span class="big-stat__label">Daily financial<br>transactions in COBOL</span>
+    </div>
+    <div class="big-stat">
+      <span class="big-stat__num">20K+</span>
+      <span class="big-stat__label">Attendees at Grace<br>Hopper Celebration annually</span>
+    </div>
+    <div class="big-stat">
+      <span class="big-stat__num">DDG-70</span>
+      <span class="big-stat__label">USS Hopper<br>Arleigh Burke destroyer</span>
+    </div>
+    <div class="big-stat">
+      <span class="big-stat__num">2016</span>
+      <span class="big-stat__label">Presidential Medal<br>of Freedom (posthumous)</span>
+    </div>
+  </div>
+
+  <!-- COBOL STILL RUNNING -->
+  <section style="margin-top:2rem;">
+    <div class="section-head">
+      <span class="kick">The Code That Did Not Die</span>
+      <h2>220 Billion Lines and Counting</h2>
+    </div>
+    <div class="prose">
+      <p>COBOL is older than the personal computer. It predates the Internet by a decade. It was designed in 1959, finalized in 1960, and has been running in production continuously ever since. Today it is not a historical curiosity — it is the load-bearing infrastructure of the global financial system.</p>
+      <p>The numbers are almost impossible to internalize. According to estimates from IBM, Gartner, and the COBOL industry groups, there are approximately 220 billion lines of COBOL code currently running in production systems worldwide. That is more lines of active code than exist in all other programming languages combined. Those systems process approximately $3 trillion in financial transactions every single day. Every time you use an ATM, file a tax return, receive a paycheck, pay for health insurance, or buy a money market fund, you are interacting with a system that has COBOL somewhere in its core.</p>
+      <p>The United States Social Security Administration runs COBOL. The Internal Revenue Service runs COBOL. Every major American bank runs COBOL. The Society for Worldwide Interbank Financial Telecommunication — SWIFT, the backbone of international money transfers — runs COBOL. Medicare and Medicaid run COBOL. The New York Stock Exchange runs COBOL. These are not legacy systems that will be replaced next year. They have been scheduled for replacement for decades. They keep running instead, because the cost and risk of replacing them is greater than the cost of maintaining them, and because no modern language has been able to match COBOL's performance on the specific task of high-volume, high-precision, hierarchical record processing.</p>
+      <p>Every time a financial crisis triggers emergency government intervention — the 2008 bank bailouts, the 2020 COVID relief payments, the unemployment insurance surges — COBOL is at the center of the bottleneck. The language runs fine; the problem is that there are not enough COBOL programmers to modify it quickly. The average age of a COBOL programmer in the United States is over 55. Universities stopped teaching it decades ago. The pipeline has been depleted by institutional neglect, and the consequence is that the financial system's operating layer is maintained by a shrinking cohort of aging specialists who learned the language from people who learned it from Grace Hopper's team.</p>
+    </div>
+
+    <div class="pullquote">
+      <div class="pullquote__text">"I think most people don't realize how much they use COBOL every day. Every time they withdraw money from an ATM — COBOL. Every time they pay income taxes — COBOL."</div>
+      <div class="pullquote__attr">Vince Lally, IBM Master Inventor, c. 2010</div>
+    </div>
+  </section>
+
+  <!-- THE COMPILER LINEAGE BAND -->
+  <div class="band">
+    <div class="band__inner">
+      <span class="kick">The Deeper Legacy</span>
+      <h2 style="margin-bottom:1rem;">Every Compiler, Every Language</h2>
+      <div class="prose">
+        <p>The most far-reaching consequence of Hopper's work is not COBOL. It is the compiler concept itself. Before 1952, the assumption was universal: if you wanted to program a computer, you wrote in machine language or assembly. After 1952, the question shifted from "can a computer translate symbolic instructions?" to "how well can it do so, and in what notation?"</p>
+        <p>FORTRAN (1957), LISP (1958), ALGOL (1958, 1960), COBOL (1960), BASIC (1964), PL/I (1966), Pascal (1970), C (1972), Ada (1980), C++ (1985), Python (1991), Java (1995), JavaScript (1995), Ruby (1995), C# (2000), Scala (2004), Go (2009), Rust (2015) — every language in this lineage requires a compiler or interpreter to exist. Every compiler or interpreter in this lineage was built by people who took it for granted that compilers were possible. That assumption was not obvious. It required a proof. Grace Hopper provided it.</p>
+        <p>The compiler is the thing that makes a programming language real — that turns symbols in a text file into instructions a processor can execute. Without the compiler, the history of software does not exist. There is no operating system, no database, no browser, no mobile application, no machine learning model. The entire edifice of modern software sits on a foundation that Grace Hopper laid in 1952 on a UNIVAC at the Eckert-Mauchly building in Philadelphia, while her colleagues told her it couldn't be done.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HONORS SECTION -->
+  <section>
+    <div class="section-head">
+      <span class="kick">Recognition</span>
+      <h2>Honors, Memorials, and Institutions</h2>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">USS Hopper — DDG-70</div>
+      <div class="honor-card__year">Commissioned 1997 · Arleigh Burke-class Guided Missile Destroyer</div>
+      <p>The USS Hopper is an Arleigh Burke-class destroyer, 505 feet long, displacing 9,200 tons, armed with Tomahawk cruise missiles, SM-2 surface-to-air missiles, and a 5-inch gun. It is one of the most capable surface combatants in the United States Navy. It was named for Grace Hopper in 1996 — a direct descendant of the Navy that doubted her, carrying her name into the Pacific and the Arabian Sea. The ship's motto: "Dare and Do." Her motto first.</p>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">The Grace Hopper Celebration of Women in Computing</div>
+      <div class="honor-card__year">Founded 1994 · Annual · 20,000+ Attendees</div>
+      <p>Founded by Anita Borg and Telle Whitney in 1994, the Grace Hopper Celebration has grown into the largest gathering of women in computing in the world. The 2023 conference drew over 25,000 attendees — students, engineers, researchers, executives — from 115 countries. It is named for Hopper because her career is the argument that the conference exists to make: that women belong in computing, that their exclusion is a policy choice rather than a natural condition, and that the field is diminished by it.</p>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">Presidential Medal of Freedom</div>
+      <div class="honor-card__year">Awarded Posthumously — President Barack Obama — November 22, 2016</div>
+      <p>The Presidential Medal of Freedom is the highest civilian honor in the United States. Hopper was among 21 recipients in the 2016 ceremony. The citation recognized her as "a true American original," noting her work on the first compiler, FLOW-MATIC, and COBOL. It was awarded 24 years after her death — a gap that may say more about institutional recognition timelines than about the quality of the achievement. The Navy had already recognized her with the Defense Distinguished Service Medal, the Legion of Merit, and the Meritorious Service Medal during her lifetime.</p>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">National Medal of Technology</div>
+      <div class="honor-card__year">1991 — President George H.W. Bush</div>
+      <p>Awarded by President George H.W. Bush in 1991, one year before her death — the first time the medal was awarded to an individual rather than a company. The citation recognized her work on compilers and programming languages. She was 84 years old at the ceremony and had been retired from the Navy for five years. She spent the rest of that year giving lectures.</p>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">U.S. Postage Stamp</div>
+      <div class="honor-card__year">2022 — U.S. Postal Service</div>
+      <p>The USPS issued a Grace Hopper Forever stamp in 2022, part of the "Celebrating the Century" series on American innovators. The stamp shows her in uniform, with her name and years. It is, among other things, a reasonable encapsulation of the American recognition timeline: she died in 1992, and it took thirty years for the postal service to get around to it.</p>
+    </div>
+
+    <div class="honor-card">
+      <div class="honor-card__title">Smithsonian Institution — The Bug Logbook</div>
+      <div class="honor-card__year">National Museum of American History — Permanent Collection</div>
+      <p>The actual logbook from the Harvard Mark II — the page with the moth taped to it, the handwritten entry "First actual case of bug being found" — is in the permanent collection of the Smithsonian's National Museum of American History in Washington, D.C. It is among the most physically examined artifacts in the history of computing. Every student of computer history who visits the museum asks to see it. It looks like what it is: a yellowed page from a 1947 laboratory notebook, with a small moth carefully taped to it. The ordinariness is the point.</p>
+    </div>
+  </section>
+
+  <!-- THE NANOSECONDS SECTION -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">The Teaching Tool</span>
+      <h2>186 Miles of Wasted Light per Second</h2>
+    </div>
+    <div class="prose">
+      <p>In her later career, Hopper became famous for the nanosecond wires — the 11.8-inch lengths of wire she carried and handed out to illustrate the distance light travels in one billionth of a second. She gave them to admirals, to engineers, to students at MIT, to David Letterman. She gave them to anyone who she thought needed to understand why computation speed was a physical, tangible, measurable thing rather than an abstraction.</p>
+      <p>She also carried a coil of wire — 984 feet of it — representing a microsecond. "How do you explain a microsecond?" she asked in one of her standard lectures. "How do you explain a nanosecond?" The wire was the answer. You couldn't argue with physics. You couldn't argue with the wire. The light was already moving; the only question was whether you were wasting it.</p>
+      <p>"The most dangerous phrase in the language is 'We've always done it this way.'" She said this at every lecture, in every context, for decades. The Navy used it as an excuse not to change its computing systems. The computing industry used it as an excuse not to make programming accessible. Businesses used it as an excuse not to adopt computers at all. Every time someone told Hopper that a machine couldn't do symbolic translation, they were hiding behind that phrase. She ran A-0 again.</p>
+      <p>The wires are a metaphor for her entire career. She made the abstract concrete. She made the invisible visible. She made the impossible demonstrable. She handed you the evidence and said: hold this. This is a nanosecond. You waste 186 miles of it every second you delay. What are you waiting for?</p>
+    </div>
+  </section>
+
+  <!-- LEGACY CARDS -->
+  <section style="margin-top:3.5rem;">
+    <div class="section-head">
+      <span class="kick">Five Strands of Legacy</span>
+      <h2>What She Left Behind</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card__year">Infrastructure</div>
+        <h3>The Financial System's Spine</h3>
+        <p>Every bank, most governments, the entire payment processing industry — COBOL is the load-bearing layer that nobody sees. Hopper's language is the most used programming language in the world, measured by the value of the transactions it processes daily.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">Epistemology</div>
+        <h3>The Compiler as a Way of Thinking</h3>
+        <p>The compiler concept changed what computation meant. It proved that machines could deal in symbols and meaning, not just arithmetic. Every act of programming since 1952 has depended on this proof. The entire software industry is built on her demonstration.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">Community</div>
+        <h3>The Grace Hopper Celebration</h3>
+        <p>20,000+ women in computing gather annually under her name to do what she spent her career doing: advancing the field and the people in it, simultaneously. The conference is both her memorial and her continuing argument.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">Pedagogy</div>
+        <h3>The Nanosecond Wire</h3>
+        <p>The 11.8-inch wire is the most elegant teaching aid in the history of computing. It is physical proof that time is a resource with a spatial dimension. It is still used in computer science classes today. It works on everyone.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">Doctrine</div>
+        <h3>Forgiveness, Not Permission</h3>
+        <p>"It's easier to ask forgiveness than it is to get permission." This principle — deriving from her operating approach rather than any formal policy — has become one of the founding doctrines of startup culture and agile engineering. She meant it literally. It still means the same thing.</p>
+      </div>
+      <div class="card">
+        <div class="card__year">Presence</div>
+        <h3>The Destroyer in the Pacific</h3>
+        <p>The USS Hopper (DDG-70) is currently in active service in the United States Navy. A ship named for a woman who was told she was too old and too light to serve. It carries Tomahawk missiles. Its motto is "Dare and Do."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL SECTION -->
+  <div class="final-section">
+    <span class="kick" style="display:block;text-align:center;margin-bottom:0.8rem;">Coda</span>
+    <h2>What the Wire Teaches</h2>
+    <p>Grace Hopper died on January 1, 1992, in her apartment in Arlington, Virginia. She was 85 years old. She is buried with full military honors at Arlington National Cemetery. The headstone reads: Rear Admiral Grace M. Hopper. United States Navy. December 9, 1906 — January 1, 1992.</p>
+    <p>The logbook with the moth is at the Smithsonian. The USS Hopper is somewhere in the Pacific. The Grace Hopper Celebration is scheduled for next October. COBOL is running. The compiler is running. The language you used to write the program you ran today — regardless of what language it was — was compiled or interpreted by software that descends from a proof of concept demonstrated on a UNIVAC in 1952 by a 46-year-old Navy Reserve officer who was told it couldn't be done.</p>
+    <p>She ran it again. The evidence is everywhere. Hold the wire.</p>
+
+    <div style="margin-top:2rem;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;">
+      <a href="0-who.html" style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1.2rem;border:1px solid var(--gold-border);border-radius:4px;transition:background 0.2s;">← Vol. 0: Who She Was</a>
+      <a href="1-compiler.html" style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1.2rem;border:1px solid var(--gold-border);border-radius:4px;transition:background 0.2s;">Vol. 1: The Compiler Work</a>
+      <a href="2-world.html" style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1.2rem;border:1px solid var(--gold-border);border-radius:4px;transition:background 0.2s;">Vol. 2: Her World</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ COLOPHON ══ -->
+<footer class="colophon">
+  <p class="colophon__attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank" rel="noopener">CC-BY-ND-4.0</a>
+    <br>
+    Grace Hopper Series — Volume 3: The Long Afterlife &nbsp;·&nbsp; Historical record compiled in good faith from public domain sources
+    <br>
+    All rights to original arrangement and design reserved · No derivative works without attribution
+  </p>
+</footer>
+
+</body>
+</html>

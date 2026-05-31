@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leibniz — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0a0a0f;
+    --card:#12121a;
+    --surface:#1a1a26;
+    --silver:#94a3b8;
+    --gold:#d97706;
+    --ink:#e8e8f0;
+    --dim:#6b7280;
+    --silvertint:rgba(148,163,184,0.08);
+    --goldtint:rgba(217,119,6,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background:var(--paper);
+    font-family:"Newsreader",Georgia,serif;line-height:1.7;}
+  ::selection{background:var(--gold);color:#000;}
+  .zine{max-width:1080px;margin:0 auto;padding:0 22px 80px;}
+
+  /* NAV */
+  .sitenav{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.96);
+    backdrop-filter:blur(8px);border-bottom:1px solid rgba(148,163,184,0.18);
+    padding:0 22px;}
+  .sitenav-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;
+    gap:0;height:46px;}
+  .sitenav a{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--dim);text-decoration:none;padding:0 14px;
+    height:100%;display:flex;align-items:center;border-right:1px solid rgba(148,163,184,0.12);
+    transition:color .15s,background .15s;}
+  .sitenav a:first-child{border-left:1px solid rgba(148,163,184,0.12);}
+  .sitenav a:hover{color:var(--gold);background:var(--goldtint);}
+  .sitenav a.active{color:var(--gold);border-bottom:2px solid var(--gold);}
+  .sitenav-series{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--dim);margin-right:auto;padding-right:20px;}
+
+  /* HERO */
+  .hero{padding:60px 0 48px;border-bottom:1px solid rgba(148,163,184,0.15);}
+  .hero-inner{display:flex;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+  .hero-text{flex:1;min-width:280px;}
+  .vol-label{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+  .hero h1{font-family:"Cinzel";font-weight:800;
+    font-size:clamp(44px,9vw,90px);line-height:0.9;letter-spacing:0.01em;
+    text-transform:uppercase;margin:0 0 20px;color:var(--ink);}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero-dek{font-size:clamp(15px,2vw,18px);max-width:600px;color:var(--silver);
+    margin:0;line-height:1.65;}
+  .hero-dek b{color:var(--ink);font-weight:500;}
+  .hero-art{flex:0 0 auto;}
+
+  /* Binary map SVG */
+  @keyframes bitblink{
+    0%,100%{opacity:.2} 50%{opacity:1}
+  }
+  .mapbit{animation:bitblink 1.8s ease-in-out infinite;}
+  .mapbit:nth-child(2){animation-delay:.3s;}
+  .mapbit:nth-child(3){animation-delay:.6s;}
+  .mapbit:nth-child(4){animation-delay:.9s;}
+  .mapbit:nth-child(5){animation-delay:1.2s;}
+  .mapbit:nth-child(6){animation-delay:1.5s;}
+  @media(prefers-reduced-motion:reduce){.mapbit{animation:none;opacity:1}}
+
+  /* KICK / BAND */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;
+    text-transform:uppercase;color:var(--silver);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--silver);
+    color:#0a0a0f;padding:5px 14px;margin:36px 0 14px;}
+  .band.gold{background:var(--gold);color:#000;}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid rgba(148,163,184,0.22);background:var(--card);
+    padding:16px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--silver);}
+  .card.gold:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 0 8px;letter-spacing:0.02em;color:var(--ink);}
+  .card p{font-size:14px;margin:0;color:var(--silver);line-height:1.55;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(148,163,184,0.3);
+    color:var(--dim);padding:2px 7px;margin-top:9px;}
+  .card .tag.gold{border-color:rgba(217,119,6,0.4);color:var(--gold);}
+
+  /* PROSE */
+  .prose{max-width:720px;}
+  .prose p{font-size:16px;margin:0 0 18px;color:var(--silver);line-height:1.75;}
+  .prose p strong{color:var(--ink);font-weight:500;}
+  .prose p em{color:var(--gold);font-style:italic;}
+  .prose blockquote{border-left:3px solid var(--gold);margin:24px 0;
+    padding:12px 20px;background:var(--goldtint);}
+  .prose blockquote p{margin:0;font-style:italic;font-size:17px;color:var(--ink);}
+  .prose blockquote cite{display:block;font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:8px;}
+
+  /* BLOCK */
+  .block{border:1px solid rgba(148,163,184,0.2);background:var(--surface);
+    padding:20px 22px;margin-top:6px;}
+  .block.gold{border-color:rgba(217,119,6,0.3);background:var(--goldtint);}
+
+  /* TWO-COL */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media(max-width:600px){.twocol{grid-template-columns:1fr;}}
+
+  /* WORLD MAP LAYOUT */
+  .worldrow{display:grid;grid-template-columns:160px 1fr;gap:20px;
+    padding:16px 0;border-bottom:1px solid rgba(148,163,184,0.1);}
+  .worldrow:last-child{border-bottom:none;}
+  .worldrow-loc{font-family:"Cinzel";font-weight:700;font-size:14px;color:var(--gold);
+    line-height:1.3;}
+  .worldrow-loc span{display:block;font-family:"Space Mono",monospace;font-size:10px;
+    font-weight:400;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;
+    margin-top:4px;}
+  .worldrow-body{font-size:14.5px;color:var(--silver);line-height:1.65;}
+  .worldrow-body strong{color:var(--ink);}
+
+  /* DISPUTE TIMELINE */
+  .dispute{list-style:none;padding:0;margin:0;position:relative;}
+  .dispute::before{content:'';position:absolute;left:13px;top:6px;bottom:6px;
+    width:1px;background:rgba(148,163,184,0.2);}
+  .dispute li{position:relative;padding:14px 0 14px 38px;
+    border-bottom:1px solid rgba(148,163,184,0.08);}
+  .dispute li:last-child{border-bottom:none;}
+  .dispute li::before{content:'';position:absolute;left:8px;top:22px;
+    width:11px;height:11px;border-radius:50%;background:var(--gold);
+    border:2px solid var(--paper);}
+  .dispute-year{font-family:"Space Mono",monospace;font-size:11px;
+    color:var(--gold);letter-spacing:0.1em;margin-bottom:4px;}
+  .dispute-body{font-size:14.5px;color:var(--silver);line-height:1.6;}
+  .dispute-body strong{color:var(--ink);}
+
+  /* LETTERS GRID */
+  .letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+  .letter-card{border:1px solid rgba(148,163,184,0.18);background:var(--card);
+    padding:14px 16px;transition:transform .13s,box-shadow .13s;}
+  .letter-card:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--silver);}
+  .letter-card .lc-name{font-family:"Cinzel";font-weight:700;font-size:15px;
+    color:var(--ink);margin:0 0 5px;}
+  .letter-card .lc-role{font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .letter-card .lc-desc{font-size:13px;color:var(--silver);line-height:1.5;margin:0;}
+
+  /* COLOPHON */
+  .colophon{margin-top:70px;padding-top:28px;border-top:1px solid rgba(148,163,184,0.2);
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.08em;
+    color:var(--dim);line-height:1.8;}
+  .colophon a{color:var(--silver);text-decoration:none;}
+  .colophon a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Series navigation">
+  <div class="sitenav-inner">
+    <span class="sitenav-series">Leibniz</span>
+    <a href="0-who.html">Vol. 0 — The Man</a>
+    <a href="1-calculus.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+</nav>
+
+<div class="zine">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="vol-label">Vol. 2 / 3 &nbsp;·&nbsp; Gottfried Wilhelm Leibniz</div>
+        <h1>His <em>World</em></h1>
+        <p class="hero-dek">
+          The Thirty Years' War left Germany. Louis XIV filled the vacuum.<br>
+          <b>The Republic of Letters connected Europe across borders and creeds.</b><br>
+          And at the center of it, a man who wrote to everyone — and was forgotten by all.
+        </p>
+      </div>
+      <div class="hero-art">
+        <!-- Animated binary scatter map — dots of 0s and 1s suggesting a network -->
+        <svg viewBox="0 0 220 200" width="220" height="200"
+             aria-label="Network of correspondents visualized as binary nodes" role="img">
+          <defs>
+            <filter id="glow2">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="220" height="200" fill="none"
+                stroke="rgba(148,163,184,0.08)" stroke-width="1"/>
+
+          <!-- Network connection lines -->
+          <line x1="110" y1="100" x2="40" y2="50"
+                stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="180" y2="45"
+                stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="30" y2="140"
+                stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="190" y2="155"
+                stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="110" y2="175"
+                stroke="rgba(217,119,6,0.2)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="60" y2="170"
+                stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+          <line x1="110" y1="100" x2="165" y2="170"
+                stroke="rgba(148,163,184,0.15)" stroke-width="1"/>
+
+          <!-- Central node — Leibniz -->
+          <circle cx="110" cy="100" r="10" fill="none"
+                  stroke="#d97706" stroke-width="2" filter="url(#glow2)"/>
+          <circle cx="110" cy="100" r="5" fill="#d97706"/>
+
+          <!-- Correspondent nodes with blinking bits -->
+          <text class="mapbit" x="30" y="52" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#94a3b8" filter="url(#glow2)">1</text>
+          <text class="mapbit" x="185" y="48" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#94a3b8" filter="url(#glow2)">0</text>
+          <text class="mapbit" x="22" y="143" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#d97706" filter="url(#glow2)">1</text>
+          <text class="mapbit" x="194" y="158" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#94a3b8" filter="url(#glow2)">1</text>
+          <text class="mapbit" x="110" y="180" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#d97706" filter="url(#glow2)">0</text>
+          <text class="mapbit" x="58" y="173" text-anchor="middle"
+                font-family="'Space Mono',monospace" font-size="14"
+                fill="#94a3b8" filter="url(#glow2)">1</text>
+
+          <!-- Labels -->
+          <text x="36" y="40" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="7.5" fill="rgba(148,163,184,0.5)">PARIS</text>
+          <text x="184" y="36" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="7.5" fill="rgba(148,163,184,0.5)">LONDON</text>
+          <text x="22" y="158" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="7.5" fill="rgba(148,163,184,0.5)">BERLIN</text>
+          <text x="196" y="170" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="7.5" fill="rgba(148,163,184,0.5)">VIENNA</text>
+          <text x="110" y="193" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="7.5" fill="rgba(217,119,6,0.6)">HANOVER</text>
+
+          <!-- Title label -->
+          <text x="110" y="22" text-anchor="middle" font-family="'Space Mono',monospace"
+                font-size="8.5" letter-spacing="3" fill="rgba(148,163,184,0.4)">REPUBLIC OF LETTERS</text>
+
+          <!-- Corner marks -->
+          <polyline points="4,4 4,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,4 18,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 202,4" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,4 216,18" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 4,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="4,196 18,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 202,196" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+          <polyline points="216,196 216,182" stroke="rgba(217,119,6,0.4)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- THIRTY YEARS WAR AFTERMATH -->
+  <div class="band gold" style="margin-top:44px;">Born in the Ruins: Post-War Germany</div>
+  <div class="prose">
+    <p>
+      Leibniz was born on 1 July 1646. The Peace of Westphalia, which ended the Thirty Years' War, was signed on 24 October 1648 — when he was two years old. He grew up in a landscape of devastation: the war had killed between four and eight million people, perhaps a third of the entire German-speaking population. Cities had been razed, universities depleted, trade routes severed.
+    </p>
+    <p>
+      The war had been religious, dynastic, and territorial all at once — Catholic vs. Protestant, Habsburg vs. Bourbon, German princes vs. the Emperor. It had turned central Europe into a laboratory for systematic cruelty. When it ended, it left behind a patchwork of weakened, traumatized states. There was no unified Germany. There would not be for two more centuries.
+    </p>
+    <p>
+      Into this vacuum, <strong>Louis XIV of France</strong> poured French power. The Sun King reigned from 1643 to 1715 — essentially the entire span of Leibniz's adult life. France was the dominant power in Europe: culturally, militarily, linguistically. Leibniz wrote most of his philosophical and scientific correspondence in French. The <em>Monadologie</em> was written in French. The <em>Théodicée</em> was written in French. Latin was for the scholars; French was for the conversation that mattered.
+    </p>
+  </div>
+
+  <!-- PLACES -->
+  <div class="band">The Stages of His World</div>
+  <div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Leipzig<span>1646–1667</span></div>
+      <div class="worldrow-body">
+        <strong>Formation.</strong> Born here, educated here, first degrees here. A Protestant university city in Saxony — the intellectual milieu of Lutheran Germany, still rebuilding from the Thirty Years' War. His father's library. The University of Leipzig. He absorbs everything available, and learns that everything available is not enough.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Mainz<span>1667–1672</span></div>
+      <div class="worldrow-body">
+        <strong>Political apprenticeship.</strong> Enters service of the Elector of Mainz, one of the seven German princes who elected the Holy Roman Emperor. Works on legal reform, diplomacy, and statecraft. Drafts a plan to redirect Louis XIV's aggression toward Egypt — the <em>Consilium Aegyptiacum</em> — to spare Germany. Travels to Paris to present it. Louis XIV never receives him.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Paris<span>1672–1676</span></div>
+      <div class="worldrow-body">
+        <strong>Transformation.</strong> The intellectual center of Europe. He meets Huygens, Arnauld, Malebranche. He learns serious mathematics from Huygens — the geometry of Descartes, the method of Cavalieri and Barrow. He invents calculus. He builds the Stepped Reckoner. He is elected to the Royal Society. In four years he goes from promising to great.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">London<span>1673, 1676</span></div>
+      <div class="worldrow-body">
+        <strong>The Royal Society.</strong> Visits in 1673 to demonstrate his calculator; elected a Fellow. Returns briefly in 1676 en route to Hanover. Meets Henry Oldenburg and John Collins, who have seen Newton's unpublished mathematical manuscripts. Whether Leibniz saw anything relevant to calculus during these visits is the question at the heart of the priority dispute.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Amsterdam<span>November 1676</span></div>
+      <div class="worldrow-body">
+        <strong>Spinoza.</strong> Passes through Amsterdam and spends several days with Baruch Spinoza. They discuss the <em>Ethics</em> — still in manuscript. Spinoza will die of tuberculosis three months later. The meeting is the apex of seventeenth-century philosophy: the two greatest minds of the era, face to face, disagreeing about God and substance.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Hanover<span>1676–1716</span></div>
+      <div class="worldrow-body">
+        <strong>Forty years of service.</strong> Court counselor, librarian, and historian to the House of Hanover. He writes philosophy and mathematics in the margins of genealogical research. He founds the Berlin Academy of Sciences. He fights the priority dispute. He watches the court he served move to London and forget him. He dies here, in an unmarked grave.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Berlin<span>1700</span></div>
+      <div class="worldrow-body">
+        <strong>The Academy.</strong> He founds the Berlin-Brandenburg Academy of Sciences in 1700, becomes its first president. It is the German counterpart to the Royal Society (London) and the Académie des Sciences (Paris). His institutional ambition — to build structures for knowledge — is, in this case, successful.
+      </div>
+    </div>
+    <div class="worldrow">
+      <div class="worldrow-loc">Vienna<span>1712–1714</span></div>
+      <div class="worldrow-body">
+        <strong>Last great work.</strong> At the Habsburg court in Vienna, working for Charles VI, he writes the <em>Monadologie</em> and the <em>Principes de la Nature et de la Grâce.</em> His philosophical system reaches its final form. He returns to Hanover in 1714 to find his employer has gone to London and left no instructions for what to do with the court philosopher.
+      </div>
+    </div>
+  </div>
+
+  <!-- REPUBLIC OF LETTERS -->
+  <div class="band gold" style="margin-top:44px;">The Republic of Letters</div>
+  <div class="prose">
+    <p>
+      Before journals, universities, conferences, and preprint servers, the European intellectual community sustained itself through letters. Latin letters, French letters, German letters — sent across borders, between Catholic and Protestant, between Jesuit and Lutheran, between philosopher and prince. This was the <strong>Respublica Literaria</strong>: the Republic of Letters, a community without territory, governed only by argument.
+    </p>
+    <p>
+      Leibniz was its most prolific citizen. He wrote approximately <strong>15,000 letters to roughly 1,000 correspondents</strong> over his lifetime. He wrote to Spinoza and to Newton. To the Queen of Prussia and to Jesuit missionaries in China. To Dutch scientists and French theologians and English mathematicians. He was the switchboard of European intellectual life: the man who knew what everyone was thinking, and made sure they knew what everyone else was thinking.
+    </p>
+    <p>
+      Many of his most important ideas exist only in letters — never systematized into books, never organized into treatises. His philosophical system is reconstructed largely from correspondence. His mathematics is scattered across letters and unpublished manuscripts in the Hanover Archive. He wrote as he thought: continuously, to everyone, about everything.
+    </p>
+  </div>
+
+  <div class="letters">
+    <div class="letter-card">
+      <div class="lc-name">Christiaan Huygens</div>
+      <div class="lc-role">Paris, from 1672</div>
+      <div class="lc-desc">Leibniz's mathematical mentor. Huygens set him the problems that forced him to learn the mathematics of his era. Without Huygens, there may have been no calculus.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Isaac Newton</div>
+      <div class="lc-role">London / Cambridge</div>
+      <div class="lc-desc">They exchanged letters in 1676, mediated by Oldenburg. Newton's letters (the Epistola Prior and Epistola Posterior) described his methods in coded anagrams. The correspondence became Exhibit A in the later priority dispute.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Baruch Spinoza</div>
+      <div class="lc-role">Amsterdam, 1676</div>
+      <div class="lc-desc">One meeting in person; prior correspondence mediated by Oldenburg. Their philosophical differences were radical. Leibniz later distanced himself from Spinoza publicly, fearing the association with "atheism."</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Queen Sophie Charlotte</div>
+      <div class="lc-role">Berlin / Hanover</div>
+      <div class="lc-desc">The Electress of Brandenburg and later Queen of Prussia. An unusually accomplished intellectual — she studied philosophy directly with Leibniz. The <em>Théodicée</em> grew out of discussions with her. She died in 1705; Leibniz wrote that he had lost his greatest patroness.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Antoine Arnauld</div>
+      <div class="lc-role">Paris / Rome</div>
+      <div class="lc-desc">The Jansenist theologian. His correspondence with Leibniz on the <em>Discours de Métaphysique</em> (1686) is one of the most important philosophical exchanges of the century — rigorous, extended, and mutually challenging.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Joachim Bouvet, S.J.</div>
+      <div class="lc-role">China (Jesuit Mission)</div>
+      <div class="lc-desc">The Jesuit missionary who connected Leibniz's binary arithmetic to the I Ching hexagrams. Leibniz used this connection to argue for the universality of binary — and for the potential unity of Chinese and Christian thought.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Samuel Clarke</div>
+      <div class="lc-role">London, 1715–1716</div>
+      <div class="lc-desc">The Leibniz-Clarke correspondence is the last and one of the greatest philosophical exchanges of Leibniz's life. Newton's proxy debated space, time, God, and gravity. The exchange was ongoing when Leibniz died.</div>
+    </div>
+    <div class="letter-card">
+      <div class="lc-name">Henry Oldenburg</div>
+      <div class="lc-role">Royal Society, London</div>
+      <div class="lc-desc">Secretary of the Royal Society and the hub of the pan-European correspondence network. Leibniz's letters to Oldenburg form an important part of the record of his mathematical development — and of the later calculus dispute.</div>
+    </div>
+  </div>
+
+  <!-- LOUIS XIV AND FRANCE -->
+  <div class="band" style="margin-top:44px;">Louis XIV and the French Threat</div>
+  <div class="prose">
+    <p>
+      The dominant geopolitical fact of Leibniz's lifetime was the expansionism of Louis XIV. The Sun King invaded the Spanish Netherlands, attacked the Dutch Republic, threatened the Rhineland. He had the most powerful army in Europe and a court at Versailles that radiated cultural prestige in every direction.
+    </p>
+    <p>
+      Leibniz was not merely an observer of this. He was an active, if minor, diplomatic actor. In 1672 he drafted the <em>Consilium Aegyptiacum</em> — a detailed proposal for France to redirect its imperial energy toward Egypt and North Africa rather than Germany. He traveled to Paris specifically to present this plan. Louis XIV never granted him an audience. He was not important enough.
+    </p>
+    <p>
+      Later, as the War of the Spanish Succession approached (1701–1714), Leibniz made further diplomatic efforts to prevent or limit it. A conflict over who would rule Spain threatened to engulf all of Europe. Leibniz wrote to princes, nobles, and emperors. He was, again, ignored. He was a court philosopher and librarian, not a statesman. The war happened.
+    </p>
+    <blockquote>
+      <p>"Nothing is more important to the common welfare than to show people the true interests of princes and states, so that no injustice is done."</p>
+      <cite>— Leibniz, in correspondence on the Spanish Succession</cite>
+    </blockquote>
+  </div>
+
+  <!-- NEWTON DISPUTE -->
+  <div class="band gold" style="margin-top:44px;">The Newton Priority Dispute</div>
+  <div class="prose">
+    <p>
+      The calculus priority dispute is one of the ugliest episodes in the history of science. It began as a genuine question about independent invention, became a proxy war between English and Continental science, and ended with a Royal Society investigation widely considered to have been rigged.
+    </p>
+    <p>
+      The historical record, reconstructed carefully by twentieth-century historians, supports this conclusion: <strong>Newton invented calculus first</strong> (c. 1666, using the method of fluxions) but left it almost entirely unpublished. <strong>Leibniz invented calculus independently</strong> (1675–1676) and published it (1684). Both inventions were genuine. Neither man copied the other. The fact that Leibniz visited London in 1676 and met people who had seen Newton's manuscripts creates a shadow of suspicion that cannot be definitively resolved — but there is no evidence of plagiarism.
+    </p>
+  </div>
+  <ul class="dispute">
+    <li>
+      <div class="dispute-year">1666</div>
+      <div class="dispute-body"><strong>Newton develops his method of fluxions</strong> in Cambridge, during the plague years. He writes it up in manuscripts that circulate to a small number of colleagues. He does not publish.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1675–76</div>
+      <div class="dispute-body"><strong>Leibniz develops calculus independently</strong> in Paris, building on Huygens, Barrow, and Pascal. His notation (dy/dx, ∫) is developed in notebooks now preserved in Hanover. The development is documented in detail.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1676</div>
+      <div class="dispute-body"><strong>The exchange of letters.</strong> Newton writes the Epistola Prior (June) and Epistola Posterior (October) to Leibniz, via Oldenburg. These describe Newton's method obliquely, with a key result given as an anagram. Leibniz visits London in October. This is the crux of the dispute.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1684</div>
+      <div class="dispute-body"><strong>Leibniz publishes first.</strong> <em>"Nova Methodus"</em> in the <em>Acta Eruditorum.</em> It is the first published account of calculus in history. Newton's prior invention is not publicly known.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1699</div>
+      <div class="dispute-body"><strong>Accusations begin.</strong> Nicolas Fatio de Duillier, a Swiss mathematician and Newton associate, accuses Leibniz of plagiarism in print. Leibniz requests a retraction. The Royal Society declines to get involved.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1711</div>
+      <div class="dispute-body"><strong>Leibniz complains to the Royal Society</strong> about John Keill's public accusations of plagiarism. He expects the Society to adjudicate fairly. He does not know that Newton has become its President.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1712</div>
+      <div class="dispute-body"><strong>The <em>Commercium Epistolicum</em>.</strong> The Royal Society appoints a committee to investigate. The committee is stacked with Newton allies. The report — almost certainly drafted by Newton himself — finds in Newton's favor. Leibniz is not invited to testify. He is not shown the report before publication.</div>
+    </li>
+    <li>
+      <div class="dispute-year">1716</div>
+      <div class="dispute-body"><strong>Leibniz dies</strong> with the dispute unresolved, his reputation damaged in England. He had spent his final years trying to rebut the accusations in correspondence. He never cleared his name in British circles during his lifetime.</div>
+    </li>
+  </ul>
+
+  <!-- HANOVER COURT -->
+  <div class="band" style="margin-top:44px;">The Hanover Court: Thirty Years of Service</div>
+  <div class="twocol" style="margin-top:6px;">
+    <div class="block">
+      <p class="kick" style="margin:0 0 10px;">What They Wanted</p>
+      <p style="font-size:14.5px;color:var(--silver);line-height:1.7;margin:0;">
+        The House of Hanover wanted a genealogy proving their descent from the Guelf dynasty and, ultimately, from a sufficiently noble Italian lineage. This would support their claim to the British throne (which they eventually received in 1714). They employed Leibniz as their historian. He worked on this project for thirty years and never finished it.
+      </p>
+    </div>
+    <div class="block gold">
+      <p class="kick" style="margin:0 0 10px;">What He Gave Them</p>
+      <p style="font-size:14.5px;color:var(--ink);line-height:1.7;margin:0;">
+        He gave them the genealogy they needed, eventually. He also gave them calculus, binary arithmetic, the first mass-production calculator design, the Berlin Academy of Sciences, the <em>Théodicée</em>, the <em>Monadologie</em>, 15,000 letters maintaining the Republic of Letters, and some of the most important unfinished manuscripts in the history of philosophy.
+        <br><br>
+        They gave him a room, a salary, and the freedom to think — when he wasn't doing genealogy.
+      </p>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: <strong>David Lee Wise</strong> / ROOT0 / TriPod LLC</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a></div>
+    <div>Series: Gottfried Wilhelm Leibniz, 1646–1716 &nbsp;·&nbsp; Vol. 2: His World</div>
+    <div style="margin-top:10px;">
+      <a href="0-who.html">Vol. 0</a> &nbsp;·&nbsp;
+      <a href="1-calculus.html">Vol. 1</a> &nbsp;·&nbsp;
+      <a href="2-world.html">Vol. 2</a> &nbsp;·&nbsp;
+      <a href="3-legacy.html">Vol. 3</a>
+    </div>
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>
