@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The War — No. 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#15171c;--card:#1d2027;--ink:#e6e3d8;--dim:#8b8f9a;--amber:#e3a02a;--green:#3fae6b;--line:rgba(227,160,42,0.14);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:repeating-linear-gradient(0deg, transparent 0 25px, rgba(227,160,42,0.025) 25px 26px);font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--amber);color:#15171c;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--amber);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(42px,9vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--amber);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cfccc0;}
+  .dek b{font-weight:500;color:var(--amber);}
+  .art{flex:0 0 auto;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .r1{transform-origin:60px 70px;animation:spin 4s linear infinite} .r2{transform-origin:90px 70px;animation:spin 3s linear infinite reverse} .r3{transform-origin:120px 70px;animation:spin 5s linear infinite}
+  @media (prefers-reduced-motion:reduce){.r1,.r2,.r3{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--amber);color:#15171c;padding:5px 13px;margin:34px 0 14px;}
+  .band.green{background:var(--green);} .band.dim{background:#2a2e37;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--amber);}
+  .type p{font-size:13px;margin:0;color:#bcc0c8;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--green);border:1px solid var(--green);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--amber);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--green);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#cdcabf;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#a7ab94;}
+  .card .plus b{color:var(--amber);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--green);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--card);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"01";position:absolute;left:0;top:9px;font-family:"Space Mono",monospace;font-size:10px;color:var(--amber);font-weight:700;}
+  .block.green .rules li::before{content:"✦";color:var(--green);font-size:13px;}
+  .rules b{font-weight:500;color:var(--amber);} .block.green .rules b{color:var(--green);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.r1,.r2,.r3{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 2 · his war &amp; world</span>
+    <div class="masthead">
+      <h1>The <em>War</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="three enigma rotors turning">
+        <g class="r1" fill="none" stroke="#e3a02a" stroke-width="2"><circle cx="60" cy="70" r="22"/><circle cx="60" cy="70" r="6"/><line x1="60" y1="48" x2="60" y2="56"/><line x1="60" y1="84" x2="60" y2="92"/></g>
+        <g class="r2" fill="none" stroke="#3fae6b" stroke-width="2"><circle cx="90" cy="70" r="22"/><circle cx="90" cy="70" r="6"/><line x1="90" y1="48" x2="90" y2="56"/><line x1="90" y1="84" x2="90" y2="92"/></g>
+        <g class="r3" fill="none" stroke="#e3a02a" stroke-width="2"><circle cx="120" cy="70" r="22"/><circle cx="120" cy="70" r="6"/><line x1="120" y1="48" x2="120" y2="56"/><line x1="120" y1="84" x2="120" y2="92"/></g>
+        <text x="90" y="124" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8b8f9a">three rotors, daily keys</text>
+      </svg>
+    </div>
+    <p class="dek">His mathematics met the war at <b>Bletchley Park</b>, where breaking Germany's ciphers turned abstract logic into intelligence that <b>saved lives by the million</b>. This book is the world that work happened in — the machines, the secrecy, and the cost of both.</p>
+  </header>
+
+  <span class="band">The setting</span>
+  <div class="types">
+    <div class="type reveal"><h4>Enigma</h4><p>Germany's rotor cipher machine — astronomically many settings, changed daily.</p><span class="tg">the cipher</span></div>
+    <div class="type reveal"><h4>Bletchley Park</h4><p>Britain's secret codebreaking centre, staffed by mathematicians and crossword champions.</p><span class="tg">the place</span></div>
+    <div class="type reveal"><h4>The Bombe</h4><p>The electromechanical machine that hunted Enigma's daily settings.</p><span class="tg">the machine</span></div>
+    <div class="type reveal"><h4>Ultra</h4><p>The priceless intelligence the breaks produced — and the secret that guarded it.</p><span class="tg">the secret</span></div>
+  </div>
+
+  <span class="band amber">The cipher & the break</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>How Enigma hid messages</h3><p class="what">Each keystroke scrambled a letter through rotating rotors and a plugboard — and the wiring shifted every press.</p><p class="need"><b>scale</b> astronomically many possible settings</p><p class="do"><b>so</b> the same letter rarely encoded the same way twice.</p><p class="plus"><b>+1</b> a quirk helped: Enigma never encoded a letter as itself — a tiny flaw the codebreakers exploited.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The Polish head start</h3><p class="what">Polish mathematicians, led by Marian Rejewski, had already broken into Enigma in the 1930s.</p><p class="need"><b>their machine</b> the "Bomba"</p><p class="do"><b>so</b> Bletchley built on crucial work shared by Poland.</p><p class="plus"><b>+1</b> a 1940 change in German procedure broke the Bomba — which is where Turing's different approach took over.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The Bombe</h3><p class="what">Turing helped design an electromechanical machine to find Enigma's daily key settings.</p><p class="need"><b>with</b> Gordon Welchman, especially</p><p class="do"><b>so</b> the daily hunt for settings could be mechanized.</p><p class="plus"><b>+1</b> within a few years Bombes were cracking roughly two messages a minute — industrial-scale decryption.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>Hut 8 and the U-boats</h3><p class="what">Turing led Hut 8, attacking the naval Enigma that guarded Germany's deadly submarine fleet.</p><p class="need"><b>method</b> his statistical technique, "Banburismus"</p><p class="do"><b>so</b> Atlantic convoys could be routed away from U-boats.</p><p class="plus"><b>+1</b> naval Enigma was the hardest nut — breaking it directly protected the supply lifeline to Britain.</p></article>
+  </div>
+
+  <span class="band amber">The wider effort</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>A team, not a hero alone</h3><p class="what">Bletchley employed thousands — mathematicians, linguists, and operators, many of them women.</p><p class="need"><b>scale</b> ~39,000 messages/month decoded by 1942</p><p class="do"><b>so</b> the breaks were a vast collective achievement.</p><p class="plus"><b>+1</b> the film myth of one lone genius flattens this — the Bombe operators and analysts were essential.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Beyond Enigma: Lorenz</h3><p class="what">A tougher cipher, "Tunny," guarded high command; Turing's methods fed the attack on it.</p><p class="need"><b>his contribution</b> "Turingery"</p><p class="do"><b>so</b> even the highest German traffic was read.</p><p class="plus"><b>+1</b> breaking Lorenz drove the building of Colossus — often called the first programmable electronic computer.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Ultra, the guarded secret</h3><p class="what">The intelligence was so valuable it had to be hidden — even successes couldn't be acted on openly.</p><p class="need"><b>codename</b> Ultra</p><p class="do"><b>so</b> commanders sometimes couldn't use what they knew, to protect the source.</p><p class="plus"><b>+1</b> Eisenhower said Ultra saved thousands of lives and hastened the German surrender.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Other wartime work</h3><p class="what">He advised US codebreakers, met Claude Shannon, and built a speech-scrambler he named "Delilah."</p><p class="need"><b>1942–43</b> liaison with US intelligence</p><p class="do"><b>so</b> his reach extended across the Allied effort.</p><p class="plus"><b>+1</b> his talks with Shannon — father of information theory — linked two of the century's foundational minds.</p></article>
+  </div>
+
+  <span class="band green">His place in it</span>
+  <div class="block green">
+    <ul class="rules">
+      <li>From <b>1939</b> Turing worked at <b>Bletchley Park</b> against Germany's <b>Enigma</b> cipher, building on a vital <b>Polish head start</b>.</li>
+      <li>He helped design the <b>Bombe</b> (with Gordon Welchman) and led <b>Hut 8</b> against the <b>naval Enigma</b> protecting U-boats, using his <b>Banburismus</b> method.</li>
+      <li>His techniques also fed the attack on the tougher <b>Lorenz</b> cipher, the problem that spurred <b>Colossus</b>.</li>
+      <li>The resulting intelligence, <b>Ultra</b>, is credited with <b>shortening WWII by two to four years</b> and saving <b>millions of lives</b>.</li>
+      <li>He earned an <b>OBE in 1945</b> — but the secrecy meant <b>almost no one knew why</b> for decades.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Solid vs. popularized</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>Solid:</b> the Enigma break, the Bombe, Hut 8, and the war-shortening estimate are <b>well-established</b> history.</li>
+      <li><b>Often distorted:</b> the <b>lone-genius</b> image. It was a <b>huge team effort</b>, the <b>Poles broke Enigma first</b>, and Welchman and many others were central — popular films compress all this into one man.</li>
+      <li>The "<b>two to four years</b>" and "<b>14 million lives</b>" figures are <b>historians' estimates</b>, not exact measurements — widely cited, but inherently approximate.</li>
+      <li>The film <em>The Imitation Game</em> <b>invents scenes and characters</b> (and a spy subplot); treat it as drama, not record.</li>
+      <li>Much of this was <b>secret until the 1970s–90s</b>, so even early histories were incomplete — the full picture is recent.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 2 · logic turned into intelligence, in total secrecy · the war he helped end</p>
+</div>
+</body>
+</html>

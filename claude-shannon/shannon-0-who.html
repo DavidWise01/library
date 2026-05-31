@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Shannon — No. 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0e1626; --card:#16203250; --ink:#e4ecf5; --dim:#8195ab;
+    --cyan:#33c6dd; --orange:#f08a3c; --line:rgba(51,198,221,0.16); --cardsolid:#162032;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);
+    background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,78px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .art{flex:0 0 auto;}
+  @keyframes trace{0%{stroke-dashoffset:300}100%{stroke-dashoffset:0}}
+  .sig{stroke-dasharray:300;animation:trace 3s linear infinite;}
+  @media (prefers-reduced-motion:reduce){.sig{animation:none;stroke-dashoffset:0}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.sig{animation:none;stroke-dashoffset:0}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 0 · who he was</span>
+    <div class="masthead">
+      <h1>Claude <em>Shannon</em></h1>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a clean signal recovered from noise">
+        <line x1="16" y1="100" x2="174" y2="100" stroke="#8195ab" stroke-width="1"/>
+        <path d="M16,100 q6,-12 12,0 t12,0 8,18 12,-30 14,22 10,-8 12,4 14,-26 12,18 16,-4" fill="none" stroke="#f08a3c" stroke-width="1" opacity="0.45"/>
+        <path class="sig" d="M16,60 H52 V100 H76 V60 H100 V100 H124 V60 H150 V100 H174" fill="none" stroke="#33c6dd" stroke-width="2.4" stroke-linejoin="round"/>
+        <text x="95" y="130" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">signal through noise</text>
+      </svg>
+    </div>
+    <p class="dek">He took something everyone thought was vague — <b>information</b> — and proved it could be measured, in a unit he helped name: the <b>bit</b>. That single idea underlies every text, call, and stream on Earth. This book is who he was: the quiet engineer who invented the digital age, juggling all the way.</p>
+  </header>
+
+  <span class="band">The shape of his life</span>
+  <div class="types">
+    <div class="type reveal"><h4>The student</h4><p>Michigan, then MIT — where a master's thesis quietly remade circuit design.</p><span class="tg">1916–2001</span></div>
+    <div class="type reveal"><h4>The theorist</h4><p>His 1948 paper founded information theory and gave the world the bit.</p><span class="tg">the bit</span></div>
+    <div class="type reveal"><h4>Bell Labs</h4><p>Where he did his great work — and rode a unicycle down the halls, juggling.</p><span class="tg">the lab</span></div>
+    <div class="type reveal"><h4>The tinkerer</h4><p>A maze-solving mouse, a Roman-numeral calculator, rocket frisbees — for the joy of it.</p><span class="tg">for fun</span></div>
+  </div>
+
+  <span class="band cyan">Who he was</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>A tinkerer from the start</h3><p class="what">Claude Elwood Shannon (1916–2001), raised in Michigan, built telegraphs and solved puzzles as a boy.</p><p class="need"><b>study</b> math + electrical engineering, U. Michigan</p><p class="do"><b>so</b> he fused abstract logic with hands-on building from the beginning.</p><p class="plus"><b>+1</b> as a child he ran a homemade wire telegraph to a friend's house — the future engineer was visible early.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The thesis that built the chip</h3><p class="what">His 1937 MIT master's thesis showed Boolean logic could be done with electrical switches.</p><p class="need"><b>work</b> "A Symbolic Analysis of Relay and Switching Circuits"</p><p class="do"><b>so</b> true/false became on/off — the basis of all digital circuits.</p><p class="plus"><b>+1</b> it's been called the most important master's thesis of the century — it turned circuit design into a science.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The paper that named the bit</h3><p class="what">In 1948, at Bell Labs, he published the paper that founded information theory.</p><p class="need"><b>work</b> "A Mathematical Theory of Communication"</p><p class="do"><b>so</b> information became a measurable quantity, counted in bits.</p><p class="plus"><b>+1</b> he credited the word "bit" to colleague John Tukey — but his paper was the first to use it in print.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>The playful genius</h3><p class="what">He rode a unicycle through Bell Labs while juggling, and built whimsical machines.</p><p class="need"><b>creed</b> "I am very seldom interested in applications"</p><p class="do"><b>so</b> he chased elegant problems for their own sake.</p><p class="plus"><b>+1</b> the AI you're reading — Claude — is named in his honor, a tribute to the founder of information theory.</p></article>
+  </div>
+
+  <span class="band cyan">Why he mattered</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Information became physical</h3><p class="what">He showed any message — text, sound, image — could be reduced to bits.</p><p class="need"><b>idea</b> a common currency for all communication</p><p class="do"><b>so</b> telegraph, telephone, and TV became one kind of thing.</p><p class="plus"><b>+1</b> before him these were separate crafts; after him, they were all just bits over a channel.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>He measured uncertainty</h3><p class="what">He defined "entropy" — how much information a message really carries.</p><p class="need"><b>symbol</b> H, the entropy of a source</p><p class="do"><b>so</b> you could say exactly how much a message could be compressed.</p><p class="plus"><b>+1</b> von Neumann reputedly told him to call it "entropy" — partly because no one could argue about a word nobody understood.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Perfect signal through noise</h3><p class="what">He proved a noisy channel still has a clean capacity — and error-free sending is possible below it.</p><p class="need"><b>idea</b> channel capacity + error correction</p><p class="do"><b>so</b> reliable communication over imperfect lines became a law, not a hope.</p><p class="plus"><b>+1</b> every error-correcting code — from CDs to deep-space probes — descends from this result.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>A seed of AI</h3><p class="what">His maze-solving mouse and chess work helped seed artificial intelligence.</p><p class="need"><b>built</b> "Theseus," a relay-controlled mechanical mouse</p><p class="do"><b>so</b> a machine that learned a maze pointed toward thinking machines.</p><p class="plus"><b>+1</b> Theseus remembered its route — an early, physical demonstration of machine learning.</p></article>
+  </div>
+
+  <span class="band orange">The core of it</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li><b>Claude Elwood Shannon (1916–2001)</b> — American mathematician and engineer, called the <b>father of information theory</b> and "the man who invented the information age."</li>
+      <li>His <b>1937 master's thesis</b> showed <b>Boolean logic</b> could be built from electrical switches — the foundation of every <b>digital circuit</b>.</li>
+      <li>His <b>1948 paper</b>, "A Mathematical Theory of Communication," founded <b>information theory</b>, introduced the <b>bit</b>, and defined <b>entropy</b> and <b>channel capacity</b>.</li>
+      <li>He proved <b>reliable communication through noise</b> is possible — the basis of all modern <b>compression and error correction</b>.</li>
+      <li>He worked at <b>Bell Labs</b> and <b>MIT</b>, built playful machines, and — fittingly — is the <b>namesake of Claude</b>, the AI.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">What we know — and how</span>
+  <div class="block">
+    <ul class="rules">
+      <li>His life and work are <b>thoroughly documented</b> — published papers, oral histories, and the well-regarded biography <em>A Mind at Play</em> (Soni &amp; Goodman, 2017).</li>
+      <li>His <b>core results are bedrock</b>, not contested — information theory is settled mathematics taught worldwide.</li>
+      <li>The <b>colorful stories</b> (unicycle-juggling, the flame-throwing trumpet, rocket frisbees) are <b>well-attested</b> by colleagues and his wife Betty — unusually, the legend here is mostly true.</li>
+      <li>One honest nuance: information theory got <b>over-applied</b> in its early hype. Shannon himself wrote a 1956 note, <b>"The Bandwagon,"</b> warning people not to stretch it into every field — a rare scientist reining in his own fame.</li>
+      <li>Books 1–3 take up his <b>ideas</b>, his <b>world and inventions</b>, and his <b>legacy</b> in turn.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 0 · he made information countable · the bit, and the age it built</p>
+</div>
+</body>
+</html>

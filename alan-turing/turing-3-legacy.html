@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Injustice & the Legacy — No. 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#15171c;--card:#1d2027;--ink:#e6e3d8;--dim:#8b8f9a;--amber:#e3a02a;--green:#3fae6b;--line:rgba(227,160,42,0.14);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:repeating-linear-gradient(0deg, transparent 0 25px, rgba(227,160,42,0.025) 25px 26px);font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--amber);color:#15171c;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--amber);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7vw,68px);line-height:0.98;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:11em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--amber);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cfccc0;}
+  .dek b{font-weight:500;color:var(--amber);}
+  .art{flex:0 0 auto;}
+  @keyframes glow{0%,100%{opacity:.35}50%{opacity:1}}
+  .flame{animation:glow 2.6s ease-in-out infinite;transform-origin:center bottom;}
+  @media (prefers-reduced-motion:reduce){.flame{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--amber);color:#15171c;padding:5px 13px;margin:34px 0 14px;}
+  .band.green{background:var(--green);} .band.dim{background:#2a2e37;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--amber);}
+  .type p{font-size:13px;margin:0;color:#bcc0c8;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--green);border:1px solid var(--green);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--amber);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--green);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#cdcabf;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#a7ab94;}
+  .card .plus b{color:var(--amber);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--green);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--card);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"01";position:absolute;left:0;top:9px;font-family:"Space Mono",monospace;font-size:10px;color:var(--amber);font-weight:700;}
+  .block.green .rules li::before{content:"✦";color:var(--green);font-size:13px;}
+  .rules b{font-weight:500;color:var(--amber);} .block.green .rules b{color:var(--green);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.flame{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 3 · injustice &amp; legacy</span>
+    <div class="masthead">
+      <h1>The Injustice <em>&amp; the Legacy</em></h1>
+      <svg class="art" width="170" height="150" viewBox="0 0 170 150" role="img" aria-label="a single candle flame, held steady">
+        <rect x="78" y="74" width="14" height="46" rx="3" fill="#2a2e37" stroke="#8b8f9a" stroke-width="1.5"/>
+        <line x1="85" y1="74" x2="85" y2="64" stroke="#8b8f9a" stroke-width="1.5"/>
+        <path class="flame" d="M85,30 C95,46 95,58 85,64 C75,58 75,46 85,30 Z" fill="#e3a02a"/>
+        <path class="flame" d="M85,40 C90,48 90,56 85,60 C80,56 80,48 85,40 Z" fill="#3fae6b" opacity="0.7"/>
+        <text x="85" y="140" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8b8f9a">remembered</text>
+      </svg>
+    </div>
+    <p class="dek">He helped win a war and invent the computer — and his own country prosecuted him for being gay, took his clearance, and forced hormone treatment on him. He died at 41. This book is that injustice, the long reckoning that followed, and why his name now stands for both genius and a wrong made right too late.</p>
+  </header>
+
+  <span class="band">The reckoning</span>
+  <div class="types">
+    <div class="type reveal"><h4>The conviction</h4><p>1952: prosecuted for "gross indecency" for a relationship with a man.</p><span class="tg">the wrong</span></div>
+    <div class="type reveal"><h4>The punishment</h4><p>Chemical castration by hormones; loss of his security clearance.</p><span class="tg">the cost</span></div>
+    <div class="type reveal"><h4>The death</h4><p>1954, cyanide, age 41 — ruled suicide, though the cause is debated.</p><span class="tg">the loss</span></div>
+    <div class="type reveal"><h4>The reckoning</h4><p>Apology (2009), royal pardon (2013), Turing's Law (2017), the £50 note.</p><span class="tg">too late</span></div>
+  </div>
+
+  <span class="band amber">The injustice</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Convicted of being himself</h3><p class="what">In 1952 Turing was prosecuted for "gross indecency" after a consensual relationship with another man — then a crime in Britain.</p><p class="need"><b>charge</b> homosexual acts, illegal until 1967</p><p class="do"><b>so</b> a private life was treated as a criminal one.</p><p class="plus"><b>+1</b> it surfaced because he <em>reported a burglary</em> — he went to the police as a victim and was charged himself.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>"Chemical castration"</h3><p class="what">To avoid prison he accepted hormone injections meant to suppress his libido.</p><p class="need"><b>effect</b> physical changes, including gynaecomastia</p><p class="do"><b>so</b> the state altered his body as punishment.</p><p class="plus"><b>+1</b> mathematician Barry Cooper called it plainly: "you invade his body with hormones… a national failure."</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Stripped of his work</h3><p class="what">His conviction cost him his security clearance, ending his secret government work.</p><p class="need"><b>loss</b> clearance revoked; ongoing surveillance</p><p class="do"><b>so</b> the man who'd helped win the war was cast out of it.</p><p class="plus"><b>+1</b> he kept doing original science (morphogenesis) through it all — his mind never stopped, even under pressure.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>Dead at 41</h3><p class="what">On 7 June 1954 he was found dead at home from cyanide poisoning.</p><p class="need"><b>inquest</b> ruled suicide; a half-eaten apple nearby</p><p class="do"><b>so</b> one of the century's great minds was lost far too young.</p><p class="plus"><b>+1</b> how he died is genuinely debated — the footer below lays out both views honestly.</p></article>
+  </div>
+
+  <span class="band amber">The long reckoning</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The secret lifted</h3><p class="what">Only as Bletchley's work was declassified (1970s–90s) did the public learn what he'd done.</p><p class="need"><b>so</b> his war role emerged decades after his death</p><p class="do"><b>then</b> the injustice of his treatment grew unmistakable.</p><p class="plus"><b>+1</b> he never received public credit in his lifetime — the recognition is entirely posthumous.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>The Turing Award</h3><p class="what">Computing's highest honour has carried his name since 1966 — its "Nobel Prize."</p><p class="need"><b>since</b> 1966, awarded annually</p><p class="do"><b>so</b> the field he founded honours him at its summit.</p><p class="plus"><b>+1</b> it was named for him while his persecution was still largely unknown — the science spoke first.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Apology and pardon</h3><p class="what">In 2009 the Prime Minister apologised; in 2013 the Queen granted a posthumous pardon.</p><p class="need"><b>2009</b> Gordon Brown · <b>2013</b> royal pardon</p><p class="do"><b>so</b> the state formally admitted the wrong.</p><p class="plus"><b>+1</b> his family argued a pardon for him alone wasn't enough — justice had to reach all who were convicted.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>"Turing's Law" and the £50</h3><p class="what">A 2017 law pardoned thousands convicted under the old statutes; in 2021 his face went on the £50 note.</p><p class="need"><b>2017</b> Turing's Law · <b>2021</b> Bank of England note</p><p class="do"><b>so</b> his name now anchors a broader justice and national honour.</p><p class="plus"><b>+1</b> ~65,000 men were convicted under those laws; ~15,000 were still alive when the pardons came.</p></article>
+  </div>
+
+  <span class="band green">Why he still matters</span>
+  <div class="block green">
+    <ul class="rules">
+      <li>He <b>defined the computer</b> in theory and helped <b>win a war</b> in practice — two achievements either of which would secure his place.</li>
+      <li>He framed the <b>question of machine intelligence</b> that still drives AI, and his name marks computing's <b>highest award</b>.</li>
+      <li>His <b>persecution</b> — convicted, chemically castrated, cast out — became a defining symbol of the <b>injustice done to gay people</b> under those laws.</li>
+      <li>The <b>apology (2009)</b>, <b>pardon (2013)</b>, <b>Turing's Law (2017)</b>, and <b>£50 note (2021)</b> mark a reckoning that came <b>decades too late</b>.</li>
+      <li>He stands now as <b>both</b> the father of computer science <b>and</b> a reminder of what bigotry costs — the two are inseparable in his story.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">How a legacy gets built — and the death debate</span>
+  <div class="block">
+    <ul class="rules">
+      <li>His <b>conviction, punishment, and the official suicide ruling</b> are documented fact. His <b>genius and war role</b> are beyond dispute.</li>
+      <li>But <b>how he died is genuinely debated.</b> Biographer <b>Andrew Hodges</b> reads it as <b>suicide</b> — a poisoned apple echoing his favourite fairy tale, <em>Snow White</em>. Scholar <b>Jack Copeland</b> argues it may have been <b>accidental</b> — cyanide fumes from a home experiment, and a poorly conducted inquest (the apple was never even tested for cyanide).</li>
+      <li>This series <b>does not resolve it</b> for you. Both readings come from serious people working from the same thin evidence — and the honest answer is that we don't fully know.</li>
+      <li>Beware accounts that state the cause <b>flatly either way</b>, or that treat the dramatized film as history — it invents characters and scenes.</li>
+      <li>The figures here — lives saved, men convicted, years shortened — are <b>estimates and records</b>, cited as such. Told straight, with the persecution named and the death left honestly open, <b>his story needs no embellishment.</b> It is devastating and luminous on its own.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 3 · he gave the century its machine, and it broke him · honoured, at last, too late</p>
+</div>
+</body>
+</html>

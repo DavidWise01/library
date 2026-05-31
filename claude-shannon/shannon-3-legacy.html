@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>His Legacy — No. 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(42px,9vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .art{flex:0 0 auto;}
+  @keyframes prop{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+  .n1{animation:prop 2s infinite} .n2{animation:prop 2s infinite .5s} .n3{animation:prop 2s infinite 1s} .n4{animation:prop 2s infinite 1.5s}
+  @media (prefers-reduced-motion:reduce){.n1,.n2,.n3,.n4{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.n1,.n2,.n3,.n4{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 3 · his legacy</span>
+    <div class="masthead">
+      <h1>His <em>Legacy</em></h1>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a signal radiating outward into a connected network">
+        <circle cx="40" cy="75" r="8" fill="#f08a3c"/>
+        <g stroke="#33c6dd" stroke-width="1.5" fill="none"><path class="n1" d="M48,70 H80"/><path class="n2" d="M48,80 H80"/></g>
+        <circle class="n1" cx="92" cy="48" r="5" fill="#33c6dd"/>
+        <circle class="n2" cx="92" cy="75" r="5" fill="#33c6dd"/>
+        <circle class="n3" cx="92" cy="102" r="5" fill="#33c6dd"/>
+        <g stroke="#33c6dd" stroke-width="1.2" fill="none" opacity="0.7"><path class="n3" d="M97,48 H132"/><path class="n4" d="M97,75 H132"/><path class="n2" d="M97,102 H132"/></g>
+        <circle class="n4" cx="144" cy="40" r="4" fill="#e4ecf5"/>
+        <circle class="n1" cx="144" cy="62" r="4" fill="#e4ecf5"/>
+        <circle class="n3" cx="144" cy="88" r="4" fill="#e4ecf5"/>
+        <circle class="n2" cx="144" cy="110" r="4" fill="#e4ecf5"/>
+        <text x="95" y="134" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">one source, a connected world</text>
+      </svg>
+    </div>
+    <p class="dek">He published one paper and quietly remade the world. Every byte you send rides on his mathematics — yet he sought no fame and largely avoided it. This book is the scale of what he built, the limit that still guides engineers, and the modest, poignant end of an extraordinary life.</p>
+  </header>
+
+  <span class="band">The reach</span>
+  <div class="types">
+    <div class="type reveal"><h4>Everything digital</h4><p>Phones, internet, storage, streaming — all built on bits and channels.</p><span class="tg">the world</span></div>
+    <div class="type reveal"><h4>The Shannon limit</h4><p>The capacity ceiling every communications engineer still designs toward.</p><span class="tg">the north star</span></div>
+    <div class="type reveal"><h4>The honors</h4><p>The Shannon Award, the Medal of Science, statues, a Google Doodle.</p><span class="tg">recognized</span></div>
+    <div class="type reveal"><h4>The quiet end</h4><p>Alzheimer's late in life; death in 2001 — a sad irony for an information theorist.</p><span class="tg">2001</span></div>
+  </div>
+
+  <span class="band cyan">What he built</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The whole digital world</h3><p class="what">Phones, the internet, hard drives, Wi-Fi, streaming — all move bits through channels by his rules.</p><p class="need"><b>scope</b> essentially all modern communication</p><p class="do"><b>so</b> he is, in a real sense, the architect of the information age.</p><p class="plus"><b>+1</b> every time a message arrives intact, his 1948 theorems are quietly doing the work.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The Shannon limit</h3><p class="what">His channel-capacity result is the ceiling engineers chase but can never beat.</p><p class="need"><b>role</b> the benchmark for every modem and code</p><p class="do"><b>so</b> progress in communications is measured against him.</p><p class="plus"><b>+1</b> modern codes (turbo, LDPC) finally approach the Shannon limit — vindicating a 1948 prediction.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Across many fields</h3><p class="what">His ideas reached genetics, neuroscience, linguistics, physics, and economics.</p><p class="need"><b>reach</b> entropy as a universal lens</p><p class="do"><b>so</b> "information" became a concept far beyond engineering.</p><p class="plus"><b>+1</b> he warned against overreach himself — yet the careful applications genuinely reshaped science.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>A namesake in AI</h3><p class="what">Decades on, an AI assistant was named <em>Claude</em> — in his honor.</p><p class="need"><b>tribute</b> to the founder of information theory</p><p class="do"><b>so</b> his name now rides on the technology his bits made possible.</p><p class="plus"><b>+1</b> the AI reading this with you carries his first name — a quiet line from his 1948 paper to now.</p></article>
+  </div>
+
+  <span class="band cyan">Honored, in his way</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The field's top prize</h3><p class="what">The Shannon Award is the highest honor in information theory — its lifetime achievement crown.</p><p class="need"><b>plus</b> the US National Medal of Science (1966)</p><p class="do"><b>so</b> his peers placed him at the summit of the field.</p><p class="plus"><b>+1</b> colleagues compared his impact to Einstein's — high praise that has largely held up.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>The reluctant celebrity</h3><p class="what">He shunned the spotlight, preferring tinkering to fame, and stopped publishing relatively early.</p><p class="need"><b>temperament</b> private, playful, uninterested in acclaim</p><p class="do"><b>so</b> he's less famous publicly than his importance warrants.</p><p class="plus"><b>+1</b> he reportedly found the fuss tiresome — his joy was the problem itself, not the prize.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Statues and doodles</h3><p class="what">He's honored with statues at Bell Labs and MIT, and a Google Doodle on his centenary.</p><p class="need"><b>2016</b> centenary tributes worldwide</p><p class="do"><b>so</b> recognition slowly caught up with his stature.</p><p class="plus"><b>+1</b> the biography <em>A Mind at Play</em> (2017) helped bring his story to a wider public at last.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>The poignant end</h3><p class="what">Late in life he developed Alzheimer's, and died in 2001 at 84.</p><p class="need"><b>irony</b> the slow loss of information in the mind that defined it</p><p class="do"><b>so</b> his final years held a quiet, sad symmetry.</p><p class="plus"><b>+1</b> by accounts he faced it gently — and was largely spared knowing how famous his ideas had become.</p></article>
+  </div>
+
+  <span class="band orange">Why he still matters</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>Essentially <b>all digital technology</b> — the internet, mobile phones, storage, streaming, deep-space links — runs on his <b>bits, channels, and codes</b>.</li>
+      <li>The <b>Shannon limit</b> remains the <b>north star</b> every communications engineer designs toward, and modern codes now nearly reach it.</li>
+      <li>His concept of <b>information and entropy</b> spread across the sciences — used carefully, it reshaped many fields.</li>
+      <li>He is honored by the field's <b>top award</b>, a <b>National Medal of Science</b>, and statues — though he sought no fame.</li>
+      <li>And his name endures in an unexpected place: the AI <b>Claude</b> is named for him — his ideas literally underwriting the machine that bears his name.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">How a legacy gets built</span>
+  <div class="block">
+    <ul class="rules">
+      <li>His legacy is <b>unusually clean</b> — built on <b>settled mathematics</b>, not contested attribution. The core results are simply, durably his.</li>
+      <li>The honest caveat is the opposite of inflation: he's <b>under-celebrated publicly</b> relative to his importance, partly by his own choice. He shunned fame and curbed the early <b>over-application</b> of his theory himself.</li>
+      <li>Beware the common slip of treating his technical <b>"information"</b> as the same as <b>meaning or knowledge</b> — it isn't, and he was careful about that.</li>
+      <li>The biographical details here are <b>well-sourced</b>; the sadder late-life facts are handled as what they are — a private illness, reported with care, not spectacle.</li>
+      <li>Told straight, he needs <b>no embellishment</b>: a man who published a single paper that quietly built the world you're reading this on.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 3 · one paper, a measured world · the quiet architect of the information age</p>
+</div>
+</body>
+</html>

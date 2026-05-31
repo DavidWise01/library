@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ideas — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .art{flex:0 0 auto;}
+  @keyframes mv{0%{transform:translateX(0);opacity:0}15%{opacity:1}85%{opacity:1}100%{transform:translateX(120px);opacity:0}}
+  .pk{animation:mv 2.4s linear infinite} .pk2{animation:mv 2.4s linear infinite .8s} .pk3{animation:mv 2.4s linear infinite 1.6s}
+  @media (prefers-reduced-motion:reduce){.pk,.pk2,.pk3{animation:none;opacity:1}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .quote{border:1px solid var(--line);background:#1b2942;padding:18px 22px;margin:6px 0 0;font-size:16px;line-height:1.7;font-style:italic;color:#e4ecf5;}
+  .quote .src{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.05em;color:var(--dim);margin-top:10px;}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type,.quote{background:#fff}.card:hover{transform:none;box-shadow:none}.pk,.pk2,.pk3{animation:none;opacity:1}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 1 · his ideas</span>
+    <div class="masthead">
+      <h1>The <em>Ideas</em></h1>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="bits flowing from a source through a channel to a receiver">
+        <rect x="10" y="56" width="34" height="34" rx="3" fill="none" stroke="#33c6dd" stroke-width="2"/>
+        <text x="27" y="78" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#33c6dd">SRC</text>
+        <line x1="44" y1="73" x2="146" y2="73" stroke="#8195ab" stroke-width="1" stroke-dasharray="3 3"/>
+        <text class="pk" x="64" y="69" font-family="Space Mono,monospace" font-size="12" fill="#f08a3c">1</text>
+        <text class="pk2" x="64" y="69" font-family="Space Mono,monospace" font-size="12" fill="#33c6dd">0</text>
+        <text class="pk3" x="64" y="69" font-family="Space Mono,monospace" font-size="12" fill="#f08a3c">1</text>
+        <rect x="146" y="56" width="34" height="34" rx="3" fill="none" stroke="#33c6dd" stroke-width="2"/>
+        <text x="163" y="78" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#33c6dd">RCV</text>
+        <path d="M86,96 q4,8 8,0 t8,0" fill="none" stroke="#f08a3c" stroke-width="1.4" opacity="0.6"/>
+        <text x="95" y="118" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#8195ab">source · channel · receiver</text>
+      </svg>
+    </div>
+    <p class="dek">His ideas were spare and total: that logic is switching, that information is bits, that every message has an irreducible size, and that even a noisy line has a perfect speed limit. This book is what he actually proved — and the famous diagram everyone has seen.</p>
+  </header>
+
+  <span class="band">The big ideas</span>
+  <div class="types">
+    <div class="type reveal"><h4>Logic = switching</h4><p>Boolean true/false maps onto electrical on/off — the digital circuit.</p><span class="tg">the thesis</span></div>
+    <div class="type reveal"><h4>The bit</h4><p>The atom of information: one answer to one yes/no question.</p><span class="tg">the unit</span></div>
+    <div class="type reveal"><h4>Entropy</h4><p>H — the true, irreducible amount of information in a source.</p><span class="tg">the measure</span></div>
+    <div class="type reveal"><h4>Capacity</h4><p>Every channel has a top speed for error-free communication.</p><span class="tg">the limit</span></div>
+  </div>
+
+  <span class="band cyan">Foundations</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Logic is switching</h3><p class="what">He showed circuits of on/off switches can carry out any Boolean logic.</p><p class="need"><b>from</b> his 1937 master's thesis</p><p class="do"><b>so</b> true/false → open/closed, and digital computing becomes buildable.</p><p class="plus"><b>+1</b> every logic gate in every chip you own is a direct descendant of this single insight.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The bit</h3><p class="what">He defined the basic unit of information as a choice between two states.</p><p class="need"><b>name</b> bit = binary digit (credited to Tukey)</p><p class="do"><b>so</b> any information could be counted in identical units.</p><p class="plus"><b>+1</b> like "Twenty Questions," any message can be pinned down by enough well-chosen yes/no answers.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The communication model</h3><p class="what">Source → encoder → channel → decoder → receiver, with noise added along the way.</p><p class="need"><b>the diagram</b> everyone in the field has seen</p><p class="do"><b>so</b> all communication fit one general picture.</p><p class="plus"><b>+1</b> he deliberately separated <em>meaning</em> from <em>transmission</em> — engineering the pipe, not the message.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>Entropy: the true size</h3><p class="what">He measured how much information a source really produces — its entropy, H.</p><p class="need"><b>idea</b> uncertainty = information</p><p class="do"><b>so</b> you know the smallest a message can ever be squeezed.</p><p class="plus"><b>+1</b> a predictable source has low entropy — which is exactly why predictable text compresses so well.</p></article>
+  </div>
+
+  <span class="band cyan">The two great theorems</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The limit of compression</h3><p class="what">No lossless code can shrink a source below its entropy — but you can get arbitrarily close.</p><p class="need"><b>result</b> the source coding theorem</p><p class="do"><b>so</b> ZIP, MP3-style coding, and all compression have a hard floor.</p><p class="plus"><b>+1</b> every "compress this file" tool is racing toward a wall Shannon located in 1948.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>The limit of the channel</h3><p class="what">Every channel has a capacity C; below it, error-free communication is possible despite noise.</p><p class="need"><b>result</b> the noisy-channel coding theorem</p><p class="do"><b>so</b> reliability through noise became a provable guarantee.</p><p class="plus"><b>+1</b> stunningly, he proved good codes <em>exist</em> long before anyone knew how to build them — the search took decades.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Error correction</h3><p class="what">By adding clever redundancy, you can detect and fix corruption automatically.</p><p class="need"><b>idea</b> extra bits that reconstruct the lost ones</p><p class="do"><b>so</b> CDs skip scratches and spacecraft phone home cleanly.</p><p class="plus"><b>+1</b> the photos from probes at the edge of the solar system arrive intact because of this principle.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>The mathematics of secrecy</h3><p class="what">He also founded the theory of secure communication, proving when a cipher is unbreakable.</p><p class="need"><b>work</b> "Communication Theory of Secrecy Systems" (1949)</p><p class="do"><b>so</b> cryptography gained a rigorous foundation.</p><p class="plus"><b>+1</b> he proved the one-time pad is perfectly secure — the rare cipher that is mathematically unbreakable.</p></article>
+  </div>
+
+  <span class="band orange">In his own words</span>
+  <div class="quote reveal">
+    "The fundamental problem of communication is that of reproducing at one point, either exactly or approximately, a message selected at another point."
+    <span class="src">— Claude Shannon, "A Mathematical Theory of Communication" (1948)</span>
+  </div>
+
+  <span class="band orange">His body of work</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>His <b>1937 thesis</b> proved <b>logic is switching</b> — Boolean true/false built from electrical on/off, the basis of digital circuits.</li>
+      <li>His <b>1948 paper</b> defined the <b>bit</b>, the <b>source-channel-receiver model</b>, and <b>entropy (H)</b> — the true, irreducible size of information.</li>
+      <li>Its two great results: the <b>source coding theorem</b> (a hard floor for compression) and the <b>noisy-channel coding theorem</b> (a top speed for error-free communication).</li>
+      <li>Together these underlie <b>all compression and error correction</b> — from ZIP files to deep-space probes.</li>
+      <li>His <b>1949 secrecy paper</b> founded mathematical <b>cryptography</b> and proved the <b>one-time pad</b> perfectly secure.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Reading his ideas today</span>
+  <div class="block">
+    <ul class="rules">
+      <li>These results are <b>settled mathematics</b> — undisputed and foundational. The debate isn't whether they're right; it's how widely the framework should be <b>applied</b>.</li>
+      <li>Shannon's theory deliberately <b>ignores meaning</b> — it measures bits, not significance. Confusing "information" (his technical sense) with "knowledge" or "meaning" is the most common misreading.</li>
+      <li>In the 1950s, enthusiasts stretched information theory into psychology, art, and biology. Shannon pushed back himself in <b>"The Bandwagon" (1956)</b>, warning it was not a cure-all — a scientist policing his own hype.</li>
+      <li>Quotations here are his <b>actual published words</b>; the 1948 paper is dense but landmark, and worth seeing in the original.</li>
+      <li>Book 2 sets these ideas in his <b>world and workshop</b>; Book 3 follows his <b>legacy</b>.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 1 · logic is switching, information is bits, noise has a limit · the math under the digital world</p>
+</div>
+</body>
+</html>

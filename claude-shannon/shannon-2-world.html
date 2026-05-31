@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>His World — No. 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(42px,9vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .art{flex:0 0 auto;}
+  @keyframes orbit{to{transform:rotate(360deg)}}
+  .ball{transform-origin:95px 70px;}
+  .b1{animation:orbit 1.4s linear infinite} .b2{animation:orbit 1.4s linear infinite -0.47s} .b3{animation:orbit 1.4s linear infinite -0.93s}
+  @media (prefers-reduced-motion:reduce){.b1,.b2,.b3{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.b1,.b2,.b3{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 2 · his world</span>
+    <div class="masthead">
+      <h1>His <em>World</em></h1>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="three juggling balls orbiting">
+        <circle cx="95" cy="70" r="4" fill="none" stroke="#8195ab" stroke-width="0.8" opacity="0.4"/>
+        <g class="ball b1"><circle cx="95" cy="34" r="7" fill="#33c6dd"/></g>
+        <g class="ball b2"><circle cx="95" cy="34" r="7" fill="#f08a3c"/></g>
+        <g class="ball b3"><circle cx="95" cy="34" r="7" fill="#e4ecf5"/></g>
+        <circle cx="95" cy="70" r="3" fill="#8195ab"/>
+        <text x="95" y="124" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">a mind at play</text>
+      </svg>
+    </div>
+    <p class="dek">He did his great work inside the most creative lab of the century — and treated genius and juggling as the same impulse. This book is the world that made him: the golden age of <b>Bell Labs</b>, the war work, the wife who built machines with him, and a workshop full of beautiful, useless wonders.</p>
+  </header>
+
+  <span class="band">The setting</span>
+  <div class="types">
+    <div class="type reveal"><h4>MIT</h4><p>Where a giant analog computer first drew him to switching circuits.</p><span class="tg">the start</span></div>
+    <div class="type reveal"><h4>Bell Labs</h4><p>The legendary lab where he was free to roam — and did his 1948 work.</p><span class="tg">the lab</span></div>
+    <div class="type reveal"><h4>The war</h4><p>Cryptography and fire-control work — and a meeting with Alan Turing.</p><span class="tg">wartime</span></div>
+    <div class="type reveal"><h4>Entropy House</h4><p>His home near Boston, stuffed with the strange machines he built for fun.</p><span class="tg">the workshop</span></div>
+  </div>
+
+  <span class="band cyan">Where he worked</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The machine at MIT</h3><p class="what">He tended a room-sized analog computer whose control relays sparked his thesis idea.</p><p class="need"><b>machine</b> Vannevar Bush's differential analyzer</p><p class="do"><b>so</b> servicing its 100+ relays led him to Boolean switching.</p><p class="plus"><b>+1</b> the great theory began in maintenance work — staring at relays until he saw the logic in them.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Bell Labs' golden age</h3><p class="what">He joined the lab that also produced the transistor, the laser, and the solar cell.</p><p class="need"><b>where</b> Murray Hill, New Jersey</p><p class="do"><b>so</b> he had freedom and brilliant company to think freely.</p><p class="plus"><b>+1</b> the culture let him chase "interesting problems" with no application in sight — and the 1948 paper resulted.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The war years</h3><p class="what">He worked on fire-control and cryptography, and his secrecy theory grew from classified work.</p><p class="need"><b>focus</b> secure communication, signal smoothing</p><p class="do"><b>so</b> his peacetime theory had wartime roots.</p><p class="plus"><b>+1</b> he met Alan Turing at Bell Labs in 1943 — the two founders of the computer age, in the same room.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>Betty, his collaborator</h3><p class="what">He married Mary "Betty" Moore, a Bell Labs numerical analyst who helped build his machines.</p><p class="need"><b>married</b> 1949</p><p class="do"><b>so</b> his home workshop was a true partnership.</p><p class="plus"><b>+1</b> it was Betty who gave him the unicycle, in 1949 — the Christmas present that became a legend.</p></article>
+  </div>
+
+  <span class="band cyan">The workshop</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Theseus the mouse</h3><p class="what">A magnetic mechanical mouse that learned its way through a reconfigurable maze.</p><p class="need"><b>brain</b> a relay circuit under the floor</p><p class="do"><b>so</b> a machine demonstrably learned and remembered — early AI.</p><p class="plus"><b>+1</b> drop it in a new spot and it navigated back to known ground, then resumed — strikingly lifelike.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Throbac and the Ultimate Machine</h3><p class="what">A calculator that did Roman-numeral arithmetic; a box whose only function was to switch itself off.</p><p class="need"><b>spirit</b> beautiful uselessness</p><p class="do"><b>so</b> he turned ideas into objects just to see them work.</p><p class="plus"><b>+1</b> the "Ultimate Machine": flip the switch, a hand emerges and flips it back off. A joke built in metal.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The unicycle and the wire</h3><p class="what">He rode unicycles down the Bell Labs halls while juggling — and built ones with square wheels.</p><p class="need"><b>feat</b> juggling atop a tightrope</p><p class="do"><b>so</b> balance and play were part of his thinking.</p><p class="plus"><b>+1</b> he even wrote a mathematical paper on the theory of juggling — turning a hobby into a theorem.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Beating roulette</h3><p class="what">With Edward Thorp he built a tiny wearable computer to predict a roulette wheel.</p><p class="need"><b>often called</b> the first wearable computer</p><p class="do"><b>so</b> even gambling became an engineering problem.</p><p class="plus"><b>+1</b> the same Thorp went on to use math to beat blackjack and then Wall Street — a lineage that starts here.</p></article>
+  </div>
+
+  <span class="band orange">His place in it</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>His interest in <b>switching circuits</b> began at <b>MIT</b>, servicing the relays of Vannevar Bush's giant <b>differential analyzer</b>.</li>
+      <li>He did his landmark work at <b>Bell Labs</b> — the era's most fertile lab — where freedom to chase elegant problems produced the <b>1948 paper</b>.</li>
+      <li>His <b>wartime cryptography and fire-control</b> work seeded his secrecy theory, and he met <b>Alan Turing</b> at Bell Labs in 1943.</li>
+      <li>His wife <b>Betty</b>, a numerical analyst, was a genuine collaborator on his home-built machines.</li>
+      <li>His workshop produced <b>Theseus</b> (a maze-learning mouse), <b>Throbac</b>, the <b>"Ultimate Machine,"</b> juggling robots, and a <b>wearable roulette computer</b> — wonders built mostly for joy.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Solid vs. embellished</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>Solid:</b> his Bell Labs and MIT careers, the inventions, the Turing meeting, and Betty's collaboration are all <b>well-documented</b> (notably in the biography <em>A Mind at Play</em>).</li>
+      <li>The <b>eccentric stories are unusually reliable</b> — corroborated by colleagues and family. Even so, retellings sometimes <b>inflate the details</b>, so treat specific embellishments (exact dates, who saw what) with mild care.</li>
+      <li>The <b>"first wearable computer"</b> label is reasonable but depends on definitions — others made claims too; it's a <b>contender, not an undisputed crown</b>.</li>
+      <li>His relays-to-theory path is real, but popular accounts can make it sound <b>more linear</b> than the messy reality of years of thinking.</li>
+      <li>Where this book reports an anecdote, it's <b>well-attested</b> — but the legend and the man are easy to blur, and the man is remarkable enough without polish.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 2 · genius and juggling, the same impulse · the lab and the workshop that made him</p>
+</div>
+</body>
+</html>

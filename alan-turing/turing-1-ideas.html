@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ideas — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#15171c;--card:#1d2027;--ink:#e6e3d8;--dim:#8b8f9a;--amber:#e3a02a;--green:#3fae6b;--line:rgba(227,160,42,0.14);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:repeating-linear-gradient(0deg, transparent 0 25px, rgba(227,160,42,0.025) 25px 26px);font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--amber);color:#15171c;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--amber);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--amber);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cfccc0;}
+  .dek b{font-weight:500;color:var(--amber);}
+  .art{flex:0 0 auto;}
+  @keyframes think{0%,100%{opacity:.3}50%{opacity:1}}
+  .q1{animation:think 2s infinite} .q2{animation:think 2s infinite .6s}
+  @media (prefers-reduced-motion:reduce){.q1,.q2{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--amber);color:#15171c;padding:5px 13px;margin:34px 0 14px;}
+  .band.green{background:var(--green);} .band.dim{background:#2a2e37;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--amber);}
+  .type p{font-size:13px;margin:0;color:#bcc0c8;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--green);border:1px solid var(--green);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--amber);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--green);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#cdcabf;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#a7ab94;}
+  .card .plus b{color:var(--amber);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--green);}
+  .quote{border:1px solid var(--line);background:#23262e;padding:18px 22px;margin:6px 0 0;font-size:16px;line-height:1.7;font-style:italic;color:#e6e3d8;}
+  .quote .src{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.05em;color:var(--dim);margin-top:10px;}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--card);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"01";position:absolute;left:0;top:9px;font-family:"Space Mono",monospace;font-size:10px;color:var(--amber);font-weight:700;}
+  .block.green .rules li::before{content:"✦";color:var(--green);font-size:13px;}
+  .rules b{font-weight:500;color:var(--amber);} .block.green .rules b{color:var(--green);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type,.quote{background:#fff}.card:hover{transform:none;box-shadow:none}.q1,.q2{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 1 · his ideas</span>
+    <div class="masthead">
+      <h1>The <em>Ideas</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="two question marks across a screen, a test of who is human">
+        <rect x="28" y="30" width="124" height="78" rx="4" fill="none" stroke="#8b8f9a" stroke-width="1.5"/>
+        <text class="q1" x="72" y="82" text-anchor="middle" font-family="Cinzel,serif" font-size="40" font-weight="800" fill="#e3a02a">?</text>
+        <text class="q2" x="110" y="82" text-anchor="middle" font-family="Cinzel,serif" font-size="40" font-weight="800" fill="#3fae6b">?</text>
+        <line x1="64" y1="108" x2="116" y2="108" stroke="#8b8f9a" stroke-width="1.5"/>
+        <line x1="90" y1="108" x2="90" y2="118" stroke="#8b8f9a" stroke-width="1.5"/>
+        <line x1="74" y1="118" x2="106" y2="118" stroke="#8b8f9a" stroke-width="1.5"/>
+        <text x="90" y="140" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8b8f9a">human or machine?</text>
+      </svg>
+    </div>
+    <p class="dek">His ideas were few but enormous: a definition of computation itself, a proof of its limits, and a question that still has no settled answer — <b>can a machine think?</b> This book is what he actually argued, and the line everyone half-remembers.</p>
+  </header>
+
+  <span class="band">The big ideas</span>
+  <div class="types">
+    <div class="type reveal"><h4>The Turing machine</h4><p>An abstract head-and-tape that defines what "computable" means.</p><span class="tg">computation</span></div>
+    <div class="type reveal"><h4>The universal machine</h4><p>One machine that can simulate any other — the stored-program computer.</p><span class="tg">one for all</span></div>
+    <div class="type reveal"><h4>The limits</h4><p>The halting problem: some questions no machine can ever answer.</p><span class="tg">the boundary</span></div>
+    <div class="type reveal"><h4>The Turing Test</h4><p>Judge a machine's mind by whether it can pass for human in conversation.</p><span class="tg">the test</span></div>
+  </div>
+
+  <span class="band amber">Defining computation</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The machine on paper</h3><p class="what">A head that reads a symbol, writes a symbol, and moves along an endless tape by simple rules.</p><p class="need"><b>from</b> "On Computable Numbers" (1936)</p><p class="do"><b>so</b> "computable" got a precise, mechanical definition.</p><p class="plus"><b>+1</b> the tape is imagined as infinite — the model is about what's possible in principle, not buildable hardware.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The universal machine</h3><p class="what">A single Turing machine that, fed a description of any other, behaves exactly like it.</p><p class="need"><b>idea</b> a machine that reads programs</p><p class="do"><b>so</b> one device can do every computable task — the computer.</p><p class="plus"><b>+1</b> this is the stored-program idea: the program is just data the machine reads, like any other input.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The Church–Turing thesis</h3><p class="what">Anything a human can compute by rote, a Turing machine can compute too.</p><p class="need"><b>with</b> Alonzo Church, independently</p><p class="do"><b>so</b> the Turing machine captures computation itself.</p><p class="plus"><b>+1</b> it's a <em>thesis</em>, not a theorem — accepted because nothing has ever broken it, not because it's proven.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>The halting problem</h3><p class="what">No machine can decide, in general, whether an arbitrary program will ever stop.</p><p class="need"><b>result</b> undecidability</p><p class="do"><b>so</b> he proved hard limits on what computers can ever do.</p><p class="plus"><b>+1</b> this was the original point of the 1936 paper — the computer fell out of a proof about impossibility.</p></article>
+  </div>
+
+  <span class="band amber">The thinking machine</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The imitation game</h3><p class="what">If a machine can converse so a judge can't tell it from a human, he argued, call it intelligent.</p><p class="need"><b>from</b> "Computing Machinery and Intelligence" (1950)</p><p class="do"><b>so</b> he reframed "can it think?" as something testable.</p><p class="plus"><b>+1</b> he sidestepped defining "think" — replacing a vague question with a concrete behavioral one.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Answering Lady Lovelace</h3><p class="what">He took up Ada's claim that machines can only do what they're told — and pushed back.</p><p class="need"><b>he named it</b> "Lady Lovelace's Objection"</p><p class="do"><b>so</b> the two pioneers debate across a century, through him.</p><p class="plus"><b>+1</b> he argued machines could surprise us and learn — a reply still echoing in today's AI.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The learning machine</h3><p class="what">He suggested building a "child machine" and teaching it, rather than programming it fully.</p><p class="need"><b>idea</b> machines that learn from experience</p><p class="do"><b>so</b> he anticipated machine learning decades early.</p><p class="plus"><b>+1</b> "instead of producing a program to simulate the adult mind, why not… simulate the child's?" — strikingly modern.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Beyond computers</h3><p class="what">His last work asked how chemistry alone can produce the patterns of living things.</p><p class="need"><b>paper</b> on morphogenesis (1952)</p><p class="do"><b>so</b> he founded a strand of mathematical biology.</p><p class="plus"><b>+1</b> his reaction-diffusion equations still help explain how animals get their spots and stripes.</p></article>
+  </div>
+
+  <span class="band green">In his own words</span>
+  <div class="quote reveal">
+    "We can only see a short distance ahead, but we can see plenty there that needs to be done."
+    <span class="src">— Alan Turing, "Computing Machinery and Intelligence" (1950), closing line</span>
+  </div>
+
+  <span class="band green">His body of work</span>
+  <div class="block green">
+    <ul class="rules">
+      <li>In <b>1936</b> he defined computation with the <b>Turing machine</b>, proved a <b>universal machine</b> could run any program, and showed real <b>limits</b> via the <b>halting problem</b>.</li>
+      <li>The <b>Church–Turing thesis</b> holds that the Turing machine captures everything that can be mechanically computed.</li>
+      <li>In <b>1950</b> he proposed the <b>Turing Test</b> (the "imitation game"), founding the philosophy of <b>artificial intelligence</b> and explicitly answering <b>Ada Lovelace's objection</b>.</li>
+      <li>He foresaw <b>machine learning</b> — teaching a "child machine" rather than programming everything.</li>
+      <li>His final work on <b>morphogenesis</b> (1952) helped found <b>mathematical biology</b>.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Reading his ideas today</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The <b>Turing machine and universal machine are bedrock</b> — undisputed foundations taught in every computer science course.</li>
+      <li>The <b>Turing Test is debated</b> — not whether he proposed it (he did), but whether passing it really shows <b>thinking</b>. Critics (e.g. Searle's "Chinese Room") argue behavior isn't understanding; that argument is live.</li>
+      <li>Modern chatbots can sometimes <b>fool judges</b>, which has made many argue the test measures <b>imitation, not intelligence</b> — arguably proving a point Turing himself raised.</li>
+      <li>Quotations here are his <b>actual published words</b>; his 1950 paper is readable and worth reading in full for its wit and care.</li>
+      <li>Book 2 sets these ideas in his <b>war and world</b>; Book 3 follows his <b>persecution, death, and legacy</b>.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 1 · he defined the computer, then asked if it could think · the question is still open</p>
+</div>
+</body>
+</html>

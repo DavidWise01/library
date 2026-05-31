@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alan Turing — No. 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#15171c; --card:#1d2027; --ink:#e6e3d8; --dim:#8b8f9a;
+    --amber:#e3a02a; --green:#3fae6b; --ambertint:#33291320; --greentint:#1a2a2010;
+    --line:rgba(227,160,42,0.14);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg, transparent 0 25px, rgba(227,160,42,0.025) 25px 26px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--amber);color:#15171c;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--amber);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--amber);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cfccc0;}
+  .dek b{font-weight:500;color:var(--amber);}
+  .art{flex:0 0 auto;}
+  @keyframes scan{0%{transform:translateX(0)}50%{transform:translateX(56px)}100%{transform:translateX(0)}}
+  @keyframes blip{0%,40%{opacity:1}50%,90%{opacity:.2}}
+  .head{animation:scan 3.2s ease-in-out infinite;}
+  .c1{animation:blip 1.2s infinite} .c2{animation:blip 1.2s infinite .3s} .c3{animation:blip 1.2s infinite .6s}
+  @media (prefers-reduced-motion:reduce){.head{animation:none}.c1,.c2,.c3{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--amber);color:#15171c;padding:5px 13px;margin:34px 0 14px;}
+  .band.green{background:var(--green);} .band.dim{background:#2a2e37;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--amber);}
+  .type p{font-size:13px;margin:0;color:#bcc0c8;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--green);border:1px solid var(--green);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--amber);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--green);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#cdcabf;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#a7ab94;}
+  .card .plus b{color:var(--amber);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--green);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--card);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"01";position:absolute;left:0;top:9px;font-family:"Space Mono",monospace;font-size:10px;color:var(--amber);font-weight:700;}
+  .block.green .rules li::before{content:"✦";color:var(--green);font-size:13px;}
+  .rules b{font-weight:500;color:var(--amber);} .block.green .rules b{color:var(--green);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.head,.c1,.c2,.c3{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 0 · who he was</span>
+    <div class="masthead">
+      <h1>Alan <em>Turing</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a read-write head moving over a tape of cells">
+        <rect x="18" y="64" width="144" height="30" fill="none" stroke="#8b8f9a" stroke-width="1.5"/>
+        <g stroke="#8b8f9a" stroke-width="1"><line x1="42" y1="64" x2="42" y2="94"/><line x1="66" y1="64" x2="66" y2="94"/><line x1="90" y1="64" x2="90" y2="94"/><line x1="114" y1="64" x2="114" y2="94"/><line x1="138" y1="64" x2="138" y2="94"/></g>
+        <text class="c1" x="30" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="13" fill="#e3a02a">1</text>
+        <text class="c2" x="54" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="13" fill="#e3a02a">0</text>
+        <text x="78" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="13" fill="#3fae6b">1</text>
+        <text class="c3" x="102" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="13" fill="#e3a02a">1</text>
+        <text x="126" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="13" fill="#3fae6b">0</text>
+        <g class="head"><polygon points="20,40 44,40 32,58" fill="#e3a02a"/><line x1="32" y1="40" x2="32" y2="30" stroke="#e3a02a" stroke-width="2"/></g>
+        <text x="90" y="118" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8b8f9a">read · write · move</text>
+      </svg>
+    </div>
+    <p class="dek">He imagined a machine that was only an idea — a head moving over an endless tape — and proved it could compute <b>anything computable at all</b>. That idea is the computer. This book is who he was: mathematician, war-winning codebreaker, and the mind that asked whether machines could think.</p>
+  </header>
+
+  <span class="band">The shape of his life</span>
+  <div class="types">
+    <div class="type reveal"><h4>The mathematician</h4><p>A 1936 paper on the limits of computation gave the world the Turing machine.</p><span class="tg">1912–1954</span></div>
+    <div class="type reveal"><h4>The codebreaker</h4><p>At Bletchley Park he helped break Enigma — work credited with shortening WWII.</p><span class="tg">Bletchley</span></div>
+    <div class="type reveal"><h4>The AI pioneer</h4><p>His 1950 paper asked "can machines think?" and proposed a test.</p><span class="tg">the question</span></div>
+    <div class="type reveal"><h4>The persecuted</h4><p>Prosecuted for being gay in 1952; dead in 1954; pardoned in 2013.</p><span class="tg">the injustice</span></div>
+  </div>
+
+  <span class="band amber">Who he was</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>A mathematician first</h3><p class="what">Alan Mathison Turing (1912–1954), educated at Cambridge and Princeton, worked at the foundations of logic and computation.</p><p class="need"><b>field</b> mathematical logic, then computing</p><p class="do"><b>so</b> his deepest work was abstract before it was practical.</p><p class="plus"><b>+1</b> he earned his PhD at Princeton in 1938 and could have stayed in the US — he chose to return to Britain.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The machine that was an idea</h3><p class="what">In 1936 he described an imaginary device — a head reading and writing symbols on an endless tape.</p><p class="need"><b>paper</b> "On Computable Numbers" (1936)</p><p class="do"><b>so</b> he defined, abstractly, what it means to compute.</p><p class="plus"><b>+1</b> he invented it to settle a logic problem — the computer was almost a side effect of the proof.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The codebreaker</h3><p class="what">From 1939 he worked at Bletchley Park, central to breaking Germany's Enigma cipher.</p><p class="need"><b>where</b> the Government Code &amp; Cypher School</p><p class="do"><b>so</b> his mathematics turned directly into wartime intelligence.</p><p class="plus"><b>+1</b> historians estimate the Bletchley effort shortened the war by two to four years.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>"Can machines think?"</h3><p class="what">In 1950 he proposed a test for machine intelligence — now called the Turing Test.</p><p class="need"><b>paper</b> "Computing Machinery and Intelligence"</p><p class="do"><b>so</b> he opened the field of artificial intelligence.</p><p class="plus"><b>+1</b> he answered Ada Lovelace's objection that machines can't originate — a direct reply across a century.</p></article>
+  </div>
+
+  <span class="band amber">Why he mattered</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The universal machine</h3><p class="what">One machine, he showed, could imitate any other — given the right instructions.</p><p class="need"><b>idea</b> the universal Turing machine</p><p class="do"><b>so</b> a single device could run any program — the core of the computer.</p><p class="plus"><b>+1</b> every general-purpose computer you've used is, in theory, a universal Turing machine.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>He mapped the limits</h3><p class="what">He also proved some problems can never be solved by any machine.</p><p class="need"><b>result</b> the halting problem; undecidability</p><p class="do"><b>so</b> he drew the boundary of what computation can do.</p><p class="plus"><b>+1</b> knowing what's <em>impossible</em> to compute is as foundational as knowing what's possible.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>From theory to hardware</h3><p class="what">After the war he designed real computers, like the ACE, and worked on early machines at Manchester.</p><p class="need"><b>work</b> ACE design; Manchester computing</p><p class="do"><b>so</b> he helped build the machines his theory predicted.</p><p class="plus"><b>+1</b> he wrote one of the earliest computer chess routines — before hardware could properly run it.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>A wider curiosity</h3><p class="what">Late in life he turned to how patterns form in nature — the mathematics of biology.</p><p class="need"><b>field</b> morphogenesis (1952 paper)</p><p class="do"><b>so</b> his last work seeded mathematical biology.</p><p class="plus"><b>+1</b> he did this innovative work <em>during</em> his persecution — his mind kept reaching outward regardless.</p></article>
+  </div>
+
+  <span class="band green">The core of it</span>
+  <div class="block green">
+    <ul class="rules">
+      <li><b>Alan Mathison Turing (1912–1954)</b> — English mathematician and codebreaker, widely called the <b>founder of computer science</b>.</li>
+      <li>In <b>1936</b> he described the <b>Turing machine</b> — an abstract device that defined computation and proved a single <b>"universal" machine</b> could run any program.</li>
+      <li>From <b>1939 at Bletchley Park</b> he was central to breaking the German <b>Enigma</b> cipher, work credited with <b>shortening WWII by years</b>.</li>
+      <li>In <b>1950</b> he asked whether machines can think and proposed the <b>Turing Test</b>, founding modern <b>artificial intelligence</b>.</li>
+      <li>In <b>1952</b> he was prosecuted for homosexuality, then illegal in Britain; he <b>died in 1954</b>, and received a royal <b>pardon in 2013</b>.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">What we know — and how</span>
+  <div class="block">
+    <ul class="rules">
+      <li>His <b>mathematical work is fully documented</b> — published papers, and the definitive biography by <b>Andrew Hodges</b> (<em>Alan Turing: The Enigma</em>, 1983).</li>
+      <li>His <b>war work was secret for decades</b>. Bletchley Park's role wasn't declassified until the <b>1970s</b>, and the full story emerged only in the <b>1990s</b> — so he died <b>uncredited</b> for it. Even his mother wasn't told what he'd done.</li>
+      <li>His <b>prosecution and death are documented</b>, but the <b>cause of death is genuinely debated</b> — the inquest ruled suicide; some scholars argue it may have been accidental. Book 3 lays this out honestly.</li>
+      <li>Popular films (e.g. <em>The Imitation Game</em>) <b>dramatize and alter</b> facts — this series works from the historical record, not the screenplay.</li>
+      <li>Books 1–3 take up his <b>ideas</b>, his <b>world and war</b>, and his <b>persecution, death, and legacy</b> in turn.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 0 · a head, a tape, and every computer that followed · the universal machine</p>
+</div>
+</body>
+</html>
