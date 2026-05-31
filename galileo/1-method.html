@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galileo Galilei — Vol. 1: The Method</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0808;
+    --red: #b91c1c;
+    --gold: #ca8a04;
+    --text: #e8e0d0;
+    --muted: #a09080;
+    --border: #2a1a1a;
+    --card-bg: #120e0e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0d0909;
+    border-bottom: 1px solid var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2rem;
+    height: 52px;
+    overflow-x: auto;
+  }
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 1.1rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav a.active { color: var(--red); border-bottom-color: var(--red); }
+  .nav-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-right: 1.5rem;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .band {
+    background: var(--red);
+    padding: 0.35rem 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-align: center;
+  }
+
+  .kick {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .kick svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.13;
+    pointer-events: none;
+  }
+  .kick-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .kick h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+  .kick .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .kick .dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  section { margin-bottom: 4rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.03em;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--red);
+    margin: 1.8rem 0 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 1.1rem; color: var(--text); }
+  em { font-style: italic; color: #d0c8b8; }
+  strong { color: var(--gold); font-weight: 600; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--red);
+    padding: 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .card p { font-size: 0.92rem; line-height: 1.6; color: var(--muted); margin: 0; }
+
+  blockquote {
+    border-left: 3px solid var(--red);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #d0c4b0;
+    line-height: 1.7;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+  }
+
+  /* ── EQUATION DISPLAY ── */
+  .eq-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.4rem 1.8rem;
+    margin: 1.8rem 0;
+    font-family: 'Space Mono', monospace;
+  }
+  .eq-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .eq {
+    font-size: 1.4rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .eq-note {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 0.5rem;
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+  .compare th {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    padding: 0.8rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    text-align: left;
+    letter-spacing: 0.04em;
+  }
+  .compare td {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .compare tr:hover td { background: #160f0f; color: var(--text); }
+  .compare .col-aris { color: #a08070; }
+  .compare .col-gal { color: #c8b890; }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.8rem 0;
+  }
+  .stat {
+    flex: 1 1 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--red);
+    display: block;
+  }
+  .stat-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ── NUMBERED STEPS ── */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 1.8rem 0;
+    padding: 0;
+  }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 1rem 1rem 1rem 3.5rem;
+    margin-bottom: 0.8rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--muted);
+    transition: border-color 0.2s;
+  }
+  .steps li:hover { border-color: var(--red); color: var(--text); }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  footer strong { color: var(--red); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .kick { padding: 3rem 1.2rem 2rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .compare { font-size: 0.82rem; }
+    .compare th, .compare td { padding: 0.5rem 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="band">GALILEO GALILEI · A FOUR-VOLUME SERIES · VOLUME ONE OF THREE</div>
+
+<nav>
+  <span class="nav-title">GALILEO</span>
+  <a href="0-who.html">VOL 0 · WHO</a>
+  <a href="1-method.html" class="active">VOL 1 · METHOD</a>
+  <a href="2-world.html">VOL 2 · WORLD</a>
+  <a href="3-legacy.html">VOL 3 · LEGACY</a>
+</nav>
+
+<header class="kick">
+  <!-- Animated SVG: Parabolic trajectory of cannonball -->
+  <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow1" cx="40%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#b91c1c" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="340" fill="url(#glow1)"/>
+    <!-- Ground line -->
+    <line x1="60" y1="290" x2="840" y2="290" stroke="#ca8a04" stroke-width="0.8" opacity="0.5"/>
+    <!-- Grid lines suggesting measurement -->
+    <line x1="60" y1="100" x2="840" y2="100" stroke="#ca8a04" stroke-width="0.3" opacity="0.2" stroke-dasharray="4,8"/>
+    <line x1="60" y1="190" x2="840" y2="190" stroke="#ca8a04" stroke-width="0.3" opacity="0.2" stroke-dasharray="4,8"/>
+    <line x1="250" y1="30" x2="250" y2="290" stroke="#ca8a04" stroke-width="0.3" opacity="0.2" stroke-dasharray="4,8"/>
+    <line x1="450" y1="30" x2="450" y2="290" stroke="#ca8a04" stroke-width="0.3" opacity="0.2" stroke-dasharray="4,8"/>
+    <line x1="650" y1="30" x2="650" y2="290" stroke="#ca8a04" stroke-width="0.3" opacity="0.2" stroke-dasharray="4,8"/>
+    <!-- Parabolic arc -->
+    <path d="M 80 280 Q 460 40 840 280" stroke="#b91c1c" stroke-width="2" fill="none" opacity="0.8"/>
+    <!-- Moving ball along parabola -->
+    <circle r="9" fill="#ca8a04" opacity="0.9">
+      <animateMotion dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+        <mpath>
+          <path d="M 80 280 Q 460 40 840 280"/>
+        </mpath>
+      </animateMotion>
+    </circle>
+    <!-- Falling particle markers -->
+    <circle cx="200" cy="260" r="3" fill="#ca8a04" opacity="0.4"/>
+    <circle cx="320" cy="185" r="3" fill="#ca8a04" opacity="0.4"/>
+    <circle cx="460" cy="120" r="3" fill="#ca8a04" opacity="0.4"/>
+    <circle cx="600" cy="185" r="3" fill="#ca8a04" opacity="0.4"/>
+    <circle cx="720" cy="260" r="3" fill="#ca8a04" opacity="0.4"/>
+  </svg>
+
+  <div class="kick-vol">Volume 1 · The Work &amp; The Method</div>
+  <h1>The New Science</h1>
+  <div class="subtitle">How Galileo invented the scientific method — and what he found when he used it</div>
+  <div class="dates">PADUA 1592–1610 · FLORENCE 1610–1642 · ARCETRI 1633–1642</div>
+</header>
+
+<main>
+
+  <section id="before">
+    <h2>Before Galileo: The Aristotelian World</h2>
+    <p>
+      To understand what Galileo changed, we must understand what existed before him. For roughly
+      <strong>two thousand years</strong>, educated Europeans understood nature through the framework
+      established by Aristotle (384–322 BC) — not because Aristotle was stupid (he was not) but because
+      his system was comprehensive, logically coherent, and had been absorbed into Christian theology by
+      Thomas Aquinas in the thirteenth century. Questioning Aristotle risked questioning the Church.
+    </p>
+    <p>
+      Aristotelian physics rested on qualitative reasoning about natural kinds and tendencies. Heavy things
+      fell because it was their nature to seek the center of the Earth. Fire rose because it was its nature
+      to seek its proper place above air. Objects in motion required a continuous cause of motion — remove
+      the cause, and motion ceased. The celestial spheres, carrying the planets, were made of a fifth element,
+      <em>quintessence</em>, incorruptible and perfect. The Moon and above were perfect; the Earth and below
+      were base and changeable.
+    </p>
+    <p>
+      Crucially: you did not <em>measure</em> this. You <em>reasoned</em> about it. The idea that precise
+      numerical measurement of physical phenomena would reveal mathematical laws of nature — this was almost
+      entirely absent from medieval natural philosophy. Galileo did not merely discover new facts. He invented
+      a new <em>way of finding facts</em>.
+    </p>
+
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Aristotelian Answer</th>
+          <th>Galileo's Answer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Why do heavy objects fall?</td>
+          <td class="col-aris">Because it is their nature to seek the center of the Earth. Heavier = faster.</td>
+          <td class="col-gal">They fall with uniform acceleration. Mass does not affect rate of fall.</td>
+        </tr>
+        <tr>
+          <td>What keeps a projectile moving?</td>
+          <td class="col-aris">Air displaced by the object rushes behind it and pushes it forward.</td>
+          <td class="col-gal">Nothing — it continues by its own inertia. Motion requires no sustaining cause.</td>
+        </tr>
+        <tr>
+          <td>Is the Moon perfect?</td>
+          <td class="col-aris">Yes. All celestial bodies are perfect crystalline spheres.</td>
+          <td class="col-gal">No. The Moon has mountains, craters, and valleys. We can calculate their heights.</td>
+        </tr>
+        <tr>
+          <td>Does the Sun move or the Earth?</td>
+          <td class="col-aris">The Sun moves around the fixed Earth at the center of the universe.</td>
+          <td class="col-gal">The Earth moves around the Sun. The phases of Venus prove it.</td>
+        </tr>
+        <tr>
+          <td>How do we know what is true?</td>
+          <td class="col-aris">By reasoning from first principles about the natures of things.</td>
+          <td class="col-gal">By controlled experiment, measurement, and mathematical description.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="method">
+    <h2>The Scientific Method</h2>
+    <p>
+      Galileo did not write a treatise called "The Scientific Method." He was not thinking in those terms.
+      But embedded in everything he did — across the inclined plane experiments, the telescope observations,
+      the tidal arguments — was a consistent and revolutionary practice:
+    </p>
+
+    <ol class="steps">
+      <li><strong>Isolate the phenomenon.</strong> Strip away irrelevant complexity. Study falling bodies in isolation, not as part of a theory of nature.</li>
+      <li><strong>Measure precisely.</strong> Use instruments. Record numbers. Time does not lie; it does not have opinions about Aristotle.</li>
+      <li><strong>Control the conditions.</strong> Vary one thing at a time. Change the angle of the ramp, not the ball and the ramp and the surface simultaneously.</li>
+      <li><strong>Repeat and verify.</strong> A result that cannot be reproduced is not a result.</li>
+      <li><strong>Express the relationship mathematically.</strong> Not "heavier things fall faster" but "distance = ½ × g × t²".</li>
+      <li><strong>Derive testable predictions.</strong> If the law is correct, what else must be true? Find out.</li>
+    </ol>
+
+    <p>
+      This sounds obvious to us. It was not obvious in 1600. The idea that the <em>book of nature is written
+      in the language of mathematics</em> — Galileo's own phrase — was a philosophical revolution as much as
+      a scientific one. It meant that the universe was, at bottom, quantitative and lawful. It meant
+      that God, if one chose to retain the metaphor, was a mathematician.
+    </p>
+
+    <blockquote>
+      "The book of nature is written in the language of mathematics, and its characters are triangles, circles, and other geometric figures, without which it is humanly impossible to understand a single word of it."
+      <cite>— Galileo, Il Saggiatore (The Assayer), 1623</cite>
+    </blockquote>
+  </section>
+
+  <section id="kinematics">
+    <h2>Kinematics: The Laws of Motion</h2>
+
+    <h3>Falling Bodies</h3>
+    <p>
+      Galileo's claim that all bodies fall at the same rate regardless of mass — that a cannonball and a
+      musket ball dropped simultaneously from the same height hit the ground together — directly contradicted
+      Aristotle, who held that heavier objects fall faster in proportion to their weight.
+    </p>
+    <p>
+      The story of the <strong>Leaning Tower of Pisa</strong> — that Galileo dropped two cannonballs of
+      different masses from the top — is likely apocryphal or, at most, a demonstration rather than
+      an experiment. What is documented is that Galileo showed this through <strong>inclined plane
+      experiments</strong> at Padua: rolling balls of different masses down grooved wooden ramps, timing
+      them with a water clock. The result was the same at every angle. Mass did not matter.
+    </p>
+
+    <div class="eq-block">
+      <div class="eq-title">Uniform Acceleration — Galileo's Law of Falling Bodies</div>
+      <div class="eq">d = ½ · g · t²</div>
+      <div class="eq-note">
+        d = distance fallen · g = gravitational acceleration (≈9.8 m/s²) · t = time elapsed<br>
+        Distance is proportional to the square of time — the odd-numbers rule (1, 3, 5, 7 ... units per interval)
+      </div>
+    </div>
+
+    <p>
+      Galileo also formulated what he called the <strong>odd-numbers rule</strong>: in successive equal
+      intervals of time, a falling body covers distances in the ratio 1:3:5:7:9... This is a direct
+      consequence of uniform acceleration and can be tested experimentally. It was.
+    </p>
+
+    <h3>Projectile Motion</h3>
+    <p>
+      Aristotelian physics could not explain how a cannonball, once fired, continued to travel forward
+      while also falling. Galileo's insight was that these were <strong>two independent motions</strong>:
+      horizontal motion continues at constant speed (no force acts on it horizontally), while vertical
+      motion is uniformly accelerated downward. The combination of these two independent motions produces
+      a <strong>parabolic trajectory</strong>.
+    </p>
+
+    <div class="eq-block">
+      <div class="eq-title">Projectile Motion — Galileo's Synthesis</div>
+      <div class="eq">x = v₀ · t</div>
+      <div class="eq">&nbsp;y = ½ · g · t²</div>
+      <div class="eq-note">
+        Horizontal: uniform motion (no acceleration) · Vertical: uniformly accelerated (gravity)<br>
+        Combined: parabolic path y = (g / 2v₀²) · x² — confirmed by artillery tables of the era
+      </div>
+    </div>
+
+    <p>
+      This was not merely theoretical. Artillery officers of the period had empirical tables of cannon-range
+      versus elevation angle. Those tables, poorly understood, now had a mathematical foundation.
+      Galileo presented these results in the <em>Discorsi</em> (1638) through the mouth of Salviati,
+      his intellectual stand-in.
+    </p>
+
+    <h3>Inertia — Newton's First Law Before Newton</h3>
+    <p>
+      Aristotle said motion requires a cause — remove the cause, motion ceases. This seems intuitive
+      on Earth, where friction always eventually stops things. Galileo asked: what if friction were absent?
+      He imagined a perfectly smooth ball on a perfectly smooth, infinite horizontal surface. It would
+      continue moving <em>forever</em>. No cause needed.
+    </p>
+    <p>
+      This is the principle of inertia: <strong>a body in uniform motion remains in uniform motion unless
+      acted upon by an external force</strong>. Newton codified it as his First Law of Motion. Newton
+      built his <em>Principia</em> (1687) on foundations that were substantially Galilean.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1604</span>
+        <div class="stat-desc">Year of inclined plane results</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">d ∝ t²</span>
+        <div class="stat-desc">The kinematic law</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1638</span>
+        <div class="stat-desc">Discorsi published</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <div class="stat-desc">Duration of inertial motion</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="telescope-science">
+    <h2>The Telescope as Scientific Instrument</h2>
+    <p>
+      The telescope's invention by Dutch opticians in 1608 was quickly known across Europe. Galileo's
+      decisive contribution was not merely to build a better one — though his 30× instrument was far
+      superior to any contemporary — but to use it as a tool of systematic scientific inquiry, to record
+      what he saw with precision, and to reason from those observations to conclusions about the structure
+      of the universe.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Observation · 1610</div>
+        <h4>Jupiter's Four Moons</h4>
+        <p>Observed nightly from January 7–15, 1610. Four bodies that orbited Jupiter, not Earth. Published in <em>Sidereus Nuncius</em>. A fatal blow to the geocentric model.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observation · 1609</div>
+        <h4>Lunar Topography</h4>
+        <p>Mountains and craters on the Moon, measured by shadow length. If the Moon was imperfect, Aristotle's perfect celestial spheres could not exist as described.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observation · 1610–11</div>
+        <h4>Phases of Venus</h4>
+        <p>Venus showed a full set of phases — from crescent to full. Impossible under Ptolemy, required under Copernicus. This one observation was mathematically decisive.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observation · 1612</div>
+        <h4>Sunspots</h4>
+        <p>Dark markings on the Sun moved and changed. The Sun was not perfect — and it rotated. Their motion allowed Galileo to estimate the Sun's rotation period.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observation · 1610</div>
+        <h4>Milky Way Resolution</h4>
+        <p>The pale band of the Milky Way resolved into innumerable individual stars, too faint to see separately. The universe was vaster than anyone had imagined.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Observation · 1610</div>
+        <h4>Saturn's Blobs</h4>
+        <p>Saturn appeared flanked by two smaller bodies — actually the rings, which Galileo's telescope could not properly resolve. He called it "three-bodied."</p>
+      </div>
+    </div>
+
+    <blockquote>
+      "We must say that there are on the Moon's surface large spots which are not part of the Moon but are something external; and if anyone wishes to revive the old Pythagorean opinion that the Moon is like another Earth, its brighter part might very fitly represent the surface of the land and its darker region the expanse of the sea."
+      <cite>— Galileo, Sidereus Nuncius, 1610</cite>
+    </blockquote>
+  </section>
+
+  <section id="heliocentrism">
+    <h2>The Defense of Heliocentrism</h2>
+    <p>
+      Galileo was a Copernican from at least 1597, when he wrote privately to Kepler admitting it.
+      He kept quiet publicly because the evidence, while suggestive, was not yet conclusive — and because
+      he was politically prudent. By 1610, the phases of Venus had made the case overwhelming, at least
+      for those willing to look.
+    </p>
+    <p>
+      The <em><strong>Dialogo sopra i due massimi sistemi del mondo</strong></em> (1632) was structured as
+      a conversation over four days between three characters: <strong>Salviati</strong> (the Copernican,
+      representing Galileo's views), <strong>Sagredo</strong> (the intelligent layman, initially open),
+      and <strong>Simplicio</strong> (the Aristotelian — a name that derives from a real sixth-century
+      commentator but also simply means "simpleton" in Italian).
+    </p>
+    <p>
+      Over four days, Salviati systematically demolishes Simplicio's objections. The arguments are
+      overwhelmingly on one side. The frame of impartiality was a legal fiction. Everyone who read it knew.
+      That included Pope Urban VIII, who reportedly recognized his own theological arguments in Simplicio's
+      mouth — which felt, to a proud Renaissance pope, like a public humiliation from a man he had befriended.
+    </p>
+
+    <h3>The Key Arguments in the Dialogo</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Day One</div>
+        <h4>Imperfection of the Heavens</h4>
+        <p>Lunar mountains, sunspots, Jupiter's moons — all demonstrate that the heavens are not perfect and unchanging. Aristotle's cosmology fails on its own observational terms.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Day Two</div>
+        <h4>Earth's Motion</h4>
+        <p>If the Earth moved, why do we not feel it? Galileo's ship analogy: inside a ship moving smoothly, you cannot tell you are moving. Inertia makes motion unfelt.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Day Three</div>
+        <h4>Annual Motion</h4>
+        <p>Jupiter's moons, the phases of Venus, the behavior of sunspots — all are explained more simply by heliocentrism than by the elaborate Ptolemaic epicycles.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Day Four</div>
+        <h4>The Tides</h4>
+        <p>Galileo's argument for tides driven by Earth's combined rotational and orbital motion — unfortunately his weakest argument, and physically incorrect. The correct explanation (lunar gravity) came from Newton.</p>
+      </div>
+    </div>
+
+    <p>
+      The tidal argument is worth noting because it shows Galileo was not infallible. He rejected
+      Kepler's correct suggestion that the Moon caused the tides, calling it "occultism." Even the greatest
+      scientists have blind spots. But the rest of the <em>Dialogo</em> was devastating to the geocentric
+      model, and the Church knew it.
+    </p>
+  </section>
+
+  <section id="discorsi">
+    <h2>The <em>Discorsi</em>: His Greatest Work</h2>
+    <p>
+      Published in <strong>1638</strong>, four years before his death and smuggled out of Italy to Leiden,
+      the <em>Discorsi e dimostrazioni matematiche intorno a due nuove scienze</em> — <em>Two New Sciences</em>
+      — is the book that founded <strong>theoretical mechanics</strong> as a discipline.
+    </p>
+    <p>
+      Where the <em>Dialogo</em> was about cosmology and got Galileo into theological trouble, the
+      <em>Discorsi</em> was about physics — the strength of materials (structural engineering) and
+      kinematics (the science of motion). It is here that the results of the inclined plane experiments
+      appear in full mathematical form. It is here that the parabolic path of projectiles is derived.
+      It is here that the law of falling bodies is proven, not merely asserted.
+    </p>
+    <p>
+      Newton read it. So did Huygens, who used Galileo's pendulum work to build the first accurate
+      mechanical clock. So did every physicist in Europe. The <em>Discorsi</em> was the textbook of
+      the new mechanics for a generation.
+    </p>
+
+    <blockquote>
+      "Philosophy is written in this grand book — I mean the universe — which stands continually open to our gaze, but it cannot be understood unless one first learns to comprehend the language and read the characters in which it is written."
+      <cite>— Galileo, Il Saggiatore, 1623</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<footer>
+  <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+  David Lee Wise / ROOT0 / TriPod LLC<br>
+  CC-BY-ND-4.0 · Series: Galileo Galilei · Volume 1: The Work &amp; The Method<br>
+  Content assembled 2025 · Sources: Drake, Finocchiaro, Dijksterhuis, Cohen
+</footer>
+
+</body>
+</html>

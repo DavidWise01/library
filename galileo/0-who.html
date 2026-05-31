@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galileo Galilei — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0808;
+    --red: #b91c1c;
+    --gold: #ca8a04;
+    --text: #e8e0d0;
+    --muted: #a09080;
+    --border: #2a1a1a;
+    --card-bg: #120e0e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0d0909;
+    border-bottom: 1px solid var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2rem;
+    height: 52px;
+    overflow-x: auto;
+  }
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 1.1rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav a.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+  .nav-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-right: 1.5rem;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── BAND / KICK ── */
+  .band {
+    background: var(--red);
+    padding: 0.35rem 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-align: center;
+  }
+
+  .kick {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kick svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .kick-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .kick h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+
+  .kick .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .kick .dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  section {
+    margin-bottom: 4rem;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.03em;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--red);
+    margin: 1.8rem 0 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  p {
+    margin-bottom: 1.1rem;
+    color: var(--text);
+  }
+
+  em {
+    font-style: italic;
+    color: #d0c8b8;
+  }
+
+  strong {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--red);
+    padding: 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.4rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 1px;
+    background: var(--red);
+    opacity: 0.5;
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.8rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 0.55rem;
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+  }
+  .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+  }
+  .tl-item p {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* ── PULLQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--red);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #d0c4b0;
+    line-height: 1.7;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.8rem 0;
+  }
+  .stat {
+    flex: 1 1 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--red);
+    display: block;
+  }
+  .stat-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ── COLOPHON ── */
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  footer strong {
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .kick { padding: 3rem 1.2rem 2rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="band">GALILEO GALILEI · A FOUR-VOLUME SERIES · VOLUME ZERO OF THREE</div>
+
+<nav>
+  <span class="nav-title">GALILEO</span>
+  <a href="0-who.html" class="active">VOL 0 · WHO</a>
+  <a href="1-method.html">VOL 1 · METHOD</a>
+  <a href="2-world.html">VOL 2 · WORLD</a>
+  <a href="3-legacy.html">VOL 3 · LEGACY</a>
+</nav>
+
+<header class="kick">
+  <!-- Animated SVG: Pendulum arc -->
+  <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow0" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="340" fill="url(#glow0)"/>
+    <!-- Cathedral ceiling arcs -->
+    <path d="M150 20 Q450 280 750 20" stroke="#ca8a04" stroke-width="1.2" fill="none" opacity="0.6"/>
+    <path d="M200 20 Q450 240 700 20" stroke="#ca8a04" stroke-width="0.7" fill="none" opacity="0.4"/>
+    <path d="M250 20 Q450 200 650 20" stroke="#ca8a04" stroke-width="0.4" fill="none" opacity="0.25"/>
+    <!-- Pivot -->
+    <circle cx="450" cy="22" r="5" fill="#b91c1c"/>
+    <!-- Pendulum rod and bob — animated -->
+    <g id="pendulum">
+      <animateTransform attributeName="transform" type="rotate"
+        values="-28 450 22; 28 450 22; -28 450 22"
+        dur="2.8s" repeatCount="indefinite" calcMode="spline"
+        keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+      <line x1="450" y1="22" x2="450" y2="220" stroke="#ca8a04" stroke-width="1.5"/>
+      <circle cx="450" cy="224" r="12" fill="#b91c1c" opacity="0.85"/>
+    </g>
+    <!-- Stars -->
+    <circle cx="80" cy="60" r="1.5" fill="#ca8a04" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="820" cy="80" r="1" fill="#ca8a04" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.1;0.5" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="160" cy="180" r="1.2" fill="#e8e0d0" opacity="0.4">
+      <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="740" cy="160" r="1" fill="#e8e0d0" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.08;0.3" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <div class="kick-vol">Volume 0 · Who He Was</div>
+  <h1>Galileo Galilei</h1>
+  <div class="subtitle">Natural philosopher, mathematician, astronomer — the first modern scientist</div>
+  <div class="dates">PISA, 15 FEBRUARY 1564 — ARCETRI, 8 JANUARY 1642</div>
+</header>
+
+<main>
+
+  <section id="birth">
+    <h2>The Son of a Musician</h2>
+    <p>
+      Galileo Galilei was born on <strong>15 February 1564</strong> in Pisa, in the Duchy of Florence — the same year
+      Michelangelo died and the same year William Shakespeare was born. His father, <strong>Vincenzo Galilei</strong>,
+      was a lutenist, composer, and music theorist of serious standing, a man who argued against received wisdom
+      in musical theory by appealing to experiment and measurement. The apple, as the saying goes, does not fall
+      far from the tree.
+    </p>
+    <p>
+      Vincenzo's work on string tension and pitch — published in <em>Dialogo della musica antica et della moderna</em>
+      (1581) — required mathematical reasoning applied to physical phenomena. He measured. He disputed authority.
+      He concluded that tradition was not proof. His son absorbed these habits before he could name them.
+    </p>
+    <p>
+      The family moved to Florence when Galileo was about ten. Florence was the Medici city — one of the great
+      crucibles of the Renaissance, already past its zenith but still rich with art, patronage, and intellectual
+      ambition. Galileo would orbit the Medici for the rest of his life, eventually becoming their court
+      mathematician and philosopher — a title he carefully negotiated to include "philosopher," because mathematics
+      alone conferred lower social standing than natural philosophy.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1564</span>
+        <div class="stat-desc">Year of Birth</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">20</span>
+        <div class="stat-desc">Age at pendulum discovery</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">78</span>
+        <div class="stat-desc">Years lived</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">30×</span>
+        <div class="stat-desc">His telescope magnification</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dropout">
+    <h2>The University Dropout</h2>
+    <p>
+      In 1581, at seventeen, Galileo enrolled at the <strong>University of Pisa to study medicine</strong> — the
+      practical, lucrative choice his father wanted. He was a difficult student in the best sense: persistently
+      curious, unwilling to accept assertions without demonstration. He attended lectures on Aristotle as required
+      and found them increasingly unsatisfying.
+    </p>
+    <p>
+      According to his first biographer, Vincenzo Viviani (writing decades later, so treat with appropriate
+      skepticism), it was in the <strong>cathedral of Pisa in 1583</strong> that Galileo noticed a large bronze
+      lamp — a chandelier — swinging on its chain after being set in motion by a sexton lighting it. Using
+      his pulse as a clock, he timed the swings. Short arc or long arc, fast swing or slow: the period was the same.
+      He had, at twenty, discovered the <strong>isochronism of the pendulum</strong>.
+    </p>
+
+    <blockquote>
+      "All truths are easy to understand once they are discovered; the point is to discover them."
+      <cite>— Galileo Galilei</cite>
+    </blockquote>
+
+    <p>
+      The medical degree never materialized. By 1585 Galileo had left the university without graduating,
+      having spent most of his time studying <strong>Euclid and Archimedes</strong> — geometry and mechanics,
+      not Galen and Hippocrates. He returned to Florence to study mathematics privately, giving private lessons
+      to support himself. He was broke, in debt (his family's finances were precarious), and completely certain
+      he was on the right path.
+    </p>
+    <p>
+      In 1589, through patronage and demonstrated ability, he secured the <strong>Chair of Mathematics at the
+      University of Pisa</strong> — ironically the institution that had failed to grant him a degree. The salary
+      was modest: 60 scudi per year. He earned it anyway.
+    </p>
+  </section>
+
+  <section id="padua">
+    <h2>The Padua Years (1592–1610)</h2>
+    <p>
+      The eighteen years Galileo spent at the <strong>University of Padua</strong> were, by his own account,
+      the happiest and most productive of his life. Padua was under the sovereignty of the Venetian Republic —
+      arguably the most intellectually tolerant state in Italy, deliberately resistant to papal authority,
+      proud of its independence. The university drew students from all over Europe.
+    </p>
+    <p>
+      Galileo lectured on Euclid, mechanics, and astronomy (teaching the Ptolemaic system officially, as required,
+      while privately doubting it). He lived with Marina Gamba, with whom he had three children — Virginia, Livia,
+      and Vincenzo. He never married her. This was common enough in his class, but he later ensured his daughters
+      were placed in a convent and his son legitimized. His relationship with Virginia — who took the name
+      <strong>Sister Maria Celeste</strong> — became one of the great correspondences in the history of science.
+      Her letters, warm and devoted, survived; his to her did not.
+    </p>
+    <p>
+      During these years he invented the <strong>geometric and military compass</strong> (1597), a calculating
+      device for artillery and surveying; the <strong>thermoscope</strong> (an early, non-calibrated
+      thermometer); and began the systematic experiments on motion that would eventually overturn Aristotelian
+      physics. He also made instruments and sold them — he was always short of money.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Invention · 1597</div>
+        <h4>Geometric Compass</h4>
+        <p>A sector-based calculating instrument for artillery elevation, currency conversion, and geometric problems. Galileo sold it with a manual and private lessons.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Instrument · ~1593</div>
+        <h4>Thermoscope</h4>
+        <p>A rudimentary temperature-sensing device — a glass bulb with a long neck inverted in water. It showed temperature change but lacked a calibrated scale.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Experiment · c.1604</div>
+        <h4>Inclined Plane</h4>
+        <p>Rolling balls down grooved ramps to slow free fall enough to measure it. Proved distance increases as the square of time: the first kinematic law.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="telescope">
+    <h2>The Telescope, 1609</h2>
+    <p>
+      In the summer of 1609, Galileo heard a rumor — a Dutch spectacle-maker had invented a device that made
+      distant objects appear close. The original device, probably developed by <strong>Hans Lipperhey</strong>
+      in 1608, magnified perhaps three times. Galileo, working from the principle alone, built his own instruments
+      with rapidly increasing magnification: 8×, then 20×, then nearly <strong>30 times</strong>.
+    </p>
+    <p>
+      He did not invent the telescope. He made it into a scientific instrument. He pointed it upward. No one,
+      apparently, had thought to do this in any systematic way. What he saw in the autumn and winter of 1609–1610
+      shattered the cosmology of the ancient world.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Discovery · Nov 1609</div>
+        <h4>Lunar Mountains</h4>
+        <p>The Moon's surface was rough, cratered, mountainous — not the perfect crystalline sphere Aristotle required. Galileo estimated mountain heights from shadow lengths.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Discovery · Jan 1610</div>
+        <h4>Jupiter's Moons</h4>
+        <p>On 7 January 1610, he saw three stars near Jupiter; a fourth appeared days later. They moved with Jupiter but around it. Not everything orbited Earth.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Discovery · 1610</div>
+        <h4>Phases of Venus</h4>
+        <p>Venus showed a full cycle of phases like the Moon. This was impossible under the Ptolemaic system where Venus always stayed between Earth and Sun.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Discovery · 1610</div>
+        <h4>The Milky Way</h4>
+        <p>The faint band across the sky resolved into countless individual stars — not a cloud or nebula but a vast multitude of suns, too faint to see separately.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Discovery · 1611–12</div>
+        <h4>Sunspots</h4>
+        <p>Dark blemishes on the Sun's surface that moved, appeared, and disappeared. The Sun was imperfect — and it rotated. Heresy in stone, written in light.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Discovery · 1610</div>
+        <h4>Saturn's Shape</h4>
+        <p>Saturn appeared as three bodies — he described it as "three-bodied." His telescope could not resolve the rings; they appeared as two flanking blobs.</p>
+      </div>
+    </div>
+
+    <p>
+      He published everything in <em>Sidereus Nuncius</em> — <strong>Starry Messenger</strong> — in March 1610.
+      It was an immediate sensation across Europe. Five hundred copies sold almost instantly. He dedicated
+      Jupiter's moons to his patrons, the Medici, naming them the <em>Medicean Stars</em>. The political
+      calculation worked: Cosimo II de' Medici, Grand Duke of Tuscany, appointed him
+      <strong>Chief Mathematician and Philosopher</strong> to the court in Florence, at twice his Padua salary.
+    </p>
+  </section>
+
+  <section id="rome">
+    <h2>Triumph in Rome, 1611</h2>
+    <p>
+      In 1611, Galileo went to Rome in triumph. He demonstrated his telescope to cardinals, nobility, and the
+      Jesuit mathematicians of the <strong>Collegio Romano</strong>. They confirmed his observations. He was
+      elected to the <strong>Accademia dei Lincei</strong> — the Lincean Academy, one of the first scientific
+      societies in Europe — and was received by <strong>Pope Paul V</strong>, who showed him honor.
+    </p>
+    <p>
+      He met a Florentine cardinal named <strong>Maffeo Barberini</strong>, a cultured humanist who admired him,
+      wrote him a poem, and became his friend. Barberini would later become Pope Urban VIII — and the man who
+      sent Galileo to the Inquisition.
+    </p>
+    <p>
+      The atmosphere in Rome was not yet hostile. The Church had not formally prohibited heliocentrism as heresy.
+      The Jesuits were intrigued. There was a genuine window in which the new astronomy might have been
+      accommodated. It would not last.
+    </p>
+  </section>
+
+  <section id="dialogo">
+    <h2>The <em>Dialogo</em> and the Trial</h2>
+    <p>
+      In <strong>1616</strong>, the Inquisition declared heliocentrism "foolish and absurd in philosophy and
+      formally heretical." Cardinal Bellarmine, on behalf of the Holy Office, instructed Galileo not to
+      hold or defend the Copernican view. Galileo agreed. He spent the next several years working on other
+      problems — tides, comets, a method of finding longitude using Jupiter's moons.
+    </p>
+    <p>
+      In <strong>1623</strong>, his friend Maffeo Barberini became <strong>Pope Urban VIII</strong>. Galileo
+      believed the climate had changed. He sought and received permission to write a book comparing the
+      Ptolemaic and Copernican systems — provided he treated them as mathematical hypotheses and did not
+      advocate for either.
+    </p>
+    <p>
+      The <em><strong>Dialogo sopra i due massimi sistemi del mondo</strong></em> — <em>Dialogue Concerning
+      the Two Chief World Systems</em> — was published in <strong>1632</strong>. The fiction of impartiality
+      was transparent to anyone who read it. The Aristotelian defender, named Simplicio, was made to look
+      foolish. Urban VIII believed the arguments he had personally given Galileo had been put in Simplicio's
+      mouth. He felt mocked. The book was banned within months of publication.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1632</div>
+        <p><em>Dialogo</em> published in Florence. Sensation across Europe. Banned within months by the Holy Office.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1633 · FEB</div>
+        <p>Galileo, 68 years old and in poor health, ordered to Rome. He travels in a litter, stops to rest in Siena.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1633 · APR–JUN</div>
+        <p>Tried before the Inquisition. Three examinations. Threatened with torture — historians debate whether it was applied. He recants.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1633 · JUN 22</div>
+        <p>Kneeling in the Church of Santa Maria sopra Minerva, Rome, Galileo formally abjures "the false opinion that the Sun is the center of the world." Sentenced to house arrest for life.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1634</div>
+        <p>His beloved daughter Virginia — Sister Maria Celeste — dies. Galileo is devastated. He writes to a friend that he hears her calling to him.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1638</div>
+        <p><em>Discorsi e dimostrazioni matematiche</em> smuggled out of Italy and published in Leiden, Holland. His greatest scientific work.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1638</div>
+        <p>Galileo goes completely blind. He continues to dictate. Students — including Evangelista Torricelli and Vincenzo Viviani — come to Arcetri to work with him.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1642 · JAN 8</div>
+        <p>Galileo Galilei dies at Arcetri, under house arrest. He is 77. In England, on Christmas Day the same year, Isaac Newton is born.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="eppur">
+    <h2>"And Yet It Moves"</h2>
+    <p>
+      <em>Eppur si muove</em> — "And yet it moves." The phrase is almost certainly apocryphal. No contemporary
+      account records Galileo saying it at the recantation or afterward. The earliest known attribution dates
+      to 1757, more than a century after his death. Yet it has the quality of a distilled truth — a compression
+      of something real into a legend that persists because it captures the man's essence better than any
+      documented utterance.
+    </p>
+    <p>
+      What is not apocryphal is this: Galileo recanted under duress, spent the remaining nine years of his
+      life under house arrest at Arcetri outside Florence, went blind, and in that blindness produced
+      the <em>Discorsi</em> — a work that founded the science of mechanics and gave Newton the foundation
+      on which to build. He was not broken. He was not silent. He worked until he could not.
+    </p>
+
+    <blockquote>
+      "In questions of science, the authority of a thousand is not worth the humble reasoning of a single individual."
+      <cite>— Galileo Galilei</cite>
+    </blockquote>
+
+    <p>
+      The Church denied him a public funeral and a monument in the Basilica of Santa Croce in Florence. A century
+      later, in 1737, those decisions were reversed. His remains were moved to a grand tomb in Santa Croce,
+      beside Michelangelo, across from Machiavelli. Florence, at last, claimed him.
+    </p>
+    <p>
+      The <strong>Catholic Church formally apologized</strong> in <strong>1992</strong>. Pope John Paul II,
+      addressing the Pontifical Academy of Sciences, acknowledged that the theologians who condemned Galileo
+      had made an error — that they had confused the Bible's religious teaching with scientific questions
+      about the structure of the universe. It took 359 years. The apology was real.
+    </p>
+    <p>
+      It moves.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+  David Lee Wise / ROOT0 / TriPod LLC<br>
+  CC-BY-ND-4.0 · Series: Galileo Galilei · Volume 0: Who He Was<br>
+  Content assembled 2025 · Historical sources: Drake, Shea, Heilbron, Reston
+</footer>
+
+</body>
+</html>

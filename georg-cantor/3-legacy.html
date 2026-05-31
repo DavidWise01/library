@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Georg Cantor — Vol. 3: The Long Afterlife | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper:   #070510;
+      --purple:  #7c3aed;
+      --silver:  #94a3b8;
+      --purple-dim: rgba(124,58,237,0.18);
+      --purple-glow: rgba(124,58,237,0.55);
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --border:  1px solid var(--purple);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.08rem; line-height: 1.75; min-height: 100vh;
+    }
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1,h2,h3,h4 {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      letter-spacing: 0.04em; line-height: 1.2;
+    }
+    code, .mono {
+      font-family: 'Space Mono', monospace; font-size: 0.85em; color: var(--silver);
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,5,16,0.92); backdrop-filter: blur(12px);
+      border-bottom: var(--border); display: flex; align-items: center;
+      padding: 0 2rem; height: 52px; overflow-x: auto;
+    }
+    .nav-brand {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 0.8rem;
+      color: var(--purple); letter-spacing: 0.12em;
+      white-space: nowrap; margin-right: 2rem; text-transform: uppercase;
+    }
+    .nav-links { display: flex; list-style: none; }
+    .nav-links a {
+      display: block; padding: 0 1rem; height: 52px; line-height: 52px;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); white-space: nowrap;
+      transition: color 0.2s, background 0.2s; letter-spacing: 0.06em;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--purple-dim); text-decoration: none; }
+    .nav-links a.active { color: var(--purple); border-bottom: 2px solid var(--purple); }
+
+    .hero {
+      position: relative; min-height: 360px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border-bottom: var(--border); padding: 4rem 2rem 2.5rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(124,58,237,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
+    .vol-label {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .hero-content h1 span { color: var(--purple); }
+    .hero-subtitle {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--silver); margin-bottom: 2rem;
+    }
+
+    .band {
+      background: var(--purple); color: #fff; text-align: center;
+      padding: 0.6rem 2rem; font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+    }
+
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    section { margin-bottom: 3.5rem; }
+    section h2 {
+      font-size: 1.5rem; color: var(--purple); margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem; border-bottom: var(--border);
+    }
+    section h3 { font-size: 1.1rem; color: var(--silver); margin: 1.8rem 0 0.6rem; font-weight: 600; }
+    p { margin-bottom: 1rem; }
+
+    .kick {
+      font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 800;
+      color: var(--purple); float: left; line-height: 0.85; margin: 0.1em 0.12em 0 0;
+    }
+
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.4rem; margin-top: 1.4rem;
+    }
+    .card {
+      border: var(--border); border-radius: 4px; padding: 1.4rem 1.6rem;
+      background: rgba(124,58,237,0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease; cursor: default;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--purple-glow); }
+    .card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--purple); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .card h3 { font-size: 1rem; color: var(--text); margin: 0 0 0.5rem; font-family: 'Cinzel', serif; }
+    .card p { font-size: 0.92rem; color: var(--silver); margin: 0; }
+
+    blockquote {
+      border-left: 3px solid var(--purple); margin: 2rem 0; padding: 1rem 1.5rem;
+      background: var(--purple-dim); border-radius: 0 4px 4px 0;
+    }
+    blockquote p { font-style: italic; font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem; }
+    blockquote cite { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--silver); letter-spacing: 0.08em; }
+
+    .math-block {
+      background: rgba(7,5,16,0.8); border: var(--border); border-radius: 4px;
+      padding: 1.4rem 1.8rem; margin: 1.5rem 0;
+      font-family: 'Space Mono', monospace; font-size: 0.9rem;
+      color: var(--silver); line-height: 2.2; overflow-x: auto;
+    }
+    .math-block .hl { color: var(--purple); font-weight: 700; }
+    .math-block .label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;
+    }
+    .math-block .green { color: #34d399; }
+
+    /* Step list */
+    .step-list { list-style: none; margin-top: 1.2rem; }
+    .step-list li {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 1rem; padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(124,58,237,0.15); align-items: start;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      color: var(--purple); background: var(--purple-dim);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-content { font-size: 0.95rem; color: var(--silver); }
+    .step-content strong { color: var(--text); }
+
+    /* Timeline */
+    .timeline { list-style: none; margin-top: 1.2rem; }
+    .timeline li {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 1rem; padding: 1rem 0;
+      border-bottom: 1px solid rgba(124,58,237,0.2); align-items: start;
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .tl-year { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--purple); padding-top: 0.1rem; letter-spacing: 0.06em; }
+    .tl-event { font-size: 0.95rem; color: var(--silver); }
+    .tl-event strong { color: var(--text); }
+
+    /* Influence map SVG */
+    .svg-wrap {
+      width: 100%; max-width: 600px; margin: 2rem auto;
+      border: var(--border); border-radius: 4px; overflow: hidden;
+      display: block;
+    }
+
+    .vol-nav {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: var(--border);
+    }
+    .vol-nav a {
+      border: var(--border); padding: 0.5rem 1.2rem;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); letter-spacing: 0.08em; transition: all 0.15s;
+    }
+    .vol-nav a:hover {
+      background: var(--purple-dim); color: var(--text); text-decoration: none;
+      transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--purple);
+    }
+    .vol-nav a.current { color: var(--purple); border-color: var(--purple); }
+
+    footer {
+      border-top: var(--border); margin-top: 4rem; padding: 2rem 2rem 3rem;
+      max-width: 900px; margin-left: auto; margin-right: auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); line-height: 1.9; letter-spacing: 0.04em;
+    }
+    .colophon strong { color: var(--silver); }
+
+    @media (max-width: 600px) {
+      .kick { font-size: 2.5rem; }
+      nav { padding: 0 1rem; }
+      main { padding: 2rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Cantor</div>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol.0 — The Man</a></li>
+    <li><a href="1-infinity.html">Vol.1 — The Work</a></li>
+    <li><a href="2-world.html">Vol.2 — His World</a></li>
+    <li><a href="3-legacy.html" class="active">Vol.3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="band">ROOT0 LIBRARY &nbsp;|&nbsp; GEORG CANTOR SERIES &nbsp;|&nbsp; VOL. 3 OF 3</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="vol-label">Volume Three &nbsp;&bull;&nbsp; The Long Afterlife</div>
+    <h1>The <span>Inheritance</span> of Infinity</h1>
+    <div class="hero-subtitle">Set theory as foundation, G&ouml;del and Cohen, the diagonal reborn, and what it all means</div>
+
+    <!-- Animated SVG: ripple of influence outward from Cantor -->
+    <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg"
+         class="svg-wrap" style="border:none;margin:2rem auto"
+         aria-label="Cantor's influence radiating outward">
+      <defs>
+        <style>
+          .ring { fill:none; stroke:#7c3aed; }
+          .rtext { font-family:'Space Mono',monospace; font-size:9px; fill:#94a3b8; text-anchor:middle; }
+          .rtext-c { font-family:'Space Mono',monospace; font-size:11px; fill:#7c3aed; font-weight:700; text-anchor:middle; }
+          .spoke { stroke:#7c3aed; stroke-width:0.6; opacity:0.3; }
+          .leaf-label { font-family:'Space Mono',monospace; font-size:8.5px; text-anchor:middle; }
+        </style>
+      </defs>
+      <rect width="600" height="260" fill="#070510"/>
+
+      <!-- Animated rings emanating -->
+      <circle cx="300" cy="130" r="20" class="ring" stroke-width="1.5" opacity="0.9"/>
+      <circle cx="300" cy="130" r="55" class="ring" stroke-width="0.8" stroke-dasharray="8 5">
+        <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="300" cy="130" r="95" class="ring" stroke-width="0.6" stroke-dasharray="5 7">
+        <animate attributeName="opacity" values="0.1;0.35;0.1" dur="5s" begin="0.5s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Spokes -->
+      <line x1="300" y1="110" x2="300" y2="30" class="spoke"/>
+      <line x1="300" y1="150" x2="300" y2="230" class="spoke"/>
+      <line x1="260" y1="120" x2="175" y2="65" class="spoke"/>
+      <line x1="340" y1="120" x2="425" y2="65" class="spoke"/>
+      <line x1="255" y1="140" x2="155" y2="185" class="spoke"/>
+      <line x1="345" y1="140" x2="445" y2="185" class="spoke"/>
+
+      <!-- Center: Cantor -->
+      <circle cx="300" cy="130" r="20" fill="rgba(124,58,237,0.18)" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="300" y="127" class="rtext-c">CAN-</text>
+      <text x="300" y="138" class="rtext-c">TOR</text>
+
+      <!-- Leaf nodes -->
+      <!-- ZFC Axioms -->
+      <circle cx="300" cy="28" r="22" fill="rgba(7,5,16,0.9)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="300" y="25" class="leaf-label" fill="#94a3b8">ZFC</text>
+      <text x="300" y="36" class="leaf-label" fill="#64748b">Axioms</text>
+
+      <!-- Gödel -->
+      <circle cx="175" cy="63" r="22" fill="rgba(7,5,16,0.9)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="175" y="60" class="leaf-label" fill="#94a3b8">G&ouml;del</text>
+      <text x="175" y="71" class="leaf-label" fill="#64748b">Incomplet.</text>
+
+      <!-- Turing -->
+      <circle cx="425" cy="63" r="22" fill="rgba(7,5,16,0.9)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="425" y="60" class="leaf-label" fill="#94a3b8">Turing</text>
+      <text x="425" y="71" class="leaf-label" fill="#64748b">Halting</text>
+
+      <!-- Cohen -->
+      <circle cx="155" cy="185" r="22" fill="rgba(7,5,16,0.9)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="155" y="182" class="leaf-label" fill="#94a3b8">Cohen</text>
+      <text x="155" y="193" class="leaf-label" fill="#64748b">Forcing</text>
+
+      <!-- Russell -->
+      <circle cx="445" cy="185" r="22" fill="rgba(7,5,16,0.9)" stroke="#7c3aed" stroke-width="1"/>
+      <text x="445" y="182" class="leaf-label" fill="#94a3b8">Russell</text>
+      <text x="445" y="193" class="leaf-label" fill="#64748b">Paradox</text>
+
+      <!-- Modern Math -->
+      <circle cx="300" cy="232" r="22" fill="rgba(7,5,16,0.9)" stroke="#34d399" stroke-width="1"/>
+      <text x="300" y="229" class="leaf-label" fill="#34d399">All of</text>
+      <text x="300" y="240" class="leaf-label" fill="#34d399">Math</text>
+
+      <!-- Pulse on modern math -->
+      <circle cx="300" cy="232" r="22" fill="none" stroke="#34d399" stroke-width="1" opacity="0">
+        <animate attributeName="r" values="22;32;22" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.4;0" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SET THEORY AS FOUNDATION -->
+  <section id="foundation">
+    <h2>Set Theory as the Foundation of All Mathematics</h2>
+    <p><span class="kick">E</span>very mathematical structure that exists in modern mathematics — every number, every function, every space, every group, every topological manifold — is defined in terms of sets. This is not a philosophical claim but a practical fact about how mathematics is actually written and taught. When a textbook defines the real numbers, it defines them as equivalence classes of Cauchy sequences of rational numbers, which are themselves defined as sets with certain properties. When it defines a function, it defines a function as a set of ordered pairs with certain properties. When it defines an ordered pair, it uses the Kuratowski definition: (a, b) = {{a}, {a, b}} — a set of sets.</p>
+
+    <p>This total absorption of mathematics into set theory was not automatic or inevitable. It was a program, carried out consciously by logicians and foundationalists in the early twentieth century: Russell and Whitehead in their <em>Principia Mathematica</em> (1910–13), Zermelo with his axioms (1908), Fraenkel with his extensions (1922), and later G&ouml;del and Bernays with their refinements. The program succeeded so completely that most mathematicians no longer think about it. They work in set-theoretic language without noticing that they are working in set-theoretic language — as naturally as one speaks in a mother tongue without consciously parsing its grammar.</p>
+
+    <blockquote>
+      <p>"No one shall expel us from the paradise that Cantor has created for us."</p>
+      <cite>— David Hilbert, "Uber das Unendliche" (On the Infinite), 1926</cite>
+    </blockquote>
+
+    <h3>What It Means That Everything Is a Set</h3>
+    <p>The claim that every mathematical object is a set is occasionally contested by mathematicians who prefer category-theoretic foundations, where the basic objects are not sets but morphisms and the basic relations are not membership but composition. This is a genuine alternative and a productive framework for certain areas of mathematics, particularly algebraic geometry and topology. But it has not displaced set theory as the universal background language of mathematics, and it is itself usually developed within set theory when full rigor is required.</p>
+
+    <p>The deeper point is not about any particular formalization but about what Cantor achieved at the conceptual level: he gave mathematics a single universal currency — the set, the membership relation — in terms of which all other mathematical concepts can be expressed. Before Cantor, mathematics was a collection of separate disciplines: arithmetic, algebra, geometry, analysis, each with its own primitive concepts. After Cantor, and after the set-theoretic program was completed, mathematics had a unified foundation.</p>
+  </section>
+
+  <!-- ZFC -->
+  <section id="zfc">
+    <h2>The Axioms of Set Theory: Fixing What Cantor Left Open</h2>
+    <p>Cantor's own set theory was what we now call <em>naive set theory</em>: he had no formal axioms, only the intuitive definition that a set is any collection of definite, distinguishable objects. This definition, combined with his theorems, is internally consistent as far as it goes — but it does not go far enough to prevent contradictions when pushed into extreme cases.</p>
+
+    <h3>Russell's Paradox (1901)</h3>
+    <p>Bertrand Russell, reading Cantor's work, noticed a problem. If sets can be formed from any property, consider the set R = {x : x &#x2209; x} — the set of all sets that do not contain themselves. Does R contain itself? If R &#x2208; R, then by the defining property, R &#x2209; R — contradiction. If R &#x2209; R, then by the defining property, R &#x2208; R — contradiction. Either assumption leads to contradiction. The "set of all sets that do not contain themselves" cannot exist as a set, yet it seems to be defined by a perfectly good property.</p>
+
+    <div class="math-block">
+      <span class="label">RUSSELL'S PARADOX</span>
+      Define: &nbsp;R = { x : x &#x2209; x }<br/>
+      Ask: &nbsp;&nbsp;&nbsp;Is R &#x2208; R?<br/><br/>
+      If R &#x2208; R: &nbsp;then by definition, R &#x2209; R. &nbsp;<span class="hl">Contradiction.</span><br/>
+      If R &#x2209; R: &nbsp;then by definition, R &#x2208; R. &nbsp;<span class="hl">Contradiction.</span><br/><br/>
+      Therefore R cannot be a set in naive set theory.<br/>
+      The unrestricted comprehension principle — that any property defines a set —<br/>
+      must be <span class="hl">restricted</span>. This is what ZFC does.
+    </div>
+
+    <p>Cantor had independently discovered closely related paradoxes — the paradox of the set of all sets, and the paradox of the set of all ordinals (now called the Burali-Forti paradox) — and was not surprised by Russell's letter. He had come to the conclusion that not every collection is a set: some collections are too large and must be treated as what he called "absolute infinities" or what later set theorists would call <em>proper classes</em>.</p>
+
+    <h3>The Zermelo-Fraenkel Axioms (ZFC)</h3>
+    <p>Ernst Zermelo published the first axiomatic set theory in 1908. Abraham Fraenkel and Thoralf Skolem extended and clarified it in the 1920s. The result is ZFC — Zermelo-Fraenkel set theory with the Axiom of Choice — the framework in which virtually all of modern mathematics is carried out.</p>
+
+    <div class="math-block">
+      <span class="label">THE ZFC AXIOMS (INFORMAL STATEMENT)</span>
+      <span class="hl">Extensionality</span>: Two sets are equal iff they have the same elements.<br/>
+      <span class="hl">Empty Set</span>: There exists a set with no elements: &#x2205;.<br/>
+      <span class="hl">Pairing</span>: For any a, b, the set {a, b} exists.<br/>
+      <span class="hl">Union</span>: For any family F of sets, &#x22C3;F exists.<br/>
+      <span class="hl">Power Set</span>: For any set A, the set &#x2118;(A) of all subsets of A exists.<br/>
+      <span class="hl">Infinity</span>: There exists an infinite set (containing &#x2205; and closed under successor).<br/>
+      <span class="hl">Separation</span>: For any set A and property &#x03C6;, { x &#x2208; A : &#x03C6;(x) } exists.<br/>
+      <span class="hl">Replacement</span>: The image of a set under a definable function is a set.<br/>
+      <span class="hl">Foundation</span>: Every non-empty set has an element disjoint from it.<br/>
+      <span class="hl">Choice</span>: Every family of non-empty sets has a choice function.
+    </div>
+
+    <p>The key axiom that blocks Russell's paradox is <em>Separation</em>: you cannot form sets from arbitrary properties applied to the entire universe; you can only separate elements from an <em>existing</em> set according to a property. "The set of all x with property P" is not automatically a set — you need "the set of all x <em>in some prior set A</em> with property P." This restriction eliminates the paradoxes while preserving the mathematical power of set theory.</p>
+  </section>
+
+  <!-- GÖDEL -->
+  <section id="godel">
+    <h2>G&ouml;del: Incompleteness and the Continuum Hypothesis</h2>
+    <p>Kurt G&ouml;del is one of the two mathematicians (the other being Paul Cohen) who resolved the status of the Continuum Hypothesis. But before he turned to the Continuum Hypothesis, he produced results that changed the nature of the question itself.</p>
+
+    <h3>The Incompleteness Theorems (1931)</h3>
+    <p>G&ouml;del's First Incompleteness Theorem states: any consistent formal system powerful enough to express basic arithmetic contains true statements that cannot be proved within the system. G&ouml;del's Second Incompleteness Theorem states: such a system cannot prove its own consistency.</p>
+
+    <p>These theorems shattered Hilbert's program — the hope of finding a complete, consistent, finitely axiomatizable foundation for all mathematics — and they did so using a method that is structurally identical to Cantor's diagonal argument. G&ouml;del constructed, within any sufficiently powerful formal system, a statement that says (in effect) "This statement is not provable in this system." If the statement is provable, it is false — contradiction. If it is not provable, it is true — but unprovable. The argument is a diagonalization: a mathematical object that refers to itself via a numbering system (G&ouml;del numbering) that encodes statements as numbers.</p>
+
+    <div class="math-block">
+      <span class="label">DIAGONAL ARGUMENT — TWO FACES</span>
+      <span class="hl">Cantor (1891):</span><br/>
+      Assume a complete list of real numbers. Construct a number that<br/>
+      differs from the n-th entry in the n-th digit. Not in the list. <span class="green">&#x220E;</span><br/><br/>
+      <span class="hl">G&ouml;del (1931):</span><br/>
+      Encode statements as numbers. Construct a statement G that says<br/>
+      "The statement with code n cannot be proved" where n = code(G).<br/>
+      G is true iff it is not provable. <span class="green">&#x220E;</span><br/><br/>
+      <span class="hl">Turing (1936):</span><br/>
+      Enumerate all Turing machines. Construct a machine that asks whether<br/>
+      the n-th machine halts on input n — and does the opposite. Contradiction.<br/>
+      The halting problem is undecidable. <span class="green">&#x220E;</span><br/><br/>
+      Same argument. Three domains. One insight.
+    </div>
+
+    <blockquote>
+      <p>"The notion of computability is not a mathematical notion created by logicians; it is the distilled essence of a mathematical argument first made by Cantor in 1891."</p>
+      <cite>— Attributed to various mathematicians and logicians; widely held in the foundations community</cite>
+    </blockquote>
+
+    <h3>G&ouml;del and the Continuum Hypothesis (1940)</h3>
+    <p>In 1940, G&ouml;del published a proof that the Continuum Hypothesis is <em>consistent with ZFC</em>. He constructed a model of set theory — the "constructible universe," denoted L — in which both ZFC and CH are true. This proved that ZFC cannot disprove CH: if it could, it would be inconsistent with L, but L is a consistent model. In other words, <strong>CH cannot be refuted from the ZFC axioms</strong>.</p>
+
+    <p>This was half the answer to Hilbert's first problem. But it was not the whole answer. Consistency alone does not settle whether CH is true or provable — it only shows it cannot be disproved. The other half waited twenty-three years.</p>
+  </section>
+
+  <!-- COHEN -->
+  <section id="cohen">
+    <h2>Paul Cohen: Forcing and the Independence of CH</h2>
+    <p>In 1963, Paul Cohen — a young analyst at Stanford who had essentially no background in mathematical logic — invented a radically new technique called <em>forcing</em> and used it to prove that the Continuum Hypothesis is also <em>consistent with the negation of CH</em>. That is, there are models of ZFC in which CH is false. Combined with G&ouml;del's result, this established that CH is <strong>independent of ZFC</strong>: it can neither be proved nor disproved from the standard axioms of set theory.</p>
+
+    <h3>What "Independent" Means</h3>
+    <p>Independence is a stronger and stranger result than mere unprovability. It says that the question "Is the Continuum Hypothesis true?" does not have a determinate answer within the framework of ZFC. You can add CH to ZFC as an extra axiom and get a consistent theory. You can add its negation (&not;CH) as an extra axiom and also get a consistent theory. Both extensions are consistent. Neither is "right" in the sense of being forced by the existing axioms.</p>
+
+    <div class="math-block">
+      <span class="label">THE STATUS OF THE CONTINUUM HYPOTHESIS</span>
+      G&ouml;del (1940): &nbsp;ZFC + CH &nbsp;is <span class="hl">consistent</span>. &nbsp;(CH cannot be disproved.)<br/>
+      Cohen &nbsp;(1963): &nbsp;ZFC + &not;CH is <span class="hl">consistent</span>. &nbsp;(CH cannot be proved.)<br/><br/>
+      Therefore: &nbsp;CH is <span class="hl">independent</span> of ZFC.<br/><br/>
+      The question "How many real numbers are there, compared to the integers?"<br/>
+      cannot be answered by the standard axioms of set theory.<br/>
+      It requires a <span class="hl">new axiom</span> — one that goes beyond what is currently accepted.
+    </div>
+
+    <h3>Cantor's Failure Was No Failure</h3>
+    <p>When Cantor spent thirty years trying and failing to prove the Continuum Hypothesis, he was not failing because he was insufficiently clever or insufficiently rigorous. He was failing because the question is unanswerable from the axioms — and he was working before anyone knew that mathematical questions could be unanswerable in this strong sense. G&ouml;del's incompleteness theorems had not yet been proved. The concept of independence had not yet been developed. Cantor's failure was the failure of a man running into a wall that he could not see and that no one yet knew was there.</p>
+
+    <p>In retrospect, his failure is one of the most informative failures in mathematical history. Each time he thought he had proved CH, and then found the error, he was discovering by brute force what Cohen would later prove systematically: that the territory of CH does not obey the usual laws of mathematical provability. He was, in a very real sense, experiencing the independence result directly, without the theoretical framework to understand what he was experiencing.</p>
+
+    <blockquote>
+      <p>"Cantor's proof that the reals are uncountable is one of the greatest mathematical arguments of all time. But his greatest contribution may be the question he could not answer."</p>
+      <cite>— Paul Cohen, in various interviews, paraphrased</cite>
+    </blockquote>
+
+    <h3>Forcing: The Technique</h3>
+    <p>Cohen's method of forcing is one of the most powerful and technically demanding tools in mathematical logic. It allows mathematicians to construct models of set theory with specific properties by "forcing" new sets into existence through a structured process of approximation. Forcing has been used to establish the independence of dozens of propositions from ZFC — not just CH but the Suslin hypothesis, various cardinal arithmetic statements, and many others. The landscape of what is and is not decidable from ZFC is now a rich and active field of mathematical research, and all of it traces back to the question Cantor could not answer.</p>
+  </section>
+
+  <!-- TURING AND THE DIAGONAL -->
+  <section id="turing">
+    <h2>The Diagonal Argument Reborn: Turing and Undecidability</h2>
+    <p>Alan Turing's 1936 paper "On Computable Numbers, with an Application to the Entscheidungsproblem" is one of the founding documents of computer science. It defines the concept of a Turing machine — an abstract model of computation — and proves that certain problems cannot be solved by any Turing machine. The most famous such problem is the <em>halting problem</em>: there is no algorithm that can determine, for an arbitrary program and input, whether the program will eventually halt or run forever.</p>
+
+    <p>The proof of the unsolvability of the halting problem is, at its core, Cantor's diagonal argument. Turing enumerates all Turing machines (there are countably many, since each can be encoded as a finite string). He then asks: suppose there were a machine H that, given any machine M and input i, outputs "halts" or "loops." Construct a new machine D that, given input n, runs H on (M&#x2099;, n) — the n-th Turing machine on input n — and does the opposite of what H predicts. What does D do when given its own index as input? Contradiction. H cannot exist. The halting problem is undecidable.</p>
+
+    <ul class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Enumerate all Turing machines:</strong> M&#x2081;, M&#x2082;, M&#x2083;, ... (possible since each is a finite description)</div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Assume a halting oracle H exists</strong>: H(M, i) = "halts" or "loops" for all M and i</div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Define D(n):</strong> Run H(M&#x2099;, n). If H says "halts," loop forever. If H says "loops," halt immediately.</div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Ask: what does D(d) do,</strong> where d is D's own index in the enumeration?</div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>If D halts:</strong> H(M&#x1D49;, d) = "loops," so D should loop. Contradiction. <strong>If D loops:</strong> H(M&#x1D49;, d) = "halts," so D should halt. Contradiction.</div>
+      </li>
+      <li>
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Conclusion:</strong> H cannot exist. The halting problem is undecidable. This is Cantor's diagonal argument, applied to Turing machines.</div>
+      </li>
+    </ul>
+
+    <p>The connection is not merely analogical. Turing's proof and Cantor's proof are the same argument instantiated in different domains. Cantor diagonalizes over real numbers. G&ouml;del diagonalizes over provability. Turing diagonalizes over computations. The diagonal method is a universal technique for proving the existence of objects that transcend any given enumeration or any given formal system.</p>
+  </section>
+
+  <!-- LEGACY TIMELINE -->
+  <section id="legacy-timeline">
+    <h2>A Century of Consequences: The Afterlife in Time</h2>
+    <ul class="timeline">
+      <li><span class="tl-year">1901</span><div class="tl-event"><strong>Russell's Paradox.</strong> The naive comprehension principle fails. Set theory needs axioms.</div></li>
+      <li><span class="tl-year">1908</span><div class="tl-event"><strong>Zermelo's axioms.</strong> The first axiomatic set theory, resolving the paradoxes. ZF is born.</div></li>
+      <li><span class="tl-year">1910</span><div class="tl-event"><strong>Principia Mathematica.</strong> Russell and Whitehead derive mathematics from logic and set theory. The project of formalization is underway.</div></li>
+      <li><span class="tl-year">1922</span><div class="tl-event"><strong>Fraenkel's additions.</strong> Replacement axiom added; the system becomes ZF. Axiom of Choice (AC) is isolated as a separate, controversial axiom.</div></li>
+      <li><span class="tl-year">1931</span><div class="tl-event"><strong>G&ouml;del's Incompleteness Theorems.</strong> No consistent system powerful enough for arithmetic can prove all its own truths. Hilbert's program is impossible. The diagonal argument strikes again.</div></li>
+      <li><span class="tl-year">1936</span><div class="tl-event"><strong>Turing and Church.</strong> The halting problem is undecidable. The Entscheidungsproblem has no solution. Computability theory is born from diagonalization.</div></li>
+      <li><span class="tl-year">1940</span><div class="tl-event"><strong>G&ouml;del's constructible universe.</strong> CH is consistent with ZFC. It cannot be disproved from the axioms.</div></li>
+      <li><span class="tl-year">1963</span><div class="tl-event"><strong>Cohen's forcing.</strong> &not;CH is consistent with ZFC. CH is independent of ZFC. Cantor's central question is undecidable. Cohen receives the Fields Medal (1966).</div></li>
+      <li><span class="tl-year">1970s</span><div class="tl-event"><strong>Large cardinal axioms.</strong> Set theorists explore axioms stronger than ZFC — measurable cardinals, supercompact cardinals — that settle more questions. A new research program emerges.</div></li>
+      <li><span class="tl-year">1980s–now</span><div class="tl-event"><strong>Woodin and beyond.</strong> Hugh Woodin and others investigate whether there are "natural" axioms that decide CH. The current consensus leans toward CH being false under certain large cardinal extensions, but this remains contested.</div></li>
+      <li><span class="tl-year">Present</span><div class="tl-event"><strong>Set theory as universal language.</strong> Every graduate mathematics course uses set-theoretic language. Every mathematical definition is ultimately set-theoretic. Cantor's work is so foundational it is invisible — it is the water mathematicians swim in.</div></li>
+    </ul>
+  </section>
+
+  <!-- WHAT THE DIAGONAL MEANS -->
+  <section id="diagonal-meaning">
+    <h2>The Diagonal Argument as a Universal Theorem</h2>
+    <p>It is worth pausing to appreciate the full scope of what Cantor discovered in 1891. He did not merely prove that the real numbers are uncountable. He discovered a <em>proof technique</em> — diagonalization — that is one of the most powerful tools in all of mathematics and logic. Every time you encounter a proof that something cannot be listed, enumerated, decided, or expressed within a given system, there is a good chance that diagonalization is behind it.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1891</div>
+        <h3>Cantor's Diagonal</h3>
+        <p>The reals are uncountable. For any set S, |&#x2118;(S)| > |S|. No enumeration of a power set is complete.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1931</div>
+        <h3>G&ouml;del's Diagonal</h3>
+        <p>No consistent formal system can prove all truths expressible in it. Provability is not the same as truth. Incompleteness is structural.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1936</div>
+        <h3>Turing's Diagonal</h3>
+        <p>The halting problem is undecidable. No algorithm can determine for all programs whether they terminate. Computability has absolute limits.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1951</div>
+        <h3>Rice's Theorem</h3>
+        <p>No non-trivial semantic property of programs is decidable. Any question about what a program computes (rather than how) is undecidable. Diagonalization again.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">General</div>
+        <h3>The Fixed-Point Pattern</h3>
+        <p>Diagonalization constructs objects that "refer to themselves" in a way that produces a contradiction. It is the mathematical form of the Liar Paradox, made rigorous.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">General</div>
+        <h3>Complexity Theory</h3>
+        <p>The diagonalization technique is used throughout computational complexity theory to separate complexity classes — to show that some problems require more resources than others.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FREEDOM OF MATHEMATICS -->
+  <section id="freedom">
+    <h2>The Essence of Mathematics Is Its Freedom</h2>
+    <p>Cantor wrote, in his 1883 <em>Grundlagen</em>: "The essence of mathematics lies in its freedom." He was defending himself against Kronecker. But the statement has a meaning that transcends its polemical context. Mathematics is not confined to what can be constructed in finite steps, or what corresponds to physical reality, or what can be proved from some fixed set of axioms. Mathematics is free to posit structures, explore their consequences, and discover what follows.</p>
+
+    <p>This freedom is not arbitrary or anarchic. It is constrained by consistency — mathematical structures must be internally coherent. And it is constrained by rigor — consequences must follow from premises by valid argument. Within these constraints, the freedom is genuine and generative. Set theory opened a door through which mathematicians could walk into a landscape of structures that had no physical analogue, no finite counterpart, no prior representation in human thought. The aleph numbers, the ordinal hierarchy, the uncountable infinities — these are products of pure mathematical freedom.</p>
+
+    <p>The independence results — G&ouml;del and Cohen's resolution of the Continuum Hypothesis — extend this freedom even further. There is not one mathematics but many, corresponding to different choices of axioms. ZFC + CH and ZFC + &not;CH are both internally consistent mathematical universes. Mathematicians can choose to work in either. The choice is not empirical — it cannot be settled by experiment — and it is not a matter of aesthetic preference alone, but it is genuinely free in a way that earlier generations of mathematicians would have found impossible to accept.</p>
+
+    <blockquote>
+      <p>"The transfinite numbers themselves are in a sense new irrationalities, and in my opinion, the best method of defining the finite irrational numbers is wholly similar to, and I might even say in principle the same as, my method for introducing transfinite numbers."</p>
+      <cite>— Georg Cantor, <em>Grundlagen</em>, 1883</cite>
+    </blockquote>
+
+    <h3>Cantor's Philosophical Position Vindicated</h3>
+    <p>Cantor insisted that mathematics could and should deal with completed infinities — actual infinites, as opposed to the merely potential infinite of "becoming." The philosophical tradition from Aristotle through Gauss had held that you could speak of infinity only as a process — "as many as you like" — but never as a completed totality. Cantor defied this. He said: there is an actual infinity, it has a definite cardinality, and we can reason about it as rigorously as we reason about finite numbers.</p>
+
+    <p>The vindication came not only in the adoption of set theory but in the applications. Measure theory — the rigorous foundation of probability — requires completed infinite sets. Functional analysis — the mathematics of quantum mechanics — works in infinite-dimensional spaces. Topology — the study of shape, continuity, and connectedness — is formulated entirely in set-theoretic language. The actual infinite is not a luxury or a speculation; it is the working vocabulary of physics, engineering, and computation.</p>
+
+    <p>Poincar&eacute; was wrong. The disease — if it ever was one — produced offspring more vigorous and more important than anything born of the caution that would have avoided it. Hilbert was right. No one has expelled us from the paradise. And the man who built it, who stared into infinity until it broke him and then went back and stared again, deserves to be remembered not only as a victim but as one of the most consequential builders in the history of human thought.</p>
+
+    <blockquote>
+      <p>"The essence of mathematics lies in its freedom."</p>
+      <cite>— Georg Cantor, <em>Grundlagen einer allgemeinen Mannigfaltigkeitslehre</em>, 1883</cite>
+    </blockquote>
+  </section>
+
+  <!-- VOL NAV -->
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol.0 — The Man</a>
+    <a href="1-infinity.html">&larr; Vol.1 — The Work</a>
+    <a href="2-world.html">&larr; Vol.2 — His World</a>
+    <a href="3-legacy.html" class="current">Vol.3 — The Long Afterlife</a>
+  </div>
+
+</main>
+
+<!-- FOOTER / COLOPHON -->
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br/>
+    Author &amp; Originator: David Lee Wise / ROOT0 / TriPod LLC<br/>
+    License: CC-BY-ND-4.0 &mdash; Attribution required, no derivatives without permission<br/>
+    Series: Georg Cantor — A Four-Volume Study &nbsp;|&nbsp; Volume 3: The Long Afterlife<br/>
+    Published: ROOT0 Library &nbsp;|&nbsp; <span class="mono">C:/repos/library/georg-cantor/3-legacy.html</span><br/>
+    &copy; ROOT0 / TriPod LLC. All rights reserved under CC-BY-ND-4.0 terms.
+  </div>
+</footer>
+
+</body>
+</html>

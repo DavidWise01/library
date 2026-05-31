@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galileo Galilei — Vol. 3: The Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0808;
+    --red: #b91c1c;
+    --gold: #ca8a04;
+    --text: #e8e0d0;
+    --muted: #a09080;
+    --border: #2a1a1a;
+    --card-bg: #120e0e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0d0909;
+    border-bottom: 1px solid var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2rem;
+    height: 52px;
+    overflow-x: auto;
+  }
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 1.1rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav a.active { color: var(--red); border-bottom-color: var(--red); }
+  .nav-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-right: 1.5rem;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .band {
+    background: var(--red);
+    padding: 0.35rem 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: #fff;
+    text-align: center;
+  }
+
+  .kick {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .kick svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .kick-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .kick h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+  .kick .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .kick .dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--red);
+    letter-spacing: 0.15em;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  section { margin-bottom: 4rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.03em;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--red);
+    margin: 1.8rem 0 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 1.1rem; color: var(--text); }
+  em { font-style: italic; color: #d0c8b8; }
+  strong { color: var(--gold); font-weight: 600; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--red);
+    padding: 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .card p { font-size: 0.92rem; line-height: 1.6; color: var(--muted); margin: 0; }
+
+  blockquote {
+    border-left: 3px solid var(--red);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #d0c4b0;
+    line-height: 1.7;
+  }
+  blockquote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+  }
+
+  /* ── CENTURY BAND ── */
+  .century-track {
+    position: relative;
+    margin: 3rem 0;
+    padding: 2rem 0;
+  }
+  .century-line {
+    position: absolute;
+    top: 50%;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--red) 10%, var(--red) 90%, transparent);
+    transform: translateY(-50%);
+  }
+  .century-items {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
+  }
+  .century-item {
+    background: var(--card-bg);
+    border: 1px solid var(--red);
+    padding: 0.8rem 1rem;
+    text-align: center;
+    flex: 1 1 120px;
+    max-width: 160px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .century-item:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 3px 3px 0 var(--red);
+  }
+  .century-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .century-item p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  /* ── CHAIN OF INFLUENCE ── */
+  .chain {
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+  }
+  .chain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .chain-item:hover { border-color: var(--red); }
+  .chain-arrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--red);
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+  }
+  .chain-text {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .chain-text strong { color: var(--text); }
+
+  /* ── BIG QUOTE ── */
+  .big-quote {
+    text-align: center;
+    padding: 3rem 2rem;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--red);
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .big-quote q {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: #d8cfc0;
+    line-height: 1.65;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .big-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--red);
+  }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1.8rem 0;
+  }
+  .stat {
+    flex: 1 1 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--red);
+    display: block;
+  }
+  .stat-desc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ── NAMED-AFTER GRID ── */
+  .named-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+  .named {
+    background: var(--card-bg);
+    border-top: 2px solid var(--gold);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 1.2rem;
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .named:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+  .named-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+  .named-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .named p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+  footer strong { color: var(--red); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .card-grid, .named-grid { grid-template-columns: 1fr; }
+    .century-items { flex-direction: column; align-items: stretch; }
+    .century-item { max-width: 100%; }
+    .kick { padding: 3rem 1.2rem 2rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="band">GALILEO GALILEI · A FOUR-VOLUME SERIES · VOLUME THREE OF THREE</div>
+
+<nav>
+  <span class="nav-title">GALILEO</span>
+  <a href="0-who.html">VOL 0 · WHO</a>
+  <a href="1-method.html">VOL 1 · METHOD</a>
+  <a href="2-world.html">VOL 2 · WORLD</a>
+  <a href="3-legacy.html" class="active">VOL 3 · LEGACY</a>
+</nav>
+
+<header class="kick">
+  <!-- Animated SVG: Orbiting moons + rippling influence waves -->
+  <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow3" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#b91c1c" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#0a0808" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="340" fill="url(#glow3)"/>
+    <!-- Sun at center -->
+    <circle cx="450" cy="170" r="22" fill="#ca8a04" opacity="0.85"/>
+    <!-- Expanding rings — influence ripples -->
+    <circle cx="450" cy="170" r="50" stroke="#b91c1c" stroke-width="0.6" fill="none" opacity="0.5">
+      <animate attributeName="r" values="22;90;22" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="170" r="50" stroke="#ca8a04" stroke-width="0.4" fill="none" opacity="0.4">
+      <animate attributeName="r" values="22;130;22" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="170" r="50" stroke="#b91c1c" stroke-width="0.3" fill="none" opacity="0.3">
+      <animate attributeName="r" values="22;200;22" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0;0.5" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Orbiting body 1 — Newton -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0 450 170; 360 450 170" dur="8s" repeatCount="indefinite"/>
+      <circle cx="550" cy="170" r="8" fill="#e8e0d0" opacity="0.85"/>
+    </g>
+    <!-- Orbiting body 2 — Telescope -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="120 450 170; 480 450 170" dur="13s" repeatCount="indefinite"/>
+      <circle cx="600" cy="170" r="6" fill="#b91c1c" opacity="0.8"/>
+    </g>
+    <!-- Orbiting body 3 — GPS -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="240 450 170; 600 450 170" dur="18s" repeatCount="indefinite"/>
+      <circle cx="650" cy="170" r="5" fill="#ca8a04" opacity="0.7"/>
+    </g>
+    <!-- Stars -->
+    <circle cx="80" cy="40" r="1.2" fill="#e8e0d0" opacity="0.5"><animate attributeName="opacity" values="0.5;0.1;0.5" dur="3.3s" repeatCount="indefinite"/></circle>
+    <circle cx="820" cy="60" r="0.9" fill="#ca8a04" opacity="0.4"><animate attributeName="opacity" values="0.4;0.1;0.4" dur="4.1s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="280" r="1" fill="#e8e0d0" opacity="0.35"><animate attributeName="opacity" values="0.35;0.1;0.35" dur="2.8s" repeatCount="indefinite"/></circle>
+    <circle cx="700" cy="300" r="1.1" fill="#ca8a04" opacity="0.45"><animate attributeName="opacity" values="0.45;0.1;0.45" dur="3.7s" repeatCount="indefinite"/></circle>
+  </svg>
+
+  <div class="kick-vol">Volume 3 · The Long Afterlife</div>
+  <h1>The Giant's Shoulders</h1>
+  <div class="subtitle">How Galileo's work echoed through four centuries of science, technology, and conscience</div>
+  <div class="dates">1642 — THE PRESENT</div>
+</header>
+
+<main>
+
+  <section id="death-birth">
+    <h2>The Year a Giant Died, a Giant Was Born</h2>
+    <p>
+      Galileo Galilei died on <strong>8 January 1642</strong> at his villa in Arcetri, outside Florence.
+      He was 77 years old, blind, under house arrest, stripped of his public dignity but not of his mind.
+      The Inquisition had forbidden a public funeral or a monument in the Basilica of Santa Croce.
+      He was buried quietly, without ceremony, in a small chapel.
+    </p>
+    <p>
+      On <strong>Christmas Day 1642</strong> — the same calendar year, under the old Julian calendar
+      still in use in England — <strong>Isaac Newton</strong> was born in Woolsthorpe, Lincolnshire.
+      This coincidence is too neat to be trusted as cosmic design, but it is too striking to be ignored.
+      The man who would complete the revolution Galileo began arrived in the world while the ground
+      was still shaking from Galileo's departure.
+    </p>
+    <p>
+      Newton, in a famous letter to Robert Hooke in 1676, wrote: <em>"If I have seen further, it is
+      by standing on the shoulders of giants."</em> The phrase was not original to Newton — it appears
+      in Bernard of Chartres in the twelfth century — but Newton meant it. Galileo was one of the giants.
+      His laws of motion, his kinematics, his principle of inertia: these were the raw material from which
+      Newton's <em>Principia Mathematica</em> (1687) was built.
+    </p>
+
+    <div class="big-quote">
+      <q>In questions of science, the authority of a thousand is not worth the humble reasoning of a single individual.</q>
+      <cite>— Galileo Galilei</cite>
+    </div>
+  </section>
+
+  <section id="newton">
+    <h2>Newton: The Direct Heir</h2>
+    <p>
+      Newton's three laws of motion did not emerge from nothing. They emerged from Galileo.
+    </p>
+
+    <ul class="chain">
+      <li class="chain-item">
+        <span class="chain-arrow">→</span>
+        <div class="chain-text"><strong>Galileo's inertia principle</strong> — a body in uniform motion continues in uniform motion without a sustaining cause — became <strong>Newton's First Law</strong> essentially word-for-word in different language.</div>
+      </li>
+      <li class="chain-item">
+        <span class="chain-arrow">→</span>
+        <div class="chain-text"><strong>Galileo's kinematics</strong> — d = ½gt², uniform acceleration — gave Newton the empirical grounding for his Second Law (F = ma). The mathematical form of acceleration was Galileo's.</div>
+      </li>
+      <li class="chain-item">
+        <span class="chain-arrow">→</span>
+        <div class="chain-text"><strong>Galileo's parabolic projectile path</strong> gave Newton the insight to decompose celestial motion: the Moon "falls" toward Earth continuously, its orbital path being the parabola extended to a closed curve.</div>
+      </li>
+      <li class="chain-item">
+        <span class="chain-arrow">→</span>
+        <div class="chain-text"><strong>Galileo's telescope observations</strong> — especially Jupiter's moons as a miniature solar system — provided Newton with data to test and refine the inverse-square law of gravitation.</div>
+      </li>
+      <li class="chain-item">
+        <span class="chain-arrow">→</span>
+        <div class="chain-text"><strong>Galileo's demolition of Aristotelian physics</strong> cleared the philosophical space Newton needed. Without Galileo's prior half-century of argument, Newton's assumptions would have seemed far more radical than they did in 1687.</div>
+      </li>
+    </ul>
+
+    <p>
+      The <em>Principia Mathematica</em> (1687) is the founding document of classical mechanics.
+      Its Galilean debts are so deep that Newton, who was personally not generous about intellectual
+      predecessors, acknowledged them explicitly.
+    </p>
+  </section>
+
+  <section id="method-legacy">
+    <h2>The Method That Changed Everything</h2>
+    <p>
+      Galileo's most consequential legacy is not any specific discovery. It is the <em>procedure</em>
+      of discovery. The scientific method — controlled experiment, measurement, mathematical description
+      of results, derivation of testable predictions — is the epistemic engine of the modern world.
+      Everything from antibiotics to semiconductors to nuclear power exists because the method works.
+    </p>
+    <p>
+      Before Galileo, European natural philosophy had been largely textual — a matter of reading,
+      commentary, and argument about what Aristotle or Galen or Avicenna had said. Galileo did not
+      read the universe; he <em>interrogated</em> it. He asked specific, answerable questions, designed
+      experiments to answer them, recorded the numbers, and built mathematical models. He demanded
+      that nature answer for itself.
+    </p>
+    <p>
+      The institution he helped create — <em>empirical science</em> — went on to produce the
+      Royal Society (1660), the Académie des Sciences (1666), journals, peer review, and eventually
+      the entire structure of modern research universities. Every experiment ever performed in a
+      physics laboratory stands in a direct line of descent from the inclined plane at Padua.
+    </p>
+
+    <blockquote>
+      "Measure what is measurable, and make measurable what is not so."
+      <cite>— attributed to Galileo (the exact wording is disputed, but the principle is thoroughly his)</cite>
+    </blockquote>
+  </section>
+
+  <section id="telescope-legacy">
+    <h2>The Telescope: Instrument of Permanent Revolution</h2>
+    <p>
+      Galileo did not invent the telescope. But by pointing it at the sky and publishing what he found,
+      he transformed it from a military and commercial gadget into the primary instrument of astronomical
+      discovery. Every telescope that has since been built — from Herschel's great reflectors to the
+      Hubble Space Telescope to the James Webb Space Telescope — is the direct institutional and
+      conceptual descendant of the instrument Galileo held up to the night sky in the winter of 1609.
+    </p>
+    <p>
+      The history of astronomy after Galileo is, in large measure, a history of progressively larger
+      telescopes revealing progressively more distant and strange objects: Herschel discovering Uranus (1781),
+      discovering the Milky Way's disk structure; the great Leviathan of Parsonstown resolving nebulae
+      into stars (1845); the Hooker Telescope on Mount Wilson establishing that "spiral nebulae" were
+      other galaxies (1924); Hubble showing the universe was expanding. Every step on that path began
+      with Galileo's gesture of turning an optical instrument upward.
+    </p>
+  </section>
+
+  <section id="galilean-moons">
+    <h2>The Galilean Moons: Still His</h2>
+    <p>
+      On the night of <strong>7 January 1610</strong>, Galileo observed three small, bright points near
+      Jupiter. Over the next nights, he observed a fourth, and watched them move. He understood they
+      were moons of Jupiter — bodies that orbited a planet other than Earth, proving that not everything
+      revolved around our world.
+    </p>
+    <p>
+      He named them the <em>Medicean Stars</em> for political reasons. The names that stuck — <strong>Io,
+      Europa, Ganymede, and Callisto</strong> — were proposed by Simon Marius, who claimed independent
+      discovery, and formalized in the eighteenth century. But the collective name — the
+      <strong>Galilean moons</strong> — endures in his honor. They are still called that.
+    </p>
+    <p>
+      In 1989, <strong>NASA launched the Galileo spacecraft</strong> toward Jupiter. It reached Jupiter
+      in 1995 and spent eight years studying the planet and its moons — Io's volcanic eruptions, Europa's
+      subsurface ocean, Ganymede's magnetic field. In 2003, its mission completed, the spacecraft was
+      deliberately crashed into Jupiter to prevent contamination of Europa's potentially life-bearing ocean.
+      Galileo the spacecraft died studying the moons Galileo the man had discovered 393 years earlier.
+    </p>
+
+    <div class="named-grid">
+      <div class="named">
+        <div class="named-title">Io</div>
+        <div class="named-type">Galilean Moon · 1610</div>
+        <p>The most volcanically active body in the solar system. Surface constantly reshaped by tidal heating from Jupiter's gravity. Galileo saw a dot of light; we have mapped a world.</p>
+      </div>
+      <div class="named">
+        <div class="named-title">Europa</div>
+        <div class="named-type">Galilean Moon · 1610</div>
+        <p>A smooth icy surface concealing a liquid saltwater ocean. One of the most promising candidates for extraterrestrial life in the solar system. Visited by the Europa Clipper mission, launched 2024.</p>
+      </div>
+      <div class="named">
+        <div class="named-title">Ganymede</div>
+        <div class="named-type">Galilean Moon · 1610</div>
+        <p>The largest moon in the solar system — larger than Mercury. Has its own magnetic field. Galileo's telescope showed it as a moving point of light; the Galileo spacecraft revealed a world of ice and rock.</p>
+      </div>
+      <div class="named">
+        <div class="named-title">Callisto</div>
+        <div class="named-type">Galilean Moon · 1610</div>
+        <p>The most heavily cratered body in the solar system, geologically quiet. Its ancient surface is a record of the early solar system. Named for a nymph from Greek mythology.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="naming">
+    <h2>Things Named for Galileo</h2>
+    <p>
+      Few scientists have had so many things named for them. The list is a map of his influence.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">NASA Mission · 1989–2003</div>
+        <h4>Galileo Spacecraft</h4>
+        <p>Launched October 1989, arrived at Jupiter December 1995. Discovered evidence of subsurface oceans on Europa and Callisto. Deliberately deorbited into Jupiter in 2003. Named for the man who first studied Jupiter's moons.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Satellite Navigation · 2011–present</div>
+        <h4>Galileo GPS System</h4>
+        <p>The European Union's global navigation satellite system — Europe's answer to GPS. Named for Galileo because he pioneered the use of astronomy for practical navigation (his proposed method of longitude-finding using Jupiter's moons). Operational since 2016.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Physics · constant</div>
+        <h4>Galilean Transformation</h4>
+        <p>The mathematical rules for transforming coordinates between inertial reference frames in classical mechanics — formalized from Galileo's principle that motion is relative. Superseded (for high velocities) by Einstein's Lorentz transformation, but named for Galileo.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Astronomy · unit</div>
+        <h4>The Gal (Galileo)</h4>
+        <p>A unit of acceleration used in gravimetry and geodesy, equal to 1 centimeter per second squared. Commemorates his measurement of gravitational acceleration. Still used in geophysics.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Crater · Moon</div>
+        <h4>Galilei Crater</h4>
+        <p>A lunar impact crater 15.5 km in diameter, on the near side of the Moon. Named for the man who first systematically studied the Moon's surface through a telescope and estimated the heights of its mountains.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Asteroid · 1983</div>
+        <h4>697 Galileo</h4>
+        <p>A main-belt asteroid named in his honor. Discovered 1910 by Max Wolf. The irony is rich: objects discovered by the telescope Galileo pioneered, orbiting the Sun Galileo argued was the center, named for the man who argued it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rehabilitation">
+    <h2>The Apology: 1992 — 359 Years Later</h2>
+    <p>
+      In <strong>1979</strong>, Pope John Paul II called for a re-examination of the Galileo case.
+      The Pontifical Academy of Sciences established a study commission. Over thirteen years, historians,
+      theologians, and scientists examined the trial documents, the astronomy, and the theological issues.
+    </p>
+    <p>
+      On <strong>31 October 1992</strong> — 359 years after the trial — Pope John Paul II addressed
+      the Pontifical Academy of Sciences and formally acknowledged that the theologians who condemned
+      Galileo had made an error. He stated:
+    </p>
+
+    <blockquote>
+      "The theologians who condemned Galileo made an error... they did not recognize the formal distinction between Sacred Scripture and its interpretation... It is a duty for theologians to keep themselves regularly informed of scientific advances in order to examine, if such be necessary, whether or not there are reasons for taking them into account in their reflection."
+      <cite>— Pope John Paul II, Address to the Pontifical Academy of Sciences, 31 October 1992</cite>
+    </blockquote>
+
+    <p>
+      The apology was real, measured, and carefully worded. It acknowledged the error without claiming
+      the Church had been wrong to take Scripture seriously — it argued instead that the interpretation
+      of Scripture had been too rigid, too immediate, too unwilling to distinguish between religious
+      teaching and cosmological description. For some, this was insufficient. For others, the fact that
+      the largest institution in Western history acknowledged a 359-year-old error at all was remarkable.
+    </p>
+    <p>
+      The Church had already, in 1741, permitted publication of Galileo's complete works. In 1822, it
+      removed heliocentrism from the Index of Forbidden Books. In 1737, Galileo's remains had been
+      reinterred in Santa Croce with a grand monument. The rehabilitation happened in stages across
+      centuries. The 1992 speech was the formal, spoken conclusion.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1737</span>
+        <div class="stat-desc">Reinterred in Santa Croce</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1741</span>
+        <div class="stat-desc">Complete works permitted</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1822</span>
+        <div class="stat-desc">Heliocentrism off Index</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1992</span>
+        <div class="stat-desc">Formal papal apology</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="century-influence">
+    <h2>Four Centuries of Influence</h2>
+
+    <div class="century-track">
+      <div class="century-line"></div>
+      <div class="century-items">
+        <div class="century-item">
+          <span class="century-year">1642–1700</span>
+          <p>Newton builds classical mechanics on Galileo's foundations. The scientific revolution crystallizes.</p>
+        </div>
+        <div class="century-item">
+          <span class="century-year">1700s</span>
+          <p>The Enlightenment: Galileo as hero of reason against authority. Voltaire celebrates him. His method spreads to biology, chemistry, economics.</p>
+        </div>
+        <div class="century-item">
+          <span class="century-year">1800s</span>
+          <p>Industrial revolution built on Newtonian mechanics — Galileo's kinematics embedded in every machine. Maxwell extends the method to electromagnetism.</p>
+        </div>
+        <div class="century-item">
+          <span class="century-year">1900s</span>
+          <p>Einstein relativity supersedes Newton — but is still built on Galileo's relativity of motion. Galilean moons revealed in detail by Pioneer and Voyager probes.</p>
+        </div>
+        <div class="century-item">
+          <span class="century-year">2000s</span>
+          <p>Galileo spacecraft at Jupiter (1995–2003). Galileo GPS system (2016–). Europa Clipper (2024) hunting life in the ocean Galileo never imagined beneath Galileo's moon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-he-means">
+    <h2>What Galileo Means Now</h2>
+    <p>
+      The figure of Galileo has been recruited for many purposes since his death. He has been the
+      hero of science against religion, the martyr of reason, the patron saint of academic freedom,
+      the exemplar of intellectual courage. Some of these uses are justified; some are oversimplifications
+      of a complicated man in a complicated world.
+    </p>
+    <p>
+      The real Galileo was <strong>vain</strong> — he was proud of his priority and territorial about
+      credit. He was <strong>politically shrewd</strong> — he understood patronage and deployed it
+      brilliantly. He was <strong>not a systematic atheist or anti-cleric</strong> — he believed his
+      discoveries glorified God's creation and genuinely hoped the Church would accommodate them.
+      He was <strong>sometimes wrong</strong> — the tidal theory, the rejection of Kepler's ellipses,
+      the rejection of the lunar influence on tides.
+    </p>
+    <p>
+      But he was also, when it counted, <strong>right</strong>. The Earth moves. The Moon has mountains.
+      Not everything orbits Earth. Heavy and light objects fall at the same rate. Objects in motion tend
+      to stay in motion. Distance increases as the square of time. The universe is written in mathematics.
+      These were not obvious. In 1610, they were revolutionary. In 1633, they were dangerous.
+    </p>
+    <p>
+      The phrase <em>Eppur si muove</em> — "And yet it moves" — almost certainly never crossed his lips
+      at the trial. But it captures something real: the universe does not change its behavior because
+      an institution declares it must. The Earth moved then. It moves now. No sentence of any court
+      has ever altered that by a millimeter.
+    </p>
+
+    <div class="big-quote">
+      <q>I do not feel obliged to believe that the same God who has endowed us with sense, reason, and intellect has intended us to forgo their use.</q>
+      <cite>— Galileo Galilei, Letter to the Grand Duchess Christina, 1615</cite>
+    </div>
+
+    <p>
+      That letter — the <em>Letter to the Grand Duchess Christina</em> — written eighteen years before
+      the trial, when Galileo still hoped to persuade — remains one of the great arguments for the
+      compatibility of empirical inquiry and religious faith, and also one of the earliest arguments for
+      the proper separation of scientific and theological authority. It was not published until 1636,
+      but it circulated in manuscript. It still reads as urgent.
+    </p>
+    <p>
+      Galileo's legacy is not finally about astronomy or physics or even the scientific method, though
+      it includes all of these. His legacy is about what a single person, working carefully, measuring
+      precisely, reasoning honestly, can establish against the accumulated authority of institutions
+      — and what those institutions cost themselves when they try to suppress it.
+    </p>
+    <p>
+      The moons of Jupiter do not care what the Inquisition decided. They continued to orbit.
+      They orbit still.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+  David Lee Wise / ROOT0 / TriPod LLC<br>
+  CC-BY-ND-4.0 · Series: Galileo Galilei · Volume 3: The Long Afterlife<br>
+  Content assembled 2025 · Sources: Heilbron, Drake, Fantoli, Finocchiaro, Sobel
+</footer>
+
+</body>
+</html>

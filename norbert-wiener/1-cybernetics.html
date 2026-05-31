@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiener — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --blue: #1d4ed8;
+    --text: #dde8e2;
+    --muted: #7a8a80;
+    --border: #1a2a20;
+    --card-bg: #081008;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,10,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); border-color: var(--green); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #051a0c 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.48;
+  }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(21,128,61,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blue);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--green);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--green); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--green); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* Feedback loop diagram in text */
+  .loop-diagram {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  .loop-diagram h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  /* Examples grid — thermostat style */
+  .systems-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+  }
+  .systems-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    background: var(--card-bg);
+  }
+  .systems-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .systems-table td:first-child {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: #fff;
+    font-size: 0.95rem;
+  }
+  .systems-table tr:hover td { background: rgba(21,128,61,0.05); }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Wiener</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-cybernetics.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Full feedback loop with signal flow animation -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="w-bg2" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#061a0e" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="ag" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#15803d" opacity="0.8"/>
+      </marker>
+      <marker id="ab" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#1d4ed8" opacity="0.7"/>
+      </marker>
+      <!-- Signal pulse filter -->
+      <filter id="pulse-glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#w-bg2)"/>
+
+    <!-- Signal noise wave at top — representing the Wiener filter context -->
+    <polyline points="50,100 80,95 110,108 140,92 170,105 200,88 230,102 260,90 290,106 320,94 350,109 380,88 410,103 440,91 470,106 500,87 530,104 560,92 590,107 620,89 650,105 680,91 710,108 740,92 770,107 800,88 830,104 860,90"
+      fill="none" stroke="#1d4ed8" stroke-width="1.2" opacity="0.35">
+      <animate attributeName="points"
+        values="50,100 80,95 110,108 140,92 170,105 200,88 230,102 260,90 290,106 320,94 350,109 380,88 410,103 440,91 470,106 500,87 530,104 560,92 590,107 620,89 650,105 680,91 710,108 740,92 770,107 800,88 830,104 860,90;
+                50,100 80,108 110,92 140,105 170,88 200,102 230,90 260,106 290,94 320,109 350,88 380,103 410,91 440,106 470,87 500,104 530,92 560,107 590,89 620,105 650,91 680,108 710,92 740,107 770,88 800,104 830,90 860,105;
+                50,100 80,95 110,108 140,92 170,105 200,88 230,102 260,90 290,106 320,94 350,109 380,88 410,103 440,91 470,106 500,87 530,104 560,92 590,107 620,89 650,105 680,91 710,108 740,92 770,107 800,88 830,104 860,90"
+        dur="3s" repeatCount="indefinite" calcMode="linear"/>
+    </polyline>
+    <text x="60" y="85" font-family="Space Mono, monospace" font-size="10" fill="#1d4ed8" opacity="0.4" letter-spacing="2">NOISY SIGNAL</text>
+
+    <!-- Smoothed signal below -->
+    <polyline points="50,135 140,132 230,134 320,133 410,135 500,132 590,134 680,133 770,135 860,133"
+      fill="none" stroke="#15803d" stroke-width="1.8" opacity="0.5">
+      <animate attributeName="points"
+        values="50,135 140,132 230,134 320,133 410,135 500,132 590,134 680,133 770,135 860,133;
+                50,134 140,135 230,132 320,134 410,133 500,135 590,132 680,134 770,133 860,135;
+                50,135 140,132 230,134 320,133 410,135 500,132 590,134 680,133 770,135 860,133"
+        dur="4s" repeatCount="indefinite"/>
+    </polyline>
+    <text x="60" y="125" font-family="Space Mono, monospace" font-size="10" fill="#15803d" opacity="0.5" letter-spacing="2">FILTERED SIGNAL</text>
+
+    <!-- Main feedback loop boxes (larger, centered) -->
+    <rect x="100" y="240" width="130" height="55" rx="3" fill="#050a08" stroke="#15803d" stroke-width="1.5" opacity="0.85"/>
+    <text x="165" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" letter-spacing="2">DESIRED</text>
+    <text x="165" y="282" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" letter-spacing="2">STATE</text>
+
+    <circle cx="295" cy="268" r="22" fill="#050a08" stroke="#15803d" stroke-width="1.5" opacity="0.85"/>
+    <text x="295" y="274" text-anchor="middle" font-family="Cinzel, serif" font-size="16" fill="#15803d">Σ</text>
+
+    <rect x="340" y="240" width="130" height="55" rx="3" fill="#050a08" stroke="#1d4ed8" stroke-width="1.5" opacity="0.85"/>
+    <text x="405" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" letter-spacing="1">CONTROLLER</text>
+    <text x="405" y="282" text-anchor="middle" font-family="Space Mono, monospace" font-size="8" fill="#7a8a80" letter-spacing="1">ERROR RESPONSE</text>
+
+    <rect x="510" y="240" width="130" height="55" rx="3" fill="#050a08" stroke="#1d4ed8" stroke-width="1.5" opacity="0.85"/>
+    <text x="575" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" letter-spacing="1">ACTUATOR</text>
+    <text x="575" y="282" text-anchor="middle" font-family="Space Mono, monospace" font-size="8" fill="#7a8a80" letter-spacing="1">EFFECTOR</text>
+
+    <rect x="680" y="240" width="130" height="55" rx="3" fill="#050a08" stroke="#15803d" stroke-width="1.5" opacity="0.85"/>
+    <text x="745" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" letter-spacing="1">OUTPUT</text>
+    <text x="745" y="282" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" letter-spacing="1">SENSOR</text>
+
+    <!-- Forward arrows -->
+    <line x1="230" y1="268" x2="271" y2="268" stroke="#15803d" stroke-width="1.8" marker-end="url(#ag)" opacity="0.8"/>
+    <line x1="317" y1="268" x2="338" y2="268" stroke="#15803d" stroke-width="1.8" marker-end="url(#ag)" opacity="0.8"/>
+    <line x1="470" y1="268" x2="508" y2="268" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#ab)" opacity="0.7"/>
+    <line x1="640" y1="268" x2="678" y2="268" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#ab)" opacity="0.7"/>
+
+    <!-- Feedback path -->
+    <path d="M745,295 L745,390 L295,390 L295,292" fill="none" stroke="#15803d" stroke-width="1.8" stroke-dasharray="7,4" opacity="0.55" marker-end="url(#ag)">
+      <animate attributeName="stroke-dashoffset" values="0;-44;0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <text x="520" y="408" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#15803d" opacity="0.55" letter-spacing="4">FEEDBACK LOOP</text>
+
+    <!-- Error label -->
+    <text x="308" y="230" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.6" letter-spacing="1">ε — ERROR</text>
+
+    <!-- Bottom: examples floating -->
+    <text x="165" y="460" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" opacity="0.45" letter-spacing="1">THERMOSTAT</text>
+    <text x="405" y="460" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" opacity="0.45" letter-spacing="1">NERVOUS SYSTEM</text>
+    <text x="620" y="460" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" opacity="0.45" letter-spacing="1">ECONOMY</text>
+    <text x="800" y="460" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" opacity="0.45" letter-spacing="1">MISSILE</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Norbert Wiener · 1894–1964 · Volume One</span>
+    <h1 class="hero-title">The Work</h1>
+    <p class="hero-subtitle">Cybernetics · Feedback · The Wiener Filter · Brownian Motion</p>
+    <p class="hero-lead">The science of control and communication in animals and machines. One concept — feedback — that unifies thermostats, nervous systems, economies, guided missiles, and the internet. All steer toward goals by measuring error and correcting it.</p>
+  </div>
+</div>
+
+<div class="band">Feedback · Cybernetics · Wiener Filter · Anti-Aircraft Predictor · Brownian Motion · Stochastic Processes</div>
+
+<main>
+
+  <!-- FEEDBACK: THE KEY CONCEPT -->
+  <section id="feedback">
+    <span class="section-label">I — The Unifying Concept</span>
+    <h2>Feedback: The Idea That Explains Everything</h2>
+    <p>The central insight of cybernetics is so simple it can be stated in one sentence: <strong>any purposive system — any system that aims at a goal — must measure the difference between its current state and its desired state, and use that measurement to correct its behavior.</strong> This is feedback. It is present in every system that maintains a target state against disturbance.</p>
+    <p>Wiener and his collaborator Arturo Rosenblueth recognized, in the early 1940s, that this same abstract structure — goal, sensor, actuator, error signal, correction — appeared identically in domains that no one had previously thought to connect. A thermostat, a living cell maintaining homeostasis, a guided missile tracking a moving target, the human nervous system correcting posture, an economy adjusting prices — all share the same architecture. Cybernetics was the science of this architecture.</p>
+
+    <div class="loop-diagram">
+      <h4>The Universal Feedback Architecture</h4>
+      <svg viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <marker id="fa" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#15803d"/>
+          </marker>
+          <marker id="fb" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#1d4ed8"/>
+          </marker>
+        </defs>
+        <!-- Boxes -->
+        <rect x="10" y="85" width="110" height="50" rx="3" fill="#081008" stroke="#15803d" stroke-width="1.5"/>
+        <text x="65" y="107" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d">REFERENCE</text>
+        <text x="65" y="124" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d">/ GOAL</text>
+
+        <circle cx="175" cy="110" r="20" fill="#081008" stroke="#15803d" stroke-width="1.5"/>
+        <text x="175" y="115" text-anchor="middle" font-family="Cinzel, serif" font-size="15" fill="#15803d">Σ</text>
+
+        <rect x="215" y="85" width="110" height="50" rx="3" fill="#081008" stroke="#1d4ed8" stroke-width="1.5"/>
+        <text x="270" y="112" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#1d4ed8">CONTROLLER</text>
+
+        <rect x="365" y="85" width="110" height="50" rx="3" fill="#081008" stroke="#1d4ed8" stroke-width="1.5"/>
+        <text x="420" y="112" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#1d4ed8">PLANT /</text>
+
+        <rect x="515" y="85" width="110" height="50" rx="3" fill="#081008" stroke="#15803d" stroke-width="1.5"/>
+        <text x="570" y="107" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d">OUTPUT</text>
+        <text x="570" y="124" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d">/ SENSOR</text>
+
+        <!-- Forward arrows -->
+        <line x1="120" y1="110" x2="153" y2="110" stroke="#15803d" stroke-width="1.5" marker-end="url(#fa)"/>
+        <line x1="195" y1="110" x2="213" y2="110" stroke="#15803d" stroke-width="1.5" marker-end="url(#fa)"/>
+        <line x1="325" y1="110" x2="363" y2="110" stroke="#1d4ed8" stroke-width="1.5" marker-end="url(#fb)"/>
+        <line x1="475" y1="110" x2="513" y2="110" stroke="#1d4ed8" stroke-width="1.5" marker-end="url(#fb)"/>
+
+        <!-- Feedback path -->
+        <path d="M570,135 L570,190 L175,190 L175,132" fill="none" stroke="#15803d" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#fa)"/>
+
+        <!-- Error label -->
+        <text x="190" y="75" font-family="Space Mono, monospace" font-size="9" fill="#15803d">ε</text>
+
+        <!-- Feedback label -->
+        <text x="372" y="207" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" letter-spacing="2">FEEDBACK</text>
+      </svg>
+    </div>
+
+    <h3>Why Feedback Matters: Teleology Without Mysticism</h3>
+    <p>Before cybernetics, purposive behavior — behavior directed toward a goal — was either explained teleologically (by appeal to intention, consciousness, or vital forces) or dismissed as an illusion. Wiener and Rosenblueth's 1943 paper "Behavior, Purpose and Teleology" provided a third option: a purely mechanistic account of goal-directed behavior based on negative feedback. A system is "purposive" if and only if it uses error-feedback to reduce the difference between its current state and a reference state. No consciousness required. No vital force required. Just measurement, error, and correction.</p>
+    <p>This was philosophically revolutionary. It allowed the vocabulary of "purpose," "goal," and "behavior" to be applied without embarrassment to machines and to biological systems in the same breath — because the architecture was identical.</p>
+  </section>
+
+  <!-- FEEDBACK EXAMPLES -->
+  <section id="examples">
+    <span class="section-label">II — Feedback Everywhere</span>
+    <h2>From Thermostats to the Internet: One Pattern</h2>
+    <p>The power of the cybernetic framework is its universality. The feedback architecture is not merely analogous across different domains — it is the same abstract structure instantiated in different physical substrates. Wiener mapped this with precision:</p>
+
+    <table class="systems-table">
+      <thead>
+        <tr>
+          <th>System</th>
+          <th>Goal / Reference</th>
+          <th>Sensor</th>
+          <th>Effector</th>
+          <th>Feedback</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Thermostat</td>
+          <td>Set temperature (e.g. 20°C)</td>
+          <td>Thermometer / bimetallic strip</td>
+          <td>Heater or cooler</td>
+          <td>If too cold → heat; if too warm → cool; measure again</td>
+        </tr>
+        <tr>
+          <td>Nervous system (posture)</td>
+          <td>Upright body position</td>
+          <td>Vestibular system, proprioception</td>
+          <td>Muscle contractions</td>
+          <td>Tilt detected → corrective muscle signals → re-measure</td>
+        </tr>
+        <tr>
+          <td>Anti-aircraft predictor</td>
+          <td>Aircraft's predicted future position</td>
+          <td>Radar, optical tracking</td>
+          <td>Gun elevation and timing</td>
+          <td>Miss distance → update prediction model → re-fire</td>
+        </tr>
+        <tr>
+          <td>Guided missile</td>
+          <td>Target position</td>
+          <td>Infrared / radar seeker</td>
+          <td>Fins / thrust vectoring</td>
+          <td>Angular error → corrective control surfaces → re-measure</td>
+        </tr>
+        <tr>
+          <td>Market economy</td>
+          <td>Supply-demand equilibrium (price)</td>
+          <td>Price signals</td>
+          <td>Production and consumption decisions</td>
+          <td>Price too high → reduce demand / increase supply → re-equilibrate</td>
+        </tr>
+        <tr>
+          <td>Ecosystem (predator-prey)</td>
+          <td>Population balance</td>
+          <td>Food availability, predation pressure</td>
+          <td>Reproduction and mortality rates</td>
+          <td>Prey decline → predator decline → prey recover → oscillate</td>
+        </tr>
+        <tr>
+          <td>Internet TCP/IP</td>
+          <td>Reliable data delivery</td>
+          <td>Packet acknowledgement (ACK)</td>
+          <td>Retransmission, rate control</td>
+          <td>Packet lost → retransmit → congestion control → re-measure</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-quote">
+      <blockquote>"It is the thesis of this book that the operation of any machine, living organism, or society, when examined in terms of circular causal processes, has properties not at all obvious from a study of the parts in isolation."</blockquote>
+      <cite>— Norbert Wiener, Cybernetics, 1948</cite>
+    </div>
+  </section>
+
+  <!-- WWII ANTI-AIRCRAFT PREDICTOR -->
+  <section id="antiaircraft">
+    <span class="section-label">III — The Origin: WWII</span>
+    <h2>Predicting Where the Plane Will Be</h2>
+    <p>The engineering problem that created cybernetics was profoundly practical. In World War II, anti-aircraft fire was spectacularly ineffective — guns aimed at where aircraft were, but the shells took time to reach altitude, and aircraft were moving. The problem was prediction: <strong>where will the aircraft be when the shell arrives?</strong></p>
+    <p>In 1940, the National Defense Research Committee assigned Wiener and his collaborator Julian Bigelow to work on this problem. Their approach was mathematically sophisticated and, in retrospect, definitional for the entire subsequent history of control theory and cybernetics.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">The Problem</span>
+        <h4>Predict Aircraft Position</h4>
+        <p>A shell takes 20-30 seconds to reach altitude. An aircraft traveling at 200 knots moves more than a mile in that time. You must aim not at where the plane is, but where it will be — a prediction problem, not a tracking problem.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Insight</span>
+        <h4>Pilot as Feedback System</h4>
+        <p>The aircraft's future position cannot be predicted from its current trajectory alone, because the pilot will take evasive action when fired upon. Wiener modeled the pilot as a feedback controller — a system with its own goals, sensors, and limitations.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Mathematics</span>
+        <h4>Statistical Prediction</h4>
+        <p>Wiener applied his work on stochastic processes to model the aircraft's trajectory as a random signal with predictable statistical properties. The optimal predictor is a linear filter — the Wiener filter — on the observed position history.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Insight That Changed Everything</span>
+        <h4>Pilot = Feedback Controller</h4>
+        <p>In modeling the pilot's evasive behavior, Wiener and Bigelow realized that the pilot was doing exactly what a control system does: sensing the situation, computing a goal-directed response, and executing it. This equivalence — human and machine as the same type of system — was the genesis of cybernetics.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">The predictor they built was only moderately effective as a weapons system — aircraft evasion was too variable to predict reliably — but the mathematics they developed was transformative. The 1942 classified report containing the Wiener filter was so dense with mathematics that British engineers receiving it called it "the yellow peril" (for its yellow cover and formidable content). It was declassified after the war and became foundational to signal processing and control theory.</p>
+  </section>
+
+  <!-- WIENER FILTER -->
+  <section id="filter">
+    <span class="section-label">IV — The Filter</span>
+    <h2>The Wiener Filter: Optimal Noise Reduction</h2>
+    <p>The Wiener filter is the optimal solution to the following problem: given a noisy signal (a desired signal corrupted by random noise), what linear filter produces the best possible estimate of the underlying clean signal? "Best" means minimum mean square error — the expected squared difference between the filter's output and the true signal is minimized.</p>
+    <p>The solution depends on the statistical properties of the signal and the noise — specifically, on their power spectral densities and cross-spectral density. If you know these (or can estimate them from data), the Wiener filter gives you the unique linear filter that is optimal. It is a causal, linear, time-invariant filter in the frequency domain.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Signal Processing</span>
+        <h4>Noise Reduction</h4>
+        <p>Audio denoising, image processing, radar signal extraction, medical imaging (MRI, EEG filtering) — wherever a signal is corrupted by noise and you need to recover it optimally, the Wiener filter is the theoretical benchmark.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Communications</span>
+        <h4>Channel Equalization</h4>
+        <p>In digital communications, the Wiener filter principle underlies the equalization filters that correct for channel distortion — the basis of modern modems, WiFi receivers, and cellular systems.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Control Theory</span>
+        <h4>State Estimation</h4>
+        <p>The Wiener filter is the precursor to the Kalman filter (1960) — the algorithm used in GPS, spacecraft navigation, autopilots, and every modern estimation problem. Kalman's filter is the Wiener filter made recursive and computationally practical.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Economics</span>
+        <h4>Forecasting</h4>
+        <p>Econometric time series forecasting methods — ARMA models, prediction intervals, spectral analysis of economic data — are built on the mathematical framework Wiener developed for the predictor problem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BROWNIAN MOTION -->
+  <section id="brownian">
+    <span class="section-label">V — Mathematical Foundations</span>
+    <h2>Brownian Motion: The Wiener Process</h2>
+    <p>Independently of Einstein's 1905 physical analysis, Wiener in 1923 developed a rigorous mathematical theory of Brownian motion — the random jiggling of particles suspended in a fluid, caused by molecular bombardment. What Einstein had described physically, Wiener constructed mathematically: a continuous-time stochastic process with stationary, independent increments and continuous sample paths. This construction is now called the <em>Wiener process</em> or standard Brownian motion.</p>
+    <p>The Wiener process is arguably the most important single object in all of probability theory and stochastic analysis. It is the building block from which:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Mathematics</span>
+        <h4>Stochastic Calculus</h4>
+        <p>Itô calculus — the calculus of random processes, developed by Kiyoshi Itô in the 1940s — is built on the Wiener process. Itô's lemma is the chain rule for stochastic differential equations.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finance</span>
+        <h4>Options Pricing</h4>
+        <p>The Black-Scholes formula (1973) — which describes the fair price of financial options — models stock prices as geometric Brownian motion (a Wiener process with drift and scaling). The entire modern derivatives industry rests on this.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Physics</span>
+        <h4>Diffusion Theory</h4>
+        <p>Heat diffusion, the spread of pollutants, the random walk of particles in a field — all modeled by Wiener processes. The Fokker-Planck equation and Langevin equation are its descendants.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Computer Science</span>
+        <h4>Randomized Algorithms</h4>
+        <p>The mathematical framework of random walks — generalized Wiener processes — underlies the analysis of randomized algorithms, Markov chain Monte Carlo methods, and the PageRank algorithm.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <blockquote>"We have decided to call the entire field of control and communication theory, whether in the machine or in the animal, by the name Cybernetics."</blockquote>
+      <cite>— Norbert Wiener, Cybernetics: Or Control and Communication in the Animal and the Machine, 1948</cite>
+    </div>
+  </section>
+
+  <!-- KEY PUBLICATIONS -->
+  <section id="publications">
+    <span class="section-label">VI — Key Publications</span>
+    <h2>The Books That Named a Field</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1923</span>
+        <h4>Differential Space</h4>
+        <p>The mathematical construction of Brownian motion (the Wiener process). A landmark of rigorous probability theory. Defines one of the most important objects in modern mathematics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1942–43</span>
+        <h4>The Extrapolation, Interpolation and Smoothing of Stationary Time Series</h4>
+        <p>The classified WWII report containing the Wiener filter. Known as "the yellow peril." Declassified and published by MIT Press in 1949. Foundational to signal processing and control theory.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1943</span>
+        <h4>Behavior, Purpose and Teleology</h4>
+        <p>With Arturo Rosenblueth and Julian Bigelow. Defines purposive behavior in terms of negative feedback. Arguably the founding paper of cybernetics. <em>Philosophy of Science</em>, vol. 10.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1948</span>
+        <h4>Cybernetics</h4>
+        <p>Full title: <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Names and defines the field. A bestseller. Translated widely. One of the genuinely foundational books of the twentieth century.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1950</span>
+        <h4>The Human Use of Human Beings</h4>
+        <p>Popular exposition of cybernetics, with a sustained argument about the ethics of automation and the social consequences of intelligent machines. Contains his warnings about unemployment from automation — still debated seventy years later.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1964</span>
+        <h4>God and Golem, Inc.</h4>
+        <p>His final book, written shortly before his death. Explores the theological and ethical dimensions of machines that learn and reproduce. Remarkably prescient about issues that are now central to AI ethics.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Norbert Wiener Series · Volume 1: The Work · norbert-wiener/1-cybernetics.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

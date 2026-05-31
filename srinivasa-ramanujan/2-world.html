@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramanujan Vol. 2 — His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --saffron: #d97706;
+    --teal: #0d9488;
+    --text: #e8e0d0;
+    --muted: #a89880;
+    --card-bg: #110d14;
+    --card-border: 1px solid var(--saffron);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.78;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    border-bottom: 1px solid var(--saffron);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 1rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--saffron); border-color: var(--saffron); }
+  nav a.active { color: var(--saffron); border-color: var(--saffron); background: rgba(217,119,6,0.08); }
+
+  .hero {
+    min-height: 68vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(217,119,6,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(13,148,136,0.06) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .vol-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--saffron);
+    padding: 0.3rem 1rem;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--saffron); }
+  .hero .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 620px;
+  }
+  .hero .locs {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+  }
+
+  /* MAP SVG */
+  .svg-stage {
+    width: 100%;
+    max-width: 700px;
+    margin: 2rem auto 0;
+  }
+
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  section { margin-bottom: 4.5rem; }
+  section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: var(--saffron);
+    border-bottom: 1px solid var(--saffron);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.04em;
+  }
+  section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--teal);
+    margin: 1.8rem 0 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  p { margin-bottom: 1.1rem; }
+  em { color: var(--saffron); font-style: italic; }
+  strong { color: #fff; font-weight: 600; }
+
+  /* TWO-COL LAYOUT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin: 1.5rem 0;
+  }
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--saffron);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.93rem; color: var(--muted); margin: 0; }
+
+  .pull-quote {
+    border-left: 3px solid var(--saffron);
+    padding: 1.1rem 1.8rem;
+    margin: 2.2rem 0;
+    background: rgba(217,119,6,0.04);
+    font-style: italic;
+    font-size: 1.06rem;
+    color: var(--text);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+  }
+
+  .band {
+    background: var(--saffron);
+    color: var(--paper);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .kick {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* PLACE CARD */
+  .place-card {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1.2rem;
+  }
+  .place-card .place-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--saffron);
+    letter-spacing: 0.12em;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .place-card-content h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .place-card-content p { font-size: 0.95rem; margin-bottom: 0; }
+
+  /* PERSON PROFILE */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .person-card {
+    background: var(--card-bg);
+    border: 1px solid var(--teal);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .person-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--teal);
+  }
+  .person-card .person-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .person-card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .person-card .person-dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--saffron);
+    margin-bottom: 0.6rem;
+  }
+  .person-card p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+  /* CONTRAST BLOCK */
+  .contrast-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 2rem 0;
+    border: var(--card-border);
+  }
+  .contrast-side {
+    padding: 1.5rem;
+    background: var(--card-bg);
+  }
+  .contrast-side + .contrast-side {
+    border-left: 1px solid var(--saffron);
+  }
+  .contrast-side .cs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 0.7rem;
+  }
+  .contrast-side h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .contrast-side p { font-size: 0.92rem; color: var(--muted); margin-bottom: 0.5rem; }
+  @media (max-width: 580px) {
+    .contrast-pair { grid-template-columns: 1fr; }
+    .contrast-side + .contrast-side { border-left: none; border-top: 1px solid var(--saffron); }
+  }
+
+  footer {
+    border-top: 1px solid rgba(217,119,6,0.35);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+  footer .attr-line { color: var(--saffron); margin-bottom: 0.3rem; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .place-card { flex-direction: column; }
+    .place-card .place-icon { writing-mode: horizontal-tb; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Ramanujan</span>
+  <a href="0-who.html">Vol 0 — Who</a>
+  <a href="1-numbers.html">Vol 1 — Numbers</a>
+  <a href="2-world.html" class="active">Vol 2 — World</a>
+  <a href="3-legacy.html">Vol 3 — Legacy</a>
+</nav>
+
+<div class="hero">
+  <span class="vol-badge">Volume 2 of 4 &nbsp;·&nbsp; Context &amp; Place</span>
+  <h1>His <span>World</span></h1>
+  <p class="subtitle">Two worlds held together by mathematics — colonial Madras and Edwardian Cambridge, with a war in between</p>
+  <p class="locs">Erode &rarr; Kumbakonam &rarr; Madras &rarr; Cambridge &rarr; Madras</p>
+
+  <!-- SVG: Schematic of the two worlds -->
+  <div class="svg-stage" aria-label="The two worlds: Madras and Cambridge">
+    <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <defs>
+        <style>
+          .wtext { font-family:'Cinzel',serif; }
+          .wmono { font-family:'Space Mono',monospace; }
+          .fade-a { animation: wfade 0.9s ease 0.3s both; }
+          .fade-b { animation: wfade 0.9s ease 1.0s both; }
+          .fade-c { animation: wfade 0.9s ease 1.7s both; }
+          .fade-d { animation: wfade 0.9s ease 2.4s both; }
+          .draw-bridge { animation: bridgeDraw 1.8s ease 2.0s both; stroke-dasharray: 300; stroke-dashoffset: 300; }
+          @keyframes wfade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+          @keyframes bridgeDraw { to{stroke-dashoffset:0} }
+        </style>
+      </defs>
+      <rect x="0" y="0" width="700" height="190" fill="rgba(17,13,20,0.88)" rx="6"/>
+
+      <!-- MADRAS side -->
+      <g class="fade-a">
+        <rect x="30" y="20" width="260" height="150" fill="rgba(217,119,6,0.06)" rx="4"/>
+        <text x="160" y="46" text-anchor="middle" fill="#d97706" class="wtext" style="font-size:16px;font-weight:700;">MADRAS</text>
+        <text x="160" y="63" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;letter-spacing:0.12em;">BRITISH INDIA · 1887–1914</text>
+
+        <!-- Temple symbol -->
+        <polygon points="120,85 160,55 200,85" fill="none" stroke="#d97706" stroke-width="1.2" opacity="0.5"/>
+        <rect x="130" y="85" width="60" height="40" fill="none" stroke="#d97706" stroke-width="1.2" opacity="0.4"/>
+        <line x1="160" y1="85" x2="160" y2="55" stroke="#d97706" stroke-width="0.8" opacity="0.3"/>
+
+        <text x="160" y="145" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;">Namagiri Temple</text>
+        <text x="160" y="160" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;">Kumbakonam</text>
+      </g>
+
+      <!-- Bridge / letter -->
+      <g class="fade-c">
+        <line x1="300" y1="95" x2="400" y2="95" stroke="#d97706" stroke-width="1.5" class="draw-bridge"/>
+        <polygon points="396,91 406,95 396,99" fill="#d97706"/>
+        <text x="350" y="84" text-anchor="middle" fill="#d97706" class="wmono" style="font-size:9px;">THE LETTER</text>
+        <text x="350" y="110" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:8px;">Jan 1913</text>
+      </g>
+
+      <!-- CAMBRIDGE side -->
+      <g class="fade-b">
+        <rect x="410" y="20" width="260" height="150" fill="rgba(13,148,136,0.06)" rx="4"/>
+        <text x="540" y="46" text-anchor="middle" fill="#0d9488" class="wtext" style="font-size:16px;font-weight:700;">CAMBRIDGE</text>
+        <text x="540" y="63" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;letter-spacing:0.12em;">ENGLAND · 1914–1919</text>
+
+        <!-- Chapel symbol -->
+        <rect x="510" y="65" width="60" height="55" fill="none" stroke="#0d9488" stroke-width="1.2" opacity="0.5"/>
+        <polygon points="510,65 540,45 570,65" fill="none" stroke="#0d9488" stroke-width="1.2" opacity="0.5"/>
+        <rect x="527" y="95" width="26" height="25" fill="none" stroke="#0d9488" stroke-width="1" opacity="0.4"/>
+
+        <text x="540" y="145" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;">Trinity College</text>
+        <text x="540" y="160" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;">G. H. Hardy · Littlewood</text>
+      </g>
+
+      <!-- Hardy label fade in last -->
+      <g class="fade-d">
+        <text x="350" y="178" text-anchor="middle" fill="#a89880" class="wmono" style="font-size:9px;opacity:0.7;">
+          5 years · 1 war · 1 FRS · 37 joint papers
+        </text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <!-- SECTION 1: COLONIAL INDIA -->
+  <section id="colonial">
+    <span class="kick">I. The First World</span>
+    <h2>Colonial India — Madras Presidency, 1887–1914</h2>
+    <p>
+      The India into which Ramanujan was born was an India under the British Crown, administered
+      as the Madras Presidency — a vast territory of what is now Tamil Nadu, Andhra Pradesh,
+      Kerala, and Karnataka. The British had governed Madras since 1639; by 1887 the
+      administrative apparatus was a century old and deeply embedded. Tamil Nadu had its own
+      internal hierarchies, its own intellectual traditions, its own religious landscape.
+    </p>
+    <p>
+      Kumbakonam, where Ramanujan grew up, was in the Tanjore (Thanjavur) district — the
+      <em>rice bowl</em> of Tamil Nadu, watered by the Cauvery River delta. The district was
+      distinguished by its concentration of Brahmin families, its Sanskrit learning, and its
+      density of ancient temples. The Great Brihadeeswara Temple at Thanjavur dated to 1010 CE.
+      The Sarangapani Temple at Kumbakonam was one of the 108 Divya Desams — the sacred Vaishnava
+      sites enumerated in the Nalayira Divya Prabandham.
+    </p>
+    <p>
+      This was Ramanujan's native landscape: Tamil, Brahmin, temple-centered, and profoundly
+      mathematical in its religious tradition. The Vedic tradition of <em>sulba sutras</em> —
+      geometric rules for the construction of sacrificial altars, requiring calculations involving
+      π and √2 — is the oldest extant mathematical tradition in South Asia. Ramanujan breathed this.
+    </p>
+
+    <h3>The Brahmin Intellectual Tradition</h3>
+    <p>
+      The Brahmin caste in Tamil Nadu in the late nineteenth century had a specific relationship
+      to colonial education. Brahmin families were disproportionately represented in colonial
+      administrative positions requiring literacy and numeracy. They engaged early and seriously
+      with English-language education while maintaining Sanskrit learning and religious practice.
+    </p>
+    <p>
+      This produced a distinctive cultural formation: English-educated, mathematically literate,
+      deeply rooted in a Hindu devotional tradition that was itself intellectually sophisticated.
+      Ramanujan was a product of this formation — a Brahmin who learned Newton's mathematics
+      and prayed to Namagiri and saw no contradiction between these things, because in his
+      framework there was none.
+    </p>
+
+    <div class="place-card">
+      <div class="place-icon">Erode · 1887</div>
+      <div class="place-card-content">
+        <h4>Town of Birth</h4>
+        <p>Erode, on the Cauvery River, in what is now Erode District, Tamil Nadu. Population in 1887 approximately 30,000. A market town and Brahmin settlement center. Ramanujan's maternal grandfather was the <em>amildar</em> (revenue officer) of Erode. The family moved to Kumbakonam, where his father worked, when Ramanujan was a year old.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-icon">Kumbakonam</div>
+      <div class="place-card-content">
+        <h4>The Temple Town</h4>
+        <p>Kumbakonam is called "the town of temples" — it contains eighteen major temples within the town limits, and the surrounding Mahamaham tank floods once every twelve years for a sacred bathing festival. This is where Ramanujan attended Town High School, encountered Carr's Synopsis, and spent the years of mathematical discovery before his marriage and his Port Trust appointment in Madras.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-icon">Madras</div>
+      <div class="place-card-content">
+        <h4>The Presidency Capital</h4>
+        <p>Madras (now Chennai) was the capital of the Madras Presidency and the largest city of South India, with a population of approximately 500,000 in 1910. The Port Trust — where Ramanujan worked — was the administrative body governing the Port of Madras, one of the major ports of British India. The city also contained Pachaiyappa's College (where Ramanujan twice failed his exams), the University of Madras, and the headquarters of the Indian Mathematical Society.</p>
+      </div>
+    </div>
+
+    <h3>The Indian Mathematical Society</h3>
+    <p>
+      The <strong>Indian Mathematical Society</strong> was founded in 1907, five years before
+      Ramanujan joined the Port Trust. It published the <em>Journal of the Indian Mathematical
+      Society</em> (founded 1909) — the first mathematical research journal published in India.
+      Ramanujan's first published paper appeared in that journal in 1911: "Some Properties of
+      Bernoulli's Numbers" — modest by his later standards, but a real mathematical publication.
+    </p>
+    <p>
+      Members of the IMS recognized that something unusual was happening in the Port Trust's
+      accounts department. R. Ramachandra Rao, a district collector and mathematics enthusiast,
+      was one of the first to understand the scope of what Ramanujan had produced — and one
+      of the first to suggest he write to Cambridge.
+    </p>
+  </section>
+
+  <!-- SECTION 2: CAMBRIDGE WORLD -->
+  <section id="cambridge">
+    <span class="kick">II. The Second World</span>
+    <h2>Cambridge — Trinity College and the War Years</h2>
+    <p>
+      Ramanujan arrived at Cambridge in April 1914. He was twenty-six years old. He had never
+      been outside India. He had never seen sustained cold. He had never lived in a place without
+      temples, coconut palms, or the specific smell of Tamil Nadu in monsoon season.
+    </p>
+    <p>
+      Trinity College, Cambridge was — and remains — one of the most formidable intellectual
+      institutions in the world. It had produced Newton, Bacon, Byron, Tennyson, Bertrand Russell,
+      Niels Bohr. Its Great Court is the largest enclosed courtyard of any academic institution
+      in Britain. The library, designed by Wren, contained Newton's working papers and first
+      editions of the <em>Principia</em>. Ramanujan was given rooms here.
+    </p>
+
+    <div class="contrast-pair">
+      <div class="contrast-side">
+        <div class="cs-label">Madras · 1913</div>
+        <h4>Temperature, Food, Religion</h4>
+        <p>Mean annual temperature ~29°C. Abundant Tamil vegetarian cuisine. Namagiri temple nearby. Rice, sambar, rasam, idli. Surrounded by family — mother, wife, community.</p>
+        <p>Near the sea. Surrounded by spoken Tamil. Social world entirely familiar.</p>
+      </div>
+      <div class="contrast-side">
+        <div class="cs-label">Cambridge · 1914–1918</div>
+        <h4>The Shock of Displacement</h4>
+        <p>Cold and wet (mean annual temp ~10°C, winters near freezing). College kitchens serving meat. No temple. No Tamil. Scarce vegetables in wartime rationing. Family 8,000 miles away.</p>
+        <p>Ramanujan cooked his own food in his rooms — inadequately, increasingly — over a small stove. His health declined steadily from 1917.</p>
+      </div>
+    </div>
+
+    <h3>The Great War and an Empty Cambridge</h3>
+    <p>
+      Ramanujan arrived in April 1914. In August 1914, Britain declared war on Germany and
+      the Austro-Hungarian Empire. Within months, most of the young men of Cambridge had left
+      for the front. The colleges were used as military hospitals. Hardy's collaborator
+      Littlewood joined the Royal Garrison Artillery. Hardy himself, rejected for military
+      service on health grounds, remained in Cambridge but worked reduced hours on war-related
+      applied mathematics.
+    </p>
+    <p>
+      The paradoxical effect: Ramanujan and Hardy had each other almost entirely. The wartime
+      isolation of Cambridge intensified their collaboration. The Joint papers of 1915–1919 —
+      on partitions, on the highly composite numbers, on the circle method — were produced in
+      this strange, emptied, rationed Cambridge.
+    </p>
+    <p>
+      Food became a serious problem. Ramanujan was a strict orthodox vegetarian. The college
+      kitchen was not equipped to accommodate him. Root vegetables and beans, the staples of
+      wartime British rationing, were poor substitutes for the fresh South Indian produce he
+      needed. By 1917 he was significantly malnourished. The doctors diagnosed tuberculosis;
+      he spent months in several sanatoria around London and Cambridge.
+    </p>
+  </section>
+
+  <!-- SECTION 3: HARDY AND LITTLEWOOD -->
+  <section id="hardy">
+    <span class="kick">III. The People</span>
+    <h2>G. H. Hardy, J. E. Littlewood, and the Cambridge Circle</h2>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-label">Collaborator</div>
+        <h4>G. H. Hardy</h4>
+        <div class="person-dates">1877–1947</div>
+        <p>Godfrey Harold Hardy, Fellow of Trinity College Cambridge, later Savilian Professor of Geometry at Oxford. Atheist, cricket enthusiast, aesthete. Author of <em>A Mathematician's Apology</em> (1940). He rated himself 25 on a scale of 100 in mathematics; he gave Ramanujan 100.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-label">Hardy's Collaborator</div>
+        <h4>J. E. Littlewood</h4>
+        <div class="person-dates">1885–1977</div>
+        <p>John Edensor Littlewood, Hardy's lifelong collaborator, who also read and was astonished by Ramanujan's first letter. An aphorism attributed to Littlewood: "Every positive integer is one of Ramanujan's personal friends." He and Hardy are said to have published 100 joint papers.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-label">Institutional Champion</div>
+        <h4>Francis Spring &amp; Narayana Iyer</h4>
+        <div class="person-dates">Madras, 1912–1913</div>
+        <p>Sir Francis Spring (chairman of the Madras Port Trust) and S. Narayana Iyer (chief accountant, Ramanujan's direct supervisor) recognized what they had in the accounts department, gave Ramanujan support, flexible hours, and ultimately connected him to Cambridge.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-label">Indian Champion</div>
+        <h4>R. Ramachandra Rao</h4>
+        <div class="person-dates">Madras, 1910–1913</div>
+        <p>District collector and mathematical enthusiast who was among the first to grasp the scale of Ramanujan's work. He initially supported Ramanujan financially — a stipend while Ramanujan searched for employment — before the Port Trust appointment came through.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-label">Wife</div>
+        <h4>Janaki Ammal</h4>
+        <div class="person-dates">1899–1994</div>
+        <p>Married Ramanujan in 1909; she was nine years old, he was twenty-one. She joined his household in Madras at twelve. When he left for England in 1914 she stayed behind with his mother. She outlived him by 74 years, dying in 1994 at the age of 94 or 95. She always maintained that Ramanujan had been poorly treated by his mother during his illness in India.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-label">Mother</div>
+        <h4>Komalatammal</h4>
+        <div class="person-dates">c.1869–1924</div>
+        <p>Ramanujan's formidable mother, who sang devotional songs at the Namagiri temple and who controlled the household. It was she who reported a dream of Namagiri commanding her to allow Ramanujan to cross the ocean. She and Janaki reportedly maintained a difficult relationship that complicated Ramanujan's final months.</p>
+      </div>
+    </div>
+
+    <h3>Hardy's Self-Assessment</h3>
+    <div class="pull-quote">
+      "I have done one thing you could never have done, and that is to have collaborated with
+      both Littlewood and Ramanujan on something like equal terms."
+      <cite>— G. H. Hardy, late in his career</cite>
+    </div>
+    <p>
+      Hardy meant this as a statement of pride, not false modesty. What he was acknowledging
+      was the extraordinary range he had maintained — that he could engage with Littlewood's
+      precise, powerful rigor and with Ramanujan's alien, intuitive genius, and hold both
+      as genuine collaboration. No other mathematician of the period could have done that.
+    </p>
+
+    <h3>Hardy's Rating System</h3>
+    <p>
+      Hardy devised a private scale — pure mathematical ability, rated out of 100. He gave
+      himself 25. He gave Littlewood 30. He gave Hilbert 80. He gave Ramanujan 100.
+      (The mathematician J. E. Littlewood said he thought Hardy was being too modest about
+      himself in that list, but not about Ramanujan.)
+    </p>
+  </section>
+
+  <!-- SECTION 4: FRS -->
+  <section id="frs">
+    <span class="kick">IV. Recognition</span>
+    <h2>Fellow of the Royal Society — 2 May 1918</h2>
+    <p>
+      The <strong>Fellowship of the Royal Society</strong> is the oldest continuous scientific
+      distinction in the world. The Society was founded in 1660; Newton was its president from
+      1703 to 1727. Fellowship (FRS) is awarded by peer election; the bar is extraordinarily high.
+    </p>
+    <p>
+      On 2 May 1918, Srinivasa Ramanujan was elected a Fellow of the Royal Society.
+      The certificate named him for his work in elliptic functions, the theory of numbers,
+      and infinite series. He was thirty years old. He was the first Indian to be elected
+      an FRS in the mathematical sciences.
+    </p>
+    <p>
+      The election occurred while Ramanujan was in a sanatorium, critically ill. Hardy brought
+      him the news in person. By all accounts, Ramanujan's response was characteristically
+      understated — he was pleased, but more interested in talking about mathematics.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">2 May 1918</div>
+        <h4>Elected FRS</h4>
+        <p>Youngest Indian FRS in the mathematics category. Certificate cited: elliptic functions, theory of numbers, infinite series. Hardy proposed him.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">October 1918</div>
+        <h4>Fellow of Trinity College</h4>
+        <p>Elected Fellow of Trinity College, Cambridge — the first Indian to hold a Fellowship at an Oxbridge college. This was the culmination of Hardy's advocacy within Cambridge itself.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1916</div>
+        <h4>B.Sc. by Research</h4>
+        <p>Cambridge awarded him a Bachelor of Science by research — the nearest available credential for a man who had done graduate-level work without undergraduate qualification.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1918–1919</div>
+        <h4>Sanatoria</h4>
+        <p>Ramanujan was treated at Matlock (Derbyshire), at Fitzroy House (London), and at Colinette House (Putney) — the nursing home where the taxi number conversation occurred.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: RETURN TO INDIA -->
+  <section id="return">
+    <span class="kick">V. Going Home</span>
+    <h2>The Return to Madras, 1919</h2>
+    <p>
+      In April 1919, too ill to remain in England, Ramanujan sailed home. He was installed
+      in a house in Madras — eventually at Chetput, a neighborhood in what is now north Chennai.
+      He had a nurse. He had — reportedly — his mother and his wife in complex domestic proximity
+      and mutual tension. He had his notebooks.
+    </p>
+    <p>
+      He continued working. In the final months of his life, seriously ill, losing weight,
+      often in pain, he produced the mock theta functions — seventeen of them, described
+      (not proved) in a letter to Hardy dated January 1920. The letter is a staggering document:
+      a dying man setting down, as quickly and completely as he can, results he knows he will
+      not live to elaborate.
+    </p>
+    <div class="pull-quote">
+      "I am extremely sorry for not writing you a single letter up to now... I discovered very
+      interesting functions recently which I call 'Mock' θ-functions. Unlike the 'False'
+      θ-functions (studied partially by Rogers in his interesting paper) they enter into
+      mathematics as beautifully as the ordinary theta functions."
+      <cite>— Ramanujan, letter to Hardy, January 1920</cite>
+    </div>
+    <p>
+      He died three months later, on 26 April 1920, at Chetput, Madras.
+      He was thirty-two years old.
+    </p>
+  </section>
+
+  <div class="band">
+    In five years at Cambridge, Ramanujan and Hardy rewrote the theory of partitions,
+    invented the circle method, and produced results that still drive mathematics a century later.
+  </div>
+
+  <section id="nav-forward" style="text-align:center;padding-top:1rem;">
+    <p style="font-family:'Cinzel',serif;color:var(--muted);font-size:0.9rem;letter-spacing:0.08em;">CONTINUE THE SERIES</p>
+    <div class="card-grid" style="max-width:500px;margin:1.2rem auto 0;">
+      <a href="3-legacy.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 3</div>
+          <h4>The Long Afterlife</h4>
+          <p>The lost notebook. Mock modular forms. String theory. The Ramanujan Prize. The film. Hardy's final words on his collaborator.</p>
+        </div>
+      </a>
+      <a href="0-who.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 0</div>
+          <h4>Back to the Man</h4>
+          <p>Return to the biographical account — who he was, how he arrived at Cambridge, what he left behind.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="attr-line">ROOT0-ATTRIBUTION-v1.0</div>
+  <div>David Lee Wise / ROOT0 / TriPod LLC &nbsp;·&nbsp; CC-BY-ND-4.0</div>
+  <div style="margin-top:0.4rem;opacity:0.6;">
+    Srinivasa Ramanujan Series &nbsp;·&nbsp; Volume 2: His World &nbsp;·&nbsp;
+    Sources: Kanigel, <em>The Man Who Knew Infinity</em> (1991); Hardy, <em>Ramanujan</em> (1940);
+    Berndt &amp; Rankin, <em>Ramanujan: Letters and Commentary</em> (1995);
+    Nandy, <em>Alternative Sciences</em> (1980)
+  </div>
+</footer>
+
+</body>
+</html>

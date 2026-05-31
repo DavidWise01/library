@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tim Berners-Lee — Vol. 1: The Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04060c;
+      --blue: #2563eb;
+      --orange: #ea580c;
+      --text: #e8e8f0;
+      --muted: #8888aa;
+      --card-bg: #0a0e1a;
+      --border: rgba(37,99,235,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.1rem;
+      line-height: 1.75;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,6,12,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 2rem;
+      height: 52px;
+    }
+
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .vol-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    h1.hero-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-align: center;
+      color: var(--text);
+      max-width: 900px;
+      position: relative;
+    }
+
+    h1.hero-title span { color: var(--blue); }
+
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      text-align: center;
+      max-width: 620px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    h2 .accent { color: var(--orange); }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.4rem; }
+    p:last-child { margin-bottom: 0; }
+
+    em { color: var(--orange); font-style: italic; }
+    strong { color: var(--text); font-weight: 500; }
+
+    blockquote {
+      border-left: 3px solid var(--blue);
+      padding: 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+      background: var(--card-bg);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .card-icon {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.6rem;
+      color: var(--blue);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .mono-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--blue);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .mono-block .c { color: var(--muted); }
+    .mono-block .tag { color: var(--orange); }
+    .mono-block .val { color: #4ade80; }
+
+    .band {
+      background: var(--blue);
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+    }
+
+    .band h2 { color: #fff; }
+    .band p { color: rgba(255,255,255,0.85); }
+
+    .kick {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .kick:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 160px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .stat:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    /* ── HTTP CYCLE DIAGRAM SVG ── */
+    .http-diagram-wrap {
+      margin: 3rem 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .http-diagram-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .colophon {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .colophon p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 2;
+      margin-bottom: 0.4rem;
+    }
+
+    .colophon a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .colophon a:hover { text-decoration: underline; }
+
+    /* three-col layout for inventions */
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 720px) {
+      .three-col { grid-template-columns: 1fr; }
+      nav a { display: none; }
+      nav a.active { display: flex; }
+    }
+
+    .invention-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .invention-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .inv-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 3.5rem;
+      color: var(--blue);
+      opacity: 0.18;
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      line-height: 1;
+    }
+
+    .inv-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .invention-card h3 {
+      font-size: 1.3rem;
+      margin-top: 0;
+      color: var(--text);
+    }
+
+    .invention-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">TBL Series</span>
+  <a href="0-who.html">Vol 0 · Who</a>
+  <a href="1-web.html" class="active">Vol 1 · Web</a>
+  <a href="2-world.html">Vol 2 · World</a>
+  <a href="3-legacy.html">Vol 3 · Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <!-- Hero SVG: HTTP request-response cycle animating — browser → server → HTML → browser -->
+  <svg class="hero-svg" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#2563eb" opacity="0.6"/>
+      </marker>
+      <marker id="arr-o" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#ea580c" opacity="0.6"/>
+      </marker>
+    </defs>
+
+    <rect width="1200" height="680" fill="url(#glow1)"/>
+
+    <!-- browser box left -->
+    <rect x="80" y="290" width="200" height="100" rx="8" fill="#0a0e1a" stroke="#2563eb" stroke-width="1.5" opacity="0.7"/>
+    <text x="180" y="332" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#2563eb" opacity="0.8">BROWSER</text>
+    <text x="180" y="352" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">http://info.cern.ch/</text>
+    <text x="180" y="370" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">CLIENT</text>
+
+    <!-- server box right -->
+    <rect x="920" y="290" width="200" height="100" rx="8" fill="#0a0e1a" stroke="#ea580c" stroke-width="1.5" opacity="0.7"/>
+    <text x="1020" y="332" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#ea580c" opacity="0.8">SERVER</text>
+    <text x="1020" y="352" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">NeXT at CERN</text>
+    <text x="1020" y="370" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">info.cern.ch</text>
+
+    <!-- HTML doc box (middle, lower) -->
+    <rect x="500" y="490" width="200" height="80" rx="6" fill="#0a0e1a" stroke="#4ade80" stroke-width="1" opacity="0.6"/>
+    <text x="600" y="526" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#4ade80" opacity="0.8">&lt;html&gt;</text>
+    <text x="600" y="544" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">HTML document</text>
+    <text x="600" y="558" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#4ade80" opacity="0.6">&lt;/html&gt;</text>
+
+    <!-- REQUEST line: browser → server (top) -->
+    <line x1="282" y1="320" x2="918" y2="320" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.5" marker-end="url(#arr)">
+      <animate attributeName="stroke-dashoffset" values="0;-60" dur="2.5s" repeatCount="indefinite"/>
+    </line>
+    <text x="600" y="308" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#2563eb" opacity="0.7">GET / HTTP/1.1</text>
+
+    <!-- RESPONSE line: server → browser (below, via HTML box) -->
+    <polyline points="920,360 750,360 700,490" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.5" marker-end="url(#arr-o)">
+      <animate attributeName="stroke-dashoffset" values="0;-60" dur="3s" begin="1.2s" repeatCount="indefinite"/>
+    </polyline>
+    <polyline points="500,530 450,530 450,380 282,380" fill="none" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.5" marker-end="url(#arr-o)">
+      <animate attributeName="stroke-dashoffset" values="0;-60" dur="3s" begin="2.4s" repeatCount="indefinite"/>
+    </polyline>
+    <text x="820" y="378" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#ea580c" opacity="0.7">200 OK</text>
+
+    <!-- animated travelling packet — request -->
+    <circle r="6" fill="#2563eb" opacity="0.9">
+      <animateMotion dur="2.5s" repeatCount="indefinite" begin="0s">
+        <mpath href="#req-path"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;1;1;0" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <path id="req-path" d="M 282,320 L 918,320" fill="none"/>
+
+    <!-- animated travelling packet — response -->
+    <circle r="6" fill="#ea580c" opacity="0.9">
+      <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.5s">
+        <mpath href="#resp-path"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="0;0;1;1;0" dur="3.5s" repeatCount="indefinite" begin="1.5s"/>
+    </circle>
+    <path id="resp-path" d="M 920,360 L 700,360 L 600,490 L 500,530 L 282,380" fill="none"/>
+
+    <!-- labels -->
+    <text x="600" y="110" text-anchor="middle" font-family="Cinzel" font-size="14" fill="#2563eb" opacity="0.3" font-weight="600">HTTP REQUEST / RESPONSE CYCLE</text>
+  </svg>
+
+  <p class="vol-label">Volume One · The Work</p>
+  <h1 class="hero-title">The Three <span>Inventions</span></h1>
+  <p class="hero-sub">HTML, HTTP, and the URL — three ideas that became the architecture of the modern world</p>
+</header>
+
+<main>
+
+  <!-- THE THREE INVENTIONS -->
+  <section id="inventions">
+    <div class="container">
+      <h2>The Three <span class="accent">Inventions</span></h2>
+
+      <p>When Berners-Lee sat down to build the World Wide Web, he built three things. Not one. Not a single protocol or a single format, but three interlocking pieces that together created something none of them could have done alone. Every website that has ever existed runs on all three. They are unchanged in their fundamentals since 1990.</p>
+
+      <div class="three-col">
+        <div class="invention-card">
+          <span class="inv-num">1</span>
+          <p class="inv-label">The Format</p>
+          <h3>HTML</h3>
+          <p>HyperText Markup Language. The language for structuring content on a web page. Tags define headings, paragraphs, images, links. The link — the anchor tag — is the key: it connects any document to any other document on the web. HTML is what a browser reads to know what to display.</p>
+        </div>
+        <div class="invention-card">
+          <span class="inv-num">2</span>
+          <p class="inv-label">The Protocol</p>
+          <h3>HTTP</h3>
+          <p>HyperText Transfer Protocol. The set of rules for how a browser asks for a document and how a server sends it back. A request goes out — GET / HTTP/1.1. A response comes back — 200 OK — with the document attached. The entire web runs on this conversation, billions of times per second.</p>
+        </div>
+        <div class="invention-card">
+          <span class="inv-num">3</span>
+          <p class="inv-label">The Address</p>
+          <h3>URL</h3>
+          <p>Uniform Resource Locator. A unique address for any document anywhere on the internet. http://info.cern.ch/ — the protocol, the server, the path. The URL is what makes it possible to link: you can always say exactly where anything is. Without it, hypertext would have no way to point.</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 2.5rem;">The genius was not in any one of these individually — it was in putting all three together. HTML without HTTP has no way to travel. HTTP without URLs has nothing to address. URLs without HTML have nothing to link. The three form a triangle: each one enables the other two.</p>
+    </div>
+  </section>
+
+  <!-- HTTP CYCLE DIAGRAM (main content) -->
+  <section id="http-cycle">
+    <div class="container">
+      <h2>The HTTP <span class="accent">Request-Response Cycle</span></h2>
+
+      <p>Every time you visit a website, the same basic conversation happens. Your browser sends a request to a server. The server finds the document and sends it back. Your browser reads the HTML and displays the page. The entire interaction — for a simple page — takes milliseconds. Berners-Lee defined this conversation in 1990, and it still works the same way.</p>
+
+      <div class="http-diagram-wrap">
+        <p class="http-diagram-label">Animated — HTTP Request / Response</p>
+
+        <!-- Inline animated HTTP cycle diagram -->
+        <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-height:340px;">
+          <defs>
+            <marker id="a1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#2563eb"/>
+            </marker>
+            <marker id="a2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#ea580c"/>
+            </marker>
+            <marker id="a3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0,8 3,0 6" fill="#4ade80"/>
+            </marker>
+          </defs>
+
+          <!-- BROWSER -->
+          <rect x="30" y="130" width="160" height="100" rx="8" fill="#0a0e1a" stroke="#2563eb" stroke-width="2"/>
+          <text x="110" y="168" text-anchor="middle" font-family="Space Mono" font-size="13" fill="#2563eb" font-weight="700">BROWSER</text>
+          <text x="110" y="188" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">Your Computer</text>
+          <text x="110" y="206" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">Client</text>
+          <!-- browser icon lines -->
+          <rect x="48" y="222" width="124" height="6" rx="2" fill="#2563eb" opacity="0.2"/>
+          <rect x="48" y="232" width="80" height="4" rx="2" fill="#2563eb" opacity="0.1"/>
+
+          <!-- SERVER -->
+          <rect x="710" y="130" width="160" height="100" rx="8" fill="#0a0e1a" stroke="#ea580c" stroke-width="2"/>
+          <text x="790" y="168" text-anchor="middle" font-family="Space Mono" font-size="13" fill="#ea580c" font-weight="700">SERVER</text>
+          <text x="790" y="188" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">info.cern.ch</text>
+          <text x="790" y="206" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">NeXT / CERN 1990</text>
+
+          <!-- HTML DOC (middle) -->
+          <rect x="370" y="240" width="160" height="80" rx="6" fill="#0a0e1a" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="450" y="270" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#4ade80">&lt;html&gt;</text>
+          <text x="450" y="288" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#8888aa">HTML Document</text>
+          <text x="450" y="306" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#4ade80">&lt;/html&gt;</text>
+
+          <!-- Step labels -->
+          <text x="450" y="55" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#2563eb">① GET /index.html HTTP/1.1</text>
+          <text x="450" y="70" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#2563eb">Host: info.cern.ch</text>
+
+          <text x="640" y="175" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#ea580c">② 200 OK</text>
+          <text x="290" y="215" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#4ade80">③ HTML → Rendered</text>
+
+          <!-- Arrow 1: browser → server (request) -->
+          <line x1="192" y1="155" x2="708" y2="155" stroke="#2563eb" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#a1)">
+            <animate attributeName="stroke-dashoffset" values="0;-90" dur="2s" repeatCount="indefinite"/>
+          </line>
+
+          <!-- Arrow 2: server sends HTML down -->
+          <polyline points="710,190 550,190 530,240" fill="none" stroke="#ea580c" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#a2)">
+            <animate attributeName="stroke-dashoffset" values="0;-90" dur="2s" begin="1s" repeatCount="indefinite"/>
+          </polyline>
+
+          <!-- Arrow 3: HTML goes to browser -->
+          <polyline points="370,280 230,280 192,200" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="10 5" marker-end="url(#a3)">
+            <animate attributeName="stroke-dashoffset" values="0;-90" dur="2s" begin="2s" repeatCount="indefinite"/>
+          </polyline>
+
+          <!-- Moving dots -->
+          <circle r="7" fill="#2563eb">
+            <animateMotion dur="2s" repeatCount="indefinite" begin="0s">
+              <mpath href="#p-req"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <path id="p-req" d="M 192,155 L 708,155" fill="none"/>
+
+          <circle r="7" fill="#ea580c">
+            <animateMotion dur="2s" repeatCount="indefinite" begin="1s">
+              <mpath href="#p-resp"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+          </circle>
+          <path id="p-resp" d="M 710,190 L 550,190 L 530,240" fill="none"/>
+
+          <circle r="7" fill="#4ade80">
+            <animateMotion dur="2s" repeatCount="indefinite" begin="2s">
+              <mpath href="#p-render"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;0;1;0" dur="2s" repeatCount="indefinite" begin="2s"/>
+          </circle>
+          <path id="p-render" d="M 370,280 L 230,280 L 192,200" fill="none"/>
+
+          <!-- step numbers in circles -->
+          <circle cx="450" cy="108" r="12" fill="#2563eb" opacity="0.2"/>
+          <text x="450" y="113" text-anchor="middle" font-family="Space Mono" font-size="11" fill="#2563eb" font-weight="700">①</text>
+        </svg>
+      </div>
+
+      <div class="mono-block">
+        <span class="c">// Step 1 — Browser sends:</span><br>
+        <span class="tag">GET</span> /index.html HTTP/1.1<br>
+        Host: info.cern.ch<br><br>
+        <span class="c">// Step 2 — Server replies:</span><br>
+        HTTP/1.1 <span class="val">200 OK</span><br>
+        Content-Type: text/html<br><br>
+        <span class="c">// Step 3 — Server sends the document:</span><br>
+        <span class="tag">&lt;html&gt;</span><br>
+        &nbsp;&nbsp;<span class="tag">&lt;head&gt;</span><span class="tag">&lt;title&gt;</span>World Wide Web<span class="tag">&lt;/title&gt;&lt;/head&gt;</span><br>
+        &nbsp;&nbsp;<span class="tag">&lt;body&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;h1&gt;</span>World Wide Web<span class="tag">&lt;/h1&gt;</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="tag">&lt;p&gt;</span>The WorldWideWeb (W3) is a wide-area hypermedia...<span class="tag">&lt;/p&gt;</span><br>
+        &nbsp;&nbsp;<span class="tag">&lt;/body&gt;</span><br>
+        <span class="tag">&lt;/html&gt;</span><br><br>
+        <span class="c">// Step 4 — Browser renders the page. Done.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY INSIGHT -->
+  <section id="insight">
+    <div class="container">
+      <h2>The Key <span class="accent">Insight</span></h2>
+
+      <p>Before Berners-Lee, the internet existed. Before Berners-Lee, hypertext existed. Before Berners-Lee, naming systems existed. He did not invent any of the underlying components. What he invented was the specific combination — and the specific decision to make that combination universal and free.</p>
+
+      <p>The internet — originally ARPANET — was a packet-switched network that allowed computers to communicate across long distances. By 1989, it was a working global infrastructure connecting universities, research institutions, and governments. But it had no universal way to share formatted documents across it. You could send files, send email, connect to remote terminals — but there was no common standard for a readable, linked document.</p>
+
+      <p><strong>Ted Nelson</strong> had proposed hypertext in 1965 — the concept of linked documents, where text could contain references (links) to other text. Nelson worked on a system called Xanadu for decades, attempting to build a global hypertext system. It never shipped. The idea was real and powerful; the implementation was never completed.</p>
+
+      <p>Berners-Lee's insight was to take Nelson's concept and implement it over the existing internet, using a simple enough system that it could be implemented by anyone, on any computer, in any operating system. The key move was not making it perfect — it was making it simple. Simple enough to implement in an afternoon. Simple enough that anyone could set up a server. Simple enough that the web could grow without central control.</p>
+
+      <blockquote>
+        "Any document anywhere can link to any other document anywhere. That is the key idea. Not the technology — the topology."
+        <cite>— Paraphrase of Berners-Lee's core insight</cite>
+      </blockquote>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-icon">01</p>
+          <h3>The Internet (already existed)</h3>
+          <p>TCP/IP, packet switching, global infrastructure connecting computers. ARPANET → Internet. The network was there; it just had no web.</p>
+        </div>
+        <div class="card">
+          <p class="card-icon">02</p>
+          <h3>Hypertext (already proposed)</h3>
+          <p>Ted Nelson, 1965. The concept of linked documents. Never fully implemented before the web. Berners-Lee took the idea and shipped it.</p>
+        </div>
+        <div class="card">
+          <p class="card-icon">03</p>
+          <h3>Naming (new contribution)</h3>
+          <p>The URL — a universal address for any document. Without a naming system, hypertext links have nowhere to point. The URL makes the web addressable.</p>
+        </div>
+        <div class="card">
+          <p class="card-icon">04</p>
+          <h3>The Synthesis</h3>
+          <p>Internet + hypertext + naming = the web. The invention was the combination. All three pieces were necessary. None was sufficient alone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FIRST URL / FIRST HTML -->
+  <section id="first">
+    <div class="container">
+      <h2>The First URL and <span class="accent">First HTML</span></h2>
+
+      <p>The first URL ever used in anger was:</p>
+
+      <div class="mono-block">
+        http://info.cern.ch/<br><br>
+        <span class="c">Protocol ─────┘    │      │</span><br>
+        <span class="c">Server ─────────────┘      │</span><br>
+        <span class="c">Path ───────────────────────┘</span>
+      </div>
+
+      <p>The first web page, hosted at that address, described the project itself. This was characteristically Berners-Lee: the first thing the web said was an explanation of the web. Documentation before everything else.</p>
+
+      <p>The first HTML ever written by Berners-Lee established conventions that persist to this day. The tag structure — opening tag, content, closing tag — is unchanged. The anchor tag with its href attribute — the hyperlink — is unchanged. The basic document structure (head, body, title) is unchanged. The first HTML was also, in its structure, the last HTML: every web page ever written follows its grammar.</p>
+
+      <div class="mono-block">
+        <span class="c">&lt;!-- The first web page structure, December 1990 --&gt;</span><br>
+        <span class="tag">&lt;HEADER&gt;</span><br>
+        <span class="tag">&lt;TITLE&gt;</span>World Wide Web<span class="tag">&lt;/TITLE&gt;</span><br>
+        <span class="tag">&lt;NEXTID&gt;</span> N<span class="val">55</span><span class="tag">&lt;/NEXTID&gt;</span><br>
+        <span class="tag">&lt;/HEADER&gt;</span><br>
+        <span class="tag">&lt;BODY&gt;</span><br>
+        <span class="tag">&lt;H1&gt;</span>World Wide Web<span class="tag">&lt;/H1&gt;</span><br><br>
+        The WorldWideWeb (W3) is a wide-area hypermedia<br>
+        information retrieval initiative aiming to give<br>
+        universal access to a large universe of documents.<br><br>
+        <span class="tag">&lt;A</span> HREF<span class="val">="WhatIs.html"</span><span class="tag">&gt;</span>What is the World-Wide Web?<span class="tag">&lt;/A&gt;</span><br>
+        <span class="tag">&lt;/BODY&gt;</span><br><br>
+        <span class="c">&lt;!-- Still accessible: http://info.cern.ch/ --&gt;</span>
+      </div>
+
+      <p>That first page is still online, restored by CERN. You can visit it today. It is the oldest active web address in history.</p>
+    </div>
+  </section>
+
+  <!-- NO PATENT -->
+  <section id="patent">
+    <div class="container">
+      <h2>The Decision: <span class="accent">No Patent</span></h2>
+
+      <p>In April 1993, CERN made a formal declaration that the web technology — the software and the protocols Berners-Lee had developed — was placed in the public domain. Royalty-free. Irrevocably. This was not a default outcome. It was a decision, and Berners-Lee lobbied for it.</p>
+
+      <p>The alternative was to patent the web. CERN could have asserted intellectual property rights over HTML, HTTP, and the URL. It could have licensed them — as was common practice with other technologies. It could have collected royalties from every company that built a web server, every developer who used HTML, every browser that implemented HTTP. The accumulated royalties, in the world we actually live in, would have run to hundreds of billions of dollars.</p>
+
+      <p>They chose not to. Berners-Lee's argument was clear: the value of the web comes from its universality. A web that costs money to access, or that requires a licence to implement, is not a web — it is a proprietary network, like the many proprietary networks that existed before the web and failed to become universal. The web's power is precisely that everyone, everywhere, can use it identically. Patent protection would have destroyed that.</p>
+
+      <div class="band">
+        <div class="container">
+          <h2 style="font-size:1.3rem; margin-bottom:1rem;">What Royalty-Free Meant</h2>
+          <p>Berners-Lee has estimated that making the web open rather than proprietary caused it to grow approximately <strong style="color:#fff; font-size:1.3em;">1,000×</strong> faster than a licensed alternative would have. That figure is inherently speculative — there is no counterfactual to measure — but the direction is not in doubt. Openness was the growth engine.</p>
+          <p style="margin-top:1rem;">Every company that has ever made money on the web owes that money, indirectly, to this decision. Google. Amazon. Facebook. Netflix. Every web shop. Every news site. Every streaming service. Built on free protocols, openly published, maintained by a standards body Berners-Lee created to keep them free.</p>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">$0</div>
+          <div class="stat-label">Royalties Charged</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Patents Filed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1000×</div>
+          <div class="stat-label">Faster Growth (est.)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1.9B</div>
+          <div class="stat-label">Websites Today</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- W3C -->
+  <section id="w3c">
+    <div class="container">
+      <h2>The W3C: <span class="accent">Keeping the Web Open</span></h2>
+
+      <p>In 1994, Berners-Lee left CERN and founded the <strong>World Wide Web Consortium</strong> (W3C) at MIT, with a European host at INRIA and later additional hosts at Keio University in Japan. The W3C is the international standards body for the web. It develops and maintains the technical specifications that define HTML, CSS, and the other languages and protocols that make the web work.</p>
+
+      <p>The W3C's operating principle is that web standards must be royalty-free. Any company that contributes to a W3C standard must agree not to charge royalties for implementing that standard. This is not automatic — the W3C has had to fight for it, and there have been controversies — but it has held. The result is that the specifications for HTML5, CSS, SVG, and every other modern web technology are available for free, for anyone to implement.</p>
+
+      <p>Berners-Lee serves as Director of the W3C. His role is partly technical and partly political: ensuring that the web's open character is defended against the constant pressure to fragment it, close it, or monetise access to its core specifications.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-icon">W3C</p>
+          <h3>Founded 1994</h3>
+          <p>World Wide Web Consortium. International. Multi-stakeholder. MIT, INRIA, Keio. Berners-Lee as Director. Hundreds of member organisations.</p>
+        </div>
+        <div class="card">
+          <p class="card-icon">RF</p>
+          <h3>Royalty-Free Standards</h3>
+          <p>Every W3C standard is royalty-free. Any company contributing to a spec agrees not to charge patent royalties for implementing it. The core commitment.</p>
+        </div>
+        <div class="card">
+          <p class="card-icon">HTML</p>
+          <h3>HTML5, CSS3, and Beyond</h3>
+          <p>The W3C has developed hundreds of specifications: HTML5, CSS, SVG, ARIA, WebRTC, WebAssembly. The living standards of the open web.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p>ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0</p>
+  <p>Tim Berners-Lee Series · Volume 1: The Work</p>
+  <p>
+    <a href="0-who.html">Vol 0 · Who</a> &nbsp;·&nbsp;
+    <a href="1-web.html">Vol 1 · Web</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol 2 · World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </p>
+  <p style="margin-top:1rem; color:#555;">Compiled 2026 · All factual claims sourced from public record</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werner Heisenberg — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060a0a;
+    --teal: #0f766e;
+    --amber: #d97706;
+    --text: #d4e0dc;
+    --muted: #5a7a74;
+    --border: #0d2422;
+    --card-bg: #080f0f;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,10,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--amber);
+    border-color: var(--teal);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #041a18 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(15,118,110,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  /* BAND */
+  .band {
+    background: var(--teal);
+    color: #e0f2f0;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section {
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--amber); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(15,118,110,0.6);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--teal);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--teal);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.55;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+  }
+  .stat-number {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--teal);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* MYSTERY BOX */
+  .mystery {
+    background: linear-gradient(135deg, #0a1a18 0%, #041212 100%);
+    border: 1px solid var(--teal);
+    border-left: 4px solid var(--amber);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+  }
+  .mystery-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .mystery h3 {
+    margin-top: 0;
+    color: #fff;
+  }
+  /* COLOPHON */
+  .colophon {
+    border-top: 1px solid var(--border);
+    margin-top: 6rem;
+    padding-top: 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+    text-align: center;
+  }
+  .colophon a { color: var(--teal); text-decoration: none; }
+  @media (max-width: 600px) {
+    main { padding: 2.5rem 1.25rem; }
+    nav { padding: 0.6rem 1.25rem; }
+    .hero { min-height: 420px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Heisenberg</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol 0 · Who</a>
+    <a href="1-uncertainty.html">Vol 1 · Uncertainty</a>
+    <a href="2-world.html">Vol 2 · World</a>
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </div>
+</nav>
+
+<!-- HERO with animated SVG: matrix grid that pulses -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 1200 540" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="heroGrad" cx="50%" cy="55%" r="55%">
+        <stop offset="0%" stop-color="#0f766e" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#060a0a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="540" fill="url(#heroGrad)"/>
+    <!-- Matrix grid dots -->
+    <g fill="#0f766e" opacity="0.25">
+      <animateTransform attributeName="transform" type="translate" values="0,0;0,-4;0,0" dur="6s" repeatCount="indefinite"/>
+      <!-- Row 1 -->
+      <circle cx="120" cy="80" r="1.5"/><circle cx="240" cy="80" r="1.5"/><circle cx="360" cy="80" r="1.5"/>
+      <circle cx="480" cy="80" r="1.5"/><circle cx="600" cy="80" r="1.5"/><circle cx="720" cy="80" r="1.5"/>
+      <circle cx="840" cy="80" r="1.5"/><circle cx="960" cy="80" r="1.5"/><circle cx="1080" cy="80" r="1.5"/>
+      <!-- Row 2 -->
+      <circle cx="120" cy="160" r="1.5"/><circle cx="240" cy="160" r="1.5"/><circle cx="360" cy="160" r="1.5"/>
+      <circle cx="480" cy="160" r="1.5"/><circle cx="600" cy="160" r="1.5"/><circle cx="720" cy="160" r="1.5"/>
+      <circle cx="840" cy="160" r="1.5"/><circle cx="960" cy="160" r="1.5"/><circle cx="1080" cy="160" r="1.5"/>
+      <!-- Row 3 -->
+      <circle cx="120" cy="240" r="1.5"/><circle cx="240" cy="240" r="1.5"/><circle cx="360" cy="240" r="1.5"/>
+      <circle cx="480" cy="240" r="1.5"/><circle cx="600" cy="240" r="1.5"/><circle cx="720" cy="240" r="1.5"/>
+      <circle cx="840" cy="240" r="1.5"/><circle cx="960" cy="240" r="1.5"/><circle cx="1080" cy="240" r="1.5"/>
+      <!-- Row 4 -->
+      <circle cx="120" cy="320" r="1.5"/><circle cx="240" cy="320" r="1.5"/><circle cx="360" cy="320" r="1.5"/>
+      <circle cx="480" cy="320" r="1.5"/><circle cx="600" cy="320" r="1.5"/><circle cx="720" cy="320" r="1.5"/>
+      <circle cx="840" cy="320" r="1.5"/><circle cx="960" cy="320" r="1.5"/><circle cx="1080" cy="320" r="1.5"/>
+      <!-- Row 5 -->
+      <circle cx="120" cy="400" r="1.5"/><circle cx="240" cy="400" r="1.5"/><circle cx="360" cy="400" r="1.5"/>
+      <circle cx="480" cy="400" r="1.5"/><circle cx="600" cy="400" r="1.5"/><circle cx="720" cy="400" r="1.5"/>
+      <circle cx="840" cy="400" r="1.5"/><circle cx="960" cy="400" r="1.5"/><circle cx="1080" cy="400" r="1.5"/>
+    </g>
+    <!-- Glowing central lines -->
+    <line x1="300" y1="270" x2="900" y2="270" stroke="#0f766e" stroke-width="0.5" opacity="0.3">
+      <animate attributeName="opacity" values="0.1;0.5;0.1" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <line x1="600" y1="100" x2="600" y2="440" stroke="#d97706" stroke-width="0.5" opacity="0.2">
+      <animate attributeName="opacity" values="0.05;0.3;0.05" dur="5.5s" repeatCount="indefinite"/>
+    </line>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Volume 0 &mdash; The Person</span>
+    <h1 class="hero-title">Werner Heisenberg</h1>
+    <p class="hero-subtitle">1901 &ndash; 1976</p>
+    <p class="hero-lead">The man who told us that the universe, at its root, refuses to be pinned down — and who lived a life of equal ambiguity.</p>
+  </div>
+</div>
+
+<div class="band">Physicist &middot; Nobel 1932 &middot; Uncertainty Principle &middot; Matrix Mechanics &middot; The Question of the Bomb</div>
+
+<main>
+
+  <!-- INTRO -->
+  <section>
+    <span class="section-label">Introduction</span>
+    <h2>The Man from Würzburg</h2>
+    <p>Werner Karl Heisenberg was born on 5 December 1901 in Würzburg, Bavaria, the second son of August Heisenberg, a scholar of Byzantine Greek, and Annie Wecklein, daughter of the headmaster of the Maximilian Gymnasium in Munich. He would die in Munich on 1 February 1976, at the age of 74, of kidney and gallbladder cancer. Between those two dates he invented matrix mechanics — the first complete mathematical formulation of quantum theory — derived the uncertainty principle that bears his name, helped lead the German nuclear weapons program during the Second World War, and became one of the most consequential and contested figures in the history of science.</p>
+    <p>He was also, by every account, an exceptionally gifted pianist, a passionate hiker and mountaineer, a devoted family man, and a man whose wartime choices have never been fully explained. The uncertainty that is written into the fabric of nature, Heisenberg's great discovery, extends also to his own biography. We cannot know with precision what he intended during those years under Hitler, and the more carefully we look, the less certain we become.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-number">22</span>
+        <span class="stat-label">Age at PhD</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">24</span>
+        <span class="stat-label">Age at Matrix Mechanics</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">25</span>
+        <span class="stat-label">Age at Uncertainty Principle</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">31</span>
+        <span class="stat-label">Age at Nobel Prize</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORIGINS -->
+  <section>
+    <span class="section-label">Origins</span>
+    <h2>Munich, and the Education of a Prodigy</h2>
+    <p>The Heisenberg family moved from Würzburg to Munich in 1910, when August was appointed professor of Byzantine philology at the University of Munich. Werner was nine years old. He attended the Maximilian Gymnasium — the same school his maternal grandfather had headed — and demonstrated an early and intense aptitude for mathematics. He reportedly learned calculus before it was formally taught, from a book he discovered at home.</p>
+    <p>The First World War swept through his youth. Bavaria in 1918 and 1919 was in chaos: the revolution, the short-lived Bavarian Soviet Republic, and the violent reaction of the Freikorps. Heisenberg, then seventeen, was involved in the youth brigade that helped keep order during the turbulent interregnum. He was shaped, as were so many of his generation, by the sense that the old certainties had dissolved — a sentiment that would, perhaps not coincidentally, find its scientific expression in a physics of irreducible uncertainty.</p>
+    <p>He was also shaped by <strong>Wandervogel</strong>, the German youth movement that turned hiking and romantic communion with nature into something like a spiritual practice. Throughout his life he would return to the mountains — to walk, to think, to recover. Some of his greatest intellectual breakthroughs occurred not at his desk but in transit, in motion, outdoors.</p>
+
+    <div class="pull-quote">
+      <blockquote>"When I was a boy I fell in love with mathematics, and this love has never left me. It was the beauty of pure mathematics that first drew me to theoretical physics."</blockquote>
+      <cite>— Heisenberg, in conversation with Werner Bloch, 1971</cite>
+    </div>
+  </section>
+
+  <!-- SOMMERFELD -->
+  <section>
+    <span class="section-label">Munich 1920</span>
+    <h2>Sommerfeld and the Old Quantum Theory</h2>
+    <p>In 1920 Heisenberg enrolled at the University of Munich, intending to study pure mathematics under Ferdinand von Lindemann. The meeting was disastrous — von Lindemann was unimpressed and unwelcoming. Heisenberg then sought out <strong>Arnold Sommerfeld</strong>, the great theoretical physicist who was at that time running the most productive and influential physics seminar in the world. Sommerfeld, who had an extraordinary gift for identifying talent, recognized Heisenberg immediately.</p>
+    <p>Sommerfeld's institute was at the cutting edge of the <em>old quantum theory</em> — the patchwork of classical mechanics and Bohr's quantum postulates that everyone knew was fundamentally unsatisfactory. The old quantum theory could not explain the intensities of spectral lines, could not handle atoms with more than one electron, and rested on arbitrary rules (the "Bohr-Sommerfeld quantization conditions") without any underlying justification. It was scaffolding over a void, and everyone knew it.</p>
+    <p>Heisenberg took to theoretical physics immediately and completely. He was so advanced that Sommerfeld brought him as a junior collaborator to the Solvay Conference in 1921, and by 1922 had sent him to Göttingen to attend lectures by Niels Bohr — a visit that would be the hinge of Heisenberg's life.</p>
+
+    <h3>The Bohr Encounter, 1922</h3>
+    <p>Bohr came to Göttingen in June 1922 to deliver a series of lectures on atomic structure — what became known as the "Bohr Festival." It was at one of these lectures that the twenty-year-old Heisenberg raised his hand and respectfully but firmly challenged one of Bohr's calculations. Bohr was taken aback — and then delighted. After the lecture he approached Heisenberg and invited him for a walk. That walk lasted three hours.</p>
+    <p>Bohr later said that it was in this conversation that he first felt the problem of atomic theory might genuinely be solved. He saw in Heisenberg someone who combined mathematical facility with genuine physical intuition — someone who was not satisfied by the patched-together compromises of the old theory. He invited Heisenberg to come to Copenhagen.</p>
+  </section>
+
+  <!-- GÖTTINGEN AND PHD -->
+  <section>
+    <span class="section-label">Göttingen 1922–1923</span>
+    <h2>Born, Göttingen, and the PhD</h2>
+    <p>After the Bohr Festival lectures, Sommerfeld sent Heisenberg to spend a semester in Göttingen under <strong>Max Born</strong>. Born was one of the great mathematical physicists of the era — more rigorous, more algebraically formidable than the intuitively-driven Bohr. The combination of influences would prove decisive: from Sommerfeld Heisenberg learned physical intuition; from Bohr he learned to question the conceptual foundations; from Born he learned mathematical precision and the power of abstract algebra.</p>
+    <p>Heisenberg completed his PhD at Munich in July 1923, at age twenty-one — technically twenty-two, since his birthday fell in December. The dissertation concerned turbulence in fluids, a subject that Sommerfeld had suggested. His oral examination famously nearly ended in disaster: the experimentalist Wilhelm Wien, who sat on his committee, was irritated by Heisenberg's inability to explain the resolving power of a microscope or the operation of a storage battery. Wien voted to fail him outright. Sommerfeld and the mathematician Ferdinand von Lindemann voted to pass. Heisenberg scraped through with the lowest possible passing grade.</p>
+    <p>He did not let it rattle him. Within two years he would do the most important work in physics of the twentieth century.</p>
+  </section>
+
+  <!-- HELGOLAND -->
+  <section>
+    <span class="section-label">Helgoland, June 1925</span>
+    <h2>The Island, the Sea, and the Birth of Quantum Mechanics</h2>
+    <p>By 1925 Heisenberg was working with Born in Göttingen and spending extended periods in Copenhagen with Bohr. He was twenty-three. The problem consuming him — consuming everyone — was the failure of the old quantum theory. It gave right answers for some things and wrong answers for others, and its foundations were rotten. The only honest path forward was to throw out the classical framework entirely and build something new from the observed facts alone.</p>
+    <p>In June 1925 Heisenberg was suffering severely from hay fever. His face was swollen, his eyes were streaming. Born, taking pity, gave him two weeks off. Heisenberg took the train north and crossed by ferry to <strong>Helgoland</strong>, a small, nearly treeless island in the North Sea, far enough from the mainland that there was no pollen. The air off the sea was clean.</p>
+    <p>On Helgoland he walked, swam in the cold water, memorized Goethe, and thought. He was attempting to reformulate atomic physics using only observable quantities — the frequencies and intensities of spectral lines that could actually be measured in the laboratory — rather than unobservable electron orbits. The key insight: <em>do not try to picture what the electron is doing between observations. Work only with what can be observed.</em></p>
+    <p>The mathematics that emerged was strange. When he tried to compute the energy of a quantum state and ensure that it was conserved, he found that the quantities he was working with did not commute — that is, the order of multiplication mattered: <strong>A × B ≠ B × A</strong>. He recognized this was an entirely new kind of mathematics. He was alarmed. He was also fairly sure it was right.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It was about three o'clock in the morning when the final result of the calculation lay before me. At first I was deeply alarmed. I had the feeling that, through the surface of atomic phenomena, I was looking at a strangely beautiful interior, and felt almost giddy at the thought that I now had to probe this wealth of mathematical structures nature had so generously spread out before me."</blockquote>
+      <cite>— Heisenberg, Physics and Beyond, 1971</cite>
+    </div>
+
+    <p>He walked to the southern tip of Helgoland and climbed a rock formation at the water's edge. He sat there as the sun rose over the North Sea. He was twenty-three years old. He had just invented quantum mechanics.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section>
+    <span class="section-label">Life & Chronology</span>
+    <h2>A Life in Time</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">5 December 1901</div>
+        <div class="timeline-title">Born in Würzburg, Bavaria</div>
+        <div class="timeline-body">Second son of August Heisenberg, professor of Byzantine Greek, and Annie Wecklein. The family moves to Munich in 1910.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1920</div>
+        <div class="timeline-title">Enrolls at University of Munich</div>
+        <div class="timeline-body">Rejected by von Lindemann; taken on by Arnold Sommerfeld. Begins rapid ascent in theoretical physics.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">June 1922</div>
+        <div class="timeline-title">Meets Niels Bohr</div>
+        <div class="timeline-body">At the Bohr Festival lectures in Göttingen; challenges Bohr publicly; invited for a three-hour walk that will define both their lives.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">July 1923</div>
+        <div class="timeline-title">PhD, University of Munich</div>
+        <div class="timeline-body">Dissertation on turbulence. Nearly fails oral examination due to inability to explain the resolving power of a microscope to Wilhelm Wien. Passes by the narrowest margin.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">June 1925</div>
+        <div class="timeline-title">Matrix Mechanics on Helgoland</div>
+        <div class="timeline-body">Isolated on the North Sea island to escape hay fever, Heisenberg derives the first complete formulation of quantum mechanics, working only with observable quantities.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">November 1925</div>
+        <div class="timeline-title">Born–Jordan–Heisenberg Paper</div>
+        <div class="timeline-body">The three-man paper that casts matrix mechanics in full mathematical form, identifying the commutation relation pq − qp = ℏ/i as the fundamental postulate of quantum theory.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">March 1927</div>
+        <div class="timeline-title">Uncertainty Principle</div>
+        <div class="timeline-body">Paper submitted: "Über den anschaulichen Inhalt der quantentheoretischen Kinematik und Mechanik." The inequality Δx · Δp ≥ ℏ/2 is stated for the first time.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1927</div>
+        <div class="timeline-title">Professor in Leipzig</div>
+        <div class="timeline-body">Appointed full professor at Leipzig at age 25 — one of the youngest in Germany's history. Builds a major research school.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1932</div>
+        <div class="timeline-title">Nobel Prize in Physics</div>
+        <div class="timeline-body">Awarded the Nobel Prize "for the creation of quantum mechanics." Schrödinger and Dirac share the 1933 Nobel. Heisenberg is 31.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1933</div>
+        <div class="timeline-title">Hitler Comes to Power</div>
+        <div class="timeline-body">Heisenberg refuses to leave Germany. Attacked by the "Deutsche Physik" movement as a "white Jew" for teaching relativity and quantum theory. Himmler eventually orders the attacks stopped, but the damage to Heisenberg's standing is lasting.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">September 1939</div>
+        <div class="timeline-title">Drafted into the German Nuclear Program</div>
+        <div class="timeline-body">Germany invades Poland; Heisenberg is called to Berlin to lead the theoretical side of what becomes the Uranverein — the German uranium project.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">September 1941</div>
+        <div class="timeline-title">The Copenhagen Meeting</div>
+        <div class="timeline-body">Heisenberg visits occupied Copenhagen and meets privately with Niels Bohr. What was said between them has never been established with certainty. Bohr leaves the meeting shaken and angry. The meeting is one of the most debated episodes in the history of science.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">August 1945</div>
+        <div class="timeline-title">Farm Hall; Hiroshima</div>
+        <div class="timeline-body">Heisenberg and nine other German physicists are interned at Farm Hall, England. Their secretly recorded conversations upon hearing the news of Hiroshima reveal that they had not come close to building a bomb.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1946–1976</div>
+        <div class="timeline-title">Postwar Germany</div>
+        <div class="timeline-body">Heisenberg rebuilds German physics. Directs the Max Planck Institute for Physics in Munich. Pursues a unified field theory. Remains active in public debate on nuclear weapons and science ethics until his death.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1 February 1976</div>
+        <div class="timeline-title">Death in Munich</div>
+        <div class="timeline-body">Werner Heisenberg dies at home in Munich, aged 74, of kidney and gallbladder cancer.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE MYSTERY -->
+  <section>
+    <span class="section-label">The Central Question</span>
+    <h2>The War, the Bomb, and the Question That Cannot Be Closed</h2>
+
+    <div class="mystery">
+      <span class="mystery-label">Unresolved History</span>
+      <h3>Did Heisenberg Choose Not to Build the Bomb?</h3>
+      <p>Germany had the knowledge, the physicists, and the industrial capacity to attempt an atomic bomb in the early 1940s. It did not build one. Werner Heisenberg led the theoretical effort. The question — <em>why didn't Germany build the bomb?</em> — has never been definitively answered, and Heisenberg is at the center of the ambiguity.</p>
+    </div>
+
+    <p>There are two broad interpretations, and adherents of each consider the other's position historically naive:</p>
+
+    <h3>The Incompetence Hypothesis</h3>
+    <p>Heisenberg made an early and critical technical error: he miscalculated the critical mass of fissile material required for a bomb, arriving at a figure many times too large. This made a German bomb seem impossibly resource-intensive. The Germans therefore focused on reactors rather than weapons, and never got close to a bomb. On this view, Heisenberg simply got the physics wrong, and Germany's failure was a consequence of that error rather than any moral decision.</p>
+    <p>The Farm Hall transcripts — recordings made of the German physicists' private conversations after they were told of Hiroshima — lend significant weight to this view. Heisenberg and his colleagues are audibly astonished that the Americans had succeeded. Their conversations show they had not worked out the key physics of a fission bomb. They were not merely pretending ignorance for their captors.</p>
+
+    <h3>The Sabotage Hypothesis</h3>
+    <p>Heisenberg deliberately suppressed or misled the project. He understood the critical mass calculation. He could have pushed harder, organized better, redirected more resources. He chose not to. He was protecting physics from becoming a weapon — or protecting Germany from winning a war under Hitler — or both.</p>
+    <p>Heisenberg's own postwar account strongly favored this interpretation. He claimed to have told Bohr in Copenhagen in 1941 that he was deliberately avoiding weapons work. Bohr's response — furious rejection — suggests he heard something very different. The Copenhagen meeting of 1941 remains the hinge on which all interpretation turns.</p>
+
+    <h3>What the Evidence Permits</h3>
+    <p>The honest answer is: we do not know. The Farm Hall transcripts show German physicists who had not solved the bomb. They do not tell us whether this was by accident or design. Heisenberg's postwar testimony is self-serving. Bohr's letters (released by his family in 2002, long after Bohr's death) suggest that what Heisenberg actually said in Copenhagen was disturbingly close to a claim that Germany would win the war and physicists on both sides had better cooperate. Michael Frayn's 1998 play <em>Copenhagen</em> dramatizes this ambiguity with great precision — and concludes that the ambiguity is not incidental but essential.</p>
+    <p>Heisenberg's uncertainty principle describes a universe where certain things cannot be simultaneously known with precision. His own history exhibits the same property.</p>
+  </section>
+
+  <!-- CARDS: Who He Was -->
+  <section>
+    <span class="section-label">The Man</span>
+    <h2>Character and Dimensions</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">The Musician</span>
+        <h4>Concert-Level Pianist</h4>
+        <p>Heisenberg was a devoted and technically accomplished pianist. He practiced throughout his life and played Mozart, Bach, and Beethoven. Music was not an affectation but a genuine passion — several friends recalled that it was when playing piano that Heisenberg seemed most completely himself.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Hiker</span>
+        <h4>Wandervogel to the End</h4>
+        <p>The Wandervogel spirit he absorbed as a teenager never left him. He hiked the Alps regularly throughout his life. After his work on Helgoland, he climbed rocks at the island's tip to watch the sunrise. Physical motion and intellectual breakthrough were deeply linked in his psychology.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Teacher</span>
+        <h4>Builder of Schools</h4>
+        <p>At Leipzig, Heisenberg built one of the strongest theoretical physics departments in the world. He trained numerous students who went on to important careers. He was known as a patient, thoughtful teacher who could explain complex ideas with unusual clarity — except, notoriously, the resolving power of a microscope to Wilhelm Wien.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Patriot</span>
+        <h4>Chose to Stay</h4>
+        <p>Many of Germany's Jewish physicists fled after 1933. Heisenberg, not Jewish, chose to remain. He was attacked by the Deutsche Physik movement — Stark and Lenard called him a "white Jew" — but he stayed, considering it his duty to preserve German science and culture through the dark years.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Philosopher</span>
+        <h4>Physics and Philosophy</h4>
+        <p>Heisenberg took the philosophical implications of quantum mechanics seriously in a way that many physicists did not. His books — <em>Physics and Philosophy</em>, <em>Physics and Beyond</em> — wrestle with questions of epistemology and ontology that were not merely window-dressing but central to his scientific vision.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Family Man</span>
+        <h4>Elisabeth and Seven Children</h4>
+        <p>Heisenberg married Elisabeth Schumacher in 1937, with whom he had three sons and four daughters. By all accounts the marriage was happy and the household warm. He was a devoted, present father — unusual in an era when many scientists of his generation were largely absent from domestic life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section>
+    <span class="section-label">Closing</span>
+    <h2>What Remains</h2>
+    <p>Heisenberg left behind three things that will survive as long as physics survives. First, <strong>matrix mechanics</strong> — the first complete formulation of quantum theory, invented at age twenty-three on a North Sea island. Second, the <strong>uncertainty principle</strong> — the result that tells us that nature itself is not merely opaque to our measurements but is fundamentally indeterminate in a way that has no classical analogue. Third, the <strong>question</strong> of who he was during the war — a question that remains open, and which may be the most human thing about him.</p>
+    <p>Physics is full of geniuses. The particular kind of genius that Heisenberg represented — synthetic, architectural, willing to throw away all of classical physics and rebuild from scratch — is rarer. He did not merely extend what came before. He broke with it entirely, and built something new from observable facts alone. The quantum mechanics we use today, the quantum mechanics on which every transistor and laser is based, flows directly from those weeks on Helgoland in June 1925.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Natural science does not simply describe and explain nature; it is part of the interplay between nature and ourselves."</blockquote>
+      <cite>— Werner Heisenberg, Physics and Philosophy, 1958</cite>
+    </div>
+  </section>
+
+  <div class="colophon">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Werner Heisenberg Series &mdash; Vol. 0: The Person &nbsp;|&nbsp; <a href="1-uncertainty.html">Next: The Uncertainty Principle &rarr;</a></p>
+    <p>Library of Giants &nbsp;&middot;&nbsp; Compiled 2025 &nbsp;&middot;&nbsp; All quotations are historically attested.</p>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tim Berners-Lee — Vol. 2: His World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04060c;
+      --blue: #2563eb;
+      --orange: #ea580c;
+      --text: #e8e8f0;
+      --muted: #8888aa;
+      --card-bg: #0a0e1a;
+      --border: rgba(37,99,235,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.1rem;
+      line-height: 1.75;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,6,12,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      height: 52px;
+    }
+
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .vol-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    h1.hero-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-align: center;
+      color: var(--text);
+      max-width: 900px;
+      position: relative;
+    }
+
+    h1.hero-title span { color: var(--blue); }
+
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      text-align: center;
+      max-width: 620px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    h2 .accent { color: var(--orange); }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.4rem; }
+    p:last-child { margin-bottom: 0; }
+
+    em { color: var(--orange); font-style: italic; }
+    strong { color: var(--text); font-weight: 500; }
+
+    blockquote {
+      border-left: 3px solid var(--blue);
+      padding: 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+      background: var(--card-bg);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .card-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .mono-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--blue);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .mono-block .c { color: var(--muted); }
+    .mono-block .hi { color: var(--orange); }
+
+    .band {
+      background: var(--blue);
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+    }
+
+    .band h2 { color: #fff; }
+    .band p { color: rgba(255,255,255,0.85); }
+
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 160px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .stat:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    /* Growth chart container */
+    .chart-wrap {
+      margin: 3rem 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+
+    .chart-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    /* people grid */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .person-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .person-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .person-name {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .person-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .person-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-top: 0.4rem;
+    }
+
+    .colophon {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .colophon p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 2;
+      margin-bottom: 0.4rem;
+    }
+
+    .colophon a { color: var(--blue); text-decoration: none; }
+    .colophon a:hover { text-decoration: underline; }
+
+    /* growth bar chart */
+    .growth-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      height: 220px;
+      padding: 0 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .bar-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 100%;
+      max-width: 80px;
+      background: linear-gradient(to top, var(--blue), rgba(37,99,235,0.4));
+      border-radius: 3px 3px 0 0;
+      transition: opacity 0.3s;
+      animation: bar-rise 1.2s ease-out both;
+    }
+
+    @keyframes bar-rise {
+      from { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+      to { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    }
+
+    .bar:nth-child(1) { animation-delay: 0.1s; }
+    .bar-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .bar-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--blue);
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      nav a { display: none; }
+      nav a.active { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">TBL Series</span>
+  <a href="0-who.html">Vol 0 · Who</a>
+  <a href="1-web.html">Vol 1 · Web</a>
+  <a href="2-world.html" class="active">Vol 2 · World</a>
+  <a href="3-legacy.html">Vol 3 · Legacy</a>
+</nav>
+
+<!-- HERO with CERN / network grid SVG -->
+<header class="hero">
+  <svg class="hero-svg" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="g2" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.09"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="680" fill="url(#g2)"/>
+
+    <!-- Background grid representing CERN's network of researchers -->
+    <g opacity="0.07" stroke="#2563eb" stroke-width="1">
+      <line x1="0" y1="113" x2="1200" y2="113"/>
+      <line x1="0" y1="226" x2="1200" y2="226"/>
+      <line x1="0" y1="340" x2="1200" y2="340"/>
+      <line x1="0" y1="453" x2="1200" y2="453"/>
+      <line x1="0" y1="566" x2="1200" y2="566"/>
+      <line x1="150" y1="0" x2="150" y2="680"/>
+      <line x1="300" y1="0" x2="300" y2="680"/>
+      <line x1="450" y1="0" x2="450" y2="680"/>
+      <line x1="600" y1="0" x2="600" y2="680"/>
+      <line x1="750" y1="0" x2="750" y2="680"/>
+      <line x1="900" y1="0" x2="900" y2="680"/>
+      <line x1="1050" y1="0" x2="1050" y2="680"/>
+    </g>
+
+    <!-- Animated network nodes -->
+    <g>
+      <!-- node pulses at various grid intersections -->
+      <circle cx="300" cy="226" r="4" fill="#2563eb" opacity="0.4">
+        <animate attributeName="r" values="4;7;4" dur="3.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="600" cy="340" r="6" fill="#ea580c" opacity="0.6">
+        <animate attributeName="r" values="6;10;6" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="900" cy="226" r="4" fill="#2563eb" opacity="0.4">
+        <animate attributeName="r" values="4;7;4" dur="2.8s" begin="-1s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.8s" begin="-1s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="450" cy="453" r="3.5" fill="#2563eb" opacity="0.35">
+        <animate attributeName="r" values="3.5;6;3.5" dur="5s" begin="-2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="750" cy="453" r="3.5" fill="#ea580c" opacity="0.3">
+        <animate attributeName="r" values="3.5;6;3.5" dur="4.5s" begin="-3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="150" cy="340" r="3" fill="#2563eb" opacity="0.3">
+        <animate attributeName="r" values="3;5;3" dur="6s" begin="-1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1050" cy="340" r="3" fill="#2563eb" opacity="0.3">
+        <animate attributeName="r" values="3;5;3" dur="5s" begin="-4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- Connection lines between nodes, animated dash -->
+    <g opacity="0.25" stroke-width="1.2">
+      <line x1="300" y1="226" x2="600" y2="340" stroke="#2563eb" stroke-dasharray="6 4">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="600" y1="340" x2="900" y2="226" stroke="#2563eb" stroke-dasharray="6 4">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="3.5s" repeatCount="indefinite"/>
+      </line>
+      <line x1="450" y1="453" x2="600" y2="340" stroke="#ea580c" stroke-dasharray="6 4">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="4s" repeatCount="indefinite"/>
+      </line>
+      <line x1="750" y1="453" x2="600" y2="340" stroke="#ea580c" stroke-dasharray="6 4">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="4s" begin="-1s" repeatCount="indefinite"/>
+      </line>
+      <line x1="150" y1="340" x2="300" y2="226" stroke="#2563eb" stroke-dasharray="5 5">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="5s" repeatCount="indefinite"/>
+      </line>
+      <line x1="900" y1="226" x2="1050" y2="340" stroke="#2563eb" stroke-dasharray="5 5">
+        <animate attributeName="stroke-dashoffset" values="0;-40" dur="5s" begin="-2s" repeatCount="indefinite"/>
+      </line>
+    </g>
+  </svg>
+
+  <p class="vol-label">Volume Two · The World</p>
+  <h1 class="hero-title">The <span>Context</span></h1>
+  <p class="hero-sub">CERN in the 1980s, the internet that already existed, the hypertext that didn't quite, and the explosion that followed</p>
+</header>
+
+<main>
+
+  <!-- CERN -->
+  <section id="cern">
+    <div class="container">
+      <h2>CERN in the <span class="accent">1980s</span></h2>
+
+      <p>The European Organisation for Nuclear Research — always known by its French acronym, <em>CERN</em> — is one of the largest and most complex scientific institutions in human history. Founded in 1954, situated on the border between France and Switzerland near Geneva, it operates particle accelerators for experiments at the frontier of fundamental physics. By the 1980s, it employed several thousand staff and hosted tens of thousands of visiting researchers from more than a hundred countries.</p>
+
+      <p>The organisational challenge was extreme. Scientists came from different countries, different institutions, different disciplines. They worked on different experiments that connected to other experiments in complex, shifting ways. People arrived, did their work, and left — taking with them everything they knew about which systems connected to which, who the right person to contact was, what documentation existed and where. Institutional memory was fragile. The network of human knowledge at CERN was unmapped.</p>
+
+      <p>Berners-Lee arrived at CERN at exactly the right moment: a place with an acute information problem and the technical resources to think about solving it. CERN was not just any institution. Its physicists were among the most analytically rigorous people in the world, accustomed to working with large, complex systems. If a new information architecture was going to be prototyped anywhere, CERN was the place.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-year">Founded 1954</p>
+          <h3>CERN</h3>
+          <p>European Organisation for Nuclear Research. Geneva, Switzerland / France border. Thousands of permanent staff; tens of thousands of visiting researchers from 100+ countries.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">The Problem</p>
+          <h3>Institutional Memory</h3>
+          <p>People came and went. Knowledge of who did what, which project connected to which, what documentation existed — constantly being lost. No system to track the web of connections.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">The Context</p>
+          <h3>High-Energy Physics</h3>
+          <p>The experiments were massive. The Large Hadron Collider (still decades away) would require thousands of collaborators. CERN needed an information system that matched the complexity of its science.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">The Resource</p>
+          <h3>Technical Rigour</h3>
+          <p>CERN had the hardware, the networking expertise, and the intellectual culture to adopt a new technical system if it was good enough. It was the ideal proving ground.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE INTERNET -->
+  <section id="internet">
+    <div class="container">
+      <h2>The Internet: <span class="accent">Already There</span></h2>
+
+      <p>When Berners-Lee proposed the web in 1989, the internet already existed. It had existed, in various forms, for two decades. The distinction between the internet and the web is one of the most commonly confused points in the history of technology, and it matters: they are completely different things.</p>
+
+      <p>The internet is a physical and logical network — a system for routing packets of data between computers anywhere in the world. It began as ARPANET in 1969, a project of the US Defense Advanced Research Projects Agency. By the early 1980s, it had acquired the TCP/IP protocols that still govern it today. By 1989, it connected universities, research institutions, and government agencies across the world. Email worked. File transfer worked. Remote login worked.</p>
+
+      <p>What the internet lacked, in 1989, was a common way to present and link formatted documents across it. You could send a file — but the recipient needed to know what program to open it with. You could connect to a remote computer — but you had to know exactly which computer and what it contained. There was no universal, human-readable layer on top of the network. That is what Berners-Lee added.</p>
+
+      <div class="mono-block">
+        <span class="c">// The Stack — 1989 vs 1991</span><br><br>
+        BEFORE THE WEB:          AFTER THE WEB:<br>
+        ─────────────────         ─────────────────────<br>
+        Email / FTP / Telnet  →   <span class="hi">HTTP + HTML + URL</span><br>
+        TCP/IP               →   TCP/IP (unchanged)<br>
+        Physical Network     →   Physical Network (unchanged)<br><br>
+        <span class="c">// The web is a layer on top of the internet.</span><br>
+        <span class="c">// The internet is not the web. The web runs on the internet.</span>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">1969</div>
+          <div class="stat-label">ARPANET Founded</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1983</div>
+          <div class="stat-label">TCP/IP Adopted</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1989</div>
+          <div class="stat-label">Web Proposed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1991</div>
+          <div class="stat-label">Web Goes Public</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TED NELSON -->
+  <section id="nelson">
+    <div class="container">
+      <h2>Ted Nelson and <span class="accent">Hypertext</span></h2>
+
+      <p>In 1965, an American philosopher and sociologist named <strong>Theodor Holm Nelson</strong> — known universally as Ted Nelson — proposed a concept he called <em>hypertext</em>. Hypertext was text that contained links to other text. Documents that referenced other documents, non-linearly, in a web of interconnections rather than a linear sequence. The idea was powerful, strange, and ahead of its time.</p>
+
+      <p>Nelson spent the next several decades working on a system to implement his vision. He called it <em>Xanadu</em> — named after the Coleridge poem. Xanadu was to be a global hypertext system: a single, unified document space in which any text could link to any other text, version control was built in, and authors were compensated for content reuse. It was an extraordinarily ambitious design, and it was never shipped. The first usable public release came decades later, long after the web had made it irrelevant.</p>
+
+      <p>Berners-Lee was aware of Nelson's work. He cited it explicitly in his proposal. The influence was real. But where Nelson aimed for a perfect, complete, unified system — with proper versioning, transclusion, micropayment — Berners-Lee built something deliberately simpler. Links in HTML were not bidirectional. There was no versioning. There was no payment system. The "broken link" problem Nelson had designed around was simply accepted as a cost of simplicity.</p>
+
+      <p>This pragmatic compromise is why the web exists and Xanadu does not. Berners-Lee later said: <em>"I took Ted Nelson's idea and stripped out everything that made it hard to ship."</em> The web is hypertext, imperfectly implemented, that actually ran.</p>
+
+      <blockquote>
+        "Ted Nelson coined the word hypertext. He worked for decades on Xanadu — a perfect hypertext system. It never shipped. I built a simpler version that ran on what was already there. Imperfect but real."
+        <cite>— Paraphrase of Berners-Lee on Nelson</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section id="people">
+    <div class="container">
+      <h2>The <span class="accent">People</span> Around Him</h2>
+
+      <p>No invention happens in a vacuum. The web required a specific ecosystem of people — collaborators, enablers, and subsequent builders who turned a prototype at CERN into a global phenomenon.</p>
+
+      <div class="people-grid">
+        <div class="person-card">
+          <p class="person-name">Robert Cailliau</p>
+          <p class="person-role">Co-Proposer — CERN</p>
+          <p class="person-desc">Belgian engineer at CERN who co-wrote the November 1990 "WorldWideWeb: Proposal for a HyperText Project" with Berners-Lee. Cailliau was the internal advocate who helped make the proposal concrete and persuasive to CERN management. Without his partnership, the project might have remained a solo curiosity.</p>
+        </div>
+        <div class="person-card">
+          <p class="person-name">Mike Sendall</p>
+          <p class="person-role">Supervisor — CERN</p>
+          <p class="person-desc">Berners-Lee's boss at CERN who approved the original 1989 proposal with the famous note "Vague but exciting." Sendall gave the project institutional cover at a critical moment. Without his approval, the work could not have proceeded. He died in 1999, before the scale of what he had enabled was fully apparent.</p>
+        </div>
+        <div class="person-card">
+          <p class="person-name">Ted Nelson</p>
+          <p class="person-role">Concept Origin — Hypertext</p>
+          <p class="person-desc">Coined the word "hypertext" in 1965. Proposed linked documents as an organising principle for knowledge. Never shipped a working system. His Xanadu project remains unfinished. But the concept he articulated is what Berners-Lee implemented — imperfectly, simply, and in a form that actually worked.</p>
+        </div>
+        <div class="person-card">
+          <p class="person-name">Marc Andreessen</p>
+          <p class="person-role">Mosaic — 1993</p>
+          <p class="person-desc">Computer science student at the University of Illinois who led the development of Mosaic, the first graphical web browser, in 1993. Mosaic could display images inline with text — a revolution in usability. It transformed the web from a text-based research tool into a medium that anyone could use. Andreessen went on to co-found Netscape.</p>
+        </div>
+        <div class="person-card">
+          <p class="person-name">Nicola Pellow</p>
+          <p class="person-role">Line Mode Browser — CERN</p>
+          <p class="person-desc">A maths student on placement at CERN who wrote the "Line Mode Browser" — the first browser that could run on any computer, not just the NeXT. This was crucial: Berners-Lee's original browser only ran on one platform. Pellow's browser made the web accessible on any terminal and was therefore the web's first truly cross-platform client.</p>
+        </div>
+        <div class="person-card">
+          <p class="person-name">Vint Cerf &amp; Bob Kahn</p>
+          <p class="person-role">TCP/IP — the Internet Itself</p>
+          <p class="person-desc">Co-designed TCP/IP, the fundamental protocol suite of the internet, in the 1970s. The web sits on top of TCP/IP. Without the internet infrastructure Cerf and Kahn created, Berners-Lee would have had no network to build on. Often called the "fathers of the internet" — not the web, but the layer beneath it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FIRST BROWSER -->
+  <section id="browser">
+    <div class="container">
+      <h2>WorldWideWeb: <span class="accent">The First Browser</span></h2>
+
+      <p>Berners-Lee's first browser was called <em>WorldWideWeb</em> — later renamed <em>Nexus</em> to avoid confusion with the web itself. It ran on the NeXTSTEP operating system, on NeXT computers that CERN had recently acquired. It was both a browser and an editor: it could not only read web pages but write and modify them. This reflected Berners-Lee's vision of the web as a read-write medium, not a read-only one.</p>
+
+      <p>The design choice to make the first browser an editor was significant and ahead of its time. Most of the subsequent browsers that made the web popular — Mosaic, Netscape, Internet Explorer — were read-only. The read-write vision did not fully arrive until Wikipedia, blogs, and eventually Web 2.0. In a sense, the web's first browser was more ambitious than anything that followed it for a decade.</p>
+
+      <p>The limitation of WorldWideWeb was critical: it only ran on NeXT hardware. CERN had NeXT computers, but most of the world did not. This was addressed in 1991 when <strong>Nicola Pellow</strong>, a maths student on placement at CERN, wrote a "Line Mode Browser" that could run on any computer with a terminal connection. The Line Mode Browser was text-only, without the graphical elegance of WorldWideWeb, but it worked everywhere. It was the web's first truly universal client.</p>
+
+      <div class="mono-block">
+        WorldWideWeb browser (later: Nexus)<br>
+        Platform: NeXTSTEP<br>
+        Capabilities: browse AND edit pages<br>
+        Author: Tim Berners-Lee, December 1990<br><br>
+        Line Mode Browser<br>
+        Platform: any terminal (VT100 compatible)<br>
+        Capabilities: browse only (text only)<br>
+        Author: Nicola Pellow, 1991<br><br>
+        Mosaic<br>
+        Platform: Unix, Mac, Windows<br>
+        Capabilities: graphical, images inline<br>
+        Author: Marc Andreessen et al., NCSA, 1993<br>
+        Impact: the browser that made the web popular
+      </div>
+    </div>
+  </section>
+
+  <!-- 1991 RELEASE -->
+  <section id="release">
+    <div class="container">
+      <h2>1991: <span class="accent">Released to the World</span></h2>
+
+      <p>On 6 August 1991, Tim Berners-Lee posted a short message to several internet newsgroups — alt.hypertext, comp.sys.next.announce, comp.text.hypertext — announcing the WorldWideWeb project and providing access to the software. The post was matter-of-fact and brief. It described what the system did and invited people to try it.</p>
+
+      <p>The response was modest at first. The internet of 1991 was not the internet of today: it was a specialist tool used primarily by academics and researchers. But the people who saw the post and downloaded the software were precisely the people who could do something with it — engineers, scientists, academics who understood what they were looking at and could set up servers of their own.</p>
+
+      <p>The first websites were not commercial products or media sites. They were what you would expect from researchers: documentation, references, project pages, university directories. The web's first years were quiet and academic. The explosion came later, with Mosaic.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-year">Aug 1991</p>
+          <h3>First Public Post</h3>
+          <p>Posted to internet newsgroups. The web is public. Anyone can download the software, run a server, create a website. The number of websites: 1.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">1993</p>
+          <h3>Mosaic</h3>
+          <p>Marc Andreessen and Eric Bina release Mosaic at NCSA. First graphical browser. Images inline with text. Cross-platform (Unix, Mac, Windows). The web becomes accessible to non-specialists.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Apr 1993</p>
+          <h3>CERN Makes Web Royalty-Free</h3>
+          <p>CERN formally declares the web technology public domain. Royalty-free in perpetuity. The legal foundation of the open web.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">1994</p>
+          <h3>Netscape</h3>
+          <p>Marc Andreessen co-founds Netscape. The first major commercial web company. Netscape Navigator becomes the dominant browser. The commercial web begins.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE EXPLOSION -->
+  <section id="explosion">
+    <div class="container">
+      <h2>The <span class="accent">Explosion</span></h2>
+
+      <p>The growth of the web from 1991 to today is one of the most dramatic adoption curves in the history of technology. Nothing has spread faster, deeper, or more irreversibly. The numbers speak for themselves.</p>
+
+      <!-- Growth bar chart -->
+      <div class="chart-wrap">
+        <p class="chart-label">Website Growth — 1991 to Present</p>
+        <div class="growth-bars">
+          <div class="bar-item">
+            <p class="bar-val">1</p>
+            <div class="bar" style="height: 4px; animation-delay: 0.1s;"></div>
+            <p class="bar-year">1991</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">130</p>
+            <div class="bar" style="height: 8px; animation-delay: 0.2s;"></div>
+            <p class="bar-year">1993</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">10K</p>
+            <div class="bar" style="height: 18px; animation-delay: 0.3s;"></div>
+            <p class="bar-year">1994</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">100K</p>
+            <div class="bar" style="height: 30px; animation-delay: 0.4s;"></div>
+            <p class="bar-year">1996</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">1M</p>
+            <div class="bar" style="height: 50px; animation-delay: 0.5s;"></div>
+            <p class="bar-year">1997</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">17M</p>
+            <div class="bar" style="height: 78px; animation-delay: 0.6s;"></div>
+            <p class="bar-year">2000</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">100M</p>
+            <div class="bar" style="height: 110px; animation-delay: 0.7s;"></div>
+            <p class="bar-year">2006</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">200M</p>
+            <div class="bar" style="height: 132px; animation-delay: 0.8s;"></div>
+            <p class="bar-year">2010</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">1B</p>
+            <div class="bar" style="height: 165px; animation-delay: 0.9s;"></div>
+            <p class="bar-year">2014</p>
+          </div>
+          <div class="bar-item">
+            <p class="bar-val">1.9B</p>
+            <div class="bar" style="height: 210px; animation-delay: 1.0s;"></div>
+            <p class="bar-year">Today</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Websites — 1991</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">10,000</div>
+          <div class="stat-label">Websites — 1994</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1M</div>
+          <div class="stat-label">Websites — 1997</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1.9B</div>
+          <div class="stat-label">Websites — Today</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 2rem;">The inflection point was Mosaic in 1993. Before Mosaic, the web was a text-based tool for researchers. After Mosaic, it was a graphical medium accessible to anyone who could use a mouse. Mosaic was free, cross-platform, and easy. It was built at the National Center for Supercomputing Applications (NCSA) at the University of Illinois by a team led by Marc Andreessen, then a 22-year-old undergraduate.</p>
+
+      <p>Andreessen went on to co-found Netscape in 1994, bringing in experienced management and Silicon Valley money. Netscape Navigator became the dominant browser for several years, introducing millions of people to the web. The commercial internet era had begun. It had been enabled, entirely, by a decision made by one person at CERN in 1989 to make his work free.</p>
+
+      <blockquote>
+        "Mosaic was the first browser that could display images inline with text. Before that, the web was text. After that, it was a medium. That was when everything changed."
+        <cite>— Summary of the Mosaic moment, 1993</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- THE BAND -->
+  <div class="band">
+    <div class="container">
+      <h2 style="font-size:1.4rem; margin-bottom:1rem;">1 Website in 1991. 1.9 Billion Today.</h2>
+      <p>The most rapid adoption of any technology in history. Driven entirely by protocols that are free to use, free to implement, and free to build on. The web is not a product. It is a standard. And standards that are free spread faster than anything with a toll-booth.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="colophon">
+  <p>ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0</p>
+  <p>Tim Berners-Lee Series · Volume 2: His World</p>
+  <p>
+    <a href="0-who.html">Vol 0 · Who</a> &nbsp;·&nbsp;
+    <a href="1-web.html">Vol 1 · Web</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol 2 · World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </p>
+  <p style="margin-top:1rem; color:#555;">Compiled 2026 · All factual claims sourced from public record</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boltzmann — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --crimson: #be123c;
+    --gold: #ca8a04;
+    --text: #e8dde8;
+    --muted: #8a7a82;
+    --border: #2a1a20;
+    --card-bg: #100810;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--crimson);
+    border-color: var(--crimson);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #1a050f 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.48;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--crimson);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(190,18,60,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--crimson);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--crimson);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--crimson);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--crimson);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--crimson);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* EQUATION DISPLAY */
+  .equation-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    padding: 2.5rem;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .equation-main {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 40px rgba(202,138,4,0.3);
+  }
+  .equation-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+  }
+  .equation-table td {
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+  }
+  .equation-table td:first-child {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: var(--gold);
+    width: 3rem;
+    text-align: center;
+  }
+  .equation-table td:last-child {
+    color: var(--text);
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--gold); text-decoration: none; }
+  .colophon a:hover { color: var(--crimson); }
+
+  /* Distribution curve styles */
+  .distribution-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 3rem 0;
+  }
+  .distribution-wrap h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  /* Two column note */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .note-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+  .note-box h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .note-box p { font-size: 0.88rem; opacity: 0.85; margin: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Boltzmann</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-entropy.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Molecules + entropy scatter -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bg-glow2" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#2a0510" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#08050a" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow-f">
+        <feGaussianBlur stdDeviation="2"/>
+        <feComposite in="SourceGraphic"/>
+      </filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#bg-glow2)"/>
+    <!-- Container box left (ordered state) -->
+    <rect x="60" y="120" width="300" height="300" fill="none" stroke="#ca8a04" stroke-width="1" opacity="0.3" stroke-dasharray="6,4"/>
+    <text x="210" y="108" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#ca8a04" opacity="0.5" letter-spacing="3">LOW ENTROPY</text>
+    <!-- Ordered molecules left -->
+    <circle cx="120" cy="200" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="180" cy="200" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="240" cy="200" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="300" cy="200" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="120" cy="270" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="180" cy="270" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="240" cy="270" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="300" cy="270" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="120" cy="340" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="180" cy="340" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="240" cy="340" r="5.5" fill="#ca8a04" opacity="0.7"/>
+    <circle cx="300" cy="340" r="5.5" fill="#ca8a04" opacity="0.7"/>
+
+    <!-- Arrow -->
+    <line x1="390" y1="270" x2="480" y2="270" stroke="#be123c" stroke-width="2" opacity="0.6"/>
+    <polygon points="480,263 494,270 480,277" fill="#be123c" opacity="0.6"/>
+    <text x="437" y="258" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#be123c" opacity="0.6" letter-spacing="1">TIME</text>
+
+    <!-- Container box right (disordered state) -->
+    <rect x="510" y="120" width="340" height="300" fill="none" stroke="#be123c" stroke-width="1" opacity="0.3" stroke-dasharray="6,4"/>
+    <text x="680" y="108" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#be123c" opacity="0.5" letter-spacing="3">HIGH ENTROPY</text>
+    <!-- Disordered molecules right — each bouncing -->
+    <circle r="5.5" fill="#be123c" opacity="0.8">
+      <animate attributeName="cx" values="540;700;830;620;780;540" dur="5.1s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="160;380;220;400;150;160" dur="5.1s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="4.5" fill="#fff" opacity="0.6">
+      <animate attributeName="cx" values="820;560;750;600;840;820" dur="4.3s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="400;200;380;160;300;400" dur="4.3s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="5" fill="#be123c" opacity="0.65">
+      <animate attributeName="cx" values="640;820;520;740;610;640" dur="6.7s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="280;160;390;230;400;280" dur="6.7s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="6" fill="#ca8a04" opacity="0.55">
+      <animate attributeName="cx" values="720;530;840;580;770;720" dur="7.2s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="200;340;300;180;380;200" dur="7.2s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="3.5" fill="#fff" opacity="0.4">
+      <animate attributeName="cx" values="580;800;560;810;640;580" dur="5.8s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="380;250;160;360;280;380" dur="5.8s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="5" fill="#be123c" opacity="0.5">
+      <animate attributeName="cx" values="780;600;840;520;720;780" dur="8.1s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="160;400;250;300;180;160" dur="8.1s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Central equation ghost -->
+    <text x="450" y="490" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#be123c" opacity="0.12" letter-spacing="3">S = k · log W</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Ludwig Boltzmann · 1844–1906 · Volume One</span>
+    <h1 class="hero-title">The Work</h1>
+    <p class="hero-subtitle">Statistical Mechanics · Entropy · The Arrow of Time</p>
+    <p class="hero-lead">He derived the second law of thermodynamics from the collisions of atoms — proving that irreversibility is not a fundamental feature of nature but a statistical certainty. An equation so true it is carved on his gravestone.</p>
+  </div>
+</div>
+
+<div class="band">S = k · log W · H-Theorem · Maxwell–Boltzmann Distribution · Statistical Mechanics</div>
+
+<main>
+
+  <!-- THE EQUATION -->
+  <section id="equation">
+    <span class="section-label">I — The Central Equation</span>
+    <h2>S = k · log W: Carved in Stone</h2>
+    <p>In 1877, Boltzmann published the paper that would define his legacy. In it, he derived a formula for entropy — the quantity that measures the degree of disorder in a physical system — entirely from the statistical behavior of atoms. The formula is:</p>
+
+    <div class="equation-block">
+      <div class="equation-main">S = k · log W</div>
+      <table class="equation-table">
+        <tr>
+          <td>S</td>
+          <td>Entropy of the system — a measure of disorder, or equivalently, of the amount of information missing from a macroscopic description of the system</td>
+        </tr>
+        <tr>
+          <td>k</td>
+          <td>Boltzmann's constant — 1.380649 × 10⁻²³ joules per kelvin. The fundamental bridge between the microscopic world of atoms and the macroscopic world of temperature and pressure</td>
+        </tr>
+        <tr>
+          <td>log</td>
+          <td>Natural logarithm (ln). Boltzmann used the natural log; the formula works equivalently with log base 2 in information-theoretic contexts</td>
+        </tr>
+        <tr>
+          <td>W</td>
+          <td>Wahrscheinlichkeit — German for "probability." Specifically: the number of distinct microscopic configurations (microstates) of a system that are consistent with its observed macroscopic state (temperature, pressure, volume)</td>
+        </tr>
+      </table>
+    </div>
+
+    <p>What this equation says is this: the entropy of a system is proportional to the logarithm of the number of ways its atoms could be arranged while keeping the macroscopic properties (temperature, pressure, density) the same. A gas has high entropy because there are vastly more ways to have its molecules distributed randomly throughout a container than to have them all in one corner. A crystal has low entropy because there are very few arrangements of atoms consistent with a regular crystalline structure.</p>
+    <p>The second law of thermodynamics — entropy always increases — is not, in this view, a fundamental law of nature. It is a statistical certainty. A system <em>could</em> spontaneously decrease in entropy (all its molecules could, by chance, end up in one corner). It is simply so vanishingly improbable at macroscopic scales that it never happens in practice. Boltzmann had reduced a law of nature to a law of statistics. This was not universally welcomed.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The most profound idea ever written on a tombstone."</blockquote>
+      <cite>— Common description of S = k · log W on Boltzmann's grave, Zentralfriedhof, Vienna</cite>
+    </div>
+  </section>
+
+  <!-- STATISTICAL MECHANICS -->
+  <section id="statmech">
+    <span class="section-label">II — Statistical Mechanics</span>
+    <h2>Deriving the Universe from Billiard Balls</h2>
+    <p>Boltzmann's broader project was statistical mechanics: the derivation of thermodynamic properties of bulk matter — temperature, pressure, entropy, specific heat — from the mechanics of individual atoms. The central insight is that temperature is not a fundamental quantity. It is a measure of the <strong>average kinetic energy</strong> of the atoms in a substance. Pressure is not fundamental either: it is the cumulative force of individual molecular collisions with a container wall.</p>
+    <p>This was a radical reduction. The laws of thermodynamics, established empirically by Carnot, Joule, Kelvin, and Clausius through the study of steam engines and heat flow, were extraordinarily precise and universal. Boltzmann claimed to derive them all from Newtonian mechanics applied to large collections of particles — using probability theory to handle the fact that you could never track the trajectory of every molecule individually.</p>
+
+    <h3>The Program in Three Steps</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Step One</span>
+        <h4>Microstate → Macrostate</h4>
+        <p>Define a macrostate (temperature T, pressure P, volume V). Then count all the microstates — all the distinct ways atoms can be arranged and moving — that produce this macrostate. Call that number W.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Step Two</span>
+        <h4>Probability → Entropy</h4>
+        <p>The entropy of the macrostate is S = k·log(W). High-entropy states have enormously more corresponding microstates than low-entropy states — they are overwhelmingly more probable.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Step Three</span>
+        <h4>Statistics → Thermodynamics</h4>
+        <p>Systems evolve toward higher-entropy states because there are more of them. The second law of thermodynamics follows — not from any fundamental asymmetry in nature's laws, but from the mathematics of probability applied to enormous numbers of particles.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">The key mathematical trick is the logarithm. When you combine two independent systems, their entropies add (S₁ + S₂), but their numbers of microstates multiply (W₁ × W₂). The logarithm turns multiplication into addition. This is why entropy is defined with a logarithm — it is the only function that makes entropy an additive (extensive) quantity.</p>
+  </section>
+
+  <!-- MAXWELL-BOLTZMANN DISTRIBUTION -->
+  <section id="maxwell-boltzmann">
+    <span class="section-label">III — The Speed Distribution</span>
+    <h2>Maxwell–Boltzmann: How Fast Do Atoms Move?</h2>
+    <p>Before Boltzmann refined it, James Clerk Maxwell had derived in 1860 the distribution of speeds among the molecules of an ideal gas. Boltzmann extended and generalized this work substantially, providing it with deeper thermodynamic foundations. The result — the Maxwell–Boltzmann distribution — describes the probability that a gas molecule will have a given speed at a given temperature.</p>
+
+    <div class="distribution-wrap">
+      <h4>Maxwell–Boltzmann Speed Distribution</h4>
+      <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <linearGradient id="curve-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#be123c" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#be123c" stop-opacity="0.05"/>
+          </linearGradient>
+        </defs>
+        <!-- Axes -->
+        <line x1="60" y1="220" x2="660" y2="220" stroke="#2a1a20" stroke-width="1.5"/>
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#2a1a20" stroke-width="1.5"/>
+        <!-- Axis labels -->
+        <text x="360" y="250" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#8a7a82" letter-spacing="2">MOLECULAR SPEED</text>
+        <text x="20" y="120" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#8a7a82" letter-spacing="1" transform="rotate(-90,20,120)">PROBABILITY</text>
+        <!-- Cold gas curve (peaks left, higher) -->
+        <path d="M60,220 C80,220 100,210 140,130 C170,75 200,45 230,40 C260,45 280,70 310,120 C340,165 380,200 430,215 C500,220 600,220 660,220 Z"
+          fill="url(#curve-fill)" stroke="none"/>
+        <path d="M60,220 C80,220 100,210 140,130 C170,75 200,45 230,40 C260,45 280,70 310,120 C340,165 380,200 430,215 C500,220 600,220 660,220"
+          fill="none" stroke="#be123c" stroke-width="2.5">
+          <animate attributeName="d"
+            values="M60,220 C80,220 100,210 140,130 C170,75 200,45 230,40 C260,45 280,70 310,120 C340,165 380,200 430,215 C500,220 600,220 660,220;
+                    M60,220 C90,220 120,215 180,150 C220,105 260,75 310,65 C360,75 400,105 440,148 C490,190 560,215 660,220;
+                    M60,220 C80,220 100,210 140,130 C170,75 200,45 230,40 C260,45 280,70 310,120 C340,165 380,200 430,215 C500,220 600,220 660,220"
+            dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+        </path>
+        <!-- Labels -->
+        <text x="190" y="35" font-family="Space Mono, monospace" font-size="10" fill="#ca8a04" letter-spacing="1">LOW T</text>
+        <text x="310" y="60" font-family="Space Mono, monospace" font-size="10" fill="#be123c" letter-spacing="1">HIGH T</text>
+        <!-- vmp marker -->
+        <line x1="230" y1="40" x2="230" y2="220" stroke="#ca8a04" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+        <text x="220" y="235" font-family="Space Mono, monospace" font-size="9" fill="#ca8a04">v_mp</text>
+      </svg>
+    </div>
+
+    <p>The distribution has a characteristic bell-curve-like shape, but asymmetric — it is bounded at zero on the left (molecules cannot have negative speed) and has a long tail to the right (a small fraction of molecules always move very fast). Three characteristic speeds matter:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">v_mp</span>
+        <h4>Most Probable Speed</h4>
+        <p>The speed at the peak of the distribution — the speed most molecules have. Increases with temperature; decreases for heavier molecules.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">v_avg</span>
+        <h4>Mean Speed</h4>
+        <p>The average speed of all molecules. Slightly higher than v_mp due to the rightward tail of the distribution. Governs diffusion rates.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">v_rms</span>
+        <h4>Root Mean Square Speed</h4>
+        <p>Square root of the average of the squared speeds. Directly related to the average kinetic energy — and therefore to temperature.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">The crucial insight: <strong>temperature is the average kinetic energy of molecules</strong>. Specifically, (3/2)kT = (1/2)mv², where k is Boltzmann's constant, T is absolute temperature, m is molecular mass, and v is the root mean square speed. This single relationship bridges the entire gap between the microscopic atomic world and the macroscopic thermodynamic world.</p>
+  </section>
+
+  <!-- H-THEOREM -->
+  <section id="htheorem">
+    <span class="section-label">IV — The H-Theorem</span>
+    <h2>Irreversibility from Reversibility: The Arrow of Time</h2>
+    <p>In 1872, Boltzmann published his most controversial result: the H-theorem. The problem it addressed was profound. The fundamental laws of classical mechanics — Newton's laws — are <em>time-reversible</em>. Run any mechanical process backward in time and it still satisfies Newton's laws. A billiard ball bouncing off a wall plays out exactly the same whether the film runs forward or backward. There is no directionality in the laws themselves.</p>
+    <p>Yet we observe an unmistakable directionality in the world. Heat flows from hot to cold, never spontaneously the other way. A gas released into a vacuum fills the vacuum; it never spontaneously contracts back. An egg, once scrambled, is not unscrambled by random thermal vibrations. The second law of thermodynamics declares that entropy — disorder — increases in isolated systems. Time has a direction. Why?</p>
+
+    <h3>Boltzmann's Resolution</h3>
+    <p>Boltzmann defined a quantity H (now understood as the negative of entropy) and proved mathematically that, under certain assumptions about molecular collisions, dH/dt ≤ 0: H can only decrease over time, meaning entropy can only increase. He had derived the directionality of time from statistical mechanics.</p>
+    <p>The objection came immediately. Josef Loschmidt (1876) pointed out what became known as the <em>Loschmidt paradox</em> or the reversibility objection: if all microscopic laws are reversible, any proof of macroscopic irreversibility must have a flaw. If you reversed all the velocities of all the molecules at any moment, the system would run backward and entropy would decrease — contradicting the H-theorem.</p>
+
+    <div class="two-col">
+      <div class="note-box">
+        <h4>Loschmidt's Reversibility Objection (1876)</h4>
+        <p>The laws of motion are time-symmetric. For every entropy-increasing trajectory of a gas, there exists a time-reversed trajectory where entropy decreases. Therefore no purely mechanical proof can establish irreversibility. Something is wrong with Boltzmann's argument.</p>
+      </div>
+      <div class="note-box">
+        <h4>Zermelo's Recurrence Objection (1896)</h4>
+        <p>Poincaré's recurrence theorem proves that any bounded mechanical system will, given enough time, return arbitrarily close to its initial state. Therefore entropy will eventually decrease. Therefore the H-theorem cannot hold for all time.</p>
+      </div>
+    </div>
+
+    <p>Boltzmann's answers were subtle and, ultimately, correct. To Loschmidt: yes, the time-reversed trajectory exists. But it requires an extraordinarily precise, specially arranged initial condition (all velocities exactly reversed) that is itself a vanishingly improbable microstate. The reason we observe entropy increasing is not that decreasing-entropy trajectories are forbidden — they are permitted — but that they require initial conditions of staggering improbability. The arrow of time is statistical, not mechanical. To Zermelo: yes, recurrence will happen. But the Poincaré recurrence time for a macroscopic gas of 10²³ molecules is so incomprehensibly long — vastly longer than the age of the universe — that it is physically irrelevant.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The second law of thermodynamics can be proved from the mechanical theory if one assumes that the present state of the universe... started from a very improbable state."</blockquote>
+      <cite>— Ludwig Boltzmann, 1896</cite>
+    </div>
+
+    <p>This was a remarkable philosophical move. Boltzmann was arguing that the second law, and the arrow of time itself, is a consequence of the improbability of the universe's initial conditions — that we live in a universe that started in an extraordinarily low-entropy state and has been increasing in entropy ever since. This idea, now central to cosmology and the physics of time, was extraordinary for 1896 and remains contentious and profound today.</p>
+  </section>
+
+  <!-- BOLTZMANN CONSTANT -->
+  <section id="constant">
+    <span class="section-label">V — The Constant</span>
+    <h2>k: The Bridge Between Scales</h2>
+    <p>Boltzmann's constant k = 1.380649 × 10⁻²³ J/K is the conversion factor between the macroscopic unit of temperature (the kelvin) and the microscopic unit of energy (the joule per atom). It appears everywhere in physics where the microscopic and macroscopic must be reconciled:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Thermodynamics</span>
+        <h4>Average Kinetic Energy</h4>
+        <p>The average translational kinetic energy of an ideal gas molecule is (3/2)kT. Temperature is literally mean molecular kinetic energy, measured in units of kT.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Statistical Mechanics</span>
+        <h4>Boltzmann Factor</h4>
+        <p>The probability of a system being in a state with energy E is proportional to e^(−E/kT). This exponential — the Boltzmann factor — governs the population of quantum states, chemical reactions, and semiconductor behavior.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Quantum Physics</span>
+        <h4>Planck's Law</h4>
+        <p>The distribution of blackbody radiation — which launched quantum mechanics — involves k at its core. Max Planck was trying to derive this distribution in 1900 when he discovered the quantum of action.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">SI Units (2019)</span>
+        <h4>Defining the Kelvin</h4>
+        <p>Since the 2019 SI redefinition, k is fixed exactly at 1.380649 × 10⁻²³ J/K, and the kelvin is defined in terms of k. Boltzmann's constant now literally defines the unit of temperature.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY PAPERS -->
+  <section id="papers">
+    <span class="section-label">VI — Key Publications</span>
+    <h2>The Papers That Changed Physics</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1866</span>
+        <h4>On the Mechanical Meaning of the Second Law of Thermodynamics</h4>
+        <p>His doctoral dissertation. First attempt to connect entropy to atomic mechanics. The seed of everything that follows.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1872</span>
+        <h4>Further Studies on the Thermal Equilibrium of Gas Molecules</h4>
+        <p>Contains the H-theorem and the Boltzmann equation — a transport equation for the distribution function of a gas. The most technically important paper of his career.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1877</span>
+        <h4>On the Relationship Between the Second Law of Thermodynamics and Probability Theory</h4>
+        <p>The S = k·log W paper. Entropy defined statistically. The formula that goes on the tombstone.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1884</span>
+        <h4>Derivation of the Stefan–Boltzmann Law</h4>
+        <p>Using thermodynamics and Maxwell's electromagnetic theory, derives the law that radiant energy scales as the fourth power of temperature — confirming his mentor Josef Stefan's empirical result.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1896–98</span>
+        <h4>Lectures on Gas Theory (2 volumes)</h4>
+        <p>His comprehensive treatment of statistical mechanics, written partly as a defense against the attacks of Mach and Ostwald. One of the masterworks of late 19th century physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1896–1905</span>
+        <h4>Philosophical and Popular Writings</h4>
+        <p>Essays on the nature of scientific knowledge, the atomic hypothesis, the philosophy of science, and the relationship between mathematics and physical reality. Collected in <em>Populäre Schriften</em>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Ludwig Boltzmann Series · Volume 1: The Work · ludwig-boltzmann/1-entropy.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

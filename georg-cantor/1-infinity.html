@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Georg Cantor — Vol. 1: The Work | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --paper:   #070510;
+      --purple:  #7c3aed;
+      --silver:  #94a3b8;
+      --purple-dim: rgba(124,58,237,0.18);
+      --purple-glow: rgba(124,58,237,0.55);
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --border:  1px solid var(--purple);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1,h2,h3,h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    code, .mono {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85em;
+      color: var(--silver);
+    }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,5,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: var(--border);
+      display: flex; align-items: center;
+      padding: 0 2rem; height: 52px;
+      overflow-x: auto;
+    }
+    .nav-brand {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 0.8rem;
+      color: var(--purple); letter-spacing: 0.12em;
+      white-space: nowrap; margin-right: 2rem; text-transform: uppercase;
+    }
+    .nav-links { display: flex; list-style: none; }
+    .nav-links a {
+      display: block; padding: 0 1rem; height: 52px; line-height: 52px;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); white-space: nowrap;
+      transition: color 0.2s, background 0.2s; letter-spacing: 0.06em;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--purple-dim); text-decoration: none; }
+    .nav-links a.active { color: var(--purple); border-bottom: 2px solid var(--purple); }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      position: relative; min-height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border-bottom: var(--border); padding: 4rem 2rem 2rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124,58,237,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; max-width: 820px;
+    }
+    .vol-label {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .hero-content h1 span { color: var(--purple); }
+    .hero-subtitle {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--silver); margin-bottom: 1.5rem;
+    }
+
+    /* ── BAND ─────────────────────────────────────────────── */
+    .band {
+      background: var(--purple); color: #fff; text-align: center;
+      padding: 0.6rem 2rem; font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+    }
+
+    /* ── MAIN ─────────────────────────────────────────────── */
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    section { margin-bottom: 3.5rem; }
+    section h2 {
+      font-size: 1.5rem; color: var(--purple); margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem; border-bottom: var(--border);
+    }
+    section h3 { font-size: 1.1rem; color: var(--silver); margin: 1.8rem 0 0.6rem; font-weight: 600; }
+    p { margin-bottom: 1rem; }
+
+    .kick {
+      font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 800;
+      color: var(--purple); float: left; line-height: 0.85; margin: 0.1em 0.12em 0 0;
+    }
+
+    /* ── CARDS ─────────────────────────────────────────────── */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem; margin-top: 1.4rem;
+    }
+    .card {
+      border: var(--border); border-radius: 4px; padding: 1.4rem 1.6rem;
+      background: rgba(124,58,237,0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease; cursor: default;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--purple-glow); }
+    .card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--purple); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .card h3 { font-size: 1rem; color: var(--text); margin: 0 0 0.5rem; font-family: 'Cinzel', serif; }
+    .card p { font-size: 0.92rem; color: var(--silver); margin: 0; }
+
+    blockquote {
+      border-left: 3px solid var(--purple); margin: 2rem 0; padding: 1rem 1.5rem;
+      background: var(--purple-dim); border-radius: 0 4px 4px 0;
+    }
+    blockquote p { font-style: italic; font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem; }
+    blockquote cite { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--silver); letter-spacing: 0.08em; }
+
+    /* ── MATH DISPLAY ─────────────────────────────────────── */
+    .math-block {
+      background: rgba(7,5,16,0.8); border: var(--border); border-radius: 4px;
+      padding: 1.4rem 1.8rem; margin: 1.5rem 0;
+      font-family: 'Space Mono', monospace; font-size: 0.9rem;
+      color: var(--silver); line-height: 2.2;
+      overflow-x: auto;
+    }
+    .math-block .hl { color: var(--purple); font-weight: 700; }
+    .math-block .constructed { color: #34d399; font-weight: 700; }
+    .math-block .label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;
+    }
+
+    /* ── DIAGONAL SVG HERO ────────────────────────────────── */
+    .diagonal-wrap {
+      margin: 2rem auto 0;
+      width: 100%;
+      max-width: 640px;
+      border: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: rgba(7,5,16,0.7);
+    }
+    .diagonal-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); letter-spacing: 0.1em; padding: 0.5rem 1rem;
+      border-bottom: 1px solid rgba(124,58,237,0.3);
+    }
+
+    /* ── STEP LIST ────────────────────────────────────────── */
+    .step-list { list-style: none; margin-top: 1.2rem; }
+    .step-list li {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 1rem; padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(124,58,237,0.15);
+      align-items: start;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      color: var(--purple); background: var(--purple-dim);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-content { font-size: 0.95rem; color: var(--silver); }
+    .step-content strong { color: var(--text); }
+
+    /* ── INFINITY TABLE ───────────────────────────────────── */
+    .inf-table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+      font-family: 'Space Mono', monospace; font-size: 0.82rem;
+    }
+    .inf-table th {
+      color: var(--purple); font-weight: 700; letter-spacing: 0.08em;
+      padding: 0.6rem 1rem; text-align: left;
+      border-bottom: 2px solid var(--purple);
+    }
+    .inf-table td {
+      color: var(--silver); padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(124,58,237,0.2);
+    }
+    .inf-table tr:hover td { background: var(--purple-dim); color: var(--text); }
+    .inf-table .aleph { color: var(--purple); font-weight: 700; font-size: 1rem; }
+
+    /* ── VOL NAV ─────────────────────────────────────────── */
+    .vol-nav {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: var(--border);
+    }
+    .vol-nav a {
+      border: var(--border); padding: 0.5rem 1.2rem;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); letter-spacing: 0.08em; transition: all 0.15s;
+    }
+    .vol-nav a:hover {
+      background: var(--purple-dim); color: var(--text); text-decoration: none;
+      transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--purple);
+    }
+    .vol-nav a.current { color: var(--purple); border-color: var(--purple); }
+
+    footer {
+      border-top: var(--border); margin-top: 4rem; padding: 2rem 2rem 3rem;
+      max-width: 900px; margin-left: auto; margin-right: auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); line-height: 1.9; letter-spacing: 0.04em;
+    }
+    .colophon strong { color: var(--silver); }
+
+    @media (max-width: 600px) {
+      .kick { font-size: 2.5rem; }
+      nav { padding: 0 1rem; }
+      main { padding: 2rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-brand">Cantor</div>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol.0 — The Man</a></li>
+    <li><a href="1-infinity.html" class="active">Vol.1 — The Work</a></li>
+    <li><a href="2-world.html">Vol.2 — His World</a></li>
+    <li><a href="3-legacy.html">Vol.3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<!-- ── BAND ──────────────────────────────────────────────── -->
+<div class="band">ROOT0 LIBRARY &nbsp;|&nbsp; GEORG CANTOR SERIES &nbsp;|&nbsp; VOL. 1 OF 3</div>
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="vol-label">Volume One &nbsp;&bull;&nbsp; The Work</div>
+    <h1>Infinity <span>Formalized</span></h1>
+    <div class="hero-subtitle">Set theory, cardinality, the diagonal argument, and the hierarchy of infinities</div>
+
+    <!-- ── ANIMATED DIAGONAL SVG ── -->
+    <div class="diagonal-wrap">
+      <div class="diagonal-label">CANTOR'S DIAGONAL ARGUMENT &nbsp;(1891) &nbsp;— animated</div>
+      <svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg"
+           style="display:block;width:100%;height:auto" aria-label="Cantor diagonal argument animation">
+        <defs>
+          <style>
+            .dg-cell { font-family:'Space Mono',monospace; font-size:13px; fill:#64748b; }
+            .dg-diag { font-family:'Space Mono',monospace; font-size:13px; fill:#7c3aed; font-weight:700; }
+            .dg-constructed { font-family:'Space Mono',monospace; font-size:13px; fill:#34d399; font-weight:700; }
+            .dg-label { font-family:'Space Mono',monospace; font-size:10px; fill:#94a3b8; letter-spacing:0.08em; }
+            .dg-row-label { font-family:'Space Mono',monospace; font-size:10px; fill:#7c3aed; }
+            .diag-box {
+              fill:none; stroke:#7c3aed; stroke-width:1.5; rx:2; ry:2;
+              opacity:0;
+            }
+            .constructed-row { opacity:0; }
+          </style>
+        </defs>
+
+        <!-- Background -->
+        <rect width="640" height="340" fill="#070510"/>
+
+        <!-- Column headers: decimal places -->
+        <text x="108" y="28" class="dg-label">d₁</text>
+        <text x="140" y="28" class="dg-label">d₂</text>
+        <text x="172" y="28" class="dg-label">d₃</text>
+        <text x="204" y="28" class="dg-label">d₄</text>
+        <text x="236" y="28" class="dg-label">d₅</text>
+        <text x="268" y="28" class="dg-label">d₆</text>
+        <text x="300" y="28" class="dg-label">d₇</text>
+        <text x="332" y="28" class="dg-label">d₈</text>
+        <text x="364" y="28" class="dg-label">d₉</text>
+        <text x="396" y="28" class="dg-label">d₁₀</text>
+
+        <!-- Row labels -->
+        <text x="10" y="58" class="dg-row-label">r₁ = 0.</text>
+        <text x="10" y="90" class="dg-row-label">r₂ = 0.</text>
+        <text x="10" y="122" class="dg-row-label">r₃ = 0.</text>
+        <text x="10" y="154" class="dg-row-label">r₄ = 0.</text>
+        <text x="10" y="186" class="dg-row-label">r₅ = 0.</text>
+        <text x="10" y="218" class="dg-row-label">r₆ = 0.</text>
+        <text x="10" y="250" class="dg-row-label">r₇ = 0.</text>
+
+        <!-- Row 1: 4 1 7 2 9 3 8 0 5 6 -->
+        <text x="108" y="58" class="dg-diag">4</text>
+        <text x="140" y="58" class="dg-cell">1</text>
+        <text x="172" y="58" class="dg-cell">7</text>
+        <text x="204" y="58" class="dg-cell">2</text>
+        <text x="236" y="58" class="dg-cell">9</text>
+        <text x="268" y="58" class="dg-cell">3</text>
+        <text x="300" y="58" class="dg-cell">8</text>
+        <text x="332" y="58" class="dg-cell">0</text>
+        <text x="364" y="58" class="dg-cell">5</text>
+        <text x="396" y="58" class="dg-cell">6</text>
+
+        <!-- Row 2 -->
+        <text x="108" y="90" class="dg-cell">8</text>
+        <text x="140" y="90" class="dg-diag">3</text>
+        <text x="172" y="90" class="dg-cell">1</text>
+        <text x="204" y="90" class="dg-cell">4</text>
+        <text x="236" y="90" class="dg-cell">1</text>
+        <text x="268" y="90" class="dg-cell">5</text>
+        <text x="300" y="90" class="dg-cell">9</text>
+        <text x="332" y="90" class="dg-cell">2</text>
+        <text x="364" y="90" class="dg-cell">6</text>
+        <text x="396" y="90" class="dg-cell">5</text>
+
+        <!-- Row 3 -->
+        <text x="108" y="122" class="dg-cell">2</text>
+        <text x="140" y="122" class="dg-cell">7</text>
+        <text x="172" y="122" class="dg-diag">1</text>
+        <text x="204" y="122" class="dg-cell">8</text>
+        <text x="236" y="122" class="dg-cell">2</text>
+        <text x="268" y="122" class="dg-cell">8</text>
+        <text x="300" y="122" class="dg-cell">4</text>
+        <text x="332" y="122" class="dg-cell">5</text>
+        <text x="364" y="122" class="dg-cell">9</text>
+        <text x="396" y="122" class="dg-cell">0</text>
+
+        <!-- Row 4 -->
+        <text x="108" y="154" class="dg-cell">5</text>
+        <text x="140" y="154" class="dg-cell">0</text>
+        <text x="172" y="154" class="dg-cell">0</text>
+        <text x="204" y="154" class="dg-diag">0</text>
+        <text x="236" y="154" class="dg-cell">0</text>
+        <text x="268" y="154" class="dg-cell">0</text>
+        <text x="300" y="154" class="dg-cell">0</text>
+        <text x="332" y="154" class="dg-cell">0</text>
+        <text x="364" y="154" class="dg-cell">0</text>
+        <text x="396" y="154" class="dg-cell">0</text>
+
+        <!-- Row 5 -->
+        <text x="108" y="186" class="dg-cell">6</text>
+        <text x="140" y="186" class="dg-cell">2</text>
+        <text x="172" y="186" class="dg-cell">8</text>
+        <text x="204" y="186" class="dg-cell">3</text>
+        <text x="236" y="186" class="dg-diag">1</text>
+        <text x="268" y="186" class="dg-cell">8</text>
+        <text x="300" y="186" class="dg-cell">3</text>
+        <text x="332" y="186" class="dg-cell">1</text>
+        <text x="364" y="186" class="dg-cell">8</text>
+        <text x="396" y="186" class="dg-cell">2</text>
+
+        <!-- Row 6 -->
+        <text x="108" y="218" class="dg-cell">1</text>
+        <text x="140" y="218" class="dg-cell">4</text>
+        <text x="172" y="218" class="dg-cell">1</text>
+        <text x="204" y="218" class="dg-cell">4</text>
+        <text x="236" y="218" class="dg-cell">2</text>
+        <text x="268" y="218" class="dg-diag">1</text>
+        <text x="300" y="218" class="dg-cell">3</text>
+        <text x="332" y="218" class="dg-cell">5</text>
+        <text x="364" y="218" class="dg-cell">6</text>
+        <text x="396" y="218" class="dg-cell">2</text>
+
+        <!-- Row 7 -->
+        <text x="108" y="250" class="dg-cell">9</text>
+        <text x="140" y="250" class="dg-cell">9</text>
+        <text x="172" y="250" class="dg-cell">7</text>
+        <text x="204" y="250" class="dg-cell">9</text>
+        <text x="236" y="250" class="dg-cell">9</text>
+        <text x="268" y="250" class="dg-cell">7</text>
+        <text x="300" y="250" class="dg-diag">9</text>
+        <text x="332" y="250" class="dg-cell">9</text>
+        <text x="364" y="250" class="dg-cell">7</text>
+        <text x="396" y="250" class="dg-cell">9</text>
+
+        <!-- Ellipsis row -->
+        <text x="108" y="278" class="dg-cell" opacity="0.4">&#x22EF;</text>
+        <text x="430" y="154" class="dg-cell" opacity="0.4">&#x22EF;</text>
+
+        <!-- Animated diagonal boxes — appear sequentially -->
+        <rect class="diag-box" x="101" y="42" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.05;0.12;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="133" y="74" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.15;0.22;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="165" y="106" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.25;0.32;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="197" y="138" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.35;0.42;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="229" y="170" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.45;0.52;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="261" y="202" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.55;0.62;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+        <rect class="diag-box" x="293" y="234" width="22" height="22">
+          <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;0.65;0.72;1" dur="6s" repeatCount="indefinite"/>
+        </rect>
+
+        <!-- Constructed number appears -->
+        <g class="constructed-row">
+          <animate attributeName="opacity" values="0;0;0;1" keyTimes="0;0.7;0.78;1" dur="6s" repeatCount="indefinite"/>
+          <text x="10" y="310" class="dg-label">d = 0.</text>
+          <!-- Each digit differs from diagonal: 4→5, 3→4, 1→2, 0→1, 1→2, 1→2, 9→0 -->
+          <text x="108" y="310" class="dg-constructed">5</text>
+          <text x="140" y="310" class="dg-constructed">4</text>
+          <text x="172" y="310" class="dg-constructed">2</text>
+          <text x="204" y="310" class="dg-constructed">1</text>
+          <text x="236" y="310" class="dg-constructed">2</text>
+          <text x="268" y="310" class="dg-constructed">2</text>
+          <text x="300" y="310" class="dg-constructed">0</text>
+          <text x="332" y="310" class="dg-constructed">&#x22EF;</text>
+          <text x="460" y="310" class="dg-label">&#x2260; any row — NOT IN LIST</text>
+        </g>
+      </svg>
+    </div>
+
+  </div>
+</header>
+
+<!-- ── MAIN ──────────────────────────────────────────────── -->
+<main>
+
+  <!-- SECTION 1: SET THEORY -->
+  <section id="set-theory">
+    <h2>I. Set Theory — A New Language for Mathematics</h2>
+    <p><span class="kick">A</span> <em>set</em> is any collection of definite, distinguishable objects considered as a whole. This sentence, so simple it appears trivial, is Cantor's founding definition — and it is revolutionary. Before Cantor, mathematicians worked with numbers, functions, and geometric figures. They did not have a general theory of collections as mathematical objects in their own right. Cantor gave them one.</p>
+
+    <p>The objects in a set are called its <em>elements</em> or <em>members</em>. If <em>a</em> is an element of a set <em>A</em>, we write <em>a</em> &#x2208; <em>A</em>. The collection of all natural numbers {1, 2, 3, ...} is a set. The collection of all even numbers is a set. The collection of all real numbers between 0 and 1 is a set. The collection of all sets that do not contain themselves is — as Russell would discover — not a set in the naive sense, but that discovery came later and required the careful axiomatization of the theory.</p>
+
+    <h3>The Empty Set</h3>
+    <p>The <em>empty set</em> &#x2205; is the set that contains no elements. It is unique: there is only one empty set. This may seem uninteresting, but the empty set is the foundation from which, in axiomatic set theory, all mathematical objects are ultimately constructed. The number zero is not a primitive — it is the cardinality of the empty set. The number one is the cardinality of the set {&#x2205;}. The number two is the cardinality of {&#x2205;, {&#x2205;}}. And so on, for all the natural numbers.</p>
+
+    <h3>Basic Operations</h3>
+    <div class="math-block">
+      <span class="label">BASIC SET OPERATIONS</span>
+      A &#x222A; B &nbsp;=&nbsp; <span class="hl">union</span> &nbsp;— all elements in A <em>or</em> B (or both)<br/>
+      A &#x2229; B &nbsp;=&nbsp; <span class="hl">intersection</span> &nbsp;— only elements in both A <em>and</em> B<br/>
+      A \ B &nbsp;&nbsp;=&nbsp; <span class="hl">difference</span> &nbsp;— elements in A but not in B<br/>
+      &#x2118;(A) &nbsp;&nbsp;=&nbsp; <span class="hl">power set</span> &nbsp;— the set of all subsets of A<br/>
+      A &#x2286; B &nbsp;=&nbsp; A is a <span class="hl">subset</span> of B &nbsp;— every element of A is also in B<br/>
+      |A| &nbsp;&nbsp;&nbsp;&nbsp;=&nbsp; <span class="hl">cardinality</span> of A &nbsp;— the "number" of elements in A
+    </div>
+
+    <p>The power set is the operation that will later produce Cantor's hierarchy of infinities. If A has <em>n</em> elements, then &#x2118;(A) has 2<sup>n</sup> elements. The power set is always strictly larger than the original set. This holds even when A is infinite — and this is not obvious, and it required Cantor to prove it.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Example</div>
+        <h3>Power Set of a Small Set</h3>
+        <p>Let A = {a, b, c}. Then |A| = 3. The power set &#x2118;(A) contains 2&#x00B3; = 8 subsets: &#x2205;, {a}, {b}, {c}, {a,b}, {a,c}, {b,c}, {a,b,c}. This 2<sup>n</sup> relationship persists into the infinite.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Key insight</div>
+        <h3>Sets Can Contain Sets</h3>
+        <p>A set can be an element of another set. The power set &#x2118;(A) is a set whose elements are themselves sets. This self-referential property is both powerful and — as Russell showed — dangerous without careful axioms.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Foundation</div>
+        <h3>Everything is a Set</h3>
+        <p>In modern axiomatic set theory (ZFC), every mathematical object — numbers, functions, ordered pairs, geometric spaces — is ultimately defined as a set. Set theory is not a branch of mathematics; it is its foundation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: CARDINALITY -->
+  <section id="cardinality">
+    <h2>II. Cardinality — Counting Without Counting</h2>
+    <p>How do you compare the sizes of two infinite sets? You cannot count to the end of an infinite set — there is no end. Cantor's decisive insight was to separate the concept of "size" from the concept of "counting." Two sets have the <em>same cardinality</em> if and only if there is a <strong>bijection</strong> between them — a one-to-one correspondence that matches every element of the first set with exactly one element of the second, and vice versa.</p>
+
+    <p>For finite sets, this is just ordinary equality of count. {a, b, c} and {1, 2, 3} have the same cardinality because you can pair them: a&#x2194;1, b&#x2194;2, c&#x2194;3. No element is left unpaired. This is really what it means for two collections to "have the same number" — the bijection is primary, the number is derived from it.</p>
+
+    <h3>Galileo's Paradox — Now Formalized</h3>
+    <p>In his <em>Two New Sciences</em> (1638), Galileo observed a puzzle: the natural numbers and the perfect squares seem to be in one-to-one correspondence, even though the squares are a proper subset of the naturals. He thought this showed that comparisons of size break down for infinite collections. Cantor formalized this observation and showed it is not a paradox but a <em>definition</em>:</p>
+
+    <div class="math-block">
+      <span class="label">GALILEO'S PARADOX — RESOLVED</span>
+      Naturals: &nbsp;1 &nbsp;2 &nbsp;3 &nbsp;4 &nbsp;5 &nbsp;6 &nbsp;7 &nbsp;8 &nbsp;9 &#x22EF;<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl">&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195; &nbsp;&#x2195;</span><br/>
+      Squares: &nbsp;&nbsp;1 &nbsp;4 &nbsp;9 16 25 36 49 64 81 &#x22EF;<br/><br/>
+      Bijection: n &#x27F7; n&#x00B2;. Every natural maps to exactly one square, and every square<br/>
+      maps back to exactly one natural. Therefore: |&#x2115;| = |{perfect squares}|.<br/>
+      A proper subset of an infinite set can have the same cardinality. This is<br/>
+      not paradox — it is the <span class="hl">definition of infinity</span>.
+    </div>
+
+    <p>Cantor made this a definition rather than a paradox: an infinite set is precisely a set that has the same cardinality as some of its proper subsets. This is the formal content of infinity. It is counterintuitive only until you accept that the bijection is the primary concept and "size" is secondary.</p>
+
+    <blockquote>
+      <p>"A set is infinite if and only if it has the same cardinality as one of its proper subsets."</p>
+      <cite>— Dedekind's equivalent formulation, later named the Dedekind-infinite definition</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 3: COUNTABLE VS UNCOUNTABLE -->
+  <section id="countable">
+    <h2>III. Countable and Uncountable — Not All Infinities Are Equal</h2>
+    <p>The first great theorem of Cantor's theory of cardinality: there are at least two different sizes of infinity. The natural numbers define the smallest infinite cardinality, denoted &#x2135;&#x2080; (aleph-null). Any set that can be put into bijection with the natural numbers has cardinality &#x2135;&#x2080; and is called <em>countably infinite</em>. The question is: are all infinite sets countable?</p>
+
+    <h3>The Rationals Are Countable</h3>
+    <p>This is surprising. There are infinitely many rational numbers between any two distinct rationals — the rationals are "dense" in a way the integers are not. Yet they are countable. Cantor's proof uses a clever enumeration: arrange all positive fractions p/q in an infinite grid (row p, column q), then traverse the grid diagonally, zigzagging through every fraction in a systematic order, skipping duplicates. This traversal is a bijection between the naturals and the positive rationals.</p>
+
+    <div class="math-block">
+      <span class="label">DIAGONAL ENUMERATION OF THE RATIONALS</span>
+      1/1 &rarr; 1/2 &nbsp;&nbsp;1/3 &rarr; 1/4 &nbsp;&nbsp;&#x22EF;<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp; &#x2193;&nbsp;&nbsp;&nbsp; &#x2197;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#x2193;&nbsp;&nbsp;&nbsp; &#x2197;<br/>
+      2/1 &nbsp;&nbsp;2/2 &nbsp;&nbsp;2/3 &nbsp;&nbsp;2/4 &nbsp;&nbsp;&#x22EF;<br/>
+      &#x2193;&nbsp;&nbsp;&nbsp; &#x2197;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#x2197;<br/>
+      3/1 &nbsp;&nbsp;3/2 &nbsp;&nbsp;3/3 &nbsp;&nbsp;3/4 &nbsp;&nbsp;&#x22EF;<br/>
+      &#x22EF;<br/><br/>
+      Enumerate: 1/1, 1/2, 2/1, 3/1, 2/2, 1/3, 1/4, 2/3 &#x22EF; (skip duplicates)<br/>
+      This is a bijection &#x2115; &#x2192; &#x211A;&#x207A;. Therefore: <span class="hl">|&#x211A;| = &#x2135;&#x2080;</span>
+    </div>
+
+    <h3>The Reals Are NOT Countable — The First Proof (1874)</h3>
+    <p>In 1874, Cantor published his first proof that the real numbers cannot be enumerated. The argument used the nested interval theorem: given any proposed enumeration of all real numbers in an interval, you can construct a nested sequence of intervals each contained in the previous, with lengths shrinking to zero, such that the limit point is not in the enumeration. This is a topological argument — powerful but somewhat opaque.</p>
+
+    <p>Seventeen years later, Cantor found a cleaner, more elegant proof. It is one of the most beautiful arguments in all of mathematics.</p>
+  </section>
+
+  <!-- SECTION 4: DIAGONAL ARGUMENT -->
+  <section id="diagonal">
+    <h2>IV. The Diagonal Argument — 1891</h2>
+    <p>The diagonal argument is Cantor's masterpiece. It proves not only that the real numbers are uncountable but provides a general method — a "diagonalization" technique — that would reappear throughout twentieth-century mathematics and logic. The proof is by contradiction.</p>
+
+    <h3>The Argument, Step by Step</h3>
+    <ul class="step-list">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content"><strong>Assume for contradiction</strong> that the real numbers between 0 and 1 are countable. Then there exists an enumeration: r&#x2081;, r&#x2082;, r&#x2083;, ... listing every real number in (0,1) exactly once.</div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content"><strong>Write each number</strong> in its decimal expansion. So r&#x2081; = 0.d&#x2081;&#x2081; d&#x2081;&#x2082; d&#x2081;&#x2083; ..., r&#x2082; = 0.d&#x2082;&#x2081; d&#x2082;&#x2082; d&#x2082;&#x2083; ..., and in general r&#x2099; = 0.d&#x2099;&#x2081; d&#x2099;&#x2082; d&#x2099;&#x2083; ..., where d&#x2099;&#x2096; is the k-th decimal digit of the n-th number.</div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content"><strong>Construct a new number</strong> d = 0.e&#x2081; e&#x2082; e&#x2083; ... by the rule: e&#x2099; differs from d&#x2099;&#x2099; (the n-th digit of the n-th number). For concreteness: if d&#x2099;&#x2099; = 4, set e&#x2099; = 5; otherwise set e&#x2099; = 4. (Avoid 0 and 9 to sidestep decimal representation ambiguity.)</div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content"><strong>Observe</strong> that d is a real number between 0 and 1 (it has a valid decimal expansion), yet d differs from r&#x2081; in its first decimal place, from r&#x2082; in its second, from r&#x2083; in its third, and from r&#x2099; in its n-th decimal place for every n.</div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-content"><strong>Contradiction:</strong> d is not equal to any r&#x2099; in the list. But we assumed the list contains every real number in (0,1). Therefore d cannot exist — but it clearly does. The assumption that the reals are countable is false.</div>
+      </li>
+      <li>
+        <div class="step-num">6</div>
+        <div class="step-content"><strong>Conclusion:</strong> The real numbers are uncountable. Their cardinality, called the <em>cardinality of the continuum</em> and denoted <strong>&#x1D50C;</strong> or 2<sup>&#x2135;&#x2080;</sup>, is strictly greater than &#x2135;&#x2080;. There are more real numbers than there are natural numbers. <em>Not all infinities are equal.</em></div>
+      </li>
+    </ul>
+
+    <div class="math-block">
+      <span class="label">THE DIAGONAL CONSTRUCTION — FORMAL</span>
+      List (assumed complete):<br/>
+      r&#x2081; = 0. <span class="hl">d&#x2081;&#x2081;</span> d&#x2081;&#x2082; d&#x2081;&#x2083; d&#x2081;&#x2084; d&#x2081;&#x2085; &#x22EF;<br/>
+      r&#x2082; = 0. d&#x2082;&#x2081; <span class="hl">d&#x2082;&#x2082;</span> d&#x2082;&#x2083; d&#x2082;&#x2084; d&#x2082;&#x2085; &#x22EF;<br/>
+      r&#x2083; = 0. d&#x2083;&#x2081; d&#x2083;&#x2082; <span class="hl">d&#x2083;&#x2083;</span> d&#x2083;&#x2084; d&#x2083;&#x2085; &#x22EF;<br/>
+      r&#x2084; = 0. d&#x2084;&#x2081; d&#x2084;&#x2082; d&#x2084;&#x2083; <span class="hl">d&#x2084;&#x2084;</span> d&#x2084;&#x2085; &#x22EF;<br/>
+      r&#x2085; = 0. d&#x2085;&#x2081; d&#x2085;&#x2082; d&#x2085;&#x2083; d&#x2085;&#x2084; <span class="hl">d&#x2085;&#x2085;</span> &#x22EF;<br/>
+      &#x22EF;<br/><br/>
+      Constructed number:<br/>
+      d = 0. <span class="constructed">e&#x2081;</span> <span class="constructed">e&#x2082;</span> <span class="constructed">e&#x2083;</span> <span class="constructed">e&#x2084;</span> <span class="constructed">e&#x2085;</span> &#x22EF;<br/>
+      where e&#x2099; &#x2260; d&#x2099;&#x2099; for all n.<br/><br/>
+      Therefore: d &#x2260; r&#x2099; for all n. &nbsp;<span class="hl">d is NOT IN THE LIST. Contradiction. &#x220E;</span>
+    </div>
+
+    <blockquote>
+      <p>"The argument is so simple and so general that it is a wonder it was not found earlier. It proves not only that the reals are uncountable, but that for any set S, the power set &#x2118;(S) has strictly greater cardinality than S."</p>
+      <cite>— Modern assessment, widely attributed in textbooks on set theory</cite>
+    </blockquote>
+
+    <h3>Why It Generalizes</h3>
+    <p>The beauty of diagonalization is that it is not really about real numbers at all. It is about the impossibility of listing all elements of a power set. Let S be any set and f: S &#x2192; &#x2118;(S) any function. Define D = {x &#x2208; S : x &#x2209; f(x)}. Then D is a subset of S (so D &#x2208; &#x2118;(S)), but for every x in S, D &#x2260; f(x) (because either x &#x2208; D and x &#x2209; f(x), or x &#x2209; D and x &#x2208; f(x)). Therefore f is not surjective. No function from S to &#x2118;(S) can be surjective. Therefore |&#x2118;(S)| &gt; |S|. Always. For every set, finite or infinite.</p>
+  </section>
+
+  <!-- SECTION 5: ALEPHS -->
+  <section id="alephs">
+    <h2>V. The Aleph Numbers — A Hierarchy of Infinities</h2>
+    <p>Cantor introduced the Hebrew letter aleph (&#x2135;) to denote his transfinite cardinal numbers. The subscript indicates the position in the hierarchy. This notation was not arbitrary: Cantor, a deeply religious man who corresponded with theologians about the philosophical status of the actual infinite, chose the first letter of the Hebrew alphabet deliberately. He saw the transfinite as a creation of God, a domain that human reason could explore but not exhaust.</p>
+
+    <table class="inf-table">
+      <thead>
+        <tr>
+          <th>Cardinal</th>
+          <th>Meaning</th>
+          <th>Example Sets</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="aleph">&#x2135;&#x2080;</td>
+          <td>Countable infinity — the smallest infinite cardinal</td>
+          <td>&#x2115; (naturals), &#x2124; (integers), &#x211A; (rationals), algebraic numbers</td>
+        </tr>
+        <tr>
+          <td class="aleph">&#x1D50C; = 2<sup>&#x2135;&#x2080;</sup></td>
+          <td>Cardinality of the continuum</td>
+          <td>&#x211D; (reals), any interval (a,b), &#x211D;<sup>n</sup>, all continuous functions</td>
+        </tr>
+        <tr>
+          <td class="aleph">&#x2135;&#x2081;</td>
+          <td>The next infinite cardinal after &#x2135;&#x2080;</td>
+          <td>The set of all countable ordinals</td>
+        </tr>
+        <tr>
+          <td class="aleph">&#x2135;&#x2082;</td>
+          <td>The next after &#x2135;&#x2081;</td>
+          <td>Defined by the ordinal hierarchy</td>
+        </tr>
+        <tr>
+          <td class="aleph">&#x2135;&#x03B1;</td>
+          <td>The &#x03B1;-th infinite cardinal (for any ordinal &#x03B1;)</td>
+          <td>There are as many alephs as there are ordinals — a proper class</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Continuum Hypothesis</h3>
+    <p>Cantor proved that &#x1D50C; = 2<sup>&#x2135;&#x2080;</sup> (the cardinality of the reals equals 2 raised to aleph-null). He believed, but could not prove, that &#x1D50C; = &#x2135;&#x2081; — that the cardinality of the continuum is the very next infinite cardinal after &#x2135;&#x2080;, with no infinity in between. This is the <strong>Continuum Hypothesis</strong>:</p>
+
+    <div class="math-block">
+      <span class="label">THE CONTINUUM HYPOTHESIS (CH)</span>
+      There is no set whose cardinality is strictly between &#x2135;&#x2080; and 2<sup>&#x2135;&#x2080;</sup>.<br/><br/>
+      Equivalently: &nbsp;2<sup>&#x2135;&#x2080;</sup> = &#x2135;&#x2081;<br/><br/>
+      Cantor spent years trying to prove this. He failed. He did not know why.<br/>
+      Hilbert listed it as Problem #1 in his famous 1900 list of 23 open problems.<br/>
+      The resolution came in two parts, decades after Cantor's death:<br/><br/>
+      &nbsp;&nbsp;1940: G&ouml;del proved CH is <span class="hl">consistent</span> with ZFC — you cannot <em>disprove</em> it.<br/>
+      &nbsp;&nbsp;1963: Cohen proved CH is <span class="hl">independent</span> of ZFC — you cannot <em>prove</em> it.<br/><br/>
+      The Continuum Hypothesis is <span class="hl">undecidable</span> from the axioms of set theory.<br/>
+      It can be freely assumed either true or false. Neither leads to contradiction.
+    </div>
+
+    <p>Cantor's failure to prove the Continuum Hypothesis contributed to his mental breakdowns. He cycled between believing he had proved it and believing he had disproved it, only to find errors in both directions. He could not have known — no one could have known — that the question was fundamentally unanswerable from within the axioms he was working with. He was, in his own way, running into the limits that G&ouml;del would later formalize.</p>
+
+    <h3>There Is No Largest Infinity</h3>
+    <p>The power set operation provides an inexhaustible supply of ever-larger infinities. Starting from &#x2135;&#x2080;, we form 2<sup>&#x2135;&#x2080;</sup>, then 2<sup>2<sup>&#x2135;&#x2080;</sup></sup>, and so on, each strictly larger than the last. The sequence of aleph numbers &#x2135;&#x2080;, &#x2135;&#x2081;, &#x2135;&#x2082;, ... is itself infinite, and beyond all of them is &#x2135;&#x03C9; (aleph-omega), and beyond that &#x2135;&#x03C9;+1, and so on for ever. There is no ceiling. There is no "set of all cardinals" — that collection is too large to be a set; it is a proper class. The hierarchy of infinities is itself infinite, and transfinitely so.</p>
+
+    <blockquote>
+      <p>"In mathematics the art of proposing a question must be held of higher value than solving it."</p>
+      <cite>— Georg Cantor</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 6: CANTOR'S THEOREM -->
+  <section id="cantors-theorem">
+    <h2>VI. Cantor's Theorem — The Power Set Is Always Larger</h2>
+    <p>The crown of Cantor's cardinal arithmetic is the theorem that bears his name:</p>
+
+    <div class="math-block">
+      <span class="label">CANTOR'S THEOREM</span>
+      For any set A: &nbsp;&nbsp;&nbsp;|A| &lt; |&#x2118;(A)|<br/><br/>
+      The cardinality of the power set of A is <span class="hl">strictly greater</span> than the cardinality of A.<br/>
+      This holds for every set — finite, infinite, or transfinite.<br/><br/>
+      Proof sketch (diagonal argument applied generally):<br/>
+      Suppose f : A &#x2192; &#x2118;(A) is any function.<br/>
+      Define: D = { x &#x2208; A : x &#x2209; f(x) }<br/>
+      Then D &#x2208; &#x2118;(A), but for any a &#x2208; A: D &#x2260; f(a).<br/>
+      (If a &#x2208; D then a &#x2209; f(a) so f(a) &#x2260; D; if a &#x2209; D then a &#x2208; f(a) so f(a) &#x2260; D.)<br/>
+      Therefore f is not surjective. No surjection A &#x2192; &#x2118;(A) exists.<br/>
+      Therefore |A| &lt; |&#x2118;(A)|. &nbsp;<span class="hl">&#x220E;</span>
+    </div>
+
+    <p>This theorem has a disquieting corollary: there is no largest set, no universal set, no "set of all sets" (in any set theory that takes Cantor's theorem seriously). If such a set U existed, &#x2118;(U) would have to be a set and would have cardinality greater than U — but U was supposed to contain all sets. Contradiction. The proper class of all sets is not itself a set. This is not a technicality; it is a fundamental fact about the nature of mathematical infinity.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Consequence</div>
+        <h3>No Universal Set</h3>
+        <p>If a set of all sets existed, Cantor's theorem would produce a set larger than it. Therefore no universal set exists. The "universe" of set theory is a proper class, not a set.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Consequence</div>
+        <h3>No Largest Cardinal</h3>
+        <p>For any cardinal &#x03BA;, the cardinal 2<sup>&#x03BA;</sup> is strictly larger. There is no ceiling. The cardinals form a proper class — a collection too large to be a set.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Application</div>
+        <h3>The Reals as Power Set</h3>
+        <p>The reals &#x211D; can be put in bijection with &#x2118;(&#x2115;). So |&#x211D;| = 2<sup>&#x2135;&#x2080;</sup>. The uncountability of the reals is the uncountability of a power set. Cantor's theorem explains why.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOL NAV -->
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol.0 — The Man</a>
+    <a href="1-infinity.html" class="current">Vol.1 — The Work</a>
+    <a href="2-world.html">Vol.2 — His World &rarr;</a>
+    <a href="3-legacy.html">Vol.3 — The Long Afterlife &rarr;</a>
+  </div>
+
+</main>
+
+<!-- ── FOOTER / COLOPHON ──────────────────────────────────── -->
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br/>
+    Author &amp; Originator: David Lee Wise / ROOT0 / TriPod LLC<br/>
+    License: CC-BY-ND-4.0 &mdash; Attribution required, no derivatives without permission<br/>
+    Series: Georg Cantor — A Four-Volume Study &nbsp;|&nbsp; Volume 1: The Work — Infinity Formalized<br/>
+    Published: ROOT0 Library &nbsp;|&nbsp; <span class="mono">C:/repos/library/georg-cantor/1-infinity.html</span><br/>
+    &copy; ROOT0 / TriPod LLC. All rights reserved under CC-BY-ND-4.0 terms.
+  </div>
+</footer>
+
+</body>
+</html>

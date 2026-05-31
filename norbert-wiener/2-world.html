@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiener — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --blue: #1d4ed8;
+    --text: #dde8e2;
+    --muted: #7a8a80;
+    --border: #1a2a20;
+    --card-bg: #081008;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,10,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); border-color: var(--green); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #051a0c 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.45; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(21,128,61,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blue);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--green);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--green); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--green); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* Macy grid */
+  .macy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .macy-person {
+    background: var(--card-bg);
+    padding: 1.25rem;
+  }
+  .macy-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.2rem;
+  }
+  .macy-field {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .macy-note { font-size: 0.82rem; color: var(--text); opacity: 0.78; }
+  /* Warning box */
+  .warning-box {
+    border: 1px solid var(--green);
+    background: rgba(21,128,61,0.07);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+  }
+  .warning-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .warning-box p { font-size: 0.97rem; margin: 0; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Wiener</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-cybernetics.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Network of nodes — the Macy conference as an intellectual graph -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="w-bg3" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#061a0e" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="node-glow">
+        <feGaussianBlur stdDeviation="2"/>
+      </filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#w-bg3)"/>
+
+    <!-- Network edges — animated to pulse suggesting communication -->
+    <g stroke="#15803d" stroke-width="0.8" opacity="0.3">
+      <line x1="450" y1="270" x2="200" y2="150"><animate attributeName="opacity" values="0.15;0.5;0.15" dur="3.1s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="700" y2="150"><animate attributeName="opacity" values="0.15;0.45;0.15" dur="2.8s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="150" y2="350"><animate attributeName="opacity" values="0.15;0.4;0.15" dur="3.5s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="750" y2="350"><animate attributeName="opacity" values="0.15;0.5;0.15" dur="2.6s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="350" y2="80"><animate attributeName="opacity" values="0.1;0.4;0.1" dur="4s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="550" y2="80"><animate attributeName="opacity" values="0.1;0.45;0.1" dur="3.3s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270" x2="450" y2="460"><animate attributeName="opacity" values="0.15;0.5;0.15" dur="2.9s" repeatCount="indefinite"/></line>
+      <line x1="200" y1="150" x2="700" y2="150"><animate attributeName="opacity" values="0.1;0.3;0.1" dur="4.2s" repeatCount="indefinite"/></line>
+      <line x1="150" y1="350" x2="750" y2="350"><animate attributeName="opacity" values="0.1;0.3;0.1" dur="5s" repeatCount="indefinite"/></line>
+      <line x1="200" y1="150" x2="150" y2="350"><animate attributeName="opacity" values="0.1;0.25;0.1" dur="6s" repeatCount="indefinite"/></line>
+      <line x1="700" y1="150" x2="750" y2="350"><animate attributeName="opacity" values="0.1;0.25;0.1" dur="5.5s" repeatCount="indefinite"/></line>
+    </g>
+
+    <!-- Node: center = Wiener -->
+    <circle cx="450" cy="270" r="16" fill="#15803d" opacity="0.9" filter="url(#node-glow)">
+      <animate attributeName="r" values="14;20;14" dur="4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <circle cx="450" cy="270" r="6" fill="#fff" opacity="0.95"/>
+
+    <!-- Other nodes -->
+    <circle cx="200" cy="150" r="9" fill="#1d4ed8" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="150" r="9" fill="#1d4ed8" opacity="0.7">
+      <animate attributeName="opacity" values="0.5;0.85;0.5" dur="2.9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="150" cy="350" r="8" fill="#15803d" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="750" cy="350" r="8" fill="#15803d" opacity="0.6">
+      <animate attributeName="opacity" values="0.4;0.75;0.4" dur="4.1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="350" cy="80" r="7" fill="#1d4ed8" opacity="0.5">
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="550" cy="80" r="7" fill="#1d4ed8" opacity="0.5">
+      <animate attributeName="opacity" values="0.3;0.65;0.3" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="460" r="8" fill="#15803d" opacity="0.55">
+      <animate attributeName="opacity" values="0.35;0.7;0.35" dur="3.6s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Labels for nodes -->
+    <text x="200" y="138" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.7" letter-spacing="1">MCCULLOCH</text>
+    <text x="700" y="138" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.7" letter-spacing="1">SHANNON</text>
+    <text x="140" y="338" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.7" letter-spacing="1">BATESON</text>
+    <text x="760" y="338" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.7" letter-spacing="1">VON NEUMANN</text>
+    <text x="350" y="68" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.6" letter-spacing="1">PITTS</text>
+    <text x="550" y="68" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.6" letter-spacing="1">MEAD</text>
+    <text x="450" y="480" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.6" letter-spacing="1">BIGELOW</text>
+    <text x="450" y="256" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#fff" opacity="0.9" letter-spacing="1">WIENER</text>
+
+    <!-- Bottom label -->
+    <text x="450" y="510" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="16" fill="#15803d" opacity="0.12" letter-spacing="4">MACY CONFERENCES 1946–1953</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Norbert Wiener · 1894–1964 · Volume Two</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">MIT · WWII · The Macy Conferences · Cold War Automation</p>
+    <p class="hero-lead">The mid-twentieth-century American intellectual world — WWII mobilization, the Macy Conferences that seeded cognitive science, and the Cold War anxiety about machines replacing human minds.</p>
+  </div>
+</div>
+
+<div class="band">MIT · WWII NDRC · Macy Conferences 1946–1953 · Cold War · Automation Anxiety</div>
+
+<main>
+
+  <!-- MIT IN THE MID-20TH CENTURY -->
+  <section id="mit-world">
+    <span class="section-label">I — MIT and American Science</span>
+    <h2>Massachusetts Institute of Technology, 1919–1964</h2>
+    <p>MIT in the 1920s was not the institution it would become. It was primarily an engineering school — a place to train men who would build bridges, design machines, and run factories. The mathematics department was subordinate to these practical goals, and the culture was more empirical than theoretical. Wiener found this environment uncongenial in some respects and liberating in others. His theoretical ambitions were occasionally seen as impractical; his collaborations with engineers gave his mathematics a grounding in real physical problems that pure mathematicians of his generation often lacked.</p>
+    <p>By the 1940s, MIT had been transformed. The demands of World War II had brought in enormous federal research funding and had created an institutional culture oriented toward the most ambitious possible problems at the intersection of science and engineering. The Radiation Laboratory at MIT, which developed radar, employed several thousand scientists and engineers at its peak. The Research Laboratory of Electronics — where Wiener worked — brought together electrical engineers, physicists, mathematicians, and biologists in a genuinely unprecedented way. The culture of interdisciplinary collaboration that produced cybernetics was not accidental: it was the specific product of wartime MIT.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1919–1940</span>
+        <h4>Pre-War MIT</h4>
+        <p>Mathematics as engineering support. Wiener develops his stochastic processes, Brownian motion theory, and harmonic analysis. Builds his reputation in pure mathematics while maintaining connections to applied problems.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1940–1945</span>
+        <h4>WWII Mobilization</h4>
+        <p>The National Defense Research Committee funds the anti-aircraft predictor project. The Radiation Laboratory develops radar. MIT becomes a major defense research institution. Wiener is changed by the work — and by the weapons it produces.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1946–1960</span>
+        <h4>Post-War Research Culture</h4>
+        <p>The Research Laboratory of Electronics becomes the center of interdisciplinary science at MIT. Cybernetics is born, grows, and spreads. The Cold War brings enormous military research funding — which Wiener declines.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1950–1964</span>
+        <h4>The Warning Years</h4>
+        <p>Wiener writes and speaks publicly about the dangers of automation and the ethics of intelligent machines. MIT colleagues consider him eccentric; history considers him prescient.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WWII AND THE ETHICS OF WEAPONS -->
+  <section id="wwii">
+    <span class="section-label">II — The War and Its Aftermath</span>
+    <h2>World War II: The Project That Changed Him</h2>
+    <p>When the National Defense Research Committee asked Wiener to work on anti-aircraft fire control in 1940, he accepted without hesitation. The problem was scientifically fascinating and the cause was unambiguous — Nazi Germany was a genuine and catastrophic threat, and anything that could help defeat it was legitimate. Wiener worked on the predictor project for five years, living the wartime research culture of enforced urgency, midnight conversations with engineers, and the particular intensity of working on problems where the stakes were human lives.</p>
+    <p>But the experience marked him in ways he did not fully anticipate. In 1946, as the Cold War began to crystallize and the military began funding the next generation of weapons research at universities, Wiener made a decision that was highly unusual for an American scientist of his era: he <strong>publicly refused to do classified weapons research</strong>. He wrote a letter — published in <em>The Atlantic</em> — explaining his refusal to respond to a defense contractor's request for results from his wartime work:</p>
+
+    <div class="pull-quote">
+      <blockquote>"I do not expect to publish any future work of mine which may do damage in the hands of irresponsible militarists."</blockquote>
+      <cite>— Norbert Wiener, "A Scientist Rebels," The Atlantic, January 1947</cite>
+    </div>
+
+    <p>This was not merely posturing. He meant it. He turned down consulting contracts, declined to participate in classified seminars, and refused to engage with military research programs that most of his MIT colleagues found not only acceptable but desirable. His position was not that weapons research was always wrong — he acknowledged that WWII justified it — but that in the Cold War, with nuclear weapons in play and geopolitical dynamics he regarded as dangerously unstable, the contribution of individual scientists to military capability was more likely to harm than help human welfare.</p>
+    <p>His colleagues thought him naive. His critics thought him disloyal. History has been kinder to his judgment than to those who simply continued building weapons without asking why.</p>
+  </section>
+
+  <!-- THE MACY CONFERENCES -->
+  <section id="macy">
+    <span class="section-label">III — The Macy Conferences, 1946–1953</span>
+    <h2>Where Disciplines Were Dissolved: The Macy Meetings</h2>
+    <p>Between 1946 and 1953, the Josiah Macy Jr. Foundation sponsored a remarkable series of ten interdisciplinary conferences in New York City, organized primarily by the neurologist Warren McCulloch. The subject was, broadly, feedback mechanisms in biology and the social sciences — but the conferences quickly became something larger: the first sustained attempt to develop a common vocabulary for understanding mind, machine, culture, and communication using the concepts of cybernetics and information theory.</p>
+    <p>Norbert Wiener attended many of the conferences, and his ideas were central to their intellectual agenda. But the Macy Conferences were remarkable precisely because of the breadth of disciplines represented around the table:</p>
+
+    <div class="macy-grid">
+      <div class="macy-person">
+        <div class="macy-name">Norbert Wiener</div>
+        <span class="macy-field">Mathematics / Cybernetics</span>
+        <div class="macy-note">The conceptual anchor. Feedback, control, communication theory.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Warren McCulloch</div>
+        <span class="macy-field">Neuroscience / Logic</span>
+        <div class="macy-note">Organizer. Pioneered the logical neuron model with Walter Pitts — the precursor to neural networks.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">John von Neumann</div>
+        <span class="macy-field">Mathematics / Computing</span>
+        <div class="macy-note">Game theory, computer architecture. Applied mathematical precision to both machines and biology.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Claude Shannon</div>
+        <span class="macy-field">Information Theory</span>
+        <div class="macy-note">His 1948 information entropy paper completed the mathematical foundation for cybernetics.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Gregory Bateson</div>
+        <span class="macy-field">Anthropology / Systems</span>
+        <div class="macy-note">Applied cybernetics to culture, ecology, schizophrenia, and the theory of mind. Transformed anthropology.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Margaret Mead</div>
+        <span class="macy-field">Anthropology</span>
+        <div class="macy-note">Bateson's collaborator. Brought sociological and cross-cultural dimensions to cybernetic analysis.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Walter Pitts</div>
+        <span class="macy-field">Mathematics / Neuroscience</span>
+        <div class="macy-note">Self-educated mathematical prodigy. With McCulloch, showed that neural networks could perform logical computation.</div>
+      </div>
+      <div class="macy-person">
+        <div class="macy-name">Julian Bigelow</div>
+        <span class="macy-field">Engineering</span>
+        <div class="macy-note">Wiener's collaborator on the predictor project. Helped build the Institute for Advanced Study computer.</div>
+      </div>
+    </div>
+
+    <h3>What the Conferences Produced</h3>
+    <p>The Macy Conferences did not produce a single unified theory. What they produced was a shared vocabulary — the concepts of feedback, information, entropy, system, control — and a set of intellectual connections between people working in radically different fields who discovered that they were, at some level of abstraction, working on the same problems. The conversations seeded:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Cognitive Science</span>
+        <h4>Mind as Information Processing</h4>
+        <p>The idea that cognition could be understood as computation — that mental processes were information-processing operations, not mystical vital phenomena — emerged directly from the Macy Conferences. This framing became the foundation of cognitive science.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Artificial Intelligence</span>
+        <h4>The Machine That Thinks</h4>
+        <p>McCulloch and Pitts' logical neurons, von Neumann's computing architectures, and Wiener's feedback loops provided the conceptual and mathematical tools for the AI project that would be formally launched at Dartmouth in 1956.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Systems Theory</span>
+        <h4>Ecology, Culture, Pathology</h4>
+        <p>Bateson and Mead applied cybernetic concepts to ecosystems, family systems, cultural patterns, and mental illness. Systems therapy, ecological thinking, and the concept of "double bind" in schizophrenia all derived from Macy discussions.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Communication Theory</span>
+        <h4>Information and Noise</h4>
+        <p>Shannon's information theory, presented in the context of the Macy discussions, became foundational to linguistics, cryptography, communications engineering, and eventually genomics (genes as information).</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <blockquote>"These conferences brought together engineers, mathematicians, neurologists, psychologists, anthropologists, and social scientists, all speaking different disciplinary languages and all discovering, with varying degrees of excitement and alarm, that they might be saying the same thing."</blockquote>
+      <cite>— Common characterization of the Macy Conferences, 1946–1953</cite>
+    </div>
+  </section>
+
+  <!-- COLD WAR AND AUTOMATION ANXIETY -->
+  <section id="automation">
+    <span class="section-label">IV — Cold War Anxiety</span>
+    <h2>Automation, Unemployment, and the Human Use of Human Beings</h2>
+    <p>By 1950, Wiener had become increasingly alarmed by what he saw as the inevitable social consequences of the technologies he and his colleagues were developing. The second industrial revolution — the automation of judgment and decision-making, not merely of muscle — was coming, and he believed it would cause massive social disruption if society did not prepare for it.</p>
+    <p>His 1950 book <em>The Human Use of Human Beings</em> stated this concern with unusual directness for an academic text. He argued that automation would displace workers not only in manufacturing but increasingly in professional and administrative roles — wherever repetitive, rule-based judgment was required. He called for serious public discussion of how to manage this transition, and he warned that leaving it to market forces alone would produce social catastrophe.</p>
+
+    <div class="warning-box">
+      <h4>The 1950 Warning — Still Debated</h4>
+      <p>Wiener wrote in 1950: "The automatic machine... is the precise economic equivalent of slave labor. Any labor which competes with slave labor must accept the economic conditions of slave labor... [The worker's] social adjustment is done for him by the machine." He argued that an economy that used machines wherever they were cheaper than humans would, without deliberate intervention, eliminate not just unpleasant jobs but the economic foundation of the working and middle class. This argument — that automation creates structural unemployment that markets do not self-correct — remains one of the most contested questions in economics and public policy today, seventy-five years later.</p>
+    </div>
+
+    <p>Wiener's concerns were not technophobic. He did not oppose automation in principle — he understood its potential to liberate humanity from grinding labor. What he opposed was the abdication of responsibility for its consequences. <em>"The answer, of course, is to have a society based on human values other than buying and selling,"</em> he wrote — a sentence that scandalized economists of the 1950s and resonates uncomfortably in the 2020s.</p>
+
+    <h3>The Cold War Context</h3>
+    <p>Wiener's warnings were delivered into a specific Cold War context in which the automation of weapons, communications, and decision-making was proceeding at maximum speed under the pressure of superpower competition. The United States was building SAGE (Semi-Automatic Ground Environment), a networked system of radar stations and computers designed to provide continental air defense against Soviet bombers — a massive, networked feedback control system of exactly the kind Wiener's cybernetics described. He was, simultaneously, the intellectual father of these systems and one of their most vocal critics. This was not comfortable for anyone involved.</p>
+  </section>
+
+  <!-- CONTEMPORARIES -->
+  <section id="contemporaries">
+    <span class="section-label">V — The Community</span>
+    <h2>The People Who Made the Moment</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Collaborator</span>
+        <h4>Arturo Rosenblueth (1900–1970)</h4>
+        <p>Mexican physician and physiologist. Wiener's closest scientific collaborator. Their joint papers on purposive behavior and teleology defined the conceptual foundations of cybernetics. Wiener dedicated <em>Cybernetics</em> to him.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Collaborator</span>
+        <h4>Julian Bigelow (1913–2003)</h4>
+        <p>Engineer who worked with Wiener on the WWII predictor. Later helped build the von Neumann computer at the Institute for Advanced Study. The practical engineering half of the cybernetics project.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Parallel Theorist</span>
+        <h4>Claude Shannon (1916–2001)</h4>
+        <p>Information theory. The Shannon-Wiener connection is deep: both were working on related problems of communication, noise, and uncertainty. Shannon's entropy and Wiener's entropy are mathematically equivalent.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Contemporary</span>
+        <h4>John von Neumann (1903–1957)</h4>
+        <p>Game theory, computing architecture, quantum mechanics. Von Neumann and Wiener moved in overlapping circles — both attended the Macy Conferences, both worked on the boundary between mathematics and computing. Their temperaments were complementary and their ambitions competing.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Student / Collaborator</span>
+        <h4>Walter Pitts (1923–1969)</h4>
+        <p>Self-taught mathematical prodigy discovered by Wiener. With McCulloch, created the logical neuron model. His tragic later life — alcoholism, destroyed work, early death — is one of the saddest stories in the history of computing.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Intellectual Partner</span>
+        <h4>Warren McCulloch (1898–1969)</h4>
+        <p>Neurologist and philosopher. Organized the Macy Conferences. Co-authored the logical neuron paper with Pitts. His restless intellect ranged from neurophysiology to philosophy of mind to cybernetic psychiatry.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Norbert Wiener Series · Volume 2: His World · norbert-wiener/2-world.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-cybernetics.html">Vol. 1 — The Work</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

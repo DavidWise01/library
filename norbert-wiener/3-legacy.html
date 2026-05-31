@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiener — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --blue: #1d4ed8;
+    --text: #dde8e2;
+    --muted: #7a8a80;
+    --border: #1a2a20;
+    --card-bg: #081008;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,10,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); border-color: var(--green); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #051a0c 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.48; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(21,128,61,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blue);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--green);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--green); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--green); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--green);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* Word tree */
+  .word-tree {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 3rem 0;
+  }
+  .word-tree h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .word-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .word-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .word-term {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--green);
+    min-width: 160px;
+  }
+  .word-desc {
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.85;
+    flex: 1;
+  }
+  /* Final quote */
+  .final-quote {
+    border: 1px solid var(--green);
+    background: rgba(21,128,61,0.06);
+    padding: 3rem;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    line-height: 1.55;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--green);
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Wiener</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-cybernetics.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Expanding legacy network -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="w-bg4" cx="50%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#061a0e" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="la" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#15803d" opacity="0.6"/>
+      </marker>
+    </defs>
+    <rect width="900" height="540" fill="url(#w-bg4)"/>
+
+    <!-- Rings expanding from center -->
+    <circle cx="450" cy="270" r="60" fill="none" stroke="#15803d" stroke-width="0.8" opacity="0.2">
+      <animate attributeName="r" values="60;180;60" dur="8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="60" fill="none" stroke="#15803d" stroke-width="0.8" opacity="0.2">
+      <animate attributeName="r" values="60;180;60" dur="8s" begin="2.7s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="8s" begin="2.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="60" fill="none" stroke="#15803d" stroke-width="0.8" opacity="0.2">
+      <animate attributeName="r" values="60;180;60" dur="8s" begin="5.4s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="8s" begin="5.4s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Center node -->
+    <circle cx="450" cy="270" r="20" fill="#15803d" opacity="0.85"/>
+    <circle cx="450" cy="270" r="7" fill="#fff" opacity="0.95"/>
+
+    <!-- Radiating spokes to legacy domains -->
+    <line x1="450" y1="270" x2="160" y2="120" stroke="#15803d" stroke-width="1" opacity="0.4" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="740" y2="120" stroke="#15803d" stroke-width="1" opacity="0.4" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="100" y2="280" stroke="#15803d" stroke-width="1" opacity="0.35" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="800" y2="280" stroke="#15803d" stroke-width="1" opacity="0.35" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="200" y2="440" stroke="#15803d" stroke-width="1" opacity="0.4" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="700" y2="440" stroke="#15803d" stroke-width="1" opacity="0.4" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="450" y2="80" stroke="#15803d" stroke-width="1" opacity="0.35" marker-end="url(#la)"/>
+    <line x1="450" y1="270" x2="450" y2="470" stroke="#15803d" stroke-width="1" opacity="0.35" marker-end="url(#la)"/>
+
+    <!-- Endpoint circles -->
+    <circle cx="160" cy="120" r="7" fill="#1d4ed8" opacity="0.7"/>
+    <circle cx="740" cy="120" r="7" fill="#1d4ed8" opacity="0.7"/>
+    <circle cx="100" cy="280" r="7" fill="#15803d" opacity="0.6"/>
+    <circle cx="800" cy="280" r="7" fill="#15803d" opacity="0.6"/>
+    <circle cx="200" cy="440" r="7" fill="#1d4ed8" opacity="0.6"/>
+    <circle cx="700" cy="440" r="7" fill="#1d4ed8" opacity="0.6"/>
+    <circle cx="450" cy="80" r="7" fill="#15803d" opacity="0.6"/>
+    <circle cx="450" cy="470" r="7" fill="#15803d" opacity="0.55"/>
+
+    <!-- Labels -->
+    <text x="160" y="108" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.7" letter-spacing="1">CONTROL THEORY</text>
+    <text x="740" y="108" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.7" letter-spacing="1">AI / NEURAL NETS</text>
+    <text x="90" y="268" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.65" letter-spacing="1">ROBOTICS</text>
+    <text x="810" y="268" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.65" letter-spacing="1">CYBERSECURITY</text>
+    <text x="200" y="458" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.65" letter-spacing="1">COGNITIVE SCI.</text>
+    <text x="700" y="458" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#1d4ed8" opacity="0.65" letter-spacing="1">ECOLOGY / SYSTEMS</text>
+    <text x="450" y="68" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.6" letter-spacing="1">INTERNET TCP/IP</text>
+    <text x="450" y="488" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.6" letter-spacing="1">ECONOMICS</text>
+
+    <!-- Bottom ghost -->
+    <text x="450" y="520" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="16" fill="#15803d" opacity="0.1" letter-spacing="4">cybernetics — control — communication — the animal — the machine</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Norbert Wiener · 1894–1964 · Volume Three</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">Feedback Is Everywhere. The Word Is Everywhere. He Was Right.</p>
+    <p class="hero-lead">The feedback loop concept is inside every PID controller, every neural network's backpropagation, every reinforcement learning agent, every homeostatic biological system, and every internet protocol. He predicted automation unemployment in 1950. The debate continues.</p>
+  </div>
+</div>
+
+<div class="band">PID Controllers · Neural Networks · Reinforcement Learning · Cognitive Science · Cyberspace · Automation Debate</div>
+
+<main>
+
+  <!-- FEEDBACK IN EVERYTHING -->
+  <section id="feedback-everywhere">
+    <span class="section-label">I — The Concept</span>
+    <h2>Feedback Is Inside Everything</h2>
+    <p>Wiener's central concept — the negative feedback loop as the universal architecture of purposive systems — has proved to be one of the most generative ideas in the history of science. It is not merely a useful analogy or a metaphor. It is a precise, mathematical description of how systems maintain goals against disturbance. Once you see it, you see it everywhere, because it is everywhere. The following list is not exhaustive. It is illustrative of a pattern so pervasive that exhaustion is impossible.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Industrial control systems using PID feedback</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1960</span>
+        <span class="stat-label">Kalman filter — Wiener filter made recursive</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1974</span>
+        <span class="stat-label">Backpropagation — feedback through neural nets</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1950</span>
+        <span class="stat-label">His automation warning — still unresolved</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTROL THEORY AND ENGINEERING -->
+  <section id="control">
+    <span class="section-label">II — Engineering</span>
+    <h2>Control Theory: Every Machine That Steers Itself</h2>
+    <p>The most direct engineering descendants of Wiener's cybernetics are found in control theory — the mathematical discipline that designs feedback controllers for physical systems. Every industrial system, every vehicle, every robot, every aircraft uses control theory derived from the cybernetic framework.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Ubiquitous</span>
+        <h4>PID Controllers</h4>
+        <p>Proportional-Integral-Derivative controllers are the workhorses of industrial automation. Every thermostat, cruise control system, industrial furnace, chemical plant, and robot joint uses a PID controller. The P, I, and D terms are three different ways of computing the feedback correction from the error signal. Millions of these run continuously in the infrastructure of modern civilization.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Aerospace</span>
+        <h4>Autopilots and Flight Control</h4>
+        <p>Aircraft autopilots are feedback control systems that compare the aircraft's current attitude and trajectory to the commanded values and apply corrective control inputs. Modern fly-by-wire aircraft (Airbus A320 and later, Boeing 777) have computerized flight control systems that apply feedback at rates of hundreds of cycles per second.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Space</span>
+        <h4>Kalman Filter — GPS, Spacecraft</h4>
+        <p>Rudolf Kalman's 1960 filter — a recursive, computationally efficient version of the Wiener filter — is used in GPS receivers, spacecraft attitude control, submarine navigation, autopilots, and every state estimation problem where measurements arrive sequentially and must be fused with a dynamic model. It won Kalman the Millennium Technology Prize in 2006.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Robotics</span>
+        <h4>Robot Control Systems</h4>
+        <p>Every robotic arm, every autonomous vehicle, every quadcopter drone uses feedback control loops — often nested ones. The outer loop maintains position; the inner loop controls velocity; the innermost loop controls motor torque. Cybernetics all the way down.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Biology</span>
+        <h4>Homeostasis</h4>
+        <p>Body temperature regulation, blood glucose homeostasis (disrupted in diabetes), hormonal regulation via the hypothalamic-pituitary axis — all are feedback control systems. The cybernetic analysis of biological regulatory systems became the foundation of physiological modeling and medical device design (insulin pumps, pacemakers, cochlear implants).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Internet</span>
+        <h4>TCP Congestion Control</h4>
+        <p>The Transmission Control Protocol's congestion control algorithm — which regulates the rate at which data is sent over the internet to avoid overwhelming routers — is a feedback control system. It measures packet loss (the error signal) and adjusts the sending rate (the control input). The internet's stability under load depends on this feedback mechanism.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEURAL NETWORKS AND AI -->
+  <section id="ai">
+    <span class="section-label">III — Artificial Intelligence</span>
+    <h2>Neural Networks and Backpropagation: Feedback Through Learning</h2>
+    <p>The connection between cybernetics and artificial intelligence is not merely historical. It is structural. The two most important learning algorithms in modern AI are both, in their essence, applications of the feedback principle that Wiener articulated.</p>
+
+    <h3>Backpropagation: Feedback Through a Neural Network</h3>
+    <p>Backpropagation — the algorithm that trains virtually every deep neural network in existence — works by computing the error at the output (the difference between the network's prediction and the correct answer) and propagating this error signal <em>backward</em> through the network to adjust the weights in each layer. This is negative feedback applied to a learning system: measure the error, compute how much each part of the system contributed to it, adjust each part proportionally, repeat. The conceptual architecture is Wiener's. The mathematics was developed by Rumelhart, Hinton, and Williams in the 1980s.</p>
+    <p>Every language model, every image classifier, every recommendation system that runs on a neural network is trained by backpropagation — trained, that is, by a feedback loop that computes error and corrects it, billions of times, until the system steers itself toward accurate predictions. Wiener described this in abstract terms in 1948. The detailed mathematics took three more decades to work out.</p>
+
+    <h3>Reinforcement Learning: Feedback Through Reward</h3>
+    <p>Reinforcement learning — the paradigm that produced AlphaGo, the game-playing systems that beat human champions, and the fine-tuning mechanisms behind modern large language models — is cybernetics at its most direct. An agent takes actions, receives reward signals (feedback), and adjusts its policy to maximize future reward. The agent has a goal (maximize reward), sensors (observations of the environment), effectors (actions), and feedback (the reward signal). Wiener described this architecture precisely. The computational methods to make it scale were developed over fifty years, but the conceptual structure was his.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The idea that cybernetics would lead to the creation of artificial intelligence was in Wiener's own mind from the beginning. He was frightened by it."</blockquote>
+      <cite>— Common assessment of Wiener's prescience regarding AI development</cite>
+    </div>
+  </section>
+
+  <!-- THE WORD CYBER -->
+  <section id="cyber">
+    <span class="section-label">IV — The Word</span>
+    <h2>Cyber-: From One Word, a Thousand Descendants</h2>
+    <p>Wiener coined the word "cybernetics" in 1948. He did not coin "cyber-" as a prefix. But the cultural diffusion of his word produced one of the most productive prefixes in contemporary English:</p>
+
+    <div class="word-tree">
+      <h4>The Cyber- Family Tree</h4>
+      <div class="word-row">
+        <div class="word-term">Cybernetics (1948)</div>
+        <div class="word-desc">Wiener's original term. The science of control and communication in animals and machines. Rarely used in its precise sense today, but the source of everything below.</div>
+      </div>
+      <div class="word-row">
+        <div class="word-term">Cyborg (1960)</div>
+        <div class="word-desc">Cybernetic organism — coined by Manfred Clynes and Nathan Kline to describe a self-regulating human-machine hybrid. Now used in science fiction, disability studies, and transhumanist discourse.</div>
+      </div>
+      <div class="word-row">
+        <div class="word-term">Cyberspace (1982)</div>
+        <div class="word-desc">William Gibson coined this in the story "Burning Chrome" (1982), popularized it in <em>Neuromancer</em> (1984). The digital networked space in which information exists. The "cyber-" was taken directly from Wiener.</div>
+      </div>
+      <div class="word-row">
+        <div class="word-term">Cyberpunk (1983)</div>
+        <div class="word-desc">A science fiction genre characterized by high technology and social decay, networked digital environments, and human-machine integration. Named by Bruce Bethke; popularized by William Gibson and Bruce Sterling.</div>
+      </div>
+      <div class="word-row">
+        <div class="word-term">Cybersecurity (1990s)</div>
+        <div class="word-desc">The protection of networked information systems from attack, theft, and disruption. Now a multi-hundred-billion-dollar global industry. Every government has a "cyber" strategy. Wiener's word governs national security discourse.</div>
+      </div>
+      <div class="word-row">
+        <div class="word-term">Cyberwarfare (2000s)</div>
+        <div class="word-desc">The use of networked digital systems to attack an adversary's infrastructure, military systems, or information environment. A recognized domain of warfare alongside land, sea, air, and space. The word descends from Wiener.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE AUTOMATION DEBATE -->
+  <section id="automation-legacy">
+    <span class="section-label">V — The Unresolved Warning</span>
+    <h2>The Automation Debate: 1950 to Now</h2>
+    <p>Wiener's warning in 1950 about automation causing massive unemployment was not a passing observation. He stated it clearly, repeatedly, and with specific reasoning. He argued that automated machinery — and especially, in the future, machines that could perform cognitive tasks — would displace workers in ways that markets would not self-correct, because the market has no mechanism for ensuring that the gains from automation are distributed to those who lose their livelihoods from it.</p>
+    <p>The debate this warning triggered has not ended. It has intensified with every wave of technological displacement:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1950s–1970s</span>
+        <h4>The First Wave</h4>
+        <p>Automation of manufacturing. The Detroit automakers automated assembly lines. Wiener's warning was largely dismissed — economists pointed to new jobs created in services and technology. The counterargument: those workers who were displaced bore the costs personally, even if aggregate employment remained stable.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1980s–2000s</span>
+        <h4>The Computerization Wave</h4>
+        <p>Personal computers automate office work. Word processors eliminate typing pools. Spreadsheets displace bookkeepers. The debate continues. Economist David Autor's research on "job polarization" — automation eliminates middle-skill routine jobs while demand for high-skill and low-skill non-routine jobs grows — revived Wiener's structural concern.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">2010s–2020s</span>
+        <h4>AI and the Cognitive Wave</h4>
+        <p>Large language models perform tasks that require reading, writing, analysis, and judgment. Wiener's specific prediction — that automation would extend beyond muscle to mind — is now the central economic and policy concern of the AI era. The "future of work" debate is his debate.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Still Open</span>
+        <h4>Is He Right?</h4>
+        <p>Economists disagree. The historical pattern is that automation creates new jobs even as it destroys old ones — but the transition costs are borne by specific people, industries, and communities. Whether generative AI is different in kind from previous waves — because it automates cognitive rather than physical tasks — remains the central unresolved question. Wiener asked it first.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <blockquote>"We must cease to kiss the whip that lashes us."</blockquote>
+      <cite>— Norbert Wiener, The Human Use of Human Beings, 1950</cite>
+    </div>
+  </section>
+
+  <!-- COGNITIVE SCIENCE -->
+  <section id="cogsci">
+    <span class="section-label">VI — The Fields He Seeded</span>
+    <h2>Cognitive Science, Systems Ecology, and Everything Between</h2>
+    <p>Beyond engineering and AI, Wiener's influence extended into every field that the Macy Conferences touched. The concept of feedback and the cybernetic framework became organizing principles for disciplines that had never previously considered themselves related:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Psychology / Neuroscience</span>
+        <h4>Cognitive Science</h4>
+        <p>The framing of the mind as an information-processing system — the core assumption of cognitive science — came directly from the Macy Conferences and the cybernetic framework. Information, feedback, and control became the vocabulary of mind research. Every computational model of cognition is Wienerian in its foundations.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Ecology</span>
+        <h4>Systems Ecology</h4>
+        <p>Gregory Bateson's application of cybernetic concepts to ecosystems — feedback loops in predator-prey dynamics, nutrient cycles, population regulation — became the foundation of systems ecology. The concept of ecological "homeostasis" is directly cybernetic.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Psychiatry</span>
+        <h4>Family Systems Therapy</h4>
+        <p>Bateson's cybernetic analysis of communication and double-bind in schizophrenic families gave rise to family systems therapy — an approach to mental illness that treats the family as the unit of analysis, a feedback system with pathological dynamics. Now a mainstream therapeutic approach.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Economics</span>
+        <h4>General Equilibrium and Feedback</h4>
+        <p>Wiener's understanding of markets as feedback control systems — price signals as error signals driving production and consumption toward equilibrium — influenced the formal mathematical modeling of general equilibrium in economics. The Walrasian auctioneer is a cybernetic control mechanism.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section id="final">
+    <span class="section-label">VII — The Assessment</span>
+    <h2>What He Got Right</h2>
+
+    <div class="final-quote">
+      <blockquote>"We are not the stuff that abides, but patterns that perpetuate themselves. A man is not the stone and steel of his bones, but the pattern of his nervous system."</blockquote>
+      <cite>— Norbert Wiener, The Human Use of Human Beings, 1950</cite>
+    </div>
+
+    <p>This sentence from 1950 contains, in compressed form, the entire philosophical implication of cybernetics: that what matters is not the material substrate but the pattern of organization and feedback — the information structure — that the material instantiates. A human being is not the specific atoms in their body (which are replaced constantly) but the pattern of organization that persists. A mind is not a specific brain state but a control system maintaining certain goals against entropy.</p>
+    <p>This is not merely poetic. It is the philosophical grounding of information theory, of functionalism in philosophy of mind, of the computational theory of cognition, and of the entire enterprise of artificial intelligence. If minds are patterns — feedback-control systems organized to certain ends — then it is at least coherent to ask whether patterns of the same type can be instantiated in silicon rather than carbon. Wiener asked this question seventy-five years before the AI systems of the 2020s made it urgently practical.</p>
+    <p>He was not always right. His specific predictions about the timeline of automation were sometimes off. His political prescriptions were sometimes naive. His personal assessment of his own contribution sometimes wavered between grandiosity and self-doubt. He was a complicated, anxious, brilliant, morally serious man who spent his career worrying about things that the rest of the scientific community would not worry about for another half-century.</p>
+    <p>The word he invented — "cybernetics" — now governs the vocabulary of national security, science fiction, technology criticism, and daily life. The concept he identified — feedback — is the invisible architecture of every control system, learning algorithm, biological regulator, and market mechanism on Earth. The warning he issued in 1950 is the central debate of the AI era. He was, in the most important senses, correct.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Norbert Wiener Series · Volume 3: The Legacy · norbert-wiener/3-legacy.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-cybernetics.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a>
+  </div>
+</footer>
+
+</body>
+</html>

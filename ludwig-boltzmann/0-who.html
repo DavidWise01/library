@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boltzmann — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --crimson: #be123c;
+    --gold: #ca8a04;
+    --text: #e8dde8;
+    --muted: #8a7a82;
+    --border: #2a1a20;
+    --card-bg: #100810;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--crimson);
+    border-color: var(--crimson);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #1a050f 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--crimson);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(190,18,60,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  /* BAND */
+  .band {
+    background: var(--crimson);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section {
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--crimson);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--crimson);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(190,18,60,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--crimson);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    opacity: 0.82;
+    margin: 0;
+  }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--crimson);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--crimson);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+  /* COLOPHON */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--gold); text-decoration: none; }
+  .colophon a:hover { color: var(--crimson); }
+
+  /* Tragedy box */
+  .tragedy-box {
+    border: 1px solid var(--crimson);
+    background: rgba(190,18,60,0.07);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+  }
+  .tragedy-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+  }
+  .tragedy-box p {
+    font-size: 0.97rem;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Boltzmann</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-entropy.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Gas molecules bouncing in a box -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bg-glow" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#3a0515" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#08050a" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="mol-blur">
+        <feGaussianBlur stdDeviation="1.2"/>
+      </filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#bg-glow)"/>
+    <!-- Container box -->
+    <rect x="80" y="60" width="740" height="420" fill="none" stroke="#be123c" stroke-width="1.5" opacity="0.35"/>
+    <!-- Molecule 1 -->
+    <circle r="7" fill="#be123c" opacity="0.85" filter="url(#mol-blur)">
+      <animate attributeName="cx" values="180;720;680;200;350;180" dur="7.3s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="140;180;420;390;200;140" dur="7.3s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 2 -->
+    <circle r="5.5" fill="#ca8a04" opacity="0.8">
+      <animate attributeName="cx" values="650;150;200;700;600;650" dur="6.1s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="300;380;150;130;400;300" dur="6.1s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 3 -->
+    <circle r="6" fill="#be123c" opacity="0.7">
+      <animate attributeName="cx" values="300;750;400;120;500;300" dur="8.7s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="420;200;100;300;450;420" dur="8.7s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 4 -->
+    <circle r="4.5" fill="#fff" opacity="0.5">
+      <animate attributeName="cx" values="500;200;600;800;450;500" dur="5.4s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="200;400;450;250;100;200" dur="5.4s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 5 -->
+    <circle r="5" fill="#ca8a04" opacity="0.65">
+      <animate attributeName="cx" values="750;500;150;300;700;750" dur="9.2s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="380;100;200;450;350;380" dur="9.2s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 6 -->
+    <circle r="6.5" fill="#be123c" opacity="0.6">
+      <animate attributeName="cx" values="200;600;780;350;130;200" dur="10.1s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="160;440;300;110;410;160" dur="10.1s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 7 -->
+    <circle r="4" fill="#fff" opacity="0.4">
+      <animate attributeName="cx" values="420;750;200;650;380;420" dur="6.8s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="350;150;400;430;100;350" dur="6.8s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 8 -->
+    <circle r="5" fill="#ca8a04" opacity="0.55">
+      <animate attributeName="cx" values="680;120;400;760;500;680" dur="7.9s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="100;280;460;380;200;100" dur="7.9s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 9 -->
+    <circle r="3.5" fill="#be123c" opacity="0.5">
+      <animate attributeName="cx" values="130;700;350;180;650;130" dur="11.3s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="470;430;130;200;360;470" dur="11.3s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Molecule 10 -->
+    <circle r="5.5" fill="#fff" opacity="0.35">
+      <animate attributeName="cx" values="570;250;720;400;600;570" dur="8.4s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="260;120;410;350;80;260" dur="8.4s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Ghost equation text -->
+    <text x="450" y="300" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="36" fill="#be123c" opacity="0.08" letter-spacing="4">S = k · log W</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Ludwig Boltzmann · 1844–1906 · Volume Zero</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Atomist. Theorist. Martyr of Physics.</p>
+    <p class="hero-lead">He proved the atomic theory of matter with mathematics so powerful it is carved on his tombstone. The scientific establishment spent thirty years trying to destroy him for it. He died not knowing he had won.</p>
+  </div>
+</div>
+
+<div class="band">Vienna 1844 · Graz · Munich · Leipzig · Duino 1906</div>
+
+<main>
+
+  <!-- STATS ROW -->
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1844</span>
+      <span class="stat-label">Born, Vienna</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1866</span>
+      <span class="stat-label">First Entropy Paper</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1877</span>
+      <span class="stat-label">S = k · log W</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">30+</span>
+      <span class="stat-label">Years of Public Attack</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1905</span>
+      <span class="stat-label">Einstein Proves Atoms</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1906</span>
+      <span class="stat-label">Died, Duino</span>
+    </div>
+  </div>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <span class="section-label">I — Origins</span>
+    <h2>Born on Shrove Tuesday, Vienna, 1844</h2>
+    <p>Ludwig Eduard Boltzmann was born on the night between February 20 and 21, 1844 — the last night of the Fasching carnival, Shrove Tuesday — in Vienna, then the capital of the Habsburg Empire. His father, Ludwig Georg Boltzmann, was a tax official; his mother, Maria Katharina Pauernfeind, came from a merchant family in Salzburg. He later joked that his turbulent temperament was the birthright of a carnival child: <em>"I was born on the night between Fasching Tuesday and Ash Wednesday — my ups and downs are not to be wondered at."</em></p>
+    <p>The family moved to Wels in Upper Austria when he was young, then to Linz, where his father died of tuberculosis in 1859. Ludwig was fifteen. His mother, left with limited means, arranged for him to continue his studies through the gymnasium in Linz. He was mathematically gifted from the start, his intellect entirely at ease with abstraction, while his emotional life remained restless and prone to melancholy swings — a pattern that would define his entire adult existence.</p>
+    <p>In 1863, he enrolled at the University of Vienna to study physics. He found his teacher: Josef Stefan, the great experimental physicist, whose name would later be attached to the Stefan-Boltzmann law of radiation. Stefan recognized the young student's extraordinary facility with mathematics and directed his energy toward the most urgent unsolved problems in physics: the nature of heat, the relationship between temperature and energy, and the mechanical behavior of gases.</p>
+
+    <h3>The Intellectual Formation</h3>
+    <p>Boltzmann's formation was Viennese, German, and classical. He read Goethe and Schiller and loved music — he played the piano well enough to perform in company, and his fondness for Beethoven and Schubert bordered on religious. He was, in the tradition of the German-speaking scientific world, a thoroughly educated man in the humanistic sense: a scientist who read philosophy, who wrote essays on ethics and epistemology, who gave public lectures on the nature of scientific knowledge and the relationship between mathematics and physical reality.</p>
+    <p>He received his doctorate from the University of Vienna in 1866 at the age of twenty-two. His dissertation and first major papers were on the kinetic theory of gases — the framework, derived from Newtonian mechanics and probability theory, that would occupy him for the rest of his life. He was attempting something radical: to derive the second law of thermodynamics — the law of entropy, of irreversibility, of the arrow of time — from the mechanics of individual atoms bouncing off one another.</p>
+    <p>To do this, he had to prove that atoms exist. In 1866, this was not a settled question. It was, in many influential quarters, considered naive.</p>
+  </section>
+
+  <!-- THE ATOMIC CONVICTION -->
+  <section id="atomism">
+    <span class="section-label">II — The Core Conviction</span>
+    <h2>Atoms: The Bet He Made With His Life</h2>
+    <p>The atomic hypothesis — that matter is composed of discrete, indivisible particles too small to observe directly — had philosophical roots going back to Democritus and Leucippus in ancient Greece. In the nineteenth century it was a contested scientific claim. John Dalton had given it a chemical footing in 1808. James Clerk Maxwell had used it to derive properties of gases in the 1860s. But a significant faction of the European scientific establishment, particularly in the German-speaking world, rejected it as metaphysical speculation — an untestable fiction dressed as physics.</p>
+    <p>Boltzmann did not merely believe in atoms. He <strong>staked his scientific program on their existence</strong>. Every calculation he made, every theory he built, every paper he published proceeded from the assumption that matter is made of atoms obeying the laws of mechanics. His statistical mechanics was not a convenient mathematical trick — it was a literal description of physical reality, of what was actually happening at scales too small to see.</p>
+    <p>This made him, in the eyes of the positivists who dominated German-language physics and philosophy of science, an idealist in the pejorative sense — a man who confused his mathematical models for reality itself. Ernst Mach, the greatest physicist-philosopher in Vienna, held that science could only describe sensory experience. Atoms could not be experienced. Therefore atoms were not science. Therefore Boltzmann was not doing science. This was the verdict of the most intellectually respected man in his professional world.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Bring forward what is true, write it so that it is clear, defend it to your last breath."</blockquote>
+      <cite>— Ludwig Boltzmann</cite>
+    </div>
+  </section>
+
+  <!-- CAREER -->
+  <section id="career">
+    <span class="section-label">III — The Academic Career</span>
+    <h2>Graz, Vienna, Munich, Leipzig: A Life in Transit</h2>
+    <p>Boltzmann's career was distinguished, productive, and restless. He was appointed to his first full professorship — in mathematical physics at the University of Graz — in 1869, when he was just twenty-five. He would return to Graz twice, leave it twice, and never quite settle anywhere for long. His academic wandering was partly opportunity, partly temperament, and partly the mounting toll of professional conflict.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1869–1873</span>
+        <h4>Graz (First Appointment)</h4>
+        <p>Mathematical physics professorship at twenty-five. Productive years of foundational work on the kinetic theory of gases. H-theorem developed here.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1873–1876</span>
+        <h4>Vienna</h4>
+        <p>Mathematics chair. Less congenial to his physics than Graz. Returns to Graz in 1876, accepting the chair of experimental physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1876–1890</span>
+        <h4>Graz (Second Appointment)</h4>
+        <p>His most productive stretch. Statistical mechanics matures. The 1877 entropy formula. Marriage and family. International reputation grows.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1890–1894</span>
+        <h4>Munich</h4>
+        <p>Theoretical physics at Ludwig Maximilian University. Prestigious appointment in Germany's leading scientific city. Publishes his major lectures.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1894–1900</span>
+        <h4>Vienna (Return)</h4>
+        <p>Succeeds Mach in the chair of natural philosophy. Bitterly ironic — he now held the seat of his greatest antagonist. His mental health deteriorates.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1900–1902</span>
+        <h4>Leipzig</h4>
+        <p>Attempts relocation to escape Vienna. Wilhelm Ostwald's institution — another opponent. The experiment fails; his depression deepens.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">In 1902 he returned to Vienna, where he spent his last years. He had by then suffered repeated bouts of what contemporaries called <em>Neurasthenie</em> — nervous collapse, severe depression, inability to work — and had been hospitalized more than once. He lectured brilliantly when he could. He was loved by his students. He was unable to stop the attacks on his life's work.</p>
+  </section>
+
+  <!-- PERSONAL LIFE -->
+  <section id="personal">
+    <span class="section-label">IV — Personal Life</span>
+    <h2>The Man: Music, Family, and a Mind at War With Itself</h2>
+    <p>In 1876, Boltzmann married Henriette von Aigentler, a former student who had fought successfully to be allowed to audit lectures at Graz — women were not formally admitted to Austrian universities until later. She was intellectually capable and became the center of his domestic life, managing the practical affairs of a household that included five children (one died in infancy) and a husband whose moods could shift from brilliant sociability to complete withdrawal without warning.</p>
+    <p>He was, by contemporary accounts, an extraordinary lecturer and a warm, even playful presence when at ease. He enjoyed long mountain walks in the Austrian Alps and had a genuine, uncondescending love of ordinary life — market stalls, music in parks, conversation over coffee. He kept a detailed diary. He wrote philosophical essays for general audiences. He gave public lectures on Goethe and Schiller and argued passionately that the humanities and natural sciences were not enemies but partners in the project of understanding.</p>
+    <p>But the depressions were real and dangerous. He attempted suicide in 1901, while attending an international scientific congress. He was found and hospitalized. He wrote afterward about the episode with startling candor, framing it not as madness but as exhaustion — the exhaustion of a man who had spent three decades defending a position that the most powerful figures in his field had declared unscientific.</p>
+
+    <h3>The Weight of Opposition</h3>
+    <p>The opposition he faced was not merely academic disagreement. Ernst Mach and Wilhelm Ostwald were not marginal figures — they commanded enormous prestige and institutional power. Mach's positivism shaped the philosophy of science for a generation. Ostwald's energetics — the doctrine that energy, not atoms, was the fundamental physical reality — was the dominant theoretical framework in German chemistry. At conferences, Boltzmann's papers were publicly attacked. His derivations were called circular. His statistical interpretation of the second law was said to be a tautology. The question was not just whether his physics was right — it was whether he was doing physics at all.</p>
+    <p>He was not a man who could absorb this coolly. He cared deeply about being right, and he cared about being recognized as right, and the combination of caring deeply and being systematically denied recognition over thirty years was, in the end, too much to bear.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I am conscious of being only an individual struggling weakly against the stream of time."</blockquote>
+      <cite>— Ludwig Boltzmann, Lectures on Gas Theory, 1896</cite>
+    </div>
+  </section>
+
+  <!-- THE END -->
+  <section id="duino">
+    <span class="section-label">V — Duino, 1906</span>
+    <h2>The Irony That Came Too Late</h2>
+    <p>In the summer of 1906, Boltzmann traveled with his wife Henriette and their daughter Elsa to the resort village of Duino, on the Adriatic coast near Trieste — then still part of the Austrian Empire. He had been in poor health, profoundly depressed, and had been persuaded by his doctors and family to take a rest cure away from the pressures of Vienna. He had been struggling to complete his lectures, struggling to write, struggling to find any equilibrium.</p>
+    <p>On September 5, 1906, while Henriette and Elsa were swimming in the bay, Ludwig Boltzmann hanged himself in the room of the hotel where they were staying. He was sixty-two years old.</p>
+
+    <div class="tragedy-box">
+      <h4>The Vindication He Never Received</h4>
+      <p>In that same year — 1905, the year before his death — Albert Einstein published his paper on Brownian motion, the random jiggling of tiny particles suspended in a liquid. Einstein's mathematical analysis proved conclusively that the motion was caused by collisions with individual molecules. Atoms were real. Boltzmann's entire scientific program was vindicated. But Einstein's paper appeared in German in the <em>Annalen der Physik</em>, and Boltzmann, in his deteriorating state, either did not read it or could not absorb its implications. He died not knowing that the confirmation he had spent forty years waiting for had already arrived.</p>
+    </div>
+
+    <p>The epitaph on his tombstone in the Zentralfriedhof in Vienna reads simply:</p>
+    <div class="pull-quote">
+      <blockquote>S = k · log W</blockquote>
+      <cite>— Boltzmann's entropy equation, carved in stone, Vienna</cite>
+    </div>
+    <p>No commentary is needed. The equation says everything: that the disorder of the universe can be measured, predicted, and understood — if you believe in atoms. He believed. He was right. He died too soon to see it confirmed.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">VI — Chronology</span>
+    <h2>A Life in Time</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">20–21 February 1844</div>
+        <div class="timeline-title">Born in Vienna on Shrove Tuesday night</div>
+        <div class="timeline-body">Son of a Habsburg tax official. The carnival birth would later become his self-deprecating explanation for his temperamental extremes.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1859</div>
+        <div class="timeline-title">Father dies of tuberculosis</div>
+        <div class="timeline-body">Ludwig is fifteen. The family's finances are constrained. He continues at the Linz gymnasium.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1863</div>
+        <div class="timeline-title">Enrolls at the University of Vienna</div>
+        <div class="timeline-body">Studies physics under Josef Stefan, who recognizes his exceptional mathematical gifts immediately.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1866</div>
+        <div class="timeline-title">Doctorate from Vienna; first kinetic theory papers</div>
+        <div class="timeline-body">Age twenty-two. Already attempting to derive thermodynamic laws from the mechanics of atoms.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1869</div>
+        <div class="timeline-title">Full professor at Graz, age twenty-five</div>
+        <div class="timeline-body">One of the youngest full professors in the Austrian Empire. The first of many institutional appointments.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1872</div>
+        <div class="timeline-title">H-theorem published</div>
+        <div class="timeline-body">Proves that entropy must always increase in an isolated system — the arrow of time derived from reversible mechanics. Major controversy follows.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1876</div>
+        <div class="timeline-title">Marries Henriette von Aigentler</div>
+        <div class="timeline-body">Returns to Graz as chair of experimental physics. His most productive and personally stable period begins.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1877</div>
+        <div class="timeline-title">S = k · log W</div>
+        <div class="timeline-body">The entropy formula published. Entropy is a measure of the number of microscopic configurations consistent with an observed macrostate. The most important equation in statistical physics.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1890s</div>
+        <div class="timeline-title">The atomic wars intensify</div>
+        <div class="timeline-body">Mach, Ostwald, and the energeticists attack his work systematically at conferences and in print. His mental health begins to deteriorate seriously.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1894–1900</div>
+        <div class="timeline-title">Succeeds Mach in Vienna</div>
+        <div class="timeline-body">Bitterly ironic: he now holds the natural philosophy chair that his greatest antagonist vacated. The pressures of Vienna weigh on him.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1901</div>
+        <div class="timeline-title">First suicide attempt</div>
+        <div class="timeline-body">At an international scientific congress. Found and hospitalized. Writes about the episode with unusual self-analytical candor.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1905</div>
+        <div class="timeline-title">Einstein's Brownian motion paper</div>
+        <div class="timeline-body">Proves atoms exist — the vindication Boltzmann needed. He apparently never registered its full significance before his death the following year.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">5 September 1906</div>
+        <div class="timeline-title">Dies at Duino while his family swims</div>
+        <div class="timeline-body">Hangs himself in the hotel room. His wife and daughter are on the beach below. He is sixty-two. The science he spent his life defending would be fully accepted within a decade.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Ludwig Boltzmann Series · Volume 0: The Person · ludwig-boltzmann/0-who.html<br>
+    Series continues: <a href="1-entropy.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

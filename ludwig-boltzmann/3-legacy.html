@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boltzmann — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --crimson: #be123c;
+    --gold: #ca8a04;
+    --text: #e8dde8;
+    --muted: #8a7a82;
+    --border: #2a1a20;
+    --card-bg: #100810;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--crimson);
+    border-color: var(--crimson);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #1a050f 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.48;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--crimson);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(190,18,60,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--crimson);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--crimson);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--crimson);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--crimson);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--crimson);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* Shannon comparison box */
+  .comparison-box {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 0;
+    margin: 3rem 0;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .comparison-box { grid-template-columns: 1fr; }
+    .comparison-divider { display: none; }
+  }
+  .comparison-panel {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+  }
+  .comparison-panel h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .comparison-panel .eq {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 0.75rem 0;
+    display: block;
+  }
+  .comparison-panel p { font-size: 0.88rem; margin: 0; }
+  .comparison-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--crimson);
+    font-weight: 700;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--gold); text-decoration: none; }
+  .colophon a:hover { color: var(--crimson); }
+  /* Legacy tree */
+  .legacy-tree {
+    position: relative;
+    padding: 2rem 0;
+  }
+  .legacy-root {
+    text-align: center;
+    background: rgba(190,18,60,0.12);
+    border: 1px solid var(--crimson);
+    padding: 1.25rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    display: inline-block;
+    width: 100%;
+  }
+  .final-quote {
+    border: 1px solid var(--gold);
+    background: rgba(202,138,4,0.06);
+    padding: 3rem 3rem;
+    margin: 3rem 0;
+    text-align: center;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Boltzmann</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-entropy.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Expanding entropy — ordered to chaotic -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bg-glow4" cx="30%" cy="50%" r="55%">
+        <stop offset="0%" stop-color="#2a0510" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#08050a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="540" fill="url(#bg-glow4)"/>
+    <!-- Radiating lines from center — the legacy spreading outward -->
+    <g stroke="#be123c" stroke-width="0.8" fill="none" opacity="0.3">
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;150;450" dur="8s" repeatCount="indefinite"/><animate attributeName="y2" values="270;80;270" dur="8s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;750;450" dur="8s" repeatCount="indefinite"/><animate attributeName="y2" values="270;80;270" dur="8s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;800;450" dur="9s" repeatCount="indefinite"/><animate attributeName="y2" values="270;270;270" dur="9s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;100;450" dur="9s" repeatCount="indefinite"/><animate attributeName="y2" values="270;270;270" dur="9s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;200;450" dur="10s" repeatCount="indefinite"/><animate attributeName="y2" values="270;460;270" dur="10s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;700;450" dur="10s" repeatCount="indefinite"/><animate attributeName="y2" values="270;460;270" dur="10s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;450;450" dur="7s" repeatCount="indefinite"/><animate attributeName="y2" values="270;480;270" dur="7s" repeatCount="indefinite"/></line>
+      <line x1="450" y1="270"><animate attributeName="x2" values="450;450;450" dur="7s" repeatCount="indefinite"/><animate attributeName="y2" values="270;60;270" dur="7s" repeatCount="indefinite"/></line>
+    </g>
+    <!-- Nodes at the tips — the fields Boltzmann influenced -->
+    <circle cx="450" cy="270" r="14" fill="#be123c" opacity="0.9">
+      <animate attributeName="r" values="12;18;12" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </circle>
+    <circle cx="450" cy="270" r="5" fill="#fff" opacity="0.95"/>
+    <!-- Molecules in field -->
+    <circle r="4" fill="#ca8a04" opacity="0.6">
+      <animate attributeName="cx" values="200;750;350;680;200" dur="14s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="120;400;460;100;120" dur="14s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="3.5" fill="#be123c" opacity="0.5">
+      <animate attributeName="cx" values="680;120;750;200;680" dur="11s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="180;380;420;130;180" dur="11s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="3" fill="#fff" opacity="0.35">
+      <animate attributeName="cx" values="300;820;450;160;300" dur="16s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="400;200;480;300;400" dur="16s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Tombstone equation -->
+    <text x="450" y="495" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="28" fill="#be123c" opacity="0.15" letter-spacing="5">S = k · log W</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Ludwig Boltzmann · 1844–1906 · Volume Three</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">A Constant. An Equation. The Foundation of Everything.</p>
+    <p class="hero-lead">He died believing he had failed. His constant now defines the kelvin. His entropy formula spawned information theory. Every simulation of physical matter runs on his mathematics. He won.</p>
+  </div>
+</div>
+
+<div class="band">Boltzmann Constant · 2019 SI Revision · Shannon Entropy · Statistical Mechanics Everywhere</div>
+
+<main>
+
+  <!-- THE VINDICATION -->
+  <section id="vindication">
+    <span class="section-label">I — The Vindication</span>
+    <h2>How Quickly the World Changed</h2>
+    <p>Within five years of Boltzmann's death in 1906, the atomic hypothesis had moved from contested to established. The process was not gradual — it was rapid and almost total. Einstein's 1905 Brownian motion paper provided the mathematical proof. Jean Perrin's careful experimental measurements of Brownian motion (published 1908–1911) confirmed the theoretical predictions with extraordinary precision, allowing the first accurate measurements of Avogadro's number and Boltzmann's constant. Wilhelm Ostwald, Boltzmann's most powerful critic, publicly conceded in 1908 that atoms were real.</p>
+    <p>The men who had spent thirty years telling Boltzmann he was not doing science lived to see his work become the foundation of modern physics, chemistry, and — eventually — information theory, computer science, and cosmology. Mach died in 1916, having never fully accepted quantum mechanics or the atomic worldview, maintaining his positivist position to the end. Ostwald lived until 1932, long enough to see Boltzmann's statistical mechanics become as established as Newton's laws.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1908</span>
+        <span class="stat-label">Ostwald concedes — atoms are real</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1909</span>
+        <span class="stat-label">Perrin confirms Brownian motion</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1948</span>
+        <span class="stat-label">Shannon entropy published</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2019</span>
+        <span class="stat-label">k defines the kelvin in SI units</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOLTZMANN'S CONSTANT -->
+  <section id="constant">
+    <span class="section-label">II — The Constant</span>
+    <h2>k: Now It Defines the Kelvin</h2>
+    <p>In November 2018, the General Conference on Weights and Measures voted to redefine the International System of Units (SI) in terms of fixed values of fundamental physical constants. The redefinition took effect on May 20, 2019 — World Metrology Day. Among the constants fixed by this decision:</p>
+    <p style="text-align:center; font-family:'Space Mono',monospace; font-size:1rem; color:var(--gold); padding:1.5rem 0; letter-spacing:0.05em;"><strong>k = 1.380649 × 10⁻²³ J K⁻¹ (exact, by definition)</strong></p>
+    <p>The kelvin — the SI unit of thermodynamic temperature — is now defined in terms of Boltzmann's constant. Temperature is defined as what Boltzmann always said it was: average kinetic energy of molecules, measured in natural units, converted by k. The constant he derived from first principles in the 1870s now anchors the international standard of temperature measurement used by every laboratory, factory, hospital, and weather station on Earth.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Physics</span>
+        <h4>Thermal Physics</h4>
+        <p>kT appears in every calculation involving thermal fluctuations, thermal equilibrium, specific heat, and the Boltzmann factor. It is the natural unit of thermal energy.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Chemistry</span>
+        <h4>Chemical Kinetics</h4>
+        <p>The Arrhenius equation for reaction rates uses kT (or more precisely, the gas constant R = Nₐk). Every calculation of reaction rate is grounded in Boltzmann's work.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Electronics</span>
+        <h4>Semiconductor Physics</h4>
+        <p>The thermal voltage V_T = kT/e governs the behavior of every transistor and diode. Every electronic device on Earth operates by physics that requires k.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Quantum</span>
+        <h4>Quantum Statistics</h4>
+        <p>The Fermi-Dirac and Bose-Einstein distributions — which describe the behavior of electrons in metals and photons in cavities — are both built on the Boltzmann factor e^(−E/kT).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Cosmology</span>
+        <h4>The Early Universe</h4>
+        <p>The thermal history of the universe — the Big Bang nucleosynthesis, recombination, and the cosmic microwave background — is calculated using Boltzmann's statistical framework applied to extreme conditions.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Biophysics</span>
+        <h4>Protein Folding</h4>
+        <p>The conformational states of proteins are governed by Boltzmann distributions. Drug design, molecular dynamics simulations, and structural biology all use his framework directly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORMATION THEORY -->
+  <section id="shannon">
+    <span class="section-label">III — The Mathematical Identity</span>
+    <h2>Shannon's Entropy: The Formula Is the Same</h2>
+    <p>In 1948, Claude Shannon, a mathematician at Bell Labs, published "A Mathematical Theory of Communication" — the founding document of information theory. In it, he defined a quantity H, the entropy of a probability distribution, as the measure of uncertainty or information content. The formula he derived:</p>
+
+    <div class="comparison-box">
+      <div class="comparison-panel">
+        <h4>Boltzmann's Entropy (1877)</h4>
+        <span class="eq">S = −k · Σ pᵢ · log pᵢ</span>
+        <p>Entropy of a physical system in terms of the probabilities pᵢ of its microstates. k is Boltzmann's constant. Physical entropy — disorder in a gas, a crystal, the universe.</p>
+      </div>
+      <div class="comparison-divider">=</div>
+      <div class="comparison-panel">
+        <h4>Shannon's Entropy (1948)</h4>
+        <span class="eq">H = −Σ pᵢ · log₂ pᵢ</span>
+        <p>Information entropy of a probability distribution. pᵢ are probabilities of outcomes. H is measured in bits. Informational entropy — the uncertainty in a message, a random variable, a DNA sequence.</p>
+      </div>
+    </div>
+
+    <p>These formulas are mathematically identical except for the choice of logarithm base (which changes the units) and the constant k (which sets the physical scale). Shannon knew this. When he was looking for a name for his quantity H, John von Neumann — who had also worked extensively with entropy in quantum mechanics — suggested "entropy" precisely because <em>"no one knows what entropy really is, so in a debate you will always have the advantage."</em> The story may be apocryphal, but Shannon did name it entropy, and he knew he was naming it after Boltzmann's concept.</p>
+    <p>The philosophical implication is profound: <strong>physical disorder and informational uncertainty are the same mathematical object, viewed from different perspectives</strong>. The entropy of a gas in a box and the entropy of a message transmitted over a noisy channel are not merely analogous — they are formally equivalent. This equivalence is now understood as deeply as anything in theoretical physics, and it connects thermodynamics, information theory, quantum mechanics, and the theory of computation in ways that are still being explored.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The fundamental theorem of the mathematical theory of communication — the noisy channel coding theorem — is a consequence of Boltzmann's statistical interpretation of entropy. He laid the foundation. Shannon built the cathedral."</blockquote>
+      <cite>— Common framing in information-theoretic treatments of thermodynamics</cite>
+    </div>
+  </section>
+
+  <!-- STATISTICAL MECHANICS TODAY -->
+  <section id="today">
+    <span class="section-label">IV — The Foundation</span>
+    <h2>Statistical Mechanics: The Framework for Everything</h2>
+    <p>Statistical mechanics — Boltzmann's creation — is now one of the three great organizing frameworks of theoretical physics, alongside quantum mechanics and general relativity. It is the bridge between the microscopic laws that govern atoms and molecules and the macroscopic properties of matter that we observe and measure. Without it, the following fields of science and engineering would not exist in their current form:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Materials Science</span>
+        <h4>Phase Transitions</h4>
+        <p>Why does ice melt at exactly 0°C? Why does iron become magnetic below the Curie temperature? The statistical mechanics of phase transitions — from the Ising model to renormalization group theory — explains all of this. Every new material designed for batteries, semiconductors, or superconductors is understood through Boltzmann's framework.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Computation</span>
+        <h4>Simulated Annealing</h4>
+        <p>The optimization algorithm "simulated annealing" is directly based on the Boltzmann distribution. It mimics the physical process of slow cooling — in which a system finds its lowest energy state — to find optimal solutions to computational problems.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Machine Learning</span>
+        <h4>Boltzmann Machines</h4>
+        <p>A class of neural networks is literally named after him. Boltzmann machines use the statistical mechanics framework to model probability distributions over data. They are predecessors of the deep learning systems now dominant in AI.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Astrophysics</span>
+        <h4>Stellar Physics</h4>
+        <p>The Boltzmann equation — his transport equation for the phase-space distribution of particles — is used to model the interior of stars, the behavior of stellar atmospheres, and the propagation of radiation through plasma.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Biology</span>
+        <h4>Biophysics and Evolution</h4>
+        <p>The statistical mechanics of genetic sequences, the thermodynamics of molecular motors (the engines of cells), and the entropy of evolutionary processes are all described using Boltzmann's mathematical framework.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finance</span>
+        <h4>Econophysics</h4>
+        <p>The Maxwell-Boltzmann distribution of molecular speeds maps (in certain models) to the distribution of income and wealth. A field called econophysics applies the tools of statistical mechanics directly to economic systems.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARROW OF TIME -->
+  <section id="time">
+    <span class="section-label">V — The Philosophical Legacy</span>
+    <h2>The Arrow of Time Is Still His Problem</h2>
+    <p>Boltzmann's deepest philosophical contribution — and his deepest unsolved problem — is the arrow of time. His statistical interpretation of the second law explained why entropy increases: it is overwhelmingly probable. But it raised a question he could only partially answer: why is the universe in a low-entropy state in the first place? Why was the Big Bang — the boundary condition of the observable universe — a state of extraordinary low entropy, from which entropy has been increasing ever since?</p>
+    <p>This question is now central to cosmology, quantum gravity, and the foundations of physics. Sean Carroll, David Deutsch, Roger Penrose, and others have devoted major portions of their scientific careers to the problem Boltzmann posed. The "Past Hypothesis" — that the universe began in an extraordinarily low-entropy state — is Boltzmann's answer, but it does not explain <em>why</em> the initial conditions were what they were. That question remains open.</p>
+    <p>The black hole information paradox — whether information that falls into a black hole is truly lost or merely encoded in the Hawking radiation — is another version of Boltzmann's question, now applied to quantum gravity. Hawking radiation is a thermal spectrum described by the Boltzmann distribution. The entropy of a black hole — the Bekenstein-Hawking entropy — is a statistical entropy in Boltzmann's sense. The deepest unresolved problems in theoretical physics today are, in a very direct sense, versions of the questions Boltzmann was wrestling with in Graz in the 1870s.</p>
+  </section>
+
+  <!-- FINAL QUOTE -->
+  <section id="words">
+    <span class="section-label">VI — His Words</span>
+    <h2>What He Said</h2>
+
+    <div class="final-quote">
+      <blockquote>"Bring forward what is true, write it so that it is clear, defend it to your last breath."</blockquote>
+      <cite>— Ludwig Boltzmann</cite>
+    </div>
+
+    <p>He meant this literally. He spent forty years defending what he knew to be true against the most formidable scientific opposition of his era, in the face of sustained professional attack, in the grip of a mental illness that made every battle harder to bear. He did not win the argument in his lifetime. He won it afterward, definitively and completely, and the victory was so total that his constant is now written into the definition of temperature itself.</p>
+    <p>The equation on his tombstone is not merely an epitaph. It is a statement of fact about the physical universe: that disorder is measurable, that probability governs the behavior of matter, that the arrow of time is statistical rather than fundamental, that the microscopic and macroscopic worlds are connected by a formula simple enough to carve in stone. He was right about all of it.</p>
+
+    <div class="pull-quote">
+      <blockquote>"If you are receptive and humble, mathematics will lead you by the hand. Again and again, when I have been at a loss how to proceed, I have just had to wait until there came to me some purely formal — some might say mathematical — inspiration."</blockquote>
+      <cite>— Ludwig Boltzmann, on the relationship between mathematics and physical discovery</cite>
+    </div>
+
+    <p>The man who could not be accepted by the dominant scientific culture of his time is now present in every laboratory thermometer, every transistor, every molecular dynamics simulation, every deep learning model called a Boltzmann machine, every measurement of temperature anywhere on Earth. He is present in the definition of a unit. He is present in Shannon's entropy. He is present in the cosmic microwave background spectrum. He is present in the questions we still cannot answer about why the universe began in a low-entropy state.</p>
+    <p>He is, in the most literal sense, everywhere.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Ludwig Boltzmann Series · Volume 3: The Legacy · ludwig-boltzmann/3-legacy.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-entropy.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a>
+  </div>
+</footer>
+
+</body>
+</html>

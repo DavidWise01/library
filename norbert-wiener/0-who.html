@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wiener — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --blue: #1d4ed8;
+    --text: #dde8e2;
+    --muted: #7a8a80;
+    --border: #1a2a20;
+    --card-bg: #081008;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,10,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--green);
+    border-color: var(--green);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #051a0c 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(21,128,61,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blue);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  /* BAND */
+  .band {
+    background: var(--green);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--green); font-style: italic; }
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(21,128,61,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--green);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--green);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--blue); text-decoration: none; }
+  .colophon a:hover { color: var(--green); }
+  /* Etymology box */
+  .etymology-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--green);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+  }
+  .etymology-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+  .etymology-box p { font-size: 0.95rem; margin: 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Wiener</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-cybernetics.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Feedback control loop diagram -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="w-bg-glow" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#051a0c" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="arrow-g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#15803d" opacity="0.7"/>
+      </marker>
+      <marker id="arrow-b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+        <polygon points="0 0, 8 3, 0 6" fill="#1d4ed8" opacity="0.6"/>
+      </marker>
+    </defs>
+    <rect width="900" height="540" fill="url(#w-bg-glow)"/>
+
+    <!-- Central feedback loop -->
+    <!-- Goal box -->
+    <rect x="80" y="220" width="130" height="60" rx="4" fill="#081008" stroke="#15803d" stroke-width="1.5" opacity="0.8"/>
+    <text x="145" y="248" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d" letter-spacing="2">GOAL</text>
+    <text x="145" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#7a8a80" letter-spacing="1">SETPOINT</text>
+
+    <!-- Comparator -->
+    <circle cx="280" cy="250" r="25" fill="#081008" stroke="#15803d" stroke-width="1.5" opacity="0.8"/>
+    <text x="280" y="254" text-anchor="middle" font-family="Cinzel, serif" font-size="18" fill="#15803d">Σ</text>
+
+    <!-- Controller box -->
+    <rect x="340" y="220" width="140" height="60" rx="4" fill="#081008" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+    <text x="410" y="248" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#1d4ed8" letter-spacing="1">CONTROLLER</text>
+    <text x="410" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" letter-spacing="1">COMPUTATION</text>
+
+    <!-- Plant/System box -->
+    <rect x="550" y="220" width="140" height="60" rx="4" fill="#081008" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+    <text x="620" y="248" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#1d4ed8" letter-spacing="1">SYSTEM</text>
+    <text x="620" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" letter-spacing="1">PLANT / PROCESS</text>
+
+    <!-- Output -->
+    <rect x="760" y="220" width="110" height="60" rx="4" fill="#081008" stroke="#15803d" stroke-width="1.5" opacity="0.8"/>
+    <text x="815" y="248" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#15803d" letter-spacing="1">OUTPUT</text>
+    <text x="815" y="265" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#7a8a80" letter-spacing="1">MEASUREMENT</text>
+
+    <!-- Forward path arrows with animation -->
+    <!-- Goal to comparator -->
+    <line x1="210" y1="250" x2="252" y2="250" stroke="#15803d" stroke-width="1.8" marker-end="url(#arrow-g)" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <!-- Comparator to controller -->
+    <line x1="305" y1="250" x2="338" y2="250" stroke="#15803d" stroke-width="1.8" marker-end="url(#arrow-g)" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+    </line>
+    <!-- Controller to system -->
+    <line x1="480" y1="250" x2="548" y2="250" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#arrow-b)" opacity="0.6">
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+    </line>
+    <!-- System to output -->
+    <line x1="690" y1="250" x2="758" y2="250" stroke="#1d4ed8" stroke-width="1.8" marker-end="url(#arrow-b)" opacity="0.6">
+      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="2s" begin="0.9s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- Feedback path — loop back under -->
+    <path d="M815,280 L815,380 L280,380 L280,278" fill="none" stroke="#15803d" stroke-width="1.8" stroke-dasharray="8,4" opacity="0.6" marker-end="url(#arrow-g)">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+    <text x="548" y="400" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#15803d" opacity="0.6" letter-spacing="3">FEEDBACK</text>
+
+    <!-- Error signal label -->
+    <text x="292" y="210" font-family="Space Mono, monospace" font-size="9" fill="#15803d" opacity="0.6" letter-spacing="1">ERROR</text>
+    <line x1="285" y1="215" x2="285" y2="225" stroke="#15803d" stroke-width="1" opacity="0.5"/>
+
+    <!-- Signal flow label top -->
+    <text x="450" y="195" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#7a8a80" opacity="0.5" letter-spacing="3">CONTROL SIGNAL</text>
+
+    <!-- Bottom text -->
+    <text x="450" y="490" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="18" fill="#15803d" opacity="0.12" letter-spacing="4">κυβερνήτης — kybernetes — steersman</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Norbert Wiener · 1894–1964 · Volume Zero</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Child Prodigy. MIT Mathematician. Father of Cybernetics.</p>
+    <p class="hero-lead">He gave us the word "cybernetics" — from the Greek for steersman, the same root as "governor" and "government" — and in doing so named the science of control and communication that underlies every intelligent system ever built.</p>
+  </div>
+</div>
+
+<div class="band">Columbia MO 1894 · Harvard PhD at 18 · MIT 1919–1964 · Cybernetics 1948</div>
+
+<main>
+
+  <!-- STATS ROW -->
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1894</span>
+      <span class="stat-label">Born, Columbia MO</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">14</span>
+      <span class="stat-label">Age at BA (Tufts)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">18</span>
+      <span class="stat-label">Age at Harvard PhD</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">45</span>
+      <span class="stat-label">Years at MIT</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1948</span>
+      <span class="stat-label">Cybernetics Published</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1964</span>
+      <span class="stat-label">Died, Stockholm</span>
+    </div>
+  </div>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <span class="section-label">I — Origins</span>
+    <h2>Born in Columbia, Missouri, 1894</h2>
+    <p>Norbert Wiener was born on November 26, 1894, in Columbia, Missouri, the eldest son of Leo Wiener and Bertha Kahn. His father was a scholar of remarkable breadth: a Lithuanian Jew who had emigrated to the United States, taught himself Russian, and became a professor of Slavic languages and literature at Harvard, where he translated Tolstoy into English and wrote prolifically on language, history, and Yiddish culture. Leo Wiener was also a man of severe and opinionated intelligence who had decided, before his son was born, that he knew how to produce a genius.</p>
+    <p>He did not lack ambition in the project. From the earliest age, Leo Wiener subjected Norbert to an intensive educational regimen of his own design — long daily sessions of instruction in mathematics, language, science, and history, with an insistence on rigor and a willingness to use the sharpest possible criticism when Norbert made errors. This produced a child who was extraordinarily learned and extremely anxious, a combination that would define his entire adult life.</p>
+    <p>The family moved to Cambridge, Massachusetts, when Leo Wiener joined the Harvard faculty, and it was in the Cambridge intellectual environment that Norbert grew up — surrounded by his father's academic colleagues, by books in multiple languages, by the assumption that intellectual life was the only life worth living, and by a parental expectation of excellence that was never quite satisfied regardless of what he achieved.</p>
+
+    <h3>The Prodigy's Education</h3>
+    <p>Norbert Wiener entered Tufts University at the age of eleven. He graduated with a BA in mathematics at fourteen. He then enrolled in graduate study at Cornell, found it uncongenial, transferred to Harvard, and completed his PhD in mathematical logic and philosophy at the age of eighteen — 1912. He had studied under Bertrand Russell at Cambridge and under David Hilbert at Göttingen in the years before the First World War. He was, by any measure, one of the most intellectually precocious people of his generation.</p>
+    <p>But he was also, by his own later account, deeply unsettled. The childhood had not given him a secure emotional foundation to match his intellectual gifts. He was awkward in social situations, prone to anxious self-doubt that seemed inexplicable given his evident abilities, and unable to maintain the composure that might have made his brilliance universally obvious to those around him. He was not the polished Harvard Brahmin who wore his learning lightly. He was something stranger and more interesting — a Jewish immigrant's son, a prodigy who knew he was a prodigy, a mathematical logician who was also a deeply literary man, and a person who would spend his career at MIT worrying about things that mathematicians were not, in 1920, supposed to worry about: the ethical consequences of what they built.</p>
+  </section>
+
+  <!-- ETYMOLOGY -->
+  <section id="etymology">
+    <span class="section-label">II — The Word</span>
+    <h2>Cybernetics: One Word, Many Descendants</h2>
+
+    <div class="etymology-box">
+      <h4>The Root</h4>
+      <p>Wiener derived "cybernetics" from the ancient Greek <em>κυβερνήτης</em> (kybernetes) — meaning "steersman," the pilot of a ship. The word was used by Plato in <em>The Republic</em> to describe the art of governance. It is the same root from which Latin derived <em>gubernator</em>, which became the English "governor." Wiener's choice of the word was deliberate: control, communication, and governance are the same concept at different scales. A ship's pilot, a thermostat, a nervous system, an economy — all are systems that steer toward goals using feedback.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Greek Root</span>
+        <h4>κυβερνήτης (kybernetes)</h4>
+        <p>"Steersman, pilot, governor." The helmsman who uses continuous sensory feedback from the water and wind to maintain a course toward a destination.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Latin Branch</span>
+        <h4>gubernator → governor</h4>
+        <p>The political meaning of the root: the one who steers the state. All government is cybernetic in Wiener's sense — a system with goals, feedback, and control mechanisms.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Science (1948)</span>
+        <h4>Cybernetics</h4>
+        <p>Wiener's term for "the science of control and communication in animals and machines." Published as the title of his 1948 book that defined the field.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Popular Prefix (1980s+)</span>
+        <h4>Cyber-</h4>
+        <p>Cyberpunk (William Gibson, 1984), cyberspace, cybersecurity, cyberwarfare, cyborg (cybernetic organism). All descended from Wiener's word. He did not coin these; they emerged from his.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MIT CAREER -->
+  <section id="mit">
+    <span class="section-label">III — Forty-Five Years at MIT</span>
+    <h2>Massachusetts Institute of Technology, 1919–1964</h2>
+    <p>Wiener joined the mathematics department at MIT in 1919, after a series of unsatisfying positions elsewhere. He would remain there for the rest of his career — forty-five years, the longest tenure at a single institution of any major mathematician of his era. MIT in 1919 was not the research powerhouse it would become; it was primarily an engineering school, and mathematics was an auxiliary subject. This suited Wiener perfectly. He was never merely a pure mathematician, and the proximity of engineers, physicists, electrical engineers, and applied scientists gave him access to problems and collaborators that a more rarefied academic environment would not have offered.</p>
+    <p>He was, by faculty colleagues' accounts, one of the most distinctive physical presences in any MIT corridor: short, round, habitually pipe-smoking, extraordinarily near-sighted (he wore thick lenses that gave his eyes an owlish, magnified appearance), prone to stopping students and visitors for extended conversations that could run from partial differential equations to European history to the ethics of automation in a single breath. He was not easy to deal with — he was demanding, sometimes tactless, occasionally oblivious to social niceties — but he was also warm, genuinely curious, and capable of intense loyalty to students and collaborators.</p>
+    <p>His mathematical work at MIT ranged across probability theory, harmonic analysis, Fourier transforms, potential theory, and the foundations of stochastic processes. He was not a mathematician who worked in isolation within a single subfield. He moved wherever the problems were, and the problems, increasingly, were at the boundary between mathematics, physics, and the emerging field of electrical engineering.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The best material model of a cat is another cat, or preferably the same cat."</blockquote>
+      <cite>— Norbert Wiener and Arturo Rosenblueth, Philosophy of Science, 1945</cite>
+    </div>
+  </section>
+
+  <!-- PERSONAL LIFE -->
+  <section id="personal">
+    <span class="section-label">IV — The Man</span>
+    <h2>Private Life, Public Worry</h2>
+    <p>In 1926, Wiener married Margaret Engemann, a German-American woman he had met through his Harvard social connections. They had two daughters, Barbara and Peggy. The marriage was apparently stable and gave him the domestic grounding that his anxious temperament required. He was not, by accounts, an attentive father in the way that later generations would consider ideal, but he was present and devoted in his fashion — he taught his daughters mathematics and took them seriously as intellectual interlocutors.</p>
+    <p>He struggled with depression throughout his life, though he managed it more successfully than some of his contemporaries. He ate too much, exercised too little, and smoked a pipe continuously. He was famous at MIT for wandering the corridors in a state of apparent abstraction, accosting colleagues at random to try out ideas on them, and sometimes forgetting where he was going. He drove a car with spectacular recklessness, an irony not lost on those who knew that he had spent years studying optimal prediction and control.</p>
+    <p>He had a genuine humanitarian dimension that was unusual for scientists of his era. He worried about the social consequences of his work in ways that were rare in the 1940s and 1950s, and he acted on those worries — writing popular books aimed at general audiences, engaging with trade unions worried about automation, and declining to participate in classified weapons research after World War II on explicit ethical grounds. He was not merely cautious about technology; he was genuinely frightened by what he saw coming.</p>
+
+    <h3>The Father's Shadow</h3>
+    <p>His relationship with his father Leo never fully resolved. He wrote two volumes of autobiography — <em>Ex-Prodigy</em> (1953) and <em>I Am a Mathematician</em> (1956) — in which he explored the childhood with remarkable candor, acknowledging both the extraordinary intellectual gift his father had cultivated and the psychological damage that the cultivation had done. The books are unusually self-aware for their era: a scientist examining his own formation with the rigor he would apply to any other subject, and finding in it something that explained both his achievements and his anxieties.</p>
+    <p>He received the National Medal of Science from President Lyndon B. Johnson in April 1964. He traveled to Stockholm in March 1964 to deliver lectures at the Royal Swedish Academy of Sciences. On March 18, 1964, he died there — of a heart attack, at the age of sixty-nine. He had spent the final years of his life watching the computer age he had helped to create unfold in exactly the direction he had warned it would go.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">V — Chronology</span>
+    <h2>A Life in Time</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">26 November 1894</div>
+        <div class="timeline-title">Born in Columbia, Missouri</div>
+        <div class="timeline-body">Eldest son of Leo Wiener, Harvard Slavic languages professor, and Bertha Kahn. A household dominated by books, languages, and intellectual ambition.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1904</div>
+        <div class="timeline-title">Enters Tufts University, age 11</div>
+        <div class="timeline-body">The result of Leo Wiener's intensive home education program. He would later describe this entry into formal higher education as a social ordeal as much as an intellectual one.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1909</div>
+        <div class="timeline-title">BA in mathematics from Tufts, age 14</div>
+        <div class="timeline-body">Graduates with honors. Enrolls at Harvard for graduate study. Transfers briefly to Cornell before returning to Harvard.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1912</div>
+        <div class="timeline-title">Harvard PhD in mathematical logic, age 18</div>
+        <div class="timeline-body">Dissertation on the comparison of ordinal numbers. Studies with Bertrand Russell at Cambridge and David Hilbert at Göttingen in subsequent years.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1914–1918</div>
+        <div class="timeline-title">World War I — searches for employment</div>
+        <div class="timeline-body">Works briefly at the Encyclopaedia Americana, at General Electric, as a mathematics instructor. The war disrupts academic appointment possibilities.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1919</div>
+        <div class="timeline-title">Joins MIT mathematics faculty</div>
+        <div class="timeline-body">The appointment that will define the rest of his life. He is twenty-four. He will spend forty-five years at MIT.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1923</div>
+        <div class="timeline-title">Brownian motion — mathematical theory</div>
+        <div class="timeline-body">Independently of Einstein (who had done physical analysis in 1905), Wiener develops a rigorous mathematical theory of Brownian motion, constructing what is now called the Wiener process.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1926</div>
+        <div class="timeline-title">Marries Margaret Engemann</div>
+        <div class="timeline-body">Two daughters follow: Barbara and Peggy. The marriage provides the domestic stability his anxious temperament requires.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1940–1945</div>
+        <div class="timeline-title">WWII — Anti-aircraft predictor project</div>
+        <div class="timeline-body">Works with Julian Bigelow on the problem of predicting aircraft flight paths for anti-aircraft fire control. The engineering problem leads directly to the cybernetics framework.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1942–1943</div>
+        <div class="timeline-title">Wiener filter developed</div>
+        <div class="timeline-body">The optimal linear filter for noise reduction in signals — now fundamental to signal processing, control theory, and communications engineering. Classified during the war.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1948</div>
+        <div class="timeline-title">Cybernetics published</div>
+        <div class="timeline-body">Full title: <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Defines the field. Becomes a bestseller in Europe and the US. Translated into multiple languages.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1950</div>
+        <div class="timeline-title">The Human Use of Human Beings published</div>
+        <div class="timeline-body">Popular version of cybernetics, with explicit warnings about automation, unemployment, and the ethics of intelligent machines. Remarkably prescient.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1964</div>
+        <div class="timeline-title">Receives National Medal of Science; dies in Stockholm</div>
+        <div class="timeline-body">Awarded the Medal by President Johnson in April. Dies of a heart attack in Stockholm on March 18, while lecturing at the Royal Swedish Academy of Sciences. Age sixty-nine.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Norbert Wiener Series · Volume 0: The Person · norbert-wiener/0-who.html<br>
+    Series continues: <a href="1-cybernetics.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

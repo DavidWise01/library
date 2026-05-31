@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boltzmann — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --crimson: #be123c;
+    --gold: #ca8a04;
+    --text: #e8dde8;
+    --muted: #8a7a82;
+    --border: #2a1a20;
+    --card-bg: #100810;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--crimson);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--crimson);
+    border-color: var(--crimson);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #1a050f 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.45;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--crimson);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(190,18,60,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.88;
+  }
+  .band {
+    background: var(--crimson);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--crimson);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--crimson);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--crimson);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* ANTAGONIST GRID */
+  .antagonist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  @media (max-width: 640px) { .antagonist-grid { grid-template-columns: 1fr; } }
+  .antagonist {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--crimson);
+    padding: 1.75rem;
+  }
+  .antagonist h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 0.3rem;
+  }
+  .antagonist .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--crimson);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .antagonist p { font-size: 0.9rem; margin: 0; }
+  /* PLACE BAND */
+  .place-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .place-item {
+    background: var(--card-bg);
+    padding: 1.25rem 1.5rem;
+  }
+  .place-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+  .place-years {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .place-note {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.8;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--gold); text-decoration: none; }
+  .colophon a:hover { color: var(--crimson); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Boltzmann</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-entropy.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Bouncing molecules + city silhouette -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bg-glow3" cx="50%" cy="60%" r="50%">
+        <stop offset="0%" stop-color="#2a0510" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#08050a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="540" fill="url(#bg-glow3)"/>
+    <!-- Stylized cityscape silhouette -->
+    <path d="M0,420 L0,320 L40,320 L40,280 L70,280 L70,260 L100,260 L100,240 L130,240 L130,280 L160,280 L160,240 L180,240 L180,200 L200,200 L200,180 L220,180 L220,200 L240,200 L240,260 L260,260 L260,300 L290,300 L290,280 L310,280 L310,260 L330,260 L330,240 L350,240 L350,200 L370,200 L370,160 L390,160 L390,140 L410,140 L410,160 L430,160 L430,200 L450,200 L450,240 L470,240 L470,260 L490,260 L490,300 L510,300 L510,260 L540,260 L540,240 L570,240 L570,220 L590,220 L590,200 L620,200 L620,240 L650,240 L650,260 L680,260 L680,300 L700,300 L700,320 L720,320 L720,280 L750,280 L750,300 L780,300 L780,320 L810,320 L810,350 L840,350 L840,380 L870,380 L870,420 L900,420 L900,540 L0,540 Z"
+      fill="#0f070d" stroke="#2a1a20" stroke-width="1" opacity="0.8"/>
+    <!-- Molecules drifting over city -->
+    <circle r="5" fill="#be123c" opacity="0.7">
+      <animate attributeName="cx" values="150;750;500;200;400;150" dur="11s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="100;200;80;350;120;100" dur="11s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="4" fill="#ca8a04" opacity="0.6">
+      <animate attributeName="cx" values="700;200;800;350;600;700" dur="9s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="180;350;120;80;300;180" dur="9s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="3.5" fill="#fff" opacity="0.4">
+      <animate attributeName="cx" values="400;800;150;700;300;400" dur="13s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="280;100;380;220;80;280" dur="13s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <circle r="4.5" fill="#be123c" opacity="0.5">
+      <animate attributeName="cx" values="250;650;850;100;500;250" dur="8s" repeatCount="indefinite" calcMode="linear"/>
+      <animate attributeName="cy" values="80;280;150;350;200;80" dur="8s" repeatCount="indefinite" calcMode="linear"/>
+    </circle>
+    <!-- Ghost label -->
+    <text x="450" y="490" text-anchor="middle" font-family="Space Mono, monospace" font-size="14" fill="#be123c" opacity="0.1" letter-spacing="6">WIEN · GRAZ · MÜNCHEN · LEIPZIG</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Ludwig Boltzmann · 1844–1906 · Volume Two</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Vienna · Graz · Munich · Leipzig · The Atomic Wars</p>
+    <p class="hero-lead">The German-speaking physics world of the 1870s–1900s was the most intellectually productive scientific community in history — and the most brutal in its treatment of those who challenged the ruling paradigm.</p>
+  </div>
+</div>
+
+<div class="band">Habsburg Empire · German Physics · Mach's Positivism · Ostwald's Energetics · The Conferences</div>
+
+<main>
+
+  <!-- THE PHYSICS WORLD -->
+  <section id="world">
+    <span class="section-label">I — The Scientific World</span>
+    <h2>The German Physics Community, 1870–1906</h2>
+    <p>In the final third of the nineteenth century, the German-speaking world — the Habsburg Empire (Austria, Bohemia, Croatia), the German states united under Bismarck in 1871, and the Swiss Confederation — dominated global physics and chemistry with an intensity unmatched in any other era or place. The institutions were extraordinary: the universities of Vienna, Berlin, Leipzig, Munich, Göttingen, Heidelberg, and Zurich housed an unprecedented concentration of scientific talent. The journals — <em>Annalen der Physik</em> above all — were the global record of physics. To publish there was to matter.</p>
+    <p>The social structure of German academic science was hierarchical in a way that shaped — and often distorted — intellectual life. A full professor (Ordinarius) had quasi-absolute power over his institute, his assistants, his junior faculty, and the direction of research in his domain. Disputes were not merely intellectual: they were battles for institutional legitimacy, for journal access, for the power to determine what counted as science. A man with the wrong ideas and the wrong enemies could be professionally destroyed.</p>
+    <p>Boltzmann had the right ideas and the wrong enemies.</p>
+
+    <div class="place-list">
+      <div class="place-item">
+        <div class="place-name">Vienna</div>
+        <div class="place-years">1844–1863, 1873–76, 1894–1906</div>
+        <div class="place-note">Capital of the Habsburg Empire. University of Vienna. Home city and final resting place. Site of his death.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-name">Graz</div>
+        <div class="place-years">1869–73, 1876–90</div>
+        <div class="place-note">Karl-Franzens-Universität. His most productive years. Where he did the statistical mechanics work and raised his family.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-name">Munich</div>
+        <div class="place-years">1890–1894</div>
+        <div class="place-note">Ludwig Maximilian University. Theoretical physics chair. German scientific capital alongside Berlin and Leipzig.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-name">Leipzig</div>
+        <div class="place-years">1900–1902</div>
+        <div class="place-note">University of Leipzig. Ostwald's territory. A failed experiment in escape from Vienna's pressures.</div>
+      </div>
+      <div class="place-item">
+        <div class="place-name">Duino</div>
+        <div class="place-years">September 1906</div>
+        <div class="place-note">Adriatic coast, near Trieste. The resort where he died by suicide on September 5, while his family was at the beach.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ANTAGONISTS -->
+  <section id="antagonists">
+    <span class="section-label">II — The Opposition</span>
+    <h2>Mach and Ostwald: The Men Who Would Not Believe in Atoms</h2>
+    <p>The attacks on Boltzmann's work were not the work of mediocrities. They came from two of the most formidable intellects in the German-speaking scientific world — men whose views commanded genuine intellectual respect and whose institutional power gave them the ability to determine the shape of German physics for a generation.</p>
+
+    <div class="antagonist-grid">
+      <div class="antagonist">
+        <h4>Ernst Mach</h4>
+        <span class="role">Physicist · Philosopher · Positivist · Vienna</span>
+        <p>Ernst Mach (1838–1916) was, by the 1890s, one of the most celebrated scientists and philosophers in Europe. His work on the psychology of sensation, on the history and philosophy of mechanics, and on the supersonic flow of projectiles (the "Mach number" is his) was genuine and important. His philosophy was a rigorous positivism: only what can be directly experienced through the senses is scientifically meaningful. Atoms cannot be seen, heard, touched, smelled, or tasted. Therefore, for Mach, atoms were not a scientific concept — they were a metaphysical fiction, a convenient calculating tool at best, a dangerous illusion at worst. "Have you ever seen one?" he famously challenged an atomist at a conference. He meant it literally.</p>
+        <p style="margin-top:0.75rem;">Mach held the chair of natural philosophy at Vienna. When he retired in 1895, Boltzmann — his intellectual opposite — was appointed to fill it. Boltzmann later described this as one of the most bitter ironies of his career.</p>
+      </div>
+      <div class="antagonist">
+        <h4>Wilhelm Ostwald</h4>
+        <span class="role">Chemist · Energeticist · Nobel Laureate · Leipzig</span>
+        <p>Wilhelm Ostwald (1853–1932) was a chemist of the first rank — he would win the Nobel Prize in Chemistry in 1909 — and the most powerful advocate of <em>Energetik</em>: the doctrine that energy, not matter, was the fundamental reality of the physical world. In this framework, the atomic hypothesis was unnecessary, untestable metaphysics. Everything that thermodynamics needed to explain could be explained in terms of energy and its transformations, without postulating the existence of unobservable entities like atoms. Ostwald's system was elegant, internally consistent, and absolutely wrong.</p>
+        <p style="margin-top:0.75rem;">At the 1895 Lübeck meeting of the Deutsche Naturforscher-Versammlung — the annual congress of German natural scientists — Ostwald and Boltzmann clashed directly. The confrontation was public and brutal. Ostwald's attack on Boltzmann's statistical mechanics was scathing. Boltzmann's defense was exhausting and, according to witnesses, ultimately unsuccessful in swaying the audience.</p>
+      </div>
+    </div>
+
+    <h3>The Positivist Framework and Why It Mattered</h3>
+    <p>To understand the depth of the dispute, one must grasp why Mach's positivism was taken so seriously. In an era before electron microscopes, before X-ray crystallography, before any direct evidence of atomic structure, the question "do atoms really exist?" was not obviously stupid. The atomic hypothesis was useful — it predicted experimental results accurately — but every theoretical framework that worked was "useful." The positivists argued that usefulness was all you could claim; to say atoms <em>really exist</em> was to make a claim that went beyond what science could legitimately assert.</p>
+    <p>Boltzmann's response was philosophical as much as scientific. He argued that the demand for direct sensory confirmation was itself a philosophical prejudice, not a scientific requirement. The entire structure of scientific explanation involves postulating unobservable entities (forces, fields, energies) and judging their reality by their explanatory and predictive power. Atoms met this test magnificently. The insistence on direct observation was an artifact of the positivist philosophy, not a requirement of science itself.</p>
+    <p>He was right. But he was arguing against the dominant philosophical framework of his community, in a culture where philosophical and scientific authority were tightly linked, and his opponents were more powerful than he was.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I see no reason why energy should not also be a name for something, in the same sense that atom is a name for something."</blockquote>
+      <cite>— Ludwig Boltzmann, responding to Ostwald's energetics</cite>
+    </div>
+  </section>
+
+  <!-- THE CONFERENCES -->
+  <section id="conferences">
+    <span class="section-label">III — The Battlefield</span>
+    <h2>Conference by Conference: The Atomic Wars</h2>
+    <p>The great scientific congresses of the late nineteenth century — the annual meetings of the Deutsche Naturforscher-Versammlung, the British Association for the Advancement of Science, the various international physics and chemistry congresses — were not merely forums for reporting results. They were theaters of power where reputations were made and broken by public debate. Boltzmann's exchanges at these meetings were, by all contemporary accounts, intellectually ferocious.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1872</span>
+        <h4>Publication of the H-Theorem</h4>
+        <p>The H-theorem immediately provokes Josef Loschmidt's reversibility objection. The exchange is published and widely read. The debate becomes a fixture of German physics discourse.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1895</span>
+        <h4>Lübeck Congress</h4>
+        <p>The most famous confrontation. Ostwald presents energetics as a complete replacement for atomic mechanics. Boltzmann defends atomism. The audience is largely hostile. Boltzmann describes the encounter as devastating.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1896</span>
+        <h4>Zermelo's Recurrence Attack</h4>
+        <p>Ernst Zermelo (who would later found set theory) applies Poincaré's recurrence theorem to attack the H-theorem. Boltzmann responds in print, but the exchange deepens his sense of embattlement.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1898</span>
+        <h4>Lectures on Gas Theory — Published as Polemic</h4>
+        <p>The preface explicitly frames the work as a defense against critics who "shall not triumph" — a rare break from academic decorum that reveals how personally Boltzmann felt the attacks.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1904</span>
+        <h4>St. Louis World Congress of Arts and Science</h4>
+        <p>Boltzmann travels to the United States to lecture. His reception there is warmer than in Germany. He is charmed by American informality and reports finding it a relief.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1905</span>
+        <h4>Einstein's Brownian Motion</h4>
+        <p>Published in the same <em>Annalen der Physik</em> that published Boltzmann's own work. The mathematical proof that atoms cause Brownian motion. Boltzmann does not live to see its full acceptance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTAL ILLNESS -->
+  <section id="illness">
+    <span class="section-label">IV — Depression and the Mind</span>
+    <h2>The Illness: Professional Siege and Mental Health</h2>
+    <p>The relationship between Boltzmann's mental illness and his professional circumstances is not a simple causal story, but it is impossible to ignore. He suffered from what nineteenth-century medicine called <em>Neurasthenie</em> — a diagnosis that covered a wide range of conditions including what we would now recognize as severe depression, bipolar disorder, and anxiety. He had periods of exceptional productivity and sociability, and periods of complete incapacitation when he could not work, write, or lecture.</p>
+    <p>The attacks intensified over the 1890s and 1900s, correlating with, though not entirely caused by, the escalating attacks on his scientific work. His academic wandering — from Graz to Vienna to Munich to Leipzig and back to Vienna — was partly an attempt to find environments where the professional hostility was less oppressive. Leipzig, where Ostwald was based, proved to be exactly the wrong place. He left after two years.</p>
+    <p>He described his condition in letters and diary entries with unusual clarity and without self-pity. He understood that his moods were not rational responses to his circumstances — the lows were too deep and the highs too elevated for that. But he also knew that the sustained professional attack had a cost that he could not simply will himself to ignore. He was constitutionally incapable of indifference to being called wrong.</p>
+
+    <h3>The 1901 Attempt</h3>
+    <p>In 1901, while attending an international scientific congress — the exact location varies in different accounts — he attempted to take his own life. He survived. He was hospitalized for a period, then returned to his duties in Vienna. He wrote afterward to colleagues about the episode in terms that made clear he regarded it not as a moment of madness but as the consequence of exhaustion carried too far. He continued to lecture, to publish philosophical essays, to correspond widely. He was present at the 1904 World Congress in St. Louis, where he found Americans' relaxed informality a genuine respite from Viennese intellectual warfare.</p>
+    <p>His students at Vienna, many of whom became significant physicists in their own right, remembered him as an inspiring and sometimes electrifying teacher — a man who could fill a lecture hall with his enthusiasm for ideas, who would pace and gesticulate and demand that students follow his reasoning step by step rather than simply accept it. The contrast between the vulnerable, isolated figure in the letters and the commanding presence in the lecture hall was real. Both were Boltzmann.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I am conscious of being only an individual struggling weakly against the stream of time. But it still remains in my power to contribute in such a way that, when the theory of gases is again revived, not too much will have to be rediscovered."</blockquote>
+      <cite>— Ludwig Boltzmann, Lectures on Gas Theory, Preface, 1898</cite>
+    </div>
+  </section>
+
+  <!-- VIENNA INTELLECTUAL LIFE -->
+  <section id="vienna">
+    <span class="section-label">V — The Vienna Context</span>
+    <h2>Fin-de-Siècle Vienna: A City at the Edge of the Modern</h2>
+    <p>Boltzmann's Vienna was not only the site of his professional struggles. It was one of the most intellectually and culturally fertile cities in the world in the 1880s and 1890s. Vienna at the turn of the century produced Sigmund Freud's psychoanalysis, the Vienna Secession's modernist art (Klimt, Schiele), the philosophical radicalism of the Vienna Circle's predecessors (Mach himself was a primary influence on the logical positivists), Arnold Schoenberg's musical modernism, and the political philosophy that would shape the twentieth century from multiple directions simultaneously.</p>
+    <p>The coffee houses were the connective tissue of this intellectual life. The Café Central, the Café Griensteidl, the Café Landtmann — these were places where physicists, philosophers, writers, politicians, and artists sat at marble tables for hours, reading newspapers on wooden frames, arguing over everything. Boltzmann was not entirely outside this world. He gave popular lectures accessible to educated laypeople. He wrote essays on Schopenhauer, on the nature of scientific truth, on the relationship between science and culture. He played piano at dinner parties. He was, in the specifically Viennese sense, an educated person as well as a scientist.</p>
+    <p>What fin-de-siècle Vienna also produced, however, was a culture of devastating intellectual attack — in the press, in the coffeehouses, in the academic journals. Karl Kraus's satirical magazine <em>Die Fackel</em> destroyed reputations with surgical precision. The philosophical debates were conducted with a ferocity that would be unrecognizable in contemporary academic discourse. Boltzmann was not merely disagreed with — he was, in the dominant circles of his community, <strong>declared to be outside the legitimate bounds of scientific discourse</strong>. This is a different order of experience than being wrong.</p>
+  </section>
+
+  <!-- CONTEMPORARIES -->
+  <section id="contemporaries">
+    <span class="section-label">VI — The Community</span>
+    <h2>The World He Worked In</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Ally</span>
+        <h4>Josef Stefan (1835–1893)</h4>
+        <p>Boltzmann's teacher and mentor at Vienna. Discovered the Stefan-Boltzmann radiation law empirically; Boltzmann provided the theoretical derivation. A relationship of genuine mutual respect.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Parallel Figure</span>
+        <h4>James Clerk Maxwell (1831–1879)</h4>
+        <p>The Scottish physicist who independently developed much of the kinetic theory of gases. Boltzmann extended Maxwell's work substantially. Maxwell died at forty-eight, before the atomic debates reached their peak.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Late Ally</span>
+        <h4>Max Planck (1858–1947)</h4>
+        <p>Initially skeptical of Boltzmann's statistical approach, Planck was forced to use it in 1900 to derive the blackbody radiation law — and in doing so discovered the quantum of action. He later acknowledged Boltzmann's essential role.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Vindication (Posthumous)</span>
+        <h4>Albert Einstein (1879–1955)</h4>
+        <p>Einstein's 1905 Brownian motion paper directly proved atoms exist. Einstein later called Boltzmann one of the thinkers who most influenced his own work. They never met in person.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Student</span>
+        <h4>Paul Ehrenfest (1880–1933)</h4>
+        <p>One of Boltzmann's most brilliant students. Wrote the definitive encyclopedia article on statistical mechanics after Boltzmann's death, doing much to preserve and clarify his teacher's legacy.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Antagonist-Turned-Conceder</span>
+        <h4>Wilhelm Ostwald (1853–1932)</h4>
+        <p>After Einstein's Brownian motion paper appeared in 1908 (when its implications were fully grasped), Ostwald publicly recanted his opposition to atomism. Boltzmann had been dead two years.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Ludwig Boltzmann Series · Volume 2: His World · ludwig-boltzmann/2-world.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-entropy.html">Vol. 1 — The Work</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

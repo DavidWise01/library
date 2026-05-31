@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramanujan Vol. 3 — The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --saffron: #d97706;
+    --teal: #0d9488;
+    --text: #e8e0d0;
+    --muted: #a89880;
+    --card-bg: #110d14;
+    --card-border: 1px solid var(--saffron);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.78;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    border-bottom: 1px solid var(--saffron);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 1rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--saffron); border-color: var(--saffron); }
+  nav a.active { color: var(--saffron); border-color: var(--saffron); background: rgba(217,119,6,0.08); }
+
+  .hero {
+    min-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(13,148,136,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 20%, rgba(217,119,6,0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .vol-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--teal);
+    padding: 0.3rem 1rem;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 620px;
+  }
+
+  /* TIMELINE SVG */
+  .svg-stage {
+    width: 100%;
+    max-width: 720px;
+    margin: 2rem auto 0;
+  }
+
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  section { margin-bottom: 4.5rem; }
+  section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: var(--teal);
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.04em;
+  }
+  section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--saffron);
+    margin: 1.8rem 0 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  p { margin-bottom: 1.1rem; }
+  em { color: var(--saffron); font-style: italic; }
+  strong { color: #fff; font-weight: 600; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--saffron);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.93rem; color: var(--muted); margin: 0; }
+
+  /* TEAL CARDS for science domains */
+  .teal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .teal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--teal);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .teal-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--teal);
+  }
+  .teal-card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .teal-card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .teal-card p { font-size: 0.93rem; color: var(--muted); margin: 0; }
+
+  .pull-quote {
+    border-left: 3px solid var(--teal);
+    padding: 1.1rem 1.8rem;
+    margin: 2.2rem 0;
+    background: rgba(13,148,136,0.04);
+    font-style: italic;
+    font-size: 1.06rem;
+    color: var(--text);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    color: var(--saffron);
+    letter-spacing: 0.1em;
+  }
+  .pull-quote.saffron {
+    border-left-color: var(--saffron);
+    background: rgba(217,119,6,0.04);
+  }
+  .pull-quote.saffron cite { color: var(--teal); }
+
+  .band {
+    background: var(--saffron);
+    color: var(--paper);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+  .band.dark {
+    background: var(--teal);
+    color: #fff;
+  }
+
+  .kick {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* AFTERLIFE TIMELINE */
+  .after-timeline { list-style: none; position: relative; padding-left: 2rem; }
+  .after-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--teal);
+    opacity: 0.4;
+  }
+  .after-timeline li {
+    position: relative;
+    padding: 0.4rem 0 1.1rem 1rem;
+    font-size: 0.97rem;
+  }
+  .after-timeline li::before {
+    content: '';
+    position: absolute;
+    left: -1.7rem;
+    top: 0.65rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--paper);
+  }
+  .after-timeline li .year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  /* EQ BLOCK */
+  .eq-block {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.5rem 2rem;
+    margin: 1.8rem 0;
+    position: relative;
+  }
+  .eq-block .eq-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .eq-block .eq-main {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.78rem, 1.7vw, 0.95rem);
+    color: #fff;
+    line-height: 1.9;
+    overflow-x: auto;
+  }
+  .eq-block .eq-note {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+  }
+
+  /* PRIZE TABLE */
+  .prize-block {
+    background: var(--card-bg);
+    border: 1px solid var(--teal);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .prize-block h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .prize-block p { font-size: 0.92rem; margin-bottom: 0.3rem; }
+  .prize-block .prize-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--saffron);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  footer {
+    border-top: 1px solid rgba(217,119,6,0.35);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+  footer .attr-line { color: var(--saffron); margin-bottom: 0.3rem; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .eq-block .eq-main { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Ramanujan</span>
+  <a href="0-who.html">Vol 0 — Who</a>
+  <a href="1-numbers.html">Vol 1 — Numbers</a>
+  <a href="2-world.html">Vol 2 — World</a>
+  <a href="3-legacy.html" class="active">Vol 3 — Legacy</a>
+</nav>
+
+<div class="hero">
+  <span class="vol-badge">Volume 3 of 4 &nbsp;·&nbsp; The Long Afterlife</span>
+  <h1>The <span>Legacy</span></h1>
+  <p class="subtitle">A century of mathematics built on foundations laid by a clerk from Madras who died at thirty-two</p>
+
+  <!-- SVG: Timeline of the afterlife — discovery of lost notebook forward -->
+  <div class="svg-stage" aria-label="Timeline of Ramanujan's posthumous influence">
+    <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <defs>
+        <style>
+          .ltxt { font-family:'Space Mono',monospace; fill:#a89880; font-size:9px; }
+          .lyear { font-family:'Space Mono',monospace; fill:#d97706; font-size:10px; font-weight:700; }
+          .lteal { fill:#0d9488; }
+          .lsaff { fill:#d97706; }
+          .lwhite { fill:#fff; }
+          .node { animation: nodeAnim 0.5s ease both; }
+          .n1 { animation-delay: 0.2s; }
+          .n2 { animation-delay: 0.7s; }
+          .n3 { animation-delay: 1.2s; }
+          .n4 { animation-delay: 1.7s; }
+          .n5 { animation-delay: 2.2s; }
+          .n6 { animation-delay: 2.7s; }
+          .n7 { animation-delay: 3.2s; }
+          .timeline-draw { animation: tlDraw 3s ease 0.3s both; stroke-dasharray: 620; stroke-dashoffset: 620; }
+          @keyframes nodeAnim { from{opacity:0;r:0} to{opacity:1;r:6} }
+          @keyframes tlDraw { to{stroke-dashoffset:0} }
+        </style>
+      </defs>
+      <rect x="0" y="0" width="720" height="200" fill="rgba(17,13,20,0.9)" rx="6"/>
+
+      <!-- Main timeline line -->
+      <line x1="50" y1="100" x2="670" y2="100" stroke="#0d9488" stroke-width="1.5" class="timeline-draw"/>
+
+      <!-- START: 1920 -->
+      <circle cx="50"  cy="100" r="6" fill="#d97706" class="node n1"/>
+      <text x="50"  y="84"  text-anchor="middle" class="lyear">1920</text>
+      <text x="50"  y="122" text-anchor="middle" class="ltxt">Death</text>
+      <text x="50"  y="132" text-anchor="middle" class="ltxt">Madras</text>
+
+      <!-- 1927: Collected Papers -->
+      <circle cx="148" cy="100" r="5" fill="#d97706" class="node n2"/>
+      <text x="148" y="84"  text-anchor="middle" class="lyear">1927</text>
+      <text x="148" y="122" text-anchor="middle" class="ltxt">Collected</text>
+      <text x="148" y="132" text-anchor="middle" class="ltxt">Papers</text>
+
+      <!-- 1940: Hardy's Book -->
+      <circle cx="246" cy="100" r="5" fill="#d97706" class="node n3"/>
+      <text x="246" y="84"  text-anchor="middle" class="lyear">1940</text>
+      <text x="246" y="122" text-anchor="middle" class="ltxt">Hardy's</text>
+      <text x="246" y="132" text-anchor="middle" class="ltxt"><tspan class="lteal">Ramanujan</tspan></text>
+
+      <!-- 1976: Lost Notebook -->
+      <circle cx="370" cy="100" r="8" fill="#0d9488" class="node n4"/>
+      <text x="370" y="78"  text-anchor="middle" class="lyear lsaff" style="font-size:11px;">1976</text>
+      <text x="370" y="118" text-anchor="middle" class="ltxt" style="fill:#fff;">Lost Notebook</text>
+      <text x="370" y="130" text-anchor="middle" class="ltxt" style="fill:#0d9488;">Andrews · Wren Library</text>
+
+      <!-- 1987: Centenary -->
+      <circle cx="478" cy="100" r="5" fill="#d97706" class="node n5"/>
+      <text x="478" y="84"  text-anchor="middle" class="lyear">1987</text>
+      <text x="478" y="122" text-anchor="middle" class="ltxt">Centenary</text>
+      <text x="478" y="132" text-anchor="middle" class="ltxt">of Birth</text>
+
+      <!-- 2002: Ken Ono -->
+      <circle cx="560" cy="100" r="6" fill="#0d9488" class="node n6"/>
+      <text x="560" y="84"  text-anchor="middle" class="lyear">2002</text>
+      <text x="560" y="122" text-anchor="middle" class="ltxt">Mock θ</text>
+      <text x="560" y="132" text-anchor="middle" class="ltxt" style="fill:#0d9488;">Ken Ono</text>
+
+      <!-- 2015: Film -->
+      <circle cx="640" cy="100" r="5" fill="#d97706" class="node n7"/>
+      <text x="640" y="84"  text-anchor="middle" class="lyear">2015</text>
+      <text x="640" y="122" text-anchor="middle" class="ltxt">The Film</text>
+      <text x="640" y="132" text-anchor="middle" class="ltxt">Dev Patel</text>
+
+      <!-- Label -->
+      <text x="360" y="175" text-anchor="middle" class="ltxt" style="fill:#d97706;font-size:8px;letter-spacing:0.15em;">
+        THE LONG AFTERLIFE OF SRINIVASA RAMANUJAN · 1920–PRESENT
+      </text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <!-- SECTION 1: THE NOTEBOOKS -->
+  <section id="notebooks">
+    <span class="kick">I. What He Left Behind</span>
+    <h2>The Notebooks — Three Volumes and a Box</h2>
+    <p>
+      When Ramanujan died, he left three large paper notebooks. They contained, across thousands
+      of pages, something on the order of 3,000 individual theorems, identities, and results —
+      most stated without proof, in the style of Carr's <em>Synopsis</em> that had been his
+      original model. The notebooks were known; they were difficult; they resisted systematic
+      publication because verifying each result required mathematical work comparable to
+      producing the result itself.
+    </p>
+    <p>
+      Hardy oversaw the publication of the <em>Collected Papers</em> in 1927 — the papers
+      Ramanujan had published in his lifetime. The notebooks remained largely unpublished,
+      known to specialists, systematically explored by G. N. Watson and B. M. Wilson in the
+      1930s, and then by Bruce Berndt of the University of Illinois from 1977 onward.
+    </p>
+    <p>
+      Berndt spent twenty years systematically proving (or disproving, when they were wrong —
+      which was rare) the claims in the notebooks. The result was a five-volume series,
+      <em>Ramanujan's Notebooks</em>, published between 1985 and 1998. A sixth supplementary
+      volume addressed the lost notebook.
+    </p>
+
+    <div class="pull-quote">
+      "The notebooks of Ramanujan are extraordinary... they contain thousands of results,
+      almost all of them correct, that Ramanujan stated without proof. The task of proving them
+      has occupied mathematicians for a century."
+      <cite>— Bruce C. Berndt, University of Illinois, Urbana-Champaign</cite>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE LOST NOTEBOOK -->
+  <section id="lost">
+    <span class="kick">II. The Discovery</span>
+    <h2>The Lost Notebook — 1976, Wren Library</h2>
+    <p>
+      In the spring of 1976, <strong>George Andrews</strong> — a number theorist from
+      Pennsylvania State University, in Cambridge for a conference — was given access to a
+      box of papers that had been sitting in the Wren Library of Trinity College since the
+      1920s. The papers had belonged to G. N. Watson, who had obtained them from Hardy's
+      estate and deposited them at Trinity without fully cataloguing them.
+    </p>
+    <p>
+      In the box, Andrews found 138 pages of mathematics in Ramanujan's handwriting. The pages
+      contained hundreds of results — primarily involving mock theta functions, which Ramanujan
+      had described (without proof) to Hardy in his January 1920 letter. This was the work of
+      the final year of Ramanujan's life. It had been sitting, unknown, in a box at Trinity
+      for fifty-six years.
+    </p>
+    <p>
+      Andrews named the pages the <strong>"Lost Notebook"</strong> — though this is slightly
+      misleading: the pages were never bound as a notebook, and they were not truly lost in
+      the sense of being discarded or destroyed, merely uncatalogued and unread. What they
+      contained was, mathematically, a revelation.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">138 Pages</div>
+        <h4>Volume and Density</h4>
+        <p>The lost notebook contains roughly 600 to 650 individual mathematical claims — primarily in the theory of mock theta functions, but also continued fractions, infinite series, and q-series identities. Virtually all have been verified as correct.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1920</div>
+        <h4>Written While Dying</h4>
+        <p>The pages were produced in the last year of Ramanujan's life — while he was bedridden, in severe pain, increasingly weakened. The mathematical density of the work produced under these conditions staggers description.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1987 Publication</div>
+        <h4>Narosa / Springer</h4>
+        <p>The Lost Notebook was published in facsimile in 1987 by Narosa (India) and Springer, on the centenary of Ramanujan's birth. Andrews and Berndt's five-volume proof-by-proof analysis began publication in 2005.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">2005–2018</div>
+        <h4>Andrews &amp; Berndt</h4>
+        <p>Five volumes of <em>Ramanujan's Lost Notebook</em> — Andrews and Berndt proving (in modern notation, with full proofs) every claim in the 138 pages. The final volume appeared in 2018.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MOCK MODULAR FORMS -->
+  <section id="mock-modular">
+    <span class="kick">III. Mathematical Physics</span>
+    <h2>Mock Modular Forms and the Modern World</h2>
+    <p>
+      The resolution of the mock theta function mystery — accomplished by Sander Zwegers
+      in his 2002 Utrecht PhD thesis, and extended by Ken Ono and collaborators — opened a
+      field that connects Ramanujan's deathbed mathematics to some of the deepest problems
+      in theoretical physics.
+    </p>
+
+    <h3>Zwegers and the Structure (2002)</h3>
+    <p>
+      <strong>Sander Zwegers</strong>, in his doctoral dissertation under Don Zagier at Utrecht,
+      showed that each mock theta function, when completed by adding a specific non-holomorphic
+      correction term (the "shadow"), becomes a weight-1/2 harmonic Maass form — a function with
+      the correct transformation properties under the modular group.
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Completion of a Mock Theta Function</span>
+      <div class="eq-main">
+        f̂(τ) = f(τ) + R(τ)
+      </div>
+      <div class="eq-note">
+        where f(τ) is the mock theta function (holomorphic, almost-modular) and R(τ) is a
+        non-holomorphic "shadow" integral. The sum f̂(τ) is a harmonic Maass form — it satisfies
+        the modular transformation laws that f(τ) alone fails to satisfy. The shadow of f is
+        related to a classical theta series.
+      </div>
+    </div>
+    <p>
+      This was the solution Ramanujan could not supply — he knew something was there, he named
+      it, he computed it, he intuited its properties. He did not have the machinery to explain it.
+      The machinery was built eighty-two years after his death.
+    </p>
+
+    <h3>Ken Ono and the Extensions</h3>
+    <p>
+      <strong>Ken Ono</strong> (then at Wisconsin, later Emory, now Virginia) extended Zwegers'
+      work into a systematic theory of harmonic Maass forms and mock modular forms. Ono and his
+      collaborators proved Dyson's partition rank conjecture (1944), explained Ramanujan's
+      partition congruences bijectively, and connected mock theta functions to Borcherds products
+      and the Monster Moonshine.
+    </p>
+    <p>
+      Ono's 2008 paper with Bringmann unified the theory: every mock theta function of Ramanujan
+      is the holomorphic part of a harmonic Maass form, and its shadow is a unary theta series.
+      The "mock" structure is now understood as a fundamental feature of the theory of modular forms.
+    </p>
+  </section>
+
+  <!-- SECTION 4: PHYSICS APPLICATIONS -->
+  <section id="physics">
+    <span class="kick">IV. The Physics</span>
+    <h2>String Theory, Black Holes, and Moonshine</h2>
+    <p>
+      Ramanujan's work entered theoretical physics through multiple independent routes. Each
+      connection was a surprise; taken together they suggest that what Ramanujan was computing —
+      whatever the source, divine or otherwise — was something fundamental about the mathematical
+      structure of the universe.
+    </p>
+
+    <div class="teal-grid">
+      <div class="teal-card">
+        <div class="card-label">String Theory</div>
+        <h4>Bosonic Strings and Partitions</h4>
+        <p>The bosonic string theory requires 26 spacetime dimensions. The proof of this uses the Ramanujan function and the modularity of the partition generating function. The fact that p(n) is generated by a modular form is load-bearing for the consistency of bosonic string theory.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Black Hole Physics</div>
+        <h4>Entropy Counting</h4>
+        <p>Dijkgraaf, Maldacena, Moore, and Verlinde (1997): the degeneracy of BPS black hole microstates in N=4 string compactifications is counted by functions with mock modular symmetry — directly related to Ramanujan's mock theta functions. Black hole entropy = mock theta.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Monster Moonshine</div>
+        <h4>Monstrous and Umbral</h4>
+        <p>Borcherds (1992, Fields Medal 1998) proved the Conway-Norton Monstrous Moonshine conjecture using Borcherds products — which require modular and mock modular machinery. Umbral Moonshine (Cheng-Duncan-Harvey 2012) generalizes this to 23 cases, each involving mock theta functions.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Statistical Mechanics</div>
+        <h4>Hard Hexagon Model</h4>
+        <p>Baxter's hard hexagon model (1980) — exactly solvable in two-dimensional statistical mechanics — has a partition function expressible in terms of the Rogers-Ramanujan identities. The mathematics Ramanujan and Rogers developed appears in crystal lattice physics.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Conformal Field Theory</div>
+        <h4>Characters of Representations</h4>
+        <p>Characters of irreducible representations of Virasoro algebras — the algebra underlying conformal field theory and hence the worldsheet of string theory — are expressible in terms of mock theta functions. Ramanujan's deathbed mathematics is a working tool of quantum field theory.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Cryptography</div>
+        <h4>Elliptic Curves</h4>
+        <p>The connections Ramanujan perceived between theta functions and elliptic curves — perceived intuitively, without the Shimura-Taniyama-Weil conjecture or modern theory — anticipated the mathematical structure underlying elliptic-curve cryptography, the basis of modern secure communications.</p>
+      </div>
+    </div>
+
+    <h3>The Rogers-Ramanujan Identities in Physics</h3>
+    <div class="eq-block">
+      <span class="eq-label">Rogers-Ramanujan in Statistical Mechanics</span>
+      <div class="eq-main">
+        The partition function of Baxter's hard hexagon model (1980):<br><br>
+        κ(x) = Π(n≥0) (1−x^(5n+2))⁻¹ · (1−x^(5n+3))⁻¹<br><br>
+        = Σ(n≥0) x^(n²+n) / (x;x)_n &nbsp;&nbsp;[Second Rogers-Ramanujan identity]
+      </div>
+      <div class="eq-note">
+        The hard hexagon model describes atoms on a triangular lattice where adjacent sites cannot both be occupied. Its exact solution requires the Rogers-Ramanujan identities. This was discovered by Rodney Baxter 63 years after Ramanujan's death — and the mathematics was already there, waiting.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE ONGOING AFTERLIFE -->
+  <section id="afterlife-timeline">
+    <span class="kick">V. Century by Century</span>
+    <h2>The Afterlife in Full</h2>
+    <ul class="after-timeline">
+      <li>
+        <span class="year">1927</span>
+        <strong>Collected Papers published</strong> — Hardy edits Ramanujan's published mathematical papers into a collected volume. The notebooks remain unproven, partially explored.
+      </li>
+      <li>
+        <span class="year">1937</span>
+        <strong>Rademacher's Exact Formula</strong> — Hans Rademacher extends the Hardy-Ramanujan asymptotic formula for p(n) into an exact convergent series. The circle method Hardy and Ramanujan invented becomes a major tool of analytic number theory.
+      </li>
+      <li>
+        <span class="year">1940</span>
+        <strong>Hardy's <em>Ramanujan</em></strong> — G. H. Hardy publishes his personal account of the collaboration, originally delivered as twelve lectures at Harvard. It contains Hardy's famous self-rating and his assessment of Ramanujan as the one mathematician he had known of the "first class." Hardy dies in 1947.
+      </li>
+      <li>
+        <span class="year">1944</span>
+        <strong>Dyson's Rank Conjecture</strong> — Freeman Dyson, then a 20-year-old undergraduate at Cambridge, conjectures the existence of a "rank" of partitions that would explain Ramanujan's partition congruences combinatorially. He cannot prove it. The conjecture is proved in 1987 by Atkin and Swinnerton-Dyer. The "crank" (conjectured by Dyson, defined by Andrews and Garvan in 1988) explains the remaining congruences.
+      </li>
+      <li>
+        <span class="year">1976</span>
+        <strong>George Andrews discovers the Lost Notebook</strong> — In the Wren Library, Trinity College, Cambridge: 138 pages of Ramanujan's mathematics from 1920, containing the mock theta functions and hundreds of other results. Andrews announces the discovery. The mathematical world is astonished.
+      </li>
+      <li>
+        <span class="year">1977</span>
+        <strong>Bruce Berndt begins the Notebooks project</strong> — Berndt at the University of Illinois undertakes the systematic proof of every result in Ramanujan's three notebooks. Twenty years of work. Five volumes. Virtually everything Ramanujan claimed was true.
+      </li>
+      <li>
+        <span class="year">1985</span>
+        <strong>Gosper's π computation</strong> — William Gosper uses Ramanujan's 1914 series to compute π to 17 million decimal places — at that point the world record. The series had been waiting 71 years for computers fast enough to exploit its convergence rate.
+      </li>
+      <li>
+        <span class="year">1987</span>
+        <strong>Chudnovsky Algorithm</strong> — Gregory and David Chudnovsky derive an enhanced version of Ramanujan's π series that adds ~14 digits per term. Used for virtually every subsequent world record computation of π. Ramanujan's 1914 paper becomes the basis of the mathematics underlying modern numerical computation of transcendental constants.
+      </li>
+      <li>
+        <span class="year">1992</span>
+        <strong>Borcherds proves Monstrous Moonshine</strong> — Richard Borcherds wins the Fields Medal in 1998 for, among other things, proving the Conway-Norton Moonshine conjecture — connecting the Monster sporadic group to modular forms via Borcherds products. The structure required is intimately connected to the mock modular machinery traced back to Ramanujan.
+      </li>
+      <li>
+        <span class="year">2002</span>
+        <strong>Sander Zwegers resolves mock theta functions</strong> — In his Utrecht PhD dissertation, Zwegers shows that mock theta functions are the holomorphic parts of harmonic Maass forms. Ken Ono extends this to a full theory. The 82-year puzzle is solved. Mock modular forms become an active research field.
+      </li>
+      <li>
+        <span class="year">2005–2018</span>
+        <strong>Andrews and Berndt complete the Lost Notebook analysis</strong> — Five volumes of <em>Ramanujan's Lost Notebook</em>. Every claim on the 138 pages is proved or explained. The project is complete.
+      </li>
+      <li>
+        <span class="year">2012</span>
+        <strong>Umbral Moonshine</strong> — Miranda Cheng, John Duncan, and Jeff Harvey discover 23 cases of "umbral moonshine" — generalizing monstrous moonshine to 23 Niemeier lattices, with mock theta functions at the center of each case. The mathematical objects Ramanujan described on his deathbed are now central to the deepest structures of moonshine theory.
+      </li>
+      <li>
+        <span class="year">2015</span>
+        <strong>"The Man Who Knew Infinity"</strong> — Feature film directed by Matthew Brown, starring Dev Patel as Ramanujan and Jeremy Irons as Hardy. Based on Robert Kanigel's 1991 biography. Ken Ono serves as mathematical consultant. The film brings Ramanujan's story to the broadest audience it has ever had.
+      </li>
+      <li>
+        <span class="year">Ongoing</span>
+        <strong>Ramanujan Machine (2019–)</strong> — Israeli researchers at the Technion develop an automated conjecture-generation system named after Ramanujan, which automatically generates new conjectures about mathematical constants (including π) — in the style of Ramanujan's intuitive generation of identities, but driven by algorithms. Several conjectures it generates are subsequently proved by mathematicians.
+      </li>
+    </ul>
+  </section>
+
+  <!-- SECTION 6: THE RAMANUJAN PRIZE -->
+  <section id="prize">
+    <span class="kick">VI. Honoring the Name</span>
+    <h2>The Ramanujan Prize and the Ramanujan Institute</h2>
+
+    <div class="prize-block">
+      <span class="prize-label">International Prize</span>
+      <h4>The ICTP Ramanujan Prize</h4>
+      <p>The <strong>DST-ICTP-IMU Ramanujan Prize</strong> for Young Mathematicians from Developing Countries is awarded annually by the International Centre for Theoretical Physics (Trieste), the International Mathematical Union, and the Government of India's Department of Science and Technology. The prize is specifically for mathematicians from developing countries who are under 45.</p>
+      <p>The prize carries USD 15,000 and is awarded at a ceremony in Trieste. Recipients have included mathematicians from Iran, Brazil, Vietnam, Argentina, Colombia, India, Mexico, and Nigeria — work in algebraic geometry, combinatorics, number theory, and PDEs.</p>
+    </div>
+
+    <div class="prize-block">
+      <span class="prize-label">Indian Institution</span>
+      <h4>SASTRA Ramanujan Prize</h4>
+      <p>The <strong>SASTRA Ramanujan Prize</strong>, awarded by Shanmugha Arts, Science, Technology and Research Academy (SASTRA University) in Kumbakonam — Ramanujan's hometown — is awarded annually at a conference held on Ramanujan's birthday (22 December) to mathematicians under 32. The age limit of 32 explicitly mirrors the age at which Ramanujan died.</p>
+      <p>Recipients have included Manjul Bhargava (2005), Kannan Soundararajan (2005), Terence Tao (2006), Ben Green (2007), and Ken Ono (2012). This is one of the most prestigious prizes in number theory and related fields.</p>
+    </div>
+
+    <div class="prize-block">
+      <span class="prize-label">Commemorative Institutions</span>
+      <h4>Ramanujan Institute and Museum</h4>
+      <p>The <strong>Ramanujan Institute for Advanced Study in Mathematics</strong> at the University of Madras (now University of Chennai) was founded in 1957. The <strong>Ramanujan Museum</strong> in Chennai, operated by the Avvai Home educational charity, preserves documents, photographs, and memorabilia. Ramanujan's birth house in Kumbakonam is maintained as a museum.</p>
+      <p>The Government of India declared 22 December (Ramanujan's birthday) as <strong>National Mathematics Day</strong> in 2011. The year 2012 was declared National Mathematics Year on the 125th anniversary of his birth.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 7: THE FILM -->
+  <section id="film">
+    <span class="kick">VII. The Culture</span>
+    <h2>The Man Who Knew Infinity — Film and Book</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1991 Book</div>
+        <h4>Robert Kanigel's Biography</h4>
+        <p><em>The Man Who Knew Infinity: A Life of the Genius Ramanujan</em> (1991) remains the definitive popular biography. Kanigel spent years in India and England, interviewing those who had known Ramanujan's surviving family and colleagues. The title comes from a phrase Hardy used.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">2015 Film</div>
+        <h4>Dev Patel &amp; Jeremy Irons</h4>
+        <p>Directed by Matthew Brown. Dev Patel as Ramanujan, Jeremy Irons as Hardy. The film is faithful to the biographical outline and notably careful with the mathematics. Ken Ono (Emory) served as mathematical consultant and appears in the documentary extras.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Mathematical Accuracy</div>
+        <h4>Ken Ono's Role</h4>
+        <p>Ken Ono — whose own career was shaped by discovering Ramanujan's work — ensured the equations shown on screen are accurate. He has written about the personal significance of Ramanujan's mathematics to his own mathematical development and mental health.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Hardy's Line</div>
+        <h4>The Self-Appraisal</h4>
+        <p>"I have done one thing you could never have done, and that is to have collaborated with both Littlewood and Ramanujan on something like equal terms." This line appears in the film, accurately attributed, in a late scene. Hardy meant it entirely as a statement of pride.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: WHAT REMAINS UNKNOWN -->
+  <section id="open">
+    <span class="kick">VIII. What Remains</span>
+    <h2>Open Problems and Ramanujan's Unfinished Business</h2>
+    <p>
+      Despite a century of intensive work, Ramanujan's notebooks are not exhausted. Open
+      problems generated by his work include:
+    </p>
+
+    <div class="teal-grid">
+      <div class="teal-card">
+        <div class="card-label">Unsolved</div>
+        <h4>Ramanujan's Conjecture on τ(n)</h4>
+        <p>Beyond Deligne's proof of |τ(p)| ≤ 2p^(11/2): the distribution of the values of τ(n) modulo primes, and the precise statistical behavior of the angles arccos(τ(p)/2p^(11/2)) — the "Sato-Tate distribution for weight 12 modular forms" — proved only in 2006 by Barnet-Lamb, Geraghty, Harris, and Taylor, using techniques from the Langlands program.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Active Research</div>
+        <h4>Moonshine Generalizations</h4>
+        <p>Umbral moonshine (2012) remains not fully proved. The connection between the 23 cases and mock modular forms is established; the deeper structural explanation — why exactly these 23 groups and these 23 mock modular forms — is an active research question connecting finite group theory, string theory, and mock theta functions.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Open</div>
+        <h4>Taxicab Numbers Ta(6)</h4>
+        <p>The sixth taxicab number — the smallest integer expressible as the sum of two positive cubes in six distinct ways — is unknown. Ta(5) = 48988659276962496 (found 1999). Ta(6) is unknown; it is known to exist, by probabilistic argument, but has not been identified.</p>
+      </div>
+      <div class="teal-card">
+        <div class="card-label">Philosophy</div>
+        <h4>The Source</h4>
+        <p>How did Ramanujan know? Hardy could not answer. No subsequent analysis of his work has produced a mechanical account of how results of such originality and correctness were generated. The question of mathematical intuition — what it is, whether it can be understood — remains open, with Ramanujan as its limiting case.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    "He could remember the idiosyncracies of numbers in an almost uncanny way... it was one of his greatest gifts."<br>
+    <span style="font-size:0.75em;font-weight:500;opacity:0.75;">— G. H. Hardy</span>
+  </div>
+
+  <!-- SECTION 9: HARDY'S FINAL WORD -->
+  <section id="hardy-last">
+    <span class="kick">IX. Hardy's Final Word</span>
+    <h2>"The Greatest Mathematician of Our Time"</h2>
+    <p>
+      G. H. Hardy died in 1947 at the age of seventy. His last years were difficult — a heart
+      attack in 1939 left him unable to do serious mathematics. He wrote <em>A Mathematician's
+      Apology</em> (1940) as a farewell to the creative life.
+    </p>
+    <p>
+      In that book, and in the lectures on Ramanujan that became the 1940 volume, Hardy returned
+      again and again to the collaboration — to what it had meant, what it had cost, what had
+      been produced. He did not regret bringing Ramanujan to Cambridge. He did, privately, blame
+      himself for Ramanujan's illness — for not ensuring better food, better care, for not
+      understanding the depth of the cultural dislocation Ramanujan had undergone.
+    </p>
+    <div class="pull-quote saffron">
+      "I still say to myself when I am depressed, and find myself forced to listen to pompous
+      and tiresome people, 'Well, I have done one thing you could never have done, and that is
+      to have collaborated with both Littlewood and Ramanujan on something like equal terms.'"
+      <cite>— G. H. Hardy, <em>A Mathematician's Apology</em>, 1940</cite>
+    </div>
+    <p>
+      Hardy's private rating: he gave himself 25 out of 100 in mathematical ability. He gave
+      Littlewood 30. He gave Hilbert 80. He gave Ramanujan 100.
+    </p>
+    <p>
+      In a letter written near the end of his life: <em>"Ramanujan's was certainly one of the
+      most romantic of all mathematical careers. From obscurity in the provincial towns of
+      India to a Fellowship of the Royal Society in five years — it is the most extraordinary
+      story I know."</em>
+    </p>
+    <p>
+      The taxi was number 1729. A dying man, from his sickbed, noted that it was the smallest
+      integer expressible as the sum of two cubes in two ways. A number Hardy had thought dull.
+      What Hardy realized at that moment — what he said he realized — is what we are still
+      realizing: that mathematics, and the minds that produce it, contain depths we have not
+      finished sounding.
+    </p>
+  </section>
+
+  <!-- FULL SERIES NAV -->
+  <section id="series-end" style="text-align:center;padding-top:1rem;">
+    <p style="font-family:'Cinzel',serif;color:var(--muted);font-size:0.9rem;letter-spacing:0.08em;margin-bottom:1.2rem;">THE COMPLETE SERIES</p>
+    <div class="card-grid" style="max-width:700px;margin:0 auto;">
+      <a href="0-who.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 0</div>
+          <h4>Who He Was</h4>
+          <p>Born in Erode. The letter to Hardy. Cambridge. The taxi. Death at thirty-two.</p>
+        </div>
+      </a>
+      <a href="1-numbers.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 1</div>
+          <h4>The Numbers</h4>
+          <p>1729. 1/π. Mock theta functions. Partitions. Rogers-Ramanujan. Continued fractions.</p>
+        </div>
+      </a>
+      <a href="2-world.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 2</div>
+          <h4>His World</h4>
+          <p>Colonial Madras. Cambridge at war. Hardy, Littlewood. The FRS. The return.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="attr-line">ROOT0-ATTRIBUTION-v1.0</div>
+  <div>David Lee Wise / ROOT0 / TriPod LLC &nbsp;·&nbsp; CC-BY-ND-4.0</div>
+  <div style="margin-top:0.4rem;opacity:0.6;">
+    Srinivasa Ramanujan Series &nbsp;·&nbsp; Volume 3: The Legacy &nbsp;·&nbsp;
+    Sources: Andrews &amp; Berndt, <em>Ramanujan's Lost Notebook</em> I–V (2005–2018);
+    Ono, <em>The Web of Modularity</em> (2004); Zwegers, <em>Mock θ-functions and Real Analytic
+    Modular Forms</em> (2002); Hardy, <em>A Mathematician's Apology</em> (1940);
+    Kanigel, <em>The Man Who Knew Infinity</em> (1991)
+  </div>
+</footer>
+
+</body>
+</html>

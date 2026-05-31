@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Georg Cantor — Vol. 2: His World | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper:   #070510;
+      --purple:  #7c3aed;
+      --silver:  #94a3b8;
+      --purple-dim: rgba(124,58,237,0.18);
+      --purple-glow: rgba(124,58,237,0.55);
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --border:  1px solid var(--purple);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.08rem; line-height: 1.75; min-height: 100vh;
+    }
+    a { color: var(--purple); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1,h2,h3,h4 {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      letter-spacing: 0.04em; line-height: 1.2;
+    }
+    code, .mono {
+      font-family: 'Space Mono', monospace; font-size: 0.85em; color: var(--silver);
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,5,16,0.92); backdrop-filter: blur(12px);
+      border-bottom: var(--border); display: flex; align-items: center;
+      padding: 0 2rem; height: 52px; overflow-x: auto;
+    }
+    .nav-brand {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 0.8rem;
+      color: var(--purple); letter-spacing: 0.12em; white-space: nowrap;
+      margin-right: 2rem; text-transform: uppercase;
+    }
+    .nav-links { display: flex; list-style: none; }
+    .nav-links a {
+      display: block; padding: 0 1rem; height: 52px; line-height: 52px;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); white-space: nowrap;
+      transition: color 0.2s, background 0.2s; letter-spacing: 0.06em;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--purple-dim); text-decoration: none; }
+    .nav-links a.active { color: var(--purple); border-bottom: 2px solid var(--purple); }
+
+    .hero {
+      position: relative; min-height: 360px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border-bottom: var(--border); padding: 4rem 2rem 2.5rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(124,58,237,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; max-width: 820px;
+    }
+    .vol-label {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .hero-content h1 span { color: var(--purple); }
+    .hero-subtitle {
+      font-family: 'Newsreader', serif; font-style: italic;
+      font-size: 1.2rem; color: var(--silver); margin-bottom: 2rem;
+    }
+
+    .band {
+      background: var(--purple); color: #fff; text-align: center;
+      padding: 0.6rem 2rem; font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+    }
+
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    section { margin-bottom: 3.5rem; }
+    section h2 {
+      font-size: 1.5rem; color: var(--purple); margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem; border-bottom: var(--border);
+    }
+    section h3 { font-size: 1.1rem; color: var(--silver); margin: 1.8rem 0 0.6rem; font-weight: 600; }
+    p { margin-bottom: 1rem; }
+
+    .kick {
+      font-family: 'Cinzel', serif; font-size: 3.5rem; font-weight: 800;
+      color: var(--purple); float: left; line-height: 0.85; margin: 0.1em 0.12em 0 0;
+    }
+
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.4rem; margin-top: 1.4rem;
+    }
+    .card {
+      border: var(--border); border-radius: 4px; padding: 1.4rem 1.6rem;
+      background: rgba(124,58,237,0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease; cursor: default;
+    }
+    .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--purple-glow); }
+    .card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--purple); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .card h3 { font-size: 1rem; color: var(--text); margin: 0 0 0.5rem; font-family: 'Cinzel', serif; }
+    .card p { font-size: 0.92rem; color: var(--silver); margin: 0; }
+
+    blockquote {
+      border-left: 3px solid var(--purple); margin: 2rem 0; padding: 1rem 1.5rem;
+      background: var(--purple-dim); border-radius: 0 4px 4px 0;
+    }
+    blockquote p { font-style: italic; font-size: 1.15rem; color: var(--text); margin-bottom: 0.4rem; }
+    blockquote cite { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--silver); letter-spacing: 0.08em; }
+
+    /* PERSON CARDS */
+    .person-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 1.5rem; margin-top: 1.4rem;
+    }
+    .person-card {
+      border: var(--border); border-radius: 4px; padding: 1.6rem;
+      background: rgba(124,58,237,0.04);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .person-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--purple-glow); }
+    .person-name {
+      font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .person-role {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--purple); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.7rem;
+    }
+    .person-card p { font-size: 0.9rem; color: var(--silver); margin: 0; line-height: 1.65; }
+
+    /* TENSION METER — visual bar */
+    .tension-row {
+      display: grid; grid-template-columns: 140px 1fr 60px;
+      align-items: center; gap: 1rem; padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(124,58,237,0.15);
+    }
+    .tension-row:last-child { border-bottom: none; }
+    .tension-name { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--silver); }
+    .tension-bar-wrap {
+      background: rgba(124,58,237,0.08); border-radius: 2px; height: 8px; overflow: hidden;
+    }
+    .tension-bar { height: 100%; border-radius: 2px; background: var(--purple); }
+    .tension-val { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted); text-align: right; }
+
+    .vol-nav {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem; padding-top: 1.5rem; border-top: var(--border);
+    }
+    .vol-nav a {
+      border: var(--border); padding: 0.5rem 1.2rem;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--silver); letter-spacing: 0.08em; transition: all 0.15s;
+    }
+    .vol-nav a:hover {
+      background: var(--purple-dim); color: var(--text); text-decoration: none;
+      transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--purple);
+    }
+    .vol-nav a.current { color: var(--purple); border-color: var(--purple); }
+
+    footer {
+      border-top: var(--border); margin-top: 4rem; padding: 2rem 2rem 3rem;
+      max-width: 900px; margin-left: auto; margin-right: auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      color: var(--muted); line-height: 1.9; letter-spacing: 0.04em;
+    }
+    .colophon strong { color: var(--silver); }
+
+    @media (max-width: 600px) {
+      .kick { font-size: 2.5rem; }
+      nav { padding: 0 1rem; }
+      main { padding: 2rem 1rem 4rem; }
+      .tension-row { grid-template-columns: 100px 1fr 50px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Cantor</div>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol.0 — The Man</a></li>
+    <li><a href="1-infinity.html">Vol.1 — The Work</a></li>
+    <li><a href="2-world.html" class="active">Vol.2 — His World</a></li>
+    <li><a href="3-legacy.html">Vol.3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="band">ROOT0 LIBRARY &nbsp;|&nbsp; GEORG CANTOR SERIES &nbsp;|&nbsp; VOL. 2 OF 3</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="vol-label">Volume Two &nbsp;&bull;&nbsp; His World</div>
+    <h1>The <span>World</span> He Worked In</h1>
+    <div class="hero-subtitle">Berlin, Halle, and the intellectual battlefield of nineteenth-century mathematics</div>
+
+    <!-- Animated SVG: network of mathematicians -->
+    <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;max-width:600px;margin-top:2rem;display:block"
+         aria-label="Network of mathematicians in Cantor's world">
+      <defs>
+        <style>
+          .node-circle { fill: var(--paper,#070510); stroke: #7c3aed; stroke-width: 1.5; }
+          .node-text { font-family:'Space Mono',monospace; font-size:9px; fill:#94a3b8; text-anchor:middle; }
+          .node-text-cantor { font-family:'Space Mono',monospace; font-size:10px; fill:#7c3aed; font-weight:700; text-anchor:middle; }
+          .edge { stroke:#7c3aed; stroke-width:0.8; opacity:0.35; }
+          .edge-hostile { stroke:#ef4444; stroke-width:1.2; opacity:0.5; stroke-dasharray:4 3; }
+          .edge-ally { stroke:#34d399; stroke-width:1; opacity:0.4; }
+          .edge-label { font-family:'Space Mono',monospace; font-size:7px; fill:#64748b; text-anchor:middle; }
+        </style>
+      </defs>
+      <rect width="600" height="240" fill="#070510"/>
+
+      <!-- Edges -->
+      <!-- Cantor — Kronecker (hostile) -->
+      <line x1="300" y1="120" x2="120" y2="70" class="edge-hostile"/>
+      <!-- Cantor — Dedekind (ally) -->
+      <line x1="300" y1="120" x2="480" y2="70" class="edge-ally"/>
+      <!-- Cantor — Weierstrass -->
+      <line x1="300" y1="120" x2="120" y2="185" class="edge"/>
+      <!-- Cantor — Hilbert -->
+      <line x1="300" y1="120" x2="480" y2="185" class="edge-ally"/>
+      <!-- Cantor — Mittag-Leffler -->
+      <line x1="300" y1="120" x2="300" y2="30" class="edge"/>
+      <!-- Kronecker — Weierstrass (colleagues) -->
+      <line x1="120" y1="70" x2="120" y2="185" class="edge"/>
+
+      <!-- Animate edges pulsing -->
+      <line x1="300" y1="120" x2="120" y2="70" stroke="#ef4444" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="0;0.7;0" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <line x1="300" y1="120" x2="480" y2="70" stroke="#34d399" stroke-width="1.5" opacity="0">
+        <animate attributeName="opacity" values="0;0.6;0" dur="4s" begin="0.5s" repeatCount="indefinite"/>
+      </line>
+
+      <!-- Nodes -->
+      <!-- Kronecker -->
+      <circle cx="120" cy="70" r="28" class="node-circle" stroke="#ef4444"/>
+      <text x="120" y="67" class="node-text">Kronecker</text>
+      <text x="120" y="79" class="node-text" fill="#ef4444" font-size="7px">adversary</text>
+
+      <!-- Dedekind -->
+      <circle cx="480" cy="70" r="28" class="node-circle" stroke="#34d399"/>
+      <text x="480" y="67" class="node-text">Dedekind</text>
+      <text x="480" y="79" class="node-text" fill="#34d399" font-size="7px">ally</text>
+
+      <!-- Cantor (center) -->
+      <circle cx="300" cy="120" r="36" fill="rgba(124,58,237,0.15)" stroke="#7c3aed" stroke-width="2"/>
+      <text x="300" y="116" class="node-text-cantor">CANTOR</text>
+      <text x="300" y="128" class="node-text" fill="#7c3aed" font-size="7px">Halle</text>
+
+      <!-- Mittag-Leffler -->
+      <circle cx="300" cy="30" r="22" class="node-circle"/>
+      <text x="300" y="27" class="node-text" font-size="8px">Mittag-Leffler</text>
+      <text x="300" y="38" class="node-text" font-size="7px">editor / supporter</text>
+
+      <!-- Weierstrass -->
+      <circle cx="120" cy="185" r="28" class="node-circle"/>
+      <text x="120" y="182" class="node-text">Weierstrass</text>
+      <text x="120" y="194" class="node-text" font-size="7px">teacher</text>
+
+      <!-- Hilbert -->
+      <circle cx="480" cy="185" r="28" class="node-circle" stroke="#34d399"/>
+      <text x="480" y="182" class="node-text">Hilbert</text>
+      <text x="480" y="194" class="node-text" fill="#34d399" font-size="7px">champion</text>
+
+      <!-- Poincaré off to side -->
+      <circle cx="560" cy="120" r="22" class="node-circle" stroke="#f59e0b"/>
+      <text x="560" y="117" class="node-text" font-size="8px">Poincar&eacute;</text>
+      <text x="560" y="128" class="node-text" fill="#f59e0b" font-size="7px">skeptic</text>
+      <line x1="300" y1="120" x2="560" y2="120" stroke="#f59e0b" stroke-width="0.8" stroke-dasharray="5 4" opacity="0.35"/>
+    </svg>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+
+  <!-- BERLIN -->
+  <section id="berlin">
+    <h2>Berlin Mathematics: The Crucible</h2>
+    <p><span class="kick">T</span>he University of Berlin in the 1860s was the most demanding mathematical environment in the world. The professors who shaped its culture — Kummer, Borchardt, Weierstrass, Kronecker — had collectively pioneered a new standard of rigor that would define modern mathematics. When Cantor arrived as a student in 1863, he entered an institution where hand-waving was not tolerated, where every assertion required proof, and where the question "but what does it really mean?" was treated as the most important question in mathematics.</p>
+
+    <p>This training was indispensable. The rigor Cantor learned in Berlin was the rigor he applied to the infinite. His definitions of set and cardinality are not intuitive; they are precise. His proofs are not appeals to geometric intuition; they are logical arguments from stated axioms. Berlin made him the mathematician who could build a theory of infinity that would survive the scrutiny of the next century.</p>
+
+    <h3>Karl Weierstrass (1815–1897)</h3>
+    <p>Weierstrass was the greatest mathematical analyst of his century. His program of "arithmetization of analysis" — replacing geometric intuition with algebraic and logical rigor — transformed calculus from an art into a science. He developed the epsilon-delta definition of limits that every calculus student still learns. He proved that continuous functions need not be differentiable anywhere (the Weierstrass function), shattering geometric intuition about curves. He was Cantor's most important teacher. Although Weierstrass had reservations about some aspects of Cantor's transfinite theory — he was himself a constructivist in temperament — he did not oppose Cantor with the viciousness of Kronecker, and he supported Cantor's appointment at Halle.</p>
+
+    <h3>The Intellectual Climate of 1860s Berlin</h3>
+    <p>The Germany into which Cantor stepped as a student was in the process of unification under Prussia. The intellectual culture was one of systematic thoroughness — the <em>Wissenschaft</em> ideal of scholarship as a complete and rigorous enterprise. Mathematics shared this culture. The Berlin seminars of the 1860s trained their students to treat every theorem as a structure to be built from the ground up, with every brick explicitly laid. This was the environment that produced not only Cantor but also a generation of mathematicians who would shape the discipline into the twentieth century.</p>
+  </section>
+
+  <!-- HALLE -->
+  <section id="halle">
+    <h2>Halle: The Provincial Appointment</h2>
+    <p>The University of Halle-Wittenberg was not Berlin. It was a solid, respectable institution — one of the older German universities, founded in 1694, with a theological and philosophical tradition — but it was not a center of cutting-edge mathematical research. When Cantor joined it in 1869 as an unpaid privatdozent, he was aware that he was beginning his career in the provinces.</p>
+
+    <p>He rose steadily: to extraordinary professor in 1872, to full professor in 1879. He founded a mathematical society there and organized mathematical congresses. He was a dedicated teacher, and his students — even those who did not follow him into research — left accounts of a man who cared deeply about whether they understood. But professionally, he felt isolated. The closest colleagues who could understand what he was doing were in Berlin, in G&ouml;ttingen, in Sweden, in Italy — anywhere but Halle.</p>
+
+    <blockquote>
+      <p>"I am farther from Berlin than from any other city of comparable mathematical life."</p>
+      <cite>— Cantor, in correspondence, paraphrased</cite>
+    </blockquote>
+
+    <p>The irony of Halle is that it gave Cantor something Berlin might not have: time. A Berlin professor would have been consumed by the demands of a major institution, the teaching load of a national center, the politics of a powerful department. At Halle, Cantor had relative freedom to pursue his research wherever it led. The price was isolation and the sense — perhaps real, perhaps partly paranoid — that Kronecker's long arm reached from Berlin even there.</p>
+
+    <h3>The Question of Berlin</h3>
+    <p>Cantor applied, informally and formally, for positions at Berlin and other major universities multiple times during his career. He never received one. The evidence that Kronecker actively blocked these applications is circumstantial but substantial. Kronecker held enormous influence in German mathematical circles. He had the ear of journal editors and faculty appointment committees. He was vocal in his opposition to Cantor's work. That opposition likely translated into institutional resistance, though the exact mechanisms were never documented in a way that constitutes proof.</p>
+
+    <p>The failure to move to Berlin was not merely a professional disappointment. For Cantor, who had been formed at Berlin, whose intellectual identity was that of a Berlin-trained mathematician doing Berlin-quality work, the exclusion felt like a verdict. Not a verdict on his work — he was too confident in the mathematics for that — but a verdict on his professional standing, his place in the hierarchy. That wound never fully healed.</p>
+  </section>
+
+  <!-- THE PEOPLE -->
+  <section id="people">
+    <h2>The Cast of Characters</h2>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Leopold Kronecker</div>
+        <div class="person-role">1823–1891 &nbsp;|&nbsp; Adversary</div>
+        <p>Algebraist, number theorist, Berlin professor, and man of private means. His credo: only the finite and constructible are mathematically real. His campaign against Cantor was sustained, personal, and effective. He called Cantor a "corrupter of youth" — a term that deliberately evoked the charge against Socrates. He lobbied journal editors to reject Cantor's papers. He used his Berlin influence to exclude Cantor from the appointments he sought. He was not stupid, and his philosophical position was not incoherent — but his methods crossed from intellectual disagreement into persecution.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Richard Dedekind</div>
+        <div class="person-role">1831–1916 &nbsp;|&nbsp; Ally &amp; Correspondent</div>
+        <p>Dedekind had independently constructed the real numbers (the "Dedekind cut") and thought deeply about infinity and algebraic structures. He and Cantor met in 1872 and began a correspondence that lasted decades and contains some of the most remarkable mathematical letters ever written. Dedekind was always supportive, always honest, and sometimes sobering — he was the person Cantor most trusted with new results in their raw, unpolished form. When Cantor wrote "I see it but I don't believe it," the letter was addressed to Dedekind.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Karl Weierstrass</div>
+        <div class="person-role">1815–1897 &nbsp;|&nbsp; Teacher</div>
+        <p>The greatest mathematical analyst of the nineteenth century. Cantor studied under him at Berlin. Weierstrass was a constructivist in method — he built every result from the ground up with epsilon-delta precision — but he was not a philosophical finitist like Kronecker. He had reservations about completed infinities, but he did not oppose Cantor with hostility. He supported Cantor's Halle appointment and, more importantly, gave Cantor the methodological tools — the deep habit of rigor — that made set theory possible.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-name">David Hilbert</div>
+        <div class="person-role">1862–1943 &nbsp;|&nbsp; Champion</div>
+        <p>The most influential mathematician of the early twentieth century. Hilbert embraced Cantor's set theory as the foundation of all mathematics and made it the centerpiece of his formalist program. He listed the Continuum Hypothesis as his first open problem in 1900. He defended Cantor's legacy after Cantor's death with the famous declaration: "No one shall expel us from the paradise that Cantor has created." Hilbert's championing came too late to help Cantor personally, but it shaped how the twentieth century understood what Cantor had done.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Henri Poincar&eacute;</div>
+        <div class="person-role">1854–1912 &nbsp;|&nbsp; Skeptic</div>
+        <p>The dominant mathematician in France and possibly the most celebrated mathematician in the world at the turn of the century. Poincar&eacute; called Cantor's set theory "a disease from which mathematics will one day recover." He was a semi-intuitionist: he believed mathematical objects must be constructible in principle, and completed infinities were suspect. He was wrong about this in the sense that set theory survived and flourished. But he was right that naive set theory needed careful foundations, and his skepticism reflected genuine philosophical concerns rather than mere conservatism.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-name">G&ouml;sta Mittag-Leffler</div>
+        <div class="person-role">1846–1927 &nbsp;|&nbsp; Supporter &amp; Editor</div>
+        <p>Swedish mathematician and founder of the journal <em>Acta Mathematica</em>, which published much important work by European mathematicians. He supported Cantor and published his work, but in 1885 he suggested — with kindly intentions — that a paper Cantor had submitted was too far ahead of its time and might damage Cantor's reputation if published. Cantor withdrew the paper and experienced the suggestion as a devastating rejection. The incident illustrates how even supporters could wound.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KRONECKER IN DEPTH -->
+  <section id="kronecker-deep">
+    <h2>Kronecker's Campaign: A Closer Look</h2>
+    <p>The Kronecker-Cantor conflict is sometimes presented as a simple story of a conservative bullying an innovator. The reality is more complicated and more instructive. Kronecker was not merely conservative — he held a coherent philosophical position about the foundations of mathematics that anticipated later developments in intuitionism and constructivism. And Cantor was not merely a victim — he was capable of sharp polemics himself and was not always measured in his responses to criticism.</p>
+
+    <h3>What Kronecker Actually Believed</h3>
+    <p>Kronecker's mathematical credo can be summarized: mathematics deals only with objects that can be explicitly constructed in a finite number of steps. The natural numbers are given directly by intuition. The integers and rationals can be constructed from them by finite operations. But the real numbers — as defined by Weierstrass via Cauchy sequences or by Dedekind via cuts — require completed infinite processes. And Cantor's transfinite numbers required accepting completed infinities as objects in their own right, which to Kronecker was not mathematics but metaphysics.</p>
+
+    <p>This position has a name today: <em>finitism</em>, or in its more sophisticated form, <em>constructivism</em>. It is a minority position in twenty-first century mathematics, but it is a coherent one, held by serious mathematicians and philosophers. The difference between Kronecker and his modern descendants is not the position but the methods: Kronecker used his institutional power to suppress work he disagreed with, which crossed a line that philosophical disagreement does not cross.</p>
+
+    <h3>The Specific Attacks</h3>
+    <p>What Kronecker actually did, as best as historians can reconstruct:</p>
+    <ul class="step-list">
+      <li>
+        <div class="step-num" style="font-size:0.7rem;width:28px;height:28px">&#x2022;</div>
+        <div class="step-content"><strong>Lobbied journal editors</strong> — particularly at <em>Crelle's Journal</em> (the leading German mathematics journal) — to delay or reject Cantor's papers. This is documented in correspondence.</div>
+      </li>
+      <li>
+        <div class="step-num" style="font-size:0.7rem;width:28px;height:28px">&#x2022;</div>
+        <div class="step-content"><strong>Made derogatory remarks in public lectures</strong> about Cantor's work, calling it "humbug" and attacking set theory's foundations in contexts where Cantor could not respond in real time.</div>
+      </li>
+      <li>
+        <div class="step-num" style="font-size:0.7rem;width:28px;height:28px">&#x2022;</div>
+        <div class="step-content"><strong>Used the phrase "corrupter of youth"</strong> — a phrase Kronecker knew was the charge leveled against Socrates, with fatal results — to characterize Cantor's teaching of set theory to students.</div>
+      </li>
+      <li>
+        <div class="step-num" style="font-size:0.7rem;width:28px;height:28px">&#x2022;</div>
+        <div class="step-content"><strong>Likely used his influence over Berlin appointments</strong> to prevent Cantor from receiving positions there. This is inferential but well-supported by circumstance.</div>
+      </li>
+      <li>
+        <div class="step-num" style="font-size:0.7rem;width:28px;height:28px">&#x2022;</div>
+        <div class="step-content"><strong>Planned a critical paper</strong> targeting set theory specifically for publication while Cantor was alive. He died in 1891 before completing it — or before Cantor had to endure it.</div>
+      </li>
+    </ul>
+
+    <blockquote>
+      <p>"My results are not new to me; I have had them for years. But I knew that I could not publish them until I had found a way to make Kronecker accept them or die."</p>
+      <cite>— Cantor, paraphrased from various letters, collected in Dauben (1979)</cite>
+    </blockquote>
+
+    <h3>The Psychological Toll</h3>
+    <p>The historian Joseph Dauben, drawing on the medical records from the Halle Nervenklinik that became available in the 1970s, argues that while Cantor's illness had a biological component, the Kronecker conflict was a major exacerbating factor in several of his depressive episodes. The 1884 breakdown, in particular, coincided with a period of intense professional conflict. Cantor had just published the sixth and most ambitious part of his <em>Punktmannigfaltigkeiten</em> series and was encountering maximal resistance.</p>
+
+    <p>What is particularly poignant is that Cantor never stopped trying to persuade Kronecker. In 1884, even from within a depressive episode, he wrote to Kronecker attempting to clear the air. He proposed a face-to-face meeting. He was not a man who had given up on dialogue; he was a man who kept reaching out to the person who was most effectively destroying his professional life, because he believed — or needed to believe — that the mathematical disagreement could be resolved by talk.</p>
+  </section>
+
+  <!-- RECEPTION -->
+  <section id="reception">
+    <h2>The Reception of Set Theory — A Spectrum</h2>
+
+    <!-- Tension meter -->
+    <div style="margin:1.5rem 0;">
+      <div class="tension-row">
+        <div class="tension-name">Hilbert</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:95%;background:#34d399"></div></div>
+        <div class="tension-val" style="color:#34d399">Champion</div>
+      </div>
+      <div class="tension-row">
+        <div class="tension-name">Dedekind</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:90%;background:#34d399"></div></div>
+        <div class="tension-val" style="color:#34d399">Ally</div>
+      </div>
+      <div class="tension-row">
+        <div class="tension-name">Weierstrass</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:60%;background:#f59e0b"></div></div>
+        <div class="tension-val" style="color:#f59e0b">Cautious</div>
+      </div>
+      <div class="tension-row">
+        <div class="tension-name">Mittag-Leffler</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:65%;background:#f59e0b"></div></div>
+        <div class="tension-val" style="color:#f59e0b">Cautious</div>
+      </div>
+      <div class="tension-row">
+        <div class="tension-name">Poincar&eacute;</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:25%;background:#f59e0b"></div></div>
+        <div class="tension-val" style="color:#f59e0b">Skeptic</div>
+      </div>
+      <div class="tension-row">
+        <div class="tension-name">Kronecker</div>
+        <div class="tension-bar-wrap"><div class="tension-bar" style="width:5%;background:#ef4444"></div></div>
+        <div class="tension-val" style="color:#ef4444">Hostile</div>
+      </div>
+    </div>
+
+    <h3>The International Congresses</h3>
+    <p>The International Congress of Mathematicians — the world's premier gathering of research mathematicians — was first held in Zurich in 1897. Cantor was involved in its organization and attended with a mixture of hope and anxiety. Set theory was by then a serious part of the mathematical landscape, and Cantor was recognized as a significant figure. The reception at Zurich was, on balance, positive — more positive than Cantor had experienced at home in Germany.</p>
+
+    <p>At the Paris Congress of 1900, Hilbert presented his famous 23 problems — a program for twentieth-century mathematics. Problem Number One was the Continuum Hypothesis. Hilbert's framing was sympathetic: this was a great open question in a great new theory, and he expected it to be solved. The fact that it was listed first signaled that Hilbert considered it the most fundamental unsolved problem in mathematics. For Cantor, who was present, this must have been vindicating — the question he had spent thirty years on was now the first item on the agenda of mathematics.</p>
+
+    <h3>Italy and the International Community</h3>
+    <p>Italian mathematicians — particularly Giuseppe Peano and his school, and later the mathematicians of the <em>Rivista di Matematica</em> — were among the earliest enthusiastic adopters of set theory. They found in Cantor's work the tools needed to put analysis and the foundations of arithmetic on a rigorous basis. The Italian reception was warmer and earlier than the German. This gave Cantor some professional comfort, but also highlighted the irony of a German mathematician finding more support abroad than at home.</p>
+  </section>
+
+  <!-- THE NERVENKLINIK -->
+  <section id="nervenklinik">
+    <h2>The Halle Nervenklinik: Where Mathematics and Madness Met</h2>
+    <p>The Nervenklinik — nerve clinic — at Halle was, by the standards of the era, a humane institution. The late nineteenth century was a period of serious reform in the treatment of mental illness: the era of Charcot, of Breuer and Freud in Vienna, of the systematic clinical observation that would eventually produce modern psychiatry. Cantor's institution was not a snake pit but a retreat — a place where exhausted, overstrained nervous systems could rest, be fed, be supervised, and sometimes recover.</p>
+
+    <p>Cantor was hospitalized there repeatedly from 1884 onward: in 1884, 1886, 1899, 1902, 1903, 1904, 1907, 1908, and continuously in his final years from around 1913 to his death in 1918. The records, when they became available to historians, showed diagnoses consistent with what we would now call bipolar disorder — periods of severe depression alternating with periods of elevated, agitated productivity. His mathematical creativity was concentrated in the "up" phases; the collapses followed.</p>
+
+    <h3>The Mathematics During the Illness</h3>
+    <p>What is remarkable is that Cantor's most celebrated result — the 1891 diagonal argument — was published during a period of relative stability between hospitalizations. His synthesis papers of 1895–97 (<em>Beitr&auml;ge zur Begr&uuml;ndung der transfiniten Mengenlehre</em>) were also produced in a period of relative lucidity. The illness was not continuous; it came in waves. In the intervals, Cantor remained capable of first-rate mathematics.</p>
+
+    <p>But the intervals grew shorter as the years passed. After 1900, his output of new mathematics slowed dramatically. The paradoxes of naive set theory — which others were now discovering and which he had independently found — troubled him. Not because he thought they refuted his work, but because they showed that the foundations he had laid needed rebuilding, and that rebuilding was a task he was increasingly unable to undertake.</p>
+
+    <blockquote>
+      <p>"I have never proceeded from any genus supremum of the actual infinite; quite the contrary, I have rigorously proved that there is absolutely no genus supremum of the cardinal numbers. What surpasses all that is finite and transfinite is no genus; it is the single, completely individual unity in which everything is included."</p>
+      <cite>— Cantor, in a letter to Cardinal Franzelin, 1886, on the Absolute Infinite</cite>
+    </blockquote>
+
+    <h3>The Theology of Infinity</h3>
+    <p>Cantor's correspondence with Catholic theologians — including Cardinal Franzelin in Rome — reveals a dimension of his intellectual life that is easy to overlook. He believed that the actual infinite — the infinite as a completed totality rather than a potential process — was not merely mathematically defensible but theologically significant. He identified the Absolute Infinite (what he called the <em>Absolutes Unendliches</em>) with God: a completed infinity beyond all mathematical infinities, which could not be increased and could not be comprehended by the human mind but could be approached by mathematical thought.</p>
+
+    <p>This was not a casual religious sentiment but a worked-out position. Cantor spent years developing it in letters and unpublished writings. He believed — and he was sincere — that his theory of the transfinite was not in conflict with Christian theology but was a contribution to it: a demonstration that the human mind could, through mathematics, approach the concept of the divine infinite with something like rigor. The theologians to whom he wrote were politely cautious; most did not engage with the mathematics. But for Cantor, the theology and the mathematics were not separate domains.</p>
+  </section>
+
+  <!-- THE VINDICATION HE DIDN'T LIVE TO ENJOY -->
+  <section id="vindication">
+    <h2>Vindicated Too Late</h2>
+    <p>The sad irony of Cantor's life is that the vindication came. He knew it was coming; he could see it in Hilbert's defense of his work, in the proceedings of the international congresses, in the adoption of set theory by mathematicians across Europe. But he experienced the vindication from inside a fog of illness and professional disappointment that he could not dispel.</p>
+
+    <p>By 1910, set theory was taught in universities across Germany, France, Italy, Britain, and the United States. Every advanced mathematics student encountered the countable-uncountable distinction. The diagonal argument was in the textbooks. The Continuum Hypothesis was the first open problem on the discipline's official list. The <em>Grundlagen</em>, which Kronecker had called humbug, was cited as a founding document of modern mathematics.</p>
+
+    <p>Cantor knew this. He was not entirely cut off from mathematical life even in his final years. He received letters, he followed the journals when he could, he was aware that Hilbert had made his defense explicit and public. But knowing that you have been vindicated is not the same as experiencing vindication. His health did not allow him to return to active mathematics. His mind, in its clearest intervals, was occupied with the Shakespeare-Bacon controversy — a peculiar obsession, perhaps a symptom, but also perhaps a refuge from mathematics that had brought him so much pain.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1897</div>
+        <h3>First International Congress</h3>
+        <p>Set theory is on the agenda. Cantor is recognized. The international mathematical community has moved past Kronecker's opposition.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1900</div>
+        <h3>Hilbert's Problem #1</h3>
+        <p>The Continuum Hypothesis leads Hilbert's list of 23 problems. Cantor's central unsolved question is now mathematics's central unsolved question.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1908</div>
+        <h3>ZFC Axioms</h3>
+        <p>Zermelo publishes axioms for set theory that resolve the paradoxes. The system Cantor built now has a rigorous foundation. Cantor is too ill to participate.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1918</div>
+        <h3>Death</h3>
+        <p>Cantor dies in the Nervenklinik, January 6. Hilbert will deliver his famous "paradise" defense eight years later. The vindication is complete — for everyone except the man who earned it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOL NAV -->
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol.0 — The Man</a>
+    <a href="1-infinity.html">&larr; Vol.1 — The Work</a>
+    <a href="2-world.html" class="current">Vol.2 — His World</a>
+    <a href="3-legacy.html">Vol.3 — The Long Afterlife &rarr;</a>
+  </div>
+
+</main>
+
+<!-- FOOTER / COLOPHON -->
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br/>
+    Author &amp; Originator: David Lee Wise / ROOT0 / TriPod LLC<br/>
+    License: CC-BY-ND-4.0 &mdash; Attribution required, no derivatives without permission<br/>
+    Series: Georg Cantor — A Four-Volume Study &nbsp;|&nbsp; Volume 2: His World<br/>
+    Published: ROOT0 Library &nbsp;|&nbsp; <span class="mono">C:/repos/library/georg-cantor/2-world.html</span><br/>
+    &copy; ROOT0 / TriPod LLC. All rights reserved under CC-BY-ND-4.0 terms.
+  </div>
+</footer>
+
+</body>
+</html>

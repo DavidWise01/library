@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tim Berners-Lee — Vol. 3: His Long Afterlife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04060c;
+      --blue: #2563eb;
+      --orange: #ea580c;
+      --text: #e8e8f0;
+      --muted: #8888aa;
+      --card-bg: #0a0e1a;
+      --border: rgba(37,99,235,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.1rem;
+      line-height: 1.75;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,6,12,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      height: 52px;
+    }
+
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .vol-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    h1.hero-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-align: center;
+      color: var(--text);
+      max-width: 900px;
+      position: relative;
+    }
+
+    h1.hero-title span { color: var(--blue); }
+
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      text-align: center;
+      max-width: 650px;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    h2 .accent { color: var(--orange); }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.4rem; }
+    p:last-child { margin-bottom: 0; }
+
+    em { color: var(--orange); font-style: italic; }
+    strong { color: var(--text); font-weight: 500; }
+
+    blockquote {
+      border-left: 3px solid var(--blue);
+      padding: 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+      background: var(--card-bg);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .card-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    .mono-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--blue);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .mono-block .c { color: var(--muted); }
+    .mono-block .hi { color: var(--orange); }
+    .mono-block .g { color: #4ade80; }
+
+    .band {
+      background: var(--blue);
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+    }
+
+    .band h2 { color: #fff; }
+    .band p { color: rgba(255,255,255,0.85); }
+
+    .kick {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    .kick:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.25);
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 160px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .stat:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    /* Web growth network SVG container */
+    .network-wrap {
+      margin: 3rem 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .network-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .colophon {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .colophon p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 2;
+      margin-bottom: 0.4rem;
+    }
+
+    .colophon a { color: var(--blue); text-decoration: none; }
+    .colophon a:hover { text-decoration: underline; }
+
+    /* Solid / campaigns cards */
+    .campaign-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .campaign-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      border-left: 3px solid var(--blue);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .campaign-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .campaign-card.orange { border-left-color: var(--orange); }
+
+    .campaign-name {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .campaign-tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .campaign-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+
+    /* quote large */
+    .big-quote {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      color: var(--text);
+      line-height: 1.2;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+    }
+
+    .big-quote::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8rem;
+      color: var(--blue);
+      opacity: 0.08;
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .big-quote span { color: var(--blue); }
+    .big-quote em { color: var(--orange); font-style: normal; }
+
+    @media (max-width: 640px) {
+      nav a { display: none; }
+      nav a.active { display: flex; }
+      .stat-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">TBL Series</span>
+  <a href="0-who.html">Vol 0 · Who</a>
+  <a href="1-web.html">Vol 1 · Web</a>
+  <a href="2-world.html">Vol 2 · World</a>
+  <a href="3-legacy.html" class="active">Vol 3 · Legacy</a>
+</nav>
+
+<!-- HERO: web growth network expanding -->
+<header class="hero">
+  <!-- Animated SVG: web growth chart — node network expanding -->
+  <svg class="hero-svg" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="g3" cx="50%" cy="50%" r="60%">
+        <stop offset="0%" stop-color="#ea580c" stop-opacity="0.07"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="680" fill="url(#g3)"/>
+
+    <!--
+      Expanding node network: nodes appear progressively,
+      representing 1 → 10K → 1M → 1.9B websites
+      Starting from center, radiating outward
+    -->
+
+    <!-- Generation 0: single center node (1991) -->
+    <circle cx="600" cy="340" r="10" fill="#ea580c" opacity="0.9">
+      <animate attributeName="r" values="10;14;10" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <text x="600" y="380" text-anchor="middle" font-family="Space Mono" font-size="9" fill="#ea580c" opacity="0.6">1991</text>
+
+    <!-- Generation 1: 6 nodes (1993) -->
+    <g>
+      <circle cx="700" cy="280" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.7;0.7" dur="8s" repeatCount="indefinite" begin="0s"/>
+        <animate attributeName="r" values="5;5;5;7;5" dur="8s" repeatCount="indefinite" begin="0s"/>
+      </circle>
+      <line x1="600" y1="340" x2="700" y2="280" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.3;0.3" dur="8s" repeatCount="indefinite"/>
+      </line>
+
+      <circle cx="680" cy="420" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.65;0.65" dur="8s" repeatCount="indefinite" begin="0.3s"/>
+      </circle>
+      <line x1="600" y1="340" x2="680" y2="420" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.25;0.25" dur="8s" repeatCount="indefinite" begin="0.3s"/>
+      </line>
+
+      <circle cx="500" cy="260" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.6;0.6" dur="8s" repeatCount="indefinite" begin="0.6s"/>
+      </circle>
+      <line x1="600" y1="340" x2="500" y2="260" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.25;0.25" dur="8s" repeatCount="indefinite" begin="0.6s"/>
+      </line>
+
+      <circle cx="510" cy="430" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.6;0.6" dur="8s" repeatCount="indefinite" begin="0.9s"/>
+      </circle>
+      <line x1="600" y1="340" x2="510" y2="430" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.2;0.2" dur="8s" repeatCount="indefinite" begin="0.9s"/>
+      </line>
+
+      <circle cx="750" cy="360" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.65;0.65" dur="8s" repeatCount="indefinite" begin="1.2s"/>
+      </circle>
+      <line x1="600" y1="340" x2="750" y2="360" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.2;0.2" dur="8s" repeatCount="indefinite" begin="1.2s"/>
+      </line>
+
+      <circle cx="450" cy="340" r="5" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.6;0.6" dur="8s" repeatCount="indefinite" begin="1.5s"/>
+      </circle>
+      <line x1="600" y1="340" x2="450" y2="340" stroke="#2563eb" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.2;0.2" dur="8s" repeatCount="indefinite" begin="1.5s"/>
+      </line>
+    </g>
+
+    <!-- Generation 2: outer nodes (1997 — 1M) -->
+    <g>
+      <circle cx="820" cy="220" r="4" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.5" dur="8s" repeatCount="indefinite" begin="0s"/>
+      </circle>
+      <line x1="700" y1="280" x2="820" y2="220" stroke="#2563eb" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.15;0.15" dur="8s" repeatCount="indefinite"/>
+      </line>
+
+      <circle cx="860" cy="360" r="4" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.5" dur="8s" repeatCount="indefinite" begin="0.4s"/>
+      </circle>
+      <line x1="750" y1="360" x2="860" y2="360" stroke="#2563eb" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.15;0.15" dur="8s" repeatCount="indefinite" begin="0.4s"/>
+      </line>
+
+      <circle cx="800" cy="480" r="4" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.5" dur="8s" repeatCount="indefinite" begin="0.8s"/>
+      </circle>
+      <line x1="680" y1="420" x2="800" y2="480" stroke="#2563eb" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.15;0.15" dur="8s" repeatCount="indefinite" begin="0.8s"/>
+      </line>
+
+      <circle cx="380" cy="200" r="4" fill="#ea580c" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.45;0.45" dur="8s" repeatCount="indefinite" begin="1s"/>
+      </circle>
+      <line x1="500" y1="260" x2="380" y2="200" stroke="#ea580c" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.12;0.12" dur="8s" repeatCount="indefinite" begin="1s"/>
+      </line>
+
+      <circle cx="340" cy="350" r="4" fill="#ea580c" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.45;0.45" dur="8s" repeatCount="indefinite" begin="1.4s"/>
+      </circle>
+      <line x1="450" y1="340" x2="340" y2="350" stroke="#ea580c" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.12;0.12" dur="8s" repeatCount="indefinite" begin="1.4s"/>
+      </line>
+
+      <circle cx="390" cy="490" r="4" fill="#ea580c" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.45;0.45" dur="8s" repeatCount="indefinite" begin="1.8s"/>
+      </circle>
+      <line x1="510" y1="430" x2="390" y2="490" stroke="#ea580c" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.12;0.12" dur="8s" repeatCount="indefinite" begin="1.8s"/>
+      </line>
+
+      <circle cx="600" cy="170" r="4" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.5" dur="8s" repeatCount="indefinite" begin="2s"/>
+      </circle>
+      <line x1="500" y1="260" x2="600" y2="170" stroke="#2563eb" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.12;0.12" dur="8s" repeatCount="indefinite" begin="2s"/>
+      </line>
+
+      <circle cx="600" cy="510" r="4" fill="#2563eb" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.5" dur="8s" repeatCount="indefinite" begin="2.4s"/>
+      </circle>
+      <line x1="510" y1="430" x2="600" y2="510" stroke="#2563eb" stroke-width="0.7" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.12;0.12" dur="8s" repeatCount="indefinite" begin="2.4s"/>
+      </line>
+    </g>
+
+    <!-- Generation 3: far outer scatter (1.9B today) — many small dots -->
+    <g opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0.6;0.6" dur="8s" repeatCount="indefinite"/>
+      <circle cx="120" cy="150" r="2.5" fill="#2563eb"/>
+      <circle cx="200" cy="80" r="2" fill="#ea580c"/>
+      <circle cx="350" cy="90" r="2" fill="#2563eb"/>
+      <circle cx="950" cy="100" r="2.5" fill="#2563eb"/>
+      <circle cx="1060" cy="170" r="2" fill="#ea580c"/>
+      <circle cx="1080" cy="300" r="2" fill="#2563eb"/>
+      <circle cx="1050" cy="480" r="2.5" fill="#2563eb"/>
+      <circle cx="960" cy="560" r="2" fill="#ea580c"/>
+      <circle cx="800" cy="600" r="2" fill="#2563eb"/>
+      <circle cx="600" cy="610" r="2.5" fill="#2563eb"/>
+      <circle cx="400" cy="600" r="2" fill="#2563eb"/>
+      <circle cx="220" cy="540" r="2" fill="#ea580c"/>
+      <circle cx="120" cy="440" r="2.5" fill="#2563eb"/>
+      <circle cx="100" cy="310" r="2" fill="#2563eb"/>
+      <circle cx="170" cy="200" r="2" fill="#ea580c"/>
+      <circle cx="270" cy="140" r="2" fill="#2563eb"/>
+      <circle cx="750" cy="130" r="2.5" fill="#2563eb"/>
+      <circle cx="900" cy="150" r="2" fill="#2563eb"/>
+      <circle cx="1100" cy="560" r="2" fill="#ea580c"/>
+      <circle cx="130" cy="560" r="2" fill="#2563eb"/>
+    </g>
+
+    <!-- Label -->
+    <text x="600" y="80" text-anchor="middle" font-family="Cinzel" font-size="15" fill="#ea580c" opacity="0.25" font-weight="700">THE WEB GROWS — 1 NODE TO 1.9 BILLION</text>
+  </svg>
+
+  <p class="vol-label">Volume Three · The Afterlife</p>
+  <h1 class="hero-title">This Is For <span>Everyone</span></h1>
+  <p class="hero-sub">The largest information system in history — given away. What it became, and what he is still fighting for</p>
+</header>
+
+<main>
+
+  <!-- THE SCALE -->
+  <section id="scale">
+    <div class="container">
+      <h2>The <span class="accent">Scale</span> of What He Built</h2>
+
+      <p>The World Wide Web is the largest information system ever constructed by human beings. It is also the largest gift in the history of technology — a system invented by one person, given freely to every person on Earth, that has restructured the global economy, global communications, global culture, and daily life for five billion people.</p>
+
+      <p>Every website that has ever existed runs on three things Tim Berners-Lee invented: <em>HTML</em>, <em>HTTP</em>, and <em>the URL</em>. Every Google search. Every Amazon purchase. Every YouTube video. Every Wikipedia article. Every email composed in a browser. Every government service delivered online. Every banking transaction. Every news article. Every social media post. Every streamed film. Every web application of any kind — all of it runs on the three protocols one man invented at CERN in 1990 and released for free.</p>
+
+      <p>He received no equity in any of it. He collected no royalty. He filed no patent. The companies that have made the most money from the web — Google ($2T valuation), Amazon ($1.8T), Meta ($1.4T), Netflix, Microsoft — built their empires on his free foundation and did not compensate him for it. By design. Because he chose that outcome.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">5B</div>
+          <div class="stat-label">Web Users Today</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1.9B</div>
+          <div class="stat-label">Websites</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">$0</div>
+          <div class="stat-label">Royalties Collected</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">35+</div>
+          <div class="stat-label">Years — Unchanged Core</div>
+        </div>
+      </div>
+
+      <blockquote>
+        "This is for everyone."
+        <cite>— Tim Berners-Lee, London Olympics opening ceremony, 27 July 2012</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- WEB GROWTH NETWORK DIAGRAM -->
+  <section id="growth">
+    <div class="container">
+      <h2>Web Growth: <span class="accent">Node Network Expanding</span></h2>
+
+      <p>The animated SVG in the hero above represents the web's growth from a single node — the first website at info.cern.ch in 1991 — outward through successive waves of adoption. This is the actual shape of the web's history: one central node, then six, then dozens, then hundreds of thousands, then a billion. The network became its own argument for itself: every new website made the web more valuable, which brought more websites, which made it more valuable.</p>
+
+      <div class="network-wrap">
+        <p class="network-label">Web Growth — Animated Node Network</p>
+        <!-- Detailed inline growth diagram -->
+        <svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-height:380px;">
+          <defs>
+            <radialGradient id="ng1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2563eb" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect width="900" height="400" fill="#04060c"/>
+          <ellipse cx="450" cy="200" rx="420" ry="185" fill="url(#ng1)"/>
+
+          <!-- Timeline baseline -->
+          <line x1="60" y1="340" x2="840" y2="340" stroke="#2563eb" stroke-width="1" opacity="0.2"/>
+
+          <!-- Year markers -->
+          <text x="60" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">1991</text>
+          <text x="184" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">1993</text>
+          <text x="308" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">1995</text>
+          <text x="432" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">1997</text>
+          <text x="556" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">2000</text>
+          <text x="680" y="358" font-family="Space Mono" font-size="9" fill="#8888aa" text-anchor="middle">2006</text>
+          <text x="840" y="358" font-family="Space Mono" font-size="9" fill="#ea580c" text-anchor="middle">Today</text>
+
+          <!-- Node: 1991 — 1 site -->
+          <circle cx="60" cy="320" r="5" fill="#ea580c" opacity="0.9"/>
+          <text x="60" y="315" font-family="Space Mono" font-size="8" fill="#ea580c" text-anchor="middle">1</text>
+
+          <!-- Node: 1993 — 130 sites -->
+          <circle cx="184" cy="310" r="6" fill="#2563eb" opacity="0.7"/>
+          <line x1="60" y1="320" x2="184" y2="310" stroke="#2563eb" stroke-width="1" opacity="0.3"/>
+          <text x="184" y="303" font-family="Space Mono" font-size="8" fill="#2563eb" text-anchor="middle">130</text>
+
+          <!-- Node: 1994 — 10K sites -->
+          <circle cx="308" cy="290" r="7" fill="#2563eb" opacity="0.75"/>
+          <line x1="184" y1="310" x2="308" y2="290" stroke="#2563eb" stroke-width="1" opacity="0.3"/>
+          <text x="308" y="282" font-family="Space Mono" font-size="8" fill="#2563eb" text-anchor="middle">10K</text>
+
+          <!-- Mosaic label -->
+          <text x="220" y="265" font-family="Space Mono" font-size="8" fill="#ea580c" opacity="0.7" text-anchor="middle">← Mosaic</text>
+
+          <!-- Node: 1997 — 1M sites -->
+          <circle cx="432" cy="250" r="10" fill="#2563eb" opacity="0.8"/>
+          <line x1="308" y1="290" x2="432" y2="250" stroke="#2563eb" stroke-width="1.5" opacity="0.35"/>
+          <text x="432" y="238" font-family="Space Mono" font-size="9" fill="#2563eb" text-anchor="middle">1M</text>
+
+          <!-- Node: 2000 — 17M sites -->
+          <circle cx="556" cy="200" r="14" fill="#2563eb" opacity="0.7"/>
+          <line x1="432" y1="250" x2="556" y2="200" stroke="#2563eb" stroke-width="1.5" opacity="0.3"/>
+          <text x="556" y="185" font-family="Space Mono" font-size="9" fill="#2563eb" text-anchor="middle">17M</text>
+
+          <!-- Node: 2006 — 100M sites -->
+          <circle cx="680" cy="145" r="18" fill="#2563eb" opacity="0.65"/>
+          <line x1="556" y1="200" x2="680" y2="145" stroke="#2563eb" stroke-width="2" opacity="0.3"/>
+          <text x="680" y="127" font-family="Space Mono" font-size="9" fill="#2563eb" text-anchor="middle">100M</text>
+
+          <!-- Node: Today — 1.9B sites -->
+          <circle cx="840" cy="80" r="26" fill="#ea580c" opacity="0.75">
+            <animate attributeName="r" values="26;30;26" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.75;0.95;0.75" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <line x1="680" y1="145" x2="840" y2="80" stroke="#ea580c" stroke-width="2" opacity="0.4"/>
+          <text x="840" y="75" font-family="Space Mono" font-size="9" fill="#ea580c" text-anchor="middle" font-weight="700">1.9B</text>
+          <text x="840" y="88" font-family="Space Mono" font-size="8" fill="#ea580c" text-anchor="middle" opacity="0.7">sites</text>
+
+          <!-- Scatter of small satellite nodes around Today -->
+          <circle cx="790" cy="50" r="3" fill="#2563eb" opacity="0.4"/>
+          <circle cx="870" cy="55" r="2.5" fill="#2563eb" opacity="0.35"/>
+          <circle cx="860" cy="110" r="3" fill="#2563eb" opacity="0.4"/>
+          <circle cx="810" cy="115" r="2" fill="#ea580c" opacity="0.35"/>
+          <circle cx="770" cy="90" r="2.5" fill="#2563eb" opacity="0.3"/>
+
+          <!-- Growth curve (approximate bezier) -->
+          <path d="M 60,320 C 200,320 300,310 432,250 S 630,170 840,80"
+            fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.2">
+            <animate attributeName="stroke-dashoffset" values="0;-90" dur="4s" repeatCount="indefinite"/>
+          </path>
+
+          <!-- Title -->
+          <text x="450" y="30" text-anchor="middle" font-family="Space Mono" font-size="10" fill="#2563eb" opacity="0.4" letter-spacing="2">WEBSITE COUNT — 1991 TO PRESENT</text>
+        </svg>
+      </div>
+
+      <p>The curve above is almost vertical in its final section — not because it has reached a limit, but because the graph cannot accommodate the actual scale. A graph that truly showed 1.9 billion websites against the single node of 1991 would need a canvas thousands of times taller to show the starting point as anything other than zero.</p>
+    </div>
+  </section>
+
+  <!-- THE FOUNDATION HE BUILT ON -->
+  <section id="foundation">
+    <div class="container">
+      <h2>The Foundation <span class="accent">Underneath Everything</span></h2>
+
+      <p>The three protocols Berners-Lee invented are now invisible infrastructure — like electricity or running water. Nobody thinks about HTML when they read a web page any more than they think about copper wiring when they turn on a light. But the infrastructure exists, and it is his.</p>
+
+      <div class="mono-block">
+        <span class="c">// Everything on the web runs on these three things.</span><br>
+        <span class="c">// They are free. They were always free.</span><br><br>
+        <span class="hi">HTML</span> ── Every webpage ever displayed<br>
+        <span class="hi">HTTP</span> ── Every request and response, billions per second<br>
+        <span class="hi">URL</span>  ── Every address, every link, every bookmark<br><br>
+        <span class="c">// Built on:</span><br>
+        <span class="g">TCP/IP</span> ── (Cerf &amp; Kahn, 1974 — the internet layer below)<br><br>
+        <span class="c">// Companies built on this free foundation:</span><br>
+        Google     → $2T valuation<br>
+        Amazon     → $1.8T valuation<br>
+        Meta       → $1.4T valuation<br>
+        Microsoft  → $3T+ valuation (web portion)<br>
+        Netflix    → $300B+ valuation<br>
+        ...and every website ever built.<br><br>
+        <span class="c">// Royalties paid to Tim Berners-Lee: $0.00</span><br>
+        <span class="c">// By his design. By his choice.</span>
+      </div>
+
+      <p>The phrase "digital economy" does not begin to capture what the web created. It restructured physical retail (Amazon), physical advertising (Google), physical social gathering (Facebook), physical entertainment (Netflix, Spotify, YouTube), physical banking, physical government, physical healthcare, and physical education. The web is not a sector of the economy. It is the infrastructure of the economy — the layer on which almost all of the others now run.</p>
+    </div>
+  </section>
+
+  <!-- 2012 OLYMPICS -->
+  <section id="olympics">
+    <div class="container">
+      <h2>The Olympics: <span class="accent">"This Is For Everyone"</span></h2>
+
+      <p>On 27 July 2012, at the opening ceremony of the London Olympic Games — watched by roughly one billion people — Tim Berners-Lee appeared in the centre of the stadium. He was sitting at a NeXT computer similar to the one he had used in 1990 when he built the first web server. On the screen in the stadium, and on screens in homes around the world, appeared a message:</p>
+
+      <div class="big-quote">
+        <span>This is for</span> <em>everyone</em>.
+      </div>
+
+      <p>The phrase was then spelled out by the crowd using LED panels — a coordinated display that lit up the words letter by letter, surrounding the man who had given the world the web. He waved from his seat. The crowd cheered. For a moment, the full scale of what one person had done was visible to everyone watching.</p>
+
+      <p>It was a carefully chosen phrase. "This is for everyone" is both a description of the web's original intent and a political statement about what it should remain. The web was designed for everyone — every person, every country, every language, every device. It was not designed for a commercial interest or a government interest. Its architecture assumed and required universality. Without universality it becomes something else: a collection of proprietary networks, a set of walled gardens. Berners-Lee has spent the decades since 1991 fighting to keep it what it was designed to be.</p>
+
+      <blockquote>
+        "The web is for everyone, and collectively we hold the power to change it. It won't be easy. But if we dream a little and work a lot, we can get the web we want."
+        <cite>— Tim Berners-Lee, 2019</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- W3C AND STANDARDS -->
+  <section id="w3c">
+    <div class="container">
+      <h2>W3C: <span class="accent">Keeping It Open</span></h2>
+
+      <p>The World Wide Web Consortium — W3C — is Berners-Lee's institutional mechanism for keeping the web's standards open and patent-free. Founded in 1994 at MIT, it now has offices at ERCIM (Europe), Keio University (Japan), and Beihang University (China), and has hundreds of member organisations — companies, universities, government bodies, and civil society groups — that participate in developing web standards.</p>
+
+      <p>The W3C's process is slow and sometimes frustrating. Standards can take years to develop, as different stakeholders argue about technical details and commercial implications. There have been controversies: the W3C approved a standard for digital rights management (EME) in 2017 despite opposition from browser developers and civil liberties groups, leading to a formal objection from Berners-Lee himself and the resignation of one senior W3C employee.</p>
+
+      <p>But the core commitment holds: W3C standards are royalty-free. Companies that participate in standards development agree not to charge patent royalties for implementing those standards. HTML5, CSS, SVG, WebRTC, WebAssembly — the technologies that make the modern web work — are all royalty-free. Any developer, anywhere, can implement them without paying a licence fee.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-year">Founded 1994</p>
+          <h3>W3C</h3>
+          <p>World Wide Web Consortium. International. Multi-stakeholder. The standards body for the open web. Berners-Lee as Director. Ensures web standards are royalty-free.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Core Policy</p>
+          <h3>Royalty-Free</h3>
+          <p>Every W3C standard — HTML5, CSS, SVG, WebRTC, WebAssembly, and hundreds more — is royalty-free. The foundation of the open web's continued existence.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Mission</p>
+          <h3>Interoperability</h3>
+          <p>Web standards ensure any browser can access any website. This interoperability is not automatic — it requires constant work, specification, and enforcement. The W3C does this work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRENT CAMPAIGNS -->
+  <section id="campaigns">
+    <div class="container">
+      <h2>What He Is <span class="accent">Still Fighting For</span></h2>
+
+      <p>Berners-Lee has not retired. He has not declared victory. He continues to work, to advocate, and to build — because the web he intended and the web that exists are not identical. The open web faces threats: surveillance capitalism, data monopolies, state censorship, disinformation, and the progressive locking of personal data inside corporate silos. He is working on all of them.</p>
+
+      <div class="campaign-grid">
+        <div class="campaign-card">
+          <p class="campaign-name">Solid</p>
+          <p class="campaign-tagline">User Data Sovereignty — 2016–Present</p>
+          <p>The Solid project — Social Linked Data — is Berners-Lee's most ambitious current work. It proposes a fundamental restructuring of how personal data is stored on the web. Instead of your data living in Facebook's servers, Google's servers, and Amazon's servers (in silos you cannot move or control), Solid proposes that each person has a personal data store — a "pod" — which they control. Applications request access to your pod rather than storing your data in their own systems. The vision: your data belongs to you, and you grant or revoke access to any application at any time.</p>
+        </div>
+        <div class="campaign-card orange">
+          <p class="campaign-name">Contract for the Web</p>
+          <p class="campaign-tagline">Open Web Principles — 2018–Present</p>
+          <p>Launched in 2018 with support from governments, companies, and civil society organisations, the Contract for the Web is a set of principles for governments, companies, and individuals to commit to in order to safeguard the web as a public good. The principles include: governments ensuring all people can connect to the internet; companies making the internet affordable and accessible; people having the right to privacy. As of 2024, over 1,900 organisations have signed on.</p>
+        </div>
+        <div class="campaign-card">
+          <p class="campaign-name">Net Neutrality</p>
+          <p class="campaign-tagline">Equal Access — Ongoing</p>
+          <p>Net neutrality is the principle that internet service providers must treat all internet traffic equally — they cannot charge more for some content, or slow down access to competitors' services. Berners-Lee has been an outspoken advocate for net neutrality as a prerequisite for the web's openness. Without it, the internet becomes a tiered service where access to the web depends on commercial agreements between ISPs and content providers — the opposite of the universal access the web was designed to provide.</p>
+        </div>
+        <div class="campaign-card orange">
+          <p class="campaign-name">Web Foundation</p>
+          <p class="campaign-tagline">Global Access — 2009–Present</p>
+          <p>The World Wide Web Foundation, co-founded by Berners-Lee in 2009, works to ensure the web is open and accessible to all people — including the roughly 2.7 billion people who remain offline. The Foundation advocates for affordable internet access, open data, women's rights online, and digital inclusion. It has worked in more than 70 countries and has been involved in research and policy campaigns that have reached millions of people.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT MAKES IT THE BIGGEST GIFT -->
+  <section id="gift">
+    <div class="container">
+      <h2>The Biggest Gift in the <span class="accent">History of Technology</span></h2>
+
+      <p>History is full of inventors who became wealthy from their inventions. James Watt patented the steam engine and became rich. Thomas Edison patented everything and built a commercial empire. Alexander Graham Bell patented the telephone. Guglielmo Marconi patented radio. In each case, the invention was real, the contribution was genuine, and the wealth was the expected outcome of the patent system working as designed.</p>
+
+      <p>Berners-Lee's case is the exception that defines the rule. He invented a system more consequential than all of those put together — a system that has restructured more of human life, at greater speed, than anything since the printing press — and he patented none of it. He charged for none of it. He profited from none of it directly.</p>
+
+      <p>The comparison that most clearly illustrates the scale: <strong>Google's market capitalisation exceeded $1 trillion</strong>. Google's core product — web search — is entirely dependent on the web. Without HTML, HTTP, and the URL, there is nothing for Google to index, nothing to return in search results, no web page to display them on. Google could not exist without Tim Berners-Lee's invention. Google's founders became two of the wealthiest people in history. Berners-Lee has an academic salary.</p>
+
+      <p>This is not a complaint — not his, not ours. It is a fact, and it is worth sitting with. The web's openness is its most important feature, and its openness was Berners-Lee's most important decision. Had he acted otherwise, the web would either not exist or would be something far smaller and more constrained than the thing we actually have. The gift was necessary. The gift was chosen. And the gift is still the ground every one of us walks on every day.</p>
+
+      <div class="band">
+        <div class="container">
+          <h2 style="font-size:1.4rem; margin-bottom:1rem;">The Arithmetic of Generosity</h2>
+          <p>If Berners-Lee had charged a single penny per web page load — a fee so small it would be imperceptible to any user — at today's web traffic volumes (roughly 5 billion page loads per hour), he would accumulate approximately <strong style="color:#fff; font-size:1.1em;">$438 billion per year</strong>. This is a mathematical thought experiment, not a real figure — because a web with that toll would not have become the web. But it illustrates the order of magnitude of what he gave away.</p>
+        </div>
+      </div>
+
+      <p>In 2004, Queen Elizabeth II appointed Berners-Lee a Knight Commander of the Order of the British Empire (KBE) for services to the global development of the internet. He is Sir Timothy Berners-Lee. The honour was deserved and widely praised as long overdue. It is also, in every material sense, far less than he deserved and far less than what he gave.</p>
+
+      <blockquote>
+        "I imagined the web as an open platform that would allow everyone, everywhere to share information, access opportunities and collaborate across geographic and cultural boundaries. In some ways, the web has lived up to this vision, though it has also been a means to exploit, undermine and oppress."
+        <cite>— Tim Berners-Lee, on the web's 30th anniversary, 2019</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section id="closing">
+    <div class="container">
+      <h2>The Measure of a <span class="accent">Life's Work</span></h2>
+
+      <p>Tim Berners-Lee is 70 years old. He continues to work — at MIT, at the W3C, on Solid, on the Contract for the Web. He is not retired and not satisfied. The web he intended and the web that exists are not the same thing, and he intends to keep working on the gap between them.</p>
+
+      <p>The measure of his life's work is not the honours or the academic positions or the awards. It is the five billion people who use the web every day. It is the 1.9 billion websites. It is the student in Lagos who can access MIT's course materials for free. It is the small business in Kerala that can reach customers in any country. It is the researcher in Santiago who can read a paper published in Stockholm the moment it appears. It is the grandmother in Manila who video-calls her grandchildren in Toronto. It is the journalist in Warsaw who can publish without a printing press. It is every person who has ever used the web for something that mattered to them.</p>
+
+      <p>All of it, built on three things invented by one person, who asked for nothing.</p>
+
+      <div class="mono-block">
+        <span class="c">// Summary of the gift:</span><br><br>
+        Inventor:     Tim Berners-Lee<br>
+        Invented:     The World Wide Web<br>
+        Year:         1989–1990<br>
+        Cost to use:  Free<br>
+        Patents filed: 0<br>
+        Royalties:    $0<br>
+        Users today:  ~5,000,000,000<br>
+        Websites:     ~1,900,000,000<br><br>
+        <span class="c">// The largest information system in history.</span><br>
+        <span class="c">// Given freely. Maintained openly. Used by everyone.</span><br><br>
+        <span class="hi">"This is for everyone." — TBL, 2012</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <p>ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0</p>
+  <p>Tim Berners-Lee Series · Volume 3: His Long Afterlife</p>
+  <p>
+    <a href="0-who.html">Vol 0 · Who</a> &nbsp;·&nbsp;
+    <a href="1-web.html">Vol 1 · Web</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol 2 · World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </p>
+  <p style="margin-top:1rem; color:#555;">Compiled 2026 · All factual claims sourced from public record</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tim Berners-Lee — Vol. 0: Who He Is</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #04060c;
+      --blue: #2563eb;
+      --orange: #ea580c;
+      --text: #e8e8f0;
+      --muted: #8888aa;
+      --card-bg: #0a0e1a;
+      --border: rgba(37,99,235,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 1.1rem;
+      line-height: 1.75;
+    }
+
+    /* ── STICKY NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(4,6,12,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 2rem;
+      height: 52px;
+    }
+
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: auto;
+      white-space: nowrap;
+    }
+
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .vol-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    h1.hero-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      text-align: center;
+      color: var(--text);
+      max-width: 900px;
+    }
+
+    h1.hero-title span { color: var(--blue); }
+
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      text-align: center;
+      max-width: 620px;
+    }
+
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-top: 2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    section:first-of-type { border-top: none; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    h2 .accent { color: var(--orange); }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.4rem; }
+
+    p:last-child { margin-bottom: 0; }
+
+    em { color: var(--orange); font-style: italic; }
+
+    strong { color: var(--text); font-weight: 500; }
+
+    blockquote {
+      border-left: 3px solid var(--blue);
+      padding: 1.2rem 1.8rem;
+      margin: 2.5rem 0;
+      background: var(--card-bg);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-style: normal;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.8rem;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .card-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+      line-height: 1.6;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin-top: 2.5rem;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), transparent);
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 0 0 2.5rem 2rem;
+    }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--blue);
+    }
+
+    .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+
+    .tl-item h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .tl-item p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ── BAND / KICK ── */
+    .band {
+      background: var(--blue);
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+    }
+
+    .band h2 { color: #fff; }
+    .band p { color: rgba(255,255,255,0.85); }
+
+    .kick {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .kick:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--orange);
+    }
+
+    /* ── MONO BLOCK ── */
+    .mono-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--blue);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .colophon p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      line-height: 2;
+      margin-bottom: 0.4rem;
+    }
+
+    .colophon a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .colophon a:hover { text-decoration: underline; }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2.5rem 0;
+    }
+
+    .stat {
+      flex: 1;
+      min-width: 160px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.8rem;
+      text-align: center;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .stat:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    @media (max-width: 640px) {
+      nav a { display: none; }
+      nav a.active { display: flex; }
+      .stat-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav>
+  <span class="nav-brand">TBL Series</span>
+  <a href="0-who.html" class="active">Vol 0 · Who</a>
+  <a href="1-web.html">Vol 1 · Web</a>
+  <a href="2-world.html">Vol 2 · World</a>
+  <a href="3-legacy.html">Vol 3 · Legacy</a>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero">
+
+  <!-- Animated SVG: orbiting nodes — the concept of connected people -->
+  <svg class="hero-svg" viewBox="0 0 1200 680" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow0" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2563eb" stop-opacity="0.12"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="600" cy="340" rx="460" ry="280" fill="url(#glow0)"/>
+
+    <!-- orbiting nodes -->
+    <g id="orb-group">
+      <circle r="5" fill="#2563eb" opacity="0.6">
+        <animateMotion dur="18s" repeatCount="indefinite">
+          <mpath href="#orbit1"/>
+        </animateMotion>
+      </circle>
+      <circle r="4" fill="#ea580c" opacity="0.5">
+        <animateMotion dur="26s" begin="-8s" repeatCount="indefinite">
+          <mpath href="#orbit2"/>
+        </animateMotion>
+      </circle>
+      <circle r="3" fill="#2563eb" opacity="0.4">
+        <animateMotion dur="14s" begin="-3s" repeatCount="indefinite">
+          <mpath href="#orbit1"/>
+        </animateMotion>
+      </circle>
+      <circle r="6" fill="#ea580c" opacity="0.3">
+        <animateMotion dur="32s" begin="-12s" repeatCount="indefinite">
+          <mpath href="#orbit2"/>
+        </animateMotion>
+      </circle>
+      <circle r="3.5" fill="#2563eb" opacity="0.5">
+        <animateMotion dur="22s" begin="-5s" repeatCount="indefinite">
+          <mpath href="#orbit3"/>
+        </animateMotion>
+      </circle>
+    </g>
+
+    <path id="orbit1" d="M 600,340 m -300,0 a 300,160 0 1,1 600,0 a 300,160 0 1,1 -600,0" fill="none"/>
+    <path id="orbit2" d="M 600,340 m -200,0 a 200,240 0 1,1 400,0 a 200,240 0 1,1 -400,0" fill="none"/>
+    <path id="orbit3" d="M 600,340 m -380,0 a 380,100 0 1,1 760,0 a 380,100 0 1,1 -760,0" fill="none"/>
+
+    <!-- faint orbit rings -->
+    <ellipse cx="600" cy="340" rx="300" ry="160" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.12"/>
+    <ellipse cx="600" cy="340" rx="200" ry="240" fill="none" stroke="#ea580c" stroke-width="0.5" opacity="0.1"/>
+    <ellipse cx="600" cy="340" rx="380" ry="100" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.08"/>
+
+    <!-- central dot -->
+    <circle cx="600" cy="340" r="8" fill="#2563eb" opacity="0.7">
+      <animate attributeName="r" values="8;11;8" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+
+  <p class="vol-label">Volume Zero · The Man</p>
+  <h1 class="hero-title">Tim <span>Berners-Lee</span></h1>
+  <p class="hero-sub">The physicist who gave the world the web — and asked for nothing in return</p>
+  <p class="hero-dates">b. London, 8 June 1955</p>
+</header>
+
+<!-- ── MAIN CONTENT ── -->
+<main>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <div class="container">
+      <h2>Origins: <span class="accent">Born to Computers</span></h2>
+
+      <p>Timothy John Berners-Lee was born in London on 8 June 1955, the oldest of four children. His parents — <strong>Conway Berners-Lee</strong> and <strong>Mary Lee Woods</strong> — were both mathematicians who had worked on the <em>Manchester Mark 1</em>, one of the earliest stored-program computers. The dinner table conversation in the Berners-Lee household was unlike most: it ran to mathematics, to computation, to what machines might one day be made to do.</p>
+
+      <p>That early immersion mattered. Berners-Lee has said he grew up surrounded by the idea that computers were not just calculating machines but something more open-ended — tools for representing and connecting ideas. The notion that information could be structured and linked was, for him, almost a childhood intuition before it was a professional one.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-year">1955</p>
+          <h3>Born in London</h3>
+          <p>Timothy John Berners-Lee born 8 June in South West London. Parents are both mathematicians who worked on some of the first computers.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Early Childhood</p>
+          <h3>Manchester Mark 1</h3>
+          <p>His parents worked on the Manchester Mark 1 — one of the world's first stored-program computers. Computing was the family's professional world from the start.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Schooling</p>
+          <h3>Emmanuel School</h3>
+          <p>Attended Emanuel School in Battersea. By his own account, an ordinary student with a powerful interest in mathematics and electronics. Built his first computer from an old television set.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">1973–1976</p>
+          <h3>Oxford, Physics</h3>
+          <p>Read physics at The Queen's College, Oxford. Graduated with a first-class degree. Built a computer during his student years from a Motorola 6800 processor and an old television.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENQUIRE -->
+  <section id="enquire">
+    <div class="container">
+      <h2>CERN and <span class="accent">Enquire</span></h2>
+
+      <p>In 1980, Berners-Lee took a software engineering contract at <strong>CERN</strong>, the European Organisation for Nuclear Research, in Geneva. CERN was — and remains — one of the world's great scientific institutions: a place where thousands of physicists, engineers, and computer scientists from dozens of countries collaborate on experiments at the frontier of human knowledge.</p>
+
+      <p>The organisational challenge this created was extraordinary. People came and went. Projects were related to other projects in complex ways. There was no good way to keep track of who was doing what, who knew whom, which system connected to which other system. Every new person who arrived had to rediscover the connections from scratch.</p>
+
+      <p>Berners-Lee's solution was personal and practical: he wrote a program for himself, which he called <em>Enquire</em> — short for "Enquire Within Upon Everything," the title of a Victorian domestic encyclopedia he had found as a child. Enquire was a simple hypertext system: it stored information as nodes and links. A node might be a person, a project, a concept, or a machine. A link connected any node to any other node.</p>
+
+      <p>This was not yet the web. Enquire ran only on Berners-Lee's own machine, could not link outside its own database, and was never distributed. When he left CERN at the end of 1980, the program was lost. But the idea — of a system where anything could link to anything, where the network was the organising principle — stayed with him. It was the seed of what was coming.</p>
+
+      <div class="mono-block">
+        ENQUIRE — 1980<br>
+        A personal information system.<br>
+        Nodes: people, projects, concepts, machines.<br>
+        Links: bidirectional, typed, arbitrary.<br>
+        Scope: local. Not networked. Lost when TBL left CERN.<br>
+        Significance: the first articulation of what would become the web.
+      </div>
+
+      <blockquote>
+        "I wrote Enquire for myself, to help me keep track of the connections between the people and projects at CERN. It was very simple. But the idea was already there."
+        <cite>— Tim Berners-Lee</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- RETURN TO CERN -->
+  <section id="return">
+    <div class="container">
+      <h2>Return to CERN: <span class="accent">The Proposal</span></h2>
+
+      <p>After leaving CERN in 1980, Berners-Lee spent several years in the private sector, working at Image Computer Systems in Dorset. He returned to CERN in 1984 as a Fellow, and the problem he had tried to solve with Enquire was still there — if anything, it had grown larger. CERN now had thousands of researchers. The internet existed and was growing. The missing piece was a way to link documents across it.</p>
+
+      <p>In March 1989, Berners-Lee wrote a document entitled <strong>"Information Management: A Proposal"</strong> and submitted it to his supervisor, <strong>Mike Sendall</strong>. The document proposed a distributed hypertext system that would allow documents anywhere on the internet to link to any other document anywhere else on the internet. It described, in outline, what would become the World Wide Web.</p>
+
+      <p>Sendall's response — written on the cover of the proposal — has become one of the most famous marginal notes in the history of technology. He wrote: <em>"Vague but exciting."</em> He approved the work. Berners-Lee was given permission to continue.</p>
+
+      <div class="band">
+        <div class="container">
+          <h2 style="font-size:1.3rem; margin-bottom:1rem;">Mike Sendall's Cover Note — March 1989</h2>
+          <p style="font-family:'Space Mono',monospace; font-size:1.4rem; letter-spacing:0.05em; color:#fff; font-style:italic; margin-bottom:0.5rem;">"Vague but exciting."</p>
+          <p style="font-size:0.9rem; color:rgba(255,255,255,0.7); margin-bottom:0;">Written on the cover of Berners-Lee's proposal document. The four words that greenlit the World Wide Web.</p>
+        </div>
+      </div>
+
+      <p>A revised and expanded version of the proposal, written with Belgian engineer <strong>Robert Cailliau</strong>, was circulated in November 1990. It was called <em>"WorldWideWeb: Proposal for a HyperText Project."</em> This version was more concrete, more technical, and more persuasive. It described HTML (to structure documents), HTTP (to transfer them), and URLs (to address them). All three still exist. All three still work.</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">1989</div>
+          <div class="stat-label">Original Proposal</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1990</div>
+          <div class="stat-label">Revised with Cailliau</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Core Inventions (HTML / HTTP / URL)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Words that started it all</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECEMBER 1990 -->
+  <section id="first">
+    <div class="container">
+      <h2>December 1990: <span class="accent">The First Web</span></h2>
+
+      <p>Between the approval of his proposal in 1989 and the end of 1990, Berners-Lee built the entire stack. He wrote the first web server — the program that receives requests and returns documents. He wrote the first web browser, which he called <em>WorldWideWeb</em> (later renamed Nexus to avoid confusion with the web itself). He published the first web page at the address <strong>http://info.cern.ch/</strong>.</p>
+
+      <p>The first web page was not a commercial product, not a media site, not a social network. It was documentation. It explained what the World Wide Web was, what it was for, and how to use it. It was exactly what you would expect from a physicist and engineer: a clear explanation of a system, written for other people who might want to use it.</p>
+
+      <p>The first browser was also an editor. Berners-Lee's original design was that the web would be a read-write medium: anyone could not just read pages, but write them. This vision — of a web where everyone contributes, not just consumes — is one that took decades to partially arrive (with wikis, blogs, social media) and one that Berners-Lee still advocates for in its deeper form today.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-year">Dec 1990</p>
+          <h3>First Web Server</h3>
+          <p>Running on a NeXT computer at CERN. The machine had a Post-It note on it reading "This machine is a server — DO NOT POWER IT DOWN!!"</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Dec 1990</p>
+          <h3>First Web Browser</h3>
+          <p>"WorldWideWeb" — also an editor. Ran on NeXTSTEP. Later renamed "Nexus" to avoid confusion with the web itself.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Dec 1990</p>
+          <h3>First Web Page</h3>
+          <p>http://info.cern.ch/ — documentation about the project itself. Still accessible at info.cern.ch today, restored from the original.</p>
+        </div>
+        <div class="card">
+          <p class="card-year">Aug 1991</p>
+          <h3>Released to the Public</h3>
+          <p>Posted to internet newsgroups. Made available freely. No licence fee. No patent claim. Anyone could use it.</p>
+        </div>
+      </div>
+
+      <div class="mono-block">
+        http://info.cern.ch/<br><br>
+        The first URL.<br>
+        The first address on the World Wide Web.<br>
+        Still online. Still works.
+      </div>
+    </div>
+  </section>
+
+  <!-- GAVE IT AWAY -->
+  <section id="gift">
+    <div class="container">
+      <h2>The Gift: <span class="accent">No Patent, No Royalty</span></h2>
+
+      <p>This is the fact that most people, hearing it for the first time, find almost impossible to believe: Tim Berners-Lee invented the World Wide Web and gave it away for free. He made no patent claim. He charged no royalty. He did not become a billionaire. He did not start a company to commercialise it.</p>
+
+      <p>CERN released the underlying web technology with a declaration making it royalty-free in perpetuity, in April 1993. This was a deliberate decision — one that Berners-Lee lobbied for. His reasoning was clear: a web that anyone could use for free would grow exponentially faster than one encumbered by licences. He estimated that making the web open rather than proprietary meant it grew roughly <em>1,000 times faster</em> than it would have otherwise. That estimate, if anything, seems conservative.</p>
+
+      <p>The web's openness is not accidental. It is the result of a specific ethical choice made by a specific person at a specific moment. Had Berners-Lee patented his inventions and licensed them — as he could have, as many people in his position would have — the web as we know it could not exist. Every website would owe a fee. Every browser would require a licence. The open internet would have been stillborn.</p>
+
+      <blockquote>
+        "Had the technology been proprietary, and in my total control, it would probably not have taken off. You can't propose that something be a universal space and at the same time keep control of it."
+        <cite>— Tim Berners-Lee</cite>
+      </blockquote>
+
+      <p>He is not poor. He has a comfortable academic salary from MIT, where he has held a position for many years, and honours beyond counting. But he has no equity in Google, Facebook, Amazon, or any of the trillion-dollar companies whose entire existence depends on what he invented. He made a choice. The rest of us live in the world that choice created.</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <h2>Life in <span class="accent">Sequence</span></h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <p class="tl-year">8 June 1955</p>
+          <h3>Born in London</h3>
+          <p>To Conway Berners-Lee and Mary Lee Woods, both mathematicians who worked on the Manchester Mark 1.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">1976</p>
+          <h3>First-class degree, Oxford</h3>
+          <p>Graduates from The Queen's College, Oxford with a first-class degree in physics. Builds his first computer during his student years from a Motorola 6800 and an old TV.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">1980</p>
+          <h3>First CERN contract — Enquire</h3>
+          <p>Six-month software contract at CERN. Writes Enquire, a personal hypertext system to track connections between people and projects. Leaves CERN; Enquire is lost.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">1984</p>
+          <h3>Returns to CERN as a Fellow</h3>
+          <p>Takes a permanent fellowship at CERN. The problem Enquire was designed to solve is still there, and growing.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">March 1989</p>
+          <h3>"Information Management: A Proposal"</h3>
+          <p>Submits his proposal to Mike Sendall. Sendall writes "Vague but exciting" on the cover and approves the work. The web begins.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">November 1990</p>
+          <h3>WorldWideWeb Proposal (with Cailliau)</h3>
+          <p>A formal, expanded proposal for a hypertext project at CERN, co-written with Robert Cailliau. Names HTML, HTTP, and the URL for the first time.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">December 1990</p>
+          <h3>First server, first browser, first web page</h3>
+          <p>By Christmas 1990, the first web server is running on a NeXT machine at CERN. The first web page is live at http://info.cern.ch/.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">August 1991</p>
+          <h3>Released to the public internet</h3>
+          <p>Posted to internet newsgroups. Anyone can use it. No licence fee. No patent. The World Wide Web is public.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">April 1993</p>
+          <h3>CERN declares the web royalty-free</h3>
+          <p>CERN releases the web technology into the public domain. Royalty-free in perpetuity.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">1994</p>
+          <h3>Founds W3C</h3>
+          <p>Founds the World Wide Web Consortium at MIT. The standards body that keeps the web open, interoperable, and patent-free.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">2004</p>
+          <h3>Knighted</h3>
+          <p>Appointed Knight Commander of the Order of the British Empire (KBE) for services to the global development of the internet.</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">2012</p>
+          <h3>"This is for everyone"</h3>
+          <p>Appears at the London Olympic Games opening ceremony with a laptop that displays the words "This is for everyone."</p>
+        </div>
+        <div class="tl-item">
+          <p class="tl-year">Ongoing</p>
+          <h3>Campaigns for an open web</h3>
+          <p>Leads the Solid project (user data sovereignty), the Contract for the Web, and continues to advocate for net neutrality and the open web.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT KIND OF PERSON -->
+  <section id="character">
+    <div class="container">
+      <h2>What Kind of Person <span class="accent">Does This?</span></h2>
+
+      <p>Berners-Lee is, by all accounts, a quiet person. Not a showman. Not a salesman. He has given countless interviews and lectures over four decades, but he is not someone who speaks in slogans or brands himself. His public persona is defined almost entirely by what he built and what he has chosen to do — and not do — with what he built.</p>
+
+      <p>He has been described by colleagues as intensely focused, technically rigorous, and possessed of an unusual capacity to hold complexity in his head — to see how systems connected to other systems. The physicist's training shows: he thinks in terms of architecture, of protocols, of how information flows. He is also, by his own description, a social optimist. He built the web not as a commercial product but as a social infrastructure, because he believed — and still believes — that access to information is a human good.</p>
+
+      <p>That belief explains the decision not to patent the web. It also explains his current campaigns: Solid, the Contract for the Web, his advocacy for net neutrality. He did not build the web and walk away. He has spent his entire adult life trying to make sure it stays what he intended it to be.</p>
+
+      <blockquote>
+        "The web is more a social creation than a technical one. I designed it for a social effect — to help people work together — and not as a technical toy."
+        <cite>— Tim Berners-Lee</cite>
+      </blockquote>
+
+      <h3>The Scale of the Gift</h3>
+      <p>It is worth stating plainly: no individual in the history of technology has given away more than Tim Berners-Lee. James Watt patented the steam engine. Edison patented everything. Bell patented the telephone. Marconi patented radio. Berners-Lee invented a system that restructured the global economy, the global media, and the daily life of five billion people — and asked for nothing. Not a penny. Not a patent. Not a royalty. Not a share.</p>
+
+      <p>The reasons are a mix of practicality and ethics. Practically: a web with toll-booths would not have become the web. Ethically: he believed information should be free to flow, that a universal information space must be universally accessible. The two reasons reinforce each other. That combination — the practical and the ethical pointing in the same direction — is what made the decision possible and permanent.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── COLOPHON ── -->
+<footer class="colophon">
+  <p>ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0</p>
+  <p>Tim Berners-Lee Series · Volume 0: Who He Is</p>
+  <p>
+    <a href="0-who.html">Vol 0 · Who</a> &nbsp;·&nbsp;
+    <a href="1-web.html">Vol 1 · Web</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol 2 · World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </p>
+  <p style="margin-top:1rem; color:#555;">Compiled 2026 · All factual claims sourced from public record</p>
+</footer>
+
+</body>
+</html>

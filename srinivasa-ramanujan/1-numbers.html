@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramanujan Vol. 1 — The Numbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --saffron: #d97706;
+    --teal: #0d9488;
+    --text: #e8e0d0;
+    --muted: #a89880;
+    --card-bg: #110d14;
+    --card-border: 1px solid var(--saffron);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.78;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    border-bottom: 1px solid var(--saffron);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 1rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--saffron); border-color: var(--saffron); }
+  nav a.active { color: var(--saffron); border-color: var(--saffron); background: rgba(217,119,6,0.08); }
+
+  .hero {
+    min-height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 40% 40%, rgba(13,148,136,0.09) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 70%, rgba(217,119,6,0.07) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .vol-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--teal);
+    padding: 0.3rem 1rem;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  /* PI SERIES ANIMATION */
+  .svg-stage {
+    width: 100%;
+    max-width: 760px;
+    margin: 2rem auto 0;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  section { margin-bottom: 4.5rem; }
+  section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: var(--teal);
+    border-bottom: 1px solid var(--teal);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.04em;
+  }
+  section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--saffron);
+    margin: 1.8rem 0 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  p { margin-bottom: 1.1rem; }
+  em { color: var(--saffron); font-style: italic; }
+  strong { color: #fff; font-weight: 600; }
+
+  /* EQUATION DISPLAY */
+  .eq-block {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.6rem 2rem;
+    margin: 1.8rem 0;
+    text-align: center;
+    position: relative;
+  }
+  .eq-block .eq-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    position: absolute;
+    top: 0.6rem;
+    left: 1rem;
+  }
+  .eq-block .eq-main {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(0.78rem, 1.8vw, 1rem);
+    color: #fff;
+    line-height: 2;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .eq-block .eq-note {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 0.8rem;
+    white-space: normal;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--saffron);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.93rem; color: var(--muted); margin: 0; }
+  .card .card-eq {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--saffron);
+    margin: 0.6rem 0 0;
+    line-height: 1.7;
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--teal);
+    padding: 1.1rem 1.8rem;
+    margin: 2.2rem 0;
+    background: rgba(13,148,136,0.04);
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--text);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    color: var(--saffron);
+    letter-spacing: 0.1em;
+  }
+
+  .band {
+    background: var(--saffron);
+    color: var(--paper);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .kick {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* PARTITION TABLE */
+  .partition-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+  }
+  .partition-table th {
+    border-bottom: 1px solid var(--saffron);
+    color: var(--saffron);
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+  .partition-table td {
+    padding: 0.45rem 0.8rem;
+    color: var(--muted);
+    border-bottom: 1px solid rgba(217,119,6,0.12);
+  }
+  .partition-table td:first-child { color: #fff; }
+  .partition-table tr:hover td { background: rgba(217,119,6,0.05); }
+
+  /* CONVERGENCE TABLE */
+  .conv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+  }
+  .conv-table th {
+    border-bottom: 1px solid var(--teal);
+    color: var(--teal);
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+  }
+  .conv-table td {
+    padding: 0.45rem 0.8rem;
+    border-bottom: 1px solid rgba(13,148,136,0.12);
+    color: var(--muted);
+  }
+  .conv-table td:first-child { color: var(--saffron); }
+  .conv-table td:last-child { color: var(--teal); }
+  .conv-table tr:hover td { background: rgba(13,148,136,0.05); }
+
+  footer {
+    border-top: 1px solid rgba(217,119,6,0.35);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+  footer .attr-line { color: var(--saffron); margin-bottom: 0.3rem; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .eq-block .eq-main { font-size: 0.68rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Ramanujan</span>
+  <a href="0-who.html">Vol 0 — Who</a>
+  <a href="1-numbers.html" class="active">Vol 1 — Numbers</a>
+  <a href="2-world.html">Vol 2 — World</a>
+  <a href="3-legacy.html">Vol 3 — Legacy</a>
+</nav>
+
+<div class="hero">
+  <span class="vol-badge">Volume 1 of 4 &nbsp;·&nbsp; The Mathematics</span>
+  <h1>The <span>Numbers</span></h1>
+  <p class="subtitle">The actual mathematics of Srinivasa Ramanujan — equations that reshaped number theory, analysis, and physics</p>
+
+  <!-- ANIMATED SVG: π series converging, partial sums -->
+  <div class="svg-stage" aria-label="Ramanujan's series for 1/π converging animation">
+    <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <defs>
+        <style>
+          .pi-text { font-family:'Space Mono',monospace; fill:#e8e0d0; }
+          .pi-saffron { fill:#d97706; }
+          .pi-teal { fill:#0d9488; }
+          .pi-white { fill:#fff; }
+          .bar-anim-1 { animation: growBar 0.6s ease 0.5s both; transform-origin: bottom; }
+          .bar-anim-2 { animation: growBar 0.6s ease 1.0s both; transform-origin: bottom; }
+          .bar-anim-3 { animation: growBar 0.6s ease 1.5s both; transform-origin: bottom; }
+          .bar-anim-4 { animation: growBar 0.6s ease 2.0s both; transform-origin: bottom; }
+          .bar-anim-5 { animation: growBar 0.6s ease 2.5s both; transform-origin: bottom; }
+          .bar-anim-6 { animation: growBar 0.6s ease 3.0s both; transform-origin: bottom; }
+          .label-anim { animation: fadeIn 0.5s ease 3.5s both; }
+          .convergence-line { animation: drawLine 2.5s ease 0.8s both; stroke-dasharray: 660; stroke-dashoffset: 660; }
+          @keyframes growBar {
+            from { transform: scaleY(0); }
+            to   { transform: scaleY(1); }
+          }
+          @keyframes fadeIn {
+            from { opacity:0; } to { opacity:1; }
+          }
+          @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+          }
+        </style>
+      </defs>
+      <rect x="0" y="0" width="760" height="200" fill="rgba(17,13,20,0.9)" rx="6"/>
+
+      <!-- Title -->
+      <text x="380" y="26" text-anchor="middle" class="pi-text pi-teal" style="font-size:11px;letter-spacing:0.15em;">RAMANUJAN'S SERIES: PARTIAL SUMS CONVERGING TO 1/π ≈ 0.31830988...</text>
+
+      <!-- Convergence baseline -->
+      <line x1="60" y1="155" x2="700" y2="155" stroke="#d97706" stroke-width="1" stroke-dasharray="4 3" opacity="0.5" class="convergence-line"/>
+      <text x="708" y="159" class="pi-text pi-saffron" style="font-size:10px;">1/π</text>
+
+      <!-- Bars: each represents a partial sum (n=0,1,2,3,4,5) growing from bottom -->
+      <!-- n=0: term ≈ 0.3183 (almost exactly 1/π already!) -->
+      <!-- Heights scaled so that 1/π = 100px height from baseline y=155 -->
+      <!-- n=0 bar: height ~100px -->
+      <rect x="90"  y="55"  width="60" height="100" fill="rgba(13,148,136,0.7)" class="bar-anim-1"/>
+      <text x="120" y="48"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#0d9488;">n=0</text>
+      <text x="120" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">0.3183...</text>
+
+      <!-- n=1 bar: overshoots very slightly — series is corrective, show near-exact -->
+      <rect x="170" y="57"  width="60" height="98"  fill="rgba(13,148,136,0.75)" class="bar-anim-2"/>
+      <text x="200" y="50"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#0d9488;">n=1</text>
+      <text x="200" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">0.3183...</text>
+
+      <rect x="250" y="56"  width="60" height="99"  fill="rgba(13,148,136,0.8)" class="bar-anim-3"/>
+      <text x="280" y="49"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#0d9488;">n=2</text>
+      <text x="280" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">8 digits</text>
+
+      <rect x="330" y="55"  width="60" height="100" fill="rgba(13,148,136,0.85)" class="bar-anim-4"/>
+      <text x="360" y="48"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#0d9488;">n=3</text>
+      <text x="360" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">+16 digits</text>
+
+      <rect x="410" y="55"  width="60" height="100" fill="rgba(217,119,6,0.75)" class="bar-anim-5"/>
+      <text x="440" y="48"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#d97706;">n=4</text>
+      <text x="440" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">+24 digits</text>
+
+      <rect x="490" y="55"  width="60" height="100" fill="rgba(217,119,6,0.85)" class="bar-anim-6"/>
+      <text x="520" y="48"  text-anchor="middle" class="pi-text" style="font-size:9px;fill:#d97706;">n=5</text>
+      <text x="520" y="173" text-anchor="middle" class="pi-text" style="font-size:9px;fill:#a89880;">+32 digits</text>
+
+      <!-- Each term adds ~8 significant digits of π -->
+      <text x="380" y="194" text-anchor="middle" class="pi-text label-anim" style="font-size:10px;fill:#a89880;">
+        Each additional term contributes ~8 correct decimal digits of π
+      </text>
+
+      <!-- π symbol large -->
+      <text x="660" y="130" text-anchor="middle" class="pi-white" style="font-family:'Cinzel',serif;font-size:72px;opacity:0.12;">π</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <!-- SECTION 1: 1729 TAXICAB -->
+  <section id="taxicab">
+    <span class="kick">I. The Taxicab Number</span>
+    <h2>1729 — Hardy-Ramanujan Number</h2>
+    <p>
+      The taxicab number <strong>1729</strong> is the canonical entry point to Ramanujan's
+      number-theoretic sensibility — the anecdote too perfect to be invention but too neat not
+      to feel like mathematics arranged itself to be noticed.
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Hardy-Ramanujan Number</span>
+      <div class="eq-main">1729 = 1³ + 12³ = 9³ + 10³</div>
+      <div class="eq-note">The smallest positive integer expressible as the sum of two positive cubes in two distinct ways. This property is now used to define the "taxicab sequence": Ta(n) = smallest number expressible as sum of two positive cubes in n distinct ways.</div>
+    </div>
+    <p>
+      The full taxicab sequence, for completeness: Ta(1) = 2 (= 1³ + 1³), Ta(2) = 1729,
+      Ta(3) = 87539319 (= 167³+436³ = 228³+423³ = 255³+414³). Ta(6) remains unknown.
+      Ramanujan did not find these — he simply knew 1729 cold. That is the point.
+    </p>
+
+    <h3>Generalizations</h3>
+    <p>
+      Ramanujan was interested in what we now call <em>Diophantine equations</em> — equations
+      in integers — and in taxicab-like problems more broadly. The Hardy-Ramanujan number
+      inaugurated a class of questions about the additive structure of cubes, fourth powers,
+      and higher that occupied number theorists throughout the twentieth century.
+    </p>
+  </section>
+
+  <!-- SECTION 2: SERIES FOR PI -->
+  <section id="pi-series">
+    <span class="kick">II. The Series for π</span>
+    <h2>Ramanujan's Infinite Series for 1/π</h2>
+    <p>
+      In 1914, Ramanujan published a paper containing seventeen extraordinary series for 1/π.
+      They had no precedent. They converged with shocking speed. The most famous, and the one
+      that drove all subsequent computation of π for decades:
+    </p>
+
+    <div class="eq-block">
+      <span class="eq-label">Ramanujan 1914 — Series for 1/π</span>
+      <div class="eq-main">
+        1/π = (2√2 / 9801) · Σ(n=0 to ∞) [(4n)! · (1103 + 26390n)] / [(n!)⁴ · 396^(4n)]
+      </div>
+      <div class="eq-note">
+        Each term adds approximately 8 correct decimal digits of π. Computed by William Gosper in 1985 to 17 million digits.
+        The Chudnovsky brothers' 1988 variant computed π to over 1 billion digits.
+      </div>
+    </div>
+
+    <p>
+      The numbers in this formula — 9801, 26390, 396 — are not guesses or heuristics. They
+      arise from the theory of complex multiplication of elliptic curves and modular forms,
+      a connection Ramanujan perceived intuitively before the theory was formally built. The
+      number 9801 = 99² appears because of a specific modular equation of level related to
+      the Heegner number 163: e^(π√163) ≈ 262537412640768743.99999999999925... — a remarkable
+      near-integer that also drives the structure of the formula.
+    </p>
+
+    <h3>The Convergence Table</h3>
+    <table class="conv-table">
+      <thead>
+        <tr><th>Terms (n=0 to)</th><th>Value of partial sum × (9801/2√2)</th><th>Correct digits of π</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>0.31830988618...</td><td>~8</td></tr>
+        <tr><td>1</td><td>0.31830988618379...</td><td>~16</td></tr>
+        <tr><td>2</td><td>0.318309886183790671...</td><td>~24</td></tr>
+        <tr><td>3</td><td>0.31830988618379067153...</td><td>~32</td></tr>
+        <tr><td>n</td><td>—</td><td>~8(n+1) digits</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Chudnovsky Connection</h3>
+    <div class="eq-block">
+      <span class="eq-label">Chudnovsky Algorithm (1988) — derived from Ramanujan</span>
+      <div class="eq-main">
+        1/π = (12 / 640320^(3/2)) · Σ(n=0 to ∞) [(-1)^n · (6n)! · (13591409 + 545140134n)] / [(3n)! · (n!)³ · 640320^(3n)]
+      </div>
+      <div class="eq-note">
+        Adds ~14.18 correct digits per term. Basis of most modern π computation records.
+        640320³ = 262537412640768000 — related to the same j-function structure Ramanujan used.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MOCK THETA FUNCTIONS -->
+  <section id="mock-theta">
+    <span class="kick">III. Mock Theta Functions</span>
+    <h2>The Deathbed Discovery</h2>
+    <p>
+      In January 1920, three months before he died, Ramanujan wrote Hardy a letter. It described
+      seventeen functions he called <em>mock theta functions</em>. He did not explain what they
+      were. He gave their formulae. He said he had "not tried to prove these results yet."
+    </p>
+    <p>
+      Mathematicians spent eighty-two years not understanding them. The problem: Ramanujan's
+      theta functions looked like modular forms — functions of extraordinary symmetry central
+      to number theory — but they weren't. They behaved like modular forms in some regimes and
+      failed to in others, in a way that seemed almost deliberate.
+    </p>
+
+    <div class="eq-block">
+      <span class="eq-label">Mock Theta Function — third order, first type</span>
+      <div class="eq-main">
+        f(q) = Σ(n=0 to ∞) [q^(n²)] / [(−q; q)_n]²<br>
+        ω(q) = Σ(n=0 to ∞) [q^(2n²+2n)] / [(q; q²)_(n+1)]²<br>
+        ν(q) = Σ(n=0 to ∞) [q^(n²+n)] / [(−q²; q²)_(n+1)]
+      </div>
+      <div class="eq-note">
+        Here (a; q)_n = (1−a)(1−aq)···(1−aq^(n−1)) is the q-Pochhammer symbol. These satisfy
+        near-modular transformation properties that puzzled mathematicians for decades.
+      </div>
+    </div>
+
+    <h3>Ken Ono's Resolution (2002)</h3>
+    <p>
+      In 2002, <strong>Ken Ono</strong> at the University of Wisconsin showed that mock theta
+      functions are the "holomorphic parts" of certain weak Maass forms — a class of functions
+      with the correct transformation properties under the modular group, but which fail to be
+      holomorphic. The mock theta functions, it turned out, are half of a larger structure —
+      the other half, the "shadow," supplies exactly the correction needed to restore modularity.
+    </p>
+    <p>
+      This resolved a seventy-year puzzle and opened an entirely new field. Mock modular forms
+      now appear in:
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">String Theory</div>
+        <h4>Black Hole Entropy</h4>
+        <p>Dijkgraaf, Maldacena, Moore, and Verlinde (1997) connected mock theta functions to counting of black hole microstates in superstring theory. Elliptic genera of string compactifications.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Moonshine</div>
+        <h4>Umbral Moonshine</h4>
+        <p>Cheng, Duncan, and Harvey (2012–14): 23 instances of "umbral moonshine" connect mock modular forms to sporadic finite simple groups — a vast generalization of the Monster Moonshine conjecture proved by Borcherds.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Combinatorics</div>
+        <h4>Ranks and Cranks of Partitions</h4>
+        <p>Dyson's "rank" and Andrews-Garvan "crank" of partitions — which explain Ramanujan's partition congruences — are intimately related to mock theta functions.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Physics</div>
+        <h4>Quantum Gravity</h4>
+        <p>Witten (2007): the partition function of three-dimensional pure quantum gravity may be expressible in terms of mock modular forms — connecting Ramanujan's last letter directly to quantum gravity research.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: PARTITIONS -->
+  <section id="partitions">
+    <span class="kick">IV. The Partition Function</span>
+    <h2>p(n) — Counting the Ways</h2>
+    <p>
+      The <strong>partition function</strong> p(n) counts the number of ways to write the
+      integer n as an unordered sum of positive integers. The first few values are easily
+      computed by hand. Large values were, before Ramanujan, essentially inaccessible.
+    </p>
+
+    <table class="partition-table">
+      <thead>
+        <tr><th>n</th><th>p(n)</th><th>Example partitions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>2</td><td>2</td><td>2 · 1+1</td></tr>
+        <tr><td>3</td><td>3</td><td>3 · 2+1 · 1+1+1</td></tr>
+        <tr><td>4</td><td>5</td><td>4 · 3+1 · 2+2 · 2+1+1 · 1+1+1+1</td></tr>
+        <tr><td>5</td><td>7</td><td>5 · 4+1 · 3+2 · 3+1+1 · 2+2+1 · 2+1+1+1 · 1+1+1+1+1</td></tr>
+        <tr><td>10</td><td>42</td><td>—</td></tr>
+        <tr><td>20</td><td>627</td><td>—</td></tr>
+        <tr><td>50</td><td>204,226</td><td>—</td></tr>
+        <tr><td>100</td><td>190,569,292</td><td>—</td></tr>
+        <tr><td>200</td><td>3,972,999,029,388</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The Hardy-Ramanujan Asymptotic Formula (1918)</h3>
+    <div class="eq-block">
+      <span class="eq-label">Hardy-Ramanujan Asymptotic (1918)</span>
+      <div class="eq-main">
+        p(n) ~ (1 / 4n√3) · exp(π · √(2n/3)) &nbsp;&nbsp;as n → ∞
+      </div>
+      <div class="eq-note">
+        The first asymptotic result for p(n). For n=200: the formula gives approximately 3.93 × 10¹², vs exact value 3.97 × 10¹² — already remarkable accuracy. Derived using the "circle method" — Hardy and Ramanujan's joint invention.
+      </div>
+    </div>
+
+    <h3>Rademacher's Exact Formula (1937)</h3>
+    <div class="eq-block">
+      <span class="eq-label">Rademacher Exact Formula</span>
+      <div class="eq-main">
+        p(n) = (1/π√2) · Σ(k=1 to ∞) √k · A_k(n) · d/dn [ sinh(π/k · √(2/3·(n−1/24))) / √(n−1/24) ]
+      </div>
+      <div class="eq-note">
+        A_k(n) is a Kloosterman-sum term. This is an exact formula for p(n) as a convergent (not merely asymptotic) series — extraordinary for a combinatorial quantity. It is a direct extension of Hardy-Ramanujan's circle method.
+      </div>
+    </div>
+
+    <h3>Ramanujan's Congruences</h3>
+    <p>
+      Ramanujan observed, and partially proved, three miraculous congruences:
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Ramanujan Partition Congruences</span>
+      <div class="eq-main">
+        p(5n + 4)  ≡ 0 (mod 5)<br>
+        p(7n + 5)  ≡ 0 (mod 7)<br>
+        p(11n + 6) ≡ 0 (mod 11)
+      </div>
+      <div class="eq-note">
+        For example: p(4)=5, p(9)=30, p(14)=135, p(19)=490 — all divisible by 5. Dyson (1944) conjectured that a "rank" function on partitions would explain these. The rank and crank functions, now understood via mock theta functions, give bijective proofs.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: RAMANUJAN PRIME & SUM -->
+  <section id="rprimes">
+    <span class="kick">V. Primes and Sums</span>
+    <h2>Ramanujan Primes and Ramanujan's Sum</h2>
+    <h3>Ramanujan Prime</h3>
+    <p>
+      A <strong>Ramanujan prime</strong> R_n is the smallest prime such that for all x ≥ R_n,
+      the number of primes in the interval (x/2, x] is at least n. Equivalently, R_n is the
+      smallest prime p such that π(x) − π(x/2) ≥ n for x ≥ p, where π is the prime-counting
+      function.
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Ramanujan Prime — First Fifteen</span>
+      <div class="eq-main">2, 11, 17, 29, 41, 47, 59, 67, 71, 97, 101, 107, 127, 149, 151, ...</div>
+      <div class="eq-note">
+        R₁ = 2 (trivially), R₂ = 11, R₃ = 17, R₄ = 29, R₅ = 41. The sequence was proved by Ramanujan as a consequence of his generalization of Bertrand's postulate: for n ≥ 1, there is always a prime between n and 2n.
+      </div>
+    </div>
+
+    <h3>Ramanujan's Sum</h3>
+    <p>
+      <strong>Ramanujan's sum</strong> c_q(n) is defined for positive integers q, n:
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Ramanujan's Sum</span>
+      <div class="eq-main">
+        c_q(n) = Σ_{1≤k≤q, gcd(k,q)=1} exp(2πikn/q)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = μ(q/gcd(n,q)) · φ(q) / φ(q/gcd(n,q))
+      </div>
+      <div class="eq-note">
+        μ is the Möbius function, φ is Euler's totient. Ramanujan's sum is a trigonometric sum ranging over integers coprime to q. It appears naturally in the Fourier analysis of arithmetic functions. Used in Vinogradov's proof of the Goldbach conjecture for large odd numbers.
+      </div>
+    </div>
+
+    <h3>Ramanujan's Conjecture (Tau Function)</h3>
+    <p>
+      Define Ramanujan's tau function τ(n) by the expansion of the discriminant modular form:
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Ramanujan Tau Function</span>
+      <div class="eq-main">
+        Δ(q) = q · Π(n=1 to ∞)(1−qⁿ)²⁴ = Σ(n=1 to ∞) τ(n) · qⁿ<br>
+        τ(1)=1, τ(2)=−24, τ(3)=252, τ(4)=−1472, τ(5)=4830, τ(6)=−6048...
+      </div>
+      <div class="eq-note">
+        Ramanujan conjectured (1916) that |τ(p)| ≤ 2p^(11/2) for primes p — now called the Ramanujan conjecture. Proved by Pierre Deligne in 1974 as a consequence of his proof of the Weil conjectures — work for which Deligne received the Fields Medal in 1978.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: HIGHLY COMPOSITE + ROGERS-RAMANUJAN -->
+  <section id="composite">
+    <span class="kick">VI. Composite Structures</span>
+    <h2>Highly Composite Numbers and Rogers-Ramanujan</h2>
+    <h3>Highly Composite Numbers</h3>
+    <p>
+      A <strong>highly composite number</strong> n is a positive integer with more divisors
+      than any smaller positive integer. Ramanujan studied these systematically in 1915 in a
+      paper that began the serious study of what is now called the divisor function d(n).
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">First Highly Composite Numbers</div>
+        <h4>The Sequence</h4>
+        <div class="card-eq">1, 2, 4, 6, 12, 24, 36, 48, 60, 120,<br>
+        180, 240, 360, 720, 840, 1260, 1680,<br>
+        2520, 5040, 7560, 10080, 15120, ...</div>
+        <p style="margin-top:0.6rem;">The number 5040 (= 7!) appears — Plato's ideal city-state size. 360 (= 12! /... degrees). Ramanujan characterized these in terms of prime factorization.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Ramanujan's Result</div>
+        <h4>Structure Theorem</h4>
+        <div class="card-eq">If n = 2^a₁ · 3^a₂ · 5^a₃ · 7^a₄ · ...<br>
+        is highly composite, then<br>
+        a₁ ≥ a₂ ≥ a₃ ≥ a₄ ≥ ...</div>
+        <p style="margin-top:0.6rem;">The exponents in the prime factorization must be non-increasing. Also: the largest prime factor of an HCN of size ≈ N is ≈ log N.</p>
+      </div>
+    </div>
+
+    <h3>Rogers-Ramanujan Identities</h3>
+    <p>
+      The <strong>Rogers-Ramanujan identities</strong> are among the most beautiful — and
+      most useful — in all of combinatorics and physics:
+    </p>
+    <div class="eq-block">
+      <span class="eq-label">Rogers-Ramanujan Identities (1894/1917)</span>
+      <div class="eq-main">
+        Σ(n=0 to ∞) q^(n²) / (q;q)_n = Π(n≥0) 1/[(1−q^(5n+1))(1−q^(5n+4))]<br><br>
+        Σ(n=0 to ∞) q^(n²+n) / (q;q)_n = Π(n≥0) 1/[(1−q^(5n+2))(1−q^(5n+3))]
+      </div>
+      <div class="eq-note">
+        Leonard James Rogers proved these in 1894. Ramanujan discovered them independently around 1913, found them in an old paper of Rogers, and proved them by his own methods. Schur proved them a third time, independently. They appear in: exactly solvable models in statistical mechanics (Baxter's hard hexagon model), conformal field theory, representation theory of affine Lie algebras.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: CONTINUED FRACTIONS -->
+  <section id="fractions">
+    <span class="kick">VII. Continued Fractions</span>
+    <h2>Ramanujan's Continued Fractions</h2>
+    <p>
+      Ramanujan had a spectacular facility with continued fractions — infinite expressions of
+      the form a₀ + b₁/(a₁ + b₂/(a₂ + ···)). Some of his results in this area were already
+      known; many were entirely new; some looked so implausible that Hardy needed weeks to
+      verify them.
+    </p>
+
+    <div class="eq-block">
+      <span class="eq-label">Rogers-Ramanujan Continued Fraction</span>
+      <div class="eq-main">
+        R(q) = q^(1/5) · (q; q⁵)_∞ · (q⁴; q⁵)_∞ / [(q²; q⁵)_∞ · (q³; q⁵)_∞]
+             = q^(1/5) / (1 + q/(1 + q²/(1 + q³/(1 + ···))))
+      </div>
+      <div class="eq-note">
+        Ramanujan to Hardy: "I told him that the continued fraction was related to θ-functions... he had no idea of it." This fraction encodes deep information about modular curves of level 5. Special values include R(e^(−2π)) = (√5−1)/2 · e^(2π/5) — related to the golden ratio φ = (√5−1)/2.
+      </div>
+    </div>
+
+    <div class="eq-block">
+      <span class="eq-label">A Startling Identity Ramanujan Sent Hardy</span>
+      <div class="eq-main">
+        1/(1 + e^(−2π)/(1 + e^(−4π)/(1 + e^(−6π)/(1 + ···)))) = (√5·√(φ√5)−φ²) · e^(2π/5)
+      </div>
+      <div class="eq-note">
+        Hardy: "If you had told me that [this] was true, I would have doubted you. I should have asked you to prove it. And yet it is true." φ = (1+√5)/2, the golden ratio. Ramanujan's mastery of q-series theory is evident throughout — he perceived structural relationships between continued fractions and theta functions that European mathematicians had not seen.
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    "The formulae defeated me completely. I had never seen anything in the least like them before."<br>
+    <span style="font-size:0.75em;font-weight:500;opacity:0.75;">— G. H. Hardy, on reading Ramanujan's first letter</span>
+  </div>
+
+  <section id="nav-forward" style="text-align:center;padding-top:1rem;">
+    <p style="font-family:'Cinzel',serif;color:var(--muted);font-size:0.9rem;letter-spacing:0.08em;">CONTINUE THE SERIES</p>
+    <div class="card-grid" style="max-width:600px;margin:1.2rem auto 0;">
+      <a href="2-world.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 2</div>
+          <h4>His World</h4>
+          <p>Colonial Madras. Cambridge in wartime. The Brahmin tradition. Fellowship of the Royal Society.</p>
+        </div>
+      </a>
+      <a href="3-legacy.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 3</div>
+          <h4>The Legacy</h4>
+          <p>The lost notebook. Mock modular forms. String theory. The long afterlife of a genius.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="attr-line">ROOT0-ATTRIBUTION-v1.0</div>
+  <div>David Lee Wise / ROOT0 / TriPod LLC &nbsp;·&nbsp; CC-BY-ND-4.0</div>
+  <div style="margin-top:0.4rem;opacity:0.6;">
+    Srinivasa Ramanujan Series &nbsp;·&nbsp; Volume 1: The Numbers &nbsp;·&nbsp;
+    Sources: Hardy-Ramanujan (1918); Ramanujan, <em>Collected Papers</em> (1927);
+    Andrews &amp; Berndt, <em>Ramanujan's Lost Notebook</em> Vol. I–V (2005–2018);
+    Ono, <em>The Web of Modularity</em> (2004)
+  </div>
+</footer>
+
+</body>
+</html>

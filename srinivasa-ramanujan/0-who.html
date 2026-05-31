@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramanujan Vol. 0 — Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #08050a;
+    --saffron: #d97706;
+    --teal: #0d9488;
+    --text: #e8e0d0;
+    --muted: #a89880;
+    --card-bg: #110d14;
+    --card-border: 1px solid var(--saffron);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.78;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,5,10,0.96);
+    border-bottom: 1px solid var(--saffron);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-right: 1rem;
+    white-space: nowrap;
+  }
+  nav a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--saffron); border-color: var(--saffron); }
+  nav a.active { color: var(--saffron); border-color: var(--saffron); background: rgba(217,119,6,0.08); }
+
+  /* HERO */
+  .hero {
+    min-height: 82vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 30%, rgba(217,119,6,0.08) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(13,148,136,0.06) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .vol-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--saffron);
+    padding: 0.3rem 1rem;
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  .hero h1 span { color: var(--saffron); }
+  .hero .subtitle {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+    color: var(--muted);
+    margin-bottom: 2rem;
+    max-width: 580px;
+  }
+  .hero .dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+  }
+
+  /* SVG ANIMATION AREA */
+  .svg-stage {
+    width: 100%;
+    max-width: 700px;
+    margin: 2.5rem auto 0;
+    position: relative;
+  }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+  section { margin-bottom: 4.5rem; }
+  section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 700;
+    color: var(--saffron);
+    border-bottom: 1px solid var(--saffron);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.6rem;
+    letter-spacing: 0.04em;
+  }
+  section h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--teal);
+    margin: 1.8rem 0 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  p { margin-bottom: 1.1rem; }
+  em { color: var(--saffron); font-style: italic; }
+  strong { color: #fff; font-weight: 600; }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg);
+    border: var(--card-border);
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--saffron);
+  }
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.95rem; margin-bottom: 0; color: var(--muted); }
+
+  /* QUOTE BLOCK */
+  .pull-quote {
+    border-left: 3px solid var(--saffron);
+    padding: 1.1rem 1.8rem;
+    margin: 2.2rem 0;
+    background: rgba(217,119,6,0.04);
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--text);
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    font-style: normal;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+  }
+
+  /* TIMELINE */
+  .timeline { list-style: none; position: relative; padding-left: 1.8rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--saffron);
+    opacity: 0.4;
+  }
+  .timeline li {
+    position: relative;
+    padding: 0.4rem 0 0.8rem 1rem;
+    font-size: 0.97rem;
+  }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -1.55rem;
+    top: 0.65rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--saffron);
+    border: 2px solid var(--paper);
+  }
+  .timeline li .year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--saffron);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+
+  /* BAND */
+  .band {
+    background: var(--saffron);
+    color: var(--paper);
+    padding: 2.2rem 2.5rem;
+    margin: 3rem 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  /* KICK */
+  .kick {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--saffron);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  /* COLOPHON */
+  footer {
+    border-top: 1px solid rgba(217,119,6,0.35);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.67rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+  }
+  footer .attr-line { color: var(--saffron); margin-bottom: 0.3rem; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .band { padding: 1.5rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Ramanujan</span>
+  <a href="0-who.html" class="active">Vol 0 — Who</a>
+  <a href="1-numbers.html">Vol 1 — Numbers</a>
+  <a href="2-world.html">Vol 2 — World</a>
+  <a href="3-legacy.html">Vol 3 — Legacy</a>
+</nav>
+
+<div class="hero">
+  <span class="vol-badge">Volume 0 of 4 &nbsp;·&nbsp; The Man</span>
+  <h1>Srinivasa <span>Ramanujan</span></h1>
+  <p class="subtitle">The clerk from Madras who sent God's equations to Cambridge</p>
+  <p class="dates">1887 &mdash; 1920 &nbsp;·&nbsp; Erode, Tamil Nadu &rarr; Trinity College, Cambridge</p>
+
+  <!-- ANIMATED SVG: 1729 resolving into two pairs of cubes -->
+  <div class="svg-stage" aria-label="1729 = 1³ + 12³ = 9³ + 10³ animation">
+    <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <defs>
+        <style>
+          .svgn { font-family:'Space Mono',monospace; fill:#e8e0d0; font-size:15px; }
+          .svgs { font-family:'Space Mono',monospace; fill:#d97706; font-size:13px; font-weight:700; }
+          .svgt { font-family:'Space Mono',monospace; fill:#0d9488; font-size:13px; }
+          .svgeq { font-family:'Cinzel',serif; fill:#fff; font-size:22px; font-weight:700; }
+          .fade-in-1 { animation: fadeUp 0.8s ease 0.3s both; }
+          .fade-in-2 { animation: fadeUp 0.8s ease 1.1s both; }
+          .fade-in-3 { animation: fadeUp 0.8s ease 1.9s both; }
+          .fade-in-4 { animation: fadeUp 0.8s ease 2.7s both; }
+          .fade-in-5 { animation: fadeUp 0.8s ease 3.5s both; }
+          .pulse-loop { animation: pulsate 2.8s ease-in-out 4.2s infinite; }
+          @keyframes fadeUp {
+            from { opacity:0; transform: translateY(14px); }
+            to   { opacity:1; transform: translateY(0); }
+          }
+          @keyframes pulsate {
+            0%,100% { opacity:1; }
+            50%      { opacity:0.55; }
+          }
+          .cube-line { stroke: #d97706; stroke-width:1.5; fill:none; opacity:0.6; }
+        </style>
+        <!-- Cube face path macro not needed — draw inline -->
+      </defs>
+      <!-- Background rule -->
+      <rect x="0" y="0" width="700" height="220" fill="rgba(17,13,20,0.85)" rx="6"/>
+
+      <!-- Taxi label -->
+      <text x="350" y="34" text-anchor="middle" class="svgt fade-in-1" style="font-size:11px;letter-spacing:0.15em;">THE HARDY–RAMANUJAN TAXICAB NUMBER</text>
+
+      <!-- 1729 big -->
+      <text x="350" y="82" text-anchor="middle" class="svgeq fade-in-2" style="font-size:52px;fill:#d97706;">1729</text>
+
+      <!-- First decomposition -->
+      <text x="175" y="130" text-anchor="middle" class="svgn fade-in-3">1³ + 12³</text>
+      <text x="175" y="152" text-anchor="middle" class="svgs fade-in-3">= 1 + 1728</text>
+      <text x="175" y="172" text-anchor="middle" class="svgt fade-in-3" style="font-size:11px;">= 1729 ✓</text>
+
+      <!-- Equals / AND -->
+      <text x="350" y="155" text-anchor="middle" class="svgeq fade-in-4" style="font-size:18px;fill:#a89880;">=</text>
+
+      <!-- Second decomposition -->
+      <text x="525" y="130" text-anchor="middle" class="svgn fade-in-3">9³ + 10³</text>
+      <text x="525" y="152" text-anchor="middle" class="svgs fade-in-3">= 729 + 1000</text>
+      <text x="525" y="172" text-anchor="middle" class="svgt fade-in-3" style="font-size:11px;">= 1729 ✓</text>
+
+      <!-- Bottom annotation -->
+      <text x="350" y="205" text-anchor="middle" class="svgn fade-in-5 pulse-loop"
+            style="font-size:11px;fill:#a89880;letter-spacing:0.1em;">
+        Smallest integer expressible as sum of two positive cubes in two distinct ways
+      </text>
+
+      <!-- Decorative cube wireframes -->
+      <!-- Small cube left (1³) -->
+      <g class="fade-in-3" transform="translate(60,105)">
+        <polygon points="0,0 14,0 14,14 0,14" class="cube-line" style="stroke:#0d9488;opacity:0.4;"/>
+        <polygon points="4,-5 18,-5 14,0 0,0" class="cube-line" style="stroke:#0d9488;opacity:0.3;"/>
+        <line x1="14" y1="0" x2="18" y2="-5" class="cube-line" style="stroke:#0d9488;opacity:0.3;"/>
+        <line x1="14" y1="14" x2="18" y2="9" class="cube-line" style="stroke:#0d9488;opacity:0.3;"/>
+        <line x1="18" y1="-5" x2="18" y2="9" class="cube-line" style="stroke:#0d9488;opacity:0.3;"/>
+      </g>
+      <!-- Large cube (12³) -->
+      <g class="fade-in-3" transform="translate(78,90)">
+        <polygon points="0,0 26,0 26,26 0,26" class="cube-line" style="stroke:#d97706;opacity:0.35;"/>
+        <polygon points="7,-9 33,-9 26,0 0,0" class="cube-line" style="stroke:#d97706;opacity:0.25;"/>
+        <line x1="26" y1="0" x2="33" y2="-9" class="cube-line" style="stroke:#d97706;opacity:0.25;"/>
+        <line x1="26" y1="26" x2="33" y2="17" class="cube-line" style="stroke:#d97706;opacity:0.25;"/>
+        <line x1="33" y1="-9" x2="33" y2="17" class="cube-line" style="stroke:#d97706;opacity:0.25;"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <!-- SECTION 1: ORIGINS -->
+  <section id="origins">
+    <span class="kick">I. Origins</span>
+    <h2>Born in Erode, Tamil Nadu</h2>
+    <p>
+      On the twenty-second of December, 1887, in the town of Erode in the Tanjore district of
+      Tamil Nadu — then a corner of British India — a boy was born who would, within three decades,
+      produce mathematical work so original and so dense with implication that it is still being
+      fully unpacked a century later. His name was <strong>Srinivasa Ramanujan Iyengar</strong>.
+    </p>
+    <p>
+      His family were Brahmin — the priestly, learned caste — but poor. His father, Kuppuswamy
+      Srinivasa Iyengar, worked as a clerk for a cloth merchant in Kumbakonam, sixty miles from Erode.
+      His mother, Komalatammal, was a strong-willed woman who sang devotional songs at the local
+      Namagiri temple. Ramanujan would grow up understanding himself in relation to that goddess —
+      Namagiri Thayar, consort of Narasimha, dwelling in the temple at Namakkal — as the source,
+      the channel, the proof-reader of his mathematics.
+    </p>
+    <p>
+      Kumbakonam was a town of temples, rivers, and Brahmin learning. Ramanujan attended the
+      Town High School, where by age twelve he had mastered the trigonometry in Loney's
+      <em>Trigonometry</em>, a standard university text. A college student boarding with the family
+      lent him Carr's <em>Synopsis of Pure Mathematics</em> — a dense Victorian compilation of
+      some 6,000 theorems stated without proof. Ramanujan worked through it, supplying his own proofs,
+      and then began generating results far beyond its scope.
+    </p>
+
+    <h3>The Goddess Namagiri</h3>
+    <p>
+      Ramanujan's relationship to the divine was not metaphorical. He reported that theorems came
+      to him in dreams — specifically, that Namagiri would write equations on his tongue, or hold
+      a scroll of formulae before him in the night. He tested results by computation and intuition,
+      trusting the source.
+    </p>
+    <div class="pull-quote">
+      "An equation for me has no meaning unless it represents a thought of God."
+      <cite>— Srinivasa Ramanujan</cite>
+    </div>
+    <p>
+      This is not the statement of a mystic retreating from rigor. Ramanujan computed with
+      ferocious precision. His results — even the ones he could not prove in Western-formal terms —
+      were nearly always correct. The goddess, if we may accept the metaphor on his own terms, had
+      impeccable taste in mathematics.
+    </p>
+  </section>
+
+  <!-- SECTION 2: FAILURE AND THE CLERK'S DESK -->
+  <section id="failure">
+    <span class="kick">II. Failure &amp; the Clerk's Desk</span>
+    <h2>The Man Who Failed Everything Except Mathematics</h2>
+    <p>
+      In 1903, Ramanujan won a scholarship to the Government College at Kumbakonam. He lost it the
+      following year. He had neglected every subject but mathematics — failing physiology, English,
+      Sanskrit. He tried again at Pachaiyappa's College in Madras in 1906. He failed again.
+      He never completed a formal university degree.
+    </p>
+    <p>
+      Between 1904 and 1912, Ramanujan lived in poverty on the margins of Madras. He was married
+      in 1909 to <strong>Janaki Ammal</strong>, then nine years old (a common arrangement in the
+      period; she moved into his household at twelve). He tutored students for small fees. He was
+      thin, often ill, and filled notebooks — large paper notebooks — with theorems that no
+      mathematician in India could fully evaluate.
+    </p>
+    <p>
+      He sent work to two established mathematicians in England: both failed to recognize what
+      they were reading and did not respond substantively. His results looked, to eyes trained in
+      conventional mathematics, either wrong, or obvious, or impossible to evaluate.
+    </p>
+    <h3>The Madras Port Trust</h3>
+    <p>
+      In 1912, through the intervention of friends, Ramanujan secured a position as a clerk —
+      Class III, Grade IV — at the <strong>Madras Port Trust</strong>, earning twenty rupees a
+      month. His supervisor, S. Narayana Iyer, recognized that the man filing accounts was doing
+      something extraordinary in his spare hours. The chairman of the Port Trust, Sir Francis
+      Spring, encouraged him. He also began corresponding with members of the Indian Mathematical
+      Society. Two of those members suggested he write to mathematicians at Cambridge.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1887</div>
+        <h4>Born in Erode</h4>
+        <p>22 December, Tamil Nadu. Brahmin family of modest means. Father a cloth merchant's clerk.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1900</div>
+        <h4>Carr's Synopsis</h4>
+        <p>Receives Carr's <em>Synopsis of Pure Mathematics</em> — 6,165 theorems stated without proof. Works through them. Outgrows them.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1904–1912</div>
+        <h4>Failed Exams, Filled Notebooks</h4>
+        <p>Twice fails college — fails everything except mathematics. Survives on tutoring fees and family help.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1912</div>
+        <h4>The Port Trust Clerk</h4>
+        <p>Class III, Grade IV. Twenty rupees/month. Fills the margins of ledgers with theorems. Supervisor urges him to write to Cambridge.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE LETTER TO HARDY -->
+  <section id="letter">
+    <span class="kick">III. The Letter</span>
+    <h2>January 16, 1913 — The Most Important Letter in Mathematical History</h2>
+    <p>
+      On the sixteenth of January, 1913, <strong>G. H. Hardy</strong> — Fellow of Trinity College,
+      Cambridge, already one of the leading mathematicians in the world — received a letter from
+      an unknown clerk in Madras. The handwriting was careful. The English was grammatically
+      correct but formal in the way of colonial self-presentation. The mathematics was extraordinary.
+    </p>
+    <p>
+      The letter contained eleven pages and approximately <strong>120 theorems</strong>: results
+      in infinite series, continued fractions, integrals, prime number theory, hypergeometric
+      series. Many were known — Ramanujan had no way of knowing what had or had not been proved
+      in European mathematics, because he had almost no access to current journals. But many were
+      entirely new. And some, Hardy later wrote, "could only be written down by a mathematician
+      of the highest class."
+    </p>
+    <div class="pull-quote">
+      "I had never seen anything in the least like them before. A single look at them is enough
+      to show that they could only be written down by a mathematician of the highest class. They
+      must be true because, if they were not true, no one would have had the imagination to
+      invent them."
+      <cite>— G. H. Hardy, on first reading Ramanujan's letter</cite>
+    </div>
+    <p>
+      Hardy showed the letter to his collaborator J. E. Littlewood. They spent the evening working
+      through the results. Hardy concluded: this man is either a fraud with access to advanced
+      results he has not credited, or — the more likely explanation, as the results were too
+      consistent and too strange to be stolen — a genuine genius working in isolation.
+    </p>
+    <p>
+      Hardy replied within days. He asked for proofs. He began the bureaucratic and personal work
+      of bringing Ramanujan to Cambridge.
+    </p>
+
+    <h3>What Was in the Letter</h3>
+    <p>
+      The 120 theorems Ramanujan included covered an enormous range. Among them: results on
+      infinite series converging to values expressible in terms of pi; continued fractions of
+      unusual beauty; results on hypergeometric functions; identities involving what would later
+      be understood as mock theta functions; and results on the distribution of primes — some
+      correct, some approximately correct, some subtly wrong in ways that revealed the boundaries
+      of self-taught intuition touching the edges of the Riemann hypothesis, which Ramanujan
+      had not seen and did not know existed.
+    </p>
+    <p>
+      Hardy: it was the most unusual letter he ever received in forty years at Cambridge.
+    </p>
+  </section>
+
+  <!-- SECTION 4: CAMBRIDGE -->
+  <section id="cambridge">
+    <span class="kick">IV. Cambridge</span>
+    <h2>Trinity College, 1914–1919</h2>
+    <p>
+      There was a complication: Ramanujan was a Brahmin. Orthodox Brahmin practice prohibited
+      crossing the ocean — the <em>kala pani</em>, the black water. He declined Hardy's first
+      invitation. It was his mother, Komalatammal, who eventually resolved the question — she
+      reported a dream in which Namagiri commanded her to release her son to his destiny. In April
+      1914, Ramanujan sailed for England on the SS Nevasa.
+    </p>
+    <p>
+      Cambridge was cold, grey, full of meat Ramanujan would not eat. As an orthodox Brahmin
+      vegetarian, he cooked his own food in his rooms, increasingly inadequately as the war
+      wore on and vegetables became scarce and expensive. The English winter was brutal by
+      Madras standards. He was far from his wife, his mother, the temples he had grown up near.
+    </p>
+    <p>
+      He worked. For five years — 1914 through 1919 — he and Hardy collaborated in one of the
+      most remarkable partnerships in intellectual history. Hardy provided the formal framework,
+      the proofs, the connection to the European literature. Ramanujan provided the results — the
+      raw, inexplicable, extraordinary identities that Hardy then had to verify and prove.
+    </p>
+
+    <h3>The Partnership</h3>
+    <p>
+      Hardy described the collaboration carefully. Ramanujan could not always prove his results
+      in the rigorous European sense. He worked by intuition, by a species of mathematical
+      perception that Hardy found impossible to analyze. But he was almost always right — and
+      when wrong, wrong in instructive ways, at the edge of very deep water. Hardy's role was
+      in part to teach Ramanujan the architecture of proof, and in part to follow him into
+      territory Hardy could not have found alone.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1914</div>
+        <h4>Arrival at Trinity</h4>
+        <p>Ramanujan arrives April 1914. WWI begins four months later. Cambridge empties of students; the collaboration intensifies.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1916</div>
+        <h4>Bachelor of Science</h4>
+        <p>Cambridge awards Ramanujan a B.Sc. by research — the nearest equivalent to a degree available to him without completing coursework.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1918</div>
+        <h4>Fellow of the Royal Society</h4>
+        <p>Elected FRS on 2 May 1918 — the first Indian to receive the honor. Also elected Fellow of Trinity College.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1918–1919</div>
+        <h4>Illness</h4>
+        <p>Tuberculosis (or possibly hepatic amoebiasis — still disputed). Sanatorium stays. Continued working from his sickbed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: 1729 -->
+  <section id="taxicab">
+    <span class="kick">V. The Taxi</span>
+    <h2>The Taxicab and 1729</h2>
+    <p>
+      The most famous anecdote in the history of mathematics involves a London taxicab.
+    </p>
+    <p>
+      Hardy visited Ramanujan in a nursing home in Putney. He came by taxi, and making
+      conversation told Ramanujan the cab number — <strong>1729</strong> — remarking that it
+      seemed to him a rather dull number, and he hoped it was not an unfavorable omen.
+    </p>
+    <div class="pull-quote">
+      "No, Hardy! No, Hardy! It is a very interesting number. It is the smallest number
+      expressible as the sum of two cubes in two different ways."
+      <cite>— Srinivasa Ramanujan, from his sickbed</cite>
+    </div>
+    <p>
+      1³ + 12³ = 1 + 1728 = <strong>1729</strong>.
+      <br>9³ + 10³ = 729 + 1000 = <strong>1729</strong>.
+    </p>
+    <p>
+      Hardy's response, recalled years later: <em>"I realized then that I was talking to the
+      greatest mathematical genius I had ever known, and perhaps the greatest of our time."</em>
+      That a man dying of tuberculosis in a London nursing home should hold in immediate recall
+      the number-theoretic properties of arbitrary four-digit integers says something essential
+      about what Ramanujan's mind was.
+    </p>
+  </section>
+
+  <!-- SECTION 6: RETURN AND DEATH -->
+  <section id="return">
+    <span class="kick">VI. Return and End</span>
+    <h2>The Return to India, and Death at Thirty-Two</h2>
+    <p>
+      Ramanujan returned to India in April 1919. He was gravely ill. The diagnosis most often
+      cited at the time was tuberculosis; modern scholars have suggested hepatic amoebiasis,
+      complicated by severe vitamin deficiencies from years of inadequate vegetarian diet in
+      wartime England. He was installed in a house in Madras. He continued working.
+    </p>
+    <p>
+      In his final year, isolated, increasingly weakened, knowing he was dying, Ramanujan
+      produced what would be recognized — sixty years later — as his most original work:
+      the <strong>mock theta functions</strong>. He described seventeen of them in a letter to
+      Hardy written in January 1920, three months before his death. He did not explain what they
+      were. He gave formulae. It would take mathematicians until 2002 to fully understand them.
+    </p>
+    <div class="pull-quote">
+      "Before I leave England, I would like to write down certain new functions I have discovered
+      that I have called mock theta functions... I have not tried to prove these results yet."
+      <cite>— Ramanujan, letter to Hardy, January 1920</cite>
+    </div>
+    <p>
+      <strong>Srinivasa Ramanujan died on 26 April 1920</strong>, at his home in Chetput, Madras.
+      He was thirty-two years old. He left behind three large notebooks of theorems —
+      the "Ramanujan Notebooks" — and, discovered in a box at Trinity College in 1976,
+      what came to be called the "Lost Notebook": 138 pages of mathematics, produced in his
+      final year, largely dealing with mock theta functions.
+    </p>
+    <h3>What He Left</h3>
+    <p>
+      Three thousand individual formulae and theorems across the notebooks. A letter containing
+      the mock theta functions. A wife, Janaki, who outlived him by seventy-four years, dying
+      in 1994. A name inscribed on the Fellow's roll of the Royal Society. And a question that
+      Hardy articulated and that mathematics has not quite stopped asking: what would Ramanujan
+      have done had he lived to sixty?
+    </p>
+    <p>
+      Hardy's answer was his own: <em>"He would have been the greatest mathematician of the
+      century."</em>
+    </p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="kick">Timeline</span>
+    <h2>A Life in Dates</h2>
+    <ul class="timeline">
+      <li><span class="year">22 Dec 1887</span>Born in Erode, Tamil Nadu. Mother: Komalatammal. Father: Kuppuswamy Srinivasa Iyengar.</li>
+      <li><span class="year">1900</span>Mastered Loney's <em>Trigonometry</em> by age 12. Introduced to Carr's <em>Synopsis</em>.</li>
+      <li><span class="year">1903</span>Won scholarship to Government College, Kumbakonam. Lost it the next year — failed every subject but mathematics.</li>
+      <li><span class="year">1906</span>Attempted Pachaiyappa's College, Madras. Failed again.</li>
+      <li><span class="year">1909</span>Married Janaki Ammal, age 9, in an arranged marriage.</li>
+      <li><span class="year">1910–1911</span>Began publishing small results in the <em>Journal of the Indian Mathematical Society</em>. Work noticed by Indian mathematicians who encourage him to write to Cambridge.</li>
+      <li><span class="year">1912</span>Appointed Class III clerk, Madras Port Trust. 20 rupees/month.</li>
+      <li><span class="year">16 Jan 1913</span>Posts letter to G. H. Hardy, Cambridge. 120 theorems enclosed. Hardy reads it that evening.</li>
+      <li><span class="year">Apr 1914</span>Sails for England on the SS Nevasa. Arrives Trinity College, Cambridge.</li>
+      <li><span class="year">Aug 1914</span>World War I begins. Cambridge depopulates. Collaboration with Hardy intensifies.</li>
+      <li><span class="year">1916</span>Awarded B.Sc. by research by Cambridge University.</li>
+      <li><span class="year">2 May 1918</span>Elected Fellow of the Royal Society. First Indian FRS in the mathematical sciences.</li>
+      <li><span class="year">Oct 1918</span>Elected Fellow of Trinity College, Cambridge.</li>
+      <li><span class="year">Jan 1920</span>From his sickbed, writes to Hardy describing 17 new "mock theta functions."</li>
+      <li><span class="year">26 Apr 1920</span>Dies at Chetput, Madras. Age 32.</li>
+      <li><span class="year">1976</span>George Andrews discovers the "Lost Notebook" in the Wren Library, Trinity College.</li>
+    </ul>
+  </section>
+
+  <div class="band">
+    "Every positive integer is one of Ramanujan's personal friends."<br>
+    <span style="font-size:0.75em;font-weight:500;opacity:0.75;">— J. E. Littlewood</span>
+  </div>
+
+  <!-- NAV FORWARD -->
+  <section id="forward" style="text-align:center;padding-top:1rem;">
+    <p style="font-family:'Cinzel',serif;color:var(--muted);font-size:0.9rem;letter-spacing:0.08em;">CONTINUE THE SERIES</p>
+    <div class="card-grid" style="max-width:600px;margin:1.2rem auto 0;">
+      <a href="1-numbers.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 1</div>
+          <h4>The Numbers</h4>
+          <p>1729. 1/π. Partitions. Mock theta functions. The actual mathematics.</p>
+        </div>
+      </a>
+      <a href="2-world.html" style="text-decoration:none;">
+        <div class="card">
+          <div class="card-label">Volume 2</div>
+          <h4>His World</h4>
+          <p>Colonial Madras. Cambridge at war. The Brahmin tradition. The Royal Society.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="attr-line">ROOT0-ATTRIBUTION-v1.0</div>
+  <div>David Lee Wise / ROOT0 / TriPod LLC &nbsp;·&nbsp; CC-BY-ND-4.0</div>
+  <div style="margin-top:0.4rem;opacity:0.6;">
+    Srinivasa Ramanujan Series &nbsp;·&nbsp; Volume 0: Who He Was &nbsp;·&nbsp;
+    Sources: Hardy, <em>Ramanujan</em> (1940); Kanigel, <em>The Man Who Knew Infinity</em> (1991);
+    Berndt &amp; Rankin, <em>Ramanujan: Letters and Commentary</em> (1995)
+  </div>
+</footer>
+
+</body>
+</html>

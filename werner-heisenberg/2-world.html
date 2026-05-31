@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werner Heisenberg — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060a0a;
+    --teal: #0f766e;
+    --amber: #d97706;
+    --text: #d4e0dc;
+    --muted: #5a7a74;
+    --border: #0d2422;
+    --card-bg: #080f0f;
+    --danger: #7f1d1d;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,10,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--amber);
+    border-color: var(--teal);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #0d1a12 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.65;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 820px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(15,118,110,0.4);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--teal);
+    color: #e0f2f0;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--amber);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--amber); font-style: italic; }
+  /* TWO-COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+  /* PLACE CARDS */
+  .place-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--teal);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .place-card:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 6px 6px 0 var(--teal);
+  }
+  .place-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .place-card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .place-card p { font-size: 0.92rem; opacity: 0.86; margin: 0; }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 6px 6px 0 var(--teal);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--teal);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.55;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DANGER BOX */
+  .danger-box {
+    background: linear-gradient(135deg, #1a0808 0%, #0e0505 100%);
+    border: 1px solid #3b0e0e;
+    border-left: 4px solid var(--amber);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+  }
+  .danger-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .danger-box h3 { margin-top: 0; color: #fca5a5; }
+  /* TRANSCRIPT BOX */
+  .transcript {
+    background: #050d0b;
+    border: 1px solid var(--teal);
+    padding: 2rem;
+    margin: 2.5rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .transcript-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .transcript .speaker { color: var(--amber); }
+  .colophon {
+    border-top: 1px solid var(--border);
+    margin-top: 6rem;
+    padding-top: 2.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+    text-align: center;
+  }
+  .colophon a { color: var(--teal); text-decoration: none; }
+  @media (max-width: 600px) {
+    main { padding: 2.5rem 1.25rem; }
+    nav { padding: 0.6rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Heisenberg</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol 0 · Who</a>
+    <a href="1-uncertainty.html">Vol 1 · Uncertainty</a>
+    <a href="2-world.html" class="active">Vol 2 · World</a>
+    <a href="3-legacy.html">Vol 3 · Legacy</a>
+  </div>
+</nav>
+
+<!-- HERO with animated SVG: interconnected nodes (physics community) -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 1200 540" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="worldGrad" cx="50%" cy="55%" r="58%">
+        <stop offset="0%" stop-color="#0f766e" stop-opacity="0.14"/>
+        <stop offset="100%" stop-color="#060a0a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="540" fill="url(#worldGrad)"/>
+    <!-- Network of cities/physics centers -->
+    <!-- Munich -->
+    <circle cx="480" cy="300" r="8" fill="#d97706" opacity="0.8"/>
+    <text x="462" y="325" font-family="monospace" font-size="9" fill="#5a7a74">Munich</text>
+    <!-- Göttingen -->
+    <circle cx="560" cy="200" r="8" fill="#0f766e" opacity="0.8"/>
+    <text x="538" y="190" font-family="monospace" font-size="9" fill="#5a7a74">Göttingen</text>
+    <!-- Copenhagen -->
+    <circle cx="680" cy="160" r="10" fill="#0f766e" opacity="0.9"/>
+    <text x="658" y="150" font-family="monospace" font-size="9" fill="#5a7a74">Copenhagen</text>
+    <!-- Leipzig -->
+    <circle cx="580" cy="290" r="6" fill="#d97706" opacity="0.6"/>
+    <text x="558" y="308" font-family="monospace" font-size="9" fill="#5a7a74">Leipzig</text>
+    <!-- Berlin -->
+    <circle cx="650" cy="250" r="6" fill="#d97706" opacity="0.5"/>
+    <text x="628" y="268" font-family="monospace" font-size="9" fill="#5a7a74">Berlin</text>
+    <!-- Helgoland -->
+    <circle cx="520" cy="130" r="5" fill="#fff" opacity="0.6"/>
+    <text x="498" y="120" font-family="monospace" font-size="9" fill="#d97706">Helgoland</text>
+    <!-- Farm Hall -->
+    <circle cx="400" cy="200" r="5" fill="#fca5a5" opacity="0.6"/>
+    <text x="378" y="190" font-family="monospace" font-size="9" fill="#5a7a74">Farm Hall</text>
+    <!-- Connection lines -->
+    <line x1="480" y1="300" x2="560" y2="200" stroke="#0f766e" stroke-width="1" opacity="0.3">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="560" y1="200" x2="680" y2="160" stroke="#0f766e" stroke-width="1" opacity="0.3">
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <line x1="480" y1="300" x2="520" y2="130" stroke="#d97706" stroke-width="1" opacity="0.2" stroke-dasharray="3,3">
+      <animate attributeName="opacity" values="0.1;0.4;0.1" dur="5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="560" y1="200" x2="580" y2="290" stroke="#0f766e" stroke-width="1" opacity="0.2">
+      <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="580" y1="290" x2="650" y2="250" stroke="#0f766e" stroke-width="0.5" opacity="0.2"/>
+    <line x1="680" y1="160" x2="650" y2="250" stroke="#0f766e" stroke-width="0.5" opacity="0.2"/>
+    <!-- Farm Hall separate -->
+    <line x1="400" y1="200" x2="480" y2="300" stroke="#fca5a5" stroke-width="1" opacity="0.15" stroke-dasharray="2,4"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Volume 2 &mdash; His World</span>
+    <h1 class="hero-title">The World He Moved Through</h1>
+    <p class="hero-subtitle">Weimar · Munich · Göttingen · Copenhagen · The Reich · Farm Hall</p>
+    <p class="hero-lead">The physics did not happen in a vacuum. It happened in Weimar Germany, in occupied Europe, in the shadow of ideological war — and in the most important intellectual friendship in the history of physics.</p>
+  </div>
+</div>
+
+<div class="band">Wandervogel &middot; Sommerfeld &middot; Born &middot; Bohr &middot; Deutsche Physik &middot; 1941 Copenhagen &middot; Farm Hall</div>
+
+<main>
+
+  <!-- WEIMAR GERMANY -->
+  <section>
+    <span class="section-label">The Formation</span>
+    <h2>Weimar Germany and the Wandervogel</h2>
+    <p>Heisenberg's youth coincided with the catastrophic collapse of the German Imperial order and the turbulent, brilliant, desperate years of the Weimar Republic. He was seventeen when the war ended, eighteen during the revolution, nineteen during the Freikorps suppression of the Bavarian Soviet Republic. The streets of Munich were the scene of political violence that would eventually produce, among other things, Adolf Hitler. The certainties of the Wilhelmine world had dissolved. The question of what — if anything — remained was both a political question and, for those with the right kind of mind, a scientific one.</p>
+    <p>Into this context came the <strong>Wandervogel</strong> — literally "migratory bird" — the German youth movement that arose in the early twentieth century as a reaction against industrial urban civilization. The Wandervogel movement emphasized hiking, camping, folk music, German romantic nationalism, the communion of youth with the natural world, and a vague but intense sense of being part of something beyond the individual self. It was not fascist — indeed many of its members were explicitly antifascist — but its romantic nationalism was easily exploited by those who came later.</p>
+    <p>Heisenberg was deeply shaped by it. Throughout his life he organized hiking parties, led expeditions into the Bavarian Alps, and considered physical engagement with the natural world to be inseparable from intellectual life. This was not mere recreation. For Heisenberg, the mountain-top was where problems were solved, where the mind clarified itself. The walk on Helgoland where he climbed rocks at sunrise after deriving quantum mechanics was entirely in character.</p>
+
+    <div class="pull-quote">
+      <blockquote>"When the old forms are broken, what remains? The task of our generation was to find out."</blockquote>
+      <cite>— Heisenberg, reflecting on the post-WWI years, Physics and Beyond, 1971</cite>
+    </div>
+
+    <h3>The Munich of Sommerfeld</h3>
+    <p>The Munich that Heisenberg entered in 1920 was, despite all the political turmoil, the intellectual center of German theoretical physics. Arnold Sommerfeld's seminar was producing a remarkable cohort: Wolfgang Pauli had just left for Hamburg, Peter Debye was nearby, and the old quantum theory was at its productive peak even as its foundations were visibly crumbling. Sommerfeld ran the seminar as a combination of rigorous instruction and open frontier exploration. The atmosphere, by all accounts, was one of excitement on the edge of catastrophe — everyone knew the old theory was wrong; no one knew what came next.</p>
+  </section>
+
+  <!-- THE THREE PLACES -->
+  <section>
+    <span class="section-label">The Physics Communities</span>
+    <h2>Three Centers, Three Influences</h2>
+
+    <div class="card-grid">
+      <div class="place-card">
+        <span class="place-label">Munich, 1920–1923</span>
+        <h4>Sommerfeld's Seminar</h4>
+        <p>Physical intuition. The gift of recognizing which approximation to make, which symmetry to exploit, which term in the expansion matters. Sommerfeld was the great practitioner of the old quantum theory — Heisenberg learned from him how to get physics done, not just how to philosophize about it. He also learned mathematical technique: Sommerfeld's seminar was technically demanding in a way that Bohr's group never quite was.</p>
+      </div>
+      <div class="place-card">
+        <span class="place-label">Göttingen, 1922–1925</span>
+        <h4>Born and the Mathematics</h4>
+        <p>Max Born brought algebraic rigor. He was more cautious, more mathematically demanding, and less willing to tolerate handwaving than Sommerfeld or Bohr. When Heisenberg brought his Helgoland paper to Born, it was Born who recognized that Heisenberg's tables were matrices and who, with Jordan, rapidly developed the full mathematical apparatus of matrix mechanics. Born gave Heisenberg's insights mathematical skeleton.</p>
+      </div>
+      <div class="place-card">
+        <span class="place-label">Copenhagen, 1924–1927</span>
+        <h4>Bohr and the Questions</h4>
+        <p>The most important intellectual influence. Bohr taught Heisenberg to never stop asking what the physics actually means — to be suspicious of any mathematical formalism that has not been physically interrogated. The long conversations in Copenhagen, the walks, the arguments, the forced rethinking of the most basic concepts: all of this produced the uncertainty principle and the Copenhagen interpretation. Without Bohr, the uncertainty principle might have been a mathematical result without a philosophical framework.</p>
+      </div>
+    </div>
+
+    <h3>The Göttingen Sprint: 1925–1927</h3>
+    <p>The period from June 1925 (Helgoland) to March 1927 (the uncertainty paper) was perhaps the most compressed and productive two years in the history of theoretical physics. In this interval: Heisenberg's matrix mechanics paper (July 1925); the Born–Jordan paper elaborating the mathematics (September 1925); the Dreimännerarbeit (November 1925); Dirac's independent formulation using q-numbers (November 1925); Schrödinger's wave mechanics (January–June 1926); Schrödinger's proof of equivalence of wave and matrix mechanics; Born's probabilistic interpretation of the wave function (June 1926); Heisenberg's uncertainty principle (March 1927); Bohr's complementarity principle (September 1927). The edifice of quantum mechanics was built essentially completely in 24 months, by a group of physicists most of whom were under 30 years old.</p>
+  </section>
+
+  <!-- BOHR RELATIONSHIP -->
+  <section>
+    <span class="section-label">The Central Relationship</span>
+    <h2>Bohr: The Most Important Intellectual Friendship in Physics</h2>
+    <p>The relationship between Niels Bohr and Werner Heisenberg was, for two decades, the most productive and the most consequential in physics. It was also, eventually, one of the most painful ruptures in the history of science.</p>
+    <p>They met in 1922. Bohr was 37 and already the most important figure in theoretical physics; Heisenberg was 20 and unknown. Bohr invited Heisenberg for a walk. Three hours later, Heisenberg understood what kind of physics he wanted to do. The pattern held throughout the 1920s: Bohr and Heisenberg would walk, argue, return, argue more. Neither would yield easily. The arguments were the work.</p>
+    <p>Their most famous disagreement was over the uncertainty principle itself. When Heisenberg submitted his 1927 paper, he attributed the uncertainty to measurement disturbance — the gamma-ray microscope thought experiment. Bohr objected strenuously: this picture was not quite right, and more importantly it was not deep enough. The uncertainty was not about disturbance; it was about the wave-particle duality of quantum objects. They argued intensely for weeks. Heisenberg, in the published paper, added a note acknowledging that Bohr had pointed out an error in his original derivation. This kind of productive correction was characteristic of how they worked.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Bohr's influence on my thinking has been stronger than anyone else's. Our arguments were part of me; they were where I found out what I thought."</blockquote>
+      <cite>— Heisenberg, Physics and Beyond, 1971</cite>
+    </div>
+
+    <h3>Copenhagen: The Institute as Home</h3>
+    <p>Bohr's Institute for Theoretical Physics in Copenhagen functioned during the 1920s and 1930s as the world capital of quantum mechanics — the place where the best young physicists came to work, argue, and push each other past what they had previously thought possible. Heisenberg spent extended periods there in 1924, 1925, 1926, and 1927. He was, by common consensus, the most gifted of the younger generation that Bohr gathered around him.</p>
+    <p>The atmosphere at the Institute was playful as well as rigorous. Bohr famously loved Western cowboy films; his office hosted debates about quantum philosophy that lasted until the small hours. The combination of intellectual intensity and human warmth was not accidental — Bohr cultivated it deliberately, believing that physics required both. Heisenberg absorbed this model and tried to replicate it later at Leipzig and Munich, with considerable success.</p>
+  </section>
+
+  <!-- NAZI GERMANY -->
+  <section>
+    <span class="section-label">Dark Years</span>
+    <h2>Nazi Germany and the Deutsche Physik Attack</h2>
+    <p>When Hitler came to power in January 1933, German physics was immediately disrupted. Jewish physicists — Einstein, Born, Franck, and dozens of others — were dismissed from their positions or fled. The intellectual world that had produced quantum mechanics was shattered within months.</p>
+    <p>Heisenberg was not Jewish. He was not immediately threatened. But he was almost immediately attacked.</p>
+
+    <div class="danger-box">
+      <span class="danger-label">The Attack</span>
+      <h3>"White Jew" — Lenard and Stark vs. Heisenberg</h3>
+      <p>Philipp Lenard (Nobel 1905) and Johannes Stark (Nobel 1919) were distinguished experimental physicists who had become committed Nazis and the intellectual architects of a movement called <em>Deutsche Physik</em> — "German Physics." Their central claim was that theoretical physics — particularly relativity and quantum mechanics — was "Jewish physics," abstract, un-German, disconnected from reality and experiment. They demanded that it be replaced by a physics rooted in direct physical intuition and German racial character.</p>
+      <p>In 1937, the SS publication Das Schwarze Korps ran an article calling Heisenberg a "white Jew" — a German who taught and defended Jewish physics. This was not merely a professional attack. In 1937, being called a "white Jew" was a genuine threat to one's safety. Heisenberg's mother contacted the mother of Heinrich Himmler, SS chief and one of the architects of the Holocaust, with whom she was personally acquainted. Himmler investigated and eventually ordered the SS to stop the attacks, issuing a personal letter to Heisenberg saying that he was not to be harassed further. But Himmler also told Heisenberg privately that while he would be protected, he should separate the science from the scientists — should teach the results of relativity and quantum theory without attributing them to Einstein or other Jewish physicists.</p>
+      <p>Heisenberg did not comply with this instruction. He continued to cite Einstein, Bohr, Born, and the other architects of modern physics by name.</p>
+    </div>
+
+    <h3>The Decision to Stay</h3>
+    <p>Many German physicists — particularly those who were Jewish or married to Jews — had no choice but to flee. But even among those who could have left, many did. Heisenberg chose to remain, and made the choice explicitly and deliberately. His reasons, as he articulated them at the time and in retrospect, were several:</p>
+    <p>He felt a responsibility to German science and German culture. German physics had reached its peak in the 1920s precisely because of the institutional infrastructure — the universities, the seminars, the funding structures — that had been built over generations. If all those capable of doing so fled, that infrastructure would collapse, and postwar Germany would have nothing. Someone had to stay and preserve what could be preserved. Heisenberg believed, or told himself, that he was that someone.</p>
+    <p>He also genuinely loved Germany — not the Nazi Germany of 1933, but the Germany of Goethe and Bach and Gauss, the Germany of the Wandervogel and the Bavarian Alps. Leaving felt like abandonment of everything that had made him who he was.</p>
+    <p>Many of his colleagues — particularly those who had fled — never entirely forgave him for this choice. Born, from exile in Edinburgh, felt the bitterness keenly. The friendship between Heisenberg and Born, close throughout the 1920s, never recovered.</p>
+  </section>
+
+  <!-- 1941 COPENHAGEN -->
+  <section>
+    <span class="section-label">September 1941</span>
+    <h2>The Copenhagen Meeting: What Was Said?</h2>
+    <p>In September 1941, Werner Heisenberg traveled from Berlin to occupied Copenhagen to attend a conference on astrophysics organized under the auspices of the German occupation authorities. He requested a private meeting with Niels Bohr.</p>
+    <p>Copenhagen was by then under German occupation. Bohr, whose mother was Jewish, was in a precarious position. He was living in Denmark under German surveillance and had chosen to stay, as Heisenberg had chosen to stay in Germany — but for different reasons, under very different circumstances. The meeting between Heisenberg and Bohr, in the garden of Bohr's house at the Carlsberg Honorary Residence, lasted perhaps an hour. No record of what was said was made at the time. What followed determined the course of the most consequential dispute in scientific history.</p>
+    <p>Bohr came away from the meeting shaken, cold, and angry. He later told colleagues that Heisenberg had seemed to imply that Germany would win the war, that atomic weapons were possible, and that physicists on both sides should coordinate on nuclear matters. The suggestion — if that is what it was — appeared to Bohr to be either an attempt to extract information about what the Allies were doing, or an attempt to enlist Bohr in some scheme that could only benefit Nazi Germany.</p>
+    <p>Heisenberg's account was entirely different. He claimed to have told Bohr that physicists were involved in weapons work on both sides — which was true — and that this raised profound moral questions — which was also true — and that he, Heisenberg, was doing his utmost to ensure that Germany did not build a bomb. He wanted Bohr's advice, and possibly his moral authorization.</p>
+
+    <h3>The Bohr Letters</h3>
+    <p>In 2002, the Niels Bohr Archive released a collection of letters that Bohr had written to Heisenberg after the war — letters that he had never sent, drafted and redrafted over years as he struggled to respond to Heisenberg's published account of the meeting. The letters are searing. Bohr rejects Heisenberg's version completely. He writes that Heisenberg did not say he was trying to prevent the bomb; he said, or implied, that Germany expected to win the war and that an atomic bomb was being developed. Bohr left the meeting believing that Germany was seriously pursuing a weapon and that Heisenberg was, one way or another, a representative of that effort.</p>
+    <p>The unsent letters are not decisive. Bohr was writing them decades later, under the influence of Heisenberg's published — and, from Bohr's perspective, deeply misleading — account. Memory is reconstructive. But they shift the balance of evidence.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I think that I must have been under a complete misapprehension as to the purpose of your visit, and that you had no intention of speaking to me about bomb work."</blockquote>
+      <cite>— Niels Bohr, unsent letter to Heisenberg, written ca. 1957, released 2002</cite>
+    </div>
+
+    <h3>What Can Be Said with Confidence</h3>
+    <p>Whatever Heisenberg intended, Bohr heard something that convinced him Germany was seriously pursuing a bomb and that Heisenberg was part of that effort. Bohr left for Britain in 1943 and contributed to the Allied bomb program. The meeting destroyed, permanently, the most important friendship in Heisenberg's life. The two men met briefly after the war, but the warmth was gone. The intellectual companionship that had produced quantum mechanics could not survive 1941.</p>
+  </section>
+
+  <!-- GERMAN NUCLEAR PROGRAM -->
+  <section>
+    <span class="section-label">Uranverein</span>
+    <h2>The German Nuclear Program</h2>
+    <p>Germany's nuclear weapons program — the <em>Uranverein</em> (Uranium Club) — began in September 1939, within days of the invasion of Poland. Heisenberg was one of the first physicists called to Berlin to assess the military potential of nuclear fission. He rapidly became the program's leading theoretical physicist.</p>
+    <p>By late 1939 and early 1940, Heisenberg had made two assessments that would shape everything that followed. First, he correctly determined that natural uranium could sustain a chain reaction in a moderator (heavy water), producing a nuclear reactor. Second, he addressed the question of a bomb — and here his calculations went wrong, or were made to go wrong, or were deliberately set aside. He arrived at a critical mass figure for a bomb that was many times too large.</p>
+    <p>The correct critical mass for a uranium-235 bomb is on the order of 50 kilograms. Heisenberg's estimate was in the range of several tons. This difference made the difference between "this is theoretically possible with a major industrial effort" and "this would require a quantity of material utterly beyond German industrial capacity." The German program therefore focused on reactors rather than weapons — a program that, as we now know, also failed to produce a working reactor before the war ended.</p>
+
+    <h3>Why the Error?</h3>
+    <p>Historians and physicists have debated this for decades. The error appears to be technical: Heisenberg miscalculated the mean free path of neutrons in uranium-235, failing to properly account for fast-neutron fission. This kind of error was not impossible for a physicist of Heisenberg's stature — the calculations were new, the data were limited, and the conditions of wartime Germany were not conducive to careful, repeated verification. But the error was also enormously convenient. And Heisenberg, who had invented a whole new theory of physics at age 23, was not the kind of physicist who made careless arithmetic errors.</p>
+    <p>The Farm Hall transcripts, discussed in Volume 3, provide the closest thing to definitive evidence: by August 1945, when the German physicists heard about Hiroshima, they still had not worked out the basic physics of a fission bomb. This does not prove deliberate sabotage — it is entirely consistent with a program that made early technical errors and never recovered from them. But it also does not rule sabotage out.</p>
+  </section>
+
+  <!-- THE QUANTUM SPRINT IN CONTEXT -->
+  <section>
+    <span class="section-label">1925–1927: The Two-Year Sprint</span>
+    <h2>How Quantum Mechanics Was Born</h2>
+    <p>To appreciate what Heisenberg's world was like during the decisive years, it is necessary to understand how concentrated and collaborative the revolution was. This was not one genius working alone. It was a network of extraordinary people, in close communication, building on each other's work at a pace that has probably never been matched in theoretical physics.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">July 1925</span>
+        <h4>Heisenberg's Paper</h4>
+        <p>"Quantum-Theoretical Re-Interpretation of Kinematic and Mechanical Relations." Matrix mechanics, without the matrices — Heisenberg did not know that his tables were matrices until Born told him.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Sept &ndash; Nov 1925</span>
+        <h4>Born, Jordan, Dirac</h4>
+        <p>Born and Jordan complete the algebraic framework (two-man paper, September). Dirac independently develops q-numbers (November). The Dreimännerarbeit — Born, Jordan, and Heisenberg — completes matrix mechanics in November.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Jan &ndash; June 1926</span>
+        <h4>Schrödinger</h4>
+        <p>Erwin Schrödinger produces wave mechanics — a completely different-looking mathematical framework, based on a differential equation for a wave function rather than matrix algebra. Initially Heisenberg and Schrödinger are hostile to each other's approaches.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">June 1926</span>
+        <h4>Born's Probability Rule</h4>
+        <p>Max Born proposes the probabilistic interpretation of Schrödinger's wave function: |ψ|² gives the probability density of finding the particle at a given position. This is not in Schrödinger's original papers; Schrödinger himself never accepted it.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">March 1927</span>
+        <h4>The Uncertainty Paper</h4>
+        <p>Heisenberg's paper on "the intuitive content of quantum-theoretical kinematics and mechanics." Δx·Δp ≥ ℏ/2 and ΔE·Δt ≥ ℏ/2 stated for the first time. The philosophical interpretation remains in dispute with Bohr.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Sept 1927</span>
+        <h4>Complementarity</h4>
+        <p>Bohr's Como lecture proposes complementarity: wave and particle descriptions are both valid but mutually exclusive — not contradictory but complementary. Together with Heisenberg's uncertainty, this forms the Copenhagen interpretation.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 2rem;">The atmosphere in which all this happened was one of barely controlled elation alternating with despair. Letters between Heisenberg, Pauli, Born, and Bohr during 1925–1927 swing between "I think we have it" and "I feel we are completely lost." Pauli, whose critical intelligence functioned as the quality control of the entire enterprise, alternated between savage skepticism and breathless enthusiasm. It is one of the great collective intellectual adventures in human history, and Heisenberg was at its center.</p>
+  </section>
+
+  <div class="colophon">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Werner Heisenberg Series &mdash; Vol. 2: His World &nbsp;|&nbsp; <a href="3-legacy.html">Next: Legacy &rarr;</a></p>
+    <p>Library of Giants &nbsp;&middot;&nbsp; Compiled 2025 &nbsp;&middot;&nbsp; Historical accounts drawn from primary sources, including Bohr Archive materials and Farm Hall transcripts.</p>
+  </div>
+
+</main>
+</body>
+</html>
