@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction is Compression — Intelligence III</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(32px,6.5vw,62px);line-height:0.98;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:12em;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes squeeze{0%,100%{width:50px}50%{width:18px}}
+  .box{animation:squeeze 2.6s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.box{animation:none;width:30px}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.box{animation:none;width:30px}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">information theory · frontiers · intelligence 3 of 4</span>
+    <div class="masthead">
+      <div>
+        <h1>Prediction is <em>Compression</em></h1>
+        <p class="serieslabel">the intelligence frontier · pamphlet 7</p>
+      </div>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a large block compressed into a small one">
+        <rect x="22" y="50" width="50" height="50" rx="3" fill="none" stroke="#8195ab" stroke-width="1.5"/>
+        <line x1="78" y1="75" x2="98" y2="75" stroke="#8195ab" stroke-width="1.2"/>
+        <polygon points="98,75 91,71 91,79" fill="#8195ab"/>
+        <rect class="box" x="110" y="58" width="50" height="34" rx="3" fill="#33c6dd" opacity="0.6"/>
+        <text x="90" y="120" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">predict well → compress well</text>
+      </svg>
+    </div>
+    <p class="dek">Here is the idea that ties the whole series into a knot: <b>to predict the next symbol well is to compress the data well</b> — they are, provably, the same skill. It runs from Shannon's bits to Book 2's Kolmogorov complexity, and it's why some argue that learning to compress just <em>is</em> learning. This pamphlet is that equivalence — and its honest limits.</p>
+  </header>
+
+  <span class="band">The equivalence</span>
+  <div class="types">
+    <div class="type reveal"><h4>Predict ⇄ compress</h4><p>A good next-symbol predictor is a good compressor, and vice versa.</p><span class="tg">two faces</span></div>
+    <div class="type reveal"><h4>The mechanism</h4><p>Arithmetic coding turns predictions directly into short codes.</p><span class="tg">the bridge</span></div>
+    <div class="type reveal"><h4>The benchmark</h4><p>The Hutter Prize: compress Wikipedia as a test of intelligence.</p><span class="tg">the wager</span></div>
+    <div class="type reveal"><h4>The hypothesis</h4><p>Maybe intelligence itself is deeply about compression.</p><span class="tg">the claim</span></div>
+  </div>
+
+  <span class="band cyan">The idea</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Two faces of one skill</h3><p class="what">If you can predict what comes next, you can encode it in few bits — and a good compressor must predict well to do its job.</p><p class="need"><b>link</b> prediction quality = compression rate</p><p class="do"><b>so</b> the two are mathematically interchangeable.</p><p class="plus"><b>+1</b> it follows straight from pamphlet 6: bits of surprise per symbol <em>is</em> the compressed size.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Arithmetic coding is the bridge</h3><p class="what">Feed a predictor's probabilities into arithmetic coding and you get near-optimal compression automatically.</p><p class="need"><b>mechanism</b> probabilities → code lengths</p><p class="do"><b>so</b> any predictor can be turned into a compressor directly.</p><p class="plus"><b>+1</b> this is the concrete machine behind the slogan — Book 1's arithmetic coding, driven by a model.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Back to Kolmogorov</h3><p class="what">Book 2's idea — the shortest program that generates the data — is the deepest form of this equivalence.</p><p class="need"><b>link</b> compression ≈ finding the shortest description</p><p class="do"><b>so</b> understanding data and shrinking it converge.</p><p class="plus"><b>+1</b> Solomonoff built a theory of prediction on exactly this: predict by favoring the simplest explanation.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>LLMs are compressors</h3><p class="what">A language model trained to predict text is, by this logic, a powerful lossless compressor of text.</p><p class="need"><b>result</b> "language modeling is compression"</p><p class="do"><b>so</b> the model writing this is, in a precise sense, an entropy estimator.</p><p class="plus"><b>+1</b> recent work showed large models can out-compress purpose-built tools — prediction skill cashing out as bits saved.</p></article>
+  </div>
+
+  <span class="band cyan">The wager & the claim</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The Hutter Prize</h3><p class="what">A standing contest to compress a fixed slice of Wikipedia as small as possible — framed as an intelligence test.</p><p class="need"><b>premise</b> better compression = better understanding</p><p class="do"><b>so</b> "compress this text" becomes a benchmark for AI.</p><p class="plus"><b>+1</b> the bet is explicit: Marcus Hutter argues compressing well <em>requires</em> understanding the content.</p></article>
+    <article class="card o reveal"><span class="num">06</span><h3>"Intelligence is compression"</h3><p class="what">Some researchers propose that finding compact patterns is the core of intelligence itself.</p><p class="need"><b>idea</b> learning = building a shorter description of the world</p><p class="do"><b>so</b> Shannon's bits reach all the way to a theory of mind.</p><p class="plus"><b>+1</b> it's a beautiful, suggestive idea — and, importantly, a <em>hypothesis</em>, not a settled fact (see the footer).</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The series, in a knot</h3><p class="what">Bit → entropy → surprise → cross-entropy → compression → prediction — one thread, tied off here.</p><p class="need"><b>through-line</b> every pamphlet meets in this one</p><p class="do"><b>so</b> Shannon's 1948 idea reaches the heart of modern AI.</p><p class="plus"><b>+1</b> the last pamphlet (8) closes the loop: the AI built on these ideas is named for the man who began them.</p></article>
+  </div>
+
+  <span class="band orange">The core of it</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li><b>Predicting the next symbol well and compressing data well are the same skill</b> — provably, via the bits-of-surprise accounting of pamphlet 6.</li>
+      <li><b>Arithmetic coding</b> is the concrete bridge: feed it a predictor's probabilities and it produces near-optimal compression.</li>
+      <li>At its deepest, this is <b>Kolmogorov complexity</b> (Book 2) — compression as finding the shortest description — and the basis of <b>Solomonoff</b> prediction.</li>
+      <li>So a <b>language model is a compressor</b>; recent work shows large models can even out-compress dedicated tools.</li>
+      <li>The <b>Hutter Prize</b> turns this into an AI benchmark, and some argue <b>"intelligence is compression"</b> — a serious, suggestive <b>hypothesis</b>.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Settled vs. hypothesis</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>Settled:</b> the <b>prediction-compression equivalence</b> is rigorous and standard — it's basic information theory, and the LLM-as-compressor result is demonstrated.</li>
+      <li><b>A genuine hypothesis, not a law:</b> "<b>intelligence is compression</b>" is a <b>real research idea that remains contested</b>. It's suggestive and partly formalized (Solomonoff, Hutter), but not proven — treat it as a live claim, not established fact.</li>
+      <li>Compression captures <b>pattern-finding and prediction</b>, which are <b>part</b> of intelligence — but reasoning, goals, embodiment, and understanding may not reduce to it. Skeptics push exactly here.</li>
+      <li>"Lossless compression of text" is a <b>precise technical claim</b>; don't over-read it as the model "understanding" in a human sense (Book 0's caution).</li>
+      <li>Third of four intelligence pamphlets in this eight-part frontier set.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · intelligence frontier · pamphlet 7 of 8 · prediction is compression — the knot that ties the series</p>
+</div>
+</body>
+</html>

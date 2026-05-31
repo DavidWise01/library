@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Information Theory — No. 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#0e1626; --cardsolid:#162032; --ink:#e4ecf5; --dim:#8195ab;
+    --cyan:#33c6dd; --orange:#f08a3c; --line:rgba(51,198,221,0.16);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,72px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes trace{0%{stroke-dashoffset:300}100%{stroke-dashoffset:0}}
+  .sig{stroke-dasharray:300;animation:trace 3s linear infinite;}
+  @media (prefers-reduced-motion:reduce){.sig{animation:none;stroke-dashoffset:0}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.sig{animation:none;stroke-dashoffset:0}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua · a concept series · book no. 0 · the idea</span>
+    <div class="masthead">
+      <div>
+        <h1>Information <em>Theory</em></h1>
+        <p class="serieslabel">the evolution of Shannon's idea · 1 of 4</p>
+      </div>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a clean digital signal">
+        <line x1="16" y1="100" x2="174" y2="100" stroke="#8195ab" stroke-width="1"/>
+        <path class="sig" d="M16,60 H52 V100 H76 V60 H100 V100 H124 V60 H150 V100 H174" fill="none" stroke="#33c6dd" stroke-width="2.4" stroke-linejoin="round"/>
+        <text x="34" y="50" font-family="Space Mono,monospace" font-size="11" fill="#f08a3c">1948</text>
+        <text x="95" y="130" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">the bit is born</text>
+      </svg>
+    </div>
+    <p class="dek">In one 1948 paper, Shannon turned a vague word into a science. He proved <b>information can be measured, compressed to a hard floor, and sent error-free through noise</b> — then left a famous challenge unanswered. This book is the idea at its birth. The next three trace how the world spent 75 years rising to it.</p>
+  </header>
+
+  <span class="band">Before & at the start</span>
+  <div class="types">
+    <div class="type reveal"><h4>The precursors</h4><p>Nyquist and Hartley (1920s) first asked how fast a line could carry "intelligence."</p><span class="tg">the runway</span></div>
+    <div class="type reveal"><h4>The bit</h4><p>The atom of information — one answer to one yes/no question.</p><span class="tg">the unit</span></div>
+    <div class="type reveal"><h4>Entropy (H)</h4><p>The true, irreducible amount of information a source produces.</p><span class="tg">the measure</span></div>
+    <div class="type reveal"><h4>Capacity (C)</h4><p>The top speed at which a channel can carry information error-free.</p><span class="tg">the limit</span></div>
+  </div>
+
+  <span class="band cyan">The 1948 breakthrough</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Standing on Nyquist & Hartley</h3><p class="what">In the 1920s, Bell engineers Harry Nyquist and Ralph Hartley studied how much "intelligence" a channel could carry.</p><p class="need"><b>when</b> the 1920s, at Bell Labs</p><p class="do"><b>so</b> Shannon's theory built directly on their earlier ideas.</p><p class="plus"><b>+1</b> Hartley even used a log measure of information — Shannon credited this groundwork explicitly in 1948.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Information becomes a quantity</h3><p class="what">Shannon defined the bit and showed any message could be measured in bits.</p><p class="need"><b>idea</b> a common currency for all communication</p><p class="do"><b>so</b> text, sound, and image became the same kind of thing.</p><p class="plus"><b>+1</b> crucially he set <em>meaning</em> aside — engineering the pipe, not the message — which is what made it a science.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Entropy: the floor</h3><p class="what">He defined entropy H — the smallest number of bits that can represent a source.</p><p class="need"><b>result</b> the source coding theorem</p><p class="do"><b>so</b> compression has a hard, provable limit.</p><p class="plus"><b>+1</b> a predictable source has low entropy — exactly why ordinary text squeezes down so well.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>Capacity: the ceiling</h3><p class="what">He proved every noisy channel has a capacity C, below which error-free sending is possible.</p><p class="need"><b>result</b> the noisy-channel coding theorem</p><p class="do"><b>so</b> reliable communication through noise became a law.</p><p class="plus"><b>+1</b> counterintuitive then: <em>any</em> noise can be beaten, if you add the right redundancy and stay under C.</p></article>
+  </div>
+
+  <span class="band cyan">The gauntlet</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Good codes must exist…</h3><p class="what">Shannon proved that codes approaching the capacity limit are guaranteed to exist.</p><p class="need"><b>claim</b> near-perfect codes are possible</p><p class="do"><b>so</b> engineers knew the prize was really there.</p><p class="plus"><b>+1</b> his proof was non-constructive — he showed they exist without exhibiting a single one.</p></article>
+    <article class="card o reveal"><span class="num">06</span><h3>…but he didn't show how</h3><p class="what">He left the actual construction of those codes to future generations.</p><p class="need"><b>the challenge</b> "throwing down the gauntlet"</p><p class="do"><b>so</b> a 45-year search for practical codes began.</p><p class="plus"><b>+1</b> for decades, real codes stalled at the "computational cutoff rate" — often only halfway to the limit.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The Shannon limit</h3><p class="what">The maximum reliable rate became the benchmark the whole field would chase.</p><p class="need"><b>name</b> the Shannon limit</p><p class="do"><b>so</b> progress could be measured as a "gap to capacity."</p><p class="plus"><b>+1</b> Books 1–2 trace the long climb; modern codes finally get within about 1 dB of it.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>A new science is born</h3><p class="what">The paper founded an entire discipline overnight: information theory.</p><p class="need"><b>work</b> "A Mathematical Theory of Communication"</p><p class="do"><b>so</b> communication had, for the first time, fundamental laws.</p><p class="plus"><b>+1</b> Quanta called it as if he "discovered the universe's laws of communication" rather than invented them.</p></article>
+  </div>
+
+  <span class="band orange">The core idea</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>Building on <b>Nyquist and Hartley</b>, Shannon's <b>1948 paper</b> made <b>information</b> a measurable quantity, counted in <b>bits</b>.</li>
+      <li><b>Entropy (H)</b> sets a <b>hard floor</b> on compression: no lossless code can shrink a source below it.</li>
+      <li><b>Channel capacity (C)</b> sets a <b>ceiling</b>: below it, communication can be made <b>error-free even through noise</b>, with enough clever redundancy.</li>
+      <li>He <b>proved good codes exist</b> near that ceiling — but <b>didn't build them</b>, leaving a challenge that took decades.</li>
+      <li>That maximum reliable rate is the <b>Shannon limit</b>, the north star for everything that followed.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">How we know — and what's settled</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The 1948 results are <b>settled mathematics</b> — proven theorems, taught worldwide, not open questions. What <em>evolved</em> is how to <b>achieve</b> them in practice (Books 1–3).</li>
+      <li>The theory deliberately measures <b>bits, not meaning</b>. Treating Shannon "information" as the same as <b>knowledge or significance</b> is the most common misreading.</li>
+      <li>The "gauntlet" framing is real: Shannon's capacity proof was <b>non-constructive</b>, which is precisely why finding practical codes became a <b>decades-long quest</b>.</li>
+      <li>Dates and credit here are <b>well-documented</b> (Bell Labs records, the original paper); Nyquist and Hartley's priority is acknowledged in Shannon's own text.</li>
+      <li>This is a <b>concept series</b>, not a biography — for Shannon the man, see his four-book ENIHUNDUA set.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · book no. 0 · the bit, the floor, the ceiling, the challenge · the idea at its birth (1948)</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Making It Real — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,76px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes fix{0%,30%{opacity:1}40%,60%{opacity:.15}70%,100%{opacity:1}}
+  .err{animation:fix 2.4s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.err{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.err{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua · a concept series · book no. 1 · making it real</span>
+    <div class="masthead">
+      <div>
+        <h1>Making <em>It Real</em></h1>
+        <p class="serieslabel">the evolution of Shannon's idea · 2 of 4</p>
+      </div>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a corrupted bit being corrected back">
+        <g font-family="Space Mono,monospace" font-size="18" font-weight="700">
+          <text x="30" y="66" fill="#33c6dd">1</text><text x="52" y="66" fill="#33c6dd">0</text>
+          <text class="err" x="74" y="66" fill="#f08a3c">1</text>
+          <text x="96" y="66" fill="#33c6dd">1</text><text x="118" y="66" fill="#33c6dd">0</text><text x="140" y="66" fill="#33c6dd">0</text>
+        </g>
+        <path class="err" d="M70,76 q9,12 18,0" fill="none" stroke="#f08a3c" stroke-width="1.8"/>
+        <text x="79" y="100" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#f08a3c">error → fixed</text>
+        <text x="95" y="124" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">codes that catch mistakes</text>
+      </svg>
+    </div>
+    <p class="dek">Shannon proved the prize existed; now someone had to build it. For decades, engineers invented <b>real codes</b> — to fix errors and to compress — that made digital storage and transmission practical. Yet for all their cleverness, they kept stalling <b>halfway to the Shannon limit</b>. This book is that long, ingenious climb.</p>
+  </header>
+
+  <span class="band">Two jobs to solve</span>
+  <div class="types">
+    <div class="type reveal"><h4>Error correction</h4><p>Add redundancy so corruption can be detected and repaired (toward capacity C).</p><span class="tg">fight noise</span></div>
+    <div class="type reveal"><h4>Compression</h4><p>Strip redundancy so data shrinks toward its entropy H.</p><span class="tg">shrink size</span></div>
+    <div class="type reveal"><h4>The early codes</h4><p>Hamming, Reed-Solomon, convolutional — the workhorses of the analog-to-digital age.</p><span class="tg">the toolkit</span></div>
+    <div class="type reveal"><h4>The wall</h4><p>The "computational cutoff rate" — practical codes stuck near half the limit.</p><span class="tg">the ceiling</span></div>
+  </div>
+
+  <span class="band cyan">Fighting noise</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Hamming codes (1950)</h3><p class="what">Richard Hamming, frustrated by a computer that halted on errors, built codes that fix single-bit flips automatically.</p><p class="need"><b>who</b> Richard Hamming, Bell Labs</p><p class="do"><b>so</b> the first practical error-correcting codes arrived, just after Shannon.</p><p class="plus"><b>+1</b> simple codes like these get nowhere near the Shannon limit — but they proved the idea worked at all.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Reed–Solomon (1960)</h3><p class="what">Irving Reed and Gus Solomon devised codes that fix bursts of errors, not just stray bits.</p><p class="need"><b>strength</b> recovers data even with many corrupted symbols</p><p class="do"><b>so</b> scratched CDs, QR codes, and DVDs still read correctly.</p><p class="plus"><b>+1</b> Voyager carried Reed-Solomon coding to the outer planets — error correction that works light-hours away.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Convolutional codes & Viterbi</h3><p class="what">Codes that protect a continuous stream, decoded efficiently by the Viterbi algorithm.</p><p class="need"><b>added</b> Andrew Viterbi's 1967 decoding method</p><p class="do"><b>so</b> mobile phones and modems could clean up live signals.</p><p class="plus"><b>+1</b> the Viterbi algorithm now turns up far beyond coding — in speech recognition and DNA analysis too.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>The cutoff-rate wall</h3><p class="what">Despite all this, practical codes kept stalling well short of capacity.</p><p class="need"><b>barrier</b> the "computational cutoff rate"</p><p class="do"><b>so</b> real systems often reached only ~half the Shannon limit.</p><p class="plus"><b>+1</b> for ~45 years this felt like a soft ceiling — many assumed the full limit was practically unreachable.</p></article>
+  </div>
+
+  <span class="band cyan">Shrinking data</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Huffman coding (1952)</h3><p class="what">David Huffman, as a student, found the optimal way to assign short codes to common symbols.</p><p class="need"><b>idea</b> frequent symbols get fewer bits</p><p class="do"><b>so</b> lossless compression had its first elegant workhorse.</p><p class="plus"><b>+1</b> he devised it to skip a final exam — and produced a method still inside ZIP and JPEG today.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Lempel–Ziv (1977–78)</h3><p class="what">Abraham Lempel and Jacob Ziv built compression that learns repeated patterns as it reads.</p><p class="need"><b>idea</b> replace repeats with short references</p><p class="do"><b>so</b> general-purpose compression (ZIP, GIF, PNG) became possible.</p><p class="plus"><b>+1</b> nearly every "zip" file you've ever made descends from these two 1970s papers.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Arithmetic coding</h3><p class="what">A subtler method encoding a whole message as a single fractional number — beating Huffman's limits.</p><p class="need"><b>strength</b> gets closer to the entropy floor</p><p class="do"><b>so</b> modern formats squeeze harder than symbol-by-symbol codes.</p><p class="plus"><b>+1</b> its descendant CABAC is core to H.264/H.265 video — the reason streaming fits down your connection.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Lossy compression</h3><p class="what">For images, audio, and video, throw away what humans won't notice — guided by entropy ideas.</p><p class="need"><b>fruits</b> JPEG, MP3, and video codecs</p><p class="do"><b>so</b> media became small enough to store and stream.</p><p class="plus"><b>+1</b> these lean on Shannon's distinction between a signal's information and its perceptible part.</p></article>
+  </div>
+
+  <span class="band orange">The story so far</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>Shannon's idea split into <b>two practical quests</b>: <b>error-correcting codes</b> (toward capacity C) and <b>compression</b> (toward entropy H).</li>
+      <li>Error correction matured through <b>Hamming (1950)</b>, <b>Reed–Solomon (1960)</b>, and <b>convolutional codes</b> with <b>Viterbi decoding</b> — protecting CDs, deep-space probes, and phones.</li>
+      <li>Compression matured through <b>Huffman (1952)</b>, <b>Lempel–Ziv (1977–78)</b>, and <b>arithmetic coding</b> — the engines inside ZIP, JPEG, MP3, and video.</li>
+      <li>But for about <b>45 years</b>, practical codes kept hitting the <b>computational cutoff rate</b> — often only <b>halfway to the Shannon limit</b>.</li>
+      <li>The full limit still looked out of reach — until a 1993 surprise, which Book 2 takes up.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">How we know — and the honest caveats</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The codes, dates, and inventors here are <b>well-documented</b> standard history (Hamming, Huffman, Reed &amp; Solomon, Viterbi, Lempel &amp; Ziv).</li>
+      <li>"<b>Halfway to the limit</b>" is a useful generalization — the exact gap depends on the channel, noise, and power; the cutoff rate <b>varies</b> by system.</li>
+      <li>Real engineering often <b>combined codes</b> (e.g. Reed–Solomon wrapped around convolutional codes) — the clean one-per-card story simplifies a messier practice.</li>
+      <li>The line between <b>lossless</b> (exact) and <b>lossy</b> (perceptual) compression matters: only lossless is bounded strictly by entropy; lossy trades fidelity deliberately.</li>
+      <li>Book 0 is the idea; <b>Book 2</b> is the breakthrough that finally reached the limit and the idea's spread into other fields.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · book no. 1 · clever codes, a stubborn ceiling · the decades of building (1950–1990)</p>
+</div>
+</body>
+</html>

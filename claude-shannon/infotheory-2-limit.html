@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaching the Limit — No. 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,72px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:11em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes climb{0%{height:6px}100%{height:50px}}
+  .bar{transform-origin:bottom;}
+  .ba{animation:climb 2.4s ease-in-out infinite alternate} .bb{animation:climb 2.4s ease-in-out infinite alternate -0.4s} .bc{animation:climb 2.4s ease-in-out infinite alternate -0.8s}
+  @media (prefers-reduced-motion:reduce){.ba,.bb,.bc{animation:none;height:46px}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.ba,.bb,.bc{animation:none;height:46px}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua · a concept series · book no. 2 · reaching the limit</span>
+    <div class="masthead">
+      <div>
+        <h1>Reaching <em>the Limit</em></h1>
+        <p class="serieslabel">the evolution of Shannon's idea · 3 of 4</p>
+      </div>
+      <svg class="art" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="bars climbing toward a ceiling line">
+        <line x1="20" y1="40" x2="170" y2="40" stroke="#f08a3c" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <text x="172" y="38" text-anchor="end" font-family="Space Mono,monospace" font-size="9" fill="#f08a3c">limit</text>
+        <rect class="bar ba" x="44" y="100" width="20" height="6" fill="#33c6dd" style="transform:translateY(0)"/>
+        <rect class="bar bb" x="84" y="100" width="20" height="6" fill="#33c6dd"/>
+        <rect class="bar bc" x="124" y="100" width="20" height="6" fill="#33c6dd"/>
+        <line x1="20" y1="106" x2="170" y2="106" stroke="#8195ab" stroke-width="1"/>
+        <text x="95" y="128" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">closing the gap, at last</text>
+      </svg>
+    </div>
+    <p class="dek">After 45 years stalled halfway, the wall fell almost overnight — and the codes that broke it now run every phone on Earth. Meanwhile Shannon's idea was <b>leaking out of engineering entirely</b>, into biology, statistics, and economics. This book is the breakthrough, and the great spreading-out.</p>
+  </header>
+
+  <span class="band">What happened</span>
+  <div class="types">
+    <div class="type reveal"><h4>Turbo codes</h4><p>1993: the first practical codes to closely approach the Shannon limit.</p><span class="tg">the breakthrough</span></div>
+    <div class="type reveal"><h4>LDPC codes</h4><p>Invented 1960, ignored, rediscovered in the '90s — now everywhere.</p><span class="tg">the comeback</span></div>
+    <div class="type reveal"><h4>Within ~1 dB</h4><p>Modern codes hug the limit so closely there's little room left.</p><span class="tg">near-perfect</span></div>
+    <div class="type reveal"><h4>The spread</h4><p>Entropy and information escape into other sciences entirely.</p><span class="tg">beyond comms</span></div>
+  </div>
+
+  <span class="band cyan">Closing the gap</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Turbo codes (1993)</h3><p class="what">Berrou and Glavieux stunned a conference with codes that nearly hit the Shannon limit.</p><p class="need"><b>who</b> Claude Berrou &amp; Alain Glavieux, France</p><p class="do"><b>so</b> the 45-year wall fell — capacity was suddenly within reach.</p><p class="plus"><b>+1</b> their claimed performance was so good that many experts first assumed it was an error.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The trick: iteration</h3><p class="what">Two simple decoders pass guesses back and forth, refining each other — "turbo" like an engine's feedback.</p><p class="need"><b>idea</b> iterative, probabilistic decoding</p><p class="do"><b>so</b> near-optimal decoding became practical, not just theoretical.</p><p class="plus"><b>+1</b> turbo codes power 3G, 4G, and 5G — the breakthrough is in the phone in your pocket.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>LDPC: ahead of its time</h3><p class="what">Robert Gallager invented low-density parity-check codes in his 1960 MIT PhD — then they were shelved.</p><p class="need"><b>why ignored</b> 1960s hardware couldn't decode them</p><p class="do"><b>so</b> a near-optimal idea sat unused for decades.</p><p class="plus"><b>+1</b> Gallager lived to see them everywhere — winning prizes for work he'd done over 30 years earlier.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>LDPC rediscovered (~1996)</h3><p class="what">Amid the turbo-code excitement, David MacKay and others realized Gallager's codes also nearly reach the limit.</p><p class="need"><b>bonus</b> LDPC is unpatented — free to use</p><p class="do"><b>so</b> it spread into Wi-Fi, DVB-S2, 5G, and Blu-ray.</p><p class="plus"><b>+1</b> being patent-free is exactly why open standards favored LDPC over the patented turbo codes.</p></article>
+  </div>
+
+  <span class="band cyan">Spreading out</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Algorithmic information</h3><p class="what">Kolmogorov (and others) asked: what's the shortest program that could generate this data?</p><p class="need"><b>idea</b> complexity = length of the shortest description</p><p class="do"><b>so</b> "information" gained a second, computational meaning.</p><p class="plus"><b>+1</b> it links Shannon's entropy to the very notion of randomness — random means incompressible.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Relative entropy (KL divergence)</h3><p class="what">Kullback and Leibler measured how far one probability distribution sits from another.</p><p class="need"><b>tool</b> KL divergence</p><p class="do"><b>so</b> statistics gained an information-based notion of "difference."</p><p class="plus"><b>+1</b> this single quantity becomes the bridge to modern machine learning in Book 3.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Mutual information</h3><p class="what">A measure of how much knowing one thing tells you about another.</p><p class="need"><b>idea</b> shared information between variables</p><p class="do"><b>so</b> fields could quantify dependence without assuming a formula.</p><p class="plus"><b>+1</b> neuroscientists use it to ask how much a neuron's firing "tells" about a stimulus.</p></article>
+    <article class="card o reveal"><span class="num">08</span><h3>The Bandwagon warning</h3><p class="what">As information theory spread into psychology, biology, and economics, Shannon urged caution.</p><p class="need"><b>essay</b> "The Bandwagon" (1956)</p><p class="do"><b>so</b> he reminded everyone it wasn't a cure-all for every field.</p><p class="plus"><b>+1</b> a founder reining in his own hype — the careful applications endured, the overreaches faded.</p></article>
+  </div>
+
+  <span class="band orange">The story so far</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li><b>Turbo codes (1993)</b>, by Berrou and Glavieux, were the <b>first practical codes to closely approach the Shannon limit</b>, using <b>iterative decoding</b> — and now run 3G/4G/5G.</li>
+      <li><b>LDPC codes</b>, invented by <b>Gallager in 1960</b> but ignored, were <b>rediscovered around 1996</b>; near-optimal and <b>patent-free</b>, they spread into Wi-Fi, 5G, and Blu-ray.</li>
+      <li>Modern codes now get <b>within about 1 dB of the limit</b> — so close that research has shifted to making decoding <b>faster and more adaptive</b>.</li>
+      <li>Meanwhile the idea <b>spread beyond communication</b>: <b>algorithmic (Kolmogorov) complexity</b>, <b>KL divergence</b>, and <b>mutual information</b> reached statistics, neuroscience, and economics.</li>
+      <li>Shannon's own <b>"Bandwagon" (1956)</b> warned against overreach — and the disciplined uses are what lasted.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">How we know — and the honest caveats</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The turbo/LDPC story, dates, and people are <b>well-documented</b> (MIT's own histories, the original 1993 ICC paper, Gallager's 1960 thesis).</li>
+      <li>"<b>Within ~1 dB</b>" and "closely approach" are <b>real but channel-dependent</b> — performance varies with code length, noise, and conditions; no practical code reaches the limit exactly.</li>
+      <li>Turbo vs. LDPC isn't a simple winner — they're <b>competing families</b> with different trade-offs; standards pick by latency, complexity, and licensing.</li>
+      <li>The "spread into other fields" is <b>genuine but uneven</b> — some applications are rigorous, others were the very overreach Shannon cautioned against. Treat sweeping "information theory explains X" claims with care.</li>
+      <li><b>Book 3</b> carries the idea to its current frontiers: quantum information and modern AI.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · book no. 2 · the wall falls, the idea escapes · reaching the limit &amp; spreading out (1993–)</p>
+</div>
+</body>
+</html>

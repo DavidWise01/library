@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Qubit — Quantum I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pq{0%,100%{opacity:.4}50%{opacity:1}}
+  .orb{transform-origin:75px 72px;animation:spin 6s linear infinite;}
+  .state{animation:pq 2.4s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.orb{animation:none}.state{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.orb,.state{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">information theory · frontiers · quantum 1 of 4</span>
+    <div class="masthead">
+      <div>
+        <h1>The <em>Qubit</em></h1>
+        <p class="serieslabel">the quantum frontier · pamphlet 1</p>
+      </div>
+      <svg class="art" width="170" height="150" viewBox="0 0 170 150" role="img" aria-label="a qubit on the Bloch sphere">
+        <circle cx="75" cy="72" r="40" fill="none" stroke="#8195ab" stroke-width="1"/>
+        <ellipse class="orb" cx="75" cy="72" rx="40" ry="13" fill="none" stroke="#8195ab" stroke-width="0.8" opacity="0.5"/>
+        <line x1="75" y1="32" x2="75" y2="112" stroke="#8195ab" stroke-width="0.7" opacity="0.5"/>
+        <text x="75" y="28" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#8195ab">|0⟩</text>
+        <text x="75" y="126" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#8195ab">|1⟩</text>
+        <line x1="75" y1="72" x2="102" y2="48" stroke="#33c6dd" stroke-width="2.4"/>
+        <circle class="state" cx="102" cy="48" r="6" fill="#33c6dd"/>
+        <text x="75" y="146" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">both at once, until measured</text>
+      </svg>
+    </div>
+    <p class="dek">A classical bit is a coin lying flat: heads or tails. A qubit is a coin <b>spinning in mid-air</b> — genuinely both at once, until it lands. That single difference reshapes what information <em>is</em>. This pamphlet is the qubit: the atom of quantum information.</p>
+  </header>
+
+  <span class="band">What makes it different</span>
+  <div class="types">
+    <div class="type reveal"><h4>Superposition</h4><p>Not 0 or 1, but a weighted blend of both at the same time.</p><span class="tg">both</span></div>
+    <div class="type reveal"><h4>The Bloch sphere</h4><p>A bit is two poles; a qubit is any point on a whole sphere.</p><span class="tg">richer</span></div>
+    <div class="type reveal"><h4>Measurement</h4><p>Look, and the spinning coin collapses to a single 0 or 1.</p><span class="tg">collapse</span></div>
+    <div class="type reveal"><h4>Entanglement</h4><p>Two qubits can share one joint state no pair of bits can.</p><span class="tg">linked</span></div>
+  </div>
+
+  <span class="band cyan">The idea</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>A blend, not a choice</h3><p class="what">A qubit holds a mix of |0⟩ and |1⟩ at once — a superposition with amplitudes for each.</p><p class="need"><b>state</b> α|0⟩ + β|1⟩</p><p class="do"><b>so</b> it carries more structure than a flat yes/no bit.</p><p class="plus"><b>+1</b> the amplitudes are complex numbers — there's a phase as well as a weight, which classical bits simply don't have.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>A point on a sphere</h3><p class="what">Where a bit has two values, a qubit's state is any point on the surface of the Bloch sphere.</p><p class="need"><b>picture</b> poles = |0⟩ and |1⟩; surface = everything between</p><p class="do"><b>so</b> there's a continuum of states, not two.</p><p class="plus"><b>+1</b> that continuum is why a qubit feels like it "holds more" — though reading it out is another matter (pamphlet 3).</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Measurement collapses it</h3><p class="what">Observe a qubit and the superposition snaps to a definite 0 or 1, with probabilities set by the amplitudes.</p><p class="need"><b>rule</b> outcome is random, weighted by |α|², |β|²</p><p class="do"><b>so</b> you never see the blend directly — only one collapsed result.</p><p class="plus"><b>+1</b> this is the deep catch: the richness is real, but measurement only ever hands you one classical bit of it.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Entanglement</h3><p class="what">Two qubits can occupy a joint state where neither has a definite value alone.</p><p class="need"><b>idea</b> correlations stronger than any classical pair</p><p class="do"><b>so</b> quantum information lives in relationships, not just units.</p><p class="plus"><b>+1</b> measure one entangled qubit and the other's odds shift instantly — Einstein's "spooky action at a distance."</p></article>
+  </div>
+
+  <span class="band cyan">Where the word came from</span>
+  <div class="grid">
+    <article class="card o reveal"><span class="num">05</span><h3>Schumacher names it (1995)</h3><p class="what">Benjamin Schumacher coined "qubit" — defining the basic unit of quantum information.</p><p class="need"><b>by analogy</b> with Shannon's "bit"</p><p class="do"><b>so</b> quantum information got its own named atom.</p><p class="plus"><b>+1</b> the name was reportedly half a joke between Schumacher and Wootters that stuck — and became the field's word.</p></article>
+    <article class="card o reveal"><span class="num">06</span><h3>Quantum compression</h3><p class="what">In the same work, Schumacher proved a quantum version of Shannon's compression theorem.</p><p class="need"><b>result</b> qubits compress to a quantum entropy floor</p><p class="do"><b>so</b> Shannon's 1948 idea ported wholesale into the quantum world.</p><p class="plus"><b>+1</b> the floor is the von Neumann entropy — the subject of pamphlet 2 in this set.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Made of real things</h3><p class="what">Qubits are built from photons, trapped ions, superconducting circuits, atomic spins.</p><p class="need"><b>realizations</b> many competing hardware platforms</p><p class="do"><b>so</b> the abstract unit has many physical bodies.</p><p class="plus"><b>+1</b> none is clearly best yet — keeping a qubit's fragile state alive long enough is the central engineering battle.</p></article>
+  </div>
+
+  <span class="band orange">The core of it</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li>A <b>qubit</b> is the basic unit of quantum information: a <b>superposition</b> α|0⟩ + β|1⟩, genuinely both 0 and 1 at once until measured.</li>
+      <li>Its state is <b>any point on the Bloch sphere</b> — a continuum, where a bit has only two values.</li>
+      <li><b>Measurement collapses</b> it to a single classical outcome, with probabilities set by the amplitudes — so you see one result, not the blend.</li>
+      <li>Qubits can be <b>entangled</b>, sharing joint states no classical pair can — information that lives in correlations.</li>
+      <li>The term was coined by <b>Schumacher (1995)</b>, who also proved a <b>quantum compression theorem</b> — Shannon's idea, made quantum.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Settled vs. frontier</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>Settled:</b> the qubit's mathematics — superposition, the Bloch sphere, measurement probabilities, entanglement — is <b>standard quantum theory</b> (Nielsen &amp; Chuang).</li>
+      <li><b>Frontier:</b> building <b>many stable qubits</b> at once is hard; today's machines are noisy and small. The theory runs well ahead of the hardware.</li>
+      <li>Beware the popular line that a qubit "<b>holds infinite information</b>." It holds a rich state, but measurement extracts <b>at most one classical bit</b> — the honest limit, taken up in pamphlet 3.</li>
+      <li>Analogies (spinning coin, sphere) are <b>aids, not the physics</b> — the real object is a complex vector, and intuition only goes so far.</li>
+      <li>This is one of eight frontier pamphlets — four quantum, four on intelligence.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · quantum frontier · pamphlet 1 of 4 · the qubit — both at once, until you look</p>
+</div>
+</body>
+</html>

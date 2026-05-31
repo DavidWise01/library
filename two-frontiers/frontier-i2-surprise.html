@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surprise in Bits — Intelligence II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#0e1626;--cardsolid:#162032;--ink:#e4ecf5;--dim:#8195ab;--cyan:#33c6dd;--orange:#f08a3c;--line:rgba(51,198,221,0.16);}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(circle at 50% 0%, #1a2740 0%, #0b1220 70%);background-attachment:fixed;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:#0e1626;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--orange);}
+  .mast{border-bottom:4px solid var(--cyan);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7vw,66px);line-height:0.98;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:11em;}
+  .mast h1 em{font-style:normal;color:var(--cyan);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#cdd8e4;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .serieslabel{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--orange);margin-top:14px;text-transform:uppercase;}
+  .art{flex:0 0 auto;}
+  @keyframes jolt{0%,80%,100%{transform:translateY(0)}85%{transform:translateY(-6px)}90%{transform:translateY(3px)}}
+  .spark{animation:jolt 2.6s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.spark{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--cyan);color:#0e1626;padding:5px 13px;margin:34px 0 14px;}
+  .band.orange{background:var(--orange);} .band.dim{background:#24344a;color:var(--ink);}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;color:var(--cyan);}
+  .type p{font-size:13px;margin:0;color:#aebccd;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.o:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#c3cedb;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#90a2b6;}
+  .card .plus b{color:var(--cyan);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.o .plus b{color:var(--orange);}
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"~";position:absolute;left:2px;top:7px;font-family:"Space Mono",monospace;font-size:15px;color:var(--cyan);font-weight:700;}
+  .block.orange .rules li::before{content:"✦";color:var(--orange);font-size:13px;top:9px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.orange .rules b{color:var(--orange);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid var(--line);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type{background:#fff}.card:hover{transform:none;box-shadow:none}.spark{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">information theory · frontiers · intelligence 2 of 4</span>
+    <div class="masthead">
+      <div>
+        <h1>Surprise, in <em>Bits</em></h1>
+        <p class="serieslabel">the intelligence frontier · pamphlet 6</p>
+      </div>
+      <svg class="art spark" width="170" height="150" viewBox="0 0 170 150" role="img" aria-label="a surprise spark over a low flat line">
+        <line x1="20" y1="100" x2="150" y2="100" stroke="#8195ab" stroke-width="1"/>
+        <path d="M20,98 H70 90,98 110,98" fill="none" stroke="#33c6dd" stroke-width="2"/>
+        <path d="M70,98 L82,40 92,40 104,98" fill="none" stroke="#f08a3c" stroke-width="2.4" stroke-linejoin="round"/>
+        <text x="87" y="34" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#f08a3c">rare = costly</text>
+        <text x="85" y="122" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#8195ab">−log p, in bits</text>
+      </svg>
+    </div>
+    <p class="dek">How do you grade a mind — human or machine — on a prediction? Shannon's answer: measure its <b>surprise</b>. A likely event that happens is no news; an unlikely one carries many bits. Stack that up and you get the standard yardstick for every language model. This pamphlet is surprise as a number.</p>
+  </header>
+
+  <span class="band">The chain</span>
+  <div class="types">
+    <div class="type reveal"><h4>Surprisal</h4><p>One event's surprise: −log of its probability.</p><span class="tg">−log p</span></div>
+    <div class="type reveal"><h4>Entropy</h4><p>The average surprise over all outcomes — Shannon's H.</p><span class="tg">the mean</span></div>
+    <div class="type reveal"><h4>Perplexity</h4><p>Entropy made friendly — "how many equally-likely choices?"</p><span class="tg">the score</span></div>
+    <div class="type reveal"><h4>Bits per token</h4><p>The benchmark for how well a model predicts language.</p><span class="tg">the gauge</span></div>
+  </div>
+
+  <span class="band cyan">The idea</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Surprise = −log p</h3><p class="what">The less likely an event, the more "surprise" — and the more information — it carries when it happens.</p><p class="need"><b>name</b> self-information, or surprisal</p><p class="do"><b>so</b> information and surprise are literally the same quantity.</p><p class="plus"><b>+1</b> a certain event (p = 1) carries zero bits — no surprise, no news. The math matches the intuition exactly.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Rare events cost more</h3><p class="what">A one-in-a-thousand outcome carries far more bits than a coin flip.</p><p class="need"><b>scale</b> halving the probability adds one bit</p><p class="do"><b>so</b> surprise grows as events get rarer.</p><p class="plus"><b>+1</b> this is why compression gives rare symbols longer codes — they genuinely carry more information.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Entropy is average surprise</h3><p class="what">Shannon's H is just the expected surprisal over all possible outcomes.</p><p class="need"><b>link</b> H = average of −log p</p><p class="do"><b>so</b> entropy and "typical surprise" are one idea.</p><p class="plus"><b>+1</b> it reframes Book 0's H in one line: entropy is how surprised you should expect to be, on average.</p></article>
+    <article class="card o reveal"><span class="num">04</span><h3>A model's surprise is its loss</h3><p class="what">Cross-entropy (pamphlet 5) is exactly the model's average surprise at the true answers.</p><p class="need"><b>link</b> loss = average surprisal under the model</p><p class="do"><b>so</b> "minimize loss" means "be less surprised by reality."</p><p class="plus"><b>+1</b> a perfectly-predicting model is never surprised — its loss bottoms out at the data's own entropy.</p></article>
+  </div>
+
+  <span class="band cyan">The standard yardstick</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Perplexity</h3><p class="what">The headline language-model score — entropy exponentiated into an intuitive number.</p><p class="need"><b>reads as</b> "effective number of equally-likely next words"</p><p class="do"><b>so</b> lower perplexity = a model less confused by text.</p><p class="plus"><b>+1</b> perplexity 1 would mean perfect prediction; in practice it's a direct stand-in for bits of surprise.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Bits per character</h3><p class="what">Models and even humans are benchmarked by how many bits they need per character of text.</p><p class="need"><b>echo</b> Shannon's own 1950 experiments on English</p><p class="do"><b>so</b> the yardstick runs straight back to Shannon himself.</p><p class="plus"><b>+1</b> Shannon estimated English at ~1 bit per letter by having people guess the next one — a 1950 perplexity test.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>It connects to compression</h3><p class="what">Fewer bits of surprise per symbol means the text compresses smaller — the bridge to pamphlet 7.</p><p class="need"><b>link</b> low surprise ⇄ high compressibility</p><p class="do"><b>so</b> prediction quality and compression are two readings of one gauge.</p><p class="plus"><b>+1</b> a model's bits-per-token <em>is</em> the size it could compress that text to — prediction and compression, one number.</p></article>
+  </div>
+
+  <span class="band orange">The core of it</span>
+  <div class="block orange">
+    <ul class="rules">
+      <li><b>Surprisal</b> (−log p) measures one event's surprise — and is identical to the <b>information</b> it carries. Rare events cost more bits.</li>
+      <li><b>Entropy (H)</b> is just the <b>average surprise</b> over all outcomes — Book 0's measure, seen from a new angle.</li>
+      <li>A model's <b>cross-entropy loss is its average surprise</b> at the true answers — "minimize loss" means "be less surprised by reality."</li>
+      <li><b>Perplexity</b> turns that into an intuitive score ("effective number of choices"); <b>bits-per-character</b> is the benchmark — echoing Shannon's own 1950 experiments.</li>
+      <li>Fewer bits of surprise per symbol means better <b>compression</b> — the bridge to pamphlet 7.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Settled vs. caveat</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>Settled:</b> surprisal, entropy-as-average-surprise, and perplexity are <b>standard information theory and NLP</b> — Shannon's 1950 English-entropy work is the original.</li>
+      <li>Low surprise measures <b>predictive fit, not comprehension</b> — a model can be unsurprised by text it doesn't "understand" in any deeper sense. (Book 0's caution, again.)</li>
+      <li>Perplexity numbers are only comparable <b>under the same tokenization and data</b> — a lower score isn't automatically a "smarter" model across different setups.</li>
+      <li>"Surprise" here is the <b>technical</b> sense (−log p), not the emotional one — a precise quantity, not a feeling.</li>
+      <li>Second of four intelligence pamphlets in this eight-part frontier set.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">information theory · intelligence frontier · pamphlet 6 of 8 · surprise in bits — how you grade a prediction</p>
+</div>
+</body>
+</html>
