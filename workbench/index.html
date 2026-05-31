@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Workbench Series — index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#efece3; --card:#f8f5ec; --ink:#161310; --dim:#5e584c;
+    --c1:#e6ac3c; --c2:#1f3ccd; --c3:#d12e84; --c4:#6a34c8;
+    --c5:#159a55; --c6:#c0830f; --c7:#0e9ac2; --c8:#2f6fb0;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(22,19,16,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:34px 22px 70px;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--c2);color:var(--paper);}
+
+  /* ---- masthead ---- */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--c3);}
+  .top{border-bottom:5px solid var(--ink);padding-bottom:22px;}
+  .spines{display:flex;gap:5px;height:30px;margin:14px 0 18px;}
+  .spines b{flex:1;border:1.5px solid var(--ink);}
+  .spines b:nth-child(1){background:var(--c1)} .spines b:nth-child(2){background:var(--c2)}
+  .spines b:nth-child(3){background:var(--c3)} .spines b:nth-child(4){background:var(--c4)}
+  .spines b:nth-child(5){background:var(--c5)} .spines b:nth-child(6){background:var(--c6)}
+  .spines b:nth-child(7){background:var(--c7)} .spines b:nth-child(8){background:var(--c8)}
+  h1.series{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(44px,10vw,104px);line-height:0.86;
+    letter-spacing:-0.03em;text-transform:uppercase;margin:0;}
+  h1.series em{font-style:normal;color:var(--c2);}
+  .dek{font-size:clamp(15px,2.1vw,19px);max-width:660px;margin:18px 0 0;color:#2f2c25;}
+  .dek b{font-weight:500;color:var(--c2);}
+  .meta{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--dim);margin-top:14px;text-transform:uppercase;}
+
+  /* ---- band ---- */
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.12em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:40px 0 16px;}
+
+  /* ---- index grid ---- */
+  .index{display:grid;grid-template-columns:repeat(auto-fill,minmax(244px,1fr));gap:15px;}
+  .issue{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:0;overflow:hidden;
+    transition:transform .14s ease, box-shadow .14s ease;display:block;}
+  .issue:hover{transform:translate(-3px,-3px);}
+  .issue .spine{height:9px;width:100%;}
+  .issue .body{padding:15px 16px 17px;}
+  .issue .no{font-family:"Space Mono",monospace;font-weight:700;font-size:12px;letter-spacing:0.08em;}
+  .issue h3{font-family:"Bricolage Grotesque";font-weight:800;font-size:23px;line-height:0.98;letter-spacing:-0.01em;
+    text-transform:uppercase;margin:5px 0 7px;}
+  .issue p{font-size:13.5px;margin:0;color:#36322a;line-height:1.5;}
+  .issue .go{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.05em;margin-top:11px;
+    display:flex;align-items:center;gap:6px;color:var(--dim);}
+  .issue .go .arw{font-weight:700;transition:transform .14s ease;}
+  .issue:hover .go .arw{transform:translateX(4px);}
+  /* per-issue accent */
+  .i1 .spine{background:var(--c1)} .i1 .no,.i1 .go{color:var(--c1)} .i1:hover{box-shadow:5px 5px 0 var(--c1)}
+  .i2 .spine{background:var(--c2)} .i2 .no,.i2 .go{color:var(--c2)} .i2:hover{box-shadow:5px 5px 0 var(--c2)}
+  .i3 .spine{background:var(--c3)} .i3 .no,.i3 .go{color:var(--c3)} .i3:hover{box-shadow:5px 5px 0 var(--c3)}
+  .i4 .spine{background:var(--c4)} .i4 .no,.i4 .go{color:var(--c4)} .i4:hover{box-shadow:5px 5px 0 var(--c4)}
+  .i5 .spine{background:var(--c5)} .i5 .no,.i5 .go{color:var(--c5)} .i5:hover{box-shadow:5px 5px 0 var(--c5)}
+  .i6 .spine{background:var(--c6)} .i6 .no,.i6 .go{color:var(--c6)} .i6:hover{box-shadow:5px 5px 0 var(--c6)}
+  .i7 .spine{background:var(--c7)} .i7 .no,.i7 .go{color:var(--c7)} .i7:hover{box-shadow:5px 5px 0 var(--c7)}
+  .i8 .spine{background:var(--c8)} .i8 .no,.i8 .go{color:var(--c8)} .i8:hover{box-shadow:5px 5px 0 var(--c8)}
+
+  /* ---- connect diagram ---- */
+  .block{border:1.5px solid var(--ink);background:var(--card);padding:20px;margin-top:6px;}
+  .chain{width:100%;height:auto;display:block;}
+  .chain text{font-family:"Space Mono",monospace;}
+  .chain .lab{font-size:11px;fill:#36322a;} .chain .cap{font-size:10px;fill:#5e584c;}
+  .connect-note{font-size:14px;margin:14px 2px 0;color:#36322a;}
+  .connect-note b{font-weight:500;}
+
+  /* ---- order ---- */
+  .orderwrap{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+  @media (max-width:640px){.orderwrap{grid-template-columns:1fr}}
+  .ord{border:1.5px solid var(--ink);padding:16px 18px;background:var(--card);}
+  .ord h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;margin:0 0 8px;}
+  .ord p{font-size:13.5px;margin:0;color:#36322a;}
+  .ord .path{font-family:"Space Mono",monospace;font-size:12px;color:var(--c2);margin-top:8px;line-height:1.7;}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:44px;padding-top:18px;border-top:1px solid rgba(22,19,16,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.issue:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="top">
+    <span class="kick">a hands-on electronics set · eight issues</span>
+    <div class="spines"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+    <h1 class="series">The Work<em>bench</em> Series</h1>
+    <p class="dek">Eight short field guides for the salvage bench — from a fistful of parts to a machine that senses and decides. Each issue stands alone; together they <b>cover the whole field</b>, and they interlock.</p>
+    <p class="meta">salvage · build · measure · repeat — most of it runs on a battery and a good idea</p>
+  </header>
+
+  <span class="band">The eight issues</span>
+  <div class="index">
+
+    <a class="issue i7 reveal" href="parts-building-blocks-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 7 · foundation</div>
+        <h3>Parts &amp; Building Blocks</h3>
+        <p>The five or six components everything is made of — and the little circuits you build from each.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i6 reveal" href="power-batteries-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 6 · feed it</div>
+        <h3>Power &amp; Batteries</h3>
+        <p>Sources, regulators, cells, and caps — clean power in, and how not to start a fire.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i5 reveal" href="microcontrollers-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 5 · the brain</div>
+        <h3>Microcontrollers &amp; Code</h3>
+        <p>The chip that reads the sensors and drives the actuators. Blink to robot brain.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i4 reveal" href="sensors-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 4 · the senses</div>
+        <h3>Sensors &amp; Signals</h3>
+        <p>Light, heat, motion, distance, sound, touch — how a circuit perceives the world.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i2 reveal" href="small-motors-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 2 · make it spin</div>
+        <h3>Small Electric Motors</h3>
+        <p>Salvage, spin, generate — fans, rovers, plotters, and a motor run backwards.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i3 reveal" href="electromagnets-solenoids-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 3 · make it move</div>
+        <h3>Electromagnets &amp; Solenoids</h3>
+        <p>Coils that pull, switch, clamp, strike, and sing — relays, latches, speakers.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i1 reveal" href="slayer-exciter-manual.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 1 · the wild card</div>
+        <h3>The Slayer Exciter</h3>
+        <p>The simplest Tesla coil there is — one transistor, two coils, a flame of plasma. Full field manual.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+    <a class="issue i8 reveal" href="tools-bench-pamphlet.html">
+      <div class="spine"></div>
+      <div class="body"><div class="no">No. 8 · the meta-issue</div>
+        <h3>Tools &amp; the Bench</h3>
+        <p>Not a thing to build — what you build everything with. The iron, the meter, the habits.</p>
+        <div class="go"><span class="arw">→</span> open issue</div></div>
+    </a>
+
+  </div>
+
+  <span class="band">How the series connects</span>
+  <div class="block reveal">
+    <svg class="chain" viewBox="0 0 1000 168" role="img" aria-label="signal chain: power feeds the microcontroller, which reads sensors and drives motors and coils">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5e584c" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+
+      <!-- power -->
+      <rect x="22" y="60" width="120" height="48" rx="5" fill="#f4e8cb" stroke="#161310" stroke-width="1.5"/>
+      <rect x="22" y="60" width="120" height="6" fill="#c0830f"/>
+      <text class="lab" x="82" y="82" text-anchor="middle" font-weight="700">No. 6 power</text>
+      <text class="cap" x="82" y="97" text-anchor="middle">feeds everything</text>
+
+      <line x1="142" y1="84" x2="190" y2="84" stroke="#5e584c" stroke-width="1.5" marker-end="url(#a)"/>
+
+      <!-- mcu -->
+      <rect x="190" y="48" width="140" height="72" rx="5" fill="#dfeee5" stroke="#161310" stroke-width="1.5"/>
+      <rect x="190" y="48" width="140" height="6" fill="#159a55"/>
+      <text class="lab" x="260" y="78" text-anchor="middle" font-weight="700">No. 5 microcontroller</text>
+      <text class="cap" x="260" y="93" text-anchor="middle">read · decide · drive</text>
+
+      <!-- sensors in -->
+      <rect x="400" y="14" width="128" height="46" rx="5" fill="#e9e4fb" stroke="#161310" stroke-width="1.5"/>
+      <rect x="400" y="14" width="128" height="6" fill="#6a34c8"/>
+      <text class="lab" x="464" y="35" text-anchor="middle" font-weight="700">No. 4 sensors</text>
+      <text class="cap" x="464" y="50" text-anchor="middle">the world in</text>
+      <path d="M400,37 C370,37 360,84 332,84" fill="none" stroke="#6a34c8" stroke-width="1.5" marker-end="url(#a)"/>
+      <text class="cap" x="352" y="28" text-anchor="middle" fill="#6a34c8">in</text>
+
+      <!-- parts under mcu -->
+      <rect x="206" y="132" width="108" height="30" rx="5" fill="#d8eff5" stroke="#161310" stroke-width="1.5"/>
+      <rect x="206" y="132" width="108" height="5" fill="#0e9ac2"/>
+      <text class="cap" x="260" y="151" text-anchor="middle" fill="#0e9ac2" font-weight="700">No. 7 parts — the atoms</text>
+
+      <!-- arrows out from mcu -->
+      <line x1="330" y1="78" x2="560" y2="46" stroke="#5e584c" stroke-width="1.5" marker-end="url(#a)"/>
+      <line x1="330" y1="96" x2="560" y2="122" stroke="#5e584c" stroke-width="1.5" marker-end="url(#a)"/>
+      <text class="cap" x="452" y="58" text-anchor="middle" fill="#5e584c">drive</text>
+
+      <!-- motors -->
+      <rect x="560" y="22" width="128" height="46" rx="5" fill="#e6e9fb" stroke="#161310" stroke-width="1.5"/>
+      <rect x="560" y="22" width="128" height="6" fill="#1f3ccd"/>
+      <text class="lab" x="624" y="43" text-anchor="middle" font-weight="700">No. 2 motors</text>
+      <text class="cap" x="624" y="58" text-anchor="middle">spin &amp; move</text>
+
+      <!-- coils -->
+      <rect x="560" y="100" width="128" height="46" rx="5" fill="#f8e2ef" stroke="#161310" stroke-width="1.5"/>
+      <rect x="560" y="100" width="128" height="6" fill="#d12e84"/>
+      <text class="lab" x="624" y="121" text-anchor="middle" font-weight="700">No. 3 coils</text>
+      <text class="cap" x="624" y="136" text-anchor="middle">pull &amp; switch</text>
+
+      <!-- wild card -->
+      <rect x="752" y="60" width="140" height="48" rx="5" fill="#f6efe0" stroke="#161310" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <rect x="752" y="60" width="140" height="6" fill="#e6ac3c"/>
+      <text class="lab" x="822" y="82" text-anchor="middle" font-weight="700">No. 1 slayer exciter</text>
+      <text class="cap" x="822" y="97" text-anchor="middle">high-voltage wild card</text>
+      <line x1="688" y1="60" x2="752" y2="74" stroke="#5e584c" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#a)"/>
+
+      <!-- tools bracket -->
+      <line x1="40" y1="150" x2="40" y2="160" stroke="#2f6fb0" stroke-width="1.5"/>
+      <text class="cap" x="48" y="160" text-anchor="start" fill="#2f6fb0" font-weight="700">No. 8 tools &amp; bench — what you build all of it with</text>
+    </svg>
+    <p class="connect-note"><b>Read it left to right:</b> No.&nbsp;6 powers No.&nbsp;5, which reads No.&nbsp;4 and drives No.&nbsp;2 and No.&nbsp;3 — all assembled from No.&nbsp;7's parts, on No.&nbsp;8's bench, with No.&nbsp;1 as the high-voltage wild card off to the side. Build one project that uses every issue and you've built a robot.</p>
+  </div>
+
+  <span class="band">Where to start</span>
+  <div class="orderwrap">
+    <div class="ord reveal"><h4>New to the bench</h4>
+      <p>Start with the fundamentals, get power and a brain, then make something happen.</p>
+      <div class="path">7 parts → 8 tools → 6 power →<br>5 microcontroller → 4 sensors →<br>2 motors / 3 coils</div></div>
+    <div class="ord reveal"><h4>Here for the sparks</h4>
+      <p>Go straight for the wild card — it needs almost nothing else — then double back for the rest.</p>
+      <div class="path">1 slayer exciter → 7 parts →<br>8 tools → 6 power → the rest</div></div>
+  </div>
+
+  <p class="colophon">the workbench series · eight issues · salvage, build, measure, repeat · the meter is the last word</p>
+
+</div>
+</body>
+</html>

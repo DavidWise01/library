@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Notes — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#e9e5dc;--card:#f4f1ea;--ink:#1b1f1e;--dim:#5d645f;--teal:#0f6e6a;--copper:#b56a32;--tealtint:#d6e7e5;--coppertint:#f1e2d3;}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(27,31,30,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--teal);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--copper);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--teal);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#2c302b;}
+  .dek b{font-weight:500;color:var(--teal);}
+  .art{flex:0 0 auto;}
+  @keyframes flow{0%{stroke-dashoffset:60}100%{stroke-dashoffset:0}}
+  .loop{stroke-dasharray:6 4;animation:flow 1.6s linear infinite;}
+  @media (prefers-reduced-motion:reduce){.loop{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 13px;margin:34px 0 14px;}
+  .band.teal{background:var(--teal);} .band.copper{background:var(--copper);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;}
+  .type p{font-size:13px;margin:0;color:#383d36;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--teal);}
+  .card.c:hover{box-shadow:5px 5px 0 var(--copper);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--copper);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#2f332c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(27,31,30,0.18);color:#46504a;}
+  .card .plus b{color:var(--teal);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.c .plus b{color:var(--copper);}
+  .quote{border:1.5px solid var(--ink);background:var(--coppertint);padding:18px 22px;margin:6px 0 0;font-size:16px;line-height:1.7;font-style:italic;color:#26302c;}
+  .quote .src{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.05em;color:var(--dim);margin-top:10px;}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.teal{background:var(--tealtint);} .block.copper{background:var(--coppertint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(27,31,30,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"⎯";position:absolute;left:0;top:8px;color:var(--teal);font-weight:700;}
+  .block.copper .rules li::before{content:"✦";color:var(--copper);}
+  .rules b{font-weight:500;color:var(--teal);} .block.copper .rules b{color:var(--copper);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(27,31,30,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.loop{animation:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 1 · her work</span>
+    <div class="masthead">
+      <h1>The <em>Notes</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a looping flow of operations, an algorithm">
+        <rect x="34" y="30" width="112" height="92" rx="6" fill="#f4f1ea" stroke="#1b1f1e" stroke-width="2"/>
+        <g fill="none" stroke="#0f6e6a" stroke-width="2.2" stroke-linecap="round">
+          <line x1="56" y1="46" x2="124" y2="46"/><line x1="56" y1="60" x2="110" y2="60"/><line x1="56" y1="74" x2="118" y2="74"/>
+        </g>
+        <path class="loop" d="M122,88 q18,0 18,-18 q0,-18 -18,-18" fill="none" stroke="#b56a32" stroke-width="2.4"/>
+        <polygon points="122,84 126,88 122,92" fill="#b56a32"/>
+        <text x="68" y="106" font-family="Space Mono,monospace" font-size="11" fill="#0f6e6a">loop →</text>
+        <text x="90" y="142" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#5d645f">Note G</text>
+      </svg>
+    </div>
+    <p class="dek">Her fame rests on one document: a translated paper she <b>tripled in length</b> with notes of her own. Buried in them is a method for a machine to compute Bernoulli numbers — and a leap of imagination that reached a century ahead. This book is what the Notes actually say.</p>
+  </header>
+
+  <span class="band">What the Notes contain</span>
+  <div class="types">
+    <div class="type reveal"><h4>The translation</h4><p>Menabrea's French "Sketch of the Analytical Engine," rendered into English.</p><span class="tg">the base</span></div>
+    <div class="type reveal"><h4>Notes A–G</h4><p>Seven notes of her own, longer than the article they annotate.</p><span class="tg">her addition</span></div>
+    <div class="type reveal"><h4>Note G</h4><p>The Bernoulli-number method — the famous "first program."</p><span class="tg">the algorithm</span></div>
+    <div class="type reveal"><h4>The vision</h4><p>The leap from numbers to any symbol — music, letters, images.</p><span class="tg">the insight</span></div>
+  </div>
+
+  <span class="band teal">How the Notes came to be</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>A talk, written down</h3><p class="what">Babbage lectured on the Analytical Engine in Turin; Luigi Menabrea wrote it up in French.</p><p class="need"><b>source</b> Menabrea's "Sketch," published 1842</p><p class="do"><b>so</b> the only contemporary account of the engine was second-hand and in French.</p><p class="plus"><b>+1</b> Babbage himself never published a full account of the engine — which left the gap Ada filled.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>She tripled it</h3><p class="what">Asked to translate it, she added seven notes far longer than the original article.</p><p class="need"><b>scale</b> her Notes ≈ 3× the source text</p><p class="do"><b>so</b> the "translation" became chiefly her own work.</p><p class="plus"><b>+1</b> reportedly Babbage asked why she hadn't written her own paper — the notes had outgrown a footnote.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>By daily letter</h3><p class="what">She and Babbage exchanged near-daily letters as she worked, through 1843.</p><p class="need"><b>method</b> a correspondence like modern collaborators</p><p class="do"><b>so</b> the Notes were forged in genuine back-and-forth.</p><p class="plus"><b>+1</b> at one point they lost track of the draft of Note G — "Where is it gone?" Babbage wrote.</p></article>
+    <article class="card c reveal"><span class="num">04</span><h3>Signed only "A.A.L."</h3><p class="what">She published under her initials — a woman's authorship half-hidden by the conventions of 1843.</p><p class="need"><b>byline</b> "A.A.L." (Augusta Ada Lovelace)</p><p class="do"><b>so</b> her name was nearly lost to the very modesty of the era.</p><p class="plus"><b>+1</b> only later were the initials firmly tied to her — part of why recognition took so long.</p></article>
+  </div>
+
+  <span class="band teal">What's inside</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Note G: the algorithm</h3><p class="what">A step-by-step table for the engine to compute the Bernoulli numbers.</p><p class="need"><b>form</b> a sequence of operations with looping</p><p class="do"><b>so</b> it's widely called the first program published for a machine.</p><p class="plus"><b>+1</b> it even handles a repeated cycle — the seed of what we now call a loop.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Numbers → any symbol</h3><p class="what">Her deepest idea: the engine need not be limited to numbers at all.</p><p class="need"><b>leap</b> operations on symbols, not just quantities</p><p class="do"><b>so</b> she described a general-purpose machine before one existed.</p><p class="plus"><b>+1</b> this is the conceptual core of every computer since — numbers are just one kind of symbol.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The machine might make music</h3><p class="what">If musical relationships could be encoded, she wrote, the engine could compose.</p><p class="need"><b>example</b> "elaborate and scientific pieces of music"</p><p class="do"><b>so</b> she foresaw computers handling art, not just sums.</p><p class="plus"><b>+1</b> an astonishing prediction in 1843 — generative music by machine, named a century before the hardware.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Lady Lovelace's Objection</h3><p class="what">She held the engine could only do what it was ordered — it could not originate ideas.</p><p class="need"><b>claim</b> "it has no pretensions to originate anything"</p><p class="do"><b>so</b> she opened the question of machine intelligence.</p><p class="plus"><b>+1</b> Turing named this "Lady Lovelace's Objection" in 1950 and argued against it — her frame still drives the debate.</p></article>
+  </div>
+
+  <span class="band copper">In her own words</span>
+  <div class="quote reveal">
+    "The Analytical Engine has no pretensions whatever to originate anything. It can do whatever we know how to order it to perform."
+    <span class="src">— Ada Lovelace, Notes (1843), Note G</span>
+  </div>
+
+  <span class="band copper">Her body of work</span>
+  <div class="block teal">
+    <ul class="rules">
+      <li>Her one great published work is the <b>1843 Notes</b> on Babbage's Analytical Engine — an English translation of <b>Menabrea's article</b> plus <b>seven notes (A–G)</b> of her own, far longer than the original.</li>
+      <li><b>Note G</b> contains a step-by-step method for the engine to compute the <b>Bernoulli numbers</b> — the famous candidate for the "first computer program," complete with a repeated cycle.</li>
+      <li>Her most far-reaching idea was that the engine could operate on <b>any symbols, not just numbers</b> — even, she suggested, <b>composing music</b>.</li>
+      <li>She also argued the machine <b>could not originate</b> ideas — later dubbed <b>"Lady Lovelace's Objection"</b> by Alan Turing, and still central to AI debates.</li>
+      <li>She published under the initials <b>"A.A.L."</b>, which is part of why her authorship was long overlooked.</li>
+    </ul>
+  </div>
+
+  <span class="band copper">Reading the Notes today</span>
+  <div class="block copper">
+    <ul class="rules">
+      <li>The <b>Notes are unquestionably hers</b> and unquestionably important. What's debated is <b>how much of the Bernoulli algorithm</b> was her work versus Babbage's — they collaborated closely, by their own letters.</li>
+      <li>Babbage had <b>sketched earlier programs</b> for the engine privately; some historians argue the "first program" honor is therefore complicated. Others note hers was the <b>first published</b>, and the most developed.</li>
+      <li>The <b>vision</b> in the Notes — symbols beyond numbers, the limits of machine originality — is the part <b>least disputed and most prophetic</b>, and arguably her greater contribution than the algorithm itself.</li>
+      <li>Quotations here are her <b>actual published words</b>, but Victorian phrasing and long sentences mean context matters — read the full Note G if you want the real texture.</li>
+      <li>Book 2 sets the Notes in her <b>world</b>; Book 3 follows how their reputation was <b>lost, then rebuilt</b>.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 1 · a translation that became a vision · numbers were only the beginning</p>
+</div>
+</body>
+</html>

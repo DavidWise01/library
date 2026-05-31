@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Her Long Afterlife — No. 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#efe6d4;--card:#f7f0e1;--ink:#211a12;--dim:#6a5f4c;--lapis:#1f4ea8;--gold:#b8862b;--lapistint:#dce4f3;--goldtint:#f1e6c8;}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(33,26,18,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--lapis);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,76px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--lapis);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#33291c;}
+  .dek b{font-weight:500;color:var(--lapis);}
+  .art{flex:0 0 auto;}
+  @keyframes rise2{0%{opacity:0;transform:translateY(8px)}60%,100%{opacity:1;transform:none}}
+  .gleam{animation:rise2 3s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.gleam{animation:none;opacity:1}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 13px;margin:34px 0 14px;}
+  .band.lapis{background:var(--lapis);} .band.gold{background:var(--gold);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;}
+  .type p{font-size:13px;margin:0;color:#3c3424;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--lapis);border:1px solid var(--lapis);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--lapis);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#34291c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(33,26,18,0.18);color:#4a3f28;}
+  .card .plus b{color:var(--lapis);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--gold);}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.lapis{background:var(--lapistint);} .block.gold{background:var(--goldtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(33,26,18,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"𒀭";position:absolute;left:0;top:7px;font-size:13px;color:var(--lapis);}
+  .block.gold .rules li::before{content:"✦";color:var(--gold);}
+  .rules b{font-weight:500;color:var(--lapis);} .block.gold .rules b{color:var(--gold);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(33,26,18,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 3 · her legacy</span>
+    <div class="masthead">
+      <h1>Her Long <em>Afterlife</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a buried tablet brought back into the light">
+        <rect x="20" y="92" width="140" height="42" fill="#8a7a55" opacity="0.5"/>
+        <g class="gleam">
+          <rect x="64" y="46" width="52" height="62" rx="6" fill="#cdb98e" stroke="#211a12" stroke-width="2.5" transform="rotate(-6 90 77)"/>
+          <g fill="#5a4a2c" transform="rotate(-6 90 77)"><polygon points="74,60 82,58 80,66"/><polygon points="88,60 96,58 94,66"/><polygon points="74,76 82,74 80,82"/><polygon points="88,76 96,74 94,82"/><polygon points="74,92 82,90 80,98"/></g>
+        </g>
+        <g class="gleam" stroke="#b8862b" stroke-width="2" stroke-linecap="round"><line x1="120" y1="30" x2="128" y2="22"/><line x1="132" y1="44" x2="142" y2="40"/><line x1="118" y1="48" x2="126" y2="46"/></g>
+        <text x="90" y="146" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#6a5f4c">unburied, 1927</text>
+      </svg>
+    </div>
+    <p class="dek">She was buried, copied, forgotten for three thousand years — then dug back into the light, slowly reassembled, and finally read in full in <b>2023</b>. This book is her rediscovery, her reach, and why she matters now.</p>
+  </header>
+
+  <span class="band">The long arc</span>
+  <div class="types">
+    <div class="type reveal"><h4>Forgetting</h4><p>After the fall of Babylon her works went dark for ~3,000 years.</p><span class="tg">lost</span></div>
+    <div class="type reveal"><h4>Unburial</h4><p>1927: Woolley excavates Ur and lifts her inscribed disk from the ground.</p><span class="tg">found</span></div>
+    <div class="type reveal"><h4>Reassembly</h4><p>Decades of scholars piecing tablets together — recognition, then translation.</p><span class="tg">decoded</span></div>
+    <div class="type reveal"><h4>Return</h4><p>2023: her complete poems published in English; museum shows; her name on Mercury.</p><span class="tg">restored</span></div>
+  </div>
+
+  <span class="band lapis">Lost, then found</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Three thousand years dark</h3><p class="what">After the First Babylonian Empire fell, her tablets lay buried and unread.</p><p class="need"><b>span</b> roughly three millennia of silence</p><p class="do"><b>so</b> the first author was, for most of history, unknown.</p><p class="plus"><b>+1</b> Homer stayed in continuous circulation; she didn't — which is why he, not she, is the household name.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Woolley digs up Ur</h3><p class="what">In 1927 archaeologist Leonard Woolley excavated the temple complex and found her disk.</p><p class="need"><b>object</b> an alabaster disk, her name and image on it</p><p class="do"><b>so</b> a face and a title returned from the ground.</p><p class="plus"><b>+1</b> tablets with her writing had surfaced even earlier, in the early 1900s — the pieces arrived scattered.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The slow reassembly</h3><p class="what">It took decades to connect the disk to the tablets and recognize what she was.</p><p class="need"><b>by</b> the 1940s–50s scholars saw her as the earliest named author</p><p class="do"><b>so</b> her status was rebuilt fact by fact, not found whole.</p><p class="plus"><b>+1</b> a 1968 scholarly edition (Hallo &amp; van Dijk) of the Exaltation was a turning point in reading her.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>Read in full at last</h3><p class="what">Her complete poems appeared in one English translation only in 2023.</p><p class="need"><b>milestone</b> first complete English edition</p><p class="do"><b>so</b> the wider world could finally read all of her.</p><p class="plus"><b>+1</b> 4,300 years to be fully translated — a reminder of how recently she re-entered public reach.</p></article>
+  </div>
+
+  <span class="band lapis">Her reach</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Five centuries of copying</h3><p class="what">Scribes recopied her work for 500+ years, keeping it alive in the schools.</p><p class="need"><b>use</b> a core text in scribal training</p><p class="do"><b>so</b> generations learned to write partly through her.</p><p class="plus"><b>+1</b> the ~1750 BCE copies we rely on exist <em>because</em> students kept transcribing her, long after she died.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Into psalm and hymn</h3><p class="what">Her petitionary-prayer forms echo forward through later traditions.</p><p class="need"><b>echoes</b> Hebrew psalms, Homeric hymns</p><p class="do"><b>so</b> her shapes ripple into texts we still know.</p><p class="plus"><b>+1</b> scholars trace faint echoes even into early Christian hymn-singing, by way of Babylon.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The first "I"</h3><p class="what">Her first-person voice models writing about one's own inner life.</p><p class="need"><b>gift</b> personal subjectivity on the page</p><p class="do"><b>so</b> the memoir impulse has a 4,000-year-old root.</p><p class="plus"><b>+1</b> every author who has since written "I" stands, distantly, behind her example.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>A modern reclamation</h3><p class="what">Museums and scholars have brought her back into public view.</p><p class="need"><b>moment</b> the 2022–23 "She Who Wrote" exhibition (Morgan Library)</p><p class="do"><b>so</b> she's being restored to the canon she founded.</p><p class="plus"><b>+1</b> a crater on the planet Mercury is named Enheduanna — her name now literally off-world.</p></article>
+  </div>
+
+  <span class="band gold">The living debate</span>
+  <div class="grid">
+    <article class="card g reveal"><span class="num">09</span><h3>Did she write it all?</h3><p class="what">Because we have only later copies, scholars debate how much she personally composed.</p><p class="need"><b>issue</b> originals lost; copies ~600 years later</p><p class="do"><b>so</b> attribution is genuinely contested — and openly so.</p><p class="plus"><b>+1</b> this isn't a scandal — it's how careful history works when the originals are gone.</p></article>
+    <article class="card g reveal"><span class="num">10</span><h3>Both sides are serious</h3><p class="what">Some assyriologists doubt the attribution; many others defend it.</p><p class="need"><b>state</b> a real, unresolved scholarly split</p><p class="do"><b>so</b> honesty means holding the question open.</p><p class="plus"><b>+1</b> "we only have copies, and things creep in over centuries" — the curators name the difficulty plainly.</p></article>
+    <article class="card g reveal"><span class="num">11</span><h3>What isn't in doubt</h3><p class="what">Her existence, rank, and the attribution of first authorship to her stand firm.</p><p class="need"><b>solid</b> a real, powerful historical woman</p><p class="do"><b>so</b> the debate is about degree, not whether she was real.</p><p class="plus"><b>+1</b> even skeptics work <em>from</em> her named tablets — the dispute lives inside an accepted reality.</p></article>
+    <article class="card g reveal"><span class="num">12</span><h3>Why the doubt matters</h3><p class="what">Naming the uncertainty is part of honoring her — not undermining her.</p><p class="need"><b>principle</b> a claim is only as good as its evidence</p><p class="do"><b>so</b> her story is stronger told with the caveats in.</p><p class="plus"><b>+1</b> a legacy that survives honest scrutiny is more durable than one that needs the doubts hidden.</p></article>
+  </div>
+
+  <span class="band gold">Why she still matters</span>
+  <div class="block lapis">
+    <ul class="rules">
+      <li>She is the <b>first author we can name</b> — the point where writing stops being anonymous and becomes a <b>signed act</b>.</li>
+      <li>She was <b>buried and forgotten for ~3,000 years</b>, unburied in <b>1927</b>, slowly reassembled, and <b>fully translated only in 2023</b>.</li>
+      <li>Her forms <b>echo forward</b> into psalms, hymns, and prayer — and her first-person voice is a <b>root of writing about the self</b>.</li>
+      <li>She is being <b>reclaimed</b> now — major exhibitions, new translations, even a <b>crater on Mercury</b> bearing her name.</li>
+      <li>And she's a <b>woman</b> at the very origin of authored literature — a fact worth keeping in plain sight.</li>
+    </ul>
+  </div>
+
+  <span class="band gold">How a legacy gets built</span>
+  <div class="block gold">
+    <ul class="rules">
+      <li>A reputation this old is <b>assembled</b>, not simply inherited — disk, tablets, translations, and debate, layered over a century of work.</li>
+      <li>Dates and details carry <b>uncertainty</b> ("c. 2300 BCE," "~3,000 years"); they're approximations from <b>combined later sources</b>.</li>
+      <li>The <b>authorship debate is real and ongoing</b> — this series presents it as part of her story, not as a footnote to bury.</li>
+      <li>Quotations from her are <b>translations</b>; wording varies by translator and shouldn't be treated as her literal words.</li>
+      <li>Told honestly — firm where the evidence is firm, open where it isn't — she needs <b>no exaggeration</b>. The real Enheduanna is extraordinary enough.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 3 · buried, unburied, read at last · the first name, restored</p>
+</div>
+</body>
+</html>

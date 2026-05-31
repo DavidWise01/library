@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power & Batteries — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f2eee2; --card:#faf6ec; --ink:#19150f; --dim:#605949;
+    --gold:#c0830f; --red:#d12d2a; --goldtint:#f4e8cb; --redtint:#fae0de;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(25,21,15,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--gold);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--red);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(38px,8vw,76px);line-height:0.9;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8.5em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--gold);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--red);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#332d22;}
+  .dek b{font-weight:500;color:var(--gold);}
+  .battart{flex:0 0 auto;}
+  @keyframes charge{0%{opacity:.15}18%{opacity:1}86%{opacity:1}100%{opacity:.15}}
+  .cbar{animation:charge 2.4s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.cbar{animation:none;opacity:1}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.gold{background:var(--gold);} .band.red{background:var(--red);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#393226;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--gold);}
+  .card.r:hover{box-shadow:5px 5px 0 var(--red);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--red);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322d23;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .warn{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--red);border:1px solid var(--red);padding:1px 6px;margin-top:9px;}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.gold{background:var(--goldtint);} .block.red{background:var(--redtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(25,21,15,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--gold);font-weight:700;}
+  .block.red .rules li::before{content:"!";color:var(--red);left:3px;}
+  .rules b{font-weight:500;color:var(--gold);} .block.red .rules b{color:var(--red);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(25,21,15,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;}.card:hover{transform:none;box-shadow:none;}.reveal{animation:none;opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 6</span>
+    <div class="masthead">
+      <h1>Power <em>& Batteries</em></h1>
+      <svg class="battart" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a battery charging, with a lightning bolt">
+        <text x="30" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="14" fill="#605949">−</text>
+        <text x="170" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="14" fill="#605949">+</text>
+        <rect x="42" y="50" width="104" height="56" rx="9" fill="#faf6ec" stroke="#19150f" stroke-width="2.5"/>
+        <rect x="146" y="66" width="10" height="24" rx="2" fill="#19150f"/>
+        <rect class="cbar" style="animation-delay:0s" x="52" y="58" width="22" height="40" rx="3" fill="#c0830f"/>
+        <rect class="cbar" style="animation-delay:.45s" x="82" y="58" width="22" height="40" rx="3" fill="#c0830f"/>
+        <rect class="cbar" style="animation-delay:.9s" x="112" y="58" width="22" height="40" rx="3" fill="#c0830f"/>
+        <polygon points="100,46 80,82 94,82 86,110 112,70 98,70" fill="#d12d2a" stroke="#19150f" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="dek">Every project on the shelf needs it, and this is the issue where the bench can actually <b>bite back</b>. Sources, regulators, batteries, and caps — how to feed a circuit cleanly, and how not to start a fire doing it.</p>
+  </header>
+
+  <span class="band">Know your source</span>
+  <div class="types">
+    <div class="type reveal"><h4>Batteries</h4><p>Portable chemical storage — alkaline, NiMH, Li-ion/LiPo, coin. The on-the-go default.</p><span class="tg">portable</span></div>
+    <div class="type reveal"><h4>Wall supply</h4><p>A "wall wart" or bench supply turns mains into clean low-voltage DC.</p><span class="tg">from the wall</span></div>
+    <div class="type reveal"><h4>Regulator</h4><p>Turns a higher or messy voltage into a fixed, steady rail.</p><span class="tg">cleans it up</span></div>
+    <div class="type reveal"><h4>Solar</h4><p>Panels and tiny harvesters scavenge power from light.</p><span class="tg">harvest</span></div>
+    <div class="type reveal"><h4>Capacitor</h4><p>Short-term storage — smooths supplies and delivers bursts.</p><span class="tg">smooth & burst</span></div>
+    <div class="type reveal"><h4>Charger / BMS</h4><p>Circuits that charge cells safely and protect them from abuse.</p><span class="tg">safe charge</span></div>
+  </div>
+
+  <span class="band gold">Make clean power</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Regulate a voltage</h3><p class="what">Pin a messy or higher voltage to a clean 5 V or 3.3 V.</p><p class="need"><b>need</b> a regulator (7805 / a buck module) · caps</p><p class="do"><b>do</b> feed it in, get a steady rail out.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Step up or down</h3><p class="what">Boost one cell to 5 V, or buck 12 V down — efficiently.</p><p class="need"><b>need</b> a buck / boost converter</p><p class="do"><b>do</b> set the output; switching converters waste little as heat.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>USB-power anything</h3><p class="what">Pull stable 5 V from a port or power bank.</p><p class="need"><b>need</b> a USB breakout · your circuit</p><p class="do"><b>do</b> tap V+ and ground; many projects run straight off it.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>ATX bench supply</h3><p class="what">A dead PC supply becomes a multi-rail bench supply.</p><p class="need"><b>need</b> an old ATX PSU · a load resistor · binding posts</p><p class="do"><b>do</b> jump it on; tap the 3.3, 5, and 12 V rails.</p><span class="warn">⚠ caps inside — discharge</span></article>
+  </div>
+
+  <span class="band gold">Go portable</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Pick the battery</h3><p class="what">Match chemistry and voltage to the job.</p><p class="need"><b>need</b> alkaline / NiMH / Li-ion / coin</p><p class="do"><b>do</b> weigh capacity, rechargeability, size, and safety.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Build a pack</h3><p class="what">Cells in series for volts, parallel for capacity.</p><p class="need"><b>need</b> matched cells · a holder</p><p class="do"><b>do</b> series adds voltage, parallel adds run-time; keep them balanced.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Charge it safely</h3><p class="what">A proper charger tops up lithium without drama.</p><p class="need"><b>need</b> a TP4056-style charger · protection</p><p class="do"><b>do</b> charge attended; never bodge a lithium charger.</p><span class="warn">⚠ lithium</span></article>
+    <article class="card reveal"><span class="num">08</span><h3>Battery gauge</h3><p class="what">Read the voltage to estimate charge, and cut off when low.</p><p class="need"><b>need</b> a divider into an ADC</p><p class="do"><b>do</b> map voltage to %; shut down before over-discharge.</p></article>
+  </div>
+
+  <span class="band gold">Store & smooth</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">09</span><h3>Smooth a supply</h3><p class="what">A cap across the rails kills noise and dips.</p><p class="need"><b>need</b> a capacitor near each chip</p><p class="do"><b>do</b> decouple every power pin — cheapest reliability there is.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Energy burst</h3><p class="what">A big cap dumps power faster than any battery — a camera flash is exactly this.</p><p class="need"><b>need</b> a large capacitor · a fast switch</p><p class="do"><b>do</b> charge slow, release fast.</p><span class="warn">⚠ stores a real jolt</span></article>
+    <article class="card reveal"><span class="num">11</span><h3>Supercap backup</h3><p class="what">Ride through a brief power loss.</p><p class="need"><b>need</b> a supercapacitor</p><p class="do"><b>do</b> keep a clock or RAM alive across a blink of the supply.</p></article>
+    <article class="card reveal"><span class="num">12</span><h3>Soft power</h3><p class="what">A tidy power-on, or a one-touch latching button.</p><p class="need"><b>need</b> an RC delay or a soft-latch circuit</p><p class="do"><b>do</b> ramp in gently, or toggle power with a tap.</p></article>
+  </div>
+
+  <span class="band red">Harvest & charge</span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">13</span><h3>Solar charger</h3><p class="what">A panel tops up a battery through a controller.</p><p class="need"><b>need</b> a solar panel · a charge controller · a cell</p><p class="do"><b>do</b> let the controller manage it — don't wire a panel straight to a cell.</p></article>
+    <article class="card r reveal"><span class="num">14</span><h3>Hand-crank / dynamo</h3><p class="what">A motor-generator (see no. 2) charges a cell or cap.</p><p class="need"><b>need</b> a DC motor · a diode · storage</p><p class="do"><b>do</b> spin it, rectify the output, store the energy.</p></article>
+    <article class="card r reveal"><span class="num">15</span><h3>Power-bank teardown</h3><p class="what">Reuse a power bank's cell and charger board.</p><p class="need"><b>need</b> a USB power bank</p><p class="do"><b>do</b> harvest the protected cell + boost board as a tidy supply.</p><span class="warn">⚠ lithium</span></article>
+    <article class="card r reveal"><span class="num">16</span><h3>Trickle backup</h3><p class="what">Keep a backup cell quietly topped up.</p><p class="need"><b>need</b> a small source · a charge circuit</p><p class="do"><b>do</b> float-charge so it's ready when the main supply drops.</p></article>
+  </div>
+
+  <span class="band red">Power discipline</span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">17</span><h3>Measure it</h3><p class="what">A multimeter is the one tool you can't skip.</p><p class="need"><b>need</b> a multimeter</p><p class="do"><b>do</b> read volts, check current, test continuity — before you trust anything.</p></article>
+    <article class="card r reveal"><span class="num">18</span><h3>Budget the current</h3><p class="what">Add up what every part pulls at peak.</p><p class="need"><b>need</b> each part's draw · arithmetic</p><p class="do"><b>do</b> size the supply with headroom; a starved rail browns out.</p></article>
+    <article class="card r reveal"><span class="num">19</span><h3>Fuse & protect</h3><p class="what">Cheap insurance against smoke and reverse wiring.</p><p class="need"><b>need</b> a fuse · a series diode or P-MOSFET · maybe a TVS</p><p class="do"><b>do</b> fuse the pack, block reverse polarity, clamp the spikes.</p></article>
+    <article class="card r reveal"><span class="num">20</span><h3>Ground & wiring</h3><p class="what">One reference, wire thick enough for the current.</p><p class="need"><b>need</b> solid grounds · the right gauge</p><p class="do"><b>do</b> tie all grounds together; short, fat runs for high current.</p></article>
+  </div>
+
+  <span class="band">Power rules</span>
+  <div class="block gold">
+    <ul class="rules">
+      <li>Volts push, amps flow, <b>watts</b> (V × A) are the power. Match the voltage exactly, and make sure the supply can deliver the current.</li>
+      <li>Linear regulators (7805) are simple but <b>burn</b> the extra voltage as heat; switching (buck/boost) converters are efficient — switch when the voltage gap or the current is large.</li>
+      <li>Put a small <b>decoupling capacitor</b> right at every chip's power pins — the cheapest reliability you'll ever buy.</li>
+      <li>Total what everything draws <b>at peak</b> (motors and LED strips spike), and pick a supply with headroom — a starved supply browns out and resets the board.</li>
+      <li><b>Reverse polarity</b> kills parts instantly — add a series diode or a P-MOSFET — and every subsystem must share one ground.</li>
+      <li><b>Lithium is unforgiving</b>: Li-ion / LiPo need a proper charger and a protection circuit. Respect them, or they bite.</li>
+    </ul>
+  </div>
+
+  <span class="band red">Before it burns</span>
+  <div class="block red">
+    <ul class="rules">
+      <li>This is the issue where it can <b>hurt you and start a fire</b> — respect it.</li>
+      <li><b>Lithium cells</b> (Li-ion, LiPo): a damaged, overcharged, shorted, or punctured cell can vent, ignite, or explode. Real charger with protection, never charge unattended, never trust a swollen cell, never short the terminals.</li>
+      <li><b>Mains voltage</b> can kill. Don't open or rewire mains gear unless you're trained — use a sealed adapter or a proper bench supply for low-voltage work.</li>
+      <li><b>Shorts and overcurrent</b> start fires — fuse your packs, insulate bare metal, and never let a battery short across a tool or loose in a pocket.</li>
+      <li><b>Big capacitors and cap banks</b> hold a charge after power-off and can deliver a dangerous jolt — discharge before touching (same caution as TVs and microwaves earlier in the series).</li>
+      <li><b>Heat</b>: regulators, resistors, and stalled loads run hot — give them airflow or a heatsink, and think before you box them in.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · volts push, amps flow, watts cost · respect lithium and the wall</p>
+
+</div>
+</body>
+</html>

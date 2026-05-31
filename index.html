@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="The Library — a growing archive of figures and ideas. One folder per person. Every book inside.">
+<title>THE LIBRARY · ROOT0 · DavidWise01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Bricolage+Grotesque:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0a0906;--ink2:#131009;--ink3:#1c1710;
+  --parchment:#f4efe5;--parchment2:#e8e0ce;
+  --gold:#c49a2a;--gold2:#e0b840;--gold3:#f5d060;--gold-dim:#3a2c08;
+  --dim:#7a6a48;--dim2:#9a8860;--faint:#1e180c;
+  --serif:"Cinzel",Georgia,serif;
+  --body:"Newsreader",Georgia,serif;
+  --sans:"Bricolage Grotesque",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--ink);
+  color:var(--parchment);
+  font-family:var(--body);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+
+/* grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/></svg>");
+}
+
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px 96px}
+
+/* ── HEADER ──────────────────────────────────────────── */
+header{
+  padding:60px 0 44px;
+  border-bottom:1px solid var(--gold-dim);
+  position:relative;text-align:center;
+}
+header::after{
+  content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:80px;height:1px;background:var(--gold);box-shadow:0 0 6px var(--gold);
+}
+
+.h-eyebrow{
+  font-family:var(--sans);font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:18px;
+}
+h1{
+  font-family:var(--serif);font-size:clamp(28px,7vw,60px);
+  font-weight:700;letter-spacing:.14em;
+  color:var(--gold3);text-shadow:0 0 40px rgba(240,200,80,.15);
+  line-height:1;margin-bottom:14px;
+}
+.h-sub{
+  font-size:15px;color:var(--parchment2);max-width:56ch;margin:0 auto 20px;
+  font-style:italic;line-height:1.7;
+}
+#entry-count{
+  font-family:var(--sans);font-size:12px;color:var(--dim2);
+  letter-spacing:.1em;
+}
+#entry-count span{color:var(--gold2);font-weight:500}
+
+/* ── TOOLBAR ─────────────────────────────────────────── */
+.toolbar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:20px 0 0;margin-top:32px;
+}
+.search-wrap{flex:1;min-width:200px;max-width:360px;position:relative}
+#search{
+  width:100%;background:var(--ink2);border:1px solid var(--gold-dim);
+  color:var(--parchment);font-family:var(--body);font-size:14px;
+  padding:9px 14px 9px 36px;outline:none;
+  transition:border-color .2s;
+}
+#search::placeholder{color:var(--dim)}
+#search:focus{border-color:var(--gold-dim);box-shadow:0 0 0 2px rgba(196,154,42,.1)}
+.search-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  font-size:13px;color:var(--dim);pointer-events:none;
+}
+
+.filter-group{display:flex;gap:6px;flex-wrap:wrap}
+.f-btn{
+  background:none;border:1px solid var(--faint);color:var(--dim2);
+  font-family:var(--sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 13px;cursor:pointer;transition:all .15s;
+}
+.f-btn:hover{border-color:var(--gold-dim);color:var(--gold2)}
+.f-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(196,154,42,.06)}
+
+.sort-wrap{margin-left:auto}
+#sort-select{
+  background:var(--ink2);border:1px solid var(--gold-dim);color:var(--dim2);
+  font-family:var(--sans);font-size:11px;letter-spacing:.08em;
+  padding:7px 12px;outline:none;cursor:pointer;
+}
+
+/* ── AUTHOR GRID ─────────────────────────────────────── */
+#grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px;
+  margin-top:24px;
+  background:var(--gold-dim);
+  border:1px solid var(--gold-dim);
+}
+
+.card{
+  background:var(--ink2);
+  padding:28px 26px 22px;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  transition:background .2s;
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  transition:opacity .2s;opacity:.5;
+}
+.card:hover{background:rgba(255,255,255,.025)}
+.card:hover::before{opacity:1}
+
+.card-era{
+  font-family:var(--sans);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;margin-bottom:10px;opacity:.75;
+}
+.card-name{
+  font-family:var(--serif);font-size:20px;font-weight:600;
+  letter-spacing:.04em;line-height:1.1;margin-bottom:5px;
+}
+.card-role{
+  font-size:12.5px;font-style:italic;color:var(--parchment2);
+  margin-bottom:12px;opacity:.8;line-height:1.4;
+}
+.card-desc{
+  font-size:13px;color:var(--dim2);line-height:1.6;
+  flex:1;margin-bottom:16px;
+}
+
+.card-works{
+  border-top:1px solid var(--faint);padding-top:12px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.cw-item{
+  display:flex;align-items:baseline;gap:8px;
+  font-size:12px;color:var(--dim);
+}
+.cw-n{
+  font-family:var(--serif);font-size:10px;font-weight:600;
+  opacity:.45;flex-shrink:0;min-width:16px;
+}
+.cw-more{font-size:11px;color:var(--dim);opacity:.5;font-style:italic;margin-top:2px}
+
+.card-open{
+  display:inline-block;margin-top:14px;font-family:var(--sans);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);transition:color .15s;
+}
+.card:hover .card-open{color:var(--gold2)}
+.card-open::after{content:" →"}
+
+/* hidden state */
+.card.hidden{display:none}
+
+/* ── EMPTY STATE ─────────────────────────────────────── */
+#empty{
+  display:none;grid-column:1/-1;padding:48px;text-align:center;
+  font-size:14px;color:var(--dim);font-style:italic;
+}
+#empty.show{display:block}
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer{
+  margin-top:56px;padding-top:20px;
+  border-top:1px solid var(--gold-dim);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+  font-size:11px;color:var(--dim);letter-spacing:.06em;
+  font-family:var(--sans);
+}
+footer a{color:var(--gold);text-decoration:none}
+
+/* ── REVEAL ───────────────────────────────────────────── */
+.card{opacity:0;transform:translateY(16px);animation:fadeUp .45s ease forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){
+  .toolbar{flex-direction:column;align-items:stretch}
+  .sort-wrap{margin-left:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="h-eyebrow">ROOT0 · DavidWise01 · TriPod LLC</div>
+    <h1>THE LIBRARY</h1>
+    <p class="h-sub">One folder per person. Every book inside. A living archive that grows as knowledge is added.</p>
+    <div id="entry-count">Loading…</div>
+  </header>
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="search" type="search" placeholder="Search names, eras, roles…" autocomplete="off">
+    </div>
+    <div class="filter-group" id="era-filters">
+      <button class="f-btn active" data-era="all">All</button>
+    </div>
+    <div class="sort-wrap">
+      <select id="sort-select">
+        <option value="added">Order Added</option>
+        <option value="era-asc">Era ↑ (oldest first)</option>
+        <option value="era-desc">Era ↓ (newest first)</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="grid">
+    <div id="empty">No entries match.</div>
+  </div>
+
+  <footer>
+    <span><b>The Library</b> · ROOT0-ATTRIBUTION-v1.0 · David Lee Wise / ROOT0 / TriPod LLC</span>
+    <a href="https://github.com/DavidWise01/library">github.com/DavidWise01/library</a>
+  </footer>
+
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────────────
+// REGISTRY — add one object here per new author/subject
+// Fields: slug, name, era (display), eraSort (number for sorting, negative=BCE),
+//         place, role, desc, color (primary), entry (href of first/index page),
+//         works: [{n, title, href}]
+// ─────────────────────────────────────────────────────────────────────────────
+const LIBRARY = [
+
+  {
+    slug: "enheduanna",
+    name: "Enheduanna",
+    era: "c. 2300 BCE",
+    eraSort: -2300,
+    place: "Ur, Sumer",
+    role: "High Priestess · World's First Named Author",
+    desc: "Daughter of Sargon of Akkad. Signed her name to the Exaltation of Inanna and 42 Temple Hymns in cuneiform, 4,300 years ago. Her alabaster disk was excavated from beneath the ruins of Ur in 1927.",
+    color: "#1f4ea8",
+    entry: "enheduanna/0-who.html",
+    works: [
+      { n:"0", title:"Who She Was",       href:"enheduanna/0-who.html" },
+      { n:"1", title:"Her Works",          href:"enheduanna/1-works.html" },
+      { n:"2", title:"Her World",          href:"enheduanna/2-world.html" },
+      { n:"3", title:"Her Long Afterlife", href:"enheduanna/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "ada-lovelace",
+    name: "Ada Lovelace",
+    era: "1815–1852",
+    eraSort: 1815,
+    place: "London",
+    role: "Mathematician · Author of the First Algorithm",
+    desc: "Byron's daughter, raised on mathematics. Her 1843 Notes on the Analytical Engine — seven times longer than the paper she was translating — contain the first algorithm ever written. She died at 36.",
+    color: "#0f6e6a",
+    entry: "ada-lovelace/0-who.html",
+    works: [
+      { n:"0", title:"Who She Was",       href:"ada-lovelace/0-who.html" },
+      { n:"1", title:"The Notes (1843)",  href:"ada-lovelace/1-notes.html" },
+      { n:"2", title:"Her World",         href:"ada-lovelace/2-world.html" },
+      { n:"3", title:"Her Long Afterlife",href:"ada-lovelace/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "faraday",
+    name: "Michael Faraday",
+    era: "1791–1867",
+    eraSort: 1791,
+    place: "London",
+    role: "Physicist · The Cage · Electromagnetic Induction",
+    desc: "Lined a room with metal foil in 1836 and proved the interior was electrically invisible. That principle now lives inside every coaxial cable, MRI room, microwave door, and anti-static bag.",
+    color: "#1763d6",
+    entry: "faraday/0-idea.html",
+    works: [
+      { n:"0", title:"The Idea",        href:"faraday/0-idea.html" },
+      { n:"1", title:"Build a Cage",    href:"faraday/1-build.html" },
+      { n:"2", title:"Shielding at Work",href:"faraday/2-at-work.html" },
+      { n:"3", title:"The Field Inside",href:"faraday/3-theory.html" },
+    ]
+  },
+
+  {
+    slug: "workbench",
+    name: "The Workbench",
+    era: "Ongoing",
+    eraSort: 9999,
+    place: "The Bench",
+    role: "8-Pamphlet Tool Series · Electronics · Making",
+    desc: "The living tradition of hands-on making. Small motors, electromagnets, sensors, microcontrollers, power, parts, tools. Eight pamphlets and one Slayer Exciter field manual.",
+    color: "#6a34c8",
+    entry: "workbench/index.html",
+    works: [
+      { n:"—",  title:"Series Index",         href:"workbench/index.html" },
+      { n:"2",  title:"Small Motors",         href:"workbench/2-small-motors.html" },
+      { n:"3",  title:"Electromagnets",       href:"workbench/3-electromagnets.html" },
+      { n:"4",  title:"Sensors",              href:"workbench/4-sensors.html" },
+      { n:"5",  title:"Microcontrollers",     href:"workbench/5-microcontrollers.html" },
+      { n:"6",  title:"Power & Batteries",    href:"workbench/6-power-batteries.html" },
+      { n:"7",  title:"Parts",                href:"workbench/7-parts.html" },
+      { n:"8",  title:"Tools & The Bench",    href:"workbench/8-tools.html" },
+      { n:"+",  title:"Slayer Exciter Manual",href:"workbench/slayer-exciter-manual.html" },
+    ]
+  },
+
+];
+// ─────────────────────────────────────────────────────────────────────────────
+// END REGISTRY — add new entries above this line
+// ─────────────────────────────────────────────────────────────────────────────
+
+
+// ── RENDER ─────────────────────────────────────────────
+let activeEra = "all";
+let activeSort = "added";
+let searchQuery = "";
+
+function eraGroup(e) {
+  if (e.eraSort < 0)    return "BCE";
+  if (e.eraSort < 1800) return "Pre-1800";
+  if (e.eraSort < 1900) return "1800s";
+  if (e.eraSort < 2000) return "1900s";
+  if (e.eraSort >= 9000) return "Ongoing";
+  return "2000s+";
+}
+
+function buildEraFilters() {
+  const groups = ["all", ...new Set(LIBRARY.map(eraGroup))];
+  const container = document.getElementById("era-filters");
+  container.innerHTML = "";
+  groups.forEach(g => {
+    const btn = document.createElement("button");
+    btn.className = "f-btn" + (g === activeEra ? " active" : "");
+    btn.dataset.era = g;
+    btn.textContent = g === "all" ? "All" : g;
+    btn.addEventListener("click", () => { activeEra = g; render(); buildEraFilters(); });
+    container.appendChild(btn);
+  });
+}
+
+function sortedFiltered() {
+  let list = [...LIBRARY];
+  // filter era
+  if (activeEra !== "all") list = list.filter(e => eraGroup(e) === activeEra);
+  // filter search
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(e =>
+      e.name.toLowerCase().includes(q) ||
+      e.era.toLowerCase().includes(q) ||
+      e.role.toLowerCase().includes(q) ||
+      e.place.toLowerCase().includes(q) ||
+      e.desc.toLowerCase().includes(q) ||
+      e.works.some(w => w.title.toLowerCase().includes(q))
+    );
+  }
+  // sort
+  if (activeSort === "era-asc")  list.sort((a,b) => a.eraSort - b.eraSort);
+  if (activeSort === "era-desc") list.sort((a,b) => b.eraSort - a.eraSort);
+  if (activeSort === "name")     list.sort((a,b) => a.name.localeCompare(b.name));
+  return list;
+}
+
+const PREVIEW_WORKS = 4; // max works shown on card before "+N more"
+
+function cardHTML(e, idx) {
+  const shown = e.works.slice(0, PREVIEW_WORKS);
+  const more  = e.works.length - shown.length;
+  const worksHTML = shown.map(w =>
+    `<div class="cw-item"><span class="cw-n">${w.n}</span><span>${w.title}</span></div>`
+  ).join("") + (more > 0 ? `<div class="cw-more">+ ${more} more</div>` : "");
+
+  const delay = Math.min(idx * 40, 400);
+  return `
+<a href="${e.entry}" class="card" style="--c:${e.color};animation-delay:${delay}ms"
+   data-slug="${e.slug}" data-era="${eraGroup(e)}">
+  <style>.card[data-slug="${e.slug}"]::before{background:linear-gradient(90deg,${e.color},${e.color}88)}</style>
+  <div class="card-era" style="color:${e.color}">${e.era} · ${e.place}</div>
+  <div class="card-name">${e.name}</div>
+  <div class="card-role">${e.role}</div>
+  <div class="card-desc">${e.desc}</div>
+  <div class="card-works">${worksHTML}</div>
+  <span class="card-open">Open</span>
+</a>`;
+}
+
+function render() {
+  const list = sortedFiltered();
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+
+  // keep empty sentinel
+  grid.innerHTML = '';
+  grid.appendChild(empty);
+
+  if (list.length === 0) {
+    empty.className = "show";
+  } else {
+    empty.className = "";
+    list.forEach((e, i) => {
+      const div = document.createElement("div");
+      div.innerHTML = cardHTML(e, i);
+      grid.appendChild(div.firstElementChild);
+    });
+  }
+
+  // Update count
+  const total = LIBRARY.length;
+  const shown = list.length;
+  const works = LIBRARY.reduce((a,e) => a + e.works.length, 0);
+  document.getElementById("entry-count").innerHTML =
+    shown === total
+      ? `<span>${total}</span> entries · <span>${works}</span> works total`
+      : `Showing <span>${shown}</span> of <span>${total}</span> · <span>${works}</span> works total`;
+}
+
+// ── EVENTS ─────────────────────────────────────────────
+document.getElementById("search").addEventListener("input", e => {
+  searchQuery = e.target.value.trim();
+  render();
+});
+
+document.getElementById("sort-select").addEventListener("change", e => {
+  activeSort = e.target.value;
+  render();
+});
+
+// ── INIT ───────────────────────────────────────────────
+buildEraFilters();
+render();
+</script>
+</body>
+</html>

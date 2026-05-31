@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microcontrollers & Code — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef0e8; --card:#f7f8f1; --ink:#15171a; --dim:#5c6055;
+    --grn:#159a55; --red:#e8463a; --grntint:#dfeee5; --redtint:#fbe4e1;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(21,23,26,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--grn);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--red);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,7vw,64px);line-height:0.92;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--grn);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--red);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#312f29;}
+  .dek b{font-weight:500;color:var(--grn);}
+  .chipart{flex:0 0 auto;}
+  @keyframes flowR{0%{transform:translateX(0);opacity:0}18%{opacity:1}80%{opacity:1}100%{transform:translateX(30px);opacity:0}}
+  @keyframes flowL{0%{transform:translateX(0);opacity:0}18%{opacity:1}80%{opacity:1}100%{transform:translateX(-30px);opacity:0}}
+  @keyframes flowU{0%{transform:translateY(0);opacity:0}18%{opacity:1}80%{opacity:1}100%{transform:translateY(-28px);opacity:0}}
+  @keyframes flowD{0%{transform:translateY(0);opacity:0}18%{opacity:1}80%{opacity:1}100%{transform:translateY(26px);opacity:0}}
+  @keyframes blink{0%,44%{opacity:1}50%,94%{opacity:0.12}}
+  .fR{animation:flowR 1.5s linear infinite} .fL{animation:flowL 1.7s linear infinite}
+  .fU{animation:flowU 1.6s linear infinite} .fD{animation:flowD 1.8s linear infinite}
+  .led{animation:blink 1.25s ease-in-out infinite}
+  @media (prefers-reduced-motion:reduce){.fR,.fL,.fU,.fD{animation:none;opacity:.8}.led{animation:none}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.grn{background:var(--grn);} .band.red{background:var(--red);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#37342c;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--grn);border:1px solid var(--grn);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--grn);}
+  .card.r:hover{box-shadow:5px 5px 0 var(--red);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--red);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e27;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.grn{background:var(--grntint);} .block.red{background:var(--redtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(21,23,26,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--grn);font-weight:700;}
+  .block.red .rules li::before{content:"!";color:var(--red);left:3px;}
+  .rules b{font-weight:500;color:var(--grn);} .block.red .rules b{color:var(--red);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(21,23,26,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;}.card:hover{transform:none;box-shadow:none;}.reveal{animation:none;opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 5</span>
+    <div class="masthead">
+      <h1>Microcontrollers <em>& Code</em></h1>
+      <svg class="chipart" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a microcontroller chip with a blinking LED and signals flowing out">
+        <g stroke="#15171a" stroke-width="1.2">
+          <line x1="90" y1="48" x2="90" y2="22"/><rect x="86" y="16" width="8" height="7" fill="#15171a" stroke="none"/>
+          <line x1="130" y1="72" x2="158" y2="72"/><rect x="158" y="68" width="8" height="8" fill="#15171a" stroke="none"/>
+          <line x1="90" y1="112" x2="90" y2="136"/><rect x="86" y="136" width="8" height="7" fill="#15171a" stroke="none"/>
+          <line x1="50" y1="92" x2="22" y2="92"/><rect x="16" y="88" width="8" height="8" fill="#15171a" stroke="none"/>
+        </g>
+        <g fill="#15171a">
+          <rect x="50" y="58" width="9" height="4"/><rect x="50" y="72" width="9" height="4"/><rect x="50" y="86" width="9" height="4"/><rect x="50" y="100" width="9" height="4"/>
+          <rect x="121" y="58" width="9" height="4"/><rect x="121" y="72" width="9" height="4"/><rect x="121" y="86" width="9" height="4"/><rect x="121" y="100" width="9" height="4"/>
+        </g>
+        <rect x="59" y="48" width="62" height="64" rx="8" fill="#159a55" stroke="#15171a" stroke-width="2.5"/>
+        <circle cx="69" cy="58" r="3" fill="#0c5e34"/>
+        <text x="90" y="85" text-anchor="middle" font-family="Space Mono,monospace" font-weight="700" font-size="15" fill="#eef0e8">µC</text>
+        <circle class="fU" cx="90" cy="44" r="3.2" fill="#e8463a"/>
+        <circle class="fR" cx="134" cy="72" r="3.2" fill="#e8463a"/>
+        <circle class="fD" cx="90" cy="116" r="3.2" fill="#e8463a"/>
+        <circle class="fL" cx="46" cy="92" r="3.2" fill="#e8463a"/>
+        <line x1="140" y1="118" x2="140" y2="112" stroke="#15171a" stroke-width="1.4"/>
+        <circle class="led" cx="140" cy="124" r="5" fill="#e8463a" stroke="#15171a" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <p class="dek">The brain of the whole series — the chip that <b>reads the sensors and drives the actuators</b>. A few dollars, a USB cable, and some code turns a pile of parts into something that decides. Here's where to start, and what to build toward.</p>
+  </header>
+
+  <span class="band">Pick your board</span>
+  <div class="types">
+    <div class="type reveal"><h4>Arduino</h4><p>The friendly classic — easy, forgiving, huge community. The best first board.</p><span class="tg">start here</span></div>
+    <div class="type reveal"><h4>Pi Pico</h4><p>Cheap, fast, dual-core (RP2040). MicroPython or C; great value.</p><span class="tg">cheap & capable</span></div>
+    <div class="type reveal"><h4>ESP32</h4><p>WiFi and Bluetooth built in — the board for connected projects.</p><span class="tg">wireless</span></div>
+    <div class="type reveal"><h4>Raspberry Pi</h4><p>Not an MCU — a full Linux computer. For cameras, AI, heavy lifting.</p><span class="tg">a computer</span></div>
+    <div class="type reveal"><h4>ATtiny</h4><p>A tiny, cheap chip for a single job once you've outgrown the breadboard.</p><span class="tg">one job</span></div>
+    <div class="type reveal"><h4>micro:bit</h4><p>Sensors, an LED grid, and radio already on board — instant projects.</p><span class="tg">batteries-included</span></div>
+  </div>
+
+  <span class="band grn">First light</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Blink</h3><p class="what">The first program — an LED on, off, on. Proof the board lives.</p><p class="need"><b>need</b> a board · an LED + resistor</p><p class="do"><b>do</b> set a pin high, wait, low, wait, repeat.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Fade (PWM)</h3><p class="what">Dim and brighten smoothly — the LED breathes.</p><p class="need"><b>need</b> a board · an LED on a PWM pin</p><p class="do"><b>do</b> ramp the duty cycle up and down in a loop.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Addressable LEDs</h3><p class="what">Set every pixel on a strip individually.</p><p class="need"><b>need</b> a board · a WS2812/NeoPixel strip · a library</p><p class="do"><b>do</b> color each pixel; run animations or ambient light.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Drive a display</h3><p class="what">Push text and graphics to a little screen.</p><p class="need"><b>need</b> a board · an OLED/LCD · a library</p><p class="do"><b>do</b> send it over I²C/SPI; show readings, menus, art.</p></article>
+  </div>
+
+  <span class="band grn">Talk to the world</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Read a button</h3><p class="what">The first input — and a lesson in debouncing.</p><p class="need"><b>need</b> a board · a button · a pull resistor</p><p class="do"><b>do</b> read the pin, debounce it, toggle something.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Sense & respond</h3><p class="what">Wire in any sensor and act on it — the core move.</p><p class="need"><b>need</b> a board · a sensor (see no. 4) · an output</p><p class="do"><b>do</b> read it, decide, drive the output.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Drive a motor or coil</h3><p class="what">Command the actuators from issues 2 &amp; 3.</p><p class="need"><b>need</b> a board · a driver (H-bridge / transistor + flyback) · the load</p><p class="do"><b>do</b> never from the pin — through a driver, on its own supply.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Serial monitor</h3><p class="what">Print what the board sees, to your computer.</p><p class="need"><b>need</b> a board · USB · the IDE's monitor</p><p class="do"><b>do</b> print values live — the first debug tool you'll reach for.</p></article>
+  </div>
+
+  <span class="band grn">Sense & decide</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">09</span><h3>Reactive lighting</h3><p class="what">Sound or motion drives the LEDs.</p><p class="need"><b>need</b> a board · a mic/PIR · addressable LEDs</p><p class="do"><b>do</b> map the sensor to color and brightness.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Clock / timer</h3><p class="what">Keep time, show it, alarm.</p><p class="need"><b>need</b> a board · a display · an RTC (for accuracy)</p><p class="do"><b>do</b> count seconds; an RTC holds time through power loss.</p></article>
+    <article class="card reveal"><span class="num">11</span><h3>Handheld game</h3><p class="what">Buttons + a small screen = a tiny console.</p><p class="need"><b>need</b> a board · a screen · a few buttons</p><p class="do"><b>do</b> code Pong or snake — the loop is the game.</p></article>
+    <article class="card reveal"><span class="num">12</span><h3>Robot brain</h3><p class="what">Read sensors, run logic, drive motors — autonomous.</p><p class="need"><b>need</b> a board · sensors · motors + driver</p><p class="do"><b>do</b> sense → decide → move; the whole series in one build.</p></article>
+  </div>
+
+  <span class="band red">Go wireless</span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">13</span><h3>WiFi dashboard</h3><p class="what">An ESP32 serves a web page you open on your phone.</p><p class="need"><b>need</b> an ESP32 · WiFi · a browser</p><p class="do"><b>do</b> control outputs and read sensors from across the network.</p></article>
+    <article class="card r reveal"><span class="num">14</span><h3>Log to the cloud</h3><p class="what">Push readings online and get alerts.</p><p class="need"><b>need</b> a connected board · a service endpoint</p><p class="do"><b>do</b> post each reading; ping your phone above a threshold.</p></article>
+    <article class="card r reveal"><span class="num">15</span><h3>Bluetooth control</h3><p class="what">Drive a robot or read sensors from a phone.</p><p class="need"><b>need</b> an ESP32/BLE board · a phone app</p><p class="do"><b>do</b> send commands over BLE; stream data back.</p></article>
+    <article class="card r reveal"><span class="num">16</span><h3>Board-to-board</h3><p class="what">Two MCUs swap data over radio, serial, or I²C.</p><p class="need"><b>need</b> two boards · a shared link</p><p class="do"><b>do</b> one talks, one listens — the seed of a mesh.</p></article>
+  </div>
+
+  <span class="band red">Level up</span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">17</span><h3>Battery & sleep</h3><p class="what">Deep-sleep modes stretch a coin cell to months.</p><p class="need"><b>need</b> a low-power board · sleep code</p><p class="do"><b>do</b> wake on a timer or a pin; sleep between.</p></article>
+    <article class="card r reveal"><span class="num">18</span><h3>Interrupts &amp; timing</h3><p class="what">Respond the instant something happens, not when you get around to polling.</p><p class="need"><b>need</b> an interrupt-capable pin</p><p class="do"><b>do</b> attach an interrupt; let the hardware catch the event.</p></article>
+    <article class="card r reveal"><span class="num">19</span><h3>State machines</h3><p class="what">Structure behavior so it doesn't become spaghetti.</p><p class="need"><b>need</b> just a way of thinking</p><p class="do"><b>do</b> name your states and the transitions between them.</p></article>
+    <article class="card r reveal"><span class="num">20</span><h3>Breadboard to PCB</h3><p class="what">Once it works, make it permanent.</p><p class="need"><b>need</b> perfboard, or a PCB tool + a fab</p><p class="do"><b>do</b> solder it down, or lay out a board and order it.</p></article>
+  </div>
+
+  <span class="band">Core moves</span>
+  <div class="block grn">
+    <ul class="rules">
+      <li><b>GPIO</b> — any pin is a digital output (drive it high/low: LED, transistor) or an input (read a switch). You pick the mode in code.</li>
+      <li><b>PWM</b> — pins fake an analog level by switching fast: dim LEDs, set motor speed, position servos.</li>
+      <li><b>ADC</b> — analog-input pins turn a voltage into a number; that's how you read most sensors. Not every pin is analog — and the full Raspberry Pi has none built in.</li>
+      <li><b>Buses</b> — I²C (two wires, many chips), SPI (fast), UART/serial (to your PC): how the board talks to sensors and displays.</li>
+      <li><b>The loop</b> — most sketches run setup() once, then loop() forever: read, decide, drive, repeat.</li>
+      <li>Current-hungry outputs — motors, coils, big LED strips — <b>never hang off a pin</b>. Use a driver (and a flyback diode for coils), give them their own supply, and tie grounds together.</li>
+    </ul>
+  </div>
+
+  <span class="band red">Before it bites</span>
+  <div class="block red">
+    <ul class="rules">
+      <li>It's low voltage, so you're safe — what's at risk is the <b>board</b>. Most magic smoke is a wiring mistake, not bad luck.</li>
+      <li><b>Match the logic voltage</b> (3.3 V vs 5 V). Feeding 5 V into a 3.3 V pin can kill it — level-shift.</li>
+      <li><b>Common ground</b>: every part of the circuit must share a ground, or nothing reads right.</li>
+      <li>A pin sources only a <b>few milliamps</b> — never run a motor, coil, or big strip straight off one.</li>
+      <li><b>Power hungry parts separately</b>; their current spikes crash a board sharing the supply. Tie everything at ground.</li>
+      <li>Check <b>+ and −</b> before powering up — reverse polarity kills boards instantly.</li>
+      <li>The honest one: the board does exactly what you <b>wrote</b>, not what you meant. When it misbehaves, print the values and check them against reality before blaming the hardware — the bug is almost always your assumption.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · read, decide, drive, repeat · it does what you wrote, not what you meant</p>
+
+</div>
+</body>
+</html>

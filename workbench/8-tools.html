@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools & the Bench — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e9ebe9; --card:#f5f7f5; --ink:#15181a; --dim:#585f5e;
+    --steel:#2f6fb0; --amber:#e0931a; --steeltint:#dde9f5; --ambertint:#f7e9cd;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(21,24,26,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--steel);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(40px,8.5vw,78px);line-height:0.9;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--steel);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--amber);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#2f3331;}
+  .dek b{font-weight:500;color:var(--steel);}
+  .toolart{flex:0 0 auto;}
+  @keyframes glow{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes drip{0%{transform:translateY(0);opacity:0}30%{opacity:1}100%{transform:translateY(16px);opacity:0}}
+  .tip{animation:glow 1.4s ease-in-out infinite;} .bead{animation:drip 1.8s ease-in infinite;}
+  @media (prefers-reduced-motion:reduce){.tip{animation:none}.bead{animation:none;opacity:.8}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.steel{background:var(--steel);} .band.amber{background:var(--amber);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#353a38;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--steel);border:1px solid var(--steel);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--steel);}
+  .card.a:hover{box-shadow:5px 5px 0 var(--amber);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--amber);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e2c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;
+    border-top:1px dashed rgba(21,24,26,0.18);color:#3a4f3f;}
+  .card .plus b{color:var(--steel);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.a .plus b{color:var(--amber);}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.steel{background:var(--steeltint);} .block.amber{background:var(--ambertint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(21,24,26,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--steel);font-weight:700;}
+  .block.amber .rules li::before{content:"!";color:var(--amber);left:3px;}
+  .rules b{font-weight:500;color:var(--steel);} .block.amber .rules b{color:var(--amber);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(21,24,26,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;}.card:hover{transform:none;box-shadow:none;}.reveal{animation:none;opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 8</span>
+    <div class="masthead">
+      <h1>Tools <em>& the Bench</em></h1>
+      <svg class="toolart" width="190" height="150" viewBox="0 0 190 150" role="img" aria-label="a soldering iron melting solder onto a joint">
+        <rect x="22" y="40" width="74" height="15" rx="7" fill="#2f6fb0" stroke="#15181a" stroke-width="2" transform="rotate(20 59 47)"/>
+        <rect x="86" y="66" width="26" height="9" rx="3" fill="#888" stroke="#15181a" stroke-width="1.5" transform="rotate(20 99 70)"/>
+        <polygon points="108,76 132,92 124,98" fill="#cfcfcf" stroke="#15181a" stroke-width="1.5"/>
+        <circle class="tip" cx="130" cy="95" r="7" fill="#e0931a"/>
+        <circle class="bead" cx="132" cy="104" r="3.5" fill="#e0931a"/>
+        <line x1="120" y1="120" x2="160" y2="120" stroke="#15181a" stroke-width="3" stroke-linecap="round"/>
+        <line x1="135" y1="120" x2="129" y2="106" stroke="#9a9a9a" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="dek">The meta-issue: not a thing to build, but <b>what you build everything else with</b>. The iron, the meter, the kit, and the habits that turn a pile of parts into working hardware — without burning yourself or the bench.</p>
+  </header>
+
+  <span class="band">Outfit the bench</span>
+  <div class="types">
+    <div class="type reveal"><h4>Multimeter</h4><p>The one non-negotiable — volts, continuity, resistance, current.</p><span class="tg">measure first</span></div>
+    <div class="type reveal"><h4>Soldering iron</h4><p>A temperature-controlled iron makes permanent joints. The core skill.</p><span class="tg">joins metal</span></div>
+    <div class="type reveal"><h4>Hand tools</h4><p>Cutters, strippers, pliers, tweezers — the everyday grip-and-snip.</p><span class="tg">grip & snip</span></div>
+    <div class="type reveal"><h4>Power supply</h4><p>A bench supply with current limit — set a ceiling, save your parts.</p><span class="tg">clean & limited</span></div>
+    <div class="type reveal"><h4>Oscilloscope</h4><p>Sees signals move over time — what a meter can't show.</p><span class="tg">sees signals</span></div>
+    <div class="type reveal"><h4>Helping hands</h4><p>Clamps, a vise, a mat — the third and fourth hand you wish you had.</p><span class="tg">holds it still</span></div>
+  </div>
+
+  <span class="band steel">Measure & diagnose</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The multimeter</h3><p class="what">Volts, ohms, continuity — your first move on any problem.</p><p class="need"><b>need</b> a multimeter</p><p class="do"><b>do</b> measure the rail, beep for continuity, check before you trust.</p><p class="plus"><b>+1</b> the continuity beep finds breaks and shorts faster than any other test — start there.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Read current</h3><p class="what">Amps go through the meter in series — the easy mistake to get wrong.</p><p class="need"><b>need</b> a meter · the right jack</p><p class="do"><b>do</b> break the circuit and put the meter in the gap.</p><p class="plus"><b>+1</b> leaving the meter in the 10 A jack across a voltage blows its fuse — return the lead after.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The oscilloscope</h3><p class="what">Watch a signal's shape and timing live.</p><p class="need"><b>need</b> an oscilloscope · a probe</p><p class="do"><b>do</b> see PWM, ripple, oscillation — what a meter only averages.</p><p class="plus"><b>+1</b> set the probe to 10× for fast or high-voltage signals so you don't load the circuit.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Logic & USB tools</h3><p class="what">A logic analyzer or USB-serial adapter reads digital traffic.</p><p class="need"><b>need</b> a cheap analyzer / serial adapter</p><p class="do"><b>do</b> decode I²C/SPI/UART; see what the chips actually say.</p><p class="plus"><b>+1</b> capturing the bus settles "my code vs the wiring" arguments in seconds.</p></article>
+  </div>
+
+  <span class="band steel">Solder & join</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>A clean joint</h3><p class="what">Heat the joint, feed the solder — shiny and smooth.</p><p class="need"><b>need</b> an iron · solder · a tip</p><p class="do"><b>do</b> heat the pad and pin, then touch solder to the joint, not the tip.</p><p class="plus"><b>+1</b> a dull, blobby joint is "cold" — reheat it; most flaky boards are bad joints.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Tin & flux</h3><p class="what">Flux cleans, tinning pre-wets — both make solder flow.</p><p class="need"><b>need</b> flux · solder</p><p class="do"><b>do</b> flux first; pre-tin wires and tips for an easy bond.</p><p class="plus"><b>+1</b> a tip that won't take solder just needs re-tinning — wipe, melt fresh solder onto it.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Desolder & rework</h3><p class="what">Braid or a pump lifts solder to fix mistakes.</p><p class="need"><b>need</b> desoldering braid or a pump</p><p class="do"><b>do</b> re-melt, then wick or suck the solder away.</p><p class="plus"><b>+1</b> add fresh solder to an old joint before removing it — it re-flows and lets go cleaner.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Heat-shrink & strain</h3><p class="what">Insulate joints and stop wires flexing where they're weak.</p><p class="need"><b>need</b> heat-shrink · a heat source</p><p class="do"><b>do</b> slip it on before soldering; shrink it after.</p><p class="plus"><b>+1</b> slide the tube on first — you can't thread it over a finished joint.</p></article>
+  </div>
+
+  <span class="band steel">Prototype & assemble</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">09</span><h3>Breadboard fast</h3><p class="what">Lay out a circuit with zero commitment.</p><p class="need"><b>need</b> a breadboard · jumpers</p><p class="do"><b>do</b> build, test, rip it up, rebuild — no solder.</p><p class="plus"><b>+1</b> breadboards add stray capacitance — they're unreliable above a few MHz; solder fast circuits.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Perfboard it</h3><p class="what">Make a breadboard build permanent.</p><p class="need"><b>need</b> perfboard · wire · solder</p><p class="do"><b>do</b> transfer the layout, solder it down, run point-to-point wires.</p><p class="plus"><b>+1</b> photograph the working breadboard first — it's your wiring map for the solder version.</p></article>
+    <article class="card reveal"><span class="num">11</span><h3>Design a PCB</h3><p class="what">Lay out a real board and have it fabbed.</p><p class="need"><b>need</b> a PCB tool (free) · a fab house</p><p class="do"><b>do</b> draw the schematic, route the board, order a few.</p><p class="plus"><b>+1</b> run the auto design-rule check before ordering — it catches the shorts you can't see.</p></article>
+    <article class="card reveal"><span class="num">12</span><h3>Wire management</h3><p class="what">Tidy wiring is debuggable wiring.</p><p class="need"><b>need</b> color-coded wire · ties · labels</p><p class="do"><b>do</b> red for +, black for −; label, bundle, leave slack.</p><p class="plus"><b>+1</b> a consistent color code means you read a fault at a glance instead of tracing every lead.</p></article>
+  </div>
+
+  <span class="band amber">Make & shape</span>
+  <div class="grid">
+    <article class="card a reveal"><span class="num">13</span><h3>Drill & dremel</h3><p class="what">Holes, cuts, and grinding for enclosures and mounts.</p><p class="need"><b>need</b> a rotary tool / drill · bits</p><p class="do"><b>do</b> mark, centre-punch, then drill — eye protection on.</p><p class="plus"><b>+1</b> a punched dimple stops the bit wandering off your mark on smooth surfaces.</p></article>
+    <article class="card a reveal"><span class="num">14</span><h3>Glue & mount</h3><p class="what">The right adhesive for the job.</p><p class="need"><b>need</b> hot glue / epoxy / CA · tape</p><p class="do"><b>do</b> hot glue for quick + removable, epoxy for structural, CA for instant.</p><p class="plus"><b>+1</b> hot glue doubles as strain relief and a vibration damper on solder joints and connectors.</p></article>
+    <article class="card a reveal"><span class="num">15</span><h3>3D-print a case</h3><p class="what">Print a custom enclosure or bracket.</p><p class="need"><b>need</b> a 3D printer or a service · a CAD tool</p><p class="do"><b>do</b> model it around your board; print, fit, iterate.</p><p class="plus"><b>+1</b> add 0.2 mm of clearance around the board — printed parts come out a hair tight.</p></article>
+    <article class="card a reveal"><span class="num">16</span><h3>Label & document</h3><p class="what">Future-you won't remember any of this.</p><p class="need"><b>need</b> a notebook / label maker</p><p class="do"><b>do</b> note pinouts, voltages, and what worked — photograph it.</p><p class="plus"><b>+1</b> snap a photo before you take anything apart — it's the cheapest insurance on the bench.</p></article>
+  </div>
+
+  <span class="band amber">Stock & set up</span>
+  <div class="grid">
+    <article class="card a reveal"><span class="num">17</span><h3>The starter kit</h3><p class="what">The tools that earn their place on day one.</p><p class="need"><b>need</b> meter · iron · cutters/strippers · breadboard · jumpers</p><p class="do"><b>do</b> start here; add as a project demands.</p><p class="plus"><b>+1</b> a temperature-controlled iron is worth the upgrade over a cheap fixed one — it's the tool you fight most.</p></article>
+    <article class="card a reveal"><span class="num">18</span><h3>Organize parts</h3><p class="what">Sorted parts you can find; loose parts you can't.</p><p class="need"><b>need</b> bins · a label scheme</p><p class="do"><b>do</b> sort by type and value; keep a small "common" tray to hand.</p><p class="plus"><b>+1</b> keep cut SMD strips in labeled zip bags — loose surface-mount parts vanish forever.</p></article>
+    <article class="card a reveal"><span class="num">19</span><h3>Light & sit right</h3><p class="what">Good light and a comfortable height save your eyes and back.</p><p class="need"><b>need</b> a bright lamp · magnification · a stool</p><p class="do"><b>do</b> light the work, magnify the fine bits, sit square to the bench.</p><p class="plus"><b>+1</b> a magnifier lamp finds the hairline solder bridge your eyes skip right over.</p></article>
+    <article class="card a reveal"><span class="num">20</span><h3>Salvage station</h3><p class="what">A teardown corner feeds the whole series with free parts.</p><p class="need"><b>need</b> screwdrivers · spudgers · a parts jar</p><p class="do"><b>do</b> harvest motors, coils, sensors, and chips from dead gear.</p><p class="plus"><b>+1</b> desolder whole component-dense boards at once with a heat gun — a tray of free parts in one go.</p></article>
+  </div>
+
+  <span class="band">Bench habits</span>
+  <div class="block steel">
+    <ul class="rules">
+      <li><b>Measure before you trust.</b> The meter is the first tool you reach for and the last word in any argument — check the rail, beep for continuity, confirm polarity.</li>
+      <li><b>Current-limit a new build.</b> A bench supply set to a low current ceiling turns a wiring mistake into a quiet shutdown instead of a puff of smoke.</li>
+      <li><b>Heat the work, not the solder.</b> A clean joint comes from a hot pad and pin; the iron melts the solder by way of the joint, not the other way round.</li>
+      <li><b>Change one thing at a time.</b> When you're debugging, one variable per step — or you'll never know which change fixed it.</li>
+      <li><b>Tidy is debuggable.</b> Color-code, label, leave slack; a rat's nest hides the very fault you're hunting.</li>
+      <li><b>Document as you go.</b> Photos and notes cost seconds now and save hours when future-you reopens the box.</li>
+    </ul>
+  </div>
+
+  <span class="band amber">Bench safety</span>
+  <div class="block amber">
+    <ul class="rules">
+      <li>A soldering iron is <b>~350 °C</b> and looks identical hot or cold — return it to its stand every time, and assume it's hot.</li>
+      <li><b>Solder fumes</b> (and flux smoke) shouldn't be breathed — work in ventilation or use a small fan to pull smoke away from your face.</li>
+      <li>Some older solder and components contain <b>lead</b> — don't eat at the bench, and wash your hands after.</li>
+      <li><b>Eye protection</b> for cutting leads (they fly), drilling, and grinding — every time.</li>
+      <li><b>Current-limit and fuse</b> a new circuit, and keep the lethal-energy cautions from the power issue in mind — discharge caps, respect mains and lithium.</li>
+      <li>Keep a <b>clear, uncluttered bench</b>: no drinks near the work, nothing flammable by the iron, and a known-good fire plan if you're charging lithium.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · measure first, heat the work, change one thing · the meter is the last word</p>
+
+</div>
+</body>
+</html>

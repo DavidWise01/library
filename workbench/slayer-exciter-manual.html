@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Slayer Exciter — Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090f; --bg2:#0e111c; --ink:#d6dae8; --dim:#878da3; --faint:#5a6076;
+    --amber:#e6ac3c; --cyan:#57c8e6; --teal:#46c7a0;
+    --line:rgba(122,148,196,0.14); --line2:rgba(122,148,196,0.30); --grid:rgba(120,150,210,0.045);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;}
+  body{
+    font-family:"JetBrains Mono",ui-monospace,monospace; color:var(--ink);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 31px, var(--grid) 31px 32px),
+      repeating-linear-gradient(90deg, transparent 0 31px, var(--grid) 31px 32px),
+      radial-gradient(circle at 50% 22%, #161d31 0%, #07080f 68%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:940px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding:0 20px;}
+  header{padding:26px 0 12px;}
+  .brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+  .brand h1{font-family:"Big Shoulders Display";font-weight:800;font-size:26px;letter-spacing:0.06em;
+    text-transform:uppercase;margin:0;color:var(--ink);}
+  .brand h1 b{color:var(--amber);}
+  .brand .meta{font-size:11px;color:var(--faint);letter-spacing:0.16em;text-transform:uppercase;}
+  .rail{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+  .chip{font-family:"Big Shoulders Display";font-weight:600;font-size:12.5px;letter-spacing:0.12em;
+    text-transform:uppercase;padding:5px 9px;border:1px solid var(--line2);color:var(--dim);
+    background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
+  .chip:hover{color:var(--ink);border-color:var(--ink);}
+  .chip.active{color:var(--bg);background:var(--amber);border-color:var(--amber);}
+  .chip .n{opacity:.6;margin-right:5px;}
+  .chip.active .n{opacity:.8;}
+  .prog{height:2px;background:var(--line);margin:6px 0 0;overflow:hidden;}
+  .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--cyan));transition:width .4s ease;}
+  .sheet{flex:1;border:1px solid var(--line);background:rgba(13,16,27,0.5);position:relative;
+    padding:34px 40px 38px;margin-top:6px;overflow:hidden;}
+  .tick{position:absolute;width:11px;height:11px;border-color:var(--line2);}
+  .tick.tl{top:7px;left:7px;border-left:1px solid;border-top:1px solid;}
+  .tick.tr{top:7px;right:7px;border-right:1px solid;border-top:1px solid;}
+  .tick.bl{bottom:7px;left:7px;border-left:1px solid;border-bottom:1px solid;}
+  .tick.br{bottom:7px;right:7px;border-right:1px solid;border-bottom:1px solid;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0 28px;}
+  .nav button{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.05em;
+    background:transparent;border:1px solid var(--line2);color:var(--ink);padding:9px 18px;cursor:pointer;transition:all .15s;}
+  .nav button:hover:not(:disabled){border-color:var(--amber);color:var(--amber);}
+  .nav button:disabled{opacity:.25;cursor:default;}
+  .pos{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;}
+  .dots{display:flex;gap:6px;}
+  .dots b{width:6px;height:6px;border-radius:50%;background:var(--line2);transition:background .2s;}
+  .dots b.on{background:var(--amber);}
+
+  .pg .kicker{font-family:"Big Shoulders Display";font-weight:600;font-size:12px;letter-spacing:0.24em;
+    text-transform:uppercase;color:var(--dim);margin:0 0 6px;}
+  .pg h2{font-family:"Big Shoulders Display";font-weight:700;font-size:31px;letter-spacing:0.02em;
+    text-transform:uppercase;color:var(--amber);margin:0 0 14px;line-height:1.02;}
+  .pg p{line-height:1.66;font-size:14px;margin:10px 0;color:var(--ink);}
+  .pg .lede{font-size:15px;color:#e9edf7;}
+  .k{color:var(--amber);} .hot{color:var(--cyan);} .grn{color:var(--teal);}
+  .pg ul.list{list-style:none;padding:0;margin:14px 0;}
+  .pg ul.list li{padding:6px 0 6px 22px;position:relative;border-bottom:1px dashed var(--line);font-size:13.5px;}
+  .pg ul.list li:last-child{border-bottom:none;}
+  .pg ul.list li::before{content:"▸";position:absolute;left:2px;color:var(--amber);}
+  .pg ol.steps{list-style:none;counter-reset:s;padding:0;margin:14px 0;}
+  .pg ol.steps li{position:relative;padding:8px 0 8px 40px;border-bottom:1px dashed var(--line);font-size:13.5px;line-height:1.55;}
+  .pg ol.steps li:last-child{border-bottom:none;}
+  .pg ol.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;left:0;top:8px;
+    font-family:"Big Shoulders Display";font-weight:700;color:var(--cyan);font-size:15px;letter-spacing:.04em;}
+  .callout{border-left:3px solid var(--line2);padding:11px 15px;margin:16px 0;background:rgba(255,255,255,0.018);font-size:13px;line-height:1.6;}
+  .callout.am{border-color:var(--amber);} .callout.cy{border-color:var(--cyan);} .callout.dg{border-color:#d9534f;}
+  .callout .lbl{display:block;font-family:"Big Shoulders Display";font-weight:700;letter-spacing:0.14em;text-transform:uppercase;font-size:11px;color:var(--dim);margin-bottom:4px;}
+  .spec{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--dim);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;margin:16px 0;}
+  .spec span b{color:var(--ink);font-weight:500;}
+  .diagram{width:100%;height:auto;display:block;margin:8px 0 4px;}
+  .diagram text{font-family:"JetBrains Mono",monospace;font-size:12px;fill:#c4c8d8;}
+  .diagram .b{fill:#e9edf7;font-weight:500;}
+  .figcap{font-size:11px;color:var(--faint);letter-spacing:0.04em;margin-top:2px;}
+  .cover{display:flex;gap:30px;align-items:center;flex-wrap:wrap;min-height:300px;}
+  .cover .ctxt{flex:1;min-width:240px;}
+  .cover h2{font-size:46px;line-height:.92;margin-bottom:10px;color:var(--ink);}
+  .cover h2 b{color:var(--amber);}
+  .cover .sub{font-size:15px;color:var(--dim);max-width:380px;line-height:1.6;}
+  .cover .hero{flex:0 0 auto;}
+  .rule{height:1px;background:var(--line2);margin:16px 0;width:80px;}
+  .pg > *{opacity:0;transform:translateY(9px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  .pg > *:nth-child(1){animation-delay:.03s} .pg > *:nth-child(2){animation-delay:.09s}
+  .pg > *:nth-child(3){animation-delay:.15s} .pg > *:nth-child(4){animation-delay:.21s}
+  .pg > *:nth-child(5){animation-delay:.27s} .pg > *:nth-child(6){animation-delay:.33s}
+  .pg > *:nth-child(7){animation-delay:.39s} .pg > *:nth-child(8){animation-delay:.45s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.pg > *{animation:none;opacity:1;transform:none}}
+  @media (max-width:560px){.sheet{padding:26px 20px 30px}.pg h2{font-size:25px}.cover h2{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>The Slayer <b>Exciter</b></h1>
+      <span class="meta">field manual · rev. workbench</span>
+    </div>
+    <div class="rail" id="rail"></div>
+  </header>
+  <div class="prog"><i id="prog"></i></div>
+  <main class="sheet">
+    <div class="pg" id="pg"></div>
+    <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
+  </main>
+  <div class="nav">
+    <button id="prev">‹ prev</button>
+    <div class="pos"><span id="poslabel"></span><span class="dots" id="dots"></span></div>
+    <button id="next">next ›</button>
+  </div>
+</div>
+
+<script>
+// ---------- embedded diagrams (self-styled for dark) ----------
+const W_NEU="#aeb2c2", W_TEAL="#46c7a0", W_AMBER="#e6ac3c", FILL="#10131d";
+
+const HERO_SVG = `<svg class="diagram hero" width="150" height="240" viewBox="0 0 150 240" role="img" aria-label="stylised slayer exciter coil">
+  <ellipse cx="75" cy="206" rx="46" ry="9" fill="rgba(120,150,210,0.06)"/>
+  <rect x="55" y="56" width="40" height="150" fill="${FILL}"/>
+  <line x1="55" y1="56" x2="55" y2="206" stroke="${W_NEU}" stroke-width="1"/>
+  <line x1="95" y1="56" x2="95" y2="206" stroke="${W_NEU}" stroke-width="1"/>
+  <ellipse cx="75" cy="56" rx="20" ry="4.5" fill="${FILL}" stroke="${W_NEU}" stroke-width="1"/>
+  ${Array.from({length:21},(_,i)=>`<ellipse cx="75" cy="${64+i*6.4}" rx="20" ry="3" fill="none" stroke="${W_TEAL}" stroke-width="1.4"/>`).join("")}
+  <ellipse cx="75" cy="182" rx="24" ry="4" fill="none" stroke="${W_AMBER}" stroke-width="2.4"/>
+  <ellipse cx="75" cy="192" rx="24" ry="4" fill="none" stroke="${W_AMBER}" stroke-width="2.4"/>
+  <line x1="75" y1="56" x2="75" y2="34" stroke="${W_TEAL}" stroke-width="1.6"/>
+  <circle cx="75" cy="28" r="6" fill="${FILL}" stroke="${W_TEAL}" stroke-width="1.6"/>
+  <g stroke="#8fe6ff" stroke-width="1.3" opacity="0.9" fill="none" stroke-linecap="round">
+    <path d="M75,24 L66,12 71,15 60,4"/><path d="M75,24 L88,14 82,16 92,7"/><path d="M75,24 L78,8"/>
+  </g>
+  <circle cx="75" cy="28" r="15" fill="#57c8e6" opacity="0.16"/>
+</svg>`;
+
+const LOOP_SVG = `<svg class="diagram" width="100%" viewBox="0 0 660 150" role="img" aria-label="feedback oscillator loop">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="${W_NEU}" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+  ${[["primary","kicks current",30],["secondary","rings, steps up",190],["bottom tail","feeds the base",350],["transistor","switches",510]].map(([t,s,x])=>`
+    <rect x="${x}" y="34" width="120" height="48" rx="3" fill="${FILL}" stroke="${W_NEU}" stroke-width="1"/>
+    <text class="b" x="${x+60}" y="54" text-anchor="middle">${t}</text>
+    <text x="${x+60}" y="71" text-anchor="middle" font-size="11">${s}</text>`).join("")}
+  <line x1="150" y1="58" x2="186" y2="58" stroke="${W_NEU}" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="310" y1="58" x2="346" y2="58" stroke="${W_TEAL}" stroke-width="1.4" marker-end="url(#ar)"/>
+  <line x1="470" y1="58" x2="506" y2="58" stroke="${W_NEU}" stroke-width="1.4" marker-end="url(#ar)"/>
+  <path d="M570,82 L570,118 L90,118 L90,82" fill="none" stroke="${W_AMBER}" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="330" y="136" text-anchor="middle" font-size="11" fill="#878da3">repeats hundreds of thousands of times a second</text>
+</svg>`;
+
+const SCHEMATIC_SVG = `<svg class="diagram" width="100%" viewBox="0 0 680 430" role="img" aria-label="slayer exciter schematic">
+  <line x1="95" y1="140" x2="510" y2="140" stroke="${W_NEU}" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="95" y1="350" x2="360" y2="350" stroke="${W_NEU}" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="95" y1="140" x2="95" y2="200" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="75" y1="200" x2="115" y2="200" stroke="${W_NEU}" stroke-width="2"/>
+  <line x1="84" y1="212" x2="106" y2="212" stroke="${W_NEU}" stroke-width="2"/>
+  <line x1="75" y1="224" x2="115" y2="224" stroke="${W_NEU}" stroke-width="2"/>
+  <line x1="84" y1="236" x2="106" y2="236" stroke="${W_NEU}" stroke-width="2"/>
+  <line x1="95" y1="236" x2="95" y2="350" stroke="${W_NEU}" stroke-width="1.5"/>
+  <text x="62" y="204" text-anchor="end">+</text><text x="62" y="228" text-anchor="end">9 V</text>
+  <line x1="360" y1="140" x2="360" y2="172" stroke="${W_NEU}" stroke-width="1.5"/>
+  <rect x="349" y="172" width="22" height="42" rx="2" fill="${FILL}" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="360" y1="214" x2="360" y2="240" stroke="${W_NEU}" stroke-width="1.5"/>
+  <text x="380" y="196" text-anchor="start">22 kΩ</text>
+  <line x1="360" y1="240" x2="360" y2="262" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="347" y1="262" x2="373" y2="262" stroke="${W_NEU}" stroke-width="2"/>
+  <polygon points="360,264 347,286 373,286" fill="none" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="360" y1="286" x2="360" y2="350" stroke="${W_NEU}" stroke-width="1.5"/>
+  <text x="392" y="284" text-anchor="start">LED</text>
+  <circle cx="295" cy="240" r="27" fill="${FILL}" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="296" y1="224" x2="296" y2="256" stroke="${W_NEU}" stroke-width="2.5"/>
+  <line x1="296" y1="240" x2="360" y2="240" stroke="${W_NEU}" stroke-width="1.5"/>
+  <polyline points="295,226 295,170 475,170 475,310" fill="none" stroke="${W_NEU}" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="295" y1="254" x2="295" y2="350" stroke="${W_NEU}" stroke-width="1.5"/>
+  <polygon points="295,302 289,290 301,290" fill="${W_NEU}"/>
+  <text class="b" x="284" y="200" text-anchor="end">C</text><text class="b" x="346" y="232" text-anchor="end">B</text>
+  <text class="b" x="284" y="286" text-anchor="end">E</text><text x="252" y="244" text-anchor="end">NPN</text>
+  <line x1="490" y1="140" x2="490" y2="280" stroke="${W_NEU}" stroke-width="1.5"/>
+  <line x1="490" y1="280" x2="515" y2="280" stroke="${W_AMBER}" stroke-width="2"/>
+  <line x1="475" y1="310" x2="515" y2="310" stroke="${W_AMBER}" stroke-width="2"/>
+  <path d="M515,280 a5,5 0 0 1 0,10 a5,5 0 0 1 0,10 a5,5 0 0 1 0,10" fill="none" stroke="${W_AMBER}" stroke-width="2"/>
+  <text x="529" y="303" text-anchor="start" fill="${W_AMBER}">⇄</text>
+  <path d="M600,120 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21 a9,10.5 0 0 1 0,21" fill="none" stroke="${W_TEAL}" stroke-width="2"/>
+  <line x1="600" y1="120" x2="600" y2="86" stroke="${W_TEAL}" stroke-width="1.5"/>
+  <circle cx="600" cy="80" r="6" fill="${FILL}" stroke="${W_TEAL}" stroke-width="1.6"/>
+  <text x="600" y="62" text-anchor="middle">streamer</text>
+  <polyline points="600,309 600,378 388,378 388,240 360,240" fill="none" stroke="${W_TEAL}" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="360" cy="140" r="3" fill="${W_NEU}"/><circle cx="490" cy="140" r="3" fill="${W_NEU}"/>
+  <circle cx="360" cy="240" r="3.5" fill="${W_NEU}"/><circle cx="295" cy="350" r="3" fill="${W_NEU}"/><circle cx="360" cy="350" r="3" fill="${W_NEU}"/>
+</svg>`;
+
+const WIND_SVG = `<svg class="diagram" width="100%" viewBox="0 0 680 600" role="img" aria-label="winding diagram">
+  <line x1="40" y1="48" x2="58" y2="48" stroke="${W_TEAL}" stroke-width="3" stroke-linecap="round"/><text x="64" y="52">secondary</text>
+  <line x1="160" y1="48" x2="178" y2="48" stroke="${W_AMBER}" stroke-width="3" stroke-linecap="round"/><text x="184" y="52">primary</text>
+  <rect x="170" y="96" width="70" height="300" fill="${FILL}"/>
+  <line x1="170" y1="96" x2="170" y2="396" stroke="${W_NEU}" stroke-width="1"/><line x1="240" y1="96" x2="240" y2="396" stroke="${W_NEU}" stroke-width="1"/>
+  <ellipse cx="205" cy="96" rx="35" ry="7" fill="${FILL}" stroke="${W_NEU}" stroke-width="1"/>
+  <path d="M170,396 A35,7 0 0 0 240,396" fill="none" stroke="${W_NEU}" stroke-width="1"/>
+  ${Array.from({length:22},(_,i)=>`<ellipse cx="205" cy="${110+i*12}" rx="35" ry="5" fill="none" stroke="${W_TEAL}" stroke-width="1.6"/>`).join("")}
+  ${[344,358,372,386].map(y=>`<ellipse cx="205" cy="${y}" rx="40" ry="5.5" fill="none" stroke="${W_AMBER}" stroke-width="2.6"/>`).join("")}
+  <line x1="205" y1="96" x2="205" y2="66" stroke="${W_TEAL}" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="205" cy="59" r="6" fill="${FILL}" stroke="${W_TEAL}" stroke-width="1.6"/>
+  <path d="M170,372 C150,392 138,408 130,428" fill="none" stroke="${W_TEAL}" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M245,344 C276,366 286,402 290,428" fill="none" stroke="${W_AMBER}" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M245,386 C300,398 330,412 352,428" fill="none" stroke="${W_AMBER}" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="108" y="444" text-anchor="start">→ base</text><text x="270" y="444" text-anchor="start">→ V+</text><text x="332" y="444" text-anchor="start">→ collector</text>
+  <line x1="360" y1="78" x2="214" y2="62" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text class="b" x="362" y="58" text-anchor="start">Top tail = free end</text>
+  <text x="362" y="76" text-anchor="start" font-size="11">the streamer point; bare,</text><text x="362" y="91" text-anchor="start" font-size="11">or a small ball/foil topload.</text>
+  <line x1="360" y1="200" x2="242" y2="200" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text class="b" x="362" y="180" text-anchor="start">Secondary</text>
+  <text x="362" y="198" text-anchor="start" font-size="11">one neat layer of fine magnet</text><text x="362" y="213" text-anchor="start" font-size="11">wire, close-wound, ~300–1000</text>
+  <text x="362" y="228" text-anchor="start" font-size="11">turns. Scrape enamel off the</text><text x="362" y="243" text-anchor="start" font-size="11">ends. (drawn sparse)</text>
+  <line x1="360" y1="350" x2="247" y2="365" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text class="b" x="362" y="320" text-anchor="start">Primary</text>
+  <text x="362" y="338" text-anchor="start" font-size="11">3–5 turns of thicker wire round</text><text x="362" y="353" text-anchor="start" font-size="11">the base, over the secondary's</text><text x="362" y="368" text-anchor="start" font-size="11">bottom, lightly spaced.</text>
+  <rect x="88" y="466" width="500" height="40" rx="3" fill="none" stroke="${W_AMBER}" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <text x="102" y="483" text-anchor="start" font-size="11.5" fill="${W_AMBER}">⇄ Won't oscillate? Swap the two primary leads (→ V+ ↔ → collector).</text>
+  <text x="102" y="499" text-anchor="start" font-size="11.5">That flips the feedback polarity — fixes most dead builds.</text>
+  <text class="b" x="60" y="532" text-anchor="start">Cross-section at the base</text>
+  <circle cx="150" cy="560" r="33" fill="#6b6f80"/><circle cx="150" cy="560" r="29" fill="${FILL}"/>
+  <circle cx="150" cy="560" r="37" fill="none" stroke="${W_TEAL}" stroke-width="4"/>
+  <circle cx="150" cy="516" r="4.5" fill="${W_AMBER}"/><circle cx="112" cy="582" r="4.5" fill="${W_AMBER}"/><circle cx="188" cy="582" r="4.5" fill="${W_AMBER}"/>
+  <line x1="248" y1="526" x2="156" y2="517" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text x="254" y="530" text-anchor="start" font-size="11">primary — just outside, fewer/fatter</text>
+  <line x1="248" y1="554" x2="181" y2="548" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text x="254" y="558" text-anchor="start" font-size="11">tube — hollow form (≈2–3 cm)</text>
+  <line x1="248" y1="582" x2="186" y2="572" stroke="${W_NEU}" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.6"/>
+  <text x="254" y="586" text-anchor="start" font-size="11">secondary — one layer, turns end-on</text>
+</svg>`;
+
+// ---------- content: chapters → pages ----------
+const chapters = [
+  { tag:"orient", pages:[
+    `<div class="cover">
+       <div class="ctxt">
+         <p class="kicker">field manual</p>
+         <h2>The Slayer <b>Exciter</b></h2>
+         <p class="sub">The simplest Tesla coil that exists: one transistor, one resistor, two coils — and a little flame of plasma off the top.</p>
+         <div class="rule"></div>
+         <div class="spec"><span><b>in</b> 9–24 V DC</span><span><b>out</b> ≈1–4 MHz RF</span><span><b>parts</b> five-ish</span></div>
+         <p style="font-size:12px;color:var(--faint)">Use the chapter rail above, or flip pages with the arrows / ← → keys.</p>
+       </div>
+       <div class="hero">${HERO_SVG}</div>
+     </div>`,
+    `<p class="kicker">chapter 01 · orientation</p><h2>What it is</h2>
+     <p class="lede">A <span class="k">slayer exciter</span> is a self-oscillating circuit that rings a tall coil at radio frequency and throws a visible streamer of ionized air off its top.</p>
+     <p>Five components do the whole job. There's no chip, no code, no mains wiring. Power it from a battery and it finds its own resonance and starts oscillating millions of times a second — stepping a small DC voltage up into a high-frequency, high-voltage field strong enough to light the air.</p>
+     <p>"Exciter" because it <span class="hot">excites</span> the secondary coil into resonance. It's the cheapest, friendliest way to make a real Tesla-coil streamer on a workbench.</p>
+     <div class="callout cy"><span class="lbl">the set</span>This manual pairs with three things you already have: the circuit schematic, the bench visualisations, and the winding diagram. Everything you need to wind and fire one is in the pages ahead.</div>`
+  ]},
+  { tag:"safety", pages:[
+    `<p class="kicker">chapter 02 · safety</p><h2>The good news</h2>
+     <p class="lede">A slayer is about as benign as high voltage gets — but "benign" isn't "ignore me."</p>
+     <p>The input is low-voltage <span class="k">DC</span> (a 9 V battery to start). The output is high-frequency, low-current <span class="hot">RF</span> — and high-frequency current rides the <em>surface</em> of a conductor (the skin effect), so it tends to travel over you rather than through your heart. There's none of the lethal stored energy that makes other high-voltage gear deadly.</p>
+     <p>People routinely draw the streamer to a fingertip or a screwdriver. You can too — but read the next two pages first, because "won't electrocute you" is not the same as "harmless."</p>`,
+    `<p class="kicker">chapter 02 · safety</p><h2>Still, respect these</h2>
+     <ul class="list">
+       <li>The transistor runs <span class="k">hot</span>. It needs a heatsink, and it can give you a contact burn.</li>
+       <li>The streamer tip causes <span class="k">RF burns</span> — a real thermal burn at the point of contact, not a shock. Don't hold the arc on skin.</li>
+       <li>It makes <span class="hot">ozone</span>. Run it in a ventilated space; don't breathe the area for long.</li>
+       <li>It scrambles and can kill nearby <span class="k">electronics</span> — phones, hearing aids, watches, cards. Keep them well clear.</li>
+       <li>Never operate near a <span class="k">pacemaker</span> or any medical implant.</li>
+       <li>Don't grab the top terminal while it's live.</li>
+     </ul>`,
+    `<p class="kicker">chapter 02 · safety</p><h2>The cousins that <em>do</em> kill</h2>
+     <p>If you're salvaging high-voltage parts, know the difference. These store or sustain lethal energy — a slayer does not:</p>
+     <ul class="list">
+       <li><span class="k">CRT flyback supplies & tubes</span> — hold tens of kilovolts for <em>days</em> after power-off.</li>
+       <li><span class="k">Microwave-oven transformers (MOTs)</span> — high current at lethal voltage.</li>
+       <li><span class="k">Charged capacitor banks</span> — dump their whole charge through you instantly.</li>
+     </ul>
+     <div class="callout dg"><span class="lbl">rule</span>A slayer exciter is none of these. But the moment you open a TV or microwave for parts, you're in their world — discharge first, assume everything is charged, and respect it.</div>`
+  ]},
+  { tag:"parts", pages:[
+    `<p class="kicker">chapter 03 · parts</p><h2>The five-ish parts</h2>
+     <ul class="list">
+       <li><span class="k">NPN power transistor</span> — MJE13007 (or 13005 / 2N3055 / TIP31C).</li>
+       <li><span class="k">Resistor ≈ 22 kΩ</span>, ½ W — biases the base.</li>
+       <li><span class="k">LED</span>, any colour — clamps the base-emitter swing and shows "it's alive."</li>
+       <li><span class="grn">Magnet wire</span>, fine & enamelled — the <em>secondary</em>.</li>
+       <li><span class="k">Hookup wire</span>, thicker & insulated — the <em>primary</em>.</li>
+       <li><span class="k">Heatsink</span> for the transistor — not optional once you raise the voltage.</li>
+       <li>A <span class="k">tube</span> ≈ 2–3 cm — PVC offcut or a fat marker body.</li>
+       <li><span class="k">Power</span> — 9 V battery to start; a 12–24 V brick for a bigger streamer.</li>
+     </ul>`,
+    `<p class="kicker">chapter 03 · parts</p><h2>Salvage map</h2>
+     <p>Half the fun is the teardown. Where each part hides:</p>
+     <ul class="list">
+       <li>Transistor → a dead <span class="k">SMPS</span>, a CFL bulb base, or a phone charger.</li>
+       <li>Magnet wire → the windings of a dead transformer or a small motor.</li>
+       <li>Heatsink → almost any scrap board.</li>
+       <li>Tube → a plumbing offcut, a marker, a pill bottle.</li>
+       <li>Resistor & LED → any junk board, or pennies new.</li>
+     </ul>
+     <div class="callout am"><span class="lbl">tip</span>Pull the transistor's exact part number off its case — you'll need it in Ch.7 to get the leg order right.</div>`
+  ]},
+  { tag:"theory", pages:[
+    `<p class="kicker">chapter 04 · how it works</p><h2>A feedback oscillator</h2>
+     <p>When power hits, a tiny imbalance starts current in the <span class="k">primary</span>. That induces a voltage in the <span class="grn">secondary</span>. The secondary's bottom tail feeds that voltage back to the transistor's <span class="k">base</span>, which switches the transistor, which kicks the primary again — and round it goes.</p>
+     ${LOOP_SVG}
+     <p>The loop runs at the secondary's natural <span class="hot">resonant frequency</span> — it tunes itself. No crystal, no clock; the coil decides the pitch.</p>`,
+    `<p class="kicker">chapter 04 · how it works</p><h2>Why a streamer</h2>
+     <p>Each cycle, the tall secondary steps the voltage way up at its free top end. Get it high enough and fast enough and it strips electrons off the surrounding air — that faint violet, hissing flame is <span class="hot">ionized air</span>.</p>
+     <p>The <span class="k">LED</span> across base-emitter isn't decoration: it clamps the reverse voltage swing that would otherwise stress the transistor, and it glows to tell you the circuit is genuinely oscillating. Lit LED = good. Dark LED + cold transistor = not oscillating (see Ch.8).</p>
+     <div class="callout cy"><span class="lbl">note</span>The frequency depends on the coil — more turns or a longer secondary lowers it. Most small builds land somewhere around 1–4 MHz.</div>`
+  ]},
+  { tag:"circuit", pages:[
+    `<p class="kicker">chapter 05 · the circuit</p><h2>The schematic</h2>
+     ${SCHEMATIC_SVG}
+     <p class="figcap">Teal = secondary & its feedback tail · amber = primary (swap if dead) · the rest is the bias and power.</p>`,
+    `<p class="kicker">chapter 05 · the circuit</p><h2>Read it base-outward</h2>
+     <p>The <span class="k">base</span> is the hub. Three things meet there:</p>
+     <ul class="list">
+       <li>the <span class="k">22 kΩ</span> down from V+ (the bias that gets it started),</li>
+       <li>the <span class="grn">secondary's bottom tail</span> (the feedback that sustains it),</li>
+       <li>the <span class="k">LED</span> across to the emitter (the clamp).</li>
+     </ul>
+     <p>The <span class="k">collector</span> drives the primary; the <span class="k">emitter</span> is ground. Battery− → emitter, battery+ → the 22k and one primary lead, collector → the other primary lead. That secondary-tail-to-base wire is the entire trick — it's the feedback path that turns a switch into an oscillator.</p>`
+  ]},
+  { tag:"winding", pages:[
+    `<p class="kicker">chapter 06 · the winding</p><h2>How the wire lays down</h2>
+     ${WIND_SVG}`,
+    `<p class="kicker">chapter 06 · the winding</p><h2>Secondary, then primary</h2>
+     <p><span class="grn">Secondary:</span> one neat layer of fine magnet wire, close-wound (turns touching, no gaps, no second layer), <span class="k">300–1000 turns</span> up the tube. Anchor both ends so it can't unravel. <span class="k">Scrape or burn the enamel</span> off the two tail ends or they won't conduct — the most common "I wired it right and nothing happened."</p>
+     <p><span class="k">Primary:</span> 3–5 turns of thicker insulated wire around the base, wound <em>over</em> the bottom of the secondary, lightly spaced. The cross-section says it plainly — secondary hugs the tube as a single ring; the primary sits just outside it, fewer and fatter.</p>
+     <div class="callout am"><span class="lbl">ends</span>Top of secondary → free (streamer). Bottom of secondary → base. Two primary leads → V+ and collector.</div>`
+  ]},
+  { tag:"build", pages:[
+    `<p class="kicker">chapter 07 · build it</p><h2>Wind & mount</h2>
+     <ol class="steps">
+       <li>Wind the <span class="grn">secondary</span> — tight single layer, hundreds of turns; tape the ends so it holds.</li>
+       <li>Wind the <span class="k">primary</span> — 3–5 turns over the base of the secondary.</li>
+       <li>Mount the transistor on its <span class="k">heatsink</span>. Identify B / C / E from <em>its</em> part-number datasheet — leg order varies between parts, so don't assume.</li>
+     </ol>
+     <div class="callout cy"><span class="lbl">why the datasheet</span>The schematic's B/C/E are logical. The physical pins on your specific transistor depend on the part — look it up before you solder, or you'll release the smoke.</div>`,
+    `<p class="kicker">chapter 07 · build it</p><h2>Wire & fire</h2>
+     <ol class="steps">
+       <li>Wire it per the schematic: emitter → −, base gets the <span class="k">22k</span> and the <span class="grn">secondary tail</span>, collector and + go to the <span class="k">primary</span>, LED across base-emitter (cathode toward base).</li>
+       <li>Power up at <span class="k">9 V</span>. A streamer, a lit LED, and a slightly warm transistor = success. Bring a screwdriver near the top tail to draw the arc out.</li>
+     </ol>
+     <div class="callout am"><span class="lbl">nothing happened?</span>That's expected on a first build as often as not — turn to Ch.8. The fix is usually one wire swap.</div>`
+  ]},
+  { tag:"tune", pages:[
+    `<p class="kicker">chapter 08 · troubleshoot</p><h2>Won't run?</h2>
+     <p>Work this list in order:</p>
+     <ol class="steps">
+       <li><span class="k">Swap the two primary leads</span> (V+ ↔ collector). Feedback polarity — fixes ~80% of dead builds.</li>
+       <li>Confirm the secondary's <em>bottom</em> tail reaches the base — not the top tail.</li>
+       <li>Did you scrape the <span class="k">enamel</span> off the wire ends?</li>
+       <li>Check your transistor's real <span class="k">pinout</span> by part number.</li>
+       <li>Cold transistor + no streamer → not oscillating (steps 1–4). Transistor very hot, fast → a wiring short; cut power.</li>
+     </ol>`,
+    `<p class="kicker">chapter 08 · tune & grow</p><h2>Bigger, then done</h2>
+     <ul class="list">
+       <li>Bump to <span class="k">12–24 V</span> (heatsink mandatory) for a fatter, louder corona.</li>
+       <li>Add a small <span class="hot">ball or foil topload</span> on the free tail for a longer streamer.</li>
+       <li>A beefier transistor will take more volts before it complains.</li>
+     </ul>
+     <p>That's it — you've built a Tesla coil from a fistful of salvaged parts. Mind the cousins back in Ch.2, keep one hand in your pocket around any HV, and enjoy the little flame.</p>
+     <div class="callout"><span class="lbl">colophon</span>Field manual assembled from the workbench notes. Diagrams are schematic; turn counts and the waveform elsewhere are representative, not measured.</div>`
+  ]},
+];
+const RAIL_NAMES = ["orient","safety","parts","theory","circuit","winding","build","tune"];
+
+// ---------- engine ----------
+let ci=0, pi=0;
+const pgEl=document.getElementById("pg"), railEl=document.getElementById("rail");
+const posLabel=document.getElementById("poslabel"), dotsEl=document.getElementById("dots");
+const progEl=document.getElementById("prog"), prevB=document.getElementById("prev"), nextB=document.getElementById("next");
+const totalPages = chapters.reduce((a,c)=>a+c.pages.length,0);
+
+function buildRail(){
+  railEl.innerHTML="";
+  chapters.forEach((c,i)=>{
+    const b=document.createElement("button");
+    b.className="chip"+(i===ci?" active":"");
+    b.innerHTML=`<span class="n">${String(i+1).padStart(2,"0")}</span>${RAIL_NAMES[i]}`;
+    b.onclick=()=>{ci=i;pi=0;render();};
+    railEl.appendChild(b);
+  });
+}
+function globalIndex(){ let n=0; for(let i=0;i<ci;i++) n+=chapters[i].pages.length; return n+pi; }
+function render(){
+  pgEl.innerHTML = chapters[ci].pages[pi];
+  buildRail();
+  posLabel.textContent = `CH ${String(ci+1).padStart(2,"0")} · ${pi+1}/${chapters[ci].pages.length}`;
+  dotsEl.innerHTML="";
+  chapters[ci].pages.forEach((_,k)=>{ const d=document.createElement("b"); if(k===pi)d.className="on"; dotsEl.appendChild(d); });
+  progEl.style.width = ((globalIndex()+1)/totalPages*100)+"%";
+  const atStart = ci===0&&pi===0, atEnd = ci===chapters.length-1&&pi===chapters[ci].pages.length-1;
+  prevB.disabled=atStart; nextB.disabled=atEnd;
+  pgEl.parentElement.scrollTop=0;
+}
+function next(){ if(pi<chapters[ci].pages.length-1)pi++; else if(ci<chapters.length-1){ci++;pi=0;} render(); }
+function prev(){ if(pi>0)pi--; else if(ci>0){ci--;pi=chapters[ci].pages.length-1;} render(); }
+nextB.onclick=next; prevB.onclick=prev;
+window.addEventListener("keydown",e=>{ if(e.key==="ArrowRight")next(); else if(e.key==="ArrowLeft")prev(); });
+render();
+</script>
+</body>
+</html>

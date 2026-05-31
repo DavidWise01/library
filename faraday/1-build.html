@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build a Faraday Cage — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e7e9ec; --card:#f3f5f7; --ink:#13161b; --dim:#565d68;
+    --graph:#3a4250; --blue:#1763d6; --graphtint:#dde1e7; --bluetint:#d7e4fa;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(19,22,27,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--blue);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--blue);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(38px,8vw,76px);line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8.5em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--blue);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--graph);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#2c313a;}
+  .dek b{font-weight:500;color:var(--blue);}
+  .art{flex:0 0 auto;}
+  @keyframes fade{0%,40%{opacity:1}55%,100%{opacity:0.12}}
+  @keyframes ring{0%,40%{opacity:0}50%{opacity:1}70%,100%{opacity:0}}
+  .bars{animation:fade 2.6s ease-in-out infinite;} .ringwave{animation:ring 2.6s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.bars{animation:none;opacity:.4}.ringwave{animation:none;opacity:0}}
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.blue{background:var(--blue);} .band.graph{background:var(--graph);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#363b44;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--graph);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--graph);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e2a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(19,22,27,0.18);color:#37424f;}
+  .card .plus b{color:var(--blue);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .warn{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--graph);border:1px solid var(--graph);padding:1px 6px;margin-top:9px;}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.blue{background:var(--bluetint);} .block.graph{background:var(--graphtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(19,22,27,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--blue);font-weight:700;}
+  .block.graph .rules li::before{content:"!";color:var(--graph);}
+  .rules b{font-weight:500;color:var(--blue);} .block.graph .rules b{color:var(--graph);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(19,22,27,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 1</span>
+    <div class="masthead">
+      <h1>Build a <em>Faraday Cage</em></h1>
+      <svg class="art" width="200" height="150" viewBox="0 0 200 150" role="img" aria-label="a phone losing signal inside a mesh box">
+        <path class="ringwave" d="M150,40 a26,26 0 0 1 0,40" fill="none" stroke="#1763d6" stroke-width="2.4" stroke-linecap="round"/>
+        <path class="ringwave" d="M160,30 a40,40 0 0 1 0,60" fill="none" stroke="#1763d6" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <rect x="40" y="36" width="92" height="84" rx="5" fill="#f3f5f7" stroke="#3a4250" stroke-width="2.5"/>
+        <g stroke="#3a4250" stroke-width="1" opacity="0.7">
+          <line x1="40" y1="50" x2="132" y2="50"/><line x1="40" y1="64" x2="132" y2="64"/><line x1="40" y1="78" x2="132" y2="78"/><line x1="40" y1="92" x2="132" y2="92"/><line x1="40" y1="106" x2="132" y2="106"/>
+          <line x1="54" y1="36" x2="54" y2="120"/><line x1="68" y1="36" x2="68" y2="120"/><line x1="82" y1="36" x2="82" y2="120"/><line x1="96" y1="36" x2="96" y2="120"/><line x1="110" y1="36" x2="110" y2="120"/><line x1="124" y1="36" x2="124" y2="120"/>
+        </g>
+        <rect x="74" y="60" width="24" height="40" rx="3" fill="#1763d6" stroke="#13161b" stroke-width="1.5"/>
+        <g class="bars" fill="#13161b"><rect x="78" y="86" width="3" height="6"/><rect x="83" y="82" width="3" height="10"/><rect x="88" y="78" width="3" height="14"/></g>
+      </svg>
+    </div>
+    <p class="dek">Now the bench. A continuous metal skin around a space blocks the fields crossing it — and you can make one from <b>foil, mesh, or a tin</b> in an afternoon. Here's how to build one that actually works, and how to prove it does.</p>
+  </header>
+
+  <span class="band">Pick your skin</span>
+  <div class="types">
+    <div class="type reveal"><h4>Foil</h4><p>Kitchen aluminium — cheap, total coverage, great for small full-block boxes.</p><span class="tg">solid & cheap</span></div>
+    <div class="type reveal"><h4>Mesh / screen</h4><p>Window screen or hardware cloth — breathes, you can see in, blocks most RF.</p><span class="tg">breathes</span></div>
+    <div class="type reveal"><h4>A metal tin</h4><p>A paint can, cookie tin, or ammo box — a ready-made cage with a lid.</p><span class="tg">ready-made</span></div>
+    <div class="type reveal"><h4>Conductive fabric</h4><p>Silver/nickel cloth — flexible bags and pouches for phones and keys.</p><span class="tg">flexible</span></div>
+    <div class="type reveal"><h4>Copper tape</h4><p>Seals seams and lines small boxes — keeps the skin continuous.</p><span class="tg">seals seams</span></div>
+    <div class="type reveal"><h4>The gasket</h4><p>Conductive gasket or finger-stock at the lid — the part most builds get wrong.</p><span class="tg">the lid</span></div>
+  </div>
+
+  <span class="band blue">Quick cages</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Foil-wrap a phone</h3><p class="what">Two snug layers of foil kill the signal — the 30-second proof.</p><p class="need"><b>need</b> aluminium foil · a phone</p><p class="do"><b>do</b> wrap fully, no gaps; call it — it won't ring.</p><p class="plus"><b>+1</b> overlap the foil seams generously; a single open slit is a leak the signal walks right through.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The tin test</h3><p class="what">Drop a phone in a metal tin with a tight lid.</p><p class="need"><b>need</b> a metal tin + lid</p><p class="do"><b>do</b> seat the lid fully; the better the metal-to-metal seal, the deeper the silence.</p><p class="plus"><b>+1</b> a painted or plastic-rimmed lid breaks contact — sand the rim to bare metal for a real seal.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Cardboard + foil box</h3><p class="what">Line a box inside and out with foil for a roomier cage.</p><p class="need"><b>need</b> a box · foil · tape</p><p class="do"><b>do</b> cover every face, bridge the seams, foil the lid's edges too.</p><p class="plus"><b>+1</b> the lid must touch the body's foil all around — tuck a foil flap so the seam closes when shut.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Signal-block pouch</h3><p class="what">Conductive fabric sewn into a fold-over bag for keys or a phone.</p><p class="need"><b>need</b> conductive fabric · a fold-over closure</p><p class="do"><b>do</b> overlap the fold several times so the opening seals.</p><p class="plus"><b>+1</b> these are how car-key fobs are blocked to foil relay theft — a real everyday use.</p></article>
+  </div>
+
+  <span class="band blue">Proper enclosures</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Mesh box</h3><p class="what">A frame skinned in screen — a see-through cage you can work in.</p><p class="need"><b>need</b> wire mesh · a frame · conductive fasteners</p><p class="do"><b>do</b> bond every panel edge to the next; no insulated gaps.</p><p class="plus"><b>+1</b> mesh only blocks waves whose wavelength is much bigger than the holes — fine mesh blocks higher frequencies.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Seal the seams</h3><p class="what">Continuity across joints is everything — a seam is a slot antenna.</p><p class="need"><b>need</b> copper tape / conductive gasket</p><p class="do"><b>do</b> tape or gasket every seam so the skin is electrically one piece.</p><p class="plus"><b>+1</b> a long thin gap leaks far more than a small round hole of the same area — close slots first.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The door problem</h3><p class="what">Any opening is the weak point; the lid needs to make contact all around.</p><p class="need"><b>need</b> conductive gasket / finger-stock</p><p class="do"><b>do</b> ring the opening with gasket so it closes the skin when shut.</p><p class="plus"><b>+1</b> this is exactly what the springy fingers around a microwave door are doing — copy that.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Feed-through</h3><p class="what">Getting power or signal in without wrecking the shield.</p><p class="need"><b>need</b> a filtered feed-through / bulkhead connector</p><p class="do"><b>do</b> never run a bare wire through — it carries the field straight in.</p><p class="plus"><b>+1</b> an unfiltered wire through the wall acts like an antenna on both ends, defeating the cage.</p></article>
+  </div>
+
+  <span class="band graph">Ground & verify</span>
+  <div class="grid">
+    <article class="card g reveal"><span class="num">09</span><h3>To ground or not</h3><p class="what">A cage shields even ungrounded — but grounding gives stray charge somewhere to go.</p><p class="need"><b>need</b> a ground wire (sometimes)</p><p class="do"><b>do</b> ground it for static and safety; for blocking RF, continuity matters more than ground.</p><p class="plus"><b>+1</b> common myth: a cage "must" be grounded to work. For field-cancelling it doesn't — the shell does that itself.</p></article>
+    <article class="card g reveal"><span class="num">10</span><h3>Test with a phone</h3><p class="what">The easiest check — does a call get through?</p><p class="need"><b>need</b> a phone · a friend to call it</p><p class="do"><b>do</b> seal it in, call; no ring = the cage holds at that band.</p><p class="plus"><b>+1</b> test each band separately — a cage can block WiFi yet leak lower-frequency cellular, or vice-versa.</p></article>
+    <article class="card g reveal"><span class="num">11</span><h3>Test with radio</h3><p class="what">A radio inside should go silent when the cage is sealed.</p><p class="need"><b>need</b> an AM/FM radio</p><p class="do"><b>do</b> tune a station, close the cage, listen for it to drop out.</p><p class="plus"><b>+1</b> AM (long wavelength) is harder to block than FM — if AM dies, your skin is genuinely continuous.</p></article>
+    <article class="card g reveal"><span class="num">12</span><h3>Measure the loss</h3><p class="what">For real numbers, compare signal strength inside vs out.</p><p class="need"><b>need</b> an SDR / field-strength meter</p><p class="do"><b>do</b> read the level, seal it, read again; the drop is your shielding.</p><p class="plus"><b>+1</b> shielding is rated in decibels (dB) — every 20 dB is a 10× cut in field strength.</p></article>
+  </div>
+
+  <span class="band blue">Put it to use</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">13</span><h3>Quiet a noisy circuit</h3><p class="what">A small shield can box in a part that radiates interference.</p><p class="need"><b>need</b> a metal can over the circuit</p><p class="do"><b>do</b> contain the noise at its source so it stops bothering neighbours.</p><p class="plus"><b>+1</b> those little tin cans soldered onto a phone board are exactly this — shields over the noisy bits.</p></article>
+    <article class="card reveal"><span class="num">14</span><h3>Protect an experiment</h3><p class="what">Shield a sensitive measurement from outside RF.</p><p class="need"><b>need</b> a cage around the setup</p><p class="do"><b>do</b> block the room's hum and radio so your signal is clean.</p><p class="plus"><b>+1</b> mains hum (50/60 Hz) is partly electric-field pickup — a grounded shield around the input tames it.</p></article>
+    <article class="card reveal"><span class="num">15</span><h3>Block key-fob relays</h3><p class="what">A pouch stops thieves amplifying your car key overnight.</p><p class="need"><b>need</b> a signal-blocking pouch</p><p class="do"><b>do</b> drop the fob in; no signal escapes to be relayed.</p><p class="plus"><b>+1</b> test it — many cheap "faraday pouches" leak; if your phone rings inside, so does the fob's signal.</p></article>
+    <article class="card reveal"><span class="num">16</span><h3>A microwave is one</h3><p class="what">The oven's mesh door is a Faraday screen keeping the microwaves in.</p><p class="need"><b>need</b> just look at the door</p><p class="do"><b>do</b> see the holes — small vs the microwave wavelength, so the waves can't pass.</p><p class="plus"><b>+1</b> never run a microwave empty or rely on a damaged door — but the door itself is a textbook cage.</p></article>
+  </div>
+
+  <span class="band graph">Build rules</span>
+  <div class="block blue">
+    <ul class="rules">
+      <li>The skin must be <b>continuous and conductive</b> all the way around — the cage is only as good as its worst gap.</li>
+      <li><b>Mesh works</b> when the holes are much smaller than the wavelength you're blocking. Small holes block high frequencies; big gaps leak everything.</li>
+      <li>A <b>slot leaks more than a round hole</b> of the same area — long thin gaps (bad door seams) are the real enemy.</li>
+      <li>Any <b>opening, seam, or wire</b> through the wall is a leak. Gasket the lid, tape the seams, filter the feed-throughs.</li>
+      <li><b>Grounding</b> helps with static charge and safety, but a cage cancels external fields whether grounded or not — continuity matters more.</li>
+      <li><b>Test it</b> the lazy way (a phone call, a radio) or the real way (an SDR in dB) — don't assume it works because it looks closed.</li>
+    </ul>
+  </div>
+
+  <span class="band graph">Limits & safety</span>
+  <div class="block graph">
+    <ul class="rules">
+      <li>This is a <b>low-risk build</b> — the cautions are about expectations more than danger.</li>
+      <li>A Faraday cage does <b>not block static magnetic fields</b> (a magnet still pulls through it) and doesn't stop a strong low-frequency magnetic field — that needs special metal, not foil.</li>
+      <li>It is <b>not a guaranteed EMP or "off-grid" vault</b> — real protection takes a fully sealed, gasketed, often grounded enclosure and tested numbers, not a wrap of foil.</li>
+      <li>Don't trust a cage with anything important until you've <b>tested it</b> on the exact signal you mean to block.</li>
+      <li>If you shield <b>mains-powered gear</b>, the usual electrical caution applies — keep the power wiring safe and the metal skin from shorting anything live.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · no. 1 · a cage is only as good as its worst gap · seal the seams, test the result</p>
+</div>
+</body>
+</html>

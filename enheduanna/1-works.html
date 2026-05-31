@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Words She Left — No. 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#efe6d4;--card:#f7f0e1;--ink:#211a12;--dim:#6a5f4c;--lapis:#1f4ea8;--gold:#b8862b;--lapistint:#dce4f3;--goldtint:#f1e6c8;}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(33,26,18,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--lapis);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,8vw,76px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--lapis);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#33291c;}
+  .dek b{font-weight:500;color:var(--lapis);}
+  .art{flex:0 0 auto;}
+  @keyframes scribe{0%{stroke-dashoffset:120}60%,100%{stroke-dashoffset:0}}
+  .ink1{stroke-dasharray:120;animation:scribe 3s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.ink1{animation:none;stroke-dashoffset:0}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 13px;margin:34px 0 14px;}
+  .band.lapis{background:var(--lapis);} .band.gold{background:var(--gold);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;}
+  .type p{font-size:13px;margin:0;color:#3c3424;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--lapis);border:1px solid var(--lapis);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--lapis);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#34291c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(33,26,18,0.18);color:#4a3f28;}
+  .card .plus b{color:var(--lapis);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--gold);}
+  .quote{border:1.5px solid var(--ink);background:var(--goldtint);padding:18px 22px;margin:6px 0 0;font-size:16px;line-height:1.7;font-style:italic;color:#2c2418;}
+  .quote .src{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.05em;color:var(--dim);margin-top:10px;}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.lapis{background:var(--lapistint);} .block.gold{background:var(--goldtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(33,26,18,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"𒀭";position:absolute;left:0;top:7px;font-size:13px;color:var(--lapis);}
+  .block.gold .rules li::before{content:"✦";color:var(--gold);}
+  .rules b{font-weight:500;color:var(--lapis);} .block.gold .rules b{color:var(--gold);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(33,26,18,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 1 · her works</span>
+    <div class="masthead">
+      <h1>The Words <em>She Left</em></h1>
+      <svg class="art" width="170" height="150" viewBox="0 0 170 150" role="img" aria-label="a reed stylus writing on a scroll of clay">
+        <path d="M30,120 L120,30" stroke="#b8862b" stroke-width="6" stroke-linecap="round"/>
+        <polygon points="118,28 132,22 124,36" fill="#5a4a2c" stroke="#211a12" stroke-width="1.5"/>
+        <path class="ink1" d="M40,118 q14,-6 22,2 q10,8 22,0 q12,-8 24,2" fill="none" stroke="#1f4ea8" stroke-width="2.4" stroke-linecap="round"/>
+        <text x="85" y="142" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#6a5f4c">reed on clay</text>
+      </svg>
+    </div>
+    <p class="dek">She left <b>hymns of real power</b> — to a goddess, to the temples of an empire, and about her own exile and return. At least five poems carry her name. This book is what she actually wrote, and the line that changed everything.</p>
+  </header>
+
+  <span class="band">What survives</span>
+  <div class="types">
+    <div class="type reveal"><h4>Exaltation of Inanna</h4><p>Nin-me-sara — a 153-line hymn of praise, exile, and triumphant restoration.</p><span class="tg">her masterwork</span></div>
+    <div class="type reveal"><h4>The Temple Hymns</h4><p>A set of 42 hymns to temples across the cities of Sumer and Akkad.</p><span class="tg">42 hymns</span></div>
+    <div class="type reveal"><h4>Inanna hymns</h4><p>Inninsagurra and Inninmehusa — further hymns to the goddess of love and war.</p><span class="tg">to the goddess</span></div>
+    <div class="type reveal"><h4>Two fragments</h4><p>Further poems attributed to her, surviving only in pieces.</p><span class="tg">partial</span></div>
+  </div>
+
+  <span class="band lapis">The masterwork</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The Exaltation of Inanna</h3><p class="what">A 153-line hymn — her best-known work — praising the goddess, then turning intensely personal.</p><p class="need"><b>name</b> Nin-me-sara ("Lady of all the divine powers")</p><p class="do"><b>arc</b> 65 lines of praise, then her own voice and plea.</p><p class="plus"><b>+1</b> the poem had no ancient title — "Exaltation of Inanna" is a modern label scholars gave it.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Exile in her own words</h3><p class="what">She describes being driven from her office by a usurper, and her anguish.</p><p class="need"><b>villain</b> a usurper named Lugalanne</p><p class="do"><b>so</b> the hymn is also testimony — a first-person account of a coup.</p><p class="plus"><b>+1</b> it's startlingly raw: she writes of disrespect, even what reads as a violation — not abstract piety.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The plea and the return</h3><p class="what">She calls on Inanna to restore her — and the poem ends in triumph as she reclaims her place.</p><p class="need"><b>turn</b> appeal to the goddess → restoration</p><p class="do"><b>so</b> devotion and survival are the same act in the text.</p><p class="plus"><b>+1</b> she credits the goddess, not the king, with her restoration — a pointed choice of power.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>"I gave birth to this song"</h3><p class="what">Near the end she reflects on composing the hymn itself — writing about her own writing.</p><p class="need"><b>move</b> the poem turns to look at its own making</p><p class="do"><b>so</b> she's conscious of authorship as she performs it.</p><p class="plus"><b>+1</b> a poet writing about the act of composing — in 2300 BCE — is breathtakingly modern.</p></article>
+  </div>
+
+  <span class="band lapis">The wider body</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The 42 Temple Hymns</h3><p class="what">A sweeping set of hymns, each to a temple in a different city across the realm.</p><p class="need"><b>scope</b> temples of ~36 cities, Sumer and Akkad</p><p class="do"><b>so</b> it's a spiritual inventory of a whole civilization.</p><p class="plus"><b>+1</b> reconstructed from dozens of tablets — by binding every city's temple in one cycle, it bound the empire.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>The Inanna hymns</h3><p class="what">Inninsagurra ("the great-hearted mistress") and Inninmehusa ("goddess of the fearsome powers").</p><p class="need"><b>subject</b> Inanna in her fullness — love and war</p><p class="do"><b>so</b> she built the earliest written portrait of a goddess.</p><p class="plus"><b>+1</b> she venerated Inanna above all — unusual for a priestess officially serving the moon god Nanna.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The fragments</h3><p class="what">Two more poems attributed to her survive only in pieces.</p><p class="need"><b>state</b> incomplete tablets</p><p class="do"><b>so</b> her full output was likely larger than what reached us.</p><p class="plus"><b>+1</b> what we have is the surviving fraction — absence of a tablet isn't absence of a poem.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Hymns as a new craft</h3><p class="what">She's credited with shaping the very forms of hymn, psalm, and prayer.</p><p class="need"><b>legacy</b> paradigms later writers reused</p><p class="do"><b>so</b> she didn't just write hymns — she helped invent the genre.</p><p class="plus"><b>+1</b> her petitionary-prayer form echoes forward into biblical psalms and Homeric hymns.</p></article>
+  </div>
+
+  <span class="band gold">The line that changed everything</span>
+  <div class="quote reveal">
+    "The compiler of these tablets is Enheduanna. My king, something has been created that no one has created before."
+    <span class="src">— closing the Temple Hymns (modern translation; phrasing varies by translator)</span>
+  </div>
+
+  <span class="band gold">Her body of work</span>
+  <div class="block lapis">
+    <ul class="rules">
+      <li>Her masterwork is the <b>Exaltation of Inanna</b> (Nin-me-sara), 153 lines: praise of the goddess, then a first-person account of her <b>exile and restoration</b>.</li>
+      <li>Her widest work is the <b>42 Temple Hymns</b> — one for the temple of city after city — a single cycle that gathered an empire's gods into shared verse.</li>
+      <li>She wrote further <b>hymns to Inanna</b> (Inninsagurra, Inninmehusa) and two surviving <b>fragments</b>.</li>
+      <li>She closed the Temple Hymns by <b>naming herself the compiler</b> and claiming the work was new — the first signed claim of authorship we possess.</li>
+      <li>She is credited with shaping the <b>forms of hymn, prayer, and psalm</b> that later traditions inherited.</li>
+    </ul>
+  </div>
+
+  <span class="band gold">Reading her today</span>
+  <div class="block gold">
+    <ul class="rules">
+      <li>We read her in <b>translation from Sumerian</b>, reconstructed from many clay tablets — so exact wording <b>varies between translators</b>. Any quote is a rendering, not her literal line.</li>
+      <li>Her <b>complete poems were first published in one English translation in 2023</b> — astonishingly recent for the first author in history.</li>
+      <li>The surviving copies date to roughly <b>1750 BCE</b>, ~600 years after she lived, which is why authorship is debated (Book 0) — but the works themselves are real and studied.</li>
+      <li>Much of her work is freely readable via the <b>Electronic Text Corpus of Sumerian Literature</b>, and in translations by scholars like Hallo &amp; van Dijk, Meador, and Sophus Helle.</li>
+      <li>Book 2 sets these words back into the <b>world</b> that made them; Book 3 follows their <b>long afterlife</b>.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 1 · praise, exile, return · and a name signed at the end</p>
+</div>
+</body>
+</html>

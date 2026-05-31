@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Small Electric Motors — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3 ede1; --paper:#f3ede1; --card:#fbf8f0; --ink:#1a1710; --dim:#6b6457;
+    --blue:#1f3ccd; --red:#e23a2c; --bluetint:#e6e9fb; --redtint:#fbe7e4;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(26,23,16,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--blue);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--red);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(38px,8.5vw,82px);line-height:0.9;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8.5em;}
+  .mast h1 em{font-style:normal;color:var(--blue);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.07em;height:0.1em;background:var(--red);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#34302a;}
+  .dek b{font-weight:500;color:var(--blue);}
+  .motorart{flex:0 0 auto;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .rotor{transform-origin:191px 78px;animation:spin 1.5s linear infinite;}
+  @media (prefers-reduced-motion:reduce){.rotor{animation:none}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.blue{background:var(--blue);} .band.red{background:var(--red);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.8;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#3a352d;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.r:hover{box-shadow:5px 5px 0 var(--red);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;
+    font-size:12px;color:var(--red);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e27;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .warn{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--red);border:1px solid var(--red);padding:1px 6px;margin-top:9px;}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.blue{background:var(--bluetint);} .block.red{background:var(--redtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(26,23,16,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--blue);font-weight:700;}
+  .block.red .rules li::before{content:"!";color:var(--red);left:3px;}
+  .rules b{font-weight:500;color:var(--blue);} .block.red .rules b{color:var(--red);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(26,23,16,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;} .card:hover{transform:none;box-shadow:none;} .reveal{animation:none;opacity:1;transform:none;}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 2</span>
+    <div class="masthead">
+      <h1>Small Electric <em>Motors</em></h1>
+      <svg class="motorart" width="220" height="140" viewBox="0 0 230 140" role="img" aria-label="a small motor with a spinning rotor">
+        <line x1="44" y1="58" x2="36" y2="58" stroke="#1a1710" stroke-width="4" stroke-linecap="round"/>
+        <line x1="44" y1="98" x2="36" y2="98" stroke="#1a1710" stroke-width="4" stroke-linecap="round"/>
+        <rect x="44" y="40" width="116" height="76" rx="10" fill="#1f3ccd" stroke="#1a1710" stroke-width="2.5"/>
+        <line x1="70" y1="46" x2="70" y2="110" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="86" y1="46" x2="86" y2="110" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="134" y1="46" x2="134" y2="110" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <rect x="160" y="64" width="14" height="28" rx="3" fill="#1a1710"/>
+        <line x1="174" y1="78" x2="191" y2="78" stroke="#1a1710" stroke-width="4" stroke-linecap="round"/>
+        <g class="rotor">
+          <circle cx="191" cy="78" r="6" fill="#1a1710"/>
+          <rect x="187" y="50" width="8" height="56" rx="4" fill="#e23a2c" stroke="#1a1710" stroke-width="1.5"/>
+          <rect x="163" y="74" width="56" height="8" rx="4" fill="#e23a2c" stroke="#1a1710" stroke-width="1.5"/>
+        </g>
+        <path d="M206,52 Q220,64 212,80" fill="none" stroke="#e23a2c" stroke-width="2" stroke-linecap="round"/>
+        <path d="M176,108 Q190,116 206,110" fill="none" stroke="#e23a2c" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="dek">Salvage one from a toy, a printer, a drone, a dead drive — and put it to work. They're cheap, low-voltage, and <b>surprisingly capable</b>. Here's a field of them, and what to make them do.</p>
+  </header>
+
+  <span class="band">Know what you pulled</span>
+  <div class="types">
+    <div class="type reveal"><h4>Brushed DC</h4><p>The classic 2-wire toy "can." Flip the leads to reverse; chop the supply (PWM) for speed.</p><span class="tg">2 wires</span></div>
+    <div class="type reveal"><h4>Brushless</h4><p>Drone & RC motors. Efficient and strong, but needs an ESC to spin.</p><span class="tg">needs ESC</span></div>
+    <div class="type reveal"><h4>Stepper</h4><p>From printers & disc drives. Moves in exact steps — precise, needs a driver.</p><span class="tg">moves in steps</span></div>
+    <div class="type reveal"><h4>Servo</h4><p>3 wires. Feed it a PWM pulse and it holds an angle. Robotics, RC steering.</p><span class="tg">holds an angle</span></div>
+    <div class="type reveal"><h4>Vibration</h4><p>Tiny pager / coin motors with an offset weight — pure buzz.</p><span class="tg">haptics</span></div>
+    <div class="type reveal"><h4>Geared</h4><p>A DC motor with a gearbox bolted on. Trades speed for torque.</p><span class="tg">torque</span></div>
+  </div>
+
+  <span class="band blue">Spin something</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Fan</h3><p class="what">A blade on the shaft moves air.</p><p class="need"><b>need</b> dc motor · a prop or cut paper blade · battery</p><p class="do"><b>do</b> press-fit the prop, power it, aim it.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Bristlebot</h3><p class="what">An offset weight makes it skitter across the table.</p><p class="need"><b>need</b> vibration motor · a toothbrush head · coin cell</p><p class="do"><b>do</b> stick the motor to the bristles — it walks itself.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Magnetic stirrer</h3><p class="what">A magnet on the shaft drags a stir-bar in the liquid above.</p><p class="need"><b>need</b> dc motor · two magnets · a dish</p><p class="do"><b>do</b> spin a magnet under a cup; a magnet-bar inside follows.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Mini drill</h3><p class="what">A collet on the shaft turns it into a rotary tool.</p><p class="need"><b>need</b> a higher-rpm dc motor · a chuck/collet · bits</p><p class="do"><b>do</b> chuck a bit; drill, sand, polish small work.</p><span class="warn">eye protection</span></article>
+    <article class="card r reveal"><span class="num">05</span><h3>Centrifuge</h3><p class="what">Spin small tubes fast to separate what's in them.</p><p class="need"><b>need</b> a balanced rotor · dc/brushless motor · an enclosure</p><p class="do"><b>do</b> load tubes in balanced pairs, shield it, then spin.</p><span class="warn">⚠ balance & shield — projectile risk</span></article>
+  </div>
+
+  <span class="band blue">Make electricity <span class="sub">a motor run backwards is a generator</span></span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">06</span><h3>Hand-crank generator</h3><p class="what">Turn the shaft and the motor makes voltage.</p><p class="need"><b>need</b> a brushed dc motor · an LED · your fingers</p><p class="do"><b>do</b> spin it fast — the LED lights. Add a diode + cap to store it.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Wind turbine</h3><p class="what">Wind spins blades, the motor-generator makes power.</p><p class="need"><b>need</b> dc motor · blades · a mast · an LED/charger</p><p class="do"><b>do</b> mount blades on the shaft, point it into the breeze.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Water wheel</h3><p class="what">Flowing water turns the shaft into a trickle of current.</p><p class="need"><b>need</b> dc motor · a paddle wheel · a tap or stream</p><p class="do"><b>do</b> let water push the paddles; harvest from the leads.</p></article>
+  </div>
+
+  <span class="band blue">Make it move</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">09</span><h3>Two-wheel rover</h3><p class="what">One geared motor per wheel — drive and steer by speed.</p><p class="need"><b>need</b> 2 geared motors · wheels · an H-bridge · battery (+ a microcontroller)</p><p class="do"><b>do</b> run the motors through the H-bridge; spin them apart to turn.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Conveyor belt</h3><p class="what">A geared motor walks a loop of belt past a point.</p><p class="need"><b>need</b> geared motor · two rollers · a belt loop</p><p class="do"><b>do</b> drive one roller; tension the belt over the other.</p></article>
+    <article class="card reveal"><span class="num">11</span><h3>Peristaltic pump</h3><p class="what">Rollers squeeze soft tubing to push liquid along — no contact with the pump.</p><p class="need"><b>need</b> geared motor · a roller head · flexible tubing</p><p class="do"><b>do</b> rotate the rollers over the tube; meters doses cleanly.</p></article>
+  </div>
+
+  <span class="band red">Get precise <span class="sub">steppers & servos</span></span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">12</span><h3>Pen plotter</h3><p class="what">Two steppers drag a pen across X and Y to draw.</p><p class="need"><b>need</b> 2 steppers · drivers · a frame · a microcontroller</p><p class="do"><b>do</b> count steps per axis; lift the pen with a small servo.</p></article>
+    <article class="card r reveal"><span class="num">13</span><h3>Camera slider</h3><p class="what">A stepper creeps a camera along a rail for smooth motion shots.</p><p class="need"><b>need</b> a stepper · a driver · a rail + belt</p><p class="do"><b>do</b> step slowly along the belt; time it to your shot.</p></article>
+    <article class="card r reveal"><span class="num">14</span><h3>CD-drive stage</h3><p class="what">A dead optical drive hands you a precise linear sled, free.</p><p class="need"><b>need</b> a scrap CD/DVD drive · a stepper/motor driver</p><p class="do"><b>do</b> harvest the sled + stepper → a ready micro-positioner.</p></article>
+    <article class="card r reveal"><span class="num">15</span><h3>Robot arm / pan-tilt</h3><p class="what">A servo per joint holds each angle on command.</p><p class="need"><b>need</b> hobby servos · brackets · a PWM source</p><p class="do"><b>do</b> send each servo a pulse; pulse width = the angle.</p></article>
+    <article class="card r reveal"><span class="num">16</span><h3>A clock</h3><p class="what">A stepper or geared motor ticks the hands at a steady rate.</p><p class="need"><b>need</b> a stepper/geared motor · a driver · gearing</p><p class="do"><b>do</b> gear the output down to one turn per minute / hour.</p></article>
+  </div>
+
+  <span class="band red">Odd & fun</span>
+  <div class="grid">
+    <article class="card r reveal"><span class="num">17</span><h3>Musical steppers</h3><p class="what">Step them at audible rates and they play tunes — the pitch is the step frequency.</p><p class="need"><b>need</b> steppers · drivers · code</p><p class="do"><b>do</b> map notes to step rates; the coils sing.</p></article>
+    <article class="card r reveal"><span class="num">18</span><h3>Build one from scratch</h3><p class="what">The homopolar motor: the simplest motor there is.</p><p class="need"><b>need</b> an AA battery · a neodymium magnet · copper wire</p><p class="do"><b>do</b> balance a wire loop on the battery touching the magnet — it spins on its own.</p></article>
+    <article class="card r reveal"><span class="num">19</span><h3>Reaction-wheel balancer</h3><p class="what">A spinning mass torques its frame — enough to balance a stick or cube on an edge.</p><p class="need"><b>need</b> a brushless/dc motor · a flywheel · a sensor + controller</p><p class="do"><b>do</b> spin the wheel to counter a tip; it stands up.</p></article>
+    <article class="card r reveal"><span class="num">20</span><h3>Harvest the magnets</h3><p class="what">Hard-drive and brushless motors hide strong neodymium magnets worth keeping.</p><p class="need"><b>need</b> a dead HDD or brushless motor</p><p class="do"><b>do</b> pry them out for other builds.</p><span class="warn">⚠ very strong — pinch hazard</span></article>
+    <article class="card r reveal"><span class="num">21</span><h3>Eddy-current drop</h3><p class="what">Bonus physics: a magnet falls slowly down a copper tube — the same braking force inside every motor.</p><p class="need"><b>need</b> a neodymium magnet · a copper pipe</p><p class="do"><b>do</b> drop it in and watch it crawl (Lenz's law).</p></article>
+  </div>
+
+  <span class="band">Driving them</span>
+  <div class="block blue">
+    <ul class="rules">
+      <li>Never run a motor straight off a logic pin — it'll <b>fry the chip</b>. Motors get their own supply, through a driver.</li>
+      <li>DC motor → an <b>H-bridge</b> (DRV8833, L298N) gives forward/reverse from logic. Add a <b>flyback diode</b> for back-EMF, or use a driver that already has them.</li>
+      <li>Stepper → a <b>stepper driver</b> (A4988, DRV8825) plus a microcontroller counting steps.</li>
+      <li>Brushless → an <b>ESC</b> (electronic speed controller).</li>
+      <li>Servo → a <b>50 Hz PWM</b> pulse; the pulse width sets the angle.</li>
+      <li>Speed = <b>PWM</b> — chop the supply on and off fast. It keeps torque, unlike just lowering the voltage.</li>
+    </ul>
+  </div>
+
+  <span class="band red">Before you let the smoke out</span>
+  <div class="block red">
+    <ul class="rules">
+      <li>The hazards here are <b>mechanical, not electrical</b>: pinched fingers, flung parts, and heat. A stalled motor pulls big current and can cook itself or the battery — don't hold the shaft.</li>
+      <li><b>Balance and shield</b> anything you spin fast. An unbalanced centrifuge rotor at speed is a projectile.</li>
+      <li>Wear <b>eye protection</b> for drilling, grinding, and high-speed builds.</li>
+      <li><b>AC / mains motors</b> (fans, appliances, power tools) are a separate, dangerous category — don't open mains gear unless you know what you're doing.</li>
+      <li>Salvaged <b>neodymium magnets</b> are brutally strong: pinch hazard, and keep them clear of cards, drives, and pacemakers.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · salvage, spin, generate, repeat · most of these run on a battery and a good idea</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electromagnets & Solenoids — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ecefe6; --card:#f6f8f1; --ink:#16181a; --dim:#5f6358;
+    --mag:#d12e84; --teal:#0f817b; --magtint:#f8e2ef; --tealtint:#dcefec;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(22,24,26,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--mag);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--teal);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(34px,7.5vw,72px);line-height:0.9;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--mag);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--teal);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#32352e;}
+  .dek b{font-weight:500;color:var(--mag);}
+  .coilart{flex:0 0 auto;}
+  @keyframes pull{0%,100%{transform:translateX(30px)}44%,56%{transform:translateX(0)}}
+  @keyframes flux{0%,100%{opacity:.35}48%{opacity:.95}}
+  .plunger{animation:pull 1.6s ease-in-out infinite;}
+  .field{animation:flux 1.6s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.plunger,.field{animation:none}.field{opacity:.7}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.mag{background:var(--mag);} .band.teal{background:var(--teal);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#3a352d;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--teal);border:1px solid var(--teal);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--mag);}
+  .card.t:hover{box-shadow:5px 5px 0 var(--teal);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--teal);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e27;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .warn{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--mag);border:1px solid var(--mag);padding:1px 6px;margin-top:9px;}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.teal{background:var(--tealtint);} .block.mag{background:var(--magtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(22,24,26,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--teal);font-weight:700;}
+  .block.mag .rules li::before{content:"!";color:var(--mag);left:3px;}
+  .rules b{font-weight:500;color:var(--teal);} .block.mag .rules b{color:var(--mag);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(22,24,26,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;}.card:hover{transform:none;box-shadow:none;}.reveal{animation:none;opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 3</span>
+    <div class="masthead">
+      <h1>Electromagnets <em>& Solenoids</em></h1>
+      <svg class="coilart" width="230" height="140" viewBox="0 0 230 140" role="img" aria-label="a solenoid coil pulling in an iron plunger, with field lines">
+        <g class="field" fill="none" stroke="#0f817b" stroke-width="2" stroke-linecap="round">
+          <path d="M146,50 C196,14 38,14 74,50"/>
+          <path d="M146,94 C196,130 38,130 74,94"/>
+        </g>
+        <line x1="80" y1="100" x2="80" y2="120" stroke="#16181a" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="92" y1="100" x2="92" y2="120" stroke="#16181a" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="76" y="134" font-family="Space Mono,monospace" font-size="11" fill="#5f6358">+</text>
+        <text x="89" y="134" font-family="Space Mono,monospace" font-size="11" fill="#5f6358">−</text>
+        <g class="plunger">
+          <rect x="120" y="64" width="58" height="16" rx="3" fill="#0f817b" stroke="#16181a" stroke-width="2"/>
+          <circle cx="182" cy="72" r="7" fill="#16181a"/>
+        </g>
+        <g fill="none" stroke="#d12e84" stroke-width="3.4">
+          <ellipse cx="80" cy="72" rx="6" ry="27"/><ellipse cx="92" cy="72" rx="6" ry="27"/>
+          <ellipse cx="104" cy="72" rx="6" ry="27"/><ellipse cx="116" cy="72" rx="6" ry="27"/>
+          <ellipse cx="128" cy="72" rx="6" ry="27"/><ellipse cx="140" cy="72" rx="6" ry="27"/>
+        </g>
+      </svg>
+    </div>
+    <p class="dek">A coil of wire and a kick of current is half of every gadget you own. They <b>pull, switch, clamp, strike, and sing</b> — and they're hiding in every dead appliance. Here's the family, and what to make it do.</p>
+  </header>
+
+  <span class="band">Know your coil</span>
+  <div class="types">
+    <div class="type reveal"><h4>Electromagnet</h4><p>Wire round an iron core. Power on = magnetic; power off = nothing. The root of all the rest.</p><span class="tg">coil + core</span></div>
+    <div class="type reveal"><h4>Solenoid</h4><p>A coil that yanks an iron plunger in when energized; a spring throws it back. Linear push/pull.</p><span class="tg">plunger</span></div>
+    <div class="type reveal"><h4>Relay</h4><p>A tiny solenoid that flips a switch — a small signal commands a big load.</p><span class="tg">switches power</span></div>
+    <div class="type reveal"><h4>Voice coil</h4><p>The flat coil in a speaker (and a drive's head arm) — fast, precise motion in a magnet's gap.</p><span class="tg">fast & precise</span></div>
+    <div class="type reveal"><h4>Solenoid valve</h4><p>A solenoid that opens or shuts a fluid or air valve.</p><span class="tg">controls flow</span></div>
+    <div class="type reveal"><h4>Reed switch</h4><p>A sealed switch a passing magnet snaps shut — no contact, no wear.</p><span class="tg">magnet-tripped</span></div>
+  </div>
+
+  <span class="band mag">Make a magnet</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Basic electromagnet</h3><p class="what">Wire round an iron core; current makes it magnetic, off and it isn't.</p><p class="need"><b>need</b> enamelled wire · a nail or bolt · a battery</p><p class="do"><b>do</b> wind a tight coil, scrape the ends, power it — picks up paperclips.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Dial-a-strength</h3><p class="what">Vary the current and you vary the pull.</p><p class="need"><b>need</b> an electromagnet · a pot or PWM · a transistor</p><p class="do"><b>do</b> PWM the coil — turn the field up and down on demand.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Junkyard crane</h3><p class="what">A switchable magnet grabs steel, then drops it on cue — the only magnet that lets go.</p><p class="need"><b>need</b> a big electromagnet · an arm · a switch</p><p class="do"><b>do</b> energize to grab, cut power to drop.</p></article>
+  </div>
+
+  <span class="band mag">Switch big things <span class="sub">relays</span></span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">04</span><h3>Switch a big load</h3><p class="what">A relay's coil throws a switch — a tiny signal controls a lamp, pump, or motor it could never drive directly.</p><p class="need"><b>need</b> a relay · a transistor + flyback diode · the load</p><p class="do"><b>do</b> pulse the coil; its contacts carry the heavy current.</p></article>
+    <article class="card reveal"><span class="num">05</span><h3>Electric bell</h3><p class="what">An electromagnet that interrupts its own power chatters a striker — the classic buzzer.</p><p class="need"><b>need</b> a coil · a springy contact · a clapper</p><p class="do"><b>do</b> run the coil through its own contact — it makes & breaks, and rings.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Relay logic</h3><p class="what">Relays were the first computers — wire them into gates and memory.</p><p class="need"><b>need</b> a handful of relays</p><p class="do"><b>do</b> cross-wire two relays to hold a state (a latch), or build an AND/OR.</p></article>
+  </div>
+
+  <span class="band mag">Push & pull <span class="sub">solenoids</span></span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">07</span><h3>Solenoid striker</h3><p class="what">Energize and the plunger slams in; a spring throws it back.</p><p class="need"><b>need</b> a solenoid · a transistor + flyback diode · a supply</p><p class="do"><b>do</b> pulse it — instant kick. Knockers, kickers, stampers.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Electric door latch</h3><p class="what">A solenoid bolt you release electronically.</p><p class="need"><b>need</b> a solenoid lock · a button or keypad · a driver</p><p class="do"><b>do</b> press to pull the bolt; the spring re-latches it.</p></article>
+    <article class="card reveal"><span class="num">09</span><h3>Solenoid valve</h3><p class="what">A solenoid opens or closes a fluid or air valve.</p><p class="need"><b>need</b> a solenoid valve · a driver · tubing</p><p class="do"><b>do</b> switch water or air on and off — irrigation, pneumatics, dosing.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Robotic drummer</h3><p class="what">Solenoids tap drums, bells, or keys on command.</p><p class="need"><b>need</b> solenoids · strikers · a microcontroller</p><p class="do"><b>do</b> fire each on the beat — a self-playing instrument.</p></article>
+  </div>
+
+  <span class="band teal">Voice coils & sound</span>
+  <div class="grid">
+    <article class="card t reveal"><span class="num">11</span><h3>Build a speaker</h3><p class="what">A coil in a magnet's gap pushes a cone to move air.</p><p class="need"><b>need</b> a magnet · a coil · a cone or membrane</p><p class="do"><b>do</b> drive the coil with an audio signal — it plays.</p></article>
+    <article class="card t reveal"><span class="num">12</span><h3>…is also a mic</h3><p class="what">Run it backwards: move the coil and it generates a signal.</p><p class="need"><b>need</b> a small speaker · an amp input</p><p class="do"><b>do</b> speak into it; the cone's motion becomes voltage.</p></article>
+    <article class="card t reveal"><span class="num">13</span><h3>HDD head actuator</h3><p class="what">A hard drive's arm is a fast, precise voice-coil mover behind a fierce magnet.</p><p class="need"><b>need</b> a dead hard drive</p><p class="do"><b>do</b> harvest the actuator for fast pointing — or just keep the magnets.</p><span class="warn">⚠ very strong magnets</span></article>
+  </div>
+
+  <span class="band teal">Magnetism tricks</span>
+  <div class="grid">
+    <article class="card t reveal"><span class="num">14</span><h3>Reed switch trigger</h3><p class="what">A passing magnet snaps a sealed switch shut — no contact, no wear.</p><p class="need"><b>need</b> a reed switch · a magnet</p><p class="do"><b>do</b> door sensors, bike speedometers, hidden triggers.</p></article>
+    <article class="card t reveal"><span class="num">15</span><h3>Shake-to-light</h3><p class="what">A magnet sliding through a coil makes current (Faraday).</p><p class="need"><b>need</b> a coil · a magnet · an LED (+ diode/cap)</p><p class="do"><b>do</b> shake it — the LED flickers; store it to glow steady.</p></article>
+    <article class="card t reveal"><span class="num">16</span><h3>Wireless power</h3><p class="what">Two coils pass energy across a gap with nothing touching.</p><p class="need"><b>need</b> two coils · an oscillator to drive one · an LED</p><p class="do"><b>do</b> drive the primary at high frequency; the LED lights across the air.</p></article>
+    <article class="card t reveal"><span class="num">17</span><h3>Magnetic levitator</h3><p class="what">A coil that pulls just enough, corrected by a sensor, floats a magnet in midair.</p><p class="need"><b>need</b> a coil · a hall sensor · a control loop</p><p class="do"><b>do</b> sense the magnet's height, trim the coil — it hovers.</p></article>
+    <article class="card t reveal"><span class="num">18</span><h3>Mag-lock holder</h3><p class="what">An energized electromagnet clamps a steel plate hard; release by cutting power.</p><p class="need"><b>need</b> an electromagnet · a steel strike plate</p><p class="do"><b>do</b> door holders, fail-safe locks, work clamps.</p></article>
+  </div>
+
+  <span class="band">Driving coils</span>
+  <div class="block teal">
+    <ul class="rules">
+      <li>The one rule for every coil: a <b>flyback diode</b>. Switch a coil off and its field collapses into a high-voltage spike that kills transistors and chips. Put a diode across the coil, reverse-biased. Always.</li>
+      <li>Don't drive a coil from a logic pin — use a <b>transistor or MOSFET</b> (or a relay/driver module). Coils want real current.</li>
+      <li><b>Match the rated voltage</b> of the relay or solenoid. Many can pull in hard, then <b>hold at lower power</b> (PWM) so they don't cook.</li>
+      <li>A coil left on gets <b>hot</b> — solenoids are often rated for short pulses, not continuous duty.</li>
+      <li>More <b>turns</b> + an <b>iron core</b> = a stronger field for the same current. The core gathers the flux.</li>
+      <li><b>AC coils</b> — mains relays, contactors, transformers — are a separate, dangerous category.</li>
+    </ul>
+  </div>
+
+  <span class="band mag">Before you let the smoke out</span>
+  <div class="block mag">
+    <ul class="rules">
+      <li>Every coil <b>kicks back</b> when switched off — flyback diode, or expect dead parts (and a real zap off a bigger one).</li>
+      <li>Coils and solenoids run <b>hot</b> — mind duty cycles; don't leave them energized.</li>
+      <li>Solenoid plungers move <b>fast and hard</b> — keep fingers out of the path.</li>
+      <li>Salvaged <b>voice-coil, HDD, and speaker magnets</b> are brutally strong — pinch hazard, and keep them clear of cards, drives, and pacemakers.</li>
+      <li><b>Mains/AC coils, contactors, and capacitor-bank</b> builds are the genuinely dangerous territory — discharge caps, respect mains, same lethal-energy caution as opening a TV or microwave.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · coils, cores, and a kick of current · mind the flyback and the heat</p>
+
+</div>
+</body>
+</html>

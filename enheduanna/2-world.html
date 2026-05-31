@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Her World — No. 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#efe6d4;--card:#f7f0e1;--ink:#211a12;--dim:#6a5f4c;--lapis:#1f4ea8;--gold:#b8862b;--lapistint:#dce4f3;--goldtint:#f1e6c8;}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(33,26,18,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--lapis);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(42px,9vw,82px);line-height:0.95;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--lapis);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#33291c;}
+  .dek b{font-weight:500;color:var(--lapis);}
+  .art{flex:0 0 auto;}
+  @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.85}}
+  .sun{animation:shimmer 3s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.sun{animation:none}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 13px;margin:34px 0 14px;}
+  .band.lapis{background:var(--lapis);} .band.gold{background:var(--gold);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;}
+  .type p{font-size:13px;margin:0;color:#3c3424;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--lapis);border:1px solid var(--lapis);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--lapis);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#34291c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(33,26,18,0.18);color:#4a3f28;}
+  .card .plus b{color:var(--lapis);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--gold);}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.lapis{background:var(--lapistint);} .block.gold{background:var(--goldtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(33,26,18,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"𒀭";position:absolute;left:0;top:7px;font-size:13px;color:var(--lapis);}
+  .block.gold .rules li::before{content:"✦";color:var(--gold);}
+  .rules b{font-weight:500;color:var(--lapis);} .block.gold .rules b{color:var(--gold);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(33,26,18,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 2 · her world</span>
+    <div class="masthead">
+      <h1>Her <em>World</em></h1>
+      <svg class="art" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="a stepped ziggurat under a sun">
+        <circle class="sun" cx="90" cy="34" r="16" fill="#b8862b"/>
+        <polygon points="40,120 140,120 132,100 48,100" fill="#cdb98e" stroke="#211a12" stroke-width="2"/>
+        <polygon points="56,100 124,100 117,82 63,82" fill="#c2ad81" stroke="#211a12" stroke-width="2"/>
+        <polygon points="70,82 110,82 104,66 76,66" fill="#b8a374" stroke="#211a12" stroke-width="2"/>
+        <line x1="90" y1="120" x2="90" y2="100" stroke="#211a12" stroke-width="1" opacity="0.4"/>
+        <line x1="90" y1="100" x2="90" y2="82" stroke="#211a12" stroke-width="1" opacity="0.4"/>
+        <text x="90" y="140" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#6a5f4c">the ziggurat of Ur</text>
+      </svg>
+    </div>
+    <p class="dek">She lived at the dawn of <b>cities, writing, and empire</b> — in Ur, beneath its great ziggurat, in the temple complex where she ruled and was buried. This book is the world that made her: the empire, the city, the office, and the turmoil she survived.</p>
+  </header>
+
+  <span class="band">The setting</span>
+  <div class="types">
+    <div class="type reveal"><h4>Mesopotamia</h4><p>"Between the rivers" — the Tigris and Euphrates, where the first cities rose.</p><span class="tg">the cradle</span></div>
+    <div class="type reveal"><h4>The Akkadian Empire</h4><p>Sargon's realm — the first known empire, joining Sumer and Akkad.</p><span class="tg">first empire</span></div>
+    <div class="type reveal"><h4>The Giparu</h4><p>The temple complex at Ur where the high priestess lived, worked, and was buried.</p><span class="tg">her home</span></div>
+    <div class="type reveal"><h4>Cuneiform</h4><p>Wedge-marks pressed in clay — the writing system she wrote in.</p><span class="tg">the script</span></div>
+  </div>
+
+  <span class="band lapis">The empire & the city</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Sargon's new order</h3><p class="what">Her father conquered and joined the Sumerian city-states into the first empire.</p><p class="need"><b>scale</b> from the Mediterranean toward Persia</p><p class="do"><b>so</b> she grew up inside an entirely new kind of power.</p><p class="plus"><b>+1</b> some accounts say he absorbed dozens of city-states — Ur among the most important.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Ur, the great city</h3><p class="what">An ancient Sumerian city-state in the south, crowned by its ziggurat to Nanna.</p><p class="need"><b>where</b> southern Mesopotamia, today's Iraq</p><p class="do"><b>so</b> it was the spiritual heart she was sent to hold.</p><p class="plus"><b>+1</b> the famous Ziggurat of Ur was dedicated to Nanna — the very god she served.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The Giparu</h3><p class="what">The temple complex at Ur where the entu priestess lived — and where she was buried.</p><p class="need"><b>place</b> the priestess's residence and sanctuary</p><p class="do"><b>so</b> her whole life had a known physical center.</p><p class="plus"><b>+1</b> excavations of the Giparu are part of how we know her — the building outlived the empire.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Writing in clay</h3><p class="what">She wrote in cuneiform — wedge-shaped marks pressed into wet clay tablets, then dried.</p><p class="need"><b>tool</b> a reed stylus on clay</p><p class="do"><b>so</b> her words could outlast her by four thousand years.</p><p class="plus"><b>+1</b> baked clay is nearly indestructible — the reason we still have her at all.</p></article>
+  </div>
+
+  <span class="band lapis">Her office & its dangers</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>The entu priestess</h3><p class="what">High priestess of Nanna — among the most powerful offices in the land.</p><p class="need"><b>role</b> religious, political, economic authority</p><p class="do"><b>so</b> she commanded a temple, its lands, and its people.</p><p class="plus"><b>+1</b> the role she defined was held by royal women for centuries after her — she set its mold.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>A bridge by design</h3><p class="what">Sargon placed her at Ur to fuse Akkadian and Sumerian religion and hold the empire.</p><p class="need"><b>task</b> meld two pantheons into one</p><p class="do"><b>so</b> her devotion did political work for the throne.</p><p class="plus"><b>+1</b> trusting a daughter with that fusion, in Sumer's heartland, shows how high she stood.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The coup</h3><p class="what">Under Sargon's successors she was caught in upheaval — driven from office, then reinstated.</p><p class="need"><b>foe</b> a usurper (Lugalanne in her hymn)</p><p class="do"><b>so</b> the Exaltation of Inanna is partly her account of it.</p><p class="plus"><b>+1</b> she served across reigns — Sargon, then his sons Rimush and possibly Naram-Sin — turbulent decades.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Remembered as near-divine</h3><p class="what">After death she was honored for centuries — perhaps approaching semi-divine status.</p><p class="need"><b>legacy</b> a remembered, venerated figure</p><p class="do"><b>so</b> her standing outlived her own lifetime by ages.</p><p class="plus"><b>+1</b> later texts echo her story — the Curse of Akkad curses Naram-Sin, under whom she may have served.</p></article>
+  </div>
+
+  <span class="band gold">Women, power, and the word</span>
+  <div class="grid">
+    <article class="card g reveal"><span class="num">09</span><h3>Women in Mesopotamia</h3><p class="what">Women appear as priestesses, weavers, potters, midwives, and more in the record.</p><p class="need"><b>context</b> a documented economic and religious role</p><p class="do"><b>so</b> her standing wasn't a fluke but part of a wider picture.</p><p class="plus"><b>+1</b> the 2022–23 "She Who Wrote" exhibition gathered this world around her — women's work, carved and recorded.</p></article>
+    <article class="card g reveal"><span class="num">10</span><h3>The Disk of Enheduanna</h3><p class="what">An alabaster disk shows her at a ritual, named, with her tie to Sargon inscribed.</p><p class="need"><b>found</b> Ur, 1927, by Leonard Woolley</p><p class="do"><b>so</b> we have her image and title, not just her verse.</p><p class="plus"><b>+1</b> it sat unconnected to her tablets for decades — linking disk to poems took later scholarship.</p></article>
+    <article class="card g reveal"><span class="num">11</span><h3>A priestess who chose Inanna</h3><p class="what">Officially Nanna's priestess, she gave her deepest devotion to his daughter, Inanna.</p><p class="need"><b>goddess</b> Inanna / Ishtar — love and war, the planet Venus</p><p class="do"><b>so</b> she wrote the first great portrait of that goddess.</p><p class="plus"><b>+1</b> choosing Inanna over her official god was a striking statement of personal allegiance.</p></article>
+    <article class="card g reveal"><span class="num">12</span><h3>Statecraft in verse</h3><p class="what">Her poems weren't only art — they helped knit a fragile new empire together.</p><p class="need"><b>function</b> shared religion as political glue</p><p class="do"><b>so</b> writing, faith, and power met in one person.</p><p class="plus"><b>+1</b> her Temple Hymns reached ~36 cities — a unifying cultural act across the whole realm.</p></article>
+  </div>
+
+  <span class="band gold">Her place in it</span>
+  <div class="block lapis">
+    <ul class="rules">
+      <li>She lived in <b>Mesopotamia</b> at the founding of cities and writing, inside the <b>first known empire</b> — her father Sargon's Akkad.</li>
+      <li>Her world centered on <b>Ur</b> and its <b>Giparu</b> temple complex, beneath the great <b>ziggurat to Nanna</b>, where she lived and was buried.</li>
+      <li>As <b>entu priestess</b> she held religious, political, and economic power, and her task was to <b>bind two peoples' gods</b> into one faith for the empire.</li>
+      <li>She lived through <b>real political danger</b> — a coup and exile under Sargon's successors — and was <b>reinstated</b>, which her own hymn records.</li>
+      <li>She wrote in <b>cuneiform on clay</b>, and the carved <b>Disk of Enheduanna</b> survives — so her world is known from <b>both objects and texts</b>.</li>
+    </ul>
+  </div>
+
+  <span class="band gold">What's solid vs. reconstructed</span>
+  <div class="block gold">
+    <ul class="rules">
+      <li><b>Solid:</b> she existed, was Sargon's daughter, served as high priestess at Ur, and is named on the disk and in records. Archaeology backs this.</li>
+      <li><b>Reconstructed:</b> exact dates, the precise sequence of the coup, and which kings she served under come from <b>combining texts written or copied later</b> — so scholars differ on the details.</li>
+      <li>Names and spellings shift across sources — <b>Lugalanne, Naram-Sin, Rimush</b> — and the <b>Curse of Akkad</b> is a later literary text, not a direct record of her life.</li>
+      <li>Dates this old carry <b>uncertainty</b> — "c. 2300 BCE" is an approximation, not a fixed year.</li>
+      <li>Where this book says "likely" or "may have," that's the honest state of the evidence — not hedging for its own sake.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 2 · cities, clay, and a fragile empire · the world that made the words</p>
+</div>
+</body>
+</html>

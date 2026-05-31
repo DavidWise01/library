@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enheduanna — No. 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#efe6d4; --card:#f7f0e1; --ink:#211a12; --dim:#6a5f4c;
+    --lapis:#1f4ea8; --gold:#b8862b; --lapistint:#dce4f3; --goldtint:#f1e6c8;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(rgba(33,26,18,0.05) 1px, transparent 1.4px);background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--lapis);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(40px,8.5vw,82px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--lapis);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#33291c;}
+  .dek b{font-weight:500;color:var(--lapis);}
+  .art{flex:0 0 auto;}
+  @keyframes press{0%,70%{opacity:0;transform:translateY(-3px)}80%,100%{opacity:1;transform:none}}
+  .w1{animation:press 3s ease-in-out infinite} .w2{animation:press 3s ease-in-out infinite .4s} .w3{animation:press 3s ease-in-out infinite .8s} .w4{animation:press 3s ease-in-out infinite 1.2s}
+  @media (prefers-reduced-motion:reduce){.w1,.w2,.w3,.w4{animation:none;opacity:1}}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 13px;margin:34px 0 14px;}
+  .band.lapis{background:var(--lapis);} .band.gold{background:var(--gold);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;letter-spacing:0.02em;}
+  .type p{font-size:13px;margin:0;color:#3c3424;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--lapis);border:1px solid var(--lapis);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--lapis);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--gold);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--gold);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:18px;line-height:1.08;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#34291c;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(33,26,18,0.18);color:#4a3f28;}
+  .card .plus b{color:var(--lapis);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.g .plus b{color:var(--gold);}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.lapis{background:var(--lapistint);} .block.gold{background:var(--goldtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(33,26,18,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"𒀭";position:absolute;left:0;top:7px;font-size:13px;color:var(--lapis);}
+  .block.gold .rules li::before{content:"✦";color:var(--gold);}
+  .rules b{font-weight:500;color:var(--lapis);} .block.gold .rules b{color:var(--gold);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(33,26,18,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">enihundua series · book no. 0 · who she was</span>
+    <div class="masthead">
+      <h1>Enhedu<em>anna</em></h1>
+      <svg class="art" width="170" height="150" viewBox="0 0 170 150" role="img" aria-label="a clay tablet with cuneiform wedge-marks">
+        <rect x="34" y="22" width="102" height="106" rx="8" fill="#cdb98e" stroke="#211a12" stroke-width="2.5"/>
+        <rect x="34" y="22" width="102" height="106" rx="8" fill="none" stroke="#b8862b" stroke-width="1" opacity="0.5"/>
+        <g fill="#5a4a2c">
+          <g class="w1"><polygon points="48,42 56,40 54,48"/><polygon points="62,42 70,40 68,48"/><polygon points="76,42 84,40 82,48"/></g>
+          <g class="w2"><polygon points="48,60 56,58 54,66"/><polygon points="62,60 70,58 68,66"/><polygon points="76,60 84,58 82,66"/><polygon points="90,60 98,58 96,66"/></g>
+          <g class="w3"><polygon points="48,78 56,76 54,84"/><polygon points="62,78 70,76 68,84"/><polygon points="90,78 98,76 96,84"/></g>
+          <g class="w4"><polygon points="48,96 56,94 54,102"/><polygon points="62,96 70,94 68,102"/><polygon points="76,96 84,94 82,102"/><polygon points="90,96 98,94 96,102"/><polygon points="104,96 112,94 110,102"/></g>
+        </g>
+        <text x="85" y="142" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#6a5f4c">𒂗𒃶𒌌𒀭𒈾</text>
+      </svg>
+    </div>
+    <p class="dek">Before any name we know, hers. Around 2300 BCE, a high priestess in the city of Ur pressed her name into wet clay and claimed her own writing — becoming the <b>earliest author in human history known by name</b>. This book is who she was, and why that matters.</p>
+  </header>
+
+  <span class="band">The world she stood in</span>
+  <div class="types">
+    <div class="type reveal"><h4>Sumer & Akkad</h4><p>Southern Mesopotamia, present-day Iraq — the first cities, joined under the first empire.</p><span class="tg">~2300 BCE</span></div>
+    <div class="type reveal"><h4>Ur</h4><p>The great Sumerian city-state where she served, beneath its famous ziggurat.</p><span class="tg">her city</span></div>
+    <div class="type reveal"><h4>Sargon</h4><p>Her father — Sargon of Akkad, builder of the world's first known empire.</p><span class="tg">her father</span></div>
+    <div class="type reveal"><h4>Nanna & Inanna</h4><p>The moon god she served, and the goddess of love and war she came to revere above all.</p><span class="tg">her gods</span></div>
+  </div>
+
+  <span class="band lapis">Who she was</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>A name that means her office</h3><p class="what">"Enheduanna" isn't a birth name — it's a Sumerian title she took on appointment.</p><p class="need"><b>means</b> roughly "high priestess, ornament of heaven" (En · hedu · Ana)</p><p class="do"><b>so</b> her very name marks the role she held.</p><p class="plus"><b>+1</b> she was likely born with a Semitic Akkadian name; the Sumerian title came when she moved to Ur.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Daughter of the first empire</h3><p class="what">Her father Sargon united Sumer and Akkad into the earliest empire we know of.</p><p class="need"><b>reign</b> Sargon, c. 2334–2279 BCE</p><p class="do"><b>so</b> she was royalty at the hinge of a new political order.</p><p class="plus"><b>+1</b> placing his daughter over Ur's chief temple was a political move as much as a sacred one.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>High priestess of the moon</h3><p class="what">Sargon appointed her chief priestess of Nanna, the moon god, at Ur.</p><p class="need"><b>role</b> entu — high priestess</p><p class="do"><b>so</b> she held religious, political, and economic power at once.</p><p class="plus"><b>+1</b> by several accounts she held the office around 40 years — a long, formidable tenure.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>The first we can name</h3><p class="what">Older writing exists — but anonymous. Enheduanna is the first author whose name we know.</p><p class="need"><b>claim</b> earliest named author in world history</p><p class="do"><b>so</b> authorship itself, as a signed act, begins with her.</p><p class="plus"><b>+1</b> she predates Homer by roughly 1,500 years — the usual "first poet" of the West.</p></article>
+  </div>
+
+  <span class="band lapis">Why she mattered</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>She signed her work</h3><p class="what">She didn't just write — she named herself as the maker, the radical part.</p><p class="need"><b>act</b> "The compiler of these tablets is Enheduanna."</p><p class="do"><b>so</b> she claimed responsibility and credit — the birth of authorship.</p><p class="plus"><b>+1</b> to sign a work is to stand ready for credit <em>or</em> blame — a genuinely new idea in 2300 BCE.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>A bridge between peoples</h3><p class="what">Her task was to weave Akkadian and Sumerian gods into one shared religion.</p><p class="need"><b>job</b> blend two pantheons to bind an empire</p><p class="do"><b>so</b> her writing was statecraft as much as devotion.</p><p class="plus"><b>+1</b> shared religious culture was how a sprawling early empire held together — and she built it in verse.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>The first inner voice</h3><p class="what">She wrote in the first person about her own fears, exile, and hopes.</p><p class="need"><b>first</b> a recorded individual consciousness</p><p class="do"><b>so</b> hers may be the earliest account of a person's inner life.</p><p class="plus"><b>+1</b> "I, Enheduanna" — she put herself <em>into</em> the text, not just behind it.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Echoes for millennia</h3><p class="what">Her hymns were copied and studied for 500+ years after her death.</p><p class="need"><b>legacy</b> models for later prayer and psalm</p><p class="do"><b>so</b> faint echoes reach the Hebrew psalms and Homeric hymns.</p><p class="plus"><b>+1</b> scribes kept recopying her work for centuries — ancient proof of how highly she was held.</p></article>
+  </div>
+
+  <span class="band gold">The core of it</span>
+  <div class="block lapis">
+    <ul class="rules">
+      <li>Around <b>2300 BCE</b>, in the Sumerian city of <b>Ur</b> (now southern Iraq), a woman served as <b>high priestess of the moon god Nanna</b>.</li>
+      <li>She was a <b>princess</b> — daughter of <b>Sargon of Akkad</b>, founder of the world's first known empire — and her post was sacred and political at once.</li>
+      <li>She wrote <b>hymns and poems</b>, and she did the unprecedented thing: she <b>put her name to them</b>.</li>
+      <li>That makes her the <b>earliest author known by name</b> in human history — about <b>1,500 years before Homer</b>.</li>
+      <li>She wrote in her <b>own voice</b>, about her <b>own life</b> — exile, restoration, devotion — which is why she still reaches us across more than four thousand years.</li>
+    </ul>
+  </div>
+
+  <span class="band gold">What we know — and how</span>
+  <div class="block gold">
+    <ul class="rules">
+      <li>Her <b>existence is well-established</b>: there are ancient records of her, two seals naming her servants, and a carved <b>alabaster disk bearing her image and name</b>, dug up at Ur in 1927 (now at the Penn Museum).</li>
+      <li>Her <b>poems survive in copies</b> — many of them — but the oldest surviving tablets date to around <b>1750 BCE</b>, some <b>600 years after she lived</b>.</li>
+      <li>Because we have copies, not originals, <b>some scholars question</b> how much she personally composed versus what later scribes shaped. This is a real, ongoing debate — and an honest part of her story, not a flaw in it.</li>
+      <li>What's <b>not</b> in dispute: she was a real historical person, of enormous standing, to whom the first signed authorship is attributed. (Books 1–3 take up her works, her world, and her legacy in turn.)</li>
+      <li>Spelling varies — <b>Enheduanna, Enheduana, En-hedu-ana</b> — all the same person; the cuneiform is 𒂗𒃶𒌌𒀭𒈾.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">enihundua series · book no. 0 · she pressed her name into clay · the first author we can name</p>
+</div>
+</body>
+</html>

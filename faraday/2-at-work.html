@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shielding at Work — No. 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e7e9ec; --card:#f3f5f7; --ink:#13161b; --dim:#565d68;
+    --graph:#3a4250; --blue:#1763d6; --graphtint:#dde1e7; --bluetint:#d7e4fa;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);background-image:radial-gradient(rgba(19,22,27,0.05) 1px, transparent 1.4px);background-size:7px 7px;font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--blue);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--blue);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(40px,8.5vw,80px);line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--blue);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--graph);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#2c313a;}
+  .dek b{font-weight:500;color:var(--blue);}
+  .art{flex:0 0 auto;}
+  @keyframes push{0%{transform:translateX(0);opacity:0}20%{opacity:1}70%{opacity:1}100%{transform:translateX(40px);opacity:0}}
+  @keyframes block{0%,45%{opacity:0}55%,100%{opacity:.9}}
+  .wv{animation:push 2s linear infinite;} .wv.w2{animation-delay:.5s} .wv.w3{animation-delay:1s}
+  .blk{animation:block 2s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.wv{animation:none;opacity:.4}.blk{animation:none}}
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.blue{background:var(--blue);} .band.graph{background:var(--graph);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#363b44;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--graph);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--graph);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e2a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(19,22,27,0.18);color:#37424f;}
+  .card .plus b{color:var(--blue);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.blue{background:var(--bluetint);} .block.graph{background:var(--graphtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(19,22,27,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--blue);font-weight:700;}
+  .block.graph .rules li::before{content:"✦";color:var(--graph);}
+  .rules b{font-weight:500;color:var(--blue);} .block.graph .rules b{color:var(--graph);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(19,22,27,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 2</span>
+    <div class="masthead">
+      <h1>Shielding <em>at Work</em></h1>
+      <svg class="art" width="200" height="150" viewBox="0 0 200 150" role="img" aria-label="radio waves stopped by a metal wall">
+        <g fill="none" stroke="#1763d6" stroke-width="2.4" stroke-linecap="round">
+          <path class="wv" d="M30,55 q8,20 0,40"/>
+          <path class="wv w2" d="M52,55 q8,20 0,40"/>
+          <path class="wv w3" d="M74,55 q8,20 0,40"/>
+        </g>
+        <rect x="104" y="34" width="14" height="82" fill="#3a4250"/>
+        <g class="blk" stroke="#1763d6" stroke-width="2"><line x1="96" y1="62" x2="104" y2="70"/><line x1="96" y1="70" x2="104" y2="62"/><line x1="96" y1="82" x2="104" y2="90"/><line x1="96" y1="90" x2="104" y2="82"/></g>
+        <text x="150" y="79" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#565d68">blocked</text>
+      </svg>
+    </div>
+    <p class="dek">Once you can spot one, they're <b>everywhere</b> — in the oven door, the cable behind your TV, the walls of a hospital scanner, the bag a chip ships in. Here's where Faraday's principle is quietly doing a job all around you.</p>
+  </header>
+
+  <span class="band">Where it hides</span>
+  <div class="types">
+    <div class="type reveal"><h4>Kitchen</h4><p>The microwave door — a mesh screen keeping the cooking energy in.</p><span class="tg">at home</span></div>
+    <div class="type reveal"><h4>Cables</h4><p>Coax and shielded wire — a metal braid wrapping the signal.</p><span class="tg">on the wire</span></div>
+    <div class="type reveal"><h4>Medicine</h4><p>The whole MRI room is a shielded cage so it can hear faint signals.</p><span class="tg">in the clinic</span></div>
+    <div class="type reveal"><h4>Vehicles</h4><p>A car or plane's metal body shields the people inside from strikes.</p><span class="tg">on the move</span></div>
+    <div class="type reveal"><h4>Labs</h4><p>Screened and anechoic rooms for testing and quiet measurement.</p><span class="tg">in the lab</span></div>
+    <div class="type reveal"><h4>Packaging</h4><p>Anti-static bags carry a thin conductive shield for chips.</p><span class="tg">in the box</span></div>
+  </div>
+
+  <span class="band blue">Around the house</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>The microwave door</h3><p class="what">That perforated metal screen is a Faraday cage holding the microwaves inside.</p><p class="need"><b>where</b> every kitchen</p><p class="do"><b>why</b> holes much smaller than the ~12 cm wavelength can't pass the energy.</p><p class="plus"><b>+1</b> your eyes see through it because visible light's wavelength is tiny next to the holes — the microwaves can't.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Shielded rooms in the wall</h3><p class="what">Some appliances and panels carry metal shields against interference.</p><p class="need"><b>where</b> behind covers and cases</p><p class="do"><b>why</b> to keep their noise in and the world's noise out.</p><p class="plus"><b>+1</b> the metal can on a router or PC board is a mini-cage over the part that radiates most.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Foil-backed insulation</h3><p class="what">Some building foil incidentally weakens WiFi between rooms.</p><p class="need"><b>where</b> walls, low-E windows</p><p class="do"><b>why</b> a continuous metal layer partially shields RF.</p><p class="plus"><b>+1</b> this is why a single room in a house can be a WiFi dead spot — it's a half-built cage.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>The elevator effect</h3><p class="what">Signal drops in a lift because you're in a metal box.</p><p class="need"><b>where</b> any steel elevator car</p><p class="do"><b>why</b> the car approximates a cage around you.</p><p class="plus"><b>+1</b> it's imperfect — the door gap leaks — which is why you sometimes keep one bar of signal.</p></article>
+  </div>
+
+  <span class="band blue">On the wire</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Coaxial cable</h3><p class="what">A center wire wrapped in a braided metal shield — a cage in cable form.</p><p class="need"><b>where</b> TV, antenna, network feeds</p><p class="do"><b>why</b> the braid keeps the signal in and interference out.</p><p class="plus"><b>+1</b> the shield must be grounded at the right point — a floating shield can make noise worse, not better.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>Shielded data cable</h3><p class="what">Quality USB, HDMI, and audio cables wrap a foil/braid shield.</p><p class="need"><b>where</b> any cable near interference</p><p class="do"><b>why</b> to stop crosstalk and pickup along the run.</p><p class="plus"><b>+1</b> a shield only works if it's connected at the ends — a cheap cable's shield often dangles, doing nothing.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Cable-can cans</h3><p class="what">The ferrite lump on a cable plus its shield tames emissions.</p><p class="need"><b>where</b> monitor and laptop leads</p><p class="do"><b>why</b> shield + ferrite together choke high-frequency noise.</p><p class="plus"><b>+1</b> the ferrite handles common-mode current; the braid handles the field — different jobs on the same cable.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Twisted + shielded</h3><p class="what">Twisting cancels magnetic pickup; the shield handles the electric field.</p><p class="need"><b>where</b> ethernet, sensor wiring</p><p class="do"><b>why</b> the two tricks cover the two kinds of interference.</p><p class="plus"><b>+1</b> recall from No. 0: a cage alone won't stop magnetic pickup — that's why the twist is there too.</p></article>
+  </div>
+
+  <span class="band graph">Big shielded spaces</span>
+  <div class="grid">
+    <article class="card g reveal"><span class="num">09</span><h3>The MRI room</h3><p class="what">An entire copper-lined room so the scanner can hear whisper-faint signals.</p><p class="need"><b>where</b> hospital imaging suites</p><p class="do"><b>why</b> outside radio would drown the tiny signal it measures.</p><p class="plus"><b>+1</b> the window has fine copper mesh in the glass — a Faraday cage you can see the patient through.</p></article>
+    <article class="card g reveal"><span class="num">10</span><h3>Screened test room</h3><p class="what">Labs test gear in a sealed metal room to keep results clean.</p><p class="need"><b>where</b> EMC / compliance labs</p><p class="do"><b>why</b> to measure a device with no outside RF contaminating it.</p><p class="plus"><b>+1</b> products are legally tested for emissions in these rooms before they can be sold.</p></article>
+    <article class="card g reveal"><span class="num">11</span><h3>Anechoic chamber</h3><p class="what">A screened room lined with RF-absorbing foam — no walls, no echoes.</p><p class="need"><b>where</b> antenna + radar labs</p><p class="do"><b>why</b> cage blocks outside; foam stops inside reflections.</p><p class="plus"><b>+1</b> the cage and the foam do opposite halves of the job — block in, absorb within.</p></article>
+    <article class="card g reveal"><span class="num">12</span><h3>SCIF / secure room</h3><p class="what">Shielded rooms stop sensitive signals from leaking out.</p><p class="need"><b>where</b> secure facilities</p><p class="do"><b>why</b> a cage works both ways — it contains emissions, not just blocks them.</p><p class="plus"><b>+1</b> "TEMPEST" is the field of stopping equipment from leaking readable signals — Faraday shielding is central to it.</p></article>
+  </div>
+
+  <span class="band blue">On the move & in the box</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">13</span><h3>Your car in a storm</h3><p class="what">A car is safe in lightning because its metal shell carries the strike around you.</p><p class="need"><b>where</b> any metal-bodied car</p><p class="do"><b>why</b> the current flows over the skin to ground — not through the cabin.</p><p class="plus"><b>+1</b> it's the metal shell, not the rubber tyres, that protects you — a common myth corrected.</p></article>
+    <article class="card reveal"><span class="num">14</span><h3>Planes & strikes</h3><p class="what">Aircraft are struck routinely and shrug it off via their conductive skin.</p><p class="need"><b>where</b> every airliner</p><p class="do"><b>why</b> the skin conducts the strike around the fuselage.</p><p class="plus"><b>+1</b> carbon-composite planes add embedded metal mesh precisely to keep the cage intact.</p></article>
+    <article class="card reveal"><span class="num">15</span><h3>Anti-static bags</h3><p class="what">The shiny bag a chip or board ships in is a thin conductive shield.</p><p class="need"><b>where</b> electronics packaging</p><p class="do"><b>why</b> it bleeds and blocks static that would zap the part.</p><p class="plus"><b>+1</b> the silvery shielding bag is the cage; the pink bag is only anti-static — they're not the same thing.</p></article>
+    <article class="card reveal"><span class="num">16</span><h3>RFID / contactless block</h3><p class="what">A lined wallet stops cards being read without your knowing.</p><p class="need"><b>where</b> shielded wallets, passport sleeves</p><p class="do"><b>why</b> the conductive liner blocks the reader's field.</p><p class="plus"><b>+1</b> test it like any cage — if a contactless tap still works through it, the liner isn't doing its job.</p></article>
+  </div>
+
+  <span class="band graph">Everyday cages</span>
+  <div class="block blue">
+    <ul class="rules">
+      <li>The <b>microwave door</b> is the one everybody owns — a mesh screen whose holes are tiny next to the microwave wavelength, so the energy stays in while light gets out.</li>
+      <li><b>Coax and shielded cables</b> are cages wrapped around a signal — but the shield only works if it's <b>connected/grounded</b> at the right end.</li>
+      <li>Big <b>shielded rooms</b> (MRI, EMC labs, secure rooms) exist because the cage works <b>both ways</b> — keeping faint signals in reach and strong ones out.</li>
+      <li>A <b>car or plane</b> protects you in lightning through its metal skin carrying the current around you — not through its tyres.</li>
+      <li><b>Shielding bags and lined wallets</b> are tiny cages for chips and cards — and like any cage, worth testing rather than trusting.</li>
+    </ul>
+  </div>
+
+  <span class="band graph">Myths & limits</span>
+  <div class="block graph">
+    <ul class="rules">
+      <li><b>Tyres don't save you</b> in a car — the conductive body does. The cabin is shielded because it's a metal shell.</li>
+      <li>A cage <b>doesn't block static magnetic fields</b> — an MRI's huge static magnet isn't what the room's shielding is for (that shielding blocks <em>radio</em>, not the magnet).</li>
+      <li><b>Not every metal box is a good cage</b> — gaps, paint, and bad seams leak. The elevator that keeps one signal bar is a leaky cage.</li>
+      <li>A <b>shield that isn't connected</b> can do nothing, or even act as an antenna — connection and continuity are everything.</li>
+      <li>Phone/RFID <b>blocking products vary wildly</b> — many leak. The only honest answer is to test the exact signal.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · no. 2 · once you see one, you see them everywhere · the door, the cable, the room, the car</p>
+</div>
+</body>
+</html>

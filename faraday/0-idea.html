@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Faraday Cage — No. 0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e7e9ec; --card:#f3f5f7; --ink:#13161b; --dim:#565d68;
+    --graph:#3a4250; --blue:#1763d6; --graphtint:#dde1e7; --bluetint:#d7e4fa;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(rgba(19,22,27,0.05) 1px, transparent 1.4px);background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif;line-height:1.6;}
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--blue);color:#fff;}
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--blue);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(40px,8.5vw,80px);line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:8em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--blue);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--graph);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#2c313a;}
+  .dek b{font-weight:500;color:var(--blue);}
+  .art{flex:0 0 auto;}
+  @keyframes strike{0%,100%{opacity:0}8%,16%{opacity:1}24%{opacity:0}}
+  @keyframes calm{0%,100%{opacity:.3}50%{opacity:.7}}
+  .bolt{animation:strike 2.4s ease-in-out infinite;}
+  .bolt.b2{animation-delay:.8s} .bolt.b3{animation-delay:1.5s}
+  .calm{animation:calm 2.4s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.bolt{animation:none;opacity:.5}.calm{animation:none}}
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.blue{background:var(--blue);} .band.graph{background:var(--graph);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#363b44;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);padding:1px 6px;margin-top:7px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.g:hover{box-shadow:5px 5px 0 var(--graph);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--graph);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e2a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed rgba(19,22,27,0.18);color:#37424f;}
+  .card .plus b{color:var(--blue);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.blue{background:var(--bluetint);} .block.graph{background:var(--graphtint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(19,22,27,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--blue);font-weight:700;}
+  .block.graph .rules li::before{content:"✦";color:var(--graph);}
+  .rules b{font-weight:500;color:var(--blue);} .block.graph .rules b{color:var(--graph);}
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(19,22,27,0.2);}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 0 · the prequel</span>
+    <div class="masthead">
+      <h1>The Faraday <em>Cage</em></h1>
+      <svg class="art" width="200" height="150" viewBox="0 0 200 150" role="img" aria-label="lightning striking a metal cage and dying out inside it">
+        <rect x="62" y="44" width="86" height="86" rx="4" fill="none" stroke="#3a4250" stroke-width="2.5"/>
+        <g stroke="#3a4250" stroke-width="1.2" opacity="0.8">
+          <line x1="62" y1="65" x2="148" y2="65"/><line x1="62" y1="87" x2="148" y2="87"/><line x1="62" y1="109" x2="148" y2="109"/>
+          <line x1="83" y1="44" x2="83" y2="130"/><line x1="105" y1="44" x2="105" y2="130"/><line x1="127" y1="44" x2="127" y2="130"/>
+        </g>
+        <path class="bolt" d="M30,12 L48,40 40,42 60,46" fill="none" stroke="#1763d6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="bolt b2" d="M172,18 L150,42 160,44 146,48" fill="none" stroke="#1763d6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="bolt b3" d="M104,4 L96,30 110,30 102,44" fill="none" stroke="#1763d6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="calm" cx="105" cy="87" r="13" fill="#1763d6"/>
+        <circle cx="105" cy="87" r="4.5" fill="#3a4250"/>
+        <text x="105" y="146" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#565d68">quiet inside</text>
+      </svg>
+    </div>
+    <p class="dek">Before the bench, the idea. A metal shell can make the space inside it <b>electrically invisible</b> — storms rage on the skin, and the interior feels nothing. Here's who found that out, and the beautifully simple reason it works.</p>
+  </header>
+
+  <span class="band">The cast</span>
+  <div class="types">
+    <div class="type reveal"><h4>Franklin</h4><p>~1755: lowered a charged ball into an electrified can; it felt no pull from the walls. Puzzled him.</p><span class="tg">first glimpse</span></div>
+    <div class="type reveal"><h4>Faraday</h4><p>1836: built a foil-lined room, blasted it with charge, sat inside measuring zero. Named for him.</p><span class="tg">the proof</span></div>
+    <div class="type reveal"><h4>The conductor</h4><p>Any metal shell. Its free charges rush to the surface and cancel the field within.</p><span class="tg">does the work</span></div>
+    <div class="type reveal"><h4>The interior</h4><p>The shadowed, field-free space — the prize the whole thing protects.</p><span class="tg">the quiet</span></div>
+  </div>
+
+  <span class="band blue">The story</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Franklin's can</h3><p class="what">He lowered a cork ball on silk into a charged metal can — and inside, it felt no attraction at all.</p><p class="need"><b>when</b> ~1755 · Philadelphia</p><p class="do"><b>saw</b> the inside of a charged conductor seems to carry no force.</p><p class="plus"><b>+1</b> Franklin reported it as a curiosity he couldn't fully explain — the observation came decades before the theory.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>The ice-pail echo</h3><p class="what">Faraday's later "ice-pail experiment" pinned down where the charge actually sits.</p><p class="need"><b>tool</b> a metal pail · a charged ball · an electroscope</p><p class="do"><b>showed</b> the induced charge lives on the outer surface, exactly mirroring the charge inside.</p><p class="plus"><b>+1</b> it proved charge is conserved and redistributed, not created — a cornerstone of electrostatics.</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>The 1836 cage</h3><p class="what">Faraday lined a whole room with metal foil and hit the outside with an electrostatic machine.</p><p class="need"><b>tool</b> a foil room · a high-voltage generator · himself + instruments</p><p class="do"><b>found</b> the discharge stayed on the skin; instruments inside read nothing.</p><p class="plus"><b>+1</b> he trusted the principle enough to sit inside while it was blasted — the experiment was also an act of nerve.</p></article>
+    <article class="card g reveal"><span class="num">04</span><h3>Why his name</h3><p class="what">Franklin saw it; Faraday explained it and proved it inside a full theory of fields.</p><p class="need"><b>why</b> systematic demonstration beats a lone curiosity</p><p class="do"><b>so</b> the effect carries Faraday's name, not Franklin's.</p><p class="plus"><b>+1</b> credit in science tends to land on whoever makes a result <em>repeatable and explained</em>, not whoever first noticed it.</p></article>
+  </div>
+
+  <span class="band blue">What he was really after</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Not shielding — physics</h3><p class="what">Faraday wasn't trying to invent a shield. He was probing what electricity <em>is</em>.</p><p class="need"><b>question</b> does charge act at a distance, or through matter?</p><p class="do"><b>answer</b> it rearranges the charges in matter — the field is local and real.</p><p class="plus"><b>+1</b> the shielding we use everywhere today was a by-product of pure curiosity about nature.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>The field idea</h3><p class="what">The cage was evidence for Faraday's radical notion: space around charges is filled with a field.</p><p class="need"><b>idea</b> lines of force, not action-at-a-distance</p><p class="do"><b>led to</b> Maxwell, who turned Faraday's pictures into equations.</p><p class="plus"><b>+1</b> Faraday couldn't do the math — Maxwell formalized his intuitions a generation later.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Equilibrium</h3><p class="what">Leave a charged conductor alone and it settles so the inside field is exactly zero.</p><p class="need"><b>state</b> electrostatic equilibrium</p><p class="do"><b>means</b> no net field can persist inside a closed conductor at rest.</p><p class="plus"><b>+1</b> if any field remained inside, the free charges would still be moving — so "at rest" forces it to zero.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Charge on the skin</h3><p class="what">All the excess charge ends up on the outer surface — none in the bulk or the cavity.</p><p class="need"><b>rule</b> like charges repel to the farthest reach</p><p class="do"><b>so</b> they spread to the outside and leave the interior clean.</p><p class="plus"><b>+1</b> this is why touching the inside of a charged hollow sphere is safe while the outside crackles.</p></article>
+  </div>
+
+  <span class="band graph">The core idea</span>
+  <div class="block graph">
+    <ul class="rules">
+      <li>A <b>conductor</b> is full of free charges that can move. Push on them with an outside field and they slide until their own arrangement <b>cancels that field</b> everywhere inside.</li>
+      <li>At rest, the field <b>inside a closed conductor is zero</b> — not small, exactly zero — because any leftover field would still be pushing charges around.</li>
+      <li>All the <b>excess charge sits on the outer surface</b>. The cavity and the metal's interior stay neutral and quiet.</li>
+      <li>So the inside is <b>shadowed</b> from outside electric fields by the shell's own redistributed charge. That shadow is the whole trick.</li>
+      <li>Faraday didn't set out to build a shield — he was testing whether electricity <b>acts through matter</b>. The cage was his proof, and the shielding came free.</li>
+    </ul>
+  </div>
+
+  <span class="band blue">What it is — and isn't</span>
+  <div class="block blue">
+    <ul class="rules">
+      <li>It's a shield against <b>electric fields and electromagnetic waves</b> — radio, static, sparks. That's the real and reliable part.</li>
+      <li>It is <b>not</b> a shield against <b>static magnetic fields</b> — a fridge magnet's pull passes straight through a Faraday cage. (Blocking those needs special high-permeability metal, a different trick.)</li>
+      <li>It protects what's <b>inside</b> from outside fields, and equally keeps fields <b>generated inside</b> from leaking out — it works both ways.</li>
+      <li>The principle is <b>electrostatic</b> first; for changing fields and waves, the same shell still works, with caveats we'll meet in No. 3.</li>
+      <li>This issue is history and principle — <b>no build yet</b>. No. 1 puts foil and mesh to work.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · no. 0 · Franklin glimpsed it, Faraday proved it · the shell does the work</p>
+</div>
+</body>
+</html>

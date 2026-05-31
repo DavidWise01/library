@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parts & Building Blocks — a pamphlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef1ee; --card:#f7f9f6; --ink:#16191b; --dim:#59605c;
+    --cyan:#0e9ac2; --coral:#ef6a55; --cyantint:#d8eff5; --coraltint:#fbe4df;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; color:var(--ink); background-color:var(--paper);
+    background-image:radial-gradient(rgba(22,25,27,0.05) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    font-family:"Newsreader",Georgia,serif; line-height:1.6;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--cyan);color:var(--paper);}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--coral);}
+  .mast{border-bottom:4px solid var(--ink);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(34px,7.5vw,68px);line-height:0.9;
+    letter-spacing:-0.02em;text-transform:uppercase;margin:0;max-width:9em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--cyan);position:relative;}
+  .mast h1 em::after{content:"";position:absolute;left:0;right:0;bottom:0.06em;height:0.09em;background:var(--coral);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#30342f;}
+  .dek b{font-weight:500;color:var(--cyan);}
+  .partart{flex:0 0 auto;}
+  @keyframes rove{0%,18%{transform:translate(0,0)}25%,43%{transform:translate(64px,0)}50%,68%{transform:translate(64px,64px)}75%,93%{transform:translate(0,64px)}100%{transform:translate(0,0)}}
+  .rove{animation:rove 4s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.rove{animation:none}}
+
+  .band{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:13px;letter-spacing:0.1em;
+    text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 12px;margin:34px 0 14px;}
+  .band.cyan{background:var(--cyan);} .band.coral{background:var(--coral);}
+  .band .sub{font-family:"Space Mono",monospace;font-weight:400;font-size:11px;opacity:0.85;margin-left:8px;letter-spacing:0.04em;text-transform:none;}
+
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:11px;}
+  .type{border:1.5px solid var(--ink);background:var(--card);padding:11px 13px;}
+  .type h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;margin:0 0 3px;}
+  .type p{font-size:13px;margin:0;color:#363a35;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;
+    text-transform:uppercase;color:var(--cyan);border:1px solid var(--cyan);padding:1px 6px;margin-top:7px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1.5px solid var(--ink);background:var(--card);padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  .card.c:hover{box-shadow:5px 5px 0 var(--coral);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--coral);}
+  .card h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:18.5px;line-height:1.05;margin:0 5px 7px 0;max-width:11em;}
+  .card .what{font-size:14px;margin:0 0 10px;color:#322e2a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+
+  .block{border:1.5px solid var(--ink);padding:18px 20px;margin-top:6px;}
+  .block.cyan{background:var(--cyantint);} .block.coral{background:var(--coraltint);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid rgba(22,25,27,0.14);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"→";position:absolute;left:0;top:8px;font-family:"Space Mono",monospace;color:var(--cyan);font-weight:700;}
+  .block.coral .rules li::before{content:"!";color:var(--coral);left:3px;}
+  .rules b{font-weight:500;color:var(--cyan);} .block.coral .rules b{color:var(--coral);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);
+    text-align:center;margin-top:40px;padding-top:16px;border-top:1px solid rgba(22,25,27,0.2);}
+
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;}.card:hover{transform:none;box-shadow:none;}.reveal{animation:none;opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">workbench series · pamphlet no. 7</span>
+    <div class="masthead">
+      <h1>Parts <em>& Building Blocks</em></h1>
+      <svg class="partart" width="180" height="150" viewBox="0 0 180 150" role="img" aria-label="four component symbols with a roving highlight">
+        <g stroke="#0e9ac2" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M38,55 H45 L49,47 L55,63 L61,47 L67,63 L73,47 L75,55 H82"/>
+          <path d="M124,38 V49 M114,49 H134 M114,61 H134 M124,61 V72"/>
+          <path d="M40,119 H52 M68,119 H80 M68,111 V127"/>
+          <circle cx="124" cy="119" r="13"/>
+          <path d="M119,111 V127 M108,119 H119 M119,114 L131,107 M119,124 L131,131"/>
+        </g>
+        <polygon points="52,111 52,127 68,119" fill="#0e9ac2"/>
+        <rect class="rove" x="33" y="30" width="54" height="50" rx="4" fill="none" stroke="#ef6a55" stroke-width="2.5"/>
+      </svg>
+    </div>
+    <p class="dek">Every card in this series leans on them — "a resistor," "a flyback diode," "a cap across the rails." Here are the <b>five or six parts</b> the whole shelf is made of, what each one does, and the little circuits you build from them.</p>
+  </header>
+
+  <span class="band">Know your parts</span>
+  <div class="types">
+    <div class="type reveal"><h4>Resistor</h4><p>Limits current and sets voltages — the workhorse. Color bands tell its value.</p><span class="tg">limits current</span></div>
+    <div class="type reveal"><h4>Capacitor</h4><p>Stores charge briefly. Smooths, blocks DC, times, and couples signals.</p><span class="tg">stores charge</span></div>
+    <div class="type reveal"><h4>Inductor</h4><p>A coil that resists change in current — filters and stores energy (see no. 3).</p><span class="tg">resists change</span></div>
+    <div class="type reveal"><h4>Diode</h4><p>A one-way valve for current — rectifies, protects, and (as an LED) lights.</p><span class="tg">one-way</span></div>
+    <div class="type reveal"><h4>Transistor</h4><p>A switch and an amplifier — the heart of all logic (and the slayer).</p><span class="tg">switch + amp</span></div>
+    <div class="type reveal"><h4>IC (chip)</h4><p>Many parts in one package — op-amps, logic, regulators, microcontrollers.</p><span class="tg">many-in-one</span></div>
+  </div>
+
+  <span class="band cyan">Resistors do the basics</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">01</span><h3>Limit current</h3><p class="what">A resistor in series protects an LED — or anything — from too much current.</p><p class="need"><b>need</b> a resistor · an LED · Ohm's law</p><p class="do"><b>do</b> size it so the current stays in range: R = (V − Vled) / I.</p></article>
+    <article class="card reveal"><span class="num">02</span><h3>Voltage divider</h3><p class="what">Two resistors split a voltage — to read sensors or scale a signal.</p><p class="need"><b>need</b> two resistors</p><p class="do"><b>do</b> the midpoint = Vin × R2 / (R1 + R2).</p></article>
+    <article class="card reveal"><span class="num">03</span><h3>Pull-up / pull-down</h3><p class="what">A resistor gives a floating input a defined state.</p><p class="need"><b>need</b> one resistor to V+ or ground</p><p class="do"><b>do</b> hold the pin high or low until something drives it.</p></article>
+    <article class="card reveal"><span class="num">04</span><h3>Read the bands</h3><p class="what">Decode the color stripes into a value.</p><p class="need"><b>need</b> a resistor · a band chart</p><p class="do"><b>do</b> first bands = digits, next = multiplier, last = tolerance.</p></article>
+  </div>
+
+  <span class="band cyan">Capacitors store & shape</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">05</span><h3>Decouple a chip</h3><p class="what">A small cap by the power pins kills noise.</p><p class="need"><b>need</b> a 100 nF cap per chip</p><p class="do"><b>do</b> place it close to the pins — every board wants them.</p></article>
+    <article class="card reveal"><span class="num">06</span><h3>RC filter</h3><p class="what">A resistor + cap smooths or blocks frequencies.</p><p class="need"><b>need</b> a resistor · a capacitor</p><p class="do"><b>do</b> arrange them for a low- or high-pass; the corner is set by R×C.</p></article>
+    <article class="card reveal"><span class="num">07</span><h3>Couple a signal</h3><p class="what">A cap passes the AC and blocks the DC between stages.</p><p class="need"><b>need</b> a series capacitor</p><p class="do"><b>do</b> let the wiggle through while the offset stays put.</p></article>
+    <article class="card reveal"><span class="num">08</span><h3>Time something</h3><p class="what">How fast a cap charges sets a delay.</p><p class="need"><b>need</b> a resistor + cap (an RC)</p><p class="do"><b>do</b> use the charge time for a delay, a blink rate, or a debounce.</p></article>
+  </div>
+
+  <span class="band cyan">Diodes steer current</span>
+  <div class="grid">
+    <article class="card reveal"><span class="num">09</span><h3>Rectify AC to DC</h3><p class="what">Diodes turn alternating current into one-way DC.</p><p class="need"><b>need</b> diodes (a bridge of four)</p><p class="do"><b>do</b> pass only one direction; a cap then smooths it.</p></article>
+    <article class="card reveal"><span class="num">10</span><h3>Block reverse polarity</h3><p class="what">A series diode saves a circuit from a backwards battery.</p><p class="need"><b>need</b> one diode in the + line</p><p class="do"><b>do</b> current only flows the right way — a cheap guardian.</p></article>
+    <article class="card reveal"><span class="num">11</span><h3>Flyback / snubber</h3><p class="what">A diode across a coil eats the back-EMF spike.</p><p class="need"><b>need</b> a diode reverse-biased across the coil</p><p class="do"><b>do</b> clamp the spike when the coil switches off (see no. 3 &amp; 5).</p></article>
+    <article class="card reveal"><span class="num">12</span><h3>Reference & regulate</h3><p class="what">A Zener diode holds a steady reference voltage.</p><p class="need"><b>need</b> a Zener · a resistor</p><p class="do"><b>do</b> bias it in reverse; it pins the voltage to its rating.</p></article>
+  </div>
+
+  <span class="band coral">Transistors switch & amplify</span>
+  <div class="grid">
+    <article class="card c reveal"><span class="num">13</span><h3>Switch a load</h3><p class="what">A transistor lets a tiny signal drive a big current.</p><p class="need"><b>need</b> a transistor · a base/gate resistor · the load</p><p class="do"><b>do</b> a low-side switch — logic on the base, load on the collector.</p></article>
+    <article class="card c reveal"><span class="num">14</span><h3>Amplify a signal</h3><p class="what">A transistor makes a weak signal bigger.</p><p class="need"><b>need</b> a transistor · biasing resistors</p><p class="do"><b>do</b> bias it on, feed the small signal in, take the larger one out.</p></article>
+    <article class="card c reveal"><span class="num">15</span><h3>The H-bridge</h3><p class="what">Four switches reverse a motor's direction.</p><p class="need"><b>need</b> four transistors (or a driver chip)</p><p class="do"><b>do</b> diagonal pairs on = forward or back (see no. 2).</p></article>
+    <article class="card c reveal"><span class="num">16</span><h3>Logic from transistors</h3><p class="what">Combine them into gates — the atoms of every chip.</p><p class="need"><b>need</b> transistors + resistors</p><p class="do"><b>do</b> wire them so outputs follow AND / OR / NOT.</p></article>
+  </div>
+
+  <span class="band coral">Put them together</span>
+  <div class="grid">
+    <article class="card c reveal"><span class="num">17</span><h3>Breadboard it</h3><p class="what">Prototype with no soldering.</p><p class="need"><b>need</b> a breadboard · jumper wires</p><p class="do"><b>do</b> rows connect across, rails run the length — power on the rails.</p></article>
+    <article class="card c reveal"><span class="num">18</span><h3>Read a schematic</h3><p class="what">The symbols, and how to trace a circuit.</p><p class="need"><b>need</b> a symbol key</p><p class="do"><b>do</b> follow each net from + to − (the slayer's a good first read).</p></article>
+    <article class="card c reveal"><span class="num">19</span><h3>The op-amp</h3><p class="what">One chip that compares, amplifies, buffers, filters.</p><p class="need"><b>need</b> an op-amp · a few resistors</p><p class="do"><b>do</b> the analog swiss-army knife — feedback sets what it does.</p></article>
+    <article class="card c reveal"><span class="num">20</span><h3>Stock a kit</h3><p class="what">The handful of values that cover most projects.</p><p class="need"><b>need</b> resistor + cap assortments · common transistors/diodes</p><p class="do"><b>do</b> keep the staples on hand; you'll reach for the same dozen.</p></article>
+  </div>
+
+  <span class="band">Reading values</span>
+  <div class="block cyan">
+    <ul class="rules">
+      <li><b>Resistors</b> — color bands (or a printed number) give the ohms; the last band is tolerance. In series they add; in parallel they're less than the smallest.</li>
+      <li><b>Capacitors</b> — marked in farads (µF / nF / pF). They block DC and pass AC; bigger = more storage, lower frequencies. Electrolytics are <b>polarised</b> — mind the + lead.</li>
+      <li><b>Diodes</b> — a band marks the cathode (the "out" end); current flows toward the band. An LED always needs a series resistor.</li>
+      <li><b>Transistors</b> — a BJT is current-controlled (base current), a MOSFET is voltage-controlled (gate voltage). Look up the pinout — it varies by part.</li>
+      <li><b>Datasheets are the truth</b>. Every part has one. The ratings — max voltage, current, power — are limits, not suggestions.</li>
+      <li><b>Tolerance</b> — most values aren't exact (a 10k may be 9.5–10.5k). Design so it doesn't matter, or measure the one that does.</li>
+    </ul>
+  </div>
+
+  <span class="band coral">Where parts go wrong</span>
+  <div class="block coral">
+    <ul class="rules">
+      <li>These parts are tiny and low-voltage — the risk is <b>using one outside its ratings</b>, not getting shocked.</li>
+      <li><b>Polarity matters</b>: electrolytic caps, diodes, LEDs, and transistors care which way round they go. Backwards, they fail — sometimes loudly. A reversed electrolytic can pop.</li>
+      <li><b>Power ratings are real</b>: a ¼ W resistor asked to dissipate a watt cooks. Size for the heat.</li>
+      <li><b>Capacitors hold charge</b> after power-off — big ones can bite. Discharge before handling (carried from no. 6).</li>
+      <li>The honest one: a part does exactly what physics says, not what you hoped. When a circuit misbehaves, the value, the polarity, or the rating is usually wrong — measure it, check the datasheet, and <b>trust the meter over your memory</b>.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">workbench series · a few parts, endless circuits · trust the meter over your memory</p>
+
+</div>
+</body>
+</html>
