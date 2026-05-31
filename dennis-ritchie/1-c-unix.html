@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dennis Ritchie — No. 1 · C and Unix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04060a;
+    --cardsolid:#0b0f15;
+    --ink:#d4e0cc;
+    --dim:#6b7280;
+    --green:#22c55e;
+    --line:rgba(34,197,94,0.15);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(34,197,94,0.018) 23px 24px);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#04060a;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:0;flex-wrap:wrap;}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);text-decoration:none;padding:8px 14px;border-right:1px solid var(--line);
+    transition:color .15s,background .15s;
+  }
+  .sitenav a:hover{color:var(--green);}
+  .sitenav a.active{color:var(--green);background:rgba(34,197,94,0.07);}
+
+  /* TYPOGRAPHY */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(40px,8.5vw,82px);
+    line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;
+    margin:0;max-width:9em;overflow-wrap:break-word;
+  }
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#9fb898;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* HELLO WORLD TYPING ANIMATION */
+  @keyframes typing{
+    0%{width:0}
+    100%{width:22ch}
+  }
+  @keyframes blink-caret{
+    0%,49%{border-right-color:var(--green)}
+    50%,100%{border-right-color:transparent}
+  }
+  .typewriter{
+    font-family:"Space Mono",monospace;font-size:13px;color:var(--green);
+    display:inline-block;overflow:hidden;white-space:nowrap;
+    border-right:2px solid var(--green);
+    width:0;
+    animation:typing 3s steps(22,end) 1s forwards, blink-caret 0.8s step-start infinite;
+  }
+  .terminal-box{
+    background:#020504;border:1px solid var(--green);border-radius:4px;
+    padding:12px 16px;margin-bottom:4px;
+  }
+  .terminal-prompt{font-family:"Space Mono",monospace;font-size:11px;color:#557a57;display:block;margin-bottom:4px;}
+  .terminal-output{font-family:"Space Mono",monospace;font-size:13px;color:var(--green);opacity:0;animation:fadeIn 0.5s ease 5s forwards;}
+  @keyframes fadeIn{to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){
+    .typewriter{animation:none;width:auto;border-right:none;}
+    .terminal-output{animation:none;opacity:1;}
+  }
+
+  /* BANDS */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--green);color:#04060a;
+    padding:5px 13px;margin:36px 0 14px;
+  }
+  .band.dim{background:#111a14;color:var(--ink);border:1px solid var(--line);}
+  .band.dark{background:#0b1810;color:var(--green);border:1px solid var(--green);}
+
+  /* TYPE TILES */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--green);}
+  .type p{font-size:13px;margin:0;color:#7ea87a;line-height:1.45;}
+  .type .tg{
+    display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--green);border:1px solid var(--green);
+    padding:1px 6px;margin-top:7px;
+  }
+
+  /* CARD GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--cardsolid);
+    padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card .num{
+    position:absolute;top:11px;right:13px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);
+  }
+  .card h3{
+    font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 30px 8px 0;letter-spacing:0.01em;color:var(--ink);
+  }
+  .card .what{font-size:14px;margin:0 0 10px;color:#9fb898;}
+  .card .need,.card .do{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:5px 0 0;color:var(--dim);
+  }
+  .card .need b,.card .do b{
+    color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+  .card .plus{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#557a57;
+  }
+  .card .plus b{
+    color:var(--green);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+
+  /* FAMILY TREE SECTION */
+  .tree-wrap{border:1px solid var(--line);background:var(--cardsolid);padding:22px;margin-top:6px;overflow-x:auto;}
+  .tree-label{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:block;}
+  .tree{font-family:"Space Mono",monospace;font-size:12px;line-height:1.9;color:var(--dim);white-space:pre;}
+  .tree .root{color:var(--green);font-weight:700;}
+  .tree .hi{color:var(--ink);}
+  .tree .faint{color:#2a3e2c;}
+
+  /* CODE BLOCK */
+  .code-block{
+    background:#020504;border:1px solid var(--line);border-left:3px solid var(--green);
+    padding:18px 20px;margin:6px 0 0;overflow-x:auto;
+  }
+  .code-block pre{
+    font-family:"Space Mono",monospace;font-size:12px;line-height:1.75;
+    color:var(--green);margin:0;white-space:pre-wrap;
+  }
+  .code-block .comment{color:#3a5a3c;}
+  .code-block .keyword{color:#5ade82;}
+  .code-block .string{color:#9fb898;}
+  .code-block .fn{color:var(--green);}
+
+  /* BLOCK / RULES */
+  .block{border:1px solid var(--line);padding:18px 22px;margin-top:6px;background:var(--cardsolid);}
+  .block.green{border-color:var(--green);background:#060f08;}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{
+    position:relative;padding:9px 0 9px 28px;font-size:14.5px;
+    border-bottom:1px solid var(--line);
+  }
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{
+    content:"$";position:absolute;left:2px;top:8px;
+    font-family:"Space Mono",monospace;font-size:13px;color:var(--green);font-weight:700;
+  }
+  .block.green .rules li::before{content:">";}
+  .rules b{font-weight:500;color:var(--green);}
+  .block.green .rules b{color:#5ade82;}
+
+  /* QUOTE */
+  .quote{
+    border:1px solid var(--line);background:#060f08;
+    padding:20px 24px;margin:6px 0 0;
+    font-size:16px;line-height:1.75;font-style:italic;color:var(--ink);
+    border-left:3px solid var(--green);
+  }
+  .quote .src{
+    display:block;font-style:normal;
+    font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.05em;color:var(--dim);margin-top:12px;
+  }
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}
+    .card,.block,.type,.quote,.code-block,.tree-wrap{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .typewriter{animation:none;width:auto;border-right:none;}
+    .terminal-output{animation:none;opacity:1;}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <nav class="sitenav" aria-label="Series navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-c-unix.html" class="active">1 · C &amp; Unix</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <header class="mast">
+    <span class="kick">ritchie series · book no. 1 · the work</span>
+    <div class="masthead">
+      <h1>C and <em>Unix</em></h1>
+
+      <!-- Animated SVG: Hello World typing in terminal -->
+      <svg class="art" width="220" height="155" viewBox="0 0 220 155" role="img" aria-label="Hello World typing out in terminal style">
+        <rect x="0" y="0" width="220" height="155" rx="4" fill="#020504"/>
+        <rect x="0" y="0" width="220" height="18" rx="0" fill="#0a150b"/>
+        <circle cx="14" cy="9" r="4" fill="#2a3e2c"/>
+        <circle cx="28" cy="9" r="4" fill="#2a3e2c"/>
+        <circle cx="42" cy="9" r="4" fill="#2a3e2c"/>
+        <text x="10" y="38" font-family="Space Mono,monospace" font-size="10" fill="#3a5a3c">/* hello.c — K&amp;R, 1974 */</text>
+        <text x="10" y="54" font-family="Space Mono,monospace" font-size="10" fill="#5ade82">#include</text>
+        <text x="68" y="54" font-family="Space Mono,monospace" font-size="10" fill="#9fb898"> &lt;stdio.h&gt;</text>
+        <text x="10" y="70" font-family="Space Mono,monospace" font-size="10" fill="#5ade82">main</text>
+        <text x="38" y="70" font-family="Space Mono,monospace" font-size="10" fill="#22c55e">()</text>
+        <text x="48" y="70" font-family="Space Mono,monospace" font-size="10" fill="#22c55e"> {</text>
+        <text x="10" y="86" font-family="Space Mono,monospace" font-size="10" fill="#9fb898">  printf("Hello, World\n");</text>
+        <text x="10" y="102" font-family="Space Mono,monospace" font-size="10" fill="#22c55e">}</text>
+        <text x="10" y="124" font-family="Space Mono,monospace" font-size="10" fill="#3a5a3c">$ cc hello.c &amp;&amp; ./a.out</text>
+        <text x="10" y="140" font-family="Space Mono,monospace" font-size="11" fill="#22c55e">Hello, World</text>
+        <rect x="116" y="128" width="7" height="13" fill="#22c55e" opacity="0.9">
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="1s" repeatCount="indefinite"/>
+        </rect>
+      </svg>
+    </div>
+    <p class="dek">Two inventions. One language — <b>C</b> — that gave programmers direct power over machines and lived forever. One operating system — <b>Unix</b> — that gave the world a model of computing that everything descended from. And "Hello, World" — the first program every programmer writes, in any language, forever.</p>
+  </header>
+
+  <!-- HELLO WORLD LIVE TERMINAL -->
+  <span class="band dark" style="margin-top:28px;">The first program</span>
+  <div class="terminal-box reveal">
+    <span class="terminal-prompt">$ cc hello.c -o hello &amp;&amp; ./hello</span>
+    <span class="typewriter">Hello, World</span>
+    <span class="terminal-output"><br><span style="color:#6b7280;">// first appeared: Ritchie's 1974 C tutorial<br>// every programmer's first program, in every language, forever</span></span>
+  </div>
+
+  <span class="band">The big inventions</span>
+  <div class="types">
+    <div class="type reveal"><h4>C (1972)</h4><p>The language that gave programmers direct access to memory and hardware, portable across machines.</p><span class="tg">systems</span></div>
+    <div class="type reveal"><h4>Unix (1969)</h4><p>Everything is a file. Composable tools. The shell. Hierarchical filesystem. Multiuser. Written in C.</p><span class="tg">os</span></div>
+    <div class="type reveal"><h4>K&amp;R (1978)</h4><p>The C Programming Language, by Kernighan and Ritchie — the most influential computer book ever written.</p><span class="tg">the book</span></div>
+    <div class="type reveal"><h4>Hello, World</h4><p>First appeared in Ritchie's 1974 C tutorial. Became the canonical first program in every language.</p><span class="tg">tradition</span></div>
+  </div>
+
+  <!-- THE C LANGUAGE -->
+  <span class="band dark">Part I — The C Language</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>What C gave the world</h3>
+      <p class="what">C (1972) let programmers control memory directly — pointers, structs, manual allocation — while compiling to fast machine code on any hardware. It was the first portable systems language.</p>
+      <p class="need"><b>before</b> assembly: one program per machine type</p>
+      <p class="do"><b>after</b> write once, compile anywhere</p>
+      <p class="plus"><b>+1</b> for the first time, an operating system (Unix) could be written in a high-level language. That changed everything about what was possible.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>K&amp;R — the canonical book</h3>
+      <p class="what"><em>The C Programming Language</em> (Kernighan and Ritchie, 1978) defined the language so precisely that the first edition became the de facto standard. Its prose is spare, elegant, and still worth reading.</p>
+      <p class="need"><b>style</b> terse, precise, example-driven</p>
+      <p class="do"><b>first line</b> introduces Hello, World — immediately</p>
+      <p class="plus"><b>+1</b> it is the best-selling computer science textbook in history. Generations learned C — and by extension, programming itself — from this book.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>The C family tree</h3>
+      <p class="what">C became the direct parent of most major programming languages. C++ extended it. Java compiled to a virtual machine patterned on C's model. Python's reference implementation (CPython) is written in C.</p>
+      <p class="need"><b>children</b> C++ (1985), Objective-C (1984), C# (2000)</p>
+      <p class="do"><b>grandchildren</b> Java, Python (CPython), Ruby, PHP — all C implementations</p>
+      <p class="plus"><b>+1</b> JavaScript's engine (V8) is written in C++. The web runs on Ritchie's language family.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">04</span>
+      <h3>Direct memory access</h3>
+      <p class="what">C's pointer model — direct access to memory addresses — was controversial and powerful. It made C fast enough for operating systems while still being readable. The tradeoff (power vs. safety) defined systems programming for fifty years.</p>
+      <p class="need"><b>pointers</b> int *p — the address of a memory location</p>
+      <p class="do"><b>tradeoff</b> total power, programmer's responsibility for safety</p>
+      <p class="plus"><b>+1</b> modern "memory-safe" languages (Rust, Swift) exist specifically to solve the problems C's pointers introduced. C defined the problem space.</p>
+    </article>
+  </div>
+
+  <!-- HELLO WORLD CODE -->
+  <span class="band dark">Hello, World — annotated</span>
+  <div class="code-block reveal">
+    <pre><span class="comment">/*
+ * "Hello, World" — first appeared in Ritchie's 1974 C tutorial,
+ * then in The C Programming Language (Kernighan &amp; Ritchie, 1978, p.6).
+ * Every programmer's first program. Every language. Forever.
+ */</span>
+
+<span class="keyword">#include</span> <span class="string">&lt;stdio.h&gt;</span>     <span class="comment">/* the standard I/O library — a Ritchie creation */</span>
+
+<span class="keyword">main</span>()             <span class="comment">/* in early C, int was implicit */</span>
+{
+    <span class="fn">printf</span>(<span class="string">"Hello, World\n"</span>);   <span class="comment">/* \n = newline */</span>
+}
+
+<span class="comment">/*
+ * Output: Hello, World
+ *
+ * This program has been translated into thousands of languages.
+ * It is the first thing written. It is written in every language.
+ * Ritchie wrote it. Thompson ran it on a PDP-11.
+ * It is still running.
+ */</span></pre>
+  </div>
+
+  <!-- UNIX -->
+  <span class="band dark">Part II — Unix</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>Everything is a file</h3>
+      <p class="what">Unix's deepest idea: files, devices, network connections, and processes all share a single interface. Open, read, write, close. One abstraction for everything. Radical in 1969; standard ever since.</p>
+      <p class="need"><b>before</b> every device needed its own interface</p>
+      <p class="do"><b>after</b> one model for disk, keyboard, screen, network socket</p>
+      <p class="plus"><b>+1</b> this is why Linux can represent a process as a file, a socket as a file, a piece of hardware as a file. The abstraction scales without limit.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>Composable tools — pipes</h3>
+      <p class="what">Unix's pipe (|) lets the output of one program feed the input of another. Instead of one large program that does everything, you build workflows from small tools that each do one thing well.</p>
+      <p class="need"><b>philosophy</b> "Do one thing and do it well"</p>
+      <p class="do"><b>example</b> ls | sort | uniq | wc -l</p>
+      <p class="plus"><b>+1</b> the pipe operator is the Unix philosophy made concrete. It is the original compositional programming model — the idea that would eventually become functional programming, microservices, and APIs.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>The portable operating system</h3>
+      <p class="what">The first Unix was written in assembly — locked to one machine. When Ritchie developed C, he and Thompson rewrote Unix in C. For the first time, an operating system could be ported to a new machine by recompiling.</p>
+      <p class="need"><b>before</b> OS code tied to specific hardware forever</p>
+      <p class="do"><b>after</b> recompile Unix for a new machine in weeks</p>
+      <p class="plus"><b>+1</b> this single decision — rewrite the OS in a high-level language — made software portable. Without it, every piece of software today would still be hardware-specific assembly.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">08</span>
+      <h3>Multiuser, hierarchical, humane</h3>
+      <p class="what">Unix supported multiple simultaneous users, organized files in a hierarchical directory tree, and had a consistent command-line shell. These were new ideas in 1969. They are now universal assumptions.</p>
+      <p class="need"><b>shell</b> sh — the command interpreter, another Ritchie/Thompson creation</p>
+      <p class="do"><b>filesystem</b> / root, directories, permissions</p>
+      <p class="plus"><b>+1</b> the shell concept — a programmable command language that mediates between user and OS — is now present in every OS on Earth. PowerShell, bash, zsh: all descendants.</p>
+    </article>
+  </div>
+
+  <!-- UNIX PHILOSOPHY -->
+  <span class="band">The Unix philosophy</span>
+  <div class="quote reveal">
+    "Write programs that do one thing and do it well. Write programs that work together. Write programs to handle text streams, because that is a universal interface."
+    <span class="src">— Doug McIlroy, summarizing the Unix philosophy; Ritchie and Thompson's practice</span>
+  </div>
+
+  <!-- FAMILY TREE -->
+  <span class="band dark">The Unix family tree</span>
+  <div class="tree-wrap reveal">
+    <span class="tree-label">Unix → the operating system beneath every screen on Earth</span>
+    <div class="tree"><span class="root">Unix</span> (Bell Labs, 1969–1973) <span class="faint">— Ritchie + Thompson</span>
+├── <span class="hi">BSD</span> (Berkeley, 1977)
+│   ├── FreeBSD / NetBSD / OpenBSD
+│   └── <span class="root">Darwin</span> (Apple, 2000) → <span class="hi">macOS</span> · <span class="hi">iOS</span> · <span class="hi">watchOS</span> · <span class="hi">tvOS</span>
+├── <span class="hi">System V</span> (AT&amp;T, 1983)
+│   └── Solaris, HP-UX, AIX
+├── <span class="root">Linux</span> (Torvalds, 1991) <span class="faint">— inspired by Unix; written in C</span>
+│   ├── <span class="hi">Android</span> (Google) → ~3.3 billion active devices
+│   ├── <span class="hi">Every web server</span> (Ubuntu, Debian, RHEL, Alpine…)
+│   ├── <span class="hi">Supercomputers</span> — 500 of top 500 run Linux
+│   └── <span class="hi">Embedded systems</span> — routers, TVs, cameras, cars
+└── <span class="faint">POSIX standard (1988) — Unix interface, codified</span>
+    <span class="faint">  └── Every OS that complies is a Unix descendant by interface</span>
+
+<span class="faint">C language family (separate but parallel lineage):</span>
+<span class="root">C</span> (Ritchie, 1972) → <span class="hi">C++</span> (1985) → <span class="hi">Java</span> (1995) → <span class="hi">C#</span> (2000)
+         └──────────→ <span class="hi">CPython</span> (Python VM, written in C)
+         └──────────→ <span class="hi">Ruby MRI</span> · <span class="hi">PHP</span> · <span class="hi">Perl</span> (all C)
+         └──────────→ <span class="hi">V8</span> (JavaScript engine, C++) → Node.js · Chrome</div>
+  </div>
+
+  <span class="band dark">The work — summary</span>
+  <div class="block green">
+    <ul class="rules">
+      <li><b>C (1972)</b> — direct memory access, portable compilation, the first language suitable for both systems programming and applications. Still among the two most-used languages in the world.</li>
+      <li><b>Unix (1969–1973)</b> — everything is a file, composable tools via pipes, the shell, hierarchical filesystem, multiuser, written in C (first OS not written in assembly).</li>
+      <li><em>The C Programming Language</em> <b>(K&amp;R, 1978)</b> — introduced "Hello, World" to every programmer alive and since. The most influential computer science textbook ever published.</li>
+      <li><b>Hello, World</b> first appeared in Ritchie's 1974 C tutorial. It is now the first program written by every programmer in every language. An unkillable tradition.</li>
+      <li>The <b>Unix philosophy</b> — do one thing well, compose tools via pipes — became the governing philosophy of software development and is now the model for microservices, APIs, and functional programming.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Confidence and sourcing</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The history of C and Unix is <b>well-documented</b> in primary sources: Ritchie's own papers ("The Development of the C Language," 1993; "The Evolution of the Unix Time-sharing System," 1984) are available and cited.</li>
+      <li>"Hello, World" appearing first in a 1974 C tutorial is <b>confirmed by Kernighan</b>, who recalls the origin clearly. The first book appearance is K&amp;R 1978, page 6.</li>
+      <li>The family tree above is accurate at a high level. Specific lineage claims (Darwin from BSD, Linux inspired by Unix) are <b>documented and uncontested</b>.</li>
+      <li>The claim that Unix was "the first OS written in a high-level language" is the standard statement. Technically, some earlier experimental systems used high-level languages, but <b>Unix was the first portable, practical, widely-adopted OS</b> written this way.</li>
+      <li>Book 2 sets these inventions in their physical world; Book 3 follows their legacy.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ritchie series · book no. 1 · C and Unix · the two inventions that built computing<br>
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0
+  </p>
+
+</div>
+</body>
+</html>

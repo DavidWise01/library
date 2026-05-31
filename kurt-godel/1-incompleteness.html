@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gödel — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060608;
+    --silver: #6b7280;
+    --gold: #b45309;
+    --text: #e2ddd6;
+    --muted: #7a7a8a;
+    --border: #1e1e2a;
+    --card-bg: #0c0c10;
+    --accent2: #4f5d73;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+    color: var(--gold); letter-spacing: 0.08em; margin-right: 2rem; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; padding: 0.35rem 0.85rem; border: 1px solid transparent; transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--gold); }
+  /* HERO */
+  .hero {
+    position: relative; width: 100%; min-height: 540px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 50%, #06080e 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.2rem; display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; color: #fff;
+    text-shadow: 0 0 60px rgba(107,114,128,0.4); margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif; font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--silver);
+    letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.15rem; color: var(--text); max-width: 640px; margin: 0 auto; opacity: 0.85;
+  }
+  .band {
+    background: var(--silver); color: #08080a; padding: 0.6rem 2rem;
+    text-align: center; font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.75rem; display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.2rem;
+    color: var(--gold); margin-bottom: 0.75rem; margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* EQUATION BLOCK */
+  .equation-block {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-left: 4px solid var(--silver); padding: 2rem 2.5rem; margin: 2.5rem 0; text-align: center;
+  }
+  .equation {
+    font-family: 'Newsreader', serif; font-size: clamp(1.6rem, 4vw, 2.8rem); font-weight: 600;
+    color: #fff; display: block; margin-bottom: 0.6rem; letter-spacing: 0.04em;
+  }
+  .equation-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--muted);
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+  }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--silver); }
+  .card-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--silver); margin-bottom: 0.6rem; display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--gold); padding: 1.5rem 2rem; margin: 3rem 0; background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.4rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* NUMBER ENCODING */
+  .numbering-demo {
+    background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; margin: 2rem 0; overflow-x: auto;
+  }
+  .numbering-demo table { width: 100%; border-collapse: collapse; font-family: 'Space Mono', monospace; font-size: 0.82rem; }
+  .numbering-demo th {
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--silver);
+    padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .numbering-demo td { padding: 0.6rem 1rem; color: var(--text); border-bottom: 1px solid #16161e; }
+  .numbering-demo td:first-child { color: var(--gold); }
+  .numbering-demo td:last-child { color: var(--silver); }
+  .numbering-demo tr:last-child td { border-bottom: none; }
+  /* THEOREM BOX */
+  .theorem {
+    border: 1px solid var(--border); border-left: 4px solid var(--gold);
+    background: #080608; padding: 2rem 2.5rem; margin: 2.5rem 0;
+  }
+  .theorem-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1rem; display: block;
+  }
+  .theorem-statement {
+    font-family: 'Newsreader', serif; font-size: 1.15rem; line-height: 1.65; color: #f0ece4;
+    font-style: italic;
+  }
+  /* LOGIC CHAIN */
+  .logic-chain {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 2rem; margin: 2rem 0; font-family: 'Space Mono', monospace;
+  }
+  .logic-step {
+    display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.25rem; padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .logic-step:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .logic-num {
+    font-size: 0.72rem; color: var(--silver); min-width: 28px; margin-top: 0.1rem;
+  }
+  .logic-text { font-size: 0.82rem; color: var(--text); line-height: 1.55; }
+  .logic-text em { font-style: normal; color: var(--gold); font-family: 'Newsreader', serif; font-size: 0.9rem; }
+  /* FINAL QUOTE */
+  .final-quote {
+    text-align: center; padding: 4rem 2rem;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 4rem 0;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.45; color: #fff;
+    max-width: 720px; margin: 0 auto 1.5rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--gold);
+  }
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 2rem; color: var(--gold);
+    display: block; line-height: 1; margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  footer {
+    border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); line-height: 2;
+  }
+  .colophon a { color: var(--silver); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Gödel</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-incompleteness.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Gödel numbering — sentence encodes as number, loops back to sentence -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="heroGlow1" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#06060e" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#060608" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow1">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="blur1"><feGaussianBlur stdDeviation="2"/></filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#heroGlow1)"/>
+
+    <!-- Ambient grid -->
+    <g stroke="#6b7280" stroke-width="0.3" fill="none" opacity="0.07">
+      <line x1="0" y1="135" x2="900" y2="135"/>
+      <line x1="0" y1="270" x2="900" y2="270"/>
+      <line x1="0" y1="405" x2="900" y2="405"/>
+      <line x1="225" y1="0" x2="225" y2="540"/>
+      <line x1="450" y1="0" x2="450" y2="540"/>
+      <line x1="675" y1="0" x2="675" y2="540"/>
+    </g>
+
+    <!-- LEFT: Statement box — "This statement is unprovable" -->
+    <rect x="60" y="190" width="280" height="80" rx="2" fill="#0c0c10" stroke="#6b7280" stroke-width="1" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.5;0.9" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <text x="200" y="222" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#b45309" opacity="0.85">¬ Provable(⌈G⌉)</text>
+    <text x="200" y="245" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" fill="#6b7280" opacity="0.7">"This statement is not provable"</text>
+    <text x="200" y="263" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#4f5d73" opacity="0.7">THE GÖDEL SENTENCE  G</text>
+
+    <!-- ENCODING ARROW — left to right -->
+    <path d="M 345 230 Q 420 200 490 230" fill="none" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5 6" opacity="0.6" filter="url(#glow1)">
+      <animate attributeName="stroke-dashoffset" values="0;-44" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <text x="420" y="205" text-anchor="middle" font-family="Space Mono,monospace" font-size="8.5" fill="#b45309" opacity="0.75">ENCODE</text>
+
+    <!-- CENTER: Number -->
+    <rect x="490" y="176" width="220" height="108" rx="2" fill="#08060e" stroke="#b45309" stroke-width="1.5" opacity="0.85">
+      <animate attributeName="stroke-opacity" values="1;0.3;1" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <text x="600" y="218" text-anchor="middle" font-family="Space Mono,monospace" font-size="13.5" fill="#b45309" filter="url(#glow1)">172,368,</text>
+    <text x="600" y="238" text-anchor="middle" font-family="Space Mono,monospace" font-size="13.5" fill="#b45309" filter="url(#glow1)">421,509...</text>
+    <text x="600" y="275" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#6b7280" opacity="0.6">THE GÖDEL NUMBER</text>
+
+    <!-- DECODING ARROW — number loops back below -->
+    <path d="M 600 290 Q 600 380 200 380 Q 140 380 120 290" fill="none" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5 6" opacity="0.5">
+      <animate attributeName="stroke-dashoffset" values="0;44" dur="3.5s" repeatCount="indefinite"/>
+    </path>
+    <text x="400" y="400" text-anchor="middle" font-family="Space Mono,monospace" font-size="8.5" fill="#6b7280" opacity="0.6">DECODE BACK</text>
+
+    <!-- Animated dot traversing encoding path -->
+    <circle r="5" fill="#b45309" opacity="0.9" filter="url(#glow1)">
+      <animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;0.45;0.45;1" keyTimes="0;0.45;0.5;1" calcMode="linear">
+        <mpath xlink:href="#encode-path"/>
+      </animateMotion>
+    </circle>
+    <path id="encode-path" d="M 200 230 Q 420 200 600 230 Q 600 380 200 380 Q 140 380 200 290 Q 210 250 200 230" fill="none"/>
+
+    <!-- Floating binary/prime fragments -->
+    <text x="80" y="140" font-family="Space Mono,monospace" font-size="9" fill="#4f5d73" opacity="0.5">2³ · 3⁵ · 5² · 7¹¹</text>
+    <text x="700" y="140" font-family="Space Mono,monospace" font-size="9" fill="#4f5d73" opacity="0.4">p₁^a₁ · p₂^a₂ · ...</text>
+    <text x="720" y="420" font-family="Space Mono,monospace" font-size="9" fill="#4f5d73" opacity="0.35">∀x ∃y (y > x)</text>
+
+    <!-- Theorem label -->
+    <text x="450" y="480" text-anchor="middle" font-family="Space Mono,monospace" font-size="9.5"
+      fill="#b45309" opacity="0.5" letter-spacing="3">GÖDEL NUMBERING — SELF-REFERENCE ACHIEVED</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Kurt Gödel · 1906 – 1978 · Volume 1</span>
+    <h1 class="hero-title">The Work</h1>
+    <p class="hero-subtitle">Incompleteness · Consistency · Time</p>
+    <p class="hero-lead">In 1931, a twenty-five-year-old Austrian logician published a proof that shattered the dream of a complete mathematics — and redrew the boundary between truth and proof forever.</p>
+  </div>
+</div>
+
+<div class="band">Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I — 1931</div>
+
+<main>
+
+  <!-- CONTEXT: HILBERT'S PROGRAM -->
+  <section id="hilbert">
+    <span class="section-label">I — The Dream Being Killed</span>
+    <h2>Hilbert's Program: Finish Mathematics</h2>
+    <p>In 1900, the great German mathematician <strong>David Hilbert</strong> posed twenty-three problems that he believed would define mathematics in the coming century. By 1920 he had crystallized these into a grand project: <em>Hilbert's Program</em>. The goal was to provide mathematics with an unshakeable foundation — to find a complete, consistent, decidable set of axioms from which all mathematical truths could be derived.</p>
+    <p><strong>Complete</strong>: every true statement can be proved. <strong>Consistent</strong>: no statement can be both proved and disproved. <strong>Decidable</strong>: there exists an algorithm to determine, for any given statement, whether it is provable. Hilbert was confident this was achievable. He called it <em>the problem of completeness</em> and expected it to be solved within a generation.</p>
+    <p>He was wrong. And a twenty-five-year-old Austrian logician in Vienna would prove it, conclusively and permanently, in 1931.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1900</span>
+        <span class="stat-label">Hilbert's 23 Problems</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1931</span>
+        <span class="stat-label">Incompleteness published</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">25</span>
+        <span class="stat-label">Gödel's age at the proof</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">True but unprovable statements</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLETENESS THEOREM -->
+  <section id="completeness">
+    <span class="section-label">II — The PhD, 1929</span>
+    <h2>Completeness: Logic Done Right</h2>
+    <p>Before the incompleteness theorems, Gödel proved something that seemed to confirm Hilbert's vision. His doctoral thesis of 1929 established the <strong>Completeness Theorem for first-order predicate logic</strong>: every logically valid formula in first-order logic has a formal proof within the standard axioms of predicate logic.</p>
+    <p>This was a genuine and important result. It showed that pure logic — at the level of first-order predicate calculus — is complete. Every truth expressible in that language can be derived. Hilbert's program seemed to be on track.</p>
+
+    <div class="theorem">
+      <span class="theorem-label">Gödel's Completeness Theorem — 1929</span>
+      <p class="theorem-statement">Every formula of first-order predicate logic that is logically valid (true in every interpretation) has a formal proof in the standard deductive system of first-order logic.</p>
+    </div>
+
+    <p>This is the result that was celebrated in 1930. Gödel was twenty-three when he proved it. The mathematical world was pleased. What Gödel did not announce — but was already working on — was that arithmetic, unlike pure logic, could not be complete. The contrast would become philosophically devastating: <em>logic is complete; arithmetic is not.</em></p>
+  </section>
+
+  <!-- GÖDEL NUMBERING -->
+  <section id="numbering">
+    <span class="section-label">III — The Method</span>
+    <h2>Gödel Numbering: Encoding the Language</h2>
+    <p>The genius of Gödel's incompleteness proof lies in a single insight: <strong>every formal statement can be encoded as a natural number</strong>. By assigning unique numbers to symbols, formulas, and sequences of formulas, Gödel created a correspondence between statements about arithmetic and numbers in arithmetic. This meant arithmetic could talk about its own statements.</p>
+    <p>The encoding works as follows: assign each basic symbol a prime number. Encode a sequence of symbols using the prime factorization: if the symbols are assigned numbers a₁, a₂, a₃, ..., then the formula is encoded as 2^a₁ × 3^a₂ × 5^a₃ × .... Because prime factorizations are unique (Fundamental Theorem of Arithmetic), each formula maps to exactly one number and back.</p>
+
+    <div class="numbering-demo">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Meaning</th>
+            <th>Gödel Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>The number zero</td><td>1</td></tr>
+          <tr><td>s</td><td>Successor function</td><td>3</td></tr>
+          <tr><td>+</td><td>Addition</td><td>5</td></tr>
+          <tr><td>×</td><td>Multiplication</td><td>7</td></tr>
+          <tr><td>=</td><td>Equality</td><td>9</td></tr>
+          <tr><td>¬</td><td>Negation (not)</td><td>11</td></tr>
+          <tr><td>∨</td><td>Disjunction (or)</td><td>13</td></tr>
+          <tr><td>∀</td><td>Universal quantifier</td><td>15</td></tr>
+          <tr><td>( )</td><td>Parentheses</td><td>17, 19</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The crucial step: the predicate <em>Provable(n)</em> — "the formula with Gödel number n is provable" — is itself a statement of arithmetic. Arithmetic can now reason about its own provability. This is Gödel's injection of self-reference into a system that seemed immune to it.</p>
+  </section>
+
+  <!-- FIRST INCOMPLETENESS THEOREM -->
+  <section id="first">
+    <span class="section-label">IV — The First Theorem</span>
+    <h2>First Incompleteness Theorem: Truth Outruns Proof</h2>
+    <p>With Gödel numbering in place, Gödel constructed what is now called the <strong>Gödel sentence</strong>, denoted G. It is a statement of arithmetic that, when decoded, says:</p>
+
+    <div class="equation-block">
+      <span class="equation">G: "This statement is not provable."</span>
+      <span class="equation-label">The Gödel Sentence — a statement of arithmetic that refers to its own unprovability</span>
+    </div>
+
+    <p>Now examine what follows:</p>
+
+    <div class="logic-chain">
+      <div class="logic-step">
+        <div class="logic-num">1.</div>
+        <div class="logic-text"><em>Suppose G is provable.</em> Then the system proves something false — namely, G, which says "I am not provable." A system that proves false things is <strong>inconsistent</strong>. We assumed the system is consistent, so this is a contradiction. Therefore G is not provable.</div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-num">2.</div>
+        <div class="logic-text"><em>Since G is not provable</em>, what G says — "I am not provable" — is <strong>true</strong>. We have found a true statement that the system cannot prove.</div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-num">3.</div>
+        <div class="logic-text"><em>Suppose we add G as an axiom.</em> Then a new Gödel sentence G' can be constructed for the enlarged system, and the same argument applies. Incompleteness cannot be patched. It is structural, not accidental.</div>
+      </div>
+      <div class="logic-step">
+        <div class="logic-num">∴</div>
+        <div class="logic-text"><em>Conclusion:</em> Any consistent formal system powerful enough to express basic arithmetic is <strong>incomplete</strong>: there exist true statements it cannot prove.</div>
+      </div>
+    </div>
+
+    <div class="theorem">
+      <span class="theorem-label">First Incompleteness Theorem — Gödel, 1931</span>
+      <p class="theorem-statement">Any consistent formal system F that is capable of expressing elementary arithmetic contains statements that are true but cannot be proved within F. Moreover, if F is consistent, then the consistency of F cannot be proved within F.</p>
+    </div>
+  </section>
+
+  <!-- SECOND INCOMPLETENESS THEOREM -->
+  <section id="second">
+    <span class="section-label">V — The Killing Blow</span>
+    <h2>Second Incompleteness Theorem: No System Proves Its Own Soundness</h2>
+    <p>The First Theorem was devastating enough. The Second Theorem was, if anything, worse for Hilbert's program — because Hilbert's program specifically aimed to prove that mathematics is consistent, <em>from within mathematics itself</em>.</p>
+
+    <div class="theorem">
+      <span class="theorem-label">Second Incompleteness Theorem — Gödel, 1931</span>
+      <p class="theorem-statement">No consistent formal system powerful enough to express elementary arithmetic can prove its own consistency. If such a system could prove its own consistency, it would be inconsistent.</p>
+    </div>
+
+    <p>The proof follows from the first theorem. The statement "This system is consistent" is itself a formal statement of arithmetic (it can be encoded via Gödel numbering). If the system could prove its own consistency — call this statement Con(F) — then it could prove the Gödel sentence G (since the argument "if Con(F), then G is unprovable, so G is true" can be formalized). But G is not provable. Contradiction. Therefore Con(F) is not provable.</p>
+    <p>Hilbert's program was dead. You cannot build an unshakeable foundation for mathematics within mathematics itself. Any proof of consistency must rest on a system stronger than the one being proved consistent — and that system's consistency is itself in question.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The human mind is incapable of formulating (or mechanizing) all its mathematical intuitions."</blockquote>
+      <cite>— Kurt Gödel, on the implications of incompleteness</cite>
+    </div>
+  </section>
+
+  <!-- THE COMPLETENESS CONTRAST -->
+  <section id="contrast">
+    <span class="section-label">VI — The Great Contrast</span>
+    <h2>Logic vs. Arithmetic: A Philosophical Knife-Edge</h2>
+    <p>The contrast at the heart of Gödel's work is philosophically vertiginous. <strong>Pure first-order logic is complete</strong>: every valid logical truth is provable. But <strong>arithmetic — the theory of the natural numbers — is not complete</strong>: true statements exist that no proof can reach.</p>
+    <p>Why the difference? First-order logic is simpler than arithmetic in a crucial sense: it cannot talk about its own provability in the way arithmetic can. Once a system is powerful enough to encode self-reference, Gödel's argument applies. Arithmetic is rich enough. Pure propositional logic is not. The very power of arithmetic — its ability to represent sequences, encode programs, and describe its own formulas — is the source of its incompleteness.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">First-Order Logic</span>
+        <h4>Complete</h4>
+        <p>Every logically valid statement has a formal proof. Gödel proved this in his 1929 PhD thesis. The system cannot talk about its own provability, so self-reference is blocked.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Peano Arithmetic</span>
+        <h4>Incomplete</h4>
+        <p>There exist true statements about natural numbers that no proof within Peano Arithmetic can reach. Via Gödel numbering, arithmetic can encode its own syntax and reason about itself.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Set Theory (ZFC)</span>
+        <h4>Also Incomplete</h4>
+        <p>Gödel's theorems apply to ZFC as well. The Continuum Hypothesis (Cantor's question about infinite cardinalities) is independent of ZFC — neither provable nor disprovable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GÖDEL AND EINSTEIN: TIME -->
+  <section id="time">
+    <span class="section-label">VII — The Physicist</span>
+    <h2>Gödel's Rotating Universe and the Problem of Time</h2>
+    <p>In 1949, as a tribute to Einstein's seventieth birthday, Gödel published a paper that shocked the physics community. He had found an exact solution to <strong>Einstein's field equations of general relativity</strong> — and the solution described a universe in which <em>closed timelike curves</em> are possible: paths through spacetime that loop back on themselves, arriving in the past.</p>
+    <p>In Gödel's rotating universe, time travel is not a paradox — it is a structural feature of the geometry. If the universe had a certain angular momentum, a traveler could, in principle, circumnavigate the cosmos and return before departing. The laws of physics would not be violated. Causality would.</p>
+    <p>Einstein was reportedly disturbed. Not because the math was wrong — Gödel's solution was correct — but because it forced a question: if the equations of physics permit a geometry in which past, present, and future can all be visited, what does that say about the reality of time? Is time an illusion? Gödel believed it might be. He wrote that the existence of closed timelike curves was evidence against the "objective lapse of time" — against the view that the flow of time is physically real rather than a feature of our perception.</p>
+
+    <div class="equation-block">
+      <span class="equation">G_μν + Λg_μν = 8πG T_μν</span>
+      <span class="equation-label">Einstein's field equations — Gödel found solutions permitting closed timelike curves</span>
+    </div>
+
+    <p>This was not a detour from Gödel's mathematical work — it was a continuation of his philosophical project. If formal systems cannot be complete, and if time itself may not be real, then the human mind's relationship to truth is stranger and deeper than any formal model can capture.</p>
+  </section>
+
+  <div class="final-quote">
+    <blockquote>"Either mathematics is too big for the human mind, or the human mind is more than a machine."</blockquote>
+    <cite>— Kurt Gödel</cite>
+  </div>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Kurt Gödel Series · Volume 1: The Work · kurt-godel/1-incompleteness.html<br>
+    Series: <a href="0-who.html">Vol. 0 — The Person</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niels Bohr — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04080a;
+    --cobalt: #1e40af;
+    --gold: #ca8a04;
+    --text: #dce8f0;
+    --muted: #6b8399;
+    --border: #0e1e2e;
+    --card-bg: #07111a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,8,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--cobalt); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #031120 0%, var(--paper) 68%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.75; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 780px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(30,64,175,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cobalt);
+    color: #e8f0ff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--cobalt); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cobalt);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cobalt);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cobalt); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+  /* Person roll */
+  .visitor-roll {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .visitor {
+    background: var(--card-bg);
+    padding: 1.2rem 1.5rem;
+    transition: background 0.2s;
+  }
+  .visitor:hover { background: #0b1a28; }
+  .visitor-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.2rem;
+  }
+  .visitor-detail {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--cobalt);
+    margin-bottom: 0.4rem;
+  }
+  .visitor p { font-size: 0.85rem; opacity: 0.78; margin: 0; }
+  /* Two-column text */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Niels Bohr</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-atom.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Copenhagen Institute as gathering place — building silhouette with orbiting visitors -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bgGlow2" cx="50%" cy="60%" r="45%">
+        <stop offset="0%" stop-color="#1e40af" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#04080a" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="buildingGlow" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="0.12"/>
+        <stop offset="100%" stop-color="#04080a" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="nodeGlow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="buildingFilter">
+        <feGaussianBlur stdDeviation="1.5"/>
+      </filter>
+    </defs>
+
+    <rect width="900" height="540" fill="url(#bgGlow2)"/>
+    <rect width="900" height="540" fill="url(#buildingGlow)"/>
+
+    <!-- Copenhagen skyline silhouette — simplified building blocks -->
+    <!-- Institute for Theoretical Physics (center building) -->
+    <g opacity="0.55" fill="#0b1d2e" stroke="#1e40af" stroke-width="0.8">
+      <!-- Main Institute building -->
+      <rect x="340" y="310" width="220" height="160"/>
+      <!-- Roof peak -->
+      <polygon points="340,310 450,255 560,310"/>
+      <!-- Left wing -->
+      <rect x="270" y="345" width="80" height="125"/>
+      <!-- Right wing -->
+      <rect x="550" y="345" width="80" height="125"/>
+      <!-- Door -->
+      <rect x="430" y="420" width="40" height="50" fill="#031120"/>
+      <!-- Windows in main -->
+      <rect x="360" y="330" width="30" height="25" fill="#1e40af" opacity="0.4"/>
+      <rect x="410" y="330" width="30" height="25" fill="#1e40af" opacity="0.4"/>
+      <rect x="460" y="330" width="30" height="25" fill="#1e40af" opacity="0.4"/>
+      <rect x="510" y="330" width="30" height="25" fill="#ca8a04" opacity="0.35"/>
+      <!-- Windows row 2 -->
+      <rect x="360" y="370" width="30" height="25" fill="#1e40af" opacity="0.3"/>
+      <rect x="410" y="370" width="30" height="25" fill="#1e40af" opacity="0.3"/>
+      <rect x="460" y="370" width="30" height="25" fill="#1e40af" opacity="0.3"/>
+      <rect x="510" y="370" width="30" height="25" fill="#1e40af" opacity="0.3"/>
+    </g>
+
+    <!-- Golden glow in central window — "Bohr is thinking" -->
+    <rect x="510" y="330" width="30" height="25" fill="#ca8a04">
+      <animate attributeName="opacity" values="0.3;0.7;0.4;0.8;0.3" dur="4s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Ground line -->
+    <line x1="0" y1="470" x2="900" y2="470" stroke="#0e1e2e" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Orbiting visitor nodes — six visitors circling the Institute -->
+    <!-- Each is a labeled dot orbiting at different radii and speeds -->
+
+    <!-- Heisenberg node — close inner orbit -->
+    <g filter="url(#nodeGlow)">
+      <circle r="7" fill="#7dd3fc">
+        <animateMotion dur="12s" repeatCount="indefinite">
+          <mpath href="#innerOrbit"/>
+        </animateMotion>
+      </circle>
+    </g>
+    <text fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="9" opacity="0.8">
+      <animateMotion dur="12s" repeatCount="indefinite" begin="0s">
+        <mpath href="#innerOrbitLabel"/>
+      </animateMotion>
+      Heisenberg
+    </text>
+
+    <!-- Pauli node — counter-orbit -->
+    <g filter="url(#nodeGlow)">
+      <circle r="6" fill="#a78bfa">
+        <animateMotion dur="18s" repeatCount="indefinite" begin="-6s">
+          <mpath href="#outerOrbit"/>
+        </animateMotion>
+      </circle>
+    </g>
+
+    <!-- Dirac node -->
+    <g filter="url(#nodeGlow)">
+      <circle r="5.5" fill="#34d399">
+        <animateMotion dur="22s" repeatCount="indefinite" begin="-9s">
+          <mpath href="#outerOrbit"/>
+        </animateMotion>
+      </circle>
+    </g>
+
+    <!-- Gamow node -->
+    <g filter="url(#nodeGlow)">
+      <circle r="5" fill="#fb923c">
+        <animateMotion dur="15s" repeatCount="indefinite" begin="-3s">
+          <mpath href="#innerOrbit"/>
+        </animateMotion>
+      </circle>
+    </g>
+
+    <!-- Kramers node -->
+    <g filter="url(#nodeGlow)">
+      <circle r="5" fill="#f472b6">
+        <animateMotion dur="20s" repeatCount="indefinite" begin="-12s">
+          <mpath href="#outerOrbit"/>
+        </animateMotion>
+      </circle>
+    </g>
+
+    <!-- Connection lines from orbiting nodes to Institute center (animated opacity) -->
+    <line x1="450" y1="380" x2="150" y2="280" stroke="#1e40af" stroke-width="0.6" opacity="0">
+      <animate attributeName="opacity" values="0;0.3;0;0.25;0" dur="8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="450" y1="380" x2="750" y2="260" stroke="#1e40af" stroke-width="0.6" opacity="0">
+      <animate attributeName="opacity" values="0.2;0;0.3;0;0.2" dur="10s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- Orbit path definitions -->
+    <path id="innerOrbit" d="M 650,385 A 200,80 0 1 1 649.99,385.01" fill="none" stroke="none"/>
+    <path id="innerOrbitLabel" d="M 655,385 A 205,82 0 1 1 654.99,385.01" fill="none" stroke="none"/>
+    <path id="outerOrbit" d="M 760,390 A 310,110 0 1 1 759.99,390.01" fill="none" stroke="none"/>
+
+    <!-- Stars -->
+    <g fill="#1e40af" opacity="0.2">
+      <circle cx="60" cy="80" r="1.2"/><circle cx="180" cy="50" r="0.9"/>
+      <circle cx="800" cy="70" r="1.4"/><circle cx="850" cy="180" r="0.8"/>
+      <circle cx="70" cy="400" r="1"/><circle cx="840" cy="420" r="1.1"/>
+      <circle cx="280" cy="40" r="0.8"/><circle cx="650" cy="30" r="1.3"/>
+    </g>
+
+    <!-- Institute label -->
+    <text x="450" y="244" fill="#ca8a04" font-family="'Cinzel', serif" font-weight="500" font-size="12" text-anchor="middle" opacity="0.7">Institut for Teoretisk Fysik</text>
+    <text x="450" y="260" fill="#6b8399" font-family="'Space Mono', monospace" font-size="9" text-anchor="middle" opacity="0.6">Copenhagen · Est. 1920</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Niels Bohr · 1885–1962 · Volume Two</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Copenhagen. Manchester. Solvay. Los Alamos. The Planet Bohr Made.</p>
+    <p class="hero-lead">The Copenhagen Institute became the world capital of quantum mechanics — a republic of the mind where Heisenberg, Pauli, Dirac, and Gamow came to argue, fail, argue again, and occasionally get it right.</p>
+  </div>
+</div>
+
+<div class="band">Copenhagen 1920 · Solvay 1927 · Nazi Occupation 1940 · Danish Rescue 1943 · Los Alamos 1944</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1920</span>
+      <span class="stat-label">Institute Opens</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">29</span>
+      <span class="stat-label">Solvay Conference 1927</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">7,000</span>
+      <span class="stat-label">Danish Jews Rescued</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1941</span>
+      <span class="stat-label">The Heisenberg Meeting</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1944</span>
+      <span class="stat-label">Memo to Roosevelt</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1998</span>
+      <span class="stat-label">Copenhagen Play Opens</span>
+    </div>
+  </div>
+
+  <!-- COPENHAGEN CITY -->
+  <section id="copenhagen-city">
+    <span class="section-label">I — The City</span>
+    <h2>Copenhagen at the Turn of the Twentieth Century</h2>
+    <p>The Copenhagen in which Niels Bohr grew up was a compact, confident, distinctly Danish city — not yet the global capital of quantum theory, but already a place of unusual intellectual vitality. Denmark had emerged from the nineteenth century with its universities strengthened, its scientific institutions well-funded by industrial philanthropy (the Carlsberg Foundation, established in 1876, would become one of science's great patrons), and its cultural life oriented outward toward Germany and Britain.</p>
+    <p>The city's geography mattered. Bordered by the Øresund strait separating Denmark from Sweden, ringed by the Baltic, accessible by sea from all of northern Europe — Copenhagen was a crossroads city that wore its cosmopolitan character naturally. The intellectual climate of Christian Bohr's household was not unusual for its milieu: professional Copenhagen in 1900 was a place where a physiology professor might host philosophers, physicists, and literary figures at the same dinner table, and where a child listening from the stairs might absorb all of it.</p>
+    <p>The University of Copenhagen, founded in 1479, was by 1900 the undisputed center of Danish scientific life. Small by German standards, it compensated with intimacy and seriousness. Bohr studied and then taught there; his return from Manchester in 1916 was treated as a homecoming, not merely a career move. He belonged to Copenhagen, and Copenhagen, over the following decades, would largely belong to him.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- RUTHERFORD'S LAB -->
+  <section id="manchester">
+    <span class="section-label">II — Manchester Laboratory</span>
+    <h2>Rutherford's Kingdom</h2>
+    <p>The Manchester Physics Laboratory under Ernest Rutherford in 1912 was unlike any other place in science. Rutherford — born in rural New Zealand, trained in Cambridge, now professor at Manchester — ran his laboratory with a combination of absolute physical intuition and theatrical energy. He was loud, cheerful, impatient with theory that couldn't be tested, and extraordinarily good at judging which experiments would produce useful results. He sang "Onward Christian Soldiers" when his experiments were going well. The vibrations, his colleagues claimed, disturbed the instruments.</p>
+    <p>Bohr arrived in March 1912, four months after Rutherford had published the nuclear model of the atom. The laboratory was buzzing. Hans Geiger — of the Geiger counter — was there. Charles Darwin's grandson was doing theoretical work. The experimenters were firing alpha particles at gold foil and measuring where they bounced. Rutherford's nucleus was less than a year old, and already people were asking what the electrons were doing around it.</p>
+    <p>The friendship between Rutherford and Bohr was one of the great productive pairings in the history of science, built on temperamental opposition. Rutherford distrusted philosophy; Bohr was constitutionally philosophical. Rutherford wanted facts nailed down; Bohr wanted concepts clarified. Rutherford acted quickly; Bohr rewrote everything seventeen times. And yet Rutherford trusted Bohr's theoretical judgment as he trusted few others', and Bohr built the entire structure of the quantum atom on the experimental results Rutherford's team was generating.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Rutherford is a man you can rely on. He never says anything he doesn't mean. He is never theatrical."</blockquote>
+      <cite>— Niels Bohr, in a letter to his brother Harald, 1912</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- THE INSTITUTE -->
+  <section id="institute-world">
+    <span class="section-label">III — The Institute</span>
+    <h2>The Republic of Quantum Mechanics</h2>
+    <p>The Institut for Teoretisk Fysik opened in 1920 in a purpose-built building on Blegdamsvej in Copenhagen. It was small — a handful of rooms, a library, a seminar space — but Bohr had designed its culture before he designed its floor plan. The culture was simple: argue everything, finish nothing until it is clear, let the best argument win regardless of who makes it.</p>
+    <p>The Institute's method was the Bohr method. He would have a draft of a paper; he would gather colleagues, read it aloud, stop at every sentence that felt imprecise, and revise. Then revise again. His assistant Aage Petersen recalled that a single sentence might be reconsidered ten or twenty times across multiple sessions before Bohr was satisfied. Heisenberg, who spent significant time at the Institute in the early 1920s, described it as exhausting and exhilarating in equal measure — the only place where he felt his ideas were being taken seriously enough to be properly destroyed.</p>
+
+    <div class="visitor-roll">
+      <div class="visitor">
+        <div class="visitor-name">Werner Heisenberg</div>
+        <div class="visitor-detail">Germany · 1922–1927 extended periods</div>
+        <p>Developed matrix mechanics and the uncertainty principle largely in Copenhagen dialogue. Said: "The months in Copenhagen were the most decisive of my life."</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">Wolfgang Pauli</div>
+        <div class="visitor-detail">Austria · 1922–1923 and frequent returns</div>
+        <p>The exclusion principle emerged during his Copenhagen period. His function: demolish weak arguments before they reached publication. Bohr called him his conscience.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">Paul Dirac</div>
+        <div class="visitor-detail">Britain · 1926 and repeated visits</div>
+        <p>Almost completely silent in seminars. Bohr got more out of him than anyone. Dirac's equation for the relativistic electron was developed in this period.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">George Gamow</div>
+        <div class="visitor-detail">USSR · 1928–1931</div>
+        <p>Explained alpha decay by quantum tunneling — a triumph of the new mechanics. Brought Soviet energy and humor to the Institute's characteristically Nordic seriousness.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">Hendrik Kramers</div>
+        <div class="visitor-detail">Netherlands · 1916–1926 resident</div>
+        <p>Bohr's first true collaborator. Stayed a decade. Co-developed the correspondence principle and ran the day-to-day life of the Institute through its most productive years.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">Oskar Klein</div>
+        <div class="visitor-detail">Sweden · long-term associate</div>
+        <p>The Klein-Gordon equation and the Klein-Nishina formula. Long-term collaborator on quantum electrodynamics and nuclear theory.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">Lise Meitner</div>
+        <div class="visitor-detail">Austria–Germany · frequent visitor</div>
+        <p>The discoverer (with Hahn and Frisch) of nuclear fission. Fled Nazi Germany to Stockholm in 1938. Her visits to Copenhagen and correspondence with Bohr were continuous through the 1930s.</p>
+      </div>
+      <div class="visitor">
+        <div class="visitor-name">John Archibald Wheeler</div>
+        <div class="visitor-detail">USA · 1934–1935 and wartime</div>
+        <p>Co-author with Bohr of the 1939 fission paper. Later co-coined the term "black hole." Described Bohr as the greatest influence on his scientific life.</p>
+      </div>
+    </div>
+
+    <p>The Institute also served a humanitarian function that Bohr took as seriously as the physics. Through the 1930s, as Nazi persecution drove Jewish and political refugee scientists out of Germany, Austria, and Hungary, the Copenhagen Institute became a waystation and safe house. Bohr worked his connections relentlessly to find positions for refugee physicists — in Britain, in the United States, in Scandinavia. His efforts saved careers and, in several cases, lives.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SOLVAY -->
+  <section id="solvay">
+    <span class="section-label">IV — The Solvay Conferences</span>
+    <h2>Where the Century Argued with Itself</h2>
+    <p>The Solvay Conferences, funded by the Belgian industrialist Ernest Solvay, gathered the world's leading physicists by invitation every three years in Brussels. They were small — rarely more than thirty participants — exclusive, and among the most productive regular scientific meetings ever organized. The 1911 conference had produced the first serious confrontation between classical and quantum ideas. The 1927 and 1930 conferences are the ones that matter most for Bohr's story.</p>
+
+    <h3>The 5th Solvay Conference, 1927</h3>
+    <p>Twenty-nine participants, the photograph now iconic: Planck, Curie, Lorentz, Einstein, Bohr, Heisenberg, Pauli, Dirac, Schrödinger, de Broglie, Born — the entire leadership of a revolution in physics, gathered in a Brussels hotel. The subject was "Electrons and Photons." The undeclared subject was: what does quantum mechanics actually mean?</p>
+    <p>Bohr presented complementarity. Einstein spent much of the conference in private conversation with Bohr, probing, proposing thought experiments, looking for inconsistencies. At the conference dinner, Einstein reportedly said: <em>"God does not play dice."</em> Bohr reportedly replied: <em>"Einstein, stop telling God what to do."</em> The exchange, whether exactly as reported or not, captured the genuine divide: Einstein wanted a deterministic universe; Bohr believed quantum indeterminacy was irreducible.</p>
+    <p>During the general sessions, Einstein rose repeatedly with challenges. Each time Bohr found the flaw — usually during the night, arriving the next morning with the refutation complete. The other participants found themselves choosing sides without quite meaning to. Pauli and Heisenberg sided with Bohr. de Broglie and Schrödinger sided with Einstein. The majority went with Bohr — but the debate was unresolved.</p>
+
+    <h3>The 6th Solvay Conference, 1930</h3>
+    <p>Einstein had worked through the summer preparing his most formidable challenge: the photon box. A box containing photons, weighed before and after releasing one through a shutter at a precisely recorded time — this seemed to allow simultaneous precise measurement of both a photon's energy and the time of its emission, violating the energy-time uncertainty relation.</p>
+    <p>Bohr was shaken. According to Léon Rosenfeld, who was present, Bohr spent the evening "in a state of great excitement" walking from person to person, repeating <em>"It cannot be so, Einstein cannot be right."</em> By morning he had the answer: Einstein had forgotten to apply his own general relativity. A clock that moves in a gravitational field runs at a changed rate — and weighing the box necessarily moves it in the Earth's gravitational field, introducing precisely the uncertainty needed to preserve Heisenberg's relation. Einstein's own theory rescued quantum mechanics from Einstein's attack.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It was as if the ground had been pulled out from under one, with no firm foundation to be seen anywhere upon which one could have built."</blockquote>
+      <cite>— Werner Heisenberg, on the state of physics at the 1927 Solvay Conference</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- NAZI OCCUPATION -->
+  <section id="occupation">
+    <span class="section-label">V — Occupation and Resistance</span>
+    <h2>Denmark Under the Swastika</h2>
+    <p>Germany invaded Denmark on April 9, 1940. The Wehrmacht crossed the border before dawn; Danish resistance lasted less than two hours. King Christian X remained on his throne; the Danish government continued to function under German supervision. The initial occupation was deliberately mild — Denmark was racially classified as Nordic, and the Germans wanted compliant Nordic allies, not a rebellious subject population.</p>
+    <p>For three years this arrangement held, and Denmark's Jews — approximately 8,000 people, most of them fully integrated into Danish society across generations — lived without the deportations that had begun across occupied Europe. Bohr, who was half Jewish by the Nazi racial definitions and wholly famous, occupied an anomalous position. He continued his work, refused to collaborate with the occupiers, and provided what cover he could to refugee scientists.</p>
+
+    <h3>The Rescue of Danish Jews, October 1943</h3>
+    <p>In August 1943 the Germans ended the fiction of Danish self-governance, imposing direct military rule. The deportation of Danish Jews was scheduled for the night of October 1–2, 1943 — the eve of Rosh Hashanah, when Jewish families would be gathered at home. Georg Duckwitz, a German shipping attaché with moral qualms, leaked the plan to Danish Social Democratic leaders on September 28. The warning spread through the Danish population with extraordinary speed.</p>
+    <p>What followed was one of the most remarkable events of the Second World War. Ordinary Danes — fishermen, taxi drivers, doctors, teachers, harbor workers — organized in hours without central coordination. In less than three weeks, approximately <strong>7,000 Jews were ferried across the Øresund to neutral Sweden</strong> in fishing boats, rowboats, and whatever vessels could be requisitioned. The rescue succeeded at least partly because the German navy under Admiral Dönitz was ordered to look the other way — the reasons remain somewhat unclear, but Duckwitz's back-channel diplomacy may have played a role.</p>
+    <p>Bohr had already escaped by this point, warned by Danish resistance contacts that his own arrest was imminent. From Sweden, using his international standing, he telephoned the Swedish Foreign Ministry and reportedly urged Swedish officials to make a public offer of asylum for Danish Jews — which Sweden did, and which helped encourage the rescue. He could not go back. He did what he could from outside.</p>
+
+    <h3>The Heisenberg Meeting, September 1941</h3>
+    <p>In September 1941 Werner Heisenberg traveled to Copenhagen on an official visit and met privately with Bohr at the Bohr family home. This meeting — what was said, what was intended — is one of the most disputed episodes in the history of science. It permanently damaged the friendship between the two men and has never been fully explained.</p>
+    <p>What is established: Heisenberg was working on the German nuclear program. He raised, in some form, the subject of atomic weapons. Bohr was alarmed and terminated the conversation. The two men's memories of what Heisenberg said — whether he was trying to warn Bohr that Germany was working on a bomb, or asking whether it would be right to build one, or doing something else entirely — diverged irreconcilably and were never reconciled before Heisenberg's death in 1976.</p>
+    <p>Heisenberg's letters to Bohr, drafted late in his life and never sent, were released by the Bohr Archive in 2002. They reveal Heisenberg trying, still, to explain himself — and still unable to say precisely what he meant to say in 1941. Bohr's draft replies, also released, show a man who felt he had been used, or misled, or approached under false pretenses — and who could never entirely forgive it. Michael Frayn's play <em>Copenhagen</em>, first performed in 1998, made this meeting the hinge of its dramatic exploration of physics, responsibility, and the uncertain boundary between memory and truth.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I am unable to believe that you have made this journey to bring me into contact with a German intelligence project."</blockquote>
+      <cite>— Niels Bohr, draft letter to Heisenberg, c. 1957 (released 2002)</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LOS ALAMOS -->
+  <section id="los-alamos">
+    <span class="section-label">VI — Los Alamos</span>
+    <h2>Nicholas Baker at the Manhattan Project</h2>
+    <p>Bohr arrived in Britain in October 1943 after his harrowing flight in the Mosquito's bomb bay. He was briefed on the British atomic weapons program and immediately understood what was being built. His reaction was not triumphalism — it was something closer to dread, mixed with a physicist's compulsive need to engage with the hardest problems.</p>
+    <p>In December 1943 he traveled to the United States, becoming Dr. Nicholas Baker. His son Aage accompanied him as James Baker. At Los Alamos, Bohr was received with something approaching awe — Oppenheimer called him "the great complement," and the younger physicists on the project were almost deferential. His role was informal but real: he walked through the laboratories, asked the questions no one else thought to ask, pointed out inconsistencies in the implosion design, and served as what Oppenheimer described as the "father confessor of Los Alamos."</p>
+    <p>But Bohr's mind was not on the design of the weapon. It was on the world that would be left after the weapon was used. He had concluded, with the inexorable logic that characterized his best physics, that the atomic bomb had changed the terms of human existence permanently and irreversibly. No nation could maintain a monopoly on nuclear weapons indefinitely. The only solution was international control — an open world in which the major powers shared nuclear knowledge and jointly committed to preventing its military use.</p>
+    <p>He wrote memoranda to Roosevelt and Churchill making this argument in 1944, at the height of wartime. Felix Frankfurter, the Supreme Court Justice, arranged a meeting with Roosevelt; it went well. Churchill's reaction was hostile. At a meeting in August 1944, Churchill was so irritated by Bohr's persistent argument for openness — including, at the time, openness with the Soviet Union — that he reportedly suggested Bohr might be a Soviet spy and should be monitored. Nothing Bohr recommended was implemented. The postwar nuclear arms race, which he had predicted and dreaded, proceeded exactly as he feared.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Niels Bohr Series · Volume 2: His World · niels-bohr/2-world.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-atom.html">Vol. 1 — The Work</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

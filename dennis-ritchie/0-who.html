@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dennis Ritchie — No. 0 · Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04060a;
+    --cardsolid:#0b0f15;
+    --ink:#d4e0cc;
+    --dim:#6b7280;
+    --green:#22c55e;
+    --line:rgba(34,197,94,0.15);
+    --dimcard:#0f1a12;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(34,197,94,0.018) 23px 24px);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#04060a;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:0;flex-wrap:wrap;}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);text-decoration:none;padding:8px 14px;border-right:1px solid var(--line);
+    transition:color .15s,background .15s;
+  }
+  .sitenav a:hover{color:var(--green);}
+  .sitenav a.active{color:var(--green);background:rgba(34,197,94,0.07);}
+
+  /* TYPOGRAPHY */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(40px,8.5vw,82px);
+    line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;
+    margin:0;max-width:9em;overflow-wrap:break-word;
+  }
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#9fb898;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* CURSOR BLINK ANIMATION */
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .cursor-blink{animation:blink 1s step-start infinite;}
+  @media (prefers-reduced-motion:reduce){.cursor-blink{animation:none;opacity:1}}
+
+  /* BANDS */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--green);color:#04060a;
+    padding:5px 13px;margin:36px 0 14px;
+  }
+  .band.dim{background:#111a14;color:var(--ink);border:1px solid var(--line);}
+  .band.dark{background:#0b1810;color:var(--green);border:1px solid var(--green);}
+
+  /* TYPE TILES */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--green);}
+  .type p{font-size:13px;margin:0;color:#7ea87a;line-height:1.45;}
+  .type .tg{
+    display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--green);border:1px solid var(--green);
+    padding:1px 6px;margin-top:7px;
+  }
+
+  /* CARD GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--cardsolid);
+    padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card .num{
+    position:absolute;top:11px;right:13px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);
+  }
+  .card h3{
+    font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 30px 8px 0;letter-spacing:0.01em;color:var(--ink);
+  }
+  .card .what{font-size:14px;margin:0 0 10px;color:#9fb898;}
+  .card .need,.card .do{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:5px 0 0;color:var(--dim);
+  }
+  .card .need b,.card .do b{
+    color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+  .card .plus{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#557a57;
+  }
+  .card .plus b{
+    color:var(--green);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+
+  /* BLOCK / RULES */
+  .block{border:1px solid var(--line);padding:18px 22px;margin-top:6px;background:var(--cardsolid);}
+  .block.green{border-color:var(--green);background:#060f08;}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{
+    position:relative;padding:9px 0 9px 28px;font-size:14.5px;
+    border-bottom:1px solid var(--line);
+  }
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{
+    content:"$";position:absolute;left:2px;top:8px;
+    font-family:"Space Mono",monospace;font-size:13px;color:var(--green);font-weight:700;
+  }
+  .block.green .rules li::before{content:">";}
+  .rules b{font-weight:500;color:var(--green);}
+  .block.green .rules b{color:#5ade82;}
+
+  /* QUOTE */
+  .quote{
+    border:1px solid var(--line);background:#060f08;
+    padding:20px 24px;margin:6px 0 0;
+    font-size:16px;line-height:1.75;font-style:italic;color:var(--ink);
+    border-left:3px solid var(--green);
+  }
+  .quote .src{
+    display:block;font-style:normal;
+    font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.05em;color:var(--dim);margin-top:12px;
+  }
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}
+    .card,.block,.type,.quote{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .cursor-blink{animation:none;opacity:1}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <nav class="sitenav" aria-label="Series navigation">
+    <a href="0-who.html" class="active">0 · Who</a>
+    <a href="1-c-unix.html">1 · C &amp; Unix</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <header class="mast">
+    <span class="kick">ritchie series · book no. 0 · who he was</span>
+    <div class="masthead">
+      <h1>Dennis <em>Ritchie</em></h1>
+
+      <!-- Animated SVG: blinking terminal cursor -->
+      <svg class="art" width="200" height="150" viewBox="0 0 200 150" role="img" aria-label="a blinking terminal prompt">
+        <rect x="0" y="0" width="200" height="150" rx="4" fill="#020504"/>
+        <rect x="0" y="0" width="200" height="18" rx="0" fill="#0a150b"/>
+        <circle cx="14" cy="9" r="4" fill="#3a3a3a"/>
+        <circle cx="28" cy="9" r="4" fill="#3a3a3a"/>
+        <circle cx="42" cy="9" r="4" fill="#3a3a3a"/>
+        <text x="12" y="44" font-family="Space Mono,monospace" font-size="11" fill="#22c55e">dmr@bell-labs:~$</text>
+        <rect class="cursor-blink" x="147" y="31" width="8" height="14" fill="#22c55e"/>
+        <text x="12" y="68" font-family="Space Mono,monospace" font-size="10" fill="#22c55e" opacity="0.7">// C · Unix · 1972</text>
+        <text x="12" y="86" font-family="Space Mono,monospace" font-size="10" fill="#6b7280">/* Bell Labs, 1967–2007 */</text>
+        <text x="12" y="104" font-family="Space Mono,monospace" font-size="10" fill="#6b7280">/* Turing Award, 1983 */</text>
+        <text x="12" y="122" font-family="Space Mono,monospace" font-size="10" fill="#22c55e" opacity="0.5">/* "Unix is very simple." */</text>
+        <text x="12" y="140" font-family="Space Mono,monospace" font-size="9" fill="#557a57">1941 ─────────────── 2011</text>
+      </svg>
+    </div>
+    <p class="dek">He invented the <b>C programming language</b> and co-created <b>Unix</b>. He spent his whole career at one address — Bell Labs, Murray Hill — and changed the world so thoroughly that the world stopped noticing. He won the <b>Turing Award</b> in 1983. He died in 2011, the week after Steve Jobs, and almost no one noticed.</p>
+  </header>
+
+  <span class="band">The shape of his life</span>
+  <div class="types">
+    <div class="type reveal"><h4>The student</h4><p>Bronxville, NY. Harvard physics. Harvard applied mathematics — PhD program, never finished.</p><span class="tg">1941–1967</span></div>
+    <div class="type reveal"><h4>Bell Labs</h4><p>He arrived in 1967 and never left. His entire working life in one building in New Jersey.</p><span class="tg">1967–2007</span></div>
+    <div class="type reveal"><h4>C and Unix</h4><p>With Ken Thompson: the two inventions that became the substrate of computing.</p><span class="tg">the work</span></div>
+    <div class="type reveal"><h4>The invisible man</h4><p>Turing Award 1983. National Medal of Technology 1999. Jobs dies; the world mourns. Ritchie dies; silence.</p><span class="tg">2011</span></div>
+  </div>
+
+  <span class="band dark">Who he was</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>Bronxville boy, Harvard student</h3>
+      <p class="what">Dennis MacAlistair Ritchie was born September 9, 1941, in Bronxville, New York. His father Alistair was a switching circuit engineer at Bell Labs — a lineage that reads like fate.</p>
+      <p class="need"><b>study</b> Harvard, physics undergrad</p>
+      <p class="do"><b>then</b> Harvard applied mathematics PhD — dropped out</p>
+      <p class="plus"><b>+1</b> the PhD abandonment is a footnote. What he did next rendered it irrelevant to everyone except the degree committee.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Bell Labs, 1967 — forever</h3>
+      <p class="what">He joined Bell Labs' Computing Science Research Center in 1967. He stayed until 2007. Forty years. One address. The entire history of modern software was written in that time and that building.</p>
+      <p class="need"><b>where</b> Murray Hill, New Jersey</p>
+      <p class="do"><b>culture</b> researchers given enormous freedom, no quarterly targets</p>
+      <p class="plus"><b>+1</b> his father worked there too. Bell Labs was, in a sense, his inheritance and his life's work simultaneously.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>A man of notable quiet</h3>
+      <p class="what">Those who knew him describe a man who was gentle, precise, and almost constitutionally humble. He gave credit easily. He deflected acclaim. He was happier writing code than giving speeches.</p>
+      <p class="need"><b>style</b> precise, self-effacing, quietly funny</p>
+      <p class="do"><b>said</b> "Unix is very simple, it just needs a genius to understand its simplicity"</p>
+      <p class="plus"><b>+1</b> the joke is also a philosophy: he believed complexity was a failure, not a feature.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">04</span>
+      <h3>Turing Award, 1983</h3>
+      <p class="what">He and Ken Thompson shared the ACM Turing Award — the Nobel Prize of computing — for their work on C and Unix. The committee called it "one of the most far-reaching technical achievements in the history of computing."</p>
+      <p class="need"><b>honor</b> ACM Turing Award, shared with Thompson</p>
+      <p class="do"><b>also</b> National Medal of Technology and Innovation, 1999 (with Thompson)</p>
+      <p class="plus"><b>+1</b> President Clinton awarded the Medal. By then C and Unix had been running the world for twenty-five years.</p>
+    </article>
+  </div>
+
+  <span class="band dark">What made him unusual</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>The most influential unknown</h3>
+      <p class="what">By any measurable standard, Ritchie's work underlies more software than any other person's. And yet almost no one outside of computing knows his name. He is the invisible foundation.</p>
+      <p class="need"><b>scope</b> C → every OS kernel, every systems language, CPython, JVM</p>
+      <p class="do"><b>unix</b> → Linux, macOS, iOS, Android, every server</p>
+      <p class="plus"><b>+1</b> the phrase "standing on the shoulders of giants" was coined for Newton. It applies more literally to Ritchie: the entire industry stands on his two inventions.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>Physics to computer science</h3>
+      <p class="what">He studied physics — not programming — at Harvard. He arrived at computing sideways, through applied mathematics. This outside path may have given him the outsider's view that produced such clean abstractions.</p>
+      <p class="need"><b>path</b> physics → applied math → computing</p>
+      <p class="do"><b>note</b> there was no CS degree to get in 1963</p>
+      <p class="plus"><b>+1</b> he belonged to a generation that invented the discipline by doing the discipline. There was no textbook because he wrote the textbook.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>The long collaboration</h3>
+      <p class="what">His partnership with Ken Thompson was one of the great collaborations in the history of technology. Thompson provided creative fire; Ritchie provided theoretical clarity. Together they were more than the sum of their parts.</p>
+      <p class="need"><b>thompson</b> wrote the first Unix kernel; wrote B (predecessor to C)</p>
+      <p class="do"><b>ritchie</b> extended B into C; gave Unix its portable foundation</p>
+      <p class="plus"><b>+1</b> they shared every major award. They appear to have been genuinely fond of each other across a forty-year working friendship.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">08</span>
+      <h3>The overlooked death</h3>
+      <p class="what">He died October 12, 2011, at home in Berkeley Heights, New Jersey — alone, after illness. Steve Jobs had died six days earlier. The global outpouring for Jobs lasted weeks. Ritchie's death was a footnote.</p>
+      <p class="need"><b>irony</b> every Apple device Jobs was mourned on ran Ritchie's code</p>
+      <p class="do"><b>said</b> Rob Pike: "Ritchie's influence dwarfs [Jobs's], and almost nobody knows it"</p>
+      <p class="plus"><b>+1</b> the invisibility is structural: Jobs built products you could hold. Ritchie built the substrate everything ran on. Substrate is invisible by nature.</p>
+    </article>
+  </div>
+
+  <span class="band">In his own words</span>
+  <div class="quote reveal">
+    "Unix is very simple, it just needs a genius to understand its simplicity."
+    <span class="src">— Dennis Ritchie, attributed</span>
+  </div>
+  <div class="quote reveal" style="margin-top:10px;">
+    "I am not now and never have been trying to make money out of computing."
+    <span class="src">— Dennis Ritchie, on his motivations</span>
+  </div>
+
+  <span class="band dark">The shape of his career</span>
+  <div class="block green">
+    <ul class="rules">
+      <li><b>Dennis MacAlistair Ritchie (1941–2011)</b> — American computer scientist, Bell Labs Computing Science Research Center, Murray Hill, NJ.</li>
+      <li>Harvard undergraduate (physics), Harvard applied mathematics graduate student — <b>left without completing the PhD</b> to join Bell Labs in 1967.</li>
+      <li>With Ken Thompson: co-created <b>Unix</b> (1969–1973) and designed the <b>C programming language</b> (1972). Wrote the canonical book with Brian Kernighan: <em>The C Programming Language</em> (1978).</li>
+      <li><b>ACM Turing Award</b> (1983, shared with Thompson); <b>National Medal of Technology</b> (1999, shared with Thompson); IEEE Richard W. Hamming Medal (1990); Japan Prize (2011).</li>
+      <li>Died quietly at home, October 12, 2011. His death was barely covered. The irony was total: every device used to mourn Steve Jobs ran on Ritchie's Unix and C.</li>
+    </ul>
+  </div>
+
+  <span class="band dark">His awards and honors</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">09</span>
+      <h3>ACM Turing Award — 1983</h3>
+      <p class="what">The Turing Award — computing's Nobel Prize — was shared by Ritchie and Thompson. The citation: "the development of generic operating systems theory and specifically for the implementation of the UNIX operating system."</p>
+      <p class="need"><b>shared with</b> Ken Thompson</p>
+      <p class="do"><b>significance</b> highest award in computer science</p>
+      <p class="plus"><b>+1</b> by 1983 Unix had already been running for fourteen years and C had been the dominant systems language for a decade. The award recognized a decade-and-a-half of demonstrated impact.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">10</span>
+      <h3>National Medal of Technology — 1999</h3>
+      <p class="what">President Clinton awarded the National Medal of Technology to Ritchie and Thompson jointly in 1999. By then the internet was booming — all of it running on Unix and C — and the award recognized the scope of what they had built.</p>
+      <p class="need"><b>shared with</b> Ken Thompson</p>
+      <p class="do"><b>occasion</b> White House ceremony, 1999</p>
+      <p class="plus"><b>+1</b> other awards include the IEEE Richard W. Hamming Medal (1990) and the Japan Prize (2011) — also shared with Thompson, awarded the year both men died.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">11</span>
+      <h3>A career of papers</h3>
+      <p class="what">Beyond C and Unix, Ritchie wrote careful, precise papers throughout his career documenting the evolution of the languages and systems he built. "The Development of the C Language" (1993) and "The Evolution of the Unix Time-sharing System" (1984) are the definitive primary sources.</p>
+      <p class="need"><b>paper</b> "The Development of the C Language" (HOPL-II, 1993)</p>
+      <p class="do"><b>paper</b> "The Evolution of the Unix Time-sharing System" (1979)</p>
+      <p class="plus"><b>+1</b> his writing style — spare, precise, slightly self-deprecating — is unmistakable. He was as good at prose as at code.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">12</span>
+      <h3>The Japan Prize — 2011</h3>
+      <p class="what">The Japan Prize in Information and Communications was awarded to Ritchie and Thompson in 2011 — the year Ritchie died. It was one of the last honors he received and he was reportedly too ill to attend the ceremony.</p>
+      <p class="need"><b>shared with</b> Ken Thompson</p>
+      <p class="do"><b>year</b> 2011 — the year Ritchie died</p>
+      <p class="plus"><b>+1</b> the Japan Prize is given for contributions to science and technology that benefit mankind. The committee's reasoning was simple: C and Unix underlie all modern information technology.</p>
+    </article>
+  </div>
+
+  <span class="band">Contemporaries and context</span>
+  <div class="types">
+    <div class="type reveal"><h4>Ken Thompson</h4><p>His closest collaborator. Co-inventor of Unix. Author of B. Later co-designed the Go language at Google.</p><span class="tg">partner</span></div>
+    <div class="type reveal"><h4>Brian Kernighan</h4><p>Bell Labs colleague. Co-authored K&amp;R. Wrote "Hello, World." Documented the Unix philosophy.</p><span class="tg">co-author</span></div>
+    <div class="type reveal"><h4>Claude Shannon</h4><p>Bell Labs predecessor. Founded information theory (1948). Ritchie's C ran on Shannon's mathematical model.</p><span class="tg">precursor</span></div>
+    <div class="type reveal"><h4>Rob Pike</h4><p>Bell Labs colleague. Co-designed Plan 9 (Unix successor) and Go. Wrote the most-cited tribute to Ritchie in 2011.</p><span class="tg">colleague</span></div>
+  </div>
+
+  <span class="band dim">What we know — and how</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Ritchie's career is <b>thoroughly documented</b> through his own published papers, Bell Labs technical reports, and the oral histories preserved by colleagues including Brian Kernighan and Rob Pike.</li>
+      <li>The biographical details here — Bronxville, Harvard, the PhD dropout, Bell Labs — are <b>unambiguous facts</b> from his own accounts and standard references.</li>
+      <li>The circumstances of his death are <b>confirmed but sparse</b>: he was found alone at home; he had been ill. He was intensely private in life and remained so in death.</li>
+      <li>The Jobs/Ritchie contrast is <b>real and well-noted</b> by the computing community — not an exaggeration. Rob Pike's widely-read post from 2011 captures the consensus view.</li>
+      <li>Books 1–3 cover the <b>work</b>, the <b>world</b>, and the <b>legacy</b> in turn.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ritchie series · book no. 0 · who he was · the most influential computer scientist almost no one knows<br>
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0
+  </p>
+
+</div>
+</body>
+</html>

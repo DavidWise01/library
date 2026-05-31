@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rosalind Franklin — Vol. 3: Legacy | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #04080c;
+      --teal: #0d9488;
+      --gold: #ca8a04;
+      --dim: #0a1520;
+      --mid: #122030;
+      --text: #c8dde8;
+      --muted: #5a8a9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #02060aee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.7;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid #0a1520;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid #0a1520; }
+    nav.series-nav a:hover { color: var(--teal); background: #071018; }
+    nav.series-nav a.active { color: var(--teal); border-bottom: 2px solid var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 75% at 50% 40%, #ca8a0412 0%, #0d948810 55%, transparent 75%);
+      pointer-events: none;
+    }
+    .hero svg.hero-anim {
+      width: min(420px, 90vw);
+      height: min(320px, 58vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 20px #ca8a0440);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--teal);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #ca8a0430;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 560px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--teal);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── KICK / BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .band {
+      background: var(--teal);
+      color: #04080c;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--teal);
+    }
+    .card.gold-card:hover {
+      box-shadow: 6px 6px 0 var(--gold);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+    .card.gold-card .card-label {
+      color: var(--gold);
+    }
+    .card .card-year {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--teal);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #071018;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #b8cdd8;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+    blockquote.pull.gold-pull {
+      border-left-color: var(--gold);
+      background: #0e0a00;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--gold);
+      background: #0e0900;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .highlight-box.teal-box {
+      border-color: var(--teal);
+      background: #041018;
+    }
+    .highlight-box.teal-box .hb-label {
+      color: var(--teal);
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { list-style: none; padding: 0; margin: 1.5rem 0; }
+    .timeline li {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--dim);
+      align-items: flex-start;
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .timeline .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      white-space: nowrap;
+      padding-top: 0.15rem;
+      min-width: 52px;
+    }
+    .timeline .tl-event { font-size: 0.95rem; color: var(--text); }
+    .timeline .tl-event strong { color: #fff; }
+
+    /* ── STAT BAND ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+      margin: 2rem 0;
+      background: var(--mid);
+      border: 1px solid var(--mid);
+    }
+    .stat-cell {
+      flex: 1;
+      min-width: 120px;
+      background: var(--dim);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-cell .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+    }
+    .stat-cell .stat-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #020508;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--teal); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Rosalind Franklin</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-photo51.html">Vol. 1 — Photo 51</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Photo 51 diffraction pattern — gold & teal rendering -->
+  <svg class="hero-anim" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Dark photographic field — silver-bromide black -->
+    <rect width="420" height="320" fill="#010306" rx="3"/>
+
+    <!-- Outer vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#010306" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#010306" stop-opacity="0.7"/>
+    </radialGradient>
+    <rect width="420" height="320" fill="url(#vignette)"/>
+
+    <!-- Photo 51 pattern — as it actually appears (X-cross, layer lines) -->
+    <!-- Diffraction arms — upper right -->
+    <ellipse cx="240" cy="126" rx="18" ry="10" fill="#ca8a04" opacity="0.65" transform="rotate(38 240 126)">
+      <animate attributeName="opacity" values="0.65;0.95;0.65" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="272" cy="96" rx="13" ry="7" fill="#ca8a04" opacity="0.40" transform="rotate(38 272 96)">
+      <animate attributeName="opacity" values="0.40;0.65;0.40" dur="3s" repeatCount="indefinite" begin="0.3s"/>
+    </ellipse>
+    <ellipse cx="298" cy="72" rx="9" ry="5" fill="#ca8a04" opacity="0.22" transform="rotate(38 298 72)">
+      <animate attributeName="opacity" values="0.22;0.40;0.22" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+    </ellipse>
+    <!-- upper left -->
+    <ellipse cx="180" cy="126" rx="18" ry="10" fill="#ca8a04" opacity="0.65" transform="rotate(-38 180 126)">
+      <animate attributeName="opacity" values="0.65;0.95;0.65" dur="3s" repeatCount="indefinite" begin="0.15s"/>
+    </ellipse>
+    <ellipse cx="148" cy="96" rx="13" ry="7" fill="#ca8a04" opacity="0.40" transform="rotate(-38 148 96)">
+      <animate attributeName="opacity" values="0.40;0.65;0.40" dur="3s" repeatCount="indefinite" begin="0.45s"/>
+    </ellipse>
+    <ellipse cx="122" cy="72" rx="9" ry="5" fill="#ca8a04" opacity="0.22" transform="rotate(-38 122 72)">
+      <animate attributeName="opacity" values="0.22;0.40;0.22" dur="3s" repeatCount="indefinite" begin="0.75s"/>
+    </ellipse>
+    <!-- lower right -->
+    <ellipse cx="240" cy="194" rx="18" ry="10" fill="#ca8a04" opacity="0.65" transform="rotate(-38 240 194)">
+      <animate attributeName="opacity" values="0.65;0.95;0.65" dur="3s" repeatCount="indefinite" begin="0.2s"/>
+    </ellipse>
+    <ellipse cx="272" cy="224" rx="13" ry="7" fill="#ca8a04" opacity="0.40" transform="rotate(-38 272 224)">
+      <animate attributeName="opacity" values="0.40;0.65;0.40" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+    </ellipse>
+    <!-- lower left -->
+    <ellipse cx="180" cy="194" rx="18" ry="10" fill="#ca8a04" opacity="0.65" transform="rotate(38 180 194)">
+      <animate attributeName="opacity" values="0.65;0.95;0.65" dur="3s" repeatCount="indefinite" begin="0.1s"/>
+    </ellipse>
+    <ellipse cx="148" cy="224" rx="13" ry="7" fill="#ca8a04" opacity="0.40" transform="rotate(38 148 224)">
+      <animate attributeName="opacity" values="0.40;0.65;0.40" dur="3s" repeatCount="indefinite" begin="0.4s"/>
+    </ellipse>
+
+    <!-- Meridional reflections — 3.4 Å signal (top and bottom) -->
+    <ellipse cx="210" cy="72" rx="24" ry="10" fill="#0d9488" opacity="0.75">
+      <animate attributeName="opacity" values="0.75;1;0.75" dur="2.2s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="210" cy="248" rx="24" ry="10" fill="#0d9488" opacity="0.75">
+      <animate attributeName="opacity" values="0.75;1;0.75" dur="2.2s" repeatCount="indefinite" begin="0.5s"/>
+    </ellipse>
+
+    <!-- Equatorial reflections — phosphate/diameter signal -->
+    <ellipse cx="115" cy="160" rx="16" ry="8" fill="#0d9488" opacity="0.60">
+      <animate attributeName="opacity" values="0.60;0.90;0.60" dur="2.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="305" cy="160" rx="16" ry="8" fill="#0d9488" opacity="0.60">
+      <animate attributeName="opacity" values="0.60;0.90;0.60" dur="2.5s" repeatCount="indefinite" begin="0.4s"/>
+    </ellipse>
+    <ellipse cx="74" cy="160" rx="9" ry="5" fill="#0d9488" opacity="0.35"/>
+    <ellipse cx="346" cy="160" rx="9" ry="5" fill="#0d9488" opacity="0.35"/>
+
+    <!-- Beam stop / central block -->
+    <ellipse cx="210" cy="160" rx="10" ry="10" fill="#010306" stroke="#ca8a0430" stroke-width="0.8"/>
+
+    <!-- Layer lines — horizontal faint bands -->
+    <line x1="60" y1="116" x2="360" y2="116" stroke="#0d948818" stroke-width="6"/>
+    <line x1="60" y1="204" x2="360" y2="204" stroke="#0d948818" stroke-width="6"/>
+    <line x1="60" y1="136" x2="360" y2="136" stroke="#0d948812" stroke-width="3"/>
+    <line x1="60" y1="184" x2="360" y2="184" stroke="#0d948812" stroke-width="3"/>
+
+    <!-- Label overlay -->
+    <text x="210" y="16" fill="#ca8a04" font-family="monospace" font-size="9" text-anchor="middle" opacity="0.6" letter-spacing="3">PHOTO 51</text>
+    <text x="210" y="28" fill="#ca8a04" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.4" letter-spacing="2">B-FORM DNA · MAY 1952 · R.E.FRANKLIN</text>
+
+    <!-- Year stamp -->
+    <text x="356" y="300" fill="#0d9488" font-family="monospace" font-size="8" text-anchor="end" opacity="0.4">100h EXPOSURE</text>
+
+    <!-- Slow gold pulse from center — the helix signal -->
+    <circle cx="210" cy="160" r="15" fill="none" stroke="#ca8a04" stroke-width="0.8">
+      <animate attributeName="r" values="15;155" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.8 1"/>
+      <animate attributeName="opacity" values="0.5;0" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="210" cy="160" r="15" fill="none" stroke="#ca8a04" stroke-width="0.8">
+      <animate attributeName="r" values="15;155" dur="5s" repeatCount="indefinite" begin="2.5s" calcMode="spline" keySplines="0.4 0 0.8 1"/>
+      <animate attributeName="opacity" values="0.5;0" dur="5s" repeatCount="indefinite" begin="2.5s"/>
+    </circle>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Rosalind Franklin Series &mdash; Volume 3</p>
+  <h1>The Long <em>Afterlife</em></h1>
+  <p class="hero-sub">The Nobel Prize she never received. The book that caricatured her. The slow, still-continuing restoration of what she actually did.</p>
+  <p class="hero-dates">1958 — Present</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: THE NOBEL -->
+  <section id="nobel">
+    <div class="container">
+      <p class="kick">October 1962 — Stockholm</p>
+      <h2>The Prize She Could Not Receive</h2>
+      <p>On October 18, 1962, the Nobel Assembly at Karolinska Institutet announced that the Nobel Prize in Physiology or Medicine would be awarded jointly to Francis Harry Compton Crick, James Dewey Watson, and Maurice Hugh Frederick Wilkins — "for their discoveries concerning the molecular structure of nucleic acids and its significance for information transfer in living material." The announcement was received, in most quarters, as long-overdue recognition of one of the century's greatest scientific discoveries. Four years had passed since the prize was last awarded for directly related work.</p>
+      <p>Rosalind Franklin had been dead for four years. The Nobel Prize in Physiology or Medicine — like all Nobel Prizes — cannot be awarded posthumously. The rules of the Nobel Foundation, established in 1974, made this explicit, but the practice of not awarding posthumously substantially predates the written rule. Franklin died in April 1958. The Nobel was awarded in 1962. She missed eligibility by four years and five months.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">The Nobel Rule</p>
+        <p>The Nobel Prize may not be awarded posthumously except in cases where the laureate dies after the announcement but before the award ceremony. Franklin died in April 1958. Watson, Crick, and Wilkins were awarded the prize in October 1962. There is no mechanism — then or now — to award the prize to Franklin. She is ineligible not because her contribution was insufficient, but because she is dead.</p>
+      </div>
+
+      <p>In his Nobel lecture, Watson did not mention Franklin's name. Crick's lecture mentioned her work obliquely. Wilkins acknowledged her contributions most directly — he noted that "without her observations and careful measurements at the start of the project, we would have had no basis for our model." It was more than Watson offered. It was far less than an adequate acknowledgment of Photo 51.</p>
+      <p>The Nobel Prize could accommodate four laureates in a single category — it has been awarded to three multiple times. Four would have been unusual but not unprecedented. Whether the committee knew the extent of Franklin's contribution, and whether they considered her, is not fully known. What is known is that Franklin's role was not prominently discussed in the nominations or the deliberations that have been made public.</p>
+
+      <blockquote class="pull gold-pull">
+        <p>"It would be wrong to suggest that Rosalind Franklin was robbed of the Nobel Prize. It would be equally wrong to suggest that the Prize accurately reflects the magnitude of her contribution."</p>
+        <cite>— Brenda Maddox, biographer, <em>Rosalind Franklin: The Dark Lady of DNA</em> (2002)</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE DOUBLE HELIX -->
+  <section id="double-helix-book">
+    <div class="container">
+      <p class="kick">1968 — Watson's Account</p>
+      <h2>The Book That Shaped the Myth</h2>
+      <p>James Watson's memoir <em>The Double Helix: A Personal Account of the Discovery of the Structure of DNA</em> was published by Atheneum in 1968. It was a bestseller. It is still in print. It was, at the time, hailed as an unusually honest account of how science actually works — competitive, messy, driven by personality and ambition as much as by pure intellectual curiosity. It remains one of the most widely read books about scientific discovery ever published.</p>
+      <p>It also contains one of the most influential caricatures in the history of science. Watson's portrayal of Franklin — as "Rosy," a nickname she hated and was never called by anyone she worked with; as dark, difficult, unfeminine, methodologically rigid, someone to be managed and worked around rather than collaborated with — entered public consciousness as a broadly credible portrait. Watson was there. He was the narrator. He was witty and self-deprecating about his own flaws. The framing worked.</p>
+      <p>The portrait was substantially false. The evidence for this is extensive: the testimony of Anne Sayre, who knew Franklin personally; the testimony of Aaron Klug, who worked with her for five years at Birkbeck; the testimony of colleagues from Paris who had maintained friendships with her for a decade; and most importantly, the primary record — Franklin's own papers, letters, and notebooks, which show a scientist of extraordinary precision and rigor who was functioning effectively in a difficult institutional environment, not the obstinate anti-helix obstructionist of Watson's account.</p>
+
+      <div class="highlight-box teal-box">
+        <p class="hb-label">The "Rosy" Problem</p>
+        <p>No one who worked with Rosalind Franklin called her "Rosy." Her friends called her Rosalind. Her family called her Ros. Watson's use of "Rosy" — a diminutive she would have found grating — was not an incidental detail. It positioned her as someone to be patronized. Combined with Watson's extended commentary on her appearance and what he described as her failure to "make the best of herself," the portrait was less a description of a colleague than a dismissal of one.</p>
+      </div>
+
+      <h3>The Pre-Publication Drama</h3>
+      <p>Watson's book was controversial before it appeared. Francis Crick and Maurice Wilkins both objected to portions of it during pre-publication review — Crick primarily on grounds that it misrepresented the sequence of scientific reasoning, Wilkins that it portrayed him unflatteringly. The original publisher, Harvard University Press, declined to publish it after members of the Harvard faculty raised objections. Franklin's family, particularly her brother Colin, objected to the portrayal of Rosalind. None of these objections substantially altered the published text.</p>
+      <p>Anne Sayre, who had been a close friend of Franklin's, read the book and found it deeply wrong. She began what would become a seven-year project: a biography of Franklin that would correct Watson's account and restore the historical record. Sayre's book, <em>Rosalind Franklin and DNA</em>, published in 1975, was the first sustained public reappraisal of Franklin's role. It was written by a friend, not a scientist — Sayre was a novelist — and it was in places polemical. But its core argument was correct: Franklin had been misrepresented, and her contribution had been inadequately acknowledged.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE REAPPRAISAL -->
+  <section id="reappraisal">
+    <div class="container">
+      <p class="kick">1975 — Present</p>
+      <h2>The Slow Restoration</h2>
+      <p>The rehabilitation of Rosalind Franklin's reputation has been gradual, cumulative, and — as of the time this volume was written — substantially complete in the scientific community and substantially incomplete in popular culture. The scientific community now broadly understands that Photo 51 was central to the Watson-Crick model, that Franklin's data provided quantitative constraints the Cambridge group did not generate independently, and that the attribution in the 1953 papers was inadequate. Watson's caricature persists in popular imagination.</p>
+
+      <ul class="timeline">
+        <li><span class="tl-year">1958</span><span class="tl-event"><strong>Franklin dies.</strong> Her papers and notebooks remain at Birkbeck. Aaron Klug continues the virus work they had begun together.</span></li>
+        <li><span class="tl-year">1962</span><span class="tl-event"><strong>Watson, Crick, and Wilkins receive the Nobel.</strong> Franklin is not mentioned in Watson's lecture. The scientific community largely accepts the Nobel as a settled account of the discovery.</span></li>
+        <li><span class="tl-year">1968</span><span class="tl-event"><strong>Watson publishes <em>The Double Helix.</em></strong> "Rosy" enters public consciousness. The book is a bestseller and shapes how a generation understands the discovery of DNA's structure.</span></li>
+        <li><span class="tl-year">1975</span><span class="tl-event"><strong>Anne Sayre publishes <em>Rosalind Franklin and DNA.</em></strong> First sustained public argument for the inadequacy of Franklin's recognition. Based on personal knowledge and archival research. The reappraisal begins.</span></li>
+        <li><span class="tl-year">1982</span><span class="tl-event"><strong>Aaron Klug wins the Nobel Prize in Chemistry</strong> for the development of crystallographic electron microscopy and his structural elucidation of biologically important nucleic acid-protein complexes. His Nobel lecture is a detailed tribute to Franklin's role in work they began together.</span></li>
+        <li><span class="tl-year">1987</span><span class="tl-event"><strong>Klug publishes a detailed scientific account</strong> of Franklin's DNA work, including access to her laboratory notebooks. The notebooks confirm she was converging on the correct helical model independently.</span></li>
+        <li><span class="tl-year">2000</span><span class="tl-event"><strong>Rosalind Franklin University of Medicine and Science</strong> established in North Chicago, Illinois. Named in her honor — recognition of her status as a pioneering scientist.</span></li>
+        <li><span class="tl-year">2002</span><span class="tl-event"><strong>Brenda Maddox publishes <em>Rosalind Franklin: The Dark Lady of DNA.</em></strong> The most thorough biography to date. Access to Franklin's letters and papers. The portrait that emerges is of a complex, brilliant, professionally isolated woman whose scientific contribution was extraordinary and whose acknowledgment was inadequate.</span></li>
+        <li><span class="tl-year">2003</span><span class="tl-event"><strong>50th anniversary of the double helix.</strong> Major reassessment in scientific literature. The role of Franklin's data is now largely settled in the scholarly record.</span></li>
+        <li><span class="tl-year">2013</span><span class="tl-event"><strong>Crick's letters reveal</strong> his own view that Photo 51 was critical. "The X-ray evidence for the B structure, taken by Rosalind Franklin, was the crucial step."</span></li>
+        <li><span class="tl-year">2019</span><span class="tl-event"><strong>ESA Rosalind Franklin Mars Rover</strong> named in her honor. The ExoMars rover carries her name to the surface of Mars — scheduled to search for signs of life.</span></li>
+        <li><span class="tl-year">2023</span><span class="tl-event"><strong>Watson's honorary titles stripped</strong> by Cold Spring Harbor Laboratory, citing his public statements on race. The scientific community's view of the 1953 story has continued to evolve.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 4: KLUG AND THE CONTINUITY -->
+  <section id="klug">
+    <div class="container">
+      <p class="kick">The Continuation</p>
+      <h2>Aaron Klug: What She Started</h2>
+      <p>Aaron Klug's Nobel Prize in Chemistry in 1982 — awarded for "the development of crystallographic electron microscopy and his structural elucidation of biologically important nucleic acid-protein complexes" — is, in a precise sense, a continuation of the work Franklin began. The TMV structural work they did together at Birkbeck established the methodology and many of the fundamental results. The Nobel for structural crystallography of nucleic acid-protein complexes is, in significant part, a posthumous recognition of a research program that Franklin founded and led.</p>
+      <p>Klug was unambiguous about this in his Nobel lecture. He spoke at length about Franklin: her precision, her intellectual honesty, her refusal to overclaim, her extraordinary experimental ability. He described the collaboration as a genuine partnership. He described how she had established the fundamental framework for understanding helical virus structures that his subsequent work had extended and elaborated. He named her. He did what Watson had not done.</p>
+      <p>"Rosalind Franklin is often remembered primarily in the context of the DNA story," Klug said. "But her work on the tobacco mosaic virus and on other viruses was, if anything, more complete. She finished what she began. I have spent much of my career finishing what she began with me."</p>
+
+      <blockquote class="pull">
+        <p>"She saw things precisely and described them precisely. She was not given to speculation — she believed the data should speak. And when the data spoke, it said exactly what she reported."</p>
+        <cite>— Aaron Klug, Nobel Lecture, Stockholm, December 1982</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE SCIENCE SHE FOUNDED -->
+  <section id="science">
+    <div class="container">
+      <p class="kick">The Downstream</p>
+      <h2>Everything That Followed</h2>
+      <p>The double helix structure of DNA, whose critical dimensional parameters were read from Franklin's diffraction pattern, is the foundation of molecular biology. It is not an exaggeration to say that the entire edifice of modern genetics, genomics, and genetic medicine rests on the structural insight encoded in Photo 51.</p>
+
+      <div class="card-grid">
+        <div class="card gold-card">
+          <p class="card-label">Molecular Biology</p>
+          <p class="card-title">The Central Dogma</p>
+          <p>DNA to RNA to protein. The flow of genetic information — the "central dogma" articulated by Crick — is only comprehensible once you understand DNA's double-stranded structure. Each strand is a template for its complement. This is visible in the photograph.</p>
+        </div>
+        <div class="card gold-card">
+          <p class="card-label">Genomics</p>
+          <p class="card-title">Sequencing the Genome</p>
+          <p>The Human Genome Project, completed in 2003 — fifty years after Photo 51 — sequenced all 3 billion base pairs of human DNA. The base-pairing rules that make sequencing possible are directly derived from the helical structure Franklin measured.</p>
+        </div>
+        <div class="card gold-card">
+          <p class="card-label">Gene Editing</p>
+          <p class="card-title">CRISPR-Cas9</p>
+          <p>CRISPR gene editing, which won the 2020 Nobel Prize in Chemistry, exploits the double-stranded structure of DNA to find and cut specific sequences with precision. The guide RNA finds its target by complementary base-pairing — the same pairing visible in Photo 51's geometry.</p>
+        </div>
+        <div class="card gold-card">
+          <p class="card-label">Medicine</p>
+          <p class="card-title">Genetic Medicine</p>
+          <p>Cancer diagnostics, inherited disease screening, mRNA vaccines, gene therapy — the entire field of genetic medicine begins with understanding that DNA is a double helix with specific, measurable geometry. That geometry was first clearly seen in Franklin's camera.</p>
+        </div>
+      </div>
+
+      <p>The chain of consequence runs from a laboratory at King's College London in May 1952 — a carefully controlled DNA fiber, a precisely calibrated X-ray beam, 100 hours of exposure time, a film plate — to every genetic medicine administered in every hospital in the world today. The photograph that encodes all of this is stored in the archives. Rosalind Franklin took it at age thirty-one. She died at thirty-seven. She never knew any of this would happen.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 6: IN HER OWN WORDS AND HONORS -->
+  <section id="honors">
+    <div class="container">
+      <p class="kick">What Remains</p>
+      <h2>Her Name on Things That Matter</h2>
+      <p>The retrospective honoring of Rosalind Franklin has accelerated since 2000. A partial accounting of the institutions, ships, and instruments bearing her name illustrates how completely the scientific community has revised its assessment of her significance.</p>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <span class="stat-num">2000</span>
+          <span class="stat-desc">Rosalind Franklin University of Medicine and Science founded in Illinois</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2019</span>
+          <span class="stat-desc">ESA Rosalind Franklin Mars rover named — ExoMars mission to search for life</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2020</span>
+          <span class="stat-desc">New £50 note features Alan Turing; campaign continues for Franklin on currency</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">37</span>
+          <span class="stat-desc">Her age at death — the career cut short before its full flowering</span>
+        </div>
+      </div>
+
+      <p>The Rosalind Franklin Institute, established by the UK Research and Innovation agency in 2019 at the Harwell Campus in Oxfordshire, focuses on the development of new technologies for life science research — X-ray imaging, cryo-electron microscopy, mass spectrometry. It is named for a scientist who spent her career mastering the use of precisely these techniques. The naming is not coincidental.</p>
+      <p>There is a building at Newnham College Cambridge named for her. There is a building at King's College London named for her. There is a crater on Venus named for her — designated Ranklin by the International Astronomical Union. There are scholarships, fellowships, lectureships, and prizes at institutions across the world that carry her name.</p>
+
+      <blockquote class="pull gold-pull">
+        <p>"Science and everyday life cannot and should not be separated. Science, for me, gives a partial explanation of life. In so far as it goes, it is based on fact, experience and experiment."</p>
+        <cite>— Rosalind Franklin, letter to her father, 1940</cite>
+      </blockquote>
+
+      <p>She wrote that letter at nineteen, during her first year at Cambridge. It is the sentence most often quoted from her correspondence — not because it is the most technically sophisticated thing she wrote, but because it captures something essential: a refusal to segregate the intellectual from the lived, the scientific from the human. She believed science was not a domain separate from life but a way of understanding it. She held this belief in a context — a university that did not grant women degrees, a college that made women eat in separate rooms, a scientific community that used her work without adequate credit — that gave her every reason to retreat into pure technique as a way of avoiding the larger insults. She did not retreat. She kept making the argument.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 7: THE QUESTION THAT REMAINS -->
+  <section id="question">
+    <div class="container">
+      <p class="kick">Historical Reckoning</p>
+      <h2>What We Owe the Record</h2>
+      <p>There is a question that history does not have the tools to answer definitively: if Rosalind Franklin had lived — if the ovarian cancer had not arrived in 1956, if she had worked another twenty or thirty years — what would she have done? Her trajectory at Birkbeck suggests she would have extended the structural virology work to animal viruses, to more complex macromolecular assemblies, possibly to the intersection of structure and function in biological systems. Klug, working in the tradition they established together, won the Nobel in 1982. A living Franklin, working alongside him, would likely have shared it.</p>
+      <p>The structure of the Nobel Prize system means she was not robbed by the Nobel committee in 1962. She was not eligible. The system does not punish women; it simply does not accommodate scientists who die young. But the history of how her work was used — seen, measured, encoded in an image taken with her instrument and her technique, shown to Watson without her knowledge, incorporated into a model that bore no primary attribution to her — is a history that the scientific community has spent sixty years slowly, imperfectly coming to terms with.</p>
+      <p>The terms of that reckoning are still being negotiated. Watson's published statements on race in the 2000s led to his honorary titles being stripped. His account of DNA's discovery has been substantially revised by scholarship. Crick's later acknowledgments have been noted. The historical record has been substantially corrected. The popular myth lags. The work of people like Anne Sayre and Brenda Maddox and Aaron Klug — arguing, in different registers, for a more accurate account — has cumulatively moved the understanding of what happened in a laboratory in King's College London in May 1952.</p>
+      <p>What happened was: a scientist prepared a DNA fiber with extraordinary care, mounted it in a humidity-controlled camera, fired X-rays at it for one hundred hours, and developed the film. The image that appeared on the film encoded the structure of the molecule that carries the information for all living things. She measured the image. She extracted the numbers. The numbers were correct. The structure was there, waiting in the pattern she had made it possible to see.</p>
+      <p>Her name was Rosalind Franklin. The photograph was Photo 51. The structure was the double helix.</p>
+
+      <blockquote class="pull">
+        <p>"All the DNA work at King's was a bit of a disaster, as far as scientific progress was concerned... Rosalind Franklin's departure opened the way for Crick and Watson to complete their famous paper."</p>
+        <cite>— This version of events, common in the 1960s and 1970s, has been substantially revised. Franklin's work was not a disaster. It was the foundation.</cite>
+      </blockquote>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="container">
+    <p class="col-attr">
+      ROOT0-ATTRIBUTION-v1.0<br/>
+      David Lee Wise / ROOT0 / TriPod LLC<br/>
+      Rosalind Franklin Series — Volume 3: Legacy<br/>
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a> — Share freely, do not modify without attribution
+    </p>
+    <div class="col-lic">CC-BY-ND-4.0 | ROOT0 | TriPod LLC</div>
+  </div>
+</footer>
+
+</body>
+</html>

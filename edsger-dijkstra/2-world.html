@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edsger W. Dijkstra — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050810;
+    --card:#0a0f1e;
+    --card2:#0f1524;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(234,88,12,0.18);
+    --lineb:rgba(29,78,216,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(234,88,12,0.018) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--orange);color:#fff;}
+
+  /* typography */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--orange);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.blue{background:var(--blue);}
+
+  /* masthead */
+  .mast{border-bottom:3px solid var(--orange);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7.5vw,76px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--orange);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* EWD document stack animation */
+  @keyframes pageFlip{
+    0%,100%{transform:translateY(0) rotate(-1deg);}
+    25%{transform:translateY(-4px) rotate(0.5deg);}
+    50%{transform:translateY(-2px) rotate(-0.5deg);}
+    75%{transform:translateY(-6px) rotate(1deg);}
+  }
+  @keyframes penWrite{
+    0%,100%{stroke-dashoffset:180;}
+    60%{stroke-dashoffset:0;}
+  }
+  @keyframes pageShuffle{
+    0%,100%{transform:translateX(0) translateY(0);}
+    33%{transform:translateX(-3px) translateY(-2px);}
+    66%{transform:translateX(2px) translateY(-4px);}
+  }
+  @keyframes inkFlow{
+    0%{stroke-dashoffset:120;opacity:0;}
+    20%{opacity:1;}
+    80%{stroke-dashoffset:0;opacity:1;}
+    100%{stroke-dashoffset:0;opacity:0;}
+  }
+  .doc-stack{animation:pageShuffle 4s ease-in-out infinite;}
+  .doc-page1{animation:pageFlip 5s ease-in-out infinite;}
+  .doc-page2{animation:pageFlip 5s ease-in-out 0.8s infinite;}
+  .ink-line{stroke-dasharray:120;animation:inkFlow 3s ease-in-out 1s infinite;}
+  @media(prefers-reduced-motion:reduce){
+    .doc-stack,.doc-page1,.doc-page2,.ink-line{animation:none;stroke-dashoffset:0;opacity:1;}
+  }
+
+  /* layout */
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--orange);}
+  .card.blue-hover:hover{box-shadow:5px 5px 0 var(--blue);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:2px 7px;margin-top:5px;}
+
+  /* block / blockquote */
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.blue{border-color:var(--lineb);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  /* timeline */
+  .timeline{list-style:none;padding:0;margin:0;}
+  .timeline li{position:relative;padding:10px 0 10px 62px;border-bottom:1px solid var(--line);font-size:14.5px;color:#b0bcd4;line-height:1.5;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline li .yr{position:absolute;left:0;top:11px;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:0.04em;}
+  .timeline li b{color:var(--ink);font-weight:500;}
+
+  /* two-column layout for wider sections */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+  /* person row */
+  .person-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:#a0adc4;}
+  .person-row:last-child{border-bottom:none;}
+  .person-row .p-name{font-family:"Cinzel";font-weight:600;font-size:14px;color:var(--ink);min-width:180px;}
+  .person-row .p-role{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);display:block;margin-top:2px;}
+  .person-row .p-desc{flex:1;line-height:1.55;}
+
+  /* colophon */
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  /* nav */
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--orange);color:#fff;}
+  .vol-nav a.current{background:var(--orange);color:#fff;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">dijkstra series · volume 2 · his world</span>
+    <div class="masthead">
+      <div>
+        <h1>The<br><em>World</em></h1>
+        <p class="dek">
+          Post-war Netherlands rebuilding. Amsterdam as an early computing center.
+          The GOTO wars. Eindhoven and the Dutch computing scene.
+          <b>1,300 handwritten memos</b> distributed by post, by hand, to colleagues around the world.
+        </p>
+      </div>
+
+      <!-- EWD document stack SVG -->
+      <svg class="art" width="220" height="200" viewBox="0 0 220 200" role="img" aria-label="animated stack of EWD handwritten memos — the Edsger W. Dijkstra document series">
+        <rect width="220" height="200" fill="#0a0f1e" rx="3"/>
+
+        <!-- Background stack of documents -->
+        <g opacity="0.35">
+          <rect x="28" y="44" width="120" height="150" fill="#111827" stroke="rgba(234,88,12,0.3)" stroke-width="1" rx="2" transform="rotate(-5,88,119)"/>
+          <rect x="32" y="40" width="120" height="150" fill="#111827" stroke="rgba(234,88,12,0.3)" stroke-width="1" rx="2" transform="rotate(-2,92,115)"/>
+        </g>
+
+        <!-- Main EWD document (top) -->
+        <g class="doc-page1">
+          <rect x="36" y="36" width="122" height="154" fill="#0f1524" stroke="rgba(234,88,12,0.5)" stroke-width="1.5" rx="2"/>
+          <!-- ruled lines on paper -->
+          <g stroke="rgba(29,78,216,0.15)" stroke-width="0.75">
+            <line x1="44" y1="62" x2="150" y2="62"/>
+            <line x1="44" y1="74" x2="150" y2="74"/>
+            <line x1="44" y1="86" x2="150" y2="86"/>
+            <line x1="44" y1="98" x2="150" y2="98"/>
+            <line x1="44" y1="110" x2="150" y2="110"/>
+            <line x1="44" y1="122" x2="150" y2="122"/>
+            <line x1="44" y1="134" x2="150" y2="134"/>
+            <line x1="44" y1="146" x2="150" y2="146"/>
+            <line x1="44" y1="158" x2="150" y2="158"/>
+            <line x1="44" y1="170" x2="150" y2="170"/>
+          </g>
+          <!-- EWD header block -->
+          <rect x="36" y="36" width="122" height="22" fill="rgba(234,88,12,0.08)" rx="2"/>
+          <!-- EWD label -->
+          <text x="46" y="50" font-family="Space Mono,monospace" font-size="9" font-weight="700" fill="rgba(234,88,12,0.9)" letter-spacing="0.15em">EWD</text>
+          <text x="100" y="50" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.6)">DIJKSTRA</text>
+          <text x="148" y="50" text-anchor="end" font-family="Space Mono,monospace" font-size="8" fill="rgba(29,78,216,0.7)">698</text>
+
+          <!-- Handwriting simulation lines (varying lengths to mimic text) -->
+          <g stroke="rgba(234,88,12,0.5)" stroke-width="1" stroke-linecap="round">
+            <line x1="44" y1="68" x2="138" y2="68"/>
+            <line x1="44" y1="80" x2="110" y2="80"/>
+            <line x1="44" y1="92" x2="145" y2="92"/>
+            <line x1="44" y1="104" x2="120" y2="104"/>
+            <line x1="44" y1="116" x2="130" y2="116"/>
+          </g>
+          <!-- animated ink writing in progress -->
+          <path class="ink-line" d="M44,128 L140,128 M44,140 L115,140 M44,152 L135,152" stroke="rgba(234,88,12,0.85)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+        </g>
+
+        <!-- Second doc behind, peeking out -->
+        <g class="doc-page2" opacity="0.6">
+          <rect x="158" y="44" width="50" height="70" fill="#0f1524" stroke="rgba(234,88,12,0.3)" stroke-width="1" rx="1"/>
+          <text x="163" y="58" font-family="Space Mono,monospace" font-size="7" fill="rgba(234,88,12,0.6)" letter-spacing="0.1em">EWD</text>
+          <text x="163" y="68" font-family="Space Mono,monospace" font-size="7" fill="rgba(234,88,12,0.5)">1,318</text>
+          <g stroke="rgba(234,88,12,0.3)" stroke-width="0.75" stroke-linecap="round">
+            <line x1="163" y1="78" x2="202" y2="78"/>
+            <line x1="163" y1="86" x2="196" y2="86"/>
+            <line x1="163" y1="94" x2="204" y2="94"/>
+            <line x1="163" y1="102" x2="190" y2="102"/>
+          </g>
+        </g>
+
+        <!-- Fountain pen -->
+        <g transform="rotate(-30,190,145)">
+          <rect x="176" y="130" width="24" height="6" fill="rgba(29,78,216,0.7)" rx="1"/>
+          <rect x="172" y="131" width="6" height="4" fill="#2a3a5c" rx="0.5"/>
+          <polygon points="172,131 168,135 172,135" fill="rgba(234,88,12,0.8)"/>
+          <rect x="198" y="129" width="4" height="8" fill="rgba(29,78,216,0.5)" rx="1"/>
+        </g>
+
+        <!-- label -->
+        <text x="4" y="196" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.4)" letter-spacing="0.08em">EWD ARCHIVE · 1,318 MEMOS · 1958–2002</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-algorithm.html">1 · Algorithm</a>
+    <a href="2-world.html" class="current">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <!-- POST-WAR NETHERLANDS -->
+  <div class="band reveal" style="animation-delay:.05s">Post-War Netherlands</div>
+  <p class="body-text reveal" style="animation-delay:.08s">
+    Dijkstra grew up in a Netherlands that had been humiliated and occupied — Rotterdam bombed flat in 1940, the country liberated only in May 1945 — and that was now rebuilding itself with characteristic Dutch practicality and determination. This was not a country for nostalgia. The rebuilt Rotterdam, rising from rubble, would become one of Europe's great modernist cities. The Netherlands would become one of the world's most prosperous and technically sophisticated societies.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.10s">
+    Computing fitted the Dutch national character: precise, pragmatic, resistant to nonsense, interested in systems that worked reliably. The Mathematisch Centrum in Amsterdam, founded in 1946 as a research institute for mathematics and computer science, became one of Europe's first serious computing centers. It was here that Dijkstra came to work in 1952, and it was here that European computing — if there was such a thing as a European tradition — began to develop its own distinct character.
+  </p>
+
+  <div class="pull reveal" style="animation-delay:.12s">
+    "I think the letterhead matters; the title matters; the paper matters. What is the use of a beautiful building if one cannot afford the proper stationery?"
+    — Edsger W. Dijkstra, on why he handwrote and photocopied the EWDs rather than using a word processor
+  </div>
+
+  <!-- THE MATHEMATISCH CENTRUM -->
+  <div class="band blue reveal" style="animation-delay:.14s">The Mathematisch Centrum, Amsterdam</div>
+  <p class="body-text reveal" style="animation-delay:.16s">
+    The Mathematisch Centrum — now CWI, Centrum Wiskunde & Informatica — was one of a small number of institutions in Europe that took computing seriously as a research discipline from the very beginning. It had a computer — the ARRA, a Dutch-built machine — and it had mathematicians willing to think rigorously about what computing was and could be. This was the environment in which Dijkstra learned to program and in which he began to ask the questions that would define his career.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.18s">
+    The early computing community was tiny. The people doing serious work could fit in a conference room — and often did. Dijkstra was in contact with British computing pioneers (he spent time in Cambridge), with the ALGOL committee, and with the small international network of people who were trying to understand what programs were. This smallness mattered: ideas spread quickly, controversy was personal and direct, and there was no insulating layer of management or academic politics between thinkers.
+  </p>
+
+  <!-- WORLD CONTEXT CARDS -->
+  <div class="grid reveal" style="animation-delay:.20s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>The EDSAC and Early Machines</h3>
+      <p class="what">The EDSAC at Cambridge (1949), the ENIAC at Penn (1945), the Manchester Baby (1948). By the time Dijkstra arrived at the Mathematisch Centrum, these machines existed but programming them was still entirely artisanal.</p>
+      <span class="tag">1945–1952</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>The ARRA</h3>
+      <p class="what">The Dutch Automatische Relais Rekenmachine — a relay-based calculator built by the Mathematisch Centrum. The machine on which Dijkstra learned to program. Slow, mechanical, lovingly unreliable.</p>
+      <span class="tag">Amsterdam</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>Post-War Reconstruction</h3>
+      <p class="what">Rotterdam rebuilt in steel and glass. The Netherlands, once devastated, becomes a model of European technical and economic recovery. A context that rewarded precision and practicality.</p>
+      <span class="tag">1945–1960</span>
+    </div>
+    <div class="card blue-hover">
+      <span class="num">04</span>
+      <h3>The Cold War Context</h3>
+      <p class="what">Unlike many of his contemporaries, Dijkstra had no significant involvement with military computing. He was not at Los Alamos. He was thinking about what programs could mean — not what weapons they could guide.</p>
+      <span class="tag">Distinction</span>
+    </div>
+  </div>
+
+  <!-- ALGOL 60 -->
+  <div class="band reveal" style="animation-delay:.22s">ALGOL 60 — The Language That Changed Everything</div>
+  <p class="body-text reveal" style="animation-delay:.24s">
+    In the late 1950s, an international committee of European and American computer scientists set out to design a universal algorithmic language — a common notation for describing algorithms that could be implemented on any machine. The result was ALGOL 60: a language that introduced block structure, recursive procedures, and pass-by-value and pass-by-name parameter conventions. It was, by the standards of its time, a masterpiece of design.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.26s">
+    Dijkstra was a contributor to ALGOL 60 and wrote the first ALGOL 60 compiler — for the Electrologica X1, a Dutch machine. This was not a small matter. Compiling ALGOL 60 required solving problems — particularly around recursive procedures and dynamic memory allocation — that nobody had solved before. Dijkstra solved them. The techniques he used (particularly for handling recursive procedure calls on a stack) became standard and are still the basis of compiler design today.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.28s">
+    ALGOL 60 was also the language that made Dijkstra's career-long argument about structured programming concrete. Here was a language with proper block structure, proper scope, proper procedure calls. GOTO still existed in it — but now you could see what a program without GOTO would look like. The structured programming debate was, in part, a debate about whether to follow ALGOL's good instincts all the way to their logical conclusion.
+  </p>
+
+  <!-- THE GOTO WARS -->
+  <div class="band orange reveal" style="animation-delay:.30s">The GOTO Wars</div>
+  <p class="body-text reveal" style="animation-delay:.32s">
+    When Dijkstra's letter "Go To Statement Considered Harmful" appeared in CACM in March 1968, the response was extraordinary. For modern readers, accustomed to structured programming as the only option and GOTO as a historical curiosity, it is difficult to appreciate how controversial this was. The GOTO was not just a programming convenience — it was, for many programmers, the tool that made efficient code possible. Dijkstra was telling an entire profession that they had been thinking badly.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.34s">
+    The counterattacks came quickly. Letters to CACM disputed his argument. Frank Rubin's 1987 letter in the same journal, provocatively titled "'GOTO Considered Harmful' Considered Harmful," argued that there were legitimate uses for GOTO in real programs. Donald Knuth — arguably the other leading theorist of algorithms — wrote a more nuanced paper arguing that GOTO could sometimes be the clearest way to express certain control flows, and that the ban should not be absolute.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.36s">
+    Dijkstra was not persuaded. He had proved his point to his own satisfaction, and in his view, the counterarguments were largely motivated by inertia. What he found most irritating was not disagreement — he could respect a well-formed counterargument — but the assumption that existing practice was the standard against which his proposals should be measured. That, for him, was backwards. The question was not "what do programmers currently do?" but "what should programs be?"
+  </p>
+
+  <div class="block reveal" style="animation-delay:.38s">
+    <blockquote>
+      "It is practically impossible to teach good programming to students that have had a prior exposure to BASIC: as potential programmers they are mentally mutilated beyond hope of regeneration."
+      <cite>— Edsger W. Dijkstra, EWD 498, "How Do We Tell Truths That Might Hurt?"</cite>
+    </blockquote>
+  </div>
+
+  <!-- EINDHOVEN -->
+  <div class="band blue reveal" style="animation-delay:.40s">Eindhoven — The Professor</div>
+  <p class="body-text reveal" style="animation-delay:.42s">
+    In 1962, Dijkstra was appointed professor of mathematics at Eindhoven University of Technology. He would spend more than twenty years there, and this period produced his most systematic work: the THE operating system, the semaphore, the Dining Philosophers, the guarded command language, and the predicate transformer calculus.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.44s">
+    Eindhoven was not a glamorous posting. It was a technical university in a provincial Dutch city, dominated by the electronics company Philips and by a culture of practical engineering. Dijkstra's appointment as a mathematician in a faculty of engineers put him in a permanently adversarial relationship with the institution — which suited him fine. He believed that engineers who did not understand mathematics were dangerous, and that programmers who did not understand proofs were dangerous, and that the most efficient way to make this argument was to demonstrate it by doing the mathematics.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.46s">
+    The Tuesday Afternoon Club — his seminar, held weekly — became legendary. Dijkstra would sit at the head of the table. A student or visiting colleague would present work. Dijkstra would listen in silence. Then he would ask one question. The question was always devastating in the best sense: it identified the point where the speaker's understanding had actually stopped, and where the interesting problem actually began. Colleagues described these sessions as among the most intellectually intense experiences of their careers.
+  </p>
+
+  <!-- KEY FIGURES IN HIS WORLD -->
+  <div class="band reveal" style="animation-delay:.48s">The People Around Him</div>
+  <div class="block reveal" style="animation-delay:.50s">
+    <div class="person-row">
+      <div>
+        <span class="p-name">Adriaan van Wijngaarden</span>
+        <span class="p-role">Mentor · Mathematisch Centrum</span>
+      </div>
+      <div class="p-desc">Director of the computing department at the MC. Persuaded Dijkstra that programming was a legitimate scientific career. Supervised the ALGOL project. Described by Dijkstra as the most intellectually rigorous person he had ever met.</div>
+    </div>
+    <div class="person-row">
+      <div>
+        <span class="p-name">Niklaus Wirth</span>
+        <span class="p-role">Colleague · ALGOL / Pascal</span>
+      </div>
+      <div class="p-desc">Swiss computer scientist; designed Pascal and later Oberon. Wirth and Dijkstra shared the view that programming languages should enforce discipline. Wirth added the famous title "Considered Harmful" to Dijkstra's 1968 letter when Wirth was editor of CACM.</div>
+    </div>
+    <div class="person-row">
+      <div>
+        <span class="p-name">C.A.R. (Tony) Hoare</span>
+        <span class="p-role">Ally · Structured Programming</span>
+      </div>
+      <div class="p-desc">British computer scientist; invented Quicksort; developed Hoare Logic for program verification. Hoare and Dijkstra were natural allies in the structured programming movement. Hoare's axiomatic semantics and Dijkstra's predicate transformers are complementary frameworks.</div>
+    </div>
+    <div class="person-row">
+      <div>
+        <span class="p-name">Donald Knuth</span>
+        <span class="p-role">Peer — sometimes adversary</span>
+      </div>
+      <div class="p-desc">Author of <em>The Art of Computer Programming</em>. Broadly agreed with Dijkstra's goals but took a more measured view of GOTO. Their relationship was respectful but intellectually tense. Dijkstra thought Knuth was too willing to accommodate bad practice for the sake of performance.</div>
+    </div>
+    <div class="person-row">
+      <div>
+        <span class="p-name">Ria Debets Dijkstra</span>
+        <span class="p-role">Wife · Companion</span>
+      </div>
+      <div class="p-desc">Maria (Ria) Debets, a colleague in computing, became Dijkstra's wife in 1957. She accompanied him to Austin and back. By accounts she provided the domestic stability that enabled his intellectual severity — a warmth that his professional persona did not always display.</div>
+    </div>
+  </div>
+
+  <!-- HANDWRITTEN EWDS -->
+  <div class="band orange reveal" style="animation-delay:.52s">The EWD System — A Deliberate Choice</div>
+  <p class="body-text reveal" style="animation-delay:.54s">
+    Dijkstra began writing the EWDs — Edsger W. Dijkstra memos — in the early 1960s. He wrote them by hand, in his distinctive small cursive, on lined paper. He photocopied them himself. He maintained a list of recipients around the world — colleagues, former students, computing researchers — and mailed the copies to them. No email. No word processor. No publishing intermediary.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.56s">
+    He had a specific reason for the handwriting: it made him slow down. Word processors allowed you to produce prose quickly, revise endlessly, never commit to a formulation. Dijkstra believed that the discipline of handwriting forced precision — you thought a sentence through before writing it, because revision was costly. The EWDs are accordingly spare, exact, and without wasted words.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.58s">
+    By the time he died in 2002, he had written EWD 0 through EWD 1318 — 1,318 documents, covering algorithms, programming methodology, mathematics, computing education, philosophy of science, academic culture, and occasional personal reflection. The entire archive is now held at the University of Texas at Austin and is freely available online. Scholars, students, and practicing programmers still read them.
+  </p>
+
+  <div class="grid reveal" style="animation-delay:.60s">
+    <div class="card">
+      <span class="num">~</span>
+      <h3>Hand Written</h3>
+      <p class="what">Every EWD written in fountain pen, by hand. No typewriter. No word processor. The slowness was not a limitation — it was a method. Precision in writing required precision in thinking.</p>
+      <span class="tag">Method</span>
+    </div>
+    <div class="card">
+      <span class="num">✉</span>
+      <h3>Photocopied and Mailed</h3>
+      <p class="what">Dijkstra maintained a distribution list of several hundred colleagues worldwide. He photocopied each EWD and posted them — physical paper — through international mail. A pre-internet open-access publishing system.</p>
+      <span class="tag">Distribution</span>
+    </div>
+    <div class="card blue-hover">
+      <span class="num">∑</span>
+      <h3>1,318 Documents</h3>
+      <p class="what">EWD 0 through EWD 1318. Four decades of continuous thought. The last was written in April 2002, four months before his death. Subject: teaching, and beauty. He never stopped.</p>
+      <span class="tag">Archive</span>
+    </div>
+    <div class="card blue-hover">
+      <span class="num">⌁</span>
+      <h3>Now Online</h3>
+      <p class="what">The complete EWD archive is digitized and hosted by the University of Texas at Austin at cs.utexas.edu. Freely available. Indexed. Still cited in papers. Still read by students who find, in his directness, something that modern technical writing has lost.</p>
+      <span class="tag">UT Austin</span>
+    </div>
+  </div>
+
+  <!-- UT AUSTIN -->
+  <div class="band blue reveal" style="animation-delay:.62s">Austin, Texas — The American Years</div>
+  <p class="body-text reveal" style="animation-delay:.64s">
+    In 1984, Dijkstra accepted the Schlumberger Centennial Chair in Computer Science at the University of Texas at Austin — one of the most prestigious endowed chairs in American computer science. He was sixty-four. He moved to Austin with his wife, and he spent the next fifteen years there.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.66s">
+    Austin was a shock in some ways. Texas was not Eindhoven. The culture was more expansive, more boisterous, less precise. Dijkstra kept his habits: he wrote EWDs by hand, he rode his bicycle, he held seminars that resembled interrogations. He found students who were eager and able, and he taught them. He also discovered, in the informality of American academic culture, a freedom he enjoyed: nobody in Austin expected him to be diplomatic.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.68s">
+    The Austin seminars — his "Tuesday Afternoon Clubs" transplanted to Texas — continued to be legendarily rigorous. One faculty colleague recalled that Dijkstra's questions in a seminar were so precisely aimed at the weakest point in an argument that some speakers were reduced to silence within minutes. He was not unkind. He was exact. In his view, the kindest thing you could do for a student or a colleague was to identify where their thinking actually stopped — not to congratulate them for the thinking they had done.
+  </p>
+  <div class="block reveal" style="animation-delay:.70s">
+    <blockquote>
+      "Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better."
+      <cite>— Edsger W. Dijkstra, EWD 1243</cite>
+    </blockquote>
+  </div>
+
+  <!-- TIMELINE OF THE WORLD AROUND HIM -->
+  <div class="band reveal" style="animation-delay:.72s">The World's Timeline</div>
+  <div class="block reveal" style="animation-delay:.74s">
+    <ul class="timeline">
+      <li><span class="yr">1945</span><b>ENIAC operational</b> — the first general-purpose electronic digital computer. Dijkstra is fifteen. The world has no idea what computing will become.</li>
+      <li><span class="yr">1949</span><b>EDSAC operational at Cambridge.</b> Maurice Wilkes builds one of the first stored-program computers in Europe. Dijkstra learns of it during his 1951 Cambridge visit.</li>
+      <li><span class="yr">1954</span><b>FORTRAN development begins</b> at IBM. The first high-level programming language. Dijkstra: FORTRAN was, at best, a useful accident.</li>
+      <li><span class="yr">1959</span><b>COBOL designed</b> by Grace Hopper and committee. Dijkstra would later write that its teaching "should be regarded as a criminal offense."</li>
+      <li><span class="yr">1960</span><b>ALGOL 60 report published.</b> Dijkstra wrote the first ALGOL 60 compiler. The language defines European computing's aesthetic for a generation.</li>
+      <li><span class="yr">1964</span><b>IBM System/360 announced.</b> Commercial computing scales up. The gap between industrial practice and Dijkstra's ideals begins to widen.</li>
+      <li><span class="yr">1968</span><b>NATO Software Engineering Conference, Garmisch.</b> The term "software engineering" coined. The "software crisis" declared. Dijkstra argues for mathematical rigor. Many attendees are skeptical.</li>
+      <li><span class="yr">1970s</span><b>The structured programming movement spreads.</b> BASIC and COBOL remain dominant in practice. Dijkstra becomes increasingly vocal about the failures of computing education.</li>
+      <li><span class="yr">1972</span><b>C language developed</b> at Bell Labs. Practical, powerful, full of GOTOs. Dijkstra did not approve.</li>
+      <li><span class="yr">1982</span><b>Commodore 64 ships with BASIC.</b> A generation of home programmers learns to program with GOTO. Dijkstra considers this a catastrophe.</li>
+      <li><span class="yr">1990s</span><b>Java rises.</b> Dijkstra critiques it as a language that teaches poor thinking habits. "Computer Science is not about computers, and it is not about science, and its name is unfortunate."</li>
+      <li><span class="yr">1999</span><b>Dijkstra retires</b> from UT Austin. Returns to Nuenen, Netherlands. Continues writing EWDs.</li>
+    </ul>
+  </div>
+
+  <!-- COLOPHON -->
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    dijkstra series · volume 2 · his world · amsterdam · eindhoven · austin<br>
+    "the tools we call 'programming languages' are still woefully inadequate"
+  </p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emmy Noether — Vol. 1: The Theorem | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0a0610;
+      --violet: #7c3aed;
+      --rose: #e11d48;
+      --dim: #140d20;
+      --mid: #221535;
+      --text: #d8cfe8;
+      --muted: #7a6a9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #07040dee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--violet);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--violet);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.8;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--dim);
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid var(--dim); }
+    nav.series-nav a:hover { color: var(--violet); background: #140d20; }
+    nav.series-nav a.active { color: var(--violet); border-bottom: 2px solid var(--violet); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 60% at 50% 40%, #7c3aed30 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.hero-anim {
+      width: min(480px, 94vw);
+      height: min(260px, 50vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 22px #7c3aed44);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--violet);
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #7c3aed44;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--rose); }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 600px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--violet);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--violet);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .band {
+      background: var(--violet);
+      color: #e8deff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── THEOREM BOX ── */
+    .theorem-box {
+      border: 1.5px solid var(--rose);
+      background: #1a0610;
+      padding: 2rem 2rem 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+    .theorem-box .thm-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--rose);
+      margin-bottom: 1rem;
+    }
+    .theorem-box .thm-statement {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .theorem-box .thm-formal {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: #c8b8e4;
+      line-height: 1.7;
+      border-top: 1px solid var(--mid);
+      padding-top: 1rem;
+      margin-top: 0.8rem;
+    }
+
+    /* ── SYMMETRY TABLE ── */
+    .sym-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8rem 0;
+      font-size: 0.9rem;
+    }
+    .sym-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--violet);
+      text-align: left;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--violet);
+      background: var(--dim);
+    }
+    .sym-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--dim);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .sym-table tr:hover td { background: #140d20; }
+    .sym-table td:first-child { color: var(--rose); font-family: 'Space Mono', monospace; font-size: 0.78rem; }
+    .sym-table td:nth-child(2) { color: #fff; }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--violet);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+    .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+    .card .card-arrow {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.6rem 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+    }
+    .card .arrow-sym { color: var(--rose); }
+    .card .arrow-con { color: var(--violet); }
+    .card .arrow-mid { color: var(--muted); }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--violet);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #130a1e;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #c8b8e4;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--violet);
+      background: #110820;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── RING DEFINITION ── */
+    .def-block {
+      border-left: 2px solid var(--rose);
+      padding: 0.8rem 1.2rem;
+      margin: 1.5rem 0;
+      background: #130010;
+    }
+    .def-block .def-term {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--rose);
+      margin-bottom: 0.4rem;
+    }
+    .def-block p { font-size: 0.92rem; color: var(--text); }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #070410;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--violet); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Emmy Noether</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-theorem.html" class="active">Vol. 1 — The Theorem</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Symmetry → Conservation Law diagram -->
+  <svg class="hero-anim" viewBox="0 0 480 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <marker id="arrowV" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+      </marker>
+      <marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#e11d48"/>
+      </marker>
+      <filter id="glow2">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Left: Symmetry side -->
+    <!-- Rotating shape (symmetry object) -->
+    <g filter="url(#glow2)">
+      <circle cx="110" cy="120" r="55" stroke="#7c3aed" stroke-width="1" fill="none" opacity="0.4"/>
+      <polygon points="110,70 148,97 135,142 85,142 72,97" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.9">
+        <animateTransform attributeName="transform" type="rotate" from="0 110 120" to="360 110 120" dur="8s" repeatCount="indefinite"/>
+      </polygon>
+      <polygon points="110,80 140,103 130,136 90,136 80,103" fill="none" stroke="#7c3aed" stroke-width="0.7" opacity="0.4">
+        <animateTransform attributeName="transform" type="rotate" from="0 110 120" to="-360 110 120" dur="12s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+    <circle cx="110" cy="120" r="4" fill="#7c3aed"/>
+
+    <!-- Left label -->
+    <text x="110" y="196" fill="#7c3aed" font-family="monospace" font-size="8" text-anchor="middle" letter-spacing="2" opacity="0.8">CONTINUOUS</text>
+    <text x="110" y="208" fill="#7c3aed" font-family="monospace" font-size="8" text-anchor="middle" letter-spacing="2" opacity="0.8">SYMMETRY</text>
+
+    <!-- Arrow (animating from left to right) -->
+    <line x1="185" y1="120" x2="295" y2="120" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowV)">
+      <animate attributeName="stroke-dasharray" values="0,120;120,0" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- Arrow label -->
+    <text x="240" y="110" fill="#c8b8e4" font-family="monospace" font-size="7.5" text-anchor="middle" letter-spacing="1.5" opacity="0.75">NOETHER'S</text>
+    <text x="240" y="148" fill="#c8b8e4" font-family="monospace" font-size="7.5" text-anchor="middle" letter-spacing="1.5" opacity="0.75">THEOREM</text>
+
+    <!-- Right: Conservation Law side -->
+    <g filter="url(#glow2)">
+      <!-- Conservation "constant" visualization: level bar -->
+      <rect x="320" y="80" width="110" height="14" rx="2" fill="#1a0610" stroke="#e11d48" stroke-width="1"/>
+      <rect x="320" y="80" width="110" height="14" rx="2" fill="#e11d48" opacity="0.85">
+        <animate attributeName="width" values="110;108;110;112;110" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;0.7;0.85" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="375" y="91" fill="#fff" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.9">CONSERVED</text>
+
+      <rect x="320" y="108" width="110" height="14" rx="2" fill="#1a0610" stroke="#e11d48" stroke-width="1"/>
+      <rect x="320" y="108" width="110" height="14" rx="2" fill="#e11d48" opacity="0.85">
+        <animate attributeName="width" values="110;111;109;110;110" dur="4.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;0.9;0.8;0.85" dur="4.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="375" y="119" fill="#fff" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.9">CONSERVED</text>
+
+      <rect x="320" y="136" width="110" height="14" rx="2" fill="#1a0610" stroke="#e11d48" stroke-width="1"/>
+      <rect x="320" y="136" width="110" height="14" rx="2" fill="#e11d48" opacity="0.85">
+        <animate attributeName="width" values="110;109;111;110;110" dur="3.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;0.75;0.9;0.85" dur="3.8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="375" y="147" fill="#fff" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.9">CONSERVED</text>
+
+      <rect x="320" y="164" width="110" height="14" rx="2" fill="#1a0610" stroke="#e11d48" stroke-width="1"/>
+      <rect x="320" y="164" width="110" height="14" rx="2" fill="#e11d48" opacity="0.85">
+        <animate attributeName="width" values="110;110;111;109;110" dur="5.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.85;0.88;0.8;0.85" dur="5.2s" repeatCount="indefinite"/>
+      </rect>
+      <text x="375" y="175" fill="#fff" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.9">CONSERVED</text>
+    </g>
+
+    <text x="375" y="208" fill="#e11d48" font-family="monospace" font-size="8" text-anchor="middle" letter-spacing="2" opacity="0.8">CONSERVATION</text>
+    <text x="375" y="220" fill="#e11d48" font-family="monospace" font-size="8" text-anchor="middle" letter-spacing="2" opacity="0.8">LAW</text>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Emmy Noether Series &mdash; Volume 1</p>
+  <h1>The <em>Theorem</em> & The Algebra</h1>
+  <p class="hero-sub">Every conservation law in physics is a symmetry in disguise. She proved it. Then she rebuilt the entire foundation of algebra.</p>
+  <p class="hero-dates">Noether's Theorem — 1915 &nbsp;·&nbsp; Abstract Algebra — 1920s</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: THE THEOREM -->
+  <section id="theorem">
+    <div class="container">
+      <p class="kick">1915 — The Deepest Theorem in Physics</p>
+      <h2>Noether's Theorem</h2>
+
+      <p>In 1915, David Hilbert was racing to formulate the general theory of relativity in mathematical terms. Einstein had the physics; Hilbert wanted the mathematics to match. There was a serious problem: energy conservation — one of the bedrock principles of classical physics — seemed to break down in general relativity. The mathematics produced a conservation law that looked trivial, that was automatically satisfied regardless of what was happening physically. Hilbert called Noether in because she was the best invariant theorist alive. She solved the problem, and in doing so she proved something of incomparably greater scope than the problem she was asked to solve.</p>
+
+      <div class="theorem-box">
+        <div class="thm-label">Noether's Theorem — 1915</div>
+        <div class="thm-statement">For every continuous symmetry of a physical system's action, there exists a corresponding conserved quantity.</div>
+        <div class="thm-formal">
+          If the action S = ∫L(q, q̇, t) dt is invariant under a continuous one-parameter group of transformations,<br/>
+          then there exists a conserved quantity Q such that dQ/dt = 0 along every physical trajectory.<br/><br/>
+          Equivalently: symmetry → conservation law (and every conservation law arises from some symmetry).
+        </div>
+      </div>
+
+      <p>The theorem has two parts, and both are remarkable. The first says: if you have a symmetry, you have a conservation law. The second says: if you have a conservation law, there is a symmetry behind it. Every conservation law in all of physics — every single one — is a Noether symmetry.</p>
+
+      <blockquote class="pull">
+        <p>"The theorem is one of the most important mathematical theorems ever proved in guiding the development of modern physics."</p>
+        <cite>— Leon M. Lederman &amp; Christopher T. Hill, Symmetry and the Beautiful Universe</cite>
+      </blockquote>
+
+      <h3>The Examples: Symmetry → Conservation</h3>
+      <p>The power of the theorem becomes vivid in its specific applications. Here are the canonical examples that make every physicist's jaw drop when they first encounter them:</p>
+
+      <table class="sym-table">
+        <thead>
+          <tr>
+            <th>Symmetry</th>
+            <th>Meaning</th>
+            <th>Conservation Law</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Time translation</td>
+            <td>The laws of physics are the same today as yesterday — the universe doesn't care when you run an experiment</td>
+            <td>Conservation of Energy</td>
+          </tr>
+          <tr>
+            <td>Spatial translation</td>
+            <td>The laws of physics are the same here as there — the universe doesn't care where you are</td>
+            <td>Conservation of Momentum</td>
+          </tr>
+          <tr>
+            <td>Rotational symmetry</td>
+            <td>The laws of physics are the same in every direction — the universe has no preferred orientation</td>
+            <td>Conservation of Angular Momentum</td>
+          </tr>
+          <tr>
+            <td>Gauge symmetry (U(1))</td>
+            <td>Electromagnetism is invariant under local phase rotations of the quantum field</td>
+            <td>Conservation of Electric Charge</td>
+          </tr>
+          <tr>
+            <td>Gauge symmetry (SU(2))</td>
+            <td>The weak nuclear force is invariant under local SU(2) rotations in isospin space</td>
+            <td>Conservation of Weak Isospin</td>
+          </tr>
+          <tr>
+            <td>Gauge symmetry (SU(3))</td>
+            <td>The strong nuclear force is invariant under local SU(3) color rotations</td>
+            <td>Conservation of Color Charge</td>
+          </tr>
+          <tr>
+            <td>CPT symmetry</td>
+            <td>Physics is invariant under combined charge conjugation, parity, and time reversal</td>
+            <td>CPT conservation (fundamental constraint on all QFT)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>The conservation of energy — the principle that has undergirded physics since Leibniz, the principle that makes perpetual motion machines impossible, the principle that connects the burning of coal to the motion of pistons — is, at its deepest level, simply the statement that physics does not change with time. Noether's theorem makes this precise.</p>
+
+      <div class="highlight-box">
+        <div class="hb-label">Why This Is The Deepest Result In Physics</div>
+        <p style="font-size:0.95rem; color:var(--text);">Before Noether, conservation laws were discovered experimentally, one by one — energy here, momentum there — and their connection to symmetry was noticed in fragments. After Noether, they are all one theorem. The Standard Model of particle physics — the most precisely tested theory in the history of science — is, structurally, an application of Noether's theorem to local gauge symmetries. Every time a particle accelerator confirms a predicted result, it is, in some sense, confirming Noether's theorem again.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: ABSTRACT ALGEBRA -->
+  <section id="algebra">
+    <div class="container">
+      <p class="kick">1920–1930 — Reformulating the Foundation</p>
+      <h2>The Algebraic Revolution</h2>
+      <p>The theorem is the result that physicists know. Mathematicians know something larger: Emmy Noether did not just prove a theorem. She rebuilt the entire conceptual architecture of algebra.</p>
+      <p>Before Noether, algebra was a collection of techniques — solving equations, manipulating polynomials, computing with matrices. It was powerful but fragmented. Different algebraic systems were studied separately, with different methods for each. Noether saw the common structure underneath. She shifted the field from computation to structure, from "how do we calculate this?" to "what kind of object is this, and what are its essential properties?"</p>
+      <p>The approach she established — studying algebraic structures abstractly, through their axioms and the relationships between their sub-structures — is still the standard approach today. Every graduate algebra course in the world is taught the way it is because of Emmy Noether.</p>
+
+      <h3>Noetherian Rings</h3>
+
+      <div class="def-block">
+        <div class="def-term">Definition: Noetherian Ring</div>
+        <p>A ring R is Noetherian if it satisfies the ascending chain condition on ideals: every ascending chain of ideals I₁ ⊆ I₂ ⊆ I₃ ⊆ … eventually stabilizes — there exists n such that Iₙ = Iₙ₊₁ = Iₙ₊₂ = …</p>
+      </div>
+
+      <p>This condition, which appears technical in isolation, turns out to be exactly the right condition for a vast range of algebraic theorems to hold. Most of the rings that appear naturally in mathematics — rings of integers, polynomial rings over fields, rings of algebraic integers — are Noetherian. The condition appears in algebraic geometry, commutative algebra, representation theory, and algebraic topology. It is one of the most productive structural conditions in all of mathematics.</p>
+
+      <h3>Ideal Theory and Ring Theory</h3>
+      <p>Noether's papers "Idealtheorie in Ringbereichen" (1921) and "Abstrakter Aufbau der Idealtheorie" (1927) are foundational documents of modern mathematics. In them, she establishes the abstract theory of ideals in rings — generalizing, unifying, and enormously extending the work of Dedekind and Hilbert. She shows that a ring in which every ideal is finitely generated (a Noetherian ring, though she did not use the term) has a structure theorem for its ideals analogous to the fundamental theorem of arithmetic: every ideal has a primary decomposition.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Noether 1921</div>
+          <div class="card-title">Idealtheorie in Ringbereichen</div>
+          <p>Establishes the theory of ideals in abstract rings. Primary decomposition theorem. The paper that defines Noetherian rings.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Noether 1927</div>
+          <div class="card-title">Abstrakter Aufbau der Idealtheorie</div>
+          <p>Continues and extends the structure theory. Brings the theory of algebraic number fields under the umbrella of abstract ring theory.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Noether 1929</div>
+          <div class="card-title">Hyperkomplexe Größen</div>
+          <p>The theory of non-commutative algebras. Establishes the connection between algebra and representation theory that still shapes the field.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Noether's School</div>
+          <div class="card-title">Moderne Algebra</div>
+          <p>Van der Waerden's 1930 textbook, written from her lectures. The book that spread the abstract algebraic approach worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: GALOIS THEORY & GR -->
+  <section id="galois-gr">
+    <div class="container">
+      <p class="kick">Further Contributions</p>
+      <h2>Galois Theory and General Relativity</h2>
+
+      <h3>Reformulating Galois Theory</h3>
+      <p>The classical Galois theory — the theory that connects the solvability of polynomial equations to the group structure of their roots — was understood, before Noether, as a body of results about polynomials and permutations. Noether reformulated it in terms of field extensions and their automorphism groups. This is now the standard formulation. Every modern algebra textbook presents Galois theory the way Noether understood it. The older formulation is of historical interest only.</p>
+      <p>The reformulation was not cosmetic. By putting the theory in terms of field extensions, Noether made visible connections to other parts of mathematics — to algebraic geometry, to number theory, to topology — that the older formulation obscured. Abstract algebra as a unified discipline became possible because Noether showed that the right concepts, defined at the right level of generality, connected everything.</p>
+
+      <h3>General Relativity: Fixing the Energy Problem</h3>
+      <p>The problem that Hilbert called her to Göttingen to solve — energy conservation in general relativity — was both a technical problem and a conceptual one. In Newtonian mechanics and in special relativity, energy conservation is a local conservation law: you can track energy flowing from point to point. In general relativity, this breaks down. The "conservation of energy" equation that came out of the formalism was what mathematicians call an identity — true for any solution, automatically, regardless of physics. It said nothing.</p>
+      <p>Noether's theorem resolved this by showing that the apparently trivial conservation law in GR is a consequence of the diffeomorphism invariance of the theory — the symmetry under arbitrary smooth coordinate changes. The theorem showed precisely <em>why</em> this conservation law was different, what it meant, and how to think about energy in a generally covariant theory. Her two theorems (the first concerning global symmetries, the second concerning infinite-dimensional symmetry groups like the diffeomorphism group) are both in the 1918 paper. The second theorem is the one that addresses general relativity. It is still the correct framework for understanding energy conservation in GR and in modern gauge theories.</p>
+
+      <blockquote class="pull">
+        <p>"Emmy Noether's discovery was one of the deepest connections between mathematics and physics — a connection that is still being mined a century later."</p>
+        <cite>— Frank Wilczek, Nobel Laureate in Physics, 2004</cite>
+      </blockquote>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Application: Classical Mechanics</div>
+          <div class="card-title">Conservation of Energy</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">Time translation</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">Energy</span>
+          </div>
+          <p>The universe runs the same experiment tomorrow as today. This sameness is conservation of energy.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Application: Classical Mechanics</div>
+          <div class="card-title">Conservation of Momentum</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">Space translation</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">Momentum</span>
+          </div>
+          <p>Here and there are equivalent for physics. That equivalence is momentum conservation.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Application: Electromagnetism</div>
+          <div class="card-title">Conservation of Charge</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">U(1) gauge symmetry</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">Charge</span>
+          </div>
+          <p>Electromagnetism is invariant under local phase rotations. That invariance is charge conservation.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Application: Particle Physics</div>
+          <div class="card-title">The Standard Model</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">SU(3)×SU(2)×U(1)</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">All known forces</span>
+          </div>
+          <p>The entire Standard Model is a Noether theorem application: gauge symmetry groups define the fundamental forces.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Application: General Relativity</div>
+          <div class="card-title">Diffeomorphism Invariance</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">Coordinate freedom</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">Bianchi identity</span>
+          </div>
+          <p>Her second theorem resolves the energy conservation puzzle in GR via infinite-dimensional symmetry groups.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Application: Quantum Mechanics</div>
+          <div class="card-title">Spin and Statistics</div>
+          <div class="card-arrow">
+            <span class="arrow-sym">Lorentz symmetry</span>
+            <span class="arrow-mid">→</span>
+            <span class="arrow-con">Spin-statistics theorem</span>
+          </div>
+          <p>The distinction between fermions and bosons, and the Pauli exclusion principle, trace to Lorentz symmetry via Noether.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: SIGNIFICANCE -->
+  <section id="significance">
+    <div class="container">
+      <p class="kick">Why It Matters</p>
+      <h2>The Measure of the Work</h2>
+      <p>It is common to say that Emmy Noether proved the most important theorem in theoretical physics. This is difficult to argue with. Conservation of energy, momentum, and angular momentum were known; Noether's theorem showed that they are one theorem in three applications. Every new conservation law discovered since 1915 — charge, lepton number, baryon number, color charge, weak isospin — has been identified by finding its corresponding symmetry using Noether's framework.</p>
+      <p>The Standard Model of particle physics is built on the symmetry group SU(3) × SU(2) × U(1). Each factor corresponds to a set of Noether symmetries; each set of Noether symmetries corresponds to a fundamental force and its conserved charges. The most precisely tested theory in the history of science is, at its structural core, an extended application of a theorem proved in 1915 by a woman who was not permitted to hold a paid position at a German university.</p>
+      <p>On the algebraic side, the scope is equally vast. "Noetherian" is a standard adjective in algebra, topology, and algebraic geometry. The abstract approach she pioneered — starting from axioms, proving structural theorems, identifying the right level of generality — is how mathematics is done today. It was not how mathematics was done before her. She changed the practice of a discipline.</p>
+
+      <blockquote class="pull">
+        <p>"In the judgment of the most competent living mathematicians, Fräulein Noether was the most significant creative mathematical genius thus far produced."</p>
+        <cite>— Albert Einstein, New York Times, May 4, 1935</cite>
+      </blockquote>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="col-attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    <br/>
+    Emmy Noether Series &mdash; Vol. 1: The Theorem &nbsp;|&nbsp; ROOT0 Library
+    <br/>
+    Series: <a href="0-who.html">Vol. 0 — The Person</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol. 2 — Her World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+  <div class="col-lic">CC-BY-ND-4.0 &nbsp;|&nbsp; Attribution required &nbsp;|&nbsp; No derivatives</div>
+</footer>
+
+</body>
+</html>

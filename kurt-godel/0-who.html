@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gödel — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060608;
+    --silver: #6b7280;
+    --gold: #b45309;
+    --text: #e2ddd6;
+    --muted: #7a7a8a;
+    --border: #1e1e2a;
+    --card-bg: #0c0c10;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #100a04 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.55;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(180,83,9,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 620px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  /* BAND */
+  .band {
+    background: var(--silver);
+    color: #0a0a0c;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section {
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(180,83,9,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--silver);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--silver);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--silver);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    opacity: 0.82;
+    margin: 0;
+  }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: #08060e;
+    border: 1px solid #2a1f3d;
+    border-left: 4px solid var(--silver);
+    padding: 1.75rem 2rem;
+    margin: 2.5rem 0;
+  }
+  .highlight-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--silver);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  /* FINAL QUOTE */
+  .final-quote {
+    text-align: center;
+    padding: 4rem 2rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    line-height: 1.45;
+    color: #fff;
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--silver); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Gödel</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-incompleteness.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Self-referential loop — a circle eating its own tail (ouroboros of logic) -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="heroGlow0" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#180d02" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#060608" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow0">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="softglow">
+        <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#heroGlow0)"/>
+
+    <!-- Ouroboros ring — the self-referential circle -->
+    <!-- Outer circle -->
+    <circle cx="450" cy="270" r="190" fill="none" stroke="#b45309" stroke-width="1.2" opacity="0.18"/>
+    <!-- Main animated ring — dashed, rotating -->
+    <circle cx="450" cy="270" r="175" fill="none" stroke="#b45309" stroke-width="2"
+      stroke-dasharray="8 14" opacity="0.45" filter="url(#glow0)">
+      <animateTransform attributeName="transform" type="rotate"
+        from="0 450 270" to="360 450 270" dur="20s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Inner ring rotating opposite -->
+    <circle cx="450" cy="270" r="155" fill="none" stroke="#6b7280" stroke-width="1"
+      stroke-dasharray="4 20" opacity="0.35">
+      <animateTransform attributeName="transform" type="rotate"
+        from="0 450 270" to="-360 450 270" dur="14s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- The snake head — circle "biting" the tail of the line -->
+    <!-- Animated arc that grows then shrinks, symbolizing self-reference -->
+    <path d="M 450 95 A 175 175 0 1 1 449.9 95" fill="none" stroke="#b45309" stroke-width="3.5"
+      stroke-linecap="round" opacity="0.7" filter="url(#softglow)">
+      <animate attributeName="stroke-dashoffset" values="0;1100;0" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-dasharray" values="0,1100;900,1100;0,1100" dur="8s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- "Mouth" dot chasing its tail -->
+    <circle r="7" fill="#b45309" filter="url(#softglow)">
+      <animateMotion dur="8s" repeatCount="indefinite">
+        <mpath xlink:href="#ouroboros-path"/>
+      </animateMotion>
+      <animate attributeName="opacity" values="1;0.5;1" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <path id="ouroboros-path" d="M 450 95 A 175 175 0 1 1 449.9 95" fill="none"/>
+
+    <!-- Central text glyph -->
+    <text x="450" y="258" text-anchor="middle" font-family="Georgia,serif" font-size="42"
+      fill="#b45309" opacity="0.22" filter="url(#glow0)">∀∃¬⊢</text>
+    <text x="450" y="300" text-anchor="middle" font-family="Georgia,serif" font-size="28"
+      fill="#6b7280" opacity="0.2">⊥ ↔ ¬◻G</text>
+
+    <!-- Orbital logic particles -->
+    <circle r="3" fill="#6b7280" opacity="0.6">
+      <animateMotion dur="12s" repeatCount="indefinite">
+        <mpath xlink:href="#orbit1"/>
+      </animateMotion>
+    </circle>
+    <circle r="2" fill="#b45309" opacity="0.5">
+      <animateMotion dur="9s" repeatCount="indefinite" begin="3s">
+        <mpath xlink:href="#orbit1"/>
+      </animateMotion>
+    </circle>
+    <circle r="2.5" fill="#fff" opacity="0.25">
+      <animateMotion dur="16s" repeatCount="indefinite" begin="6s">
+        <mpath xlink:href="#orbit1"/>
+      </animateMotion>
+    </circle>
+    <path id="orbit1" d="M 450 95 A 175 175 0 1 1 449.9 95" fill="none"/>
+
+    <!-- Ambient grid — very faint -->
+    <g stroke="#6b7280" stroke-width="0.3" fill="none" opacity="0.07">
+      <line x1="0" y1="135" x2="900" y2="135"/>
+      <line x1="0" y1="270" x2="900" y2="270"/>
+      <line x1="0" y1="405" x2="900" y2="405"/>
+      <line x1="225" y1="0" x2="225" y2="540"/>
+      <line x1="450" y1="0" x2="450" y2="540"/>
+      <line x1="675" y1="0" x2="675" y2="540"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Kurt Gödel · 1906 – 1978 · Volume 0</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Logician · Dreamer · Paradox</p>
+    <p class="hero-lead">He proved that every formal system contains truths it cannot reach. His own life was the proof.</p>
+  </div>
+</div>
+
+<div class="band">Born Brno, 1906 · Vienna PhD, 1930 · Princeton IAS, 1940 · Died 1978, 29 kg</div>
+
+<main>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <span class="section-label">I — Origins</span>
+    <h2>Brno, 1906: City of Mendel</h2>
+    <p>Kurt Friedrich Gödel was born on April 28, 1906, in Brünn — today Brno, in the Czech Republic — then part of the Austro-Hungarian Empire. The city had a peculiar resonance for the history of science: it was here, in the Augustinian monastery of St. Thomas just a few blocks from where Gödel was born, that <strong>Gregor Mendel</strong> had cultivated his peas and discovered the laws of heredity forty years earlier. Two of the most consequential intellectual revolutions in history were gestated in the same small Moravian city.</p>
+    <p>His father, Rudolf Gödel, managed a textile factory owned by the German community that dominated the city's commercial life. His mother, Marianne, was educated, curious, and devoted. Kurt was the second son; his brother Rudolf became a physician. The family was comfortable, Protestant in a predominantly Catholic city, and thoroughly German-speaking — the culture in which Kurt would always feel at home, even after it expelled him.</p>
+    <p>From early childhood he was known as <em>Herr Warum</em> — Mr. Why. He asked questions incessantly, about everything. His mother kept the letters he wrote her as an adult: hundreds of them, meticulous, detailed, full of philosophical asides. The curiosity never left him.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1906</span>
+        <span class="stat-label">Born, Brünn/Brno</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">25</span>
+        <span class="stat-label">Age at Incompleteness</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1948</span>
+        <span class="stat-label">US Citizenship</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">29 kg</span>
+        <span class="stat-label">Weight at death</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIENNA -->
+  <section id="vienna">
+    <span class="section-label">II — Formation</span>
+    <h2>Vienna: The University and the Circle</h2>
+    <p>In 1924, Gödel enrolled at the University of Vienna, initially to study physics. Within two years he had shifted to mathematics, drawn in by the lectures of <strong>Philipp Furtwängler</strong> on number theory. He encountered the Vienna Circle — the extraordinary gathering of logical positivists who met regularly to discuss the foundations of science, language, and knowledge — but he was never ideologically at home there. He attended. He listened. He disagreed, quietly and fundamentally, with their rejection of metaphysics and their insistence that mathematics was merely tautological.</p>
+    <p>In 1929, he completed his doctoral dissertation under Hans Hahn, proving what became known as the <strong>Completeness Theorem</strong> for first-order predicate logic: every logically valid formula has a formal proof. It was a brilliant result — and it set up the more shattering paper two years later, in which he demonstrated that arithmetic, unlike pure logic, could not be complete.</p>
+    <p>He was twenty-three when he proved completeness. He was twenty-four when he began the work that would prove incompleteness. He submitted the incompleteness paper in 1931, at twenty-five.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The more I think about language, the more it amazes me that people ever understand each other at all."</blockquote>
+      <cite>— Kurt Gödel</cite>
+    </div>
+  </section>
+
+  <!-- ADELE -->
+  <section id="adele">
+    <span class="section-label">III — The Marriage</span>
+    <h2>Adele Nimbursky: The One Who Tasted His Food</h2>
+    <p>In 1927, at a Vienna nightclub called the Nachtfalter — the Nighthawk — Gödel met <strong>Adele Nimbursky</strong>, a dancer six years his senior, previously married, from a working-class family. His parents disapproved immediately and persistently. She was not educated in the way they understood education. She was not from the right world.</p>
+    <p>He married her anyway, in 1938, after more than a decade of the relationship. She was the most practically capable person in his life, and possibly the only reason he survived as long as he did. When his paranoia about being poisoned intensified, she tasted his food before he would eat it — the formal proof of safety he required. She navigated the bureaucracies of escape from Europe. She managed the social obligations of Princeton that he found intolerable. She was, in the fullest sense, his auxiliary system for interacting with physical reality.</p>
+    <p>In 1977, Adele required hospitalization for several months. Without her to taste his food, Gödel stopped eating. He trusted no one else — no test, no doctor, no assurance. The logic of his paranoia was airtight. He weighed 29 kilograms when he died on January 14, 1978, of starvation and inanition. The official cause was listed as <em>"malnutrition and inanition caused by personality disturbance."</em></p>
+  </section>
+
+  <!-- EINSTEIN FRIENDSHIP -->
+  <section id="einstein">
+    <span class="section-label">IV — The Great Friendship</span>
+    <h2>Walking with Einstein</h2>
+    <p>At the Institute for Advanced Study in Princeton, Gödel formed what became one of the most celebrated intellectual friendships in modern history. He and <strong>Albert Einstein</strong> walked together — every morning, from their homes to Fuld Hall, through the oak-lined paths of the IAS campus. They spoke in German. They argued about physics, mathematics, philosophy, time, and whether God played dice.</p>
+    <p>Einstein was twenty-seven years older. He had been famous for thirty years when Gödel arrived. He found in Gödel something rare: a mind he could not predict, a colleague who would argue back from first principles without deference. Einstein later said that in his last years at Princeton, <em>"my own work no longer means much, I come to the Institute merely to have the privilege of walking home with Gödel."</em></p>
+    <p>The friendship was philosophically productive. Gödel's work on rotating universe solutions to Einstein's field equations — which permit closed timelike curves, i.e., time travel — emerged partly from their conversations. Einstein was reportedly disturbed by it. If the equations of general relativity permitted such solutions, what did that say about the nature of time?</p>
+
+    <div class="pull-quote">
+      <blockquote>"I have come to the Institute merely to have the privilege of walking home with Gödel."</blockquote>
+      <cite>— Albert Einstein</cite>
+    </div>
+  </section>
+
+  <!-- CITIZENSHIP -->
+  <section id="citizenship">
+    <span class="section-label">V — Becoming American</span>
+    <h2>The Constitution and the Dictatorship</h2>
+    <p>In 1948, Gödel prepared to take his United States citizenship examination. He prepared for it the way he prepared for everything: with total rigor. He read the Constitution of the United States in full — not as a formality, but as a logical document to be analyzed for consistency and completeness.</p>
+    <p>He found something that alarmed him. He believed he had identified a <strong>logical contradiction</strong> in the Constitution — a gap in the document that would permit a legal transformation to dictatorship, fully consistent with the letter of the document as written. He was eager to explain it to the examiner.</p>
+    <p>Einstein and his friend the economist <strong>Oskar Morgenstern</strong> accompanied him to the ceremony in Trenton, New Jersey — partly to celebrate, partly to manage the situation. During the drive, Gödel began outlining his discovery. Einstein and Morgenstern became alarmed. Morgenstern later recorded in his diary that he spent the journey trying to talk Gödel out of raising the issue. The examiner, Judge Philip Forman, recognized Einstein and was effusive. He began asking Gödel genial questions about Austria. <em>"Is this a dictatorship?"</em> Forman asked, meaning Austria. <em>"I know how that can happen,"</em> Gödel began. Forman cut him off: the oath was administered without incident. Gödel never published what he had found. No one knows exactly what it was.</p>
+
+    <div class="highlight">
+      <span class="highlight-label">The Gödel Constitution Problem</span>
+      <p>Scholars have speculated about what Gödel's "loophole" was. Some suggest he was concerned about Article V (the amendment process), which has no substantive constraints — it could theoretically be used to amend away the Bill of Rights. Others point to emergency powers doctrines. The actual argument died with him.</p>
+    </div>
+  </section>
+
+  <!-- PARANOIA -->
+  <section id="paranoia">
+    <span class="section-label">VI — The Interior</span>
+    <h2>Logic and Paranoia</h2>
+    <p>Gödel's mental health was fragile throughout his adult life. He had his first breakdown in 1934, following an exhausting lecture tour in the United States, and was hospitalized in a sanatorium near Vienna. He had another in 1936, following the assassination of his Vienna Circle colleague Moritz Schlick (shot by a deranged student on the steps of the University of Vienna). He was hospitalized again in 1937 and 1938.</p>
+    <p>The paranoia about food — specifically about being poisoned — became the governing feature of his last decades. It was not irrational in the sense that it lacked internal logic; it was rigorously structured. He maintained detailed records of what he ate and its effects. He developed specific tests. He required witnesses. In the absence of Adele, he could not complete the verification process to his satisfaction, and so he ate nothing.</p>
+    <p>There is something terrible and philosophically exact about this: the man who proved that formal systems cannot verify their own consistency died because he could not verify his own food's safety. His paranoia was, in its structure, a lived version of his theorem: the need for a proof from outside the system that the system could not supply.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1934</span>
+        <h4>First Breakdown</h4>
+        <p>Following a strenuous lecture series at IAS, Gödel returned to Vienna in a state of nervous collapse and was admitted to a sanatorium.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1936</span>
+        <h4>Schlick Assassination</h4>
+        <p>The murder of Moritz Schlick on the University of Vienna stairs — by a student who claimed philosophy had corrupted his victim — devastated Gödel.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1977–78</span>
+        <h4>Adele's Hospitalization</h4>
+        <p>Without the one person he trusted to verify his food, Gödel ceased eating. He weighed 29 kg when he died in January 1978.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">VII — The Arc</span>
+    <h2>Life in Full</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">28 April 1906</div>
+        <div class="timeline-title">Born in Brünn, Austro-Hungarian Empire</div>
+        <div class="timeline-body">Same city as Mendel's monastery. His father manages a textile factory; he is the younger of two sons.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1924</div>
+        <div class="timeline-title">Enrolls at University of Vienna</div>
+        <div class="timeline-body">Begins in physics; switches to mathematics within two years. Encounters — and quietly dissents from — the Vienna Circle.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1927</div>
+        <div class="timeline-title">Meets Adele at the Nighthawk Club</div>
+        <div class="timeline-body">A dancer, six years older, previously married. His family's disapproval is immediate and sustained for over a decade.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1929</div>
+        <div class="timeline-title">Completeness Theorem — PhD Thesis</div>
+        <div class="timeline-body">First-order predicate logic is complete: every valid formula has a proof. Supervisor: Hans Hahn.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1931</div>
+        <div class="timeline-title">Incompleteness Theorems Published</div>
+        <div class="timeline-body">Age 25. The paper that changed mathematics forever: "Über formal unentscheidbare Sätze..." Hilbert's program is finished.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1938</div>
+        <div class="timeline-title">Marries Adele; Escapes Europe</div>
+        <div class="timeline-body">The Anschluss has absorbed Austria into Nazi Germany. Gödel's Vienna lectureship is abolished. He applies for a US position.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1940</div>
+        <div class="timeline-title">Trans-Siberian Railway to Princeton</div>
+        <div class="timeline-body">The Atlantic crossing is too dangerous with war. He and Adele travel east: Vienna → Moscow → Trans-Siberian → Japan → San Francisco → Princeton.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1948</div>
+        <div class="timeline-title">US Citizenship Ceremony</div>
+        <div class="timeline-body">Einstein and Morgenstern accompany him. He nearly derails the interview by trying to explain a logical contradiction he found in the Constitution.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1949</div>
+        <div class="timeline-title">Gödel's Rotating Universe</div>
+        <div class="timeline-body">He finds solutions to Einstein's field equations permitting closed timelike curves — time travel. Einstein is disturbed.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1977</div>
+        <div class="timeline-title">Adele Hospitalized</div>
+        <div class="timeline-body">Without her to verify his food, he stops eating. He weighs 65 pounds when admitted to Princeton Hospital in December.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">14 January 1978</div>
+        <div class="timeline-title">Dies at Princeton Hospital</div>
+        <div class="timeline-body">Cause: malnutrition and inanition caused by personality disturbance. Weight: 29 kilograms. Age: 71.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="final-quote">
+    <blockquote>"Either mathematics is too big for the human mind, or the human mind is more than a machine."</blockquote>
+    <cite>— Kurt Gödel</cite>
+  </div>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Kurt Gödel Series · Volume 0: The Person · kurt-godel/0-who.html<br>
+    Series continues: <a href="1-incompleteness.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

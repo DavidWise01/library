@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dennis Ritchie — No. 2 · His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04060a;
+    --cardsolid:#0b0f15;
+    --ink:#d4e0cc;
+    --dim:#6b7280;
+    --green:#22c55e;
+    --line:rgba(34,197,94,0.15);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(34,197,94,0.018) 23px 24px);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#04060a;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:0;flex-wrap:wrap;}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);text-decoration:none;padding:8px 14px;border-right:1px solid var(--line);
+    transition:color .15s,background .15s;
+  }
+  .sitenav a:hover{color:var(--green);}
+  .sitenav a.active{color:var(--green);background:rgba(34,197,94,0.07);}
+
+  /* TYPOGRAPHY */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(40px,8.5vw,82px);
+    line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;
+    margin:0;max-width:9em;overflow-wrap:break-word;
+  }
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#9fb898;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* BELL LABS CAMPUS SVG ANIMATIONS */
+  @keyframes windowFlicker{0%,100%{opacity:0.9}50%{opacity:0.4}}
+  @keyframes signalPulse{0%{stroke-dashoffset:40}100%{stroke-dashoffset:0}}
+  .win1{animation:windowFlicker 3.1s ease-in-out infinite;}
+  .win2{animation:windowFlicker 2.7s ease-in-out infinite 0.8s;}
+  .win3{animation:windowFlicker 4.2s ease-in-out infinite 1.4s;}
+  .data-line{stroke-dasharray:8 4;animation:signalPulse 1.5s linear infinite;}
+  @media (prefers-reduced-motion:reduce){
+    .win1,.win2,.win3{animation:none;opacity:0.9;}
+    .data-line{animation:none;}
+  }
+
+  /* BANDS */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--green);color:#04060a;
+    padding:5px 13px;margin:36px 0 14px;
+  }
+  .band.dim{background:#111a14;color:var(--ink);border:1px solid var(--line);}
+  .band.dark{background:#0b1810;color:var(--green);border:1px solid var(--green);}
+
+  /* TYPE TILES */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--green);}
+  .type p{font-size:13px;margin:0;color:#7ea87a;line-height:1.45;}
+  .type .tg{
+    display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--green);border:1px solid var(--green);
+    padding:1px 6px;margin-top:7px;
+  }
+
+  /* CARD GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--cardsolid);
+    padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card .num{
+    position:absolute;top:11px;right:13px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);
+  }
+  .card h3{
+    font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 30px 8px 0;letter-spacing:0.01em;color:var(--ink);
+  }
+  .card .what{font-size:14px;margin:0 0 10px;color:#9fb898;}
+  .card .need,.card .do{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:5px 0 0;color:var(--dim);
+  }
+  .card .need b,.card .do b{
+    color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+  .card .plus{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#557a57;
+  }
+  .card .plus b{
+    color:var(--green);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+
+  /* BLOCK / RULES */
+  .block{border:1px solid var(--line);padding:18px 22px;margin-top:6px;background:var(--cardsolid);}
+  .block.green{border-color:var(--green);background:#060f08;}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{
+    position:relative;padding:9px 0 9px 28px;font-size:14.5px;
+    border-bottom:1px solid var(--line);
+  }
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{
+    content:"$";position:absolute;left:2px;top:8px;
+    font-family:"Space Mono",monospace;font-size:13px;color:var(--green);font-weight:700;
+  }
+  .block.green .rules li::before{content:">";}
+  .rules b{font-weight:500;color:var(--green);}
+  .block.green .rules b{color:#5ade82;}
+
+  /* QUOTE */
+  .quote{
+    border:1px solid var(--line);background:#060f08;
+    padding:20px 24px;margin:6px 0 0;
+    font-size:16px;line-height:1.75;font-style:italic;color:var(--ink);
+    border-left:3px solid var(--green);
+  }
+  .quote .src{
+    display:block;font-style:normal;
+    font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.05em;color:var(--dim);margin-top:12px;
+  }
+
+  /* TIMELINE */
+  .timeline{border-left:2px solid var(--green);padding-left:22px;margin-top:6px;}
+  .tline-item{position:relative;padding:10px 0 10px 0;border-bottom:1px solid var(--line);}
+  .tline-item:last-child{border-bottom:none;}
+  .tline-item::before{
+    content:"";position:absolute;left:-29px;top:16px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--green);border:2px solid var(--paper);
+  }
+  .tline-year{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;
+    color:var(--green);margin-bottom:3px;
+  }
+  .tline-text{font-size:14px;color:#9fb898;line-height:1.5;}
+  .tline-text b{color:var(--ink);font-weight:500;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}
+    .card,.block,.type,.quote,.timeline{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .win1,.win2,.win3,.data-line{animation:none;}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <nav class="sitenav" aria-label="Series navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-c-unix.html">1 · C &amp; Unix</a>
+    <a href="2-world.html" class="active">2 · His World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <header class="mast">
+    <span class="kick">ritchie series · book no. 2 · his world</span>
+    <div class="masthead">
+      <h1>His <em>World</em></h1>
+
+      <!-- Animated SVG: Bell Labs campus with flickering windows -->
+      <svg class="art" width="210" height="155" viewBox="0 0 210 155" role="img" aria-label="Bell Labs campus building with lit windows at night">
+        <!-- Sky / ground -->
+        <rect x="0" y="0" width="210" height="155" fill="#010403"/>
+        <rect x="0" y="110" width="210" height="45" fill="#0a0f0a"/>
+        <!-- Ground line -->
+        <line x1="0" y1="110" x2="210" y2="110" stroke="#1a3020" stroke-width="1"/>
+        <!-- Main building -->
+        <rect x="20" y="40" width="170" height="72" fill="#0b150c" stroke="#22c55e" stroke-width="1"/>
+        <!-- Roof detail -->
+        <rect x="20" y="34" width="170" height="8" fill="#0f1e10" stroke="#22c55e" stroke-width="1"/>
+        <!-- Sign -->
+        <text x="105" y="30" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#22c55e">BELL LABS · MURRAY HILL</text>
+        <!-- Windows row 1 -->
+        <rect class="win1" x="30" y="50" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win2" x="52" y="50" width="16" height="12" fill="#22c55e" opacity="0.4"/>
+        <rect class="win1" x="74" y="50" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win3" x="96" y="50" width="16" height="12" fill="#22c55e" opacity="0.7"/>
+        <rect class="win2" x="118" y="50" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win1" x="140" y="50" width="16" height="12" fill="#22c55e" opacity="0.5"/>
+        <rect class="win3" x="162" y="50" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <!-- Windows row 2 -->
+        <rect class="win3" x="30" y="68" width="16" height="12" fill="#22c55e" opacity="0.7"/>
+        <rect class="win1" x="52" y="68" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win2" x="74" y="68" width="16" height="12" fill="#22c55e" opacity="0.5"/>
+        <rect class="win3" x="96" y="68" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win1" x="118" y="68" width="16" height="12" fill="#22c55e" opacity="0.6"/>
+        <rect class="win2" x="140" y="68" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win1" x="162" y="68" width="16" height="12" fill="#22c55e" opacity="0.4"/>
+        <!-- Windows row 3 -->
+        <rect class="win2" x="30" y="86" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win3" x="52" y="86" width="16" height="12" fill="#22c55e" opacity="0.7"/>
+        <rect class="win1" x="74" y="86" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win2" x="96" y="86" width="16" height="12" fill="#22c55e" opacity="0.5"/>
+        <rect class="win3" x="118" y="86" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <rect class="win1" x="140" y="86" width="16" height="12" fill="#22c55e" opacity="0.8"/>
+        <rect class="win2" x="162" y="86" width="16" height="12" fill="#22c55e" opacity="0.9"/>
+        <!-- Door -->
+        <rect x="90" y="94" width="30" height="18" fill="#0a150b" stroke="#22c55e" stroke-width="0.8"/>
+        <!-- Data lines -->
+        <line class="data-line" x1="0" y1="128" x2="210" y2="128" stroke="#22c55e" stroke-width="0.8" stroke-dasharray="6 4" opacity="0.3"/>
+        <!-- Label -->
+        <text x="105" y="148" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#6b7280">where Unix was born · 1967–2011</text>
+      </svg>
+    </div>
+    <p class="dek">He worked in one of history's most fertile rooms. <b>Bell Labs, Murray Hill</b> — where researchers were free to follow curiosity without quarterly targets, and where the Unix Room hummed with PDP machines and the smell of cigarette smoke and ambition. The world was made there.</p>
+  </header>
+
+  <span class="band">The setting</span>
+  <div class="types">
+    <div class="type reveal"><h4>Bell Labs</h4><p>Murray Hill, NJ. The greatest industrial research lab in history. Transistor, laser, solar cell, information theory, Unix — all from one campus.</p><span class="tg">the lab</span></div>
+    <div class="type reveal"><h4>The PDP-7</h4><p>A discarded minicomputer. Ken Thompson wrote the first Unix on it to play Space Travel. This is not a metaphor.</p><span class="tg">the machine</span></div>
+    <div class="type reveal"><h4>The Unix Room</h4><p>The physical space at Bell Labs where C and Unix were built — dense with terminals, keyboards, and collaboration.</p><span class="tg">the room</span></div>
+    <div class="type reveal"><h4>1956 Consent Decree</h4><p>An antitrust ruling forced Bell to give Unix away free to universities. It accidentally invented open source.</p><span class="tg">accident</span></div>
+  </div>
+
+  <span class="band dark">Bell Labs — the institution</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>The greatest lab in history</h3>
+      <p class="what">Bell Telephone Laboratories, Murray Hill, NJ — funded by AT&amp;T's monopoly revenue — housed researchers with complete freedom to pursue any problem they found interesting. No quarterly targets. No product roadmap. Just curiosity and time.</p>
+      <p class="need"><b>products</b> transistor (1947), laser (1958), solar cell (1954), information theory (1948), Unix (1969)</p>
+      <p class="do"><b>Nobel Prizes</b> eight, across decades</p>
+      <p class="plus"><b>+1</b> the model has never been replicated. AT&amp;T's regulated monopoly was the economic engine. The freedom was the output. When the monopoly broke up, the lab slowly deflated.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Shannon was there too</h3>
+      <p class="what">Claude Shannon — who also has an entry in this library — did his foundational work on information theory at Bell Labs in 1948. Ritchie arrived nineteen years later and worked in the same building. The culture that produced both men was the same culture.</p>
+      <p class="need"><b>shannon</b> information theory (1948) — a Bell Labs colleague before Ritchie arrived</p>
+      <p class="do"><b>ritchie</b> C and Unix (1969–1972) — the engineering built on that theoretical foundation</p>
+      <p class="plus"><b>+1</b> Shannon's bits needed C to become code. Ritchie's C ran on Shannon's mathematical model. One lab, one building, the two inventions that underlie the digital world.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>The transistor inventors</h3>
+      <p class="what">Shockley, Bardeen, and Brattain invented the transistor at Bell Labs in 1947 — the device that made all digital computers possible. Ritchie's C ran on machines built from those transistors.</p>
+      <p class="need"><b>shockley · bardeen · brattain</b> Nobel Prize, Physics, 1956</p>
+      <p class="do"><b>chain</b> transistor → integrated circuit → microprocessor → Unix</p>
+      <p class="plus"><b>+1</b> Penzias and Wilson discovered the Cosmic Microwave Background radiation at Bell Labs in 1965, using a horn antenna built for satellite communication. The lab was that broad.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">04</span>
+      <h3>The 1956 consent decree</h3>
+      <p class="what">An antitrust settlement forced AT&amp;T to license all patents freely and to stay out of the computer business. This meant they had to give Unix away to universities — for free. An accident that created the open-source ecosystem.</p>
+      <p class="need"><b>result</b> universities got Unix source code for essentially nothing</p>
+      <p class="do"><b>effect</b> a generation of students learned Unix; Berkeley forked it into BSD; BSD became macOS</p>
+      <p class="plus"><b>+1</b> the entire open-source movement is the downstream consequence of a legal settlement nobody planned to matter. The lawyers created the future by accident.</p>
+    </article>
+  </div>
+
+  <span class="band dark">The machines — PDP-7 and PDP-11</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>The PDP-7 — a discarded machine</h3>
+      <p class="what">The Digital Equipment Corporation PDP-7 was a small, cheap minicomputer that Bell Labs had set aside. Ken Thompson found it, noticed it could run a game he'd been working on (Space Travel), and spent an intense three weeks writing the first Unix kernel for it in 1969.</p>
+      <p class="need"><b>specs</b> 8K 18-bit words of memory; roughly the power of a pocket calculator</p>
+      <p class="do"><b>moment</b> "the first Unix kernel, file system, and shell, written in three weeks"</p>
+      <p class="plus"><b>+1</b> Space Travel — a game simulating our solar system — was the reason Unix was born. The game needed better hardware management. The management layer became the operating system.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>The PDP-11 — the real machine</h3>
+      <p class="what">The PDP-11 (1970) was the machine Unix was rewritten for — and the machine that justified rewriting Unix in C. It was powerful enough to run a C compiler, and the rewritten OS could then be ported to other architectures.</p>
+      <p class="need"><b>key step</b> rewriting Unix in C on the PDP-11 made it portable</p>
+      <p class="do"><b>result</b> Unix spread to universities and research labs that had different machines</p>
+      <p class="plus"><b>+1</b> the PDP-11 became one of the most influential computers in history — not because of what it did, but because of what was written on it. The hardware was the stage; Unix was the play.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>Ken Thompson — the collaborator</h3>
+      <p class="what">Thompson wrote the first Unix kernel and the B language (Ritchie's C grew from B). Ritchie gave C its type system and power. Their collaboration was complete: Thompson built things fast; Ritchie made them right. Together they were the most productive pair in computing history.</p>
+      <p class="need"><b>thompson's role</b> Unix kernel; B language; Go (later)</p>
+      <p class="do"><b>ritchie's role</b> C language; Unix standardization; the book with Kernighan</p>
+      <p class="plus"><b>+1</b> they shared every major award: Turing Award (1983), National Medal of Technology (1999), Japan Prize (2011). The prizes recognized the partnership, not just the individuals.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">08</span>
+      <h3>Brian Kernighan — the author</h3>
+      <p class="what">Brian Kernighan was Ritchie's colleague at Bell Labs and co-author of <em>The C Programming Language</em>. He was also responsible for awk, an early scripting tool, and the first clear articulations of the Unix philosophy.</p>
+      <p class="need"><b>kernighan's role</b> co-wrote K&amp;R; wrote the Hello World example; documented Unix philosophy</p>
+      <p class="do"><b>still active</b> professor at Princeton; continues writing on Unix and C</p>
+      <p class="plus"><b>+1</b> it was Kernighan who actually wrote the "Hello, World" example in the 1974 tutorial. Ritchie confirmed this. Kernighan gave the tradition its name and its first form.</p>
+    </article>
+  </div>
+
+  <!-- TIMELINE -->
+  <span class="band dark">The Bell Labs years — a timeline</span>
+  <div class="timeline reveal">
+    <div class="tline-item">
+      <div class="tline-year">1967</div>
+      <div class="tline-text">Ritchie joins <b>Bell Labs Computing Science Research Center</b>, Murray Hill, NJ. His father Alistair worked there before him.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1969</div>
+      <div class="tline-text">Thompson writes the <b>first Unix kernel</b> on a discarded PDP-7, originally to run Space Travel. Ritchie joins the effort.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1970–1971</div>
+      <div class="tline-text">Unix is rewritten for the <b>PDP-11</b>. Ritchie begins developing <b>C</b> from Thompson's B language.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1972</div>
+      <div class="tline-text">The <b>C programming language</b> reaches its definitive form. Unix is rewritten in C — the first portable operating system.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1973</div>
+      <div class="tline-text">Ritchie and Thompson present Unix at the <b>ACM Symposium on Operating System Principles</b>. It is the first public announcement. The world begins to learn.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1974</div>
+      <div class="tline-text">Ritchie's <b>C tutorial</b> includes the first "Hello, World" program. Kernighan writes the example. The tradition begins.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1976</div>
+      <div class="tline-text">AT&amp;T begins licensing Unix to universities. The <b>1956 consent decree</b> means it cannot commercialize the software — so it gives it away. Berkeley receives Unix source code.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1978</div>
+      <div class="tline-text"><em>The C Programming Language</em> (<b>K&amp;R</b>) is published. It becomes the most influential computer science textbook in history.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1983</div>
+      <div class="tline-text">Ritchie and Thompson receive the <b>ACM Turing Award</b>. The citation calls their work "one of the most far-reaching achievements in the history of computing."</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">1999</div>
+      <div class="tline-text">President Clinton awards the <b>National Medal of Technology</b> to Ritchie and Thompson.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">2007</div>
+      <div class="tline-text">Ritchie retires from Bell Labs (by then Lucent Technologies, then Alcatel-Lucent). <b>Forty years</b> at one address.</div>
+    </div>
+    <div class="tline-item">
+      <div class="tline-year">Oct 12, 2011</div>
+      <div class="tline-text">Ritchie dies at home in Berkeley Heights, NJ, six days after Steve Jobs. His death is almost invisible in the news.</div>
+    </div>
+  </div>
+
+  <span class="band dark">The world he was part of</span>
+  <div class="block green">
+    <ul class="rules">
+      <li><b>Bell Labs, Murray Hill, NJ</b> — the greatest industrial research lab in history. Transistor (1947), information theory (1948), Unix (1969), all from the same campus.</li>
+      <li><b>Claude Shannon</b> worked at Bell Labs before Ritchie arrived. <b>Shockley, Bardeen, Brattain</b> (transistor inventors) worked there. <b>Penzias and Wilson</b> (Cosmic Microwave Background) worked there. It was that kind of place.</li>
+      <li>The <b>PDP-7</b> (discarded; Unix started here, to play Space Travel) and the <b>PDP-11</b> (Unix rewritten here; C developed here) were the physical machines of the revolution.</li>
+      <li><b>Ken Thompson</b> and <b>Brian Kernighan</b> were his closest collaborators. Thompson was creative fire; Kernighan was precise documentation; Ritchie was the theoretical foundation that held it all together.</li>
+      <li>The <b>1956 consent decree</b> forced AT&amp;T to give Unix away free — accidentally creating the open-source ecosystem, BSD, and eventually Linux, macOS, and the entire open internet.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">Solid vs. storied</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The Bell Labs history is <b>thoroughly documented</b> — Jon Gertner's <em>The Idea Factory</em> (2012) covers the institution in depth, and Ritchie's own technical papers document his role specifically.</li>
+      <li>The Space Travel / PDP-7 / Unix origin story is <b>confirmed by Thompson himself</b> in multiple interviews. It is remarkable but true: Unix began as infrastructure for a video game.</li>
+      <li>The "Hello, World" authorship — that Kernighan wrote the example — is <b>confirmed by Kernighan</b> in his 2019 book <em>UNIX: A History and a Memoir</em>.</li>
+      <li>The 1956 consent decree and its role in distributing Unix to universities is <b>documented legal and institutional history</b>, not legend.</li>
+      <li>The quiet irony of Ritchie's death going unnoticed while Jobs's death dominated news is <b>factual</b> — Rob Pike, Brian Kernighan, and many others noted it publicly at the time.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ritchie series · book no. 2 · his world · Bell Labs, Murray Hill, and the rooms where Unix was born<br>
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0
+  </p>
+
+</div>
+</body>
+</html>

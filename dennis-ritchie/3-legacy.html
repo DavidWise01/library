@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dennis Ritchie — No. 3 · Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04060a;
+    --cardsolid:#0b0f15;
+    --ink:#d4e0cc;
+    --dim:#6b7280;
+    --green:#22c55e;
+    --line:rgba(34,197,94,0.15);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 23px,rgba(34,197,94,0.018) 23px 24px);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--green);color:#04060a;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:0;flex-wrap:wrap;}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--dim);text-decoration:none;padding:8px 14px;border-right:1px solid var(--line);
+    transition:color .15s,background .15s;
+  }
+  .sitenav a:hover{color:var(--green);}
+  .sitenav a.active{color:var(--green);background:rgba(34,197,94,0.07);}
+
+  /* TYPOGRAPHY */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green);}
+  .mast{border-bottom:4px solid var(--green);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(40px,8.5vw,82px);
+    line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;
+    margin:0;max-width:9em;overflow-wrap:break-word;
+  }
+  .mast h1 em{font-style:normal;color:var(--green);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#9fb898;}
+  .dek b{font-weight:500;color:var(--green);}
+  .art{flex:0 0 auto;}
+
+  /* UNIX FAMILY TREE SVG ANIMATIONS */
+  @keyframes branchGrow{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+  @keyframes nodePop{0%{r:0;opacity:0}100%{r:5;opacity:1}}
+  @keyframes labelFade{0%{opacity:0}100%{opacity:1}}
+  .branch{stroke-dasharray:120;animation:branchGrow 2s ease-out forwards;}
+  .branch.b1{animation-delay:0.2s;}
+  .branch.b2{animation-delay:0.5s;}
+  .branch.b3{animation-delay:0.8s;}
+  .branch.b4{animation-delay:1.0s;}
+  .branch.b5{animation-delay:1.3s;}
+  .branch.b6{animation-delay:1.6s;}
+  .node{animation:nodePop 0.4s ease-out forwards;r:0;opacity:0;}
+  .node.n1{animation-delay:0.4s;}
+  .node.n2{animation-delay:0.7s;}
+  .node.n3{animation-delay:1.0s;}
+  .node.n4{animation-delay:1.2s;}
+  .node.n5{animation-delay:1.5s;}
+  .node.n6{animation-delay:1.8s;}
+  .nlabel{opacity:0;animation:labelFade 0.4s ease-out forwards;}
+  .nlabel.l1{animation-delay:0.5s;}
+  .nlabel.l2{animation-delay:0.8s;}
+  .nlabel.l3{animation-delay:1.1s;}
+  .nlabel.l4{animation-delay:1.3s;}
+  .nlabel.l5{animation-delay:1.6s;}
+  .nlabel.l6{animation-delay:1.9s;}
+  @media (prefers-reduced-motion:reduce){
+    .branch,.node,.nlabel{animation:none;stroke-dashoffset:0;r:5;opacity:1;}
+  }
+
+  /* BANDS */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--green);color:#04060a;
+    padding:5px 13px;margin:36px 0 14px;
+  }
+  .band.dim{background:#111a14;color:var(--ink);border:1px solid var(--line);}
+  .band.dark{background:#0b1810;color:var(--green);border:1px solid var(--green);}
+
+  /* TYPE TILES */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:11px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--green);}
+  .type p{font-size:13px;margin:0;color:#7ea87a;line-height:1.45;}
+  .type .tg{
+    display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--green);border:1px solid var(--green);
+    padding:1px 6px;margin-top:7px;
+  }
+
+  /* CARD GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--cardsolid);
+    padding:15px 16px 16px;
+    transition:transform .14s ease, box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--green);}
+  .card .num{
+    position:absolute;top:11px;right:13px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--green);
+  }
+  .card h3{
+    font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;
+    margin:0 30px 8px 0;letter-spacing:0.01em;color:var(--ink);
+  }
+  .card .what{font-size:14px;margin:0 0 10px;color:#9fb898;}
+  .card .need,.card .do{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:5px 0 0;color:var(--dim);
+  }
+  .card .need b,.card .do b{
+    color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+  .card .plus{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#557a57;
+  }
+  .card .plus b{
+    color:var(--green);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;
+  }
+
+  /* TREE SVG WRAPPER */
+  .tree-svg-wrap{
+    border:1px solid var(--line);background:#020504;
+    padding:22px 16px 16px;margin-top:6px;
+    display:flex;justify-content:center;overflow-x:auto;
+  }
+
+  /* STAT GRID */
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:6px;}
+  .stat{
+    border:1px solid var(--green);background:#060f08;
+    padding:16px 18px;text-align:center;
+  }
+  .stat .num{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(28px,5vw,42px);
+    color:var(--green);line-height:1;display:block;margin-bottom:6px;
+  }
+  .stat .label{
+    font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);
+  }
+  .stat .sub{font-size:12px;color:#7ea87a;margin-top:5px;display:block;font-family:"Space Mono",monospace;}
+
+  /* BLOCK / RULES */
+  .block{border:1px solid var(--line);padding:18px 22px;margin-top:6px;background:var(--cardsolid);}
+  .block.green{border-color:var(--green);background:#060f08;}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{
+    position:relative;padding:9px 0 9px 28px;font-size:14.5px;
+    border-bottom:1px solid var(--line);
+  }
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{
+    content:"$";position:absolute;left:2px;top:8px;
+    font-family:"Space Mono",monospace;font-size:13px;color:var(--green);font-weight:700;
+  }
+  .block.green .rules li::before{content:">";}
+  .rules b{font-weight:500;color:var(--green);}
+  .block.green .rules b{color:#5ade82;}
+
+  /* QUOTE */
+  .quote{
+    border:1px solid var(--line);background:#060f08;
+    padding:20px 24px;margin:6px 0 0;
+    font-size:16px;line-height:1.75;font-style:italic;color:var(--ink);
+    border-left:3px solid var(--green);
+  }
+  .quote .src{
+    display:block;font-style:normal;
+    font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.05em;color:var(--dim);margin-top:12px;
+  }
+
+  /* EPITAPH */
+  .epitaph{
+    border:2px solid var(--green);background:#030806;
+    padding:28px 30px;margin-top:8px;
+    text-align:center;
+  }
+  .epitaph .name{
+    font-family:"Cinzel";font-weight:800;font-size:22px;
+    color:var(--green);letter-spacing:0.06em;text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .epitaph .dates{
+    font-family:"Space Mono",monospace;font-size:12px;color:var(--dim);
+    letter-spacing:0.12em;margin-bottom:18px;
+  }
+  .epitaph .text{
+    font-size:15px;color:#9fb898;max-width:520px;margin:0 auto;line-height:1.75;
+  }
+  .epitaph .code{
+    font-family:"Space Mono",monospace;font-size:12px;
+    color:var(--green);margin-top:18px;opacity:0.7;
+  }
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}
+    .card,.block,.type,.quote,.stat,.tree-svg-wrap,.epitaph{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .branch,.node,.nlabel{animation:none;stroke-dashoffset:0;r:5;opacity:1;}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <nav class="sitenav" aria-label="Series navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-c-unix.html">1 · C &amp; Unix</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html" class="active">3 · Legacy</a>
+  </nav>
+
+  <header class="mast">
+    <span class="kick">ritchie series · book no. 3 · the long afterlife</span>
+    <div class="masthead">
+      <h1>His <em>Legacy</em></h1>
+
+      <!-- Animated SVG: Unix family tree branching -->
+      <svg class="art" width="220" height="155" viewBox="0 0 220 155" role="img" aria-label="Unix family tree branching from root to Linux, BSD, macOS, Android">
+        <rect x="0" y="0" width="220" height="155" fill="#020504"/>
+        <!-- ROOT: Unix -->
+        <circle cx="20" cy="77" r="6" fill="#22c55e"/>
+        <text x="28" y="74" font-family="Space Mono,monospace" font-size="9" fill="#22c55e" font-weight="700">Unix</text>
+        <text x="28" y="84" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">1969</text>
+        <!-- Trunk line -->
+        <line class="branch b1" x1="26" y1="77" x2="70" y2="77" stroke="#22c55e" stroke-width="1.5" fill="none"/>
+        <!-- Branch to BSD (up) -->
+        <line class="branch b2" x1="70" y1="77" x2="70" y2="38" stroke="#22c55e" stroke-width="1.2" fill="none"/>
+        <line class="branch b3" x1="70" y1="38" x2="120" y2="38" stroke="#22c55e" stroke-width="1.2" fill="none"/>
+        <!-- BSD node -->
+        <circle class="node n1" cx="120" cy="38" r="5" fill="#22c55e"/>
+        <text class="nlabel l1" x="127" y="35" font-family="Space Mono,monospace" font-size="9" fill="#22c55e">BSD</text>
+        <text class="nlabel l1" x="127" y="44" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">1977</text>
+        <!-- BSD → macOS -->
+        <line class="branch b4" x1="120" y1="38" x2="165" y2="22" stroke="#22c55e" stroke-width="1" fill="none" stroke-dasharray="3 2" opacity="0.7"/>
+        <circle class="node n2" cx="165" cy="22" r="4" fill="#22c55e" opacity="0.8"/>
+        <text class="nlabel l2" x="171" y="19" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">macOS</text>
+        <text class="nlabel l2" x="171" y="27" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">iOS</text>
+        <!-- Branch to Linux (middle) -->
+        <line class="branch b2" x1="70" y1="77" x2="120" y2="77" stroke="#22c55e" stroke-width="1.5" fill="none"/>
+        <!-- Linux node -->
+        <circle class="node n3" cx="120" cy="77" r="5" fill="#22c55e"/>
+        <text class="nlabel l3" x="127" y="74" font-family="Space Mono,monospace" font-size="9" fill="#22c55e">Linux</text>
+        <text class="nlabel l3" x="127" y="83" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">1991</text>
+        <!-- Linux → Android -->
+        <line class="branch b5" x1="120" y1="77" x2="165" y2="60" stroke="#22c55e" stroke-width="1" fill="none" stroke-dasharray="3 2" opacity="0.7"/>
+        <circle class="node n4" cx="165" cy="60" r="4" fill="#22c55e" opacity="0.8"/>
+        <text class="nlabel l4" x="171" y="57" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">Android</text>
+        <text class="nlabel l4" x="171" y="65" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">3.3B devices</text>
+        <!-- Linux → Servers -->
+        <line class="branch b5" x1="120" y1="77" x2="165" y2="90" stroke="#22c55e" stroke-width="1" fill="none" stroke-dasharray="3 2" opacity="0.7"/>
+        <circle class="node n5" cx="165" cy="90" r="4" fill="#22c55e" opacity="0.8"/>
+        <text class="nlabel l5" x="171" y="87" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">Servers</text>
+        <text class="nlabel l5" x="171" y="95" font-family="Space Mono,monospace" font-size="7" fill="#6b7280">90%+ web</text>
+        <!-- Branch to System V (below) -->
+        <line class="branch b2" x1="70" y1="77" x2="70" y2="115" stroke="#22c55e" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <line class="branch b6" x1="70" y1="115" x2="120" y2="115" stroke="#22c55e" stroke-width="1.2" fill="none" opacity="0.6"/>
+        <circle class="node n6" cx="120" cy="115" r="4" fill="#22c55e" opacity="0.6"/>
+        <text class="nlabel l6" x="126" y="112" font-family="Space Mono,monospace" font-size="8" fill="#6b7280">System V</text>
+        <text class="nlabel l6" x="126" y="120" font-family="Space Mono,monospace" font-size="7" fill="#3a5a3c">1983</text>
+        <!-- Footer -->
+        <text x="110" y="145" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#6b7280">Unix → every screen on Earth</text>
+      </svg>
+    </div>
+    <p class="dek">He built the substrate. Not the application, not the product — the <b>ground itself</b>. C is still the #1 or #2 systems language. Linux runs everything. macOS is Unix. Android is Linux. Every web server descends from Unix. And "Hello, World" is still the first program written by every programmer in every language. He is the invisible architect of the digital world.</p>
+  </header>
+
+  <span class="band">The reach</span>
+  <div class="types">
+    <div class="type reveal"><h4>C language</h4><p>Still the #1 or #2 systems language. Linux kernel is C. Every OS is C. CPython, Ruby, PHP — all C.</p><span class="tg">alive</span></div>
+    <div class="type reveal"><h4>Unix descendants</h4><p>macOS, iOS, Android, Linux, every web server. 90%+ of internet infrastructure is Unix-derived.</p><span class="tg">everywhere</span></div>
+    <div class="type reveal"><h4>Linux</h4><p>500 of the top 500 supercomputers. 96% of the world's servers. 3.3 billion Android devices.</p><span class="tg">dominant</span></div>
+    <div class="type reveal"><h4>Hello, World</h4><p>Still the first program written in every language, by every programmer, forever. An immortal tradition.</p><span class="tg">tradition</span></div>
+  </div>
+
+  <!-- UNIX FAMILY TREE FULL TEXT VERSION -->
+  <span class="band dark">The Unix family tree — full</span>
+  <div class="tree-svg-wrap reveal">
+    <svg width="680" height="280" viewBox="0 0 680 280" role="img" aria-label="Detailed Unix family tree from 1969 to present">
+      <!-- Background -->
+      <rect x="0" y="0" width="680" height="280" fill="#020504"/>
+      <!-- UNIX ROOT -->
+      <rect x="10" y="118" width="64" height="24" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="42" y="133" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#22c55e" font-weight="700">Unix 1969</text>
+      <!-- Trunk -->
+      <line x1="74" y1="130" x2="150" y2="130" stroke="#22c55e" stroke-width="2"/>
+      <!-- Branch fork at x=150 -->
+      <line x1="150" y1="50" x2="150" y2="210" stroke="#22c55e" stroke-width="1.5"/>
+      <!-- Upper branch: BSD line -->
+      <line x1="150" y1="50" x2="240" y2="50" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="240" y="38" width="62" height="24" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1"/>
+      <text x="271" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#22c55e">BSD 1977</text>
+      <!-- BSD → Darwin → macOS/iOS -->
+      <line x1="302" y1="50" x2="370" y2="50" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 2"/>
+      <rect x="370" y="38" width="68" height="24" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1"/>
+      <text x="404" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#22c55e">Darwin 2000</text>
+      <line x1="438" y1="44" x2="520" y2="25" stroke="#22c55e" stroke-width="1" stroke-dasharray="3 2" opacity="0.8"/>
+      <line x1="438" y1="56" x2="520" y2="65" stroke="#22c55e" stroke-width="1" stroke-dasharray="3 2" opacity="0.8"/>
+      <rect x="520" y="14" width="60" height="20" rx="2" fill="#060f08" stroke="#9fb898" stroke-width="0.8"/>
+      <text x="550" y="27" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">macOS</text>
+      <rect x="520" y="56" width="60" height="20" rx="2" fill="#060f08" stroke="#9fb898" stroke-width="0.8"/>
+      <text x="550" y="69" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">iOS / iPadOS</text>
+      <!-- Middle branch: System V -->
+      <line x1="150" y1="100" x2="240" y2="100" stroke="#22c55e" stroke-width="1.2"/>
+      <rect x="240" y="88" width="78" height="24" rx="2" fill="#060f08" stroke="#6b7280" stroke-width="1"/>
+      <text x="279" y="103" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b7280">System V 1983</text>
+      <!-- SV → Solaris, AIX -->
+      <line x1="318" y1="100" x2="370" y2="88" stroke="#6b7280" stroke-width="0.8" stroke-dasharray="3 3"/>
+      <line x1="318" y1="100" x2="370" y2="112" stroke="#6b7280" stroke-width="0.8" stroke-dasharray="3 3"/>
+      <text x="374" y="92" font-family="Space Mono,monospace" font-size="8" fill="#3a5a3c">Solaris / HP-UX / AIX</text>
+      <!-- POSIX line -->
+      <line x1="150" y1="130" x2="240" y2="130" stroke="#22c55e" stroke-width="0.8" stroke-dasharray="4 2" opacity="0.4"/>
+      <text x="244" y="133" font-family="Space Mono,monospace" font-size="8" fill="#2a3e2c">POSIX standard 1988</text>
+      <!-- Linux branch -->
+      <line x1="150" y1="165" x2="240" y2="165" stroke="#22c55e" stroke-width="1.5"/>
+      <rect x="240" y="153" width="72" height="24" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1.5"/>
+      <text x="276" y="168" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#22c55e" font-weight="700">Linux 1991</text>
+      <!-- Linux branches -->
+      <line x1="312" y1="165" x2="370" y2="145" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="312" y1="165" x2="370" y2="165" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="312" y1="165" x2="370" y2="185" stroke="#22c55e" stroke-width="1" stroke-dasharray="4 2"/>
+      <rect x="370" y="134" width="68" height="20" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1"/>
+      <text x="404" y="147" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">Android · 3.3B</text>
+      <rect x="370" y="156" width="68" height="20" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1"/>
+      <text x="404" y="169" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">Web Servers 90%+</text>
+      <rect x="370" y="177" width="68" height="20" rx="2" fill="#060f08" stroke="#22c55e" stroke-width="1"/>
+      <text x="404" y="190" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#9fb898">Supercomputers</text>
+      <!-- Bottom: Embedded -->
+      <line x1="150" y1="210" x2="240" y2="210" stroke="#22c55e" stroke-width="1" opacity="0.5"/>
+      <rect x="240" y="198" width="82" height="24" rx="2" fill="#060f08" stroke="#6b7280" stroke-width="0.8"/>
+      <text x="281" y="213" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b7280">Embedded / IoT</text>
+      <!-- C Language lineage label -->
+      <text x="10" y="255" font-family="Space Mono,monospace" font-size="8" fill="#3a5a3c">C (1972) ──→ C++ ──→ Java, C# · CPython, Ruby, PHP, V8/JavaScript · every systems language</text>
+      <text x="10" y="270" font-family="Space Mono,monospace" font-size="8" fill="#22c55e" opacity="0.5">Linux kernel: C · macOS/iOS kernel: C · Android HAL: C · every OS on Earth: C</text>
+    </svg>
+  </div>
+
+  <!-- SCALE STATS -->
+  <span class="band dark" style="margin-top:32px;">The numbers</span>
+  <div class="stats reveal">
+    <div class="stat">
+      <span class="num">500</span>
+      <span class="label">Supercomputers</span>
+      <span class="sub">Top 500 — all run Linux</span>
+    </div>
+    <div class="stat">
+      <span class="num">3.3B</span>
+      <span class="label">Android devices</span>
+      <span class="sub">All run Linux (Unix-derived)</span>
+    </div>
+    <div class="stat">
+      <span class="num">90%+</span>
+      <span class="label">Web servers</span>
+      <span class="sub">Run Unix or Linux</span>
+    </div>
+    <div class="stat">
+      <span class="num">#1–2</span>
+      <span class="label">C language rank</span>
+      <span class="sub">TIOBE index, consistently</span>
+    </div>
+    <div class="stat">
+      <span class="num">50+</span>
+      <span class="label">Years of C</span>
+      <span class="sub">1972 → still dominant in 2025</span>
+    </div>
+  </div>
+
+  <span class="band dark">What C built</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>Every OS kernel is C</h3>
+      <p class="what">The Linux kernel is written in C. The Windows NT kernel is written in C and C++. The macOS/iOS XNU kernel is written in C and C++. Every operating system's inner core — the code that controls the hardware — is C.</p>
+      <p class="need"><b>linux kernel</b> ~30 million lines of C</p>
+      <p class="do"><b>role</b> manages memory, processes, filesystems, hardware</p>
+      <p class="plus"><b>+1</b> Rust was admitted to the Linux kernel in 2022 — the first non-C language permitted in over 30 years. The event was news because C's monopoly is that total.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Every language runs on C</h3>
+      <p class="what">CPython (the reference Python implementation) is written in C. Ruby MRI is written in C. PHP is written in C. The Java Virtual Machine was written in C. V8 (JavaScript's engine) is written in C++. Nearly every programming language runs on Ritchie's language.</p>
+      <p class="need"><b>cpython</b> python is C, at the bottom</p>
+      <p class="do"><b>v8</b> javascript is C++, at the bottom</p>
+      <p class="plus"><b>+1</b> when you run Python, Python calls C functions. When you run JavaScript in a browser, V8 calls C++ routines. The whole tower is built on Ritchie's foundation.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>C shaped every language</h3>
+      <p class="what">C's syntax — curly braces, semicolons, for loops, if/else — was so influential that virtually every major language after 1972 adopted the same basic structure. Java, JavaScript, C#, PHP, Swift, Go, Rust: all look like C.</p>
+      <p class="need"><b>inheritance</b> C's syntax is the syntax of programming</p>
+      <p class="do"><b>languages</b> Java, JavaScript, C#, PHP, Swift, Go, Rust, Perl, Awk</p>
+      <p class="plus"><b>+1</b> Go — designed by Ken Thompson himself in 2009 — is partly a rethinking of C. Even the deliberate successor inherits the ancestor's grammar.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">04</span>
+      <h3>The internet runs Unix</h3>
+      <p class="what">The servers that handle HTTP requests, the routers that move packets, the DNS infrastructure that translates names to addresses — nearly all of it runs on Linux, which is Unix-philosophy software written in C.</p>
+      <p class="need"><b>nginx</b> written in C</p>
+      <p class="do"><b>apache</b> written in C; <b>openssh</b> C; <b>openssl</b> C</p>
+      <p class="plus"><b>+1</b> the TCP/IP networking stack itself — the protocol of the internet — was developed on Unix systems. The internet's architecture is Unix's architecture.</p>
+    </article>
+  </div>
+
+  <!-- WHAT UNIX BUILT -->
+  <span class="band dark">What Unix built</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>macOS and iOS</h3>
+      <p class="what">macOS is built on Darwin, which is built on BSD, which is built on Unix. iOS is macOS for phones. Every iPhone and Mac runs on a direct Unix descendant. Every app on those devices sits on top of Ritchie's operating system model.</p>
+      <p class="need"><b>darwin kernel</b> XNU — "X is Not Unix," officially; it is Unix in practice</p>
+      <p class="do"><b>posix certified</b> macOS is officially certified as a POSIX-compliant Unix</p>
+      <p class="plus"><b>+1</b> Steve Jobs used NeXTSTEP (a BSD-derived OS) as the core of macOS when he returned to Apple in 1997. The foundation of Jobs's greatest products was Ritchie's Unix.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>Android and Linux</h3>
+      <p class="what">Android is built on the Linux kernel. Linux is not Unix — it was written from scratch by Linus Torvalds in 1991 — but it was explicitly modeled on Unix and implements the Unix philosophy. Every Android phone is a Unix-philosophy device.</p>
+      <p class="need"><b>torvalds, 1991</b> "Just a hobby, won't be big and professional like gnu"</p>
+      <p class="do"><b>today</b> 3.3 billion active Android devices worldwide</p>
+      <p class="plus"><b>+1</b> Torvalds wrote Linux because he wanted to run Unix-style software on his home PC and couldn't afford a real Unix license. The 1956 consent decree had made Unix free to universities but not to individuals.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>The shell tradition</h3>
+      <p class="what">The Unix shell — sh, bash, zsh, ksh — is the command-line interface that powers professional computing worldwide. DevOps, system administration, scientific computing, and software development all live in the shell.</p>
+      <p class="need"><b>bash</b> the default shell on most Linux systems since 1989</p>
+      <p class="do"><b>zsh</b> default on macOS since 2019; sh created at Bell Labs 1970s</p>
+      <p class="plus"><b>+1</b> every time a programmer runs "git push" or "docker build" or "ssh server," they are using a tool built entirely on the Unix shell model — composable, text-stream-based, exactly as Ritchie and Thompson designed it.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">08</span>
+      <h3>Hello, World — forever</h3>
+      <p class="what">The "Hello, World" tradition — first appearing in Ritchie's 1974 C tutorial — has become the universal first program. Every programming language, every tutorial, every bootcamp begins with "Hello, World." It is the invariant of programming education, across time and language.</p>
+      <p class="need"><b>origin</b> Ritchie's 1974 C tutorial; formalized in K&amp;R 1978</p>
+      <p class="do"><b>scope</b> Python, JavaScript, Java, Rust, Go, Ruby — all start here</p>
+      <p class="plus"><b>+1</b> Ritchie did not decree this. It spread because it was perfect: minimal, complete, satisfying. The simplest thing a program can do — announce itself to the world. It has never been improved upon.</p>
+    </article>
+  </div>
+
+  <!-- THE INVISIBLE ARCHITECT -->
+  <span class="band">Jobs and Ritchie — the contrast</span>
+  <div class="quote reveal">
+    "Dennis Ritchie is bigger than Steve Jobs. Ritchie's influence dwarfs Jobs's, and almost nobody knows it."
+    <span class="src">— Rob Pike, 2011 (Google+ post, written the week both men died)</span>
+  </div>
+  <div class="quote reveal" style="margin-top:10px;">
+    "The tools that Ritchie built... are what make today's modern computing possible. We have Jobs to thank for packaging it in ways people could use, but Ritchie is the one who created the pipes that all of the plumbing runs through."
+    <span class="src">— Vint Cerf, co-inventor of TCP/IP</span>
+  </div>
+
+  <span class="band dark">Why the invisibility</span>
+  <div class="block green">
+    <ul class="rules">
+      <li>Ritchie built <b>infrastructure</b>: the foundation, the pipe, the substrate. Jobs built <b>products</b>: things you hold, touch, see. Infrastructure is invisible by nature — you only notice it when it fails.</li>
+      <li>C is invisible because it is the <b>layer below</b> every layer you see. Unix is invisible because it is the <b>air</b> that software breathes. The Unix philosophy — composable tools, standard interfaces — is now so universal that it seems like the only possible way to design software.</li>
+      <li>Ritchie himself was constitutionally <b>uninterested in fame</b>. He gave away credit. He deflected attention. He was content to build things that worked and let others use them.</li>
+      <li>The technical community knew. The Turing Award committee knew. Ken Thompson, Brian Kernighan, Rob Pike, Linus Torvalds — all knew. The public, which interacts only with the surface layer, did not need to know, because the foundation held whether you knew it or not.</li>
+      <li>The final irony: the devices used to mourn Steve Jobs in October 2011 — iPhones running iOS, MacBooks running macOS — all ran directly on Unix derivatives, built in C. <b>Ritchie's code carried the eulogies for his own burial.</b></li>
+    </ul>
+  </div>
+
+  <!-- EPITAPH -->
+  <span class="band dark" style="margin-top:36px;">In memoriam</span>
+  <div class="epitaph reveal">
+    <div class="name">Dennis MacAlistair Ritchie</div>
+    <div class="dates">September 9, 1941 — October 12, 2011</div>
+    <div class="text">
+      He invented C and co-created Unix. He spent forty years at one address — Bell Labs, Murray Hill, New Jersey — and changed the world so completely that the world stopped noticing.
+      Every screen you read this on runs his operating system. Every program you run descends from his language. Every "Hello, World" bears his fingerprint.
+      He wanted none of the credit and received little of it. He did it anyway.
+    </div>
+    <div class="code">$ echo "Hello, World" # still running · 1969–∞</div>
+  </div>
+
+  <span class="band dim">Confidence and sourcing</span>
+  <div class="block">
+    <ul class="rules">
+      <li>All statistics (Linux market share, Android device count, supercomputer OS data) are from industry sources (TIOBE, StatCounter, Top500.org) and are <b>verifiable and current</b> as of 2025.</li>
+      <li>The claim that macOS is certified POSIX-compliant is <b>factual</b> — Apple maintains the certification specifically to be called a legitimate Unix.</li>
+      <li>The Rob Pike quotation is from a real 2011 public post; the attribution is <b>confirmed</b>. The Vint Cerf quotation is widely reported and attributed in tech journalism from that period.</li>
+      <li>The "Hello, World" origin story — Kernighan wrote the example, it first appeared in a 1974 Ritchie tutorial — is <b>confirmed by Kernighan himself</b> in <em>UNIX: A History and a Memoir</em> (2019).</li>
+      <li>Told straight, Ritchie needs no embellishment. The scale of what he built is so large that the temptation is understatement, not exaggeration. The numbers are the argument.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ritchie series · book no. 3 · the long afterlife · the invisible architect of the digital world<br>
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0
+  </p>
+
+</div>
+</body>
+</html>

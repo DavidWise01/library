@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emmy Noether — Vol. 3: Legacy | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0a0610;
+      --violet: #7c3aed;
+      --rose: #e11d48;
+      --dim: #140d20;
+      --mid: #221535;
+      --text: #d8cfe8;
+      --muted: #7a6a9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #07040dee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--violet);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--violet);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.8;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--dim);
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid var(--dim); }
+    nav.series-nav a:hover { color: var(--violet); background: #140d20; }
+    nav.series-nav a.active { color: var(--violet); border-bottom: 2px solid var(--violet); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, #7c3aed28 0%, #e11d4812 60%, transparent 80%);
+      pointer-events: none;
+    }
+    .hero svg.hero-anim {
+      width: min(500px, 96vw);
+      height: min(290px, 55vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 24px #7c3aed44);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--violet);
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #7c3aed44;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--rose); }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 600px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--violet);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--violet);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .band {
+      background: var(--violet);
+      color: #e8deff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--violet);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0; }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--violet);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #130a1e;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #c8b8e4;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--violet);
+      background: #110820;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── ROSE HIGHLIGHT BOX ── */
+    .rose-box {
+      border: 1px solid var(--rose);
+      background: #1a0610;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .rose-box .rb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--rose);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── PARTICLE TABLE ── */
+    .particle-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8rem 0;
+      font-size: 0.88rem;
+    }
+    .particle-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--rose);
+      text-align: left;
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--rose);
+      background: var(--dim);
+    }
+    .particle-table td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--dim);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .particle-table tr:hover td { background: #140d20; }
+    .particle-table td:first-child {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--violet);
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+      margin: 2rem 0;
+      background: var(--mid);
+      border: 1px solid var(--mid);
+    }
+    .stat-cell {
+      flex: 1;
+      min-width: 130px;
+      background: var(--dim);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-cell .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--violet);
+      display: block;
+      line-height: 1;
+    }
+    .stat-cell .stat-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #070410;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--violet); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Emmy Noether</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-theorem.html">Vol. 1 — The Theorem</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Standard Model particles arranged by symmetry group -->
+  <svg class="hero-anim" viewBox="0 0 500 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="particleGlow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <radialGradient id="su3grad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e11d48" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#e11d48" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="su2grad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="u1grad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Background group labels -->
+    <text x="80" y="22" fill="#e11d48" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.7" letter-spacing="1">SU(3) — STRONG</text>
+    <text x="250" y="22" fill="#7c3aed" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.7" letter-spacing="1">SU(2) — WEAK</text>
+    <text x="410" y="22" fill="#3b82f6" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.7" letter-spacing="1">U(1) — EM</text>
+
+    <!-- Separator lines -->
+    <line x1="162" y1="30" x2="162" y2="270" stroke="#221535" stroke-width="1"/>
+    <line x1="325" y1="30" x2="325" y2="270" stroke="#221535" stroke-width="1"/>
+
+    <!-- SU(3) group: Quarks (3 generations × 2 types) -->
+    <!-- Up quark -->
+    <circle cx="42" cy="80" r="20" fill="#e11d48" opacity="0.18" filter="url(#particleGlow)"/>
+    <circle cx="42" cy="80" r="16" fill="none" stroke="#e11d48" stroke-width="1.3">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <text x="42" y="75" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">u</text>
+    <text x="42" y="87" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">UP</text>
+
+    <!-- Down quark -->
+    <circle cx="88" cy="80" r="20" fill="#e11d48" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="88" cy="80" r="16" fill="none" stroke="#e11d48" stroke-width="1.3">
+      <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <text x="88" y="75" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">d</text>
+    <text x="88" y="87" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">DOWN</text>
+
+    <!-- Charm quark -->
+    <circle cx="42" cy="145" r="20" fill="#e11d48" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="42" cy="145" r="16" fill="none" stroke="#e11d48" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="42" y="140" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">c</text>
+    <text x="42" y="152" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">CHARM</text>
+
+    <!-- Strange quark -->
+    <circle cx="88" cy="145" r="20" fill="#e11d48" opacity="0.13" filter="url(#particleGlow)"/>
+    <circle cx="88" cy="145" r="16" fill="none" stroke="#e11d48" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.6;0.95;0.6" dur="3.7s" repeatCount="indefinite"/>
+    </circle>
+    <text x="88" y="140" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">s</text>
+    <text x="88" y="152" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">STRANGE</text>
+
+    <!-- Top quark -->
+    <circle cx="42" cy="210" r="20" fill="#e11d48" opacity="0.13" filter="url(#particleGlow)"/>
+    <circle cx="42" cy="210" r="16" fill="none" stroke="#e11d48" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.5;0.85;0.5" dur="4.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="42" y="205" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">t</text>
+    <text x="42" y="217" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">TOP</text>
+
+    <!-- Bottom quark -->
+    <circle cx="88" cy="210" r="20" fill="#e11d48" opacity="0.12" filter="url(#particleGlow)"/>
+    <circle cx="88" cy="210" r="16" fill="none" stroke="#e11d48" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.55;0.9;0.55" dur="5.5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="88" y="205" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">b</text>
+    <text x="88" y="217" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">BOTTOM</text>
+
+    <!-- Gluon -->
+    <circle cx="120" cy="255" r="13" fill="none" stroke="#e11d48" stroke-width="1" stroke-dasharray="2 3">
+      <animateTransform attributeName="transform" type="rotate" from="0 120 255" to="360 120 255" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="120" y="259" fill="#e11d48" font-family="monospace" font-size="7" text-anchor="middle">g</text>
+
+    <!-- SU(2) group: Leptons + W/Z bosons -->
+    <!-- Electron -->
+    <circle cx="196" cy="80" r="20" fill="#7c3aed" opacity="0.2" filter="url(#particleGlow)"/>
+    <circle cx="196" cy="80" r="16" fill="none" stroke="#7c3aed" stroke-width="1.3">
+      <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="3.3s" repeatCount="indefinite"/>
+    </circle>
+    <text x="196" y="75" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">e⁻</text>
+    <text x="196" y="87" fill="#7c3aed" font-family="monospace" font-size="6" text-anchor="middle">ELECTRON</text>
+
+    <!-- Electron neutrino -->
+    <circle cx="244" cy="80" r="20" fill="#7c3aed" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="244" cy="80" r="16" fill="none" stroke="#7c3aed" stroke-width="1.1" stroke-dasharray="4 2">
+      <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="4.5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="244" y="75" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle">νe</text>
+    <text x="244" y="87" fill="#7c3aed" font-family="monospace" font-size="5.5" text-anchor="middle">ν-ELECTRON</text>
+
+    <!-- Muon -->
+    <circle cx="196" cy="145" r="20" fill="#7c3aed" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="196" cy="145" r="16" fill="none" stroke="#7c3aed" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.55;0.85;0.55" dur="5.1s" repeatCount="indefinite"/>
+    </circle>
+    <text x="196" y="140" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">μ</text>
+    <text x="196" y="152" fill="#7c3aed" font-family="monospace" font-size="6" text-anchor="middle">MUON</text>
+
+    <!-- Muon neutrino -->
+    <circle cx="244" cy="145" r="20" fill="#7c3aed" opacity="0.12" filter="url(#particleGlow)"/>
+    <circle cx="244" cy="145" r="16" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4 2">
+      <animate attributeName="stroke-opacity" values="0.45;0.8;0.45" dur="3.9s" repeatCount="indefinite"/>
+    </circle>
+    <text x="244" y="140" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle">νμ</text>
+    <text x="244" y="152" fill="#7c3aed" font-family="monospace" font-size="5.5" text-anchor="middle">ν-MUON</text>
+
+    <!-- Tau -->
+    <circle cx="196" cy="210" r="20" fill="#7c3aed" opacity="0.13" filter="url(#particleGlow)"/>
+    <circle cx="196" cy="210" r="16" fill="none" stroke="#7c3aed" stroke-width="1.1">
+      <animate attributeName="stroke-opacity" values="0.5;0.85;0.5" dur="4.8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="196" y="205" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">τ</text>
+    <text x="196" y="217" fill="#7c3aed" font-family="monospace" font-size="6" text-anchor="middle">TAU</text>
+
+    <!-- Tau neutrino -->
+    <circle cx="244" cy="210" r="20" fill="#7c3aed" opacity="0.1" filter="url(#particleGlow)"/>
+    <circle cx="244" cy="210" r="16" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4 2">
+      <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="244" y="205" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle">ντ</text>
+    <text x="244" y="217" fill="#7c3aed" font-family="monospace" font-size="5.5" text-anchor="middle">ν-TAU</text>
+
+    <!-- W+/W- bosons -->
+    <circle cx="296" cy="255" r="13" fill="none" stroke="#7c3aed" stroke-width="1.2">
+      <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="296" y="259" fill="#7c3aed" font-family="monospace" font-size="7" text-anchor="middle">W±</text>
+
+    <!-- Z boson -->
+    <circle cx="322" cy="255" r="13" fill="none" stroke="#7c3aed" stroke-width="1.2">
+      <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="3.2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="322" y="259" fill="#7c3aed" font-family="monospace" font-size="7" text-anchor="middle">Z⁰</text>
+
+    <!-- U(1) group: Photon + Higgs -->
+    <!-- Photon -->
+    <circle cx="380" cy="120" r="24" fill="#3b82f6" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="380" cy="120" r="19" fill="none" stroke="#3b82f6" stroke-width="1.4">
+      <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 380 120" to="360 380 120" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <text x="380" y="115" fill="#fff" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">γ</text>
+    <text x="380" y="129" fill="#3b82f6" font-family="monospace" font-size="6.5" text-anchor="middle">PHOTON</text>
+
+    <!-- Higgs -->
+    <circle cx="440" cy="120" r="24" fill="#e11d48" opacity="0.15" filter="url(#particleGlow)"/>
+    <circle cx="440" cy="120" r="19" fill="none" stroke="#e11d48" stroke-width="1.4" stroke-dasharray="5 3">
+      <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="4s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="rotate" from="360 440 120" to="0 440 120" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <text x="440" y="115" fill="#fff" font-family="monospace" font-size="11" text-anchor="middle" font-weight="bold">H</text>
+    <text x="440" y="129" fill="#e11d48" font-family="monospace" font-size="6.5" text-anchor="middle">HIGGS</text>
+
+    <!-- Gravity (outside SM) -->
+    <circle cx="410" cy="210" r="17" fill="none" stroke="#7a6a9a" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.2;0.5" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <text x="410" y="205" fill="#7a6a9a" font-family="monospace" font-size="8" text-anchor="middle">G?</text>
+    <text x="410" y="215" fill="#7a6a9a" font-family="monospace" font-size="5.5" text-anchor="middle">GRAVITON</text>
+    <text x="410" y="235" fill="#7a6a9a" font-family="monospace" font-size="5" text-anchor="middle" opacity="0.6">(undetected)</text>
+
+    <!-- Bottom label -->
+    <text x="250" y="275" fill="#7c3aed" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.5" letter-spacing="2">THE STANDARD MODEL — EVERY FORCE A NOETHER SYMMETRY</text>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Emmy Noether Series &mdash; Volume 3</p>
+  <h1>The Long <em>Afterlife</em></h1>
+  <p class="hero-sub">She has been dead ninety years and she is still doing mathematics. Every conservation law in the universe is a theorem she proved in 1915.</p>
+  <p class="hero-dates">1935 – Present</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: THE THEOREM AS SKELETON -->
+  <section id="theorem-skeleton">
+    <div class="container">
+      <p class="kick">The Skeleton of All Theoretical Physics</p>
+      <h2>Noether's Theorem: Ninety Years Later</h2>
+      <p>The word "profound" is overused in describing scientific results. For Noether's theorem, it is barely adequate. The theorem, proved in 1915 and published in 1918, is not merely a useful tool that physicists apply. It is the structural basis on which all of modern theoretical physics stands. Every conservation law — energy, momentum, angular momentum, charge, color charge, weak isospin — is a Noether symmetry. Every fundamental force in the Standard Model is defined by the requirement that a particular symmetry be preserved locally. The theorem does not describe the architecture of physics; it is the architecture.</p>
+      <p>Classical mechanics, as reformulated in the Lagrangian and Hamiltonian frameworks, is an application of Noether's theorem. Special relativity's energy-momentum conservation laws are Noether symmetries under Poincaré group transformations. Quantum electrodynamics — the most precisely tested theory in the history of science — is built on local U(1) gauge symmetry; the photon exists because this symmetry must be preserved, and charge conservation is the Noether charge corresponding to it. The weak nuclear force is SU(2) gauge symmetry. The strong nuclear force is SU(3). The entire Standard Model is the statement: these three symmetry groups exist; here are the Noether charges and the force-carrying bosons required to make the symmetries local.</p>
+
+      <div class="highlight-box">
+        <div class="hb-label">The Standard Model as Noether Theorem</div>
+        <p style="font-size:0.95rem; color:var(--text);">The Lagrangian of the Standard Model is required to be invariant under SU(3) × SU(2) × U(1) local gauge transformations. From this requirement, Noether's theorem generates: eight gluons (the SU(3) gauge bosons), three W and Z bosons (the SU(2) gauge bosons), and the photon (the U(1) gauge boson). All the fundamental forces except gravity emerge from the theorem. The Higgs mechanism breaks the electroweak symmetry spontaneously — but even this is formulated in Noether's framework. The Standard Model is a Noether architecture from foundation to apex.</p>
+      </div>
+
+      <h3>String Theory and Beyond</h3>
+      <p>Beyond the Standard Model, Noether's theorem continues to be the primary tool. String theory requires conformal symmetry on the worldsheet, and its conservation laws are Noether charges. Supersymmetry is a Noether symmetry relating bosons and fermions, with supercharges as the corresponding conserved quantities. Any candidate theory of quantum gravity that is taken seriously must account for diffeomorphism invariance — which, by Noether's second theorem, constrains the form of its conservation laws. The theorem has not been superseded; it has been extended to cover mathematical structures that did not exist when Noether proved it.</p>
+
+      <blockquote class="pull">
+        <p>"As far as I can see, every fundamental conservation law in physics is a consequence of some symmetry, and every symmetry corresponds to a conservation law — and this is Noether's theorem."</p>
+        <cite>— Steven Weinberg, Nobel Laureate in Physics, 1979</cite>
+      </blockquote>
+
+      <table class="particle-table">
+        <thead>
+          <tr>
+            <th>Symmetry Group</th>
+            <th>Physical Domain</th>
+            <th>Noether Charge</th>
+            <th>Force Carrier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>U(1)</td>
+            <td>Electromagnetism</td>
+            <td>Electric charge</td>
+            <td>Photon (γ)</td>
+          </tr>
+          <tr>
+            <td>SU(2)</td>
+            <td>Weak nuclear force</td>
+            <td>Weak isospin</td>
+            <td>W±, Z⁰ bosons</td>
+          </tr>
+          <tr>
+            <td>SU(3)</td>
+            <td>Strong nuclear force (QCD)</td>
+            <td>Color charge</td>
+            <td>Eight gluons</td>
+          </tr>
+          <tr>
+            <td>Poincaré (time translation)</td>
+            <td>All relativistic physics</td>
+            <td>Energy</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Poincaré (space translation)</td>
+            <td>All physics</td>
+            <td>Momentum</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Poincaré (rotation)</td>
+            <td>All physics</td>
+            <td>Angular momentum</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Diffeomorphism invariance</td>
+            <td>General relativity</td>
+            <td>Bianchi identity (energy-momentum)</td>
+            <td>Graviton (hypothetical)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 2: ABSTRACT ALGEBRA LEGACY -->
+  <section id="algebra-legacy">
+    <div class="container">
+      <p class="kick">The Mathematical Legacy</p>
+      <h2>Noetherian Rings and the Algebraic World</h2>
+      <p>In mathematics, the standard measure of a concept's importance is how far it propagates — how many theorems, in how many different fields, require it as a hypothesis. By this measure, Noetherian rings are among the most important concepts in the mathematical vocabulary.</p>
+      <p>They appear in commutative algebra, where the Hilbert basis theorem (proved before Noether but now understood through her framework) states that the polynomial ring over a Noetherian ring is Noetherian — and this single fact guarantees that a vast range of algebraic varieties are described by finitely many equations. They appear in algebraic geometry, where the Noetherian condition on a topological space is the right hypothesis for a clean theory of closed sets and irreducible decompositions. They appear in algebraic number theory, where rings of algebraic integers are always Noetherian. They appear in representation theory, where Noetherian modules over group algebras have well-behaved structure theorems. They appear in homological algebra, where the Noetherian hypothesis is required for the Hilbert syzygy theorem and its descendants.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Commutative Algebra</div>
+          <div class="card-title">Primary Decomposition</div>
+          <p>In a Noetherian ring, every ideal is a finite intersection of primary ideals — a structural theorem analogous to the fundamental theorem of arithmetic. Standard in every graduate algebra course.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Algebraic Geometry</div>
+          <div class="card-title">Noetherian Spaces</div>
+          <p>A topological space satisfying the descending chain condition on closed sets. Affine algebraic varieties over a field are Noetherian. The whole theory of schemes depends on this condition.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Number Theory</div>
+          <div class="card-title">Dedekind Domains</div>
+          <p>Rings of algebraic integers are Dedekind domains — in particular, Noetherian. Her unification of ideal theory made modern algebraic number theory possible.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Representation Theory</div>
+          <div class="card-title">Non-commutative Algebra</div>
+          <p>Her work on hypercomplex numbers and their representation theory (1929) established the connection between algebra and representation theory that Brauer and Weyl developed further.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Homological Algebra</div>
+          <div class="card-title">Syzygy and Beyond</div>
+          <p>Hilbert's syzygy theorem, recast in Noetherian language, became the foundation of the free resolution theory that drives modern commutative and homological algebra.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Galois Theory</div>
+          <div class="card-title">The Modern Formulation</div>
+          <p>Every graduate textbook presents Galois theory via field extensions and automorphism groups. This is Noether's reformulation, which made connections to algebraic geometry and number theory explicit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE NOETHER BOYS LEGACY -->
+  <section id="noether-boys-legacy">
+    <div class="container">
+      <p class="kick">The Propagation of the School</p>
+      <h2>Moderne Algebra and the Lineage</h2>
+      <p>Van der Waerden's <em>Moderne Algebra</em> (1930–31) is the single most important textbook in the history of abstract algebra. It took Noether's approach — groups, rings, fields studied axiomatically, with structure theorems proved at the appropriate level of generality — and made it accessible, systematic, and teachable. The book went through eight editions and was translated into at least six languages. A generation of mathematicians worldwide learned algebra from it. The abstract algebraic approach is now simply how mathematics is done; it is impossible to imagine the modern mathematical landscape without it.</p>
+      <p>Van der Waerden was always explicit: the approach, the organization, the core results were from Noether's lectures. He was writing them down, not inventing them. He said so in the preface. He said so in lectures. He said so in interviews. The book carries his name — but it carries her mathematics.</p>
+
+      <blockquote class="pull">
+        <p>"The origin of Moderne Algebra is entirely in the lectures and the work of Emmy Noether."</p>
+        <cite>— Bartel L. van der Waerden</cite>
+      </blockquote>
+
+      <h3>The Lineage Extends Further</h3>
+      <p>The mathematical descendants of the Noether school are not just van der Waerden's students and their students. The abstract algebraic approach she established influenced everyone who came after. Alexander Grothendieck's algebraic geometry — the most ambitious and comprehensive program in twentieth-century mathematics — is built on schemes, which are defined using commutative ring theory in precisely the Noetherian tradition. Grothendieck acknowledged the influence explicitly. The tools that proved the Weil conjectures, that proved Fermat's Last Theorem, that animate the modern Langlands program — all operate within a framework whose foundations Emmy Noether laid.</p>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <span class="stat-num">1930</span>
+          <span class="stat-desc">Moderne Algebra published</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">8+</span>
+          <span class="stat-desc">Editions of the textbook</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">6+</span>
+          <span class="stat-desc">Languages translated</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">1994</span>
+          <span class="stat-desc">Fermat's Last Theorem proved — Noetherian tools throughout</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: MEMORIAL HONORS -->
+  <section id="honors">
+    <div class="container">
+      <p class="kick">Honors and Memorials</p>
+      <h2>Asteroid, Programme, and Afterlife</h2>
+
+      <h3>Asteroid 7001 Noether</h3>
+      <p>The asteroid 7001 Noether, discovered in 1955 and named in 1993, orbits in the asteroid belt between Mars and Jupiter. It has a diameter of approximately 66 kilometers and an orbital period of about 5.6 years. The naming is appropriate: asteroids move in orbits governed by Newton's laws, which are Lagrangian in structure, which means that the conservation of angular momentum that keeps them in their orbits is a Noether symmetry. The rock named after her obeys the theorem that bears her name.</p>
+
+      <h3>The Emmy Noether Programme (DFG)</h3>
+      <p>Germany's Deutsche Forschungsgemeinschaft — the German Research Foundation — administers the Emmy Noether Programme, its largest and most competitive funding program for early-career researchers in mathematics and the sciences. The program funds outstanding postdoctoral researchers to lead independent junior research groups, providing a path to a full professorship that bypasses traditional hierarchical barriers. It is considered among the most prestigious early-career awards in German academia. That it bears her name is a piece of institutional conscience: Germany destroyed her career in 1933, and Germany funds the best young mathematicians today in her name.</p>
+
+      <h3>University Namings and Further Honors</h3>
+      <p>The University of Erlangen-Nuremberg — the institution that barred her from enrollment as a young woman — maintains the Emmy Noether Centre for Mathematics and established an Emmy Noether Campus. Schools across Germany are named for her. There is an Emmy Noether lecture at major mathematics conferences. Her image appeared on a German postage stamp in 1981. Google marked her birthday with a doodle. None of these things are adequate. They are better than silence.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Astronomy</div>
+          <div class="card-title">Asteroid 7001</div>
+          <p>A 66-km rock in the asteroid belt, orbiting in gravitational fields whose conservation laws follow her theorem. Discovered 1955. Named 1993.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Germany · DFG</div>
+          <div class="card-title">Emmy Noether Programme</div>
+          <p>Germany's premier early-career research funding program. Named in partial redress of the fact that Germany fired her in 1933.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Erlangen</div>
+          <div class="card-title">Emmy Noether Centre</div>
+          <p>The university that refused to enroll her now bears her name on its mathematics center. The irony is deliberate and appropriate.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Bryn Mawr</div>
+          <div class="card-title">Emmy Noether Lectures</div>
+          <p>The Association for Women in Mathematics administers the Emmy Noether Lectures, given at the Joint Mathematics Meetings by distinguished women mathematicians.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE CORRECTED RECORD -->
+  <section id="corrected-record">
+    <div class="container">
+      <p class="kick">The Corrected Record</p>
+      <h2>Not "Greatest Woman Mathematician." Greatest Mathematician.</h2>
+      <p>For most of the twentieth century, the standard formulation was: "Emmy Noether was the greatest woman mathematician of all time." This is the formulation Einstein used in 1935 — with the qualifier, however unconscious, built in. It is the formulation that appeared in obituaries, encyclopedia articles, textbook footnotes, and popular histories for decades. It measured her against women. It did not occur to most writers, apparently, to measure her against everyone.</p>
+      <p>The case for the unqualified version is straightforward. Take the two bodies of work. Noether's theorem is, in the honest opinion of the physicists and mathematicians who have studied it most carefully, the most important theorem in theoretical physics — more structurally fundamental than any result by Newton, Maxwell, or Einstein, because it underlies and unifies all of them. The abstract algebraic program she established is the foundation on which modern mathematics operates. These are not the contributions of someone in a second tier. They are the contributions of someone at the apex of the discipline, by any measure.</p>
+      <p>Hermann Weyl, who was himself one of the great mathematicians of the century and who worked alongside her for years, was direct: she was the better mathematician. He said so. He meant it. When a competitor of that caliber says that, it is worth attending to.</p>
+
+      <div class="rose-box">
+        <div class="rb-label">The Verdict</div>
+        <p style="font-size:1rem; color:var(--text);">Emmy Noether was one of the greatest mathematicians in history, without the qualifier. Her theorem is the structural foundation of theoretical physics. Her algebraic program is the standard approach of the field. The obstacles placed in her path — no enrollment, no pay, no title, exile, death at fifty-three — make her achievement not smaller but larger. She did the greatest mathematics of her era while the institutions of her era were systematically trying to prevent her from doing any mathematics at all.</p>
+      </div>
+
+      <blockquote class="pull">
+        <p>"She was the greatest woman mathematician who has ever lived" is underselling it. Remove "woman."</p>
+        <cite>— The corrected formulation</cite>
+      </blockquote>
+
+      <p>She has been dead since 1935. Her theorem runs the universe. Every conservation law that has ever been confirmed by experiment is a Noether symmetry. Every particle accelerator that finds a predicted result is finding her theorem again. The Standard Model, the most precisely tested theory in the history of science, is a Noether architecture. The mathematics she built — Noetherian rings, abstract ideal theory, the unified algebraic approach — is the daily working language of mathematicians worldwide.</p>
+      <p>She worked for seven years without pay. She was denied a position because of her sex. She was fired and exiled because of her heritage. She died at fifty-three from a sudden, unpredicted complication after a routine surgery.</p>
+      <p>And she is still doing mathematics.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="col-attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    <br/>
+    Emmy Noether Series &mdash; Vol. 3: Legacy &nbsp;|&nbsp; ROOT0 Library
+    <br/>
+    Series: <a href="0-who.html">Vol. 0 — The Person</a> &nbsp;·&nbsp;
+    <a href="1-theorem.html">Vol. 1 — The Theorem</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol. 2 — Her World</a>
+  </div>
+  <div class="col-lic">CC-BY-ND-4.0 &nbsp;|&nbsp; Attribution required &nbsp;|&nbsp; No derivatives</div>
+</footer>
+
+</body>
+</html>

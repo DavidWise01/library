@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emmy Noether — Vol. 0: The Person | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0a0610;
+      --violet: #7c3aed;
+      --rose: #e11d48;
+      --dim: #140d20;
+      --mid: #221535;
+      --text: #d8cfe8;
+      --muted: #7a6a9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #07040dee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--violet);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--violet);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.8;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--dim);
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid var(--dim); }
+    nav.series-nav a:hover { color: var(--violet); background: #140d20; }
+    nav.series-nav a.active { color: var(--violet); border-bottom: 2px solid var(--violet); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 40%, #3b1a6a50 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.hero-anim {
+      width: min(440px, 92vw);
+      height: min(280px, 52vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 22px #7c3aed55);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--violet);
+      margin-bottom: 0.8rem;
+      opacity: 0.85;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #7c3aed44;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--violet);
+    }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 560px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rose);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--violet);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── KICK / BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .band {
+      background: var(--violet);
+      color: #e8deff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--violet);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-year {
+      font-family: 'Cinzel', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--violet);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #130a1e;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #c8b8e4;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { list-style: none; padding: 0; margin: 1.5rem 0; }
+    .timeline li {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--dim);
+      align-items: flex-start;
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .timeline .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--rose);
+      white-space: nowrap;
+      padding-top: 0.15rem;
+      min-width: 52px;
+    }
+    .timeline .tl-event { font-size: 0.95rem; color: var(--text); }
+    .timeline .tl-event strong { color: #fff; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--violet);
+      background: #110820;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── ROSE BAND ── */
+    .rose-band {
+      background: var(--rose);
+      color: #fff0f3;
+      padding: 0.2rem 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-block;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px;
+      margin: 2rem 0;
+      background: var(--mid);
+      border: 1px solid var(--mid);
+    }
+    .stat-cell {
+      flex: 1;
+      min-width: 130px;
+      background: var(--dim);
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .stat-cell .stat-num {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: var(--violet);
+      display: block;
+      line-height: 1;
+    }
+    .stat-cell .stat-desc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.4rem;
+    }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #070410;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--violet); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Emmy Noether</span>
+  <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+  <a href="1-theorem.html">Vol. 1 — The Theorem</a>
+  <a href="2-world.html">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: Rotating crystal showing symmetry axes -->
+  <svg class="hero-anim" viewBox="0 0 440 270" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="crystalGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="2.5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Background glow -->
+    <ellipse cx="220" cy="135" rx="140" ry="120" fill="url(#crystalGlow)"/>
+
+    <!-- Symmetry axis lines (animated rotation) -->
+    <g transform-origin="220 135">
+      <animateTransform attributeName="transform" type="rotate" from="0 220 135" to="360 220 135" dur="18s" repeatCount="indefinite"/>
+      <!-- Axis 1 -->
+      <line x1="220" y1="30" x2="220" y2="240" stroke="#7c3aed" stroke-width="0.6" stroke-dasharray="4 6" opacity="0.45"/>
+      <!-- Axis 2 -->
+      <line x1="115" y1="75" x2="325" y2="195" stroke="#7c3aed" stroke-width="0.6" stroke-dasharray="4 6" opacity="0.45"/>
+      <!-- Axis 3 -->
+      <line x1="325" y1="75" x2="115" y2="195" stroke="#7c3aed" stroke-width="0.6" stroke-dasharray="4 6" opacity="0.45"/>
+    </g>
+
+    <!-- Crystal body (hexagonal, slowly rotating) -->
+    <g filter="url(#glow)">
+      <animateTransform attributeName="transform" type="rotate" from="0 220 135" to="360 220 135" dur="24s" repeatCount="indefinite"/>
+      <polygon points="220,48 290,90 290,174 220,216 150,174 150,90" fill="none" stroke="#7c3aed" stroke-width="1.6" opacity="0.9"/>
+      <!-- Inner hexagon -->
+      <polygon points="220,80 263,104 263,152 220,176 177,152 177,104" fill="none" stroke="#7c3aed" stroke-width="0.9" opacity="0.5"/>
+      <!-- Facet lines -->
+      <line x1="220" y1="48" x2="220" y2="80" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+      <line x1="290" y1="90" x2="263" y2="104" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+      <line x1="290" y1="174" x2="263" y2="152" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+      <line x1="220" y1="216" x2="220" y2="176" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+      <line x1="150" y1="174" x2="177" y2="152" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+      <line x1="150" y1="90" x2="177" y2="104" stroke="#7c3aed" stroke-width="0.8" opacity="0.4"/>
+    </g>
+
+    <!-- Center node (pulsing) -->
+    <circle cx="220" cy="135" r="5" fill="#7c3aed">
+      <animate attributeName="r" values="4;7;4" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Symmetry pulse rings -->
+    <circle cx="220" cy="135" r="30" fill="none" stroke="#7c3aed" stroke-width="0.8" opacity="0">
+      <animate attributeName="r" values="30;110" dur="3.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0" dur="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="220" cy="135" r="30" fill="none" stroke="#e11d48" stroke-width="0.6" opacity="0">
+      <animate attributeName="r" values="30;90" dur="3.5s" repeatCount="indefinite" begin="1.75s"/>
+      <animate attributeName="opacity" values="0.35;0" dur="3.5s" repeatCount="indefinite" begin="1.75s"/>
+    </circle>
+
+    <!-- Vertex dots -->
+    <circle cx="220" cy="48" r="3" fill="#7c3aed" opacity="0.8"/>
+    <circle cx="290" cy="90" r="3" fill="#7c3aed" opacity="0.8"/>
+    <circle cx="290" cy="174" r="3" fill="#7c3aed" opacity="0.8"/>
+    <circle cx="220" cy="216" r="3" fill="#7c3aed" opacity="0.8"/>
+    <circle cx="150" cy="174" r="3" fill="#7c3aed" opacity="0.8"/>
+    <circle cx="150" cy="90" r="3" fill="#7c3aed" opacity="0.8"/>
+
+    <!-- Label -->
+    <text x="220" y="255" fill="#7c3aed" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.55" letter-spacing="3">SYMMETRY — ALGEBRA — INVARIANCE</text>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Emmy Noether Series &mdash; Volume 0</p>
+  <h1>Amalie Emmy <em>Noether</em></h1>
+  <p class="hero-sub">The woman who found the skeleton of physics inside the body of mathematics — and was nearly erased from history.</p>
+  <p class="hero-dates">1882 – 1935</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: ERLANGEN -->
+  <section id="erlangen">
+    <div class="container">
+      <p class="kick">Erlangen, Bavaria — 1882</p>
+      <h2>Born Into Mathematics</h2>
+      <p>Amalie Emmy Noether was born on March 23, 1882, in the Bavarian university town of Erlangen. Her father, Max Noether, was a professor of mathematics at the University of Erlangen — a distinguished algebraic geometer whose name still appears in the Noether–Lefschetz theorem and half a dozen other results. Mathematics was the atmosphere of the household. Emmy grew up breathing it.</p>
+      <p>She was the eldest of four children. By all accounts she was a cheerful, sociable girl: she took piano lessons, attended dances, and showed no early signs of the obsessive mathematical drive that would define her adult life. She was certified to teach French and English in Bavarian schools. That was what young women of her class and era aimed for.</p>
+      <p>But she was also her father's daughter, and she had watched him work. Somewhere around her eighteenth year, that ambient mathematical atmosphere ignited into something deliberate. She decided she wanted to study mathematics at university — not teach languages to children, but do the mathematics herself, at its frontier.</p>
+
+      <blockquote class="pull">
+        <p>"My methods are really methods of working and thinking; this is why they have crept in everywhere anonymously."</p>
+        <cite>— Emmy Noether</cite>
+      </blockquote>
+
+      <h3>The Wall at the University Gates</h3>
+      <p>The obstacle was simple and total: the University of Erlangen did not formally admit women. This was not an unusual policy in 1900 — it was the standard policy of German universities. Women could attend lectures only with the explicit permission of each individual professor, and they could not formally enroll, sit examinations for credit, or receive degrees.</p>
+      <p>Emmy Noether went anyway. She attended lectures as an auditor, gathering permissions one by one. She sat in the mathematics courses. She listened and she studied. In 1903, she passed the matriculation examination — the <em>Abitur</em> — at a gymnasium in Nuremberg. The exam was designed for men. She passed it anyway.</p>
+      <p>She spent a semester at the University of Göttingen — then the greatest center of mathematics in the world, home to David Hilbert and Felix Klein — and heard the lectures that were remaking the field. Then the University of Erlangen changed its policy and began formally admitting women. Emmy Noether enrolled. She received her doctorate in 1907, summa cum laude, supervised by Paul Gordan, on a problem in invariant theory. She was twenty-five years old.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: INVISIBLE YEARS -->
+  <section id="invisible">
+    <div class="container">
+      <p class="kick">1907 – 1915 · Erlangen</p>
+      <h2>Seven Years Without Pay</h2>
+      <p>A PhD in mathematics did not purchase Emmy Noether a position. There were no positions open to women at German universities, not in any formal sense. She remained in Erlangen, working under her father's name, giving lectures under his name when his gout made teaching difficult, supervising doctoral students — and receiving no salary, no title, and no institutional recognition of any kind.</p>
+      <p>For seven years she worked this way. She did real mathematics — she published, she corresponded, she attended meetings of the German Mathematical Society — but she did so in the shadow of an institution that formally denied her existence as a professional. The mathematical community knew her work. The university's accounting office did not know her name.</p>
+
+      <div class="stat-row">
+        <div class="stat-cell">
+          <span class="stat-num">7</span>
+          <span class="stat-desc">Years unpaid at Erlangen</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">1907</span>
+          <span class="stat-desc">PhD, Erlangen</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">0</span>
+          <span class="stat-desc">Salary for those seven years</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">1915</span>
+          <span class="stat-desc">Called to Göttingen by Hilbert</span>
+        </div>
+      </div>
+
+      <p>This was not bitterness. By the testimony of everyone who knew her, Emmy Noether was constitutionally incapable of bitterness. She loved mathematics with a total, unreserved love. The obstacles placed in front of her by institutional sexism were obstacles she treated as problems to be navigated, not injustices to be catalogued. She navigated them. She kept working.</p>
+      <p>Her early work focused on invariant theory — the branch of algebra concerned with quantities that remain unchanged under transformations. This was already the question that would define her career: what is preserved? What remains the same when everything changes? She was circling, even then, toward the theorem that would make her immortal.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 3: GÖTTINGEN FIGHT -->
+  <section id="gottingen">
+    <div class="container">
+      <p class="kick">Göttingen, 1915</p>
+      <h2>The Battle Hilbert Fought For Her</h2>
+      <p>In 1915, David Hilbert — the greatest mathematician alive, the architect of the formalist program, the man who had listed the twenty-three unsolved problems that would define twentieth-century mathematics — invited Emmy Noether to Göttingen. He had seen her work. He wanted her there. Albert Einstein had just published the general theory of relativity, and there was a deep, troubling problem with energy conservation in that framework. Hilbert believed Emmy Noether was the person who could solve it.</p>
+      <p>She came. She began working. Hilbert and Felix Klein submitted a formal request to the faculty to allow her to give lectures and to qualify as a <em>Privatdozent</em> — the unsalaried teaching license that was the entry point to an academic career in the German university system. The request was denied by the philosophy faculty, which then governed the qualification process.</p>
+
+      <blockquote class="pull">
+        <p>"What will our soldiers think when they return to find they must study at the feet of a woman?"</p>
+        <cite>— Objecting faculty member, Göttingen, 1915</cite>
+      </blockquote>
+
+      <p>The response from Hilbert became immediately famous. He addressed the faculty directly: <strong>"I do not see why the sex of a candidate is an argument against admission to the university. After all, we are a university, not a bathing establishment."</strong></p>
+      <p>It was not enough. Not yet. The faculty refused. Emmy Noether continued working anyway. She gave lectures — listed in the university calendar under Hilbert's name, with a note that they would actually be delivered by Dr. Noether. The workaround was transparent. No one pretended otherwise. She taught. She proved her theorem. The war ended. The Weimar Republic brought a liberalization of academic rules. In 1919, Emmy Noether was finally granted the <em>Privatdozent</em> qualification — the right to teach and to collect fees from students who attended her lectures. No salary. No title. But an official existence.</p>
+      <p>She was thirty-seven years old.</p>
+
+      <div class="highlight-box">
+        <div class="hb-label">The Göttingen Situation</div>
+        <p style="font-size:0.95rem; color:var(--text);">In 1922, she received the title <em>nichtbeamteter ausserordentlicher Professor</em> — "unofficial extraordinary professor." The title was honorary. It carried no salary and no voting rights in faculty meetings. She received a small teaching stipend. For her most productive mathematical decade, Emmy Noether was paid approximately what a junior secretary earned, for work that was quietly reformulating the foundations of modern algebra.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE PERSON HERSELF -->
+  <section id="person">
+    <div class="container">
+      <p class="kick">The Human Being</p>
+      <h2>Who Emmy Noether Actually Was</h2>
+      <p>Every account of Emmy Noether by those who knew her converges on the same picture: she was warm, enthusiastic, physically exuberant, and almost aggressively uninterested in the social performances expected of academic women — or academic men. She spoke loudly and rapidly. She ate with great appetite. She swam and hiked. She was generous to students to a degree that was unusual even by the standards of that era's great teachers.</p>
+      <p>Hermann Weyl, her contemporary and colleague, wrote after her death: "Her significance for algebra is more easily measured by the altered direction of the whole field than by the list of specific results bearing her name." But he also wrote: "She was a warm and vital human being, and she cared about her students in a way that went beyond mathematics." The two were not separate things in her case.</p>
+      <p>She wore plain clothes, cut her hair short at a time when this was still unusual, and reportedly had little interest in the social hierarchies of academic life. She was known to walk through Göttingen with a crowd of students, talking mathematics the entire way, gesturing broadly, laughing. The students who surrounded her — van der Waerden, Hasse, Alexandrov, among others — called themselves the "Noether boys." They meant it as a badge of honor.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Father</div>
+          <div class="card-year">Max</div>
+          <p>Max Noether, algebraic geometer. His daughter surpassed him, and he knew it and was proud.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Mentor</div>
+          <div class="card-year">Hilbert</div>
+          <p>David Hilbert fought the faculty for her right to exist professionally. She solved his problem in return.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Champion</div>
+          <div class="card-year">Klein</div>
+          <p>Felix Klein co-signed the petition for her habilitation. He had recognized her as exceptional for years.</p>
+        </div>
+        <div class="card">
+          <div class="card-label">Student</div>
+          <div class="card-year">van der Waerden</div>
+          <p>Bartel van der Waerden attended her lectures and wrote them into Moderne Algebra — the textbook that changed everything.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE FIRING AND BRYN MAWR -->
+  <section id="exile">
+    <div class="container">
+      <p class="kick">April 1933 — The End in Germany</p>
+      <h2>Fired by the Nazis, Unbroken</h2>
+      <p>On April 7, 1933, the Law for the Restoration of the Professional Civil Service came into effect. It gave the Nazi government authority to remove from public positions anyone who was Jewish, politically opposed to National Socialism, or both. Emmy Noether was Jewish. She received her letter of dismissal a few days later.</p>
+      <p>She read it. Then she went to teach her class.</p>
+      <p>This was not defiance in any theatrical sense. It was simply what she did. Mathematics was her life's work, and she had a class to teach. She taught it. Afterward, she began making arrangements to leave Germany, with the same matter-of-fact practicality she had applied to every obstacle her career had encountered.</p>
+
+      <blockquote class="pull">
+        <p>"She was not only the greatest woman mathematician who has ever lived, but the greatest mathematician — man or woman — that Germany has produced in recent memory."</p>
+        <cite>— Hermann Weyl, 1935</cite>
+      </blockquote>
+
+      <h3>Bryn Mawr</h3>
+      <p>Bryn Mawr College, a women's liberal arts college in Pennsylvania, offered Emmy Noether a position. She accepted. The Emergency Committee in Aid of Displaced German Scholars helped fund her appointment. She arrived in the United States in the fall of 1933. She was fifty-one years old, speaking limited English, rebuilding her professional life from scratch on a different continent.</p>
+      <p>She thrived. By every account, she found Bryn Mawr congenial, the students eager, and her American colleagues warm. She also held weekly lectures at the Institute for Advanced Study in Princeton — the newly founded institution that had also taken in Einstein. She and Einstein became friendly. She lectured. She worked.</p>
+      <p>She had less than two years.</p>
+
+      <h3>Death — April 14, 1935</h3>
+      <p>In April 1935, surgeons discovered an ovarian cyst. It had been unknown; she had shown no symptoms. Surgery was performed on April 10. She seemed to be recovering. On April 14, she suddenly lost consciousness and died. She was fifty-three years old, at the height of her creative powers.</p>
+
+      <div class="highlight-box">
+        <div class="hb-label">Einstein's Obituary, New York Times, 1935</div>
+        <p style="font-size:1rem; font-style:italic; color:#c8b8e4;">"In the judgment of the most competent living mathematicians, Fräulein Noether was the most significant creative mathematical genius thus far produced, since the higher education of women began. In the realm of algebra, in which the most gifted mathematicians have been busy for centuries, she discovered methods which have proved of enormous importance in the development of the present-day younger generation of mathematicians."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: TIMELINE -->
+  <section id="timeline">
+    <div class="container">
+      <p class="kick">Life in Sequence</p>
+      <h2>A Chronology</h2>
+      <ul class="timeline">
+        <li><span class="tl-year">1882</span><span class="tl-event"><strong>Born March 23</strong> in Erlangen, Bavaria. Father Max Noether is professor of mathematics at the university.</span></li>
+        <li><span class="tl-year">1900</span><span class="tl-event">Decides to study mathematics. University of Erlangen bars women from formal enrollment. She audits lectures with permission.</span></li>
+        <li><span class="tl-year">1903</span><span class="tl-event">Passes the <em>Abitur</em> at a gymnasium in Nuremberg. Spends a semester at Göttingen, hears Hilbert and Klein.</span></li>
+        <li><span class="tl-year">1904</span><span class="tl-event">Erlangen admits women. Noether formally enrolls.</span></li>
+        <li><span class="tl-year">1907</span><span class="tl-event"><strong>PhD awarded</strong>, summa cum laude. Supervisor: Paul Gordan. Topic: invariant theory of ternary biquadratic forms.</span></li>
+        <li><span class="tl-year">1907–1915</span><span class="tl-event">Works in Erlangen without pay or official title. Publishes. Attends mathematical conferences. Teaches under her father's name.</span></li>
+        <li><span class="tl-year">1915</span><span class="tl-event"><strong>Called to Göttingen</strong> by Hilbert and Klein. Proves Noether's theorem. Faculty refuses to grant habilitation.</span></li>
+        <li><span class="tl-year">1919</span><span class="tl-event"><strong>Habilitation granted</strong> under Weimar Republic reforms. First woman to habilitate at a German university in mathematics.</span></li>
+        <li><span class="tl-year">1920s</span><span class="tl-event">Most productive decade. Reformulates abstract algebra. Noether's boys crowd her lectures. Van der Waerden writes it all down.</span></li>
+        <li><span class="tl-year">1922</span><span class="tl-event">Receives title of <em>außerordentlicher Professor</em>. Still no salary; small lecture stipend only.</span></li>
+        <li><span class="tl-year">1933</span><span class="tl-event"><strong>Fired</strong> by the Nazi government under the civil service law. Reads the letter. Goes to teach her class. Moves to Bryn Mawr.</span></li>
+        <li><span class="tl-year">1935</span><span class="tl-event"><strong>Dies April 14</strong>, Bryn Mawr, Pennsylvania. Age 53. Unexpected complication from ovarian cyst surgery.</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="col-attr">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    <br/>
+    Emmy Noether Series &mdash; Vol. 0: The Person &nbsp;|&nbsp; ROOT0 Library
+    <br/>
+    Series: <a href="1-theorem.html">Vol. 1 — The Theorem</a> &nbsp;·&nbsp;
+    <a href="2-world.html">Vol. 2 — Her World</a> &nbsp;·&nbsp;
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </div>
+  <div class="col-lic">CC-BY-ND-4.0 &nbsp;|&nbsp; Attribution required &nbsp;|&nbsp; No derivatives</div>
+</footer>
+
+</body>
+</html>

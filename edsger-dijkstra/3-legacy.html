@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edsger W. Dijkstra — Vol. 3: The Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050810;
+    --card:#0a0f1e;
+    --card2:#0f1524;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(234,88,12,0.18);
+    --lineb:rgba(29,78,216,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(29,78,216,0.022) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--blue);color:#fff;}
+
+  /* typography */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--blue);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.orange{background:var(--orange);}
+
+  /* masthead */
+  .mast{border-bottom:3px solid var(--blue);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7.5vw,76px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--blue);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* Internet routing graph animation */
+  @keyframes packetPulse{
+    0%{r:3;opacity:0;}
+    10%{opacity:1;}
+    90%{opacity:1;}
+    100%{r:3;opacity:0;}
+  }
+  @keyframes routerPulse{
+    0%,100%{fill:rgba(29,78,216,0.5);stroke:var(--blue);}
+    50%{fill:rgba(29,78,216,0.8);stroke:#5b8fff;}
+  }
+  @keyframes routerOrange{
+    0%,100%{fill:rgba(234,88,12,0.5);stroke:var(--orange);}
+    50%{fill:rgba(234,88,12,0.8);stroke:#ff8040;}
+  }
+  @keyframes movePacketH{
+    0%{offset-distance:0%;opacity:0;}
+    5%{opacity:1;}
+    95%{opacity:1;}
+    100%{offset-distance:100%;opacity:0;}
+  }
+  @keyframes traceGlow{
+    0%,100%{stroke:rgba(234,88,12,0.3);}
+    50%{stroke:rgba(234,88,12,0.8);}
+  }
+  @keyframes linkPulse{
+    0%,100%{stroke:rgba(29,78,216,0.25);stroke-width:1;}
+    50%{stroke:rgba(29,78,216,0.5);stroke-width:1.5;}
+  }
+  @keyframes dataFlow{
+    0%{stroke-dashoffset:200;opacity:0.8;}
+    100%{stroke-dashoffset:0;opacity:0.8;}
+  }
+  .router-n{animation:routerPulse 2.5s ease-in-out infinite;}
+  .router-src{animation:routerOrange 1.8s ease-in-out infinite;}
+  .router-dst{animation:routerOrange 2.2s ease-in-out 0.4s infinite;}
+  .link-glow{animation:linkPulse 3s ease-in-out infinite;}
+  .trace-path{animation:traceGlow 2s ease-in-out infinite;}
+  .flow-a{stroke-dasharray:200;animation:dataFlow 2s linear infinite;}
+  .flow-b{stroke-dasharray:200;animation:dataFlow 2s linear 0.7s infinite;}
+  .flow-c{stroke-dasharray:200;animation:dataFlow 2s linear 1.4s infinite;}
+  @media(prefers-reduced-motion:reduce){
+    .router-n,.router-src,.router-dst,.link-glow,.trace-path,.flow-a,.flow-b,.flow-c{animation:none;opacity:1;stroke-dashoffset:0;}
+  }
+
+  /* layout */
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--lineb);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.orange-hover:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--blue);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:2px 7px;margin-top:5px;}
+  .card .tag.blue{color:var(--blue);border-color:var(--lineb);}
+
+  /* legacy stream blocks */
+  .stream{border:1px solid var(--lineb);background:var(--card);padding:22px 24px;margin-bottom:16px;}
+  .stream.orange{border-color:var(--line);}
+  .stream-head{display:flex;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+  .stream h3{font-family:"Cinzel";font-weight:700;font-size:20px;color:var(--ink);margin:0;}
+  .stream .stream-yr{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;color:var(--orange);}
+  .stream p{font-size:clamp(14.5px,1.6vw,16.5px);color:#a8b4cc;line-height:1.65;margin:0 0 10px;}
+  .stream p:last-child{margin-bottom:0;}
+  .stream em{font-style:italic;color:#c8cce0;}
+
+  /* lineage tree display */
+  .lineage-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--lineb);font-size:14px;color:#a0adc4;}
+  .lineage-row:last-child{border-bottom:none;}
+  .lineage-row .l-year{font-family:"Space Mono",monospace;font-size:11px;color:var(--orange);min-width:48px;letter-spacing:0.06em;padding-top:2px;}
+  .lineage-row .l-arrow{color:var(--blue);opacity:0.7;font-size:16px;padding-top:0;}
+  .lineage-row .l-text{flex:1;}
+  .lineage-row .l-text b{color:var(--ink);font-weight:500;}
+  .lineage-row .l-field{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);margin-left:8px;opacity:0.8;}
+
+  /* block / blockquote */
+  .block{border:1px solid var(--lineb);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.orange{border-color:var(--line);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  /* impact scale bars */
+  .impact-bar{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--lineb);font-size:13.5px;color:#a8b4cc;}
+  .impact-bar:last-child{border-bottom:none;}
+  .impact-bar .i-label{font-family:"Space Mono",monospace;font-size:11px;color:var(--orange);min-width:140px;letter-spacing:0.04em;}
+  .impact-bar .i-track{flex:1;height:6px;background:rgba(29,78,216,0.12);border-radius:3px;overflow:hidden;}
+  .impact-bar .i-fill{height:100%;background:linear-gradient(90deg,var(--orange),rgba(234,88,12,0.4));border-radius:3px;transition:width 1s ease;}
+  .impact-bar .i-count{font-family:"Space Mono",monospace;font-size:11px;color:var(--blue);min-width:60px;text-align:right;}
+
+  /* colophon */
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--lineb);line-height:2;}
+
+  /* nav */
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--orange);color:#fff;}
+  .vol-nav a.current{background:var(--orange);color:#fff;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.stream{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">dijkstra series · volume 3 · the long afterlife</span>
+    <div class="masthead">
+      <div>
+        <h1>The<br><em>Legacy</em></h1>
+        <p class="dek">
+          He died in 2002. His algorithm runs inside every smartphone.
+          His structured programming is every language written since 1970.
+          His semaphores are in every operating system.
+          <b>He is everywhere, unnamed.</b>
+        </p>
+      </div>
+
+      <!-- Internet routing graph SVG with packets flowing -->
+      <svg class="art" width="280" height="200" viewBox="0 0 280 200" role="img" aria-label="animated internet routing graph with packets flowing along Dijkstra shortest-path routes between routers">
+        <rect width="280" height="200" fill="#0a0f1e" rx="3"/>
+
+        <!-- background grid -->
+        <g stroke="rgba(29,78,216,0.06)" stroke-width="0.5">
+          <line x1="0" y1="50" x2="280" y2="50"/>
+          <line x1="0" y1="100" x2="280" y2="100"/>
+          <line x1="0" y1="150" x2="280" y2="150"/>
+          <line x1="70" y1="0" x2="70" y2="200"/>
+          <line x1="140" y1="0" x2="140" y2="200"/>
+          <line x1="210" y1="0" x2="210" y2="200"/>
+        </g>
+
+        <!-- NETWORK LINKS (background) -->
+        <g class="link-glow" fill="none">
+          <!-- backbone links -->
+          <line x1="40" y1="100" x2="100" y2="55"/>
+          <line x1="40" y1="100" x2="100" y2="145"/>
+          <line x1="100" y1="55" x2="170" y2="55"/>
+          <line x1="100" y1="55" x2="140" y2="100"/>
+          <line x1="100" y1="145" x2="140" y2="100"/>
+          <line x1="100" y1="145" x2="170" y2="145"/>
+          <line x1="140" y1="100" x2="170" y2="55"/>
+          <line x1="140" y1="100" x2="170" y2="145"/>
+          <line x1="170" y1="55" x2="240" y2="100"/>
+          <line x1="170" y1="145" x2="240" y2="100"/>
+          <line x1="170" y1="55" x2="170" y2="145"/>
+        </g>
+
+        <!-- OSPF SHORTEST PATH (highlighted) -->
+        <g class="trace-path" fill="none" stroke-width="2.5">
+          <line x1="40" y1="100" x2="100" y2="55"/>
+          <line x1="100" y1="55" x2="170" y2="55"/>
+          <line x1="170" y1="55" x2="240" y2="100"/>
+        </g>
+
+        <!-- PACKET FLOWS along highlighted path -->
+        <!-- Flow A: src to R1 -->
+        <g fill="var(--orange)">
+          <circle cx="0" cy="0" r="3.5" opacity="0">
+            <animateMotion dur="1.8s" repeatCount="indefinite" begin="0s">
+              <mpath href="#pathSrcR1"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+        </g>
+        <!-- Flow B: R1 to R3 -->
+        <g fill="var(--orange)">
+          <circle cx="0" cy="0" r="3.5" opacity="0">
+            <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.6s">
+              <mpath href="#pathR1R3"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite" begin="0.6s"/>
+          </circle>
+        </g>
+        <!-- Flow C: R3 to DST -->
+        <g fill="var(--orange)">
+          <circle cx="0" cy="0" r="3.5" opacity="0">
+            <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.2s">
+              <mpath href="#pathR3Dst"/>
+            </animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite" begin="1.2s"/>
+          </circle>
+        </g>
+
+        <!-- Path definitions for packet motion -->
+        <defs>
+          <path id="pathSrcR1" d="M40,100 L100,55"/>
+          <path id="pathR1R3" d="M100,55 L170,55"/>
+          <path id="pathR3Dst" d="M170,55 L240,100"/>
+        </defs>
+
+        <!-- ROUTER NODES -->
+        <!-- Source (orange) -->
+        <g class="router-src">
+          <rect x="28" y="88" width="24" height="24" rx="3" fill="rgba(234,88,12,0.5)" stroke="var(--orange)" stroke-width="2"/>
+        </g>
+        <text x="40" y="104" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" font-weight="700" fill="#fff">SRC</text>
+
+        <!-- Router R1 -->
+        <g class="router-n">
+          <rect x="88" y="43" width="24" height="24" rx="3" fill="rgba(29,78,216,0.5)" stroke="var(--blue)" stroke-width="1.5"/>
+        </g>
+        <text x="100" y="59" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#fff">R1</text>
+
+        <!-- Router R2 -->
+        <g class="router-n" style="animation-delay:0.5s">
+          <rect x="88" y="133" width="24" height="24" rx="3" fill="rgba(29,78,216,0.35)" stroke="rgba(29,78,216,0.6)" stroke-width="1.5"/>
+        </g>
+        <text x="100" y="149" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#8899cc">R2</text>
+
+        <!-- Router R4 (hub) -->
+        <g class="router-n" style="animation-delay:1.0s">
+          <rect x="128" y="88" width="24" height="24" rx="3" fill="rgba(29,78,216,0.45)" stroke="var(--blue)" stroke-width="1.5"/>
+        </g>
+        <text x="140" y="104" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#fff">R4</text>
+
+        <!-- Router R3 (on path) -->
+        <g class="router-n" style="animation-delay:0.3s">
+          <rect x="158" y="43" width="24" height="24" rx="3" fill="rgba(29,78,216,0.6)" stroke="var(--blue)" stroke-width="2"/>
+        </g>
+        <text x="170" y="59" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#fff">R3</text>
+
+        <!-- Router R5 -->
+        <g class="router-n" style="animation-delay:0.7s">
+          <rect x="158" y="133" width="24" height="24" rx="3" fill="rgba(29,78,216,0.35)" stroke="rgba(29,78,216,0.5)" stroke-width="1.5"/>
+        </g>
+        <text x="170" y="149" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#8899cc">R5</text>
+
+        <!-- Destination (orange) -->
+        <g class="router-dst">
+          <rect x="228" y="88" width="24" height="24" rx="3" fill="rgba(234,88,12,0.5)" stroke="var(--orange)" stroke-width="2"/>
+        </g>
+        <text x="240" y="104" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" font-weight="700" fill="#fff">DST</text>
+
+        <!-- legend -->
+        <rect x="6" y="6" width="7" height="7" fill="var(--orange)" rx="1"/>
+        <text x="15" y="13" font-family="Space Mono,monospace" font-size="7" fill="rgba(234,88,12,0.7)">OSPF/BGP ROUTER</text>
+        <line x1="120" y1="9" x2="140" y2="9" stroke="var(--orange)" stroke-width="2"/>
+        <text x="143" y="13" font-family="Space Mono,monospace" font-size="7" fill="rgba(234,88,12,0.7)">DIJKSTRA PATH</text>
+
+        <!-- label -->
+        <text x="4" y="196" font-family="Space Mono,monospace" font-size="8" fill="rgba(29,78,216,0.45)" letter-spacing="0.08em">OSPF · BGP · INTERNET ROUTING · DIJKSTRA 1956</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-algorithm.html">1 · Algorithm</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html" class="current">3 · Legacy</a>
+  </nav>
+
+  <!-- SECTION: THE ALGORITHM IS EVERYWHERE -->
+  <div class="band orange reveal" style="animation-delay:.05s">The Algorithm Is Everywhere</div>
+  <p class="body-text reveal" style="animation-delay:.08s">
+    Every time you ask Google Maps for directions, Dijkstra's algorithm runs. Every time your phone finds a route on Waze, Dijkstra's algorithm runs. Every time a logistics company optimizes a delivery route, Dijkstra's algorithm runs. Every time an internet router decides which path to forward a packet through the network — using OSPF, the Open Shortest Path First protocol — a variant of Dijkstra's algorithm runs.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.10s">
+    The algorithm was published in 1959, in a nine-page paper in a German mathematics journal. It is now embedded in infrastructure that serves billions of people daily. The GPS in every car. The routing tables in every internet router. The logistics systems that move every package. Dijkstra invented it in twenty minutes at a café, without paper. He thought it was a rather nice result. He had no idea.
+  </p>
+
+  <div class="pull reveal" style="animation-delay:.12s">
+    "Computer science is no more about computers than astronomy is about telescopes."
+    — Edsger W. Dijkstra
+  </div>
+
+  <!-- LEGACY STREAMS -->
+  <div class="band blue reveal" style="animation-delay:.14s">Five Streams of Influence</div>
+
+  <div class="stream reveal" style="animation-delay:.16s">
+    <div class="stream-head">
+      <h3>1. Navigation and Logistics</h3>
+      <span class="stream-yr">1956 → present</span>
+    </div>
+    <p>Dijkstra's algorithm is the computational engine beneath every GPS navigation system. Google Maps, Apple Maps, Waze — all use variants of Dijkstra's algorithm (or its improvement, A*, which adds a heuristic to Dijkstra's core). The algorithm computes shortest paths through road networks containing millions of nodes, in under a second, on hardware that would have been incomprehensible to Dijkstra in 1956.</p>
+    <p>Global shipping and logistics optimization — the systems that route FedEx packages, Amazon deliveries, airline networks — use Dijkstra-class algorithms to minimize distance and cost across vast networks of locations. It is not an exaggeration to say that modern global commerce depends on an insight Dijkstra had at a café table while his fiancée waited.</p>
+  </div>
+
+  <div class="stream reveal" style="animation-delay:.18s">
+    <div class="stream-head">
+      <h3>2. The Internet Itself</h3>
+      <span class="stream-yr">1956 → present</span>
+    </div>
+    <p>The <em>Open Shortest Path First</em> (OSPF) protocol — one of the two main interior gateway routing protocols of the internet — runs Dijkstra's algorithm on every router that implements it. When you send a packet across the internet, the routers it passes through are continuously computing shortest paths through the network graph, updating their routing tables as links come up and go down. This is Dijkstra's algorithm running in real time, at every point of the internet's backbone.</p>
+    <p>The modern internet would not function in its current form without Dijkstra's 1956 insight. This is not hyperbole. Without efficient shortest-path computation, internet routing would require either flooding (sending every packet everywhere) or static routing tables (which could not adapt to failures). Dynamic shortest-path routing is what makes the internet resilient. Dijkstra invented the mathematical core of internet routing six years before the ARPANET existed.</p>
+  </div>
+
+  <div class="stream orange reveal" style="animation-delay:.20s">
+    <div class="stream-head">
+      <h3>3. Structured Programming — Every Modern Language</h3>
+      <span class="stream-yr">1968 → present</span>
+    </div>
+    <p>Python has no GOTO. Java has no GOTO. C++ has no GOTO (or deprecated goto that no one uses in serious code). Rust has no GOTO. Swift has no GOTO. Every programming language designed after approximately 1975 was designed around the structured programming principles that Dijkstra fought for. The GOTO statement is gone from serious programming. The battle is over, and Dijkstra won.</p>
+    <p>The consequences extend deeper than syntax. Every modern program is organized as functions (procedures), conditionals (selection), and loops (iteration). Every modern programmer thinks in these structures without realizing there was ever an alternative. The cognitive architecture of programming — the way programmers think about their code — was reshaped by Dijkstra's 1968 letter, which was itself building on his deeper program-correctness framework.</p>
+    <p>Modern code review practices — asking whether code is readable, understandable, testable — descend directly from the structured programming argument. The question "can you reason about what this code does?" is Dijkstra's question. It is now everybody's question.</p>
+  </div>
+
+  <div class="stream reveal" style="animation-delay:.22s">
+    <div class="stream-head">
+      <h3>4. Concurrent Programming — Semaphores and Beyond</h3>
+      <span class="stream-yr">1965 → present</span>
+    </div>
+    <p>Every operating system uses the concept of the semaphore, or a higher-level abstraction built on it. Every mutex (mutual exclusion lock) in every concurrent program is a semaphore with a maximum count of one. Every thread synchronization primitive in Java, Python, Rust, Go, C++ descends from Dijkstra's 1965 invention. The Dining Philosophers problem is still the standard pedagogical example for teaching concurrent programming — it appears in every operating systems textbook, in every algorithms course, in every treatment of deadlock and livelock.</p>
+    <p>The architects of every major operating system — UNIX, Linux, Windows NT, macOS — built their synchronization primitives on the conceptual foundation Dijkstra established. The multi-core processing revolution of the 2000s — the sudden need to write software that correctly ran on eight, sixteen, sixty-four simultaneous processors — returned Dijkstra's concurrency work to urgent relevance. His problems are now everyone's problems.</p>
+  </div>
+
+  <div class="stream orange reveal" style="animation-delay:.24s">
+    <div class="stream-head">
+      <h3>5. Formal Verification and Program Correctness</h3>
+      <span class="stream-yr">1975 → present</span>
+    </div>
+    <p>The field of formal verification — proving mathematically that a program does what its specification says it does — descends directly from Dijkstra's predicate transformer calculus and from Hoare Logic (itself strongly influenced by Dijkstra's work). The <em>Coq</em> proof assistant, the <em>Lean</em> theorem prover, the <em>TLA+</em> specification language (developed by Leslie Lamport, a close colleague) — all sit in a direct intellectual lineage from Dijkstra's insistence that correctness is provable, not merely testable.</p>
+    <p>As software has grown to control aircraft, medical devices, nuclear facilities, financial systems, and autonomous vehicles, the ability to <em>prove</em> programs correct — rather than merely test them — has moved from academic exercise to practical necessity. The companies writing flight control software, the research groups developing formally verified operating systems (seL4, for instance), the engineers at AWS who use TLA+ to verify distributed system designs — all are doing what Dijkstra argued for, with the tools his tradition produced.</p>
+  </div>
+
+  <!-- IMPACT SCALE -->
+  <div class="band reveal" style="animation-delay:.26s">Scale of Impact</div>
+  <div class="block reveal" style="animation-delay:.28s">
+    <div class="impact-bar">
+      <span class="i-label">GPS/Navigation</span>
+      <div class="i-track"><div class="i-fill" style="width:99%"></div></div>
+      <span class="i-count">~5B users</span>
+    </div>
+    <div class="impact-bar">
+      <span class="i-label">Internet Routing</span>
+      <div class="i-track"><div class="i-fill" style="width:100%"></div></div>
+      <span class="i-count">All packets</span>
+    </div>
+    <div class="impact-bar">
+      <span class="i-label">Structured Code</span>
+      <div class="i-track"><div class="i-fill" style="width:100%"></div></div>
+      <span class="i-count">Every language</span>
+    </div>
+    <div class="impact-bar">
+      <span class="i-label">Semaphores/Locks</span>
+      <div class="i-track"><div class="i-fill" style="width:100%"></div></div>
+      <span class="i-count">Every OS</span>
+    </div>
+    <div class="impact-bar">
+      <span class="i-label">Formal Verification</span>
+      <div class="i-track"><div class="i-fill" style="width:55%"></div></div>
+      <span class="i-count">Growing fast</span>
+    </div>
+    <div class="impact-bar">
+      <span class="i-label">EWD Archive</span>
+      <div class="i-track"><div class="i-fill" style="width:72%"></div></div>
+      <span class="i-count">Still read daily</span>
+    </div>
+  </div>
+
+  <!-- THE ALGORITHM IN YOUR POCKET -->
+  <div class="band orange reveal" style="animation-delay:.30s">The Algorithm in Your Pocket</div>
+  <p class="body-text reveal" style="animation-delay:.32s">
+    Your smartphone contains Dijkstra's algorithm in multiple places. The GPS application uses it to find routes. The Wi-Fi networking stack uses routing protocols that descend from it. The operating system kernel uses synchronization primitives (semaphores, mutexes) that Dijkstra invented. The applications running on it are written in structured programming languages whose design he shaped. And the data packets traveling to and from your phone pass through internet routers running OSPF — Dijkstra's algorithm — to find their path.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.34s">
+    Dijkstra died in 2002, before smartphones existed. He used no email. He had no webpage. He would have regarded social media with the same precision-focused horror he brought to BASIC and COBOL. But the smartphone in your pocket is, in multiple deep senses, a product of his thinking. He did not foresee any of the specific applications. He was not trying to build an internet or enable GPS. He was asking: what does it mean for a program to be correct? How do we find shortest paths? How do concurrent processes synchronize without collision? The applications followed from the answers.
+  </p>
+
+  <!-- CARDS OF INFLUENCE -->
+  <div class="grid reveal" style="animation-delay:.36s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>Google Maps</h3>
+      <p class="what">Uses A* — Dijkstra's algorithm with a heuristic — to route billions of queries per day. The graph has tens of millions of nodes. The algorithm runs in under 100 milliseconds. Invented in twenty minutes at a café, 1956.</p>
+      <span class="tag blue">Navigation</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>OSPF Protocol</h3>
+      <p class="what">Open Shortest Path First — the routing protocol that most enterprise and carrier networks use for interior routing. Each OSPF router runs Dijkstra's algorithm on the network topology to build its forwarding table.</p>
+      <span class="tag blue">Internet</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>Python / Java / Rust</h3>
+      <p class="what">No GOTO. Structured control flow. Programs organized as functions, conditionals, loops. Readability and reasoning built into the language design. Every modern language is a monument to Dijkstra's 1968 argument.</p>
+      <span class="tag">Languages</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>Linux Kernel</h3>
+      <p class="what">Uses semaphores, mutexes, spinlocks, and read-write locks — all derived from Dijkstra's semaphore concept. Every process synchronization in every Linux system is built on foundations he established in 1965.</p>
+      <span class="tag">OS</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">05</span>
+      <h3>seL4 Microkernel</h3>
+      <p class="what">A formally verified operating system kernel — proved correct in Coq. The dream Dijkstra articulated in the 1960s: a program proved correct, not merely tested. seL4 is now used in safety-critical aerospace and defense systems.</p>
+      <span class="tag">Verification</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">06</span>
+      <h3>AWS TLA+</h3>
+      <p class="what">Amazon Web Services uses TLA+ (Leslie Lamport's specification language, Dijkstra-lineage) to formally verify the correctness of distributed systems designs. Engineers describe finding bugs that testing had missed for years.</p>
+      <span class="tag">Formal</span>
+    </div>
+  </div>
+
+  <!-- THE DINING PHILOSOPHERS -->
+  <div class="band blue reveal" style="animation-delay:.38s">The Dining Philosophers — Still Canonical</div>
+  <p class="body-text reveal" style="animation-delay:.40s">
+    Dijkstra invented the Dining Philosophers problem in 1965 as an illustration of the problems of concurrent resource allocation. Five philosophers. Five forks. The problem is still, sixty years later, the canonical introduction to deadlock and livelock in every operating systems course. It has been generalized, extended, and analyzed thousands of times in the academic literature. It has been used to test concurrent programming languages, verify synchronization protocols, and teach the subtleties of system design.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.42s">
+    The reason it endures is its combination of simplicity and depth. The setup can be explained in two sentences. The solution — avoiding deadlock while preventing starvation — requires genuine insight. It is, in Dijkstra's sense, a beautiful problem: one that reveals the nature of concurrency through the most parsimonious possible setup.
+  </p>
+
+  <!-- THE EWD ARCHIVE -->
+  <div class="band orange reveal" style="animation-delay:.44s">The EWDs — Still Being Read</div>
+  <p class="body-text reveal" style="animation-delay:.46s">
+    The EWD archive at the University of Texas at Austin — 1,318 documents, spanning 1958 to 2002 — is freely available online. It is actively read. Computer science students discover it and pass it around. Practitioners find in the EWDs a precision and directness that contemporary technical writing has largely lost. EWD 498, with its roster of observations about BASIC, COBOL, PL/I, and computing education, is regularly circulated and debated. EWD 1243, on notation and thought, is cited in programming language research.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.48s">
+    His Turing Award lecture — EWD 215, "The Humble Programmer" — is still required reading in many computer science programs. Its central argument — that programming is not primarily about telling computers what to do, but about managing complexity in a way that human minds can follow — remains as relevant as it was in 1972, and arguably more urgent, now that programs have grown to scales that would have seemed impossible then.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.50s">
+    <blockquote>
+      "The humble programmer has been taught to distrust his own programming and to build his verification argument hand in hand with the program itself."
+      <cite>— Edsger W. Dijkstra, EWD 215, "The Humble Programmer," 1972 Turing Award Lecture</cite>
+    </blockquote>
+  </div>
+
+  <!-- HONORS AND THE PRIZE -->
+  <div class="band blue reveal" style="animation-delay:.52s">Honors and the Prize in His Name</div>
+  <p class="body-text reveal" style="animation-delay:.54s">
+    Dijkstra received the ACM Turing Award in 1972 — the highest honor in computer science — for "fundamental contributions to programming as a high, intellectual challenge." He received numerous honorary degrees from universities around the world. He was a member of the Royal Dutch Academy of Arts and Sciences and a foreign honorary member of the American Academy of Arts and Sciences.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.56s">
+    After his death in 2002, the ACM Symposium on Principles of Distributed Computing (PODC) established the <em>Dijkstra Prize in Distributed Computing</em> — awarded annually for outstanding papers on the principles of distributed computing. The first award was given posthumously to Dijkstra himself, for his paper on self-stabilizing systems. The prize continues, recognizing work in the field he helped found.
+  </p>
+
+  <!-- LINEAGE OF IDEAS -->
+  <div class="band reveal" style="animation-delay:.58s">The Lineage of Ideas</div>
+  <div class="block reveal" style="animation-delay:.60s">
+    <div class="lineage-row">
+      <span class="l-year">1956</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>Dijkstra's shortest-path algorithm</b> <span class="l-field">Graph Theory</span> → A* search (1968) → OSPF (1988) → Google Maps (2005) → every navigation app</div>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1968</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>Structured programming / Go To Harmful</b> <span class="l-field">Language Design</span> → Pascal (1970) → C with discipline → Java (1995) → Python → Rust → Swift → every modern language</div>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1965</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>Semaphores and the Dining Philosophers</b> <span class="l-field">Concurrency</span> → monitors (Hoare, 1974) → UNIX pipes → POSIX threads → Java synchronized → Go channels → Rust ownership model</div>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1968</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>THE operating system — layered architecture</b> <span class="l-field">Systems</span> → UNIX layers → TCP/IP stack → OSI model → every operating system kernel architecture</div>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1975</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>Predicate transformers / weakest preconditions</b> <span class="l-field">Verification</span> → Hoare Logic → VDM → B Method → Coq → Lean → seL4 → TLA+ → industrial formal verification</div>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1958–2002</span>
+      <span class="l-arrow">→</span>
+      <div class="l-text"><b>EWD archive — 1,318 memos</b> <span class="l-field">Philosophy of CS</span> → a body of writing on what computing is, what it should be, and why precision matters that is still being read and cited in 2024</div>
+    </div>
+  </div>
+
+  <!-- WHAT HE GOT RIGHT -->
+  <div class="band orange reveal" style="animation-delay:.62s">What He Got Right — and What He Missed</div>
+  <p class="body-text reveal" style="animation-delay:.64s">
+    Dijkstra got the core things right with an accuracy that has only become clearer with time. Programs should be derived from specifications, not patched until they pass tests — and the movement toward formal methods and proof-carrying code has vindicated this. Structured programming is the only serious way to write code — and the GOTO is gone. Concurrency requires formal synchronization primitives — and this is now a multi-billion-dollar problem domain. The choice of programming language shapes what you can think — and the programming language research community, thirty years later, has proved this with data.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.66s">
+    He was wrong about some things. He was too pessimistic about the ability of heuristic and empirical methods to achieve practical results — the rise of machine learning, which he would have viewed with deep suspicion, has produced systems that work remarkably well without anything like a correctness proof. He underestimated the value of pragmatic, incremental engineering — the messy, iterative, test-driven process that produced the internet, Linux, and most of the software infrastructure of modern civilization. He thought computing should be more like mathematics. It turned out that computing is, in large part, its own thing — neither physics nor mathematics nor engineering, but something new, which perhaps requires its own standards.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.68s">
+    But even here, his ghost is present in the debate. Every time a system fails because of an unchecked buffer overflow, because of a race condition in concurrent code, because of an untested edge case — Dijkstra is right. The failures he predicted are the failures that keep happening. The gap between what he argued for and what the industry produces is still, sixty years on, the most important problem in software engineering.
+  </p>
+
+  <!-- FINAL STATEMENT -->
+  <div class="band blue reveal" style="animation-delay:.70s">The Last EWD</div>
+  <p class="body-text reveal" style="animation-delay:.72s">
+    EWD 1318 was written in April 2002. Dijkstra was ill; he would die in August. The document is about teaching — about what a computer science education should be, and about the beauty he saw in the discipline he had spent fifty years trying to define and defend. He did not know it was his last memo. He wrote it as he wrote all of them: carefully, by hand, in fountain pen, on lined paper.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.74s">
+    He died on 6 August 2002, in Nuenen, the Dutch village where van Gogh had lived and painted the potato eaters a century before. His wife was with him. The bicycle was in the garage. The fountain pen was on the desk. The archive of 1,318 memos was, already, being digitized in Austin.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.76s">
+    <blockquote>
+      "If you want more effective programmers, you will discover that they should not waste their time debugging — they should not introduce the bugs to start with."
+      <cite>— Edsger W. Dijkstra, EWD 1036</cite>
+    </blockquote>
+  </div>
+
+  <!-- FINAL QUOTE -->
+  <div class="pull reveal" style="animation-delay:.78s">
+    "The competent programmer is fully aware of the strictly limited size of his own skull; therefore he approaches the programming task in full humility, and among other things he avoids clever tricks like the plague."
+    — EWD 215, 1972
+  </div>
+
+  <!-- COLOPHON -->
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    dijkstra series · volume 3 · the long afterlife · rotterdam 1930 – nuenen 2002<br>
+    dijkstra prize in distributed computing · turing award 1972 · EWD 0–1318 · cs.utexas.edu/~EWD<br>
+    "for fundamental contributions to programming as a high, intellectual challenge"
+  </p>
+
+</div>
+</body>
+</html>

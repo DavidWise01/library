@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rosalind Franklin — Vol. 2: Her World | ROOT0 Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #04080c;
+      --teal: #0d9488;
+      --gold: #ca8a04;
+      --dim: #0a1520;
+      --mid: #122030;
+      --text: #c8dde8;
+      --muted: #5a8a9a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    /* ── STICKY NAV ── */
+    nav.series-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #02060aee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 1.5rem;
+      height: 48px;
+      overflow-x: auto;
+    }
+    nav.series-nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+      margin-right: 1.5rem;
+      opacity: 0.7;
+    }
+    nav.series-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0 1rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid #0a1520;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav.series-nav a:first-of-type { border-left: 1px solid #0a1520; }
+    nav.series-nav a:hover { color: var(--teal); background: #071018; }
+    nav.series-nav a.active { color: var(--teal); border-bottom: 2px solid var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem 3rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--mid);
+    }
+    .hero-bg-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 40%, #0d948818 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero svg.hero-anim {
+      width: min(480px, 94vw);
+      height: min(320px, 58vw);
+      margin-bottom: 2.5rem;
+      filter: drop-shadow(0 0 14px #0d948840);
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--teal);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      line-height: 1.1;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 40px #0d948844;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+    .hero-sub {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--muted);
+      text-align: center;
+      max-width: 560px;
+      margin-top: 0.6rem;
+    }
+    .hero-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    section { padding: 3.5rem 0 2rem; border-bottom: 1px solid var(--dim); }
+    section:last-of-type { border-bottom: none; }
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      margin-bottom: 1.2rem;
+      line-height: 1.2;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--teal);
+      margin-bottom: 0.7rem;
+      margin-top: 1.8rem;
+    }
+    p { margin-bottom: 1.1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── KICK / BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .band {
+      background: var(--teal);
+      color: #04080c;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0.25rem 0.7rem;
+      display: inline-block;
+    }
+
+    /* ── CARDS ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--dim);
+      border: 1px solid var(--mid);
+      padding: 1.4rem 1.3rem;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: default;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--teal);
+    }
+    .card .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+    .card .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote.pull {
+      border-left: 3px solid var(--teal);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+      background: #071018;
+    }
+    blockquote.pull p {
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #b8cdd8;
+      margin-bottom: 0.4rem;
+    }
+    blockquote.pull cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      border: 1px solid var(--gold);
+      background: #0e0900;
+      padding: 1.4rem 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .highlight-box .hb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .highlight-box.teal-box {
+      border-color: var(--teal);
+      background: #041018;
+    }
+    .highlight-box.teal-box .hb-label {
+      color: var(--teal);
+    }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+    .compare-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--teal);
+      text-align: left;
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--teal);
+      background: var(--dim);
+    }
+    .compare-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--dim);
+      color: var(--text);
+      vertical-align: top;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:hover td { background: #07111a; }
+    .compare-table td:first-child {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    /* ── MAP LABEL ── */
+    .map-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 0.8rem;
+    }
+
+    /* ── COLOPHON ── */
+    footer.colophon {
+      border-top: 1px solid var(--mid);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: #020508;
+    }
+    footer.colophon .col-attr {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      line-height: 2;
+    }
+    footer.colophon .col-attr a { color: var(--teal); text-decoration: none; }
+    footer.colophon .col-lic {
+      display: inline-block;
+      border: 1px solid var(--mid);
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.8rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="series-nav" aria-label="Volume navigation">
+  <span class="series-label">Rosalind Franklin</span>
+  <a href="0-who.html">Vol. 0 — The Person</a>
+  <a href="1-photo51.html">Vol. 1 — Photo 51</a>
+  <a href="2-world.html" class="active">Vol. 2 — Her World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-glow"></div>
+
+  <!-- Animated SVG: London institutional map — King's College, Birkbeck, Cambridge -->
+  <svg class="hero-anim" viewBox="0 0 480 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Background — dark cartographic field -->
+    <rect width="480" height="320" fill="#030609" rx="3"/>
+    <!-- River Thames — sinuous band -->
+    <path d="M 0 198 C 40 195, 80 200, 130 196 C 180 192, 210 205, 260 200 C 310 195, 350 202, 400 198 C 430 196, 460 200, 480 198" stroke="#0d9488" stroke-width="12" fill="none" opacity="0.18"/>
+    <path d="M 0 198 C 40 195, 80 200, 130 196 C 180 192, 210 205, 260 200 C 310 195, 350 202, 400 198 C 430 196, 460 200, 480 198" stroke="#0d9488" stroke-width="1.2" fill="none" opacity="0.5"/>
+    <!-- Thames label -->
+    <text x="240" y="214" fill="#0d9488" font-family="monospace" font-size="8" text-anchor="middle" opacity="0.4" letter-spacing="4">RIVER THAMES</text>
+
+    <!-- Street grid — Strand / Aldwych -->
+    <line x1="80" y1="165" x2="280" y2="165" stroke="#0d948820" stroke-width="3"/>
+    <text x="155" y="162" fill="#0d948850" font-family="monospace" font-size="7" letter-spacing="2">THE STRAND</text>
+    <!-- Kingsway -->
+    <line x1="190" y1="80" x2="190" y2="195" stroke="#0d948818" stroke-width="2.5"/>
+    <text x="193" y="112" fill="#0d948540" font-family="monospace" font-size="7" letter-spacing="1">KINGSWAY</text>
+    <!-- Gower St -->
+    <line x1="120" y1="50" x2="120" y2="185" stroke="#0d948818" stroke-width="2"/>
+    <text x="123" y="78" fill="#0d948840" font-family="monospace" font-size="7" letter-spacing="1">GOWER ST</text>
+
+    <!-- KING'S COLLEGE LONDON — on the Strand, near the Thames -->
+    <rect x="200" y="148" width="52" height="32" fill="#04080c" stroke="#0d9488" stroke-width="1.4" rx="1"/>
+    <rect x="204" y="152" width="44" height="24" fill="#071218" stroke="#0d948840" stroke-width="0.5"/>
+    <!-- King's courtyard indication -->
+    <rect x="214" y="158" width="24" height="12" fill="none" stroke="#0d948830" stroke-width="0.6"/>
+    <text x="226" y="146" fill="#0d9488" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.9" font-weight="bold">KING'S COLLEGE</text>
+    <text x="226" y="185" fill="#0d9488" font-family="monospace" font-size="6.5" text-anchor="middle" opacity="0.7">LONDON — 1951–53</text>
+    <!-- Pulse marker on King's -->
+    <circle cx="226" cy="164" r="4" fill="#0d9488" opacity="0.8">
+      <animate attributeName="r" values="4;16;4" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="226" cy="164" r="4" fill="#0d9488" opacity="0.9"/>
+
+    <!-- BIRKBECK COLLEGE — Bloomsbury -->
+    <rect x="88" y="108" width="50" height="28" fill="#04080c" stroke="#ca8a04" stroke-width="1.4" rx="1"/>
+    <text x="113" y="105" fill="#ca8a04" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.9" font-weight="bold">BIRKBECK</text>
+    <text x="113" y="141" fill="#ca8a04" font-family="monospace" font-size="6.5" text-anchor="middle" opacity="0.7">1953–58</text>
+    <circle cx="113" cy="122" r="3.5" fill="#ca8a04" opacity="0.8">
+      <animate attributeName="r" values="3.5;14;3.5" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+    </circle>
+    <circle cx="113" cy="122" r="3.5" fill="#ca8a04" opacity="0.9"/>
+
+    <!-- CAMBRIDGE (upper right — distant) -->
+    <rect x="370" y="35" width="56" height="26" fill="#04080c" stroke="#0d948870" stroke-width="1" rx="1"/>
+    <text x="398" y="32" fill="#0d9488" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.7">CAMBRIDGE</text>
+    <text x="398" y="67" fill="#0d9488" font-family="monospace" font-size="6" text-anchor="middle" opacity="0.5">NEWNHAM 1938–41</text>
+    <!-- distance arrow from London to Cambridge -->
+    <line x1="370" y1="48" x2="290" y2="110" stroke="#0d948830" stroke-width="0.8" stroke-dasharray="4,4"/>
+
+    <!-- PARIS (lower left — distant) -->
+    <rect x="20" y="255" width="46" height="24" fill="#04080c" stroke="#0d948850" stroke-width="0.9" rx="1"/>
+    <text x="43" y="252" fill="#0d9488" font-family="monospace" font-size="7.5" text-anchor="middle" opacity="0.6">PARIS</text>
+    <text x="43" y="285" fill="#0d9488" font-family="monospace" font-size="6" text-anchor="middle" opacity="0.4">LNRS 1947–50</text>
+    <line x1="65" y1="264" x2="195" y2="200" stroke="#0d948820" stroke-width="0.8" stroke-dasharray="3,5"/>
+
+    <!-- BCURA (Leatherhead — south of London) -->
+    <circle cx="310" cy="265" r="6" fill="#04080c" stroke="#0d948850" stroke-width="0.8"/>
+    <text x="322" y="263" fill="#0d9488" font-family="monospace" font-size="7" opacity="0.6">BCURA</text>
+    <text x="322" y="272" fill="#0d9488" font-family="monospace" font-size="6" opacity="0.4">1942–47</text>
+    <line x1="310" y1="259" x2="260" y2="200" stroke="#0d948820" stroke-width="0.6" stroke-dasharray="3,5"/>
+
+    <!-- compass rose -->
+    <text x="440" y="290" fill="#0d9488" font-family="monospace" font-size="8" opacity="0.35" text-anchor="middle">N↑</text>
+    <line x1="440" y1="295" x2="440" y2="308" stroke="#0d9488" stroke-width="0.8" opacity="0.3"/>
+    <!-- scale bar -->
+    <line x1="340" y1="308" x2="400" y2="308" stroke="#0d9488" stroke-width="1" opacity="0.3"/>
+    <text x="370" y="316" fill="#0d9488" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.3">~5 km</text>
+  </svg>
+
+  <p class="hero-eyebrow">ROOT0 Library &mdash; Rosalind Franklin Series &mdash; Volume 2</p>
+  <h1>Her <em>World</em></h1>
+  <p class="hero-sub">The institutions, colleagues, rivals, and cultures that shaped — and failed — one of the twentieth century's finest scientists.</p>
+  <p class="hero-dates">Cambridge · Paris · London · 1938–1958</p>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- SECTION 1: CAMBRIDGE -->
+  <section id="cambridge">
+    <div class="container">
+      <p class="kick">1938–1941</p>
+      <h2>Cambridge: The Half-Open Door</h2>
+      <p>When Rosalind Franklin arrived at Newnham College in October 1938, Cambridge was one of the most intellectually distinguished universities in the world. It was also, for women, a university with explicit institutional limits. Women had been permitted to attend lectures since 1869 — nearly seventy years before Franklin arrived. They had been permitted to sit the Tripos examinations since 1881. They had never been permitted to receive degrees.</p>
+      <p>This was not a technicality. The Cambridge degree — the BA — was the credential that opened doors to fellowships, to academic positions, to professional standing. A woman who completed the same examinations as a man, with the same or better results, received a piece of paper that said she had satisfied the requirements. The man received a degree. The distinction had consequences.</p>
+      <p>The vote to grant women full membership of the university — and thus full degree rights — was put to the university senate twice in the twentieth century before Franklin's time. In 1897 it failed. In 1921 it failed again. When it finally passed in 1948, Rosalind Franklin had been gone from Cambridge for seven years. She had done her undergraduate work, sat her examinations, and left without a degree.</p>
+
+      <div class="highlight-box teal-box">
+        <p class="hb-label">The Cambridge Anomaly</p>
+        <p>Oxford had granted women degrees since 1920. Cambridge — despite being home to some of the most progressive scientific thought in the world — did not grant women degrees until 1948. Rosalind Franklin completed her physical chemistry studies in 1941. Her degree, held retroactively by university convention, post-dated her presence at Cambridge by seven years.</p>
+      </div>
+
+      <h3>What Cambridge Gave Her</h3>
+      <p>Despite the institutional contradiction, Cambridge gave Franklin a formidable scientific education. She was taught physical chemistry at a level that few universities in the world matched. The discipline that Cambridge imposed — precision in measurement, rigor in argument, clarity in exposition — ran deep. Her later mentors in Paris and colleagues at Birkbeck consistently noted that her standards were extraordinarily high; those standards were forged in Cambridge's culture of technical excellence.</p>
+      <p>She made friends at Newnham who would last her lifetime. She was not socially isolated. She was direct, passionate about science, and impatient with imprecision. These qualities were recognized at Cambridge as attributes rather than flaws — a recognition she would not always receive elsewhere.</p>
+    </div>
+  </section>
+
+  <!-- SECTION 2: WARTIME COAL RESEARCH -->
+  <section id="bcura">
+    <div class="container">
+      <p class="kick">1942–1947 — Leatherhead, Surrey</p>
+      <h2>Wartime Britain: Coal and Coal Alone</h2>
+      <p>The wartime British economy ran on coal. Coal powered the industrial production that sustained the war effort; coal heated the homes of a nation under bombardment. Understanding how coal burned — how its microstructure determined its combustion characteristics — was not an academic exercise. It was economically and strategically important.</p>
+      <p>The British Coal Utilisation Research Association (BCURA) was a serious institution doing serious applied science. Franklin fit naturally. The work was empirical, quantitative, and technically demanding. She applied X-ray diffraction to questions no one had previously asked in this way: how does the microstructure of coal — the arrangement of its carbon planes, the geometry of its pore network — determine its behavior as a fuel?</p>
+      <p>She worked essentially independently, which suited her. She designed her own experiments, interpreted her own data, wrote her own papers. Her coal papers remain scientifically valid — her classification of carbons into "graphitizing" and "non-graphitizing" types based on their X-ray properties was an insight that stood up. This was not time-serving. She was doing real science.</p>
+
+      <blockquote class="pull">
+        <p>"Her work on coal was a model of careful, rigorous experimental science. She had a gift for identifying the right question to ask."</p>
+        <cite>— Patrick Blackett, physicist, on Franklin's BCURA work</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 3: PARIS -->
+  <section id="paris">
+    <div class="container">
+      <p class="kick">1947–1950 — Laboratoire National de la Recherche Scientifique, Paris</p>
+      <h2>Paris: Where She Belonged</h2>
+      <p>Franklin arrived in Paris in 1947 speaking rudimentary French. Within a year she was conducting seminars in French, eating long lunches with colleagues who argued about politics and science in equal measure, and hiking in the French Alps on weekends. The transformation was not superficial. Paris changed what she believed professional science could be.</p>
+      <p>The LNRS — the Laboratoire National de la Recherche Scientifique, in the part of the national service often called the CNRS — was headed by Jacques Mering. Mering was a crystallographer of genuine distinction who had himself fled the Soviet Union and held an independent, somewhat iconoclastic position in French science. He was a demanding mentor but a fair one. He did not treat Franklin as an anomaly. He treated her as a scientist.</p>
+      <p>The French crystallography community of the late 1940s had a culture Franklin found congenial: it was collegial, argument-centered, and meritocratic in practice if not always in theory. She was included in intellectual discussions. She ate at the same tables as the men. She was invited to give talks. She developed close friendships — with Mering's group and with the broader Parisian intellectual community — that she would maintain for the rest of her life.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">The Mentor</p>
+          <p class="card-title">Jacques Mering</p>
+          <p>One of Europe's leading X-ray crystallographers. Treated Franklin as a colleague from the start. Their working relationship was intense and productive — and remained a friendship long after she left Paris.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">The Method</p>
+          <p class="card-title">Diffuse Scattering Analysis</p>
+          <p>Franklin mastered the interpretation of diffuse (non-ideal) diffraction patterns — critical for disordered carbons and for DNA fibers. Paris is where she became world-class in this technique.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">The Cost</p>
+          <p class="card-title">The Return</p>
+          <p>She left Paris for a prestigious MRC fellowship in London. She would say, later, that she should have stayed. The fellowship led her to King's College London and to the most difficult professional years of her life.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: KING'S COLLEGE LONDON -->
+  <section id="kings">
+    <div class="container">
+      <p class="kick">1951–1953 — Strand, London</p>
+      <h2>King's College: The Institutional Failure</h2>
+      <p>King's College London in 1951 was in many respects a distinguished institution. Its biophysics unit, funded by the Medical Research Council, was doing important work. John Randall, who led it, was an accomplished physicist who had played a key role in radar development during the war. The environment was serious.</p>
+      <p>It was also hostile to women in ways that were structural, not merely atmospheric. The men's dining room at King's excluded women as a matter of explicit policy. The arrangement of offices, of social hierarchies, of informal networks — all of these operated on assumptions that women were peripheral. Franklin encountered this from her first weeks. It was not the misogyny of individual hostility (though Wilkins's attitude was personal as well as institutional) but the misogyny of a system that had never seriously imagined women as full participants.</p>
+
+      <h3>The Wilkins Problem</h3>
+      <p>The misunderstanding between Franklin and Maurice Wilkins was, at its root, an administrative failure by John Randall. Randall had written to Franklin describing DNA fiber work as her project; he had not communicated this clearly to Wilkins. When Wilkins returned from sabbatical to find Franklin installed in what he understood as his research domain, with his student Gosling assigned to work with her, he concluded — incorrectly — that she was a technical assistant sent to support his research program. She was not. She was an independent MRC researcher.</p>
+      <p>The practical consequences were serious. Wilkins addressed her in condescending terms. He attempted to brief her on what she should be doing rather than consulting her as an equal. She refused to accept this framing, which he experienced as obstinacy. She experienced it as self-defense against someone misrepresenting her role. Both reactions were comprehensible; both made collaboration impossible. They communicated through written notes. They barely spoke.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Institution</th>
+            <th>Treatment of Franklin</th>
+            <th>Outcome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BCURA (1942–47)</td>
+            <td>Independent researcher. Full autonomy over experiments and publications. No institutional friction.</td>
+            <td>Five strong papers. PhD. Mastery of technique.</td>
+          </tr>
+          <tr>
+            <td>LNRS Paris (1947–50)</td>
+            <td>Full colleague. Included in seminars, discussions, social life of the laboratory. Treated as a scientist by Mering and peers.</td>
+            <td>Five papers on carbons. World-class technique. Professional happiness. Deep friendships.</td>
+          </tr>
+          <tr>
+            <td>King's College London (1951–53)</td>
+            <td>Misidentified as Wilkins's assistant. Excluded from men's dining room. Administrative confusion never resolved. Institutional hostility.</td>
+            <td>Photo 51. Extraordinary science despite the environment. Two years of professional misery.</td>
+          </tr>
+          <tr>
+            <td>Birkbeck (1953–58)</td>
+            <td>Full colleague under Bernal. Aaron Klug as genuine partner. Supportive environment. Recognized as leader.</td>
+            <td>TMV structure. 17 papers. Klug collaboration. At the height of her powers when illness intervened.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE RACE FOR DNA -->
+  <section id="race">
+    <div class="container">
+      <p class="kick">1951–1953 — The Triple Competition</p>
+      <h2>The Race for DNA Structure</h2>
+      <p>By 1951, the race to determine the structure of DNA involved at least three groups: Franklin and Gosling at King's, working with X-ray diffraction; Wilkins at King's, also working with X-ray diffraction but with less powerful specimens; and Watson and Crick at the Cavendish Laboratory in Cambridge, working with model-building.</p>
+      <p>A fourth competitor — and for a time the most feared — was Linus Pauling at the California Institute of Technology. Pauling had already determined the alpha-helix structure of proteins in 1951, demonstrating that model-building from bond angles and distances could be extraordinarily powerful. He was working on DNA. Watson and Crick were genuinely frightened of Pauling getting there first.</p>
+
+      <div class="highlight-box">
+        <p class="hb-label">Pauling's Triple Helix</p>
+        <p>In January 1953, Linus Pauling and Robert Corey published a proposed structure for DNA: a triple helix, with the phosphate backbone on the inside. The paper was wrong. The phosphates-inside configuration was physically impossible — it required protonated phosphates, which cannot exist at physiological pH. Franklin recognized this immediately. Watson and Crick, reading Pauling's preprint, also recognized it. The error, from the world's most celebrated structural chemist, gave the Cambridge group renewed urgency.</p>
+      </div>
+
+      <h3>The Cambridge Strategy</h3>
+      <p>Watson and Crick at Cambridge were model-builders, not crystallographers. They were not generating their own primary data. Their strategy was to synthesize published and unpublished data — from their own chemical reasoning, from whatever they could learn of King's work, from Pauling's papers — into a physically plausible model. This was legitimate science; Crick's mathematical understanding of diffraction from helical structures was a genuine contribution. But it depended on experimental data they did not produce.</p>
+      <p>The data that made the difference was Franklin's: Photo 51's parameters, seen by Watson in January 1953, and the MRC report data on unit cell dimensions and water content. With these constraints, the model-building became rapidly convergent. The Watson-Crick model was published in Nature on April 25, 1953 — one of the most famous papers in the history of science. The accompanying papers by Franklin and by Wilkins provided crystallographic support. They were positioned, in that layout, as corroboration rather than as the foundation.</p>
+
+      <blockquote class="pull">
+        <p>"The X-ray evidence available suggests that the structure is a B-form helix... My jaw dropped and my pulse began to race when I saw the picture."</p>
+        <cite>— James Watson, on seeing Photo 51 in January 1953</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- SECTION 6: BIRKBECK AND BERNAL -->
+  <section id="birkbeck">
+    <div class="container">
+      <p class="kick">1953–1958 — Bloomsbury, London</p>
+      <h2>Birkbeck: The Good Years</h2>
+      <p>J.D. Bernal — "Sage" to everyone who knew him — was one of the most remarkable scientists in Britain. A crystallographer, a communist, a polymath of extraordinary breadth who had mapped the first protein crystal structures in the 1930s. His laboratory at Birkbeck College was open, argumentative, international, and meritocratic in practice. Women worked there as scientists, not as assistants. Ideas competed on their merits.</p>
+      <p>Franklin arrived at Birkbeck in mid-1953, leaving the King's disaster behind. She was thirty-two years old and had produced some of the best X-ray diffraction data in the history of structural biology — data that had been used without adequate acknowledgment to build one of the most celebrated discoveries of the century. She did not dwell on this, at least not publicly. She redirected her attention entirely to viruses, and she worked.</p>
+      <p>Aaron Klug arrived at Birkbeck shortly after Franklin, having recently completed his doctorate in Cambridge. He was twenty-seven. He was a physicist with extraordinary mathematical abilities. The collaboration that formed between them was, by the accounts of all who observed it, a genuine scientific partnership of a rare kind: each brought what the other lacked, and the synthesis was greater than either alone.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <p class="card-label">J.D. Bernal</p>
+          <p class="card-title">The Mentor Who Got It Right</p>
+          <p>Bernal recognized Franklin as a first-rate scientist immediately. He gave her laboratory space, resources, and — crucially — the autonomy to define her own research program. He treated her the way Mering had in Paris.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">Aaron Klug</p>
+          <p class="card-title">The Perfect Collaborator</p>
+          <p>Franklin and Klug complemented each other without competition. She prepared specimens and read diffraction patterns; he built mathematical models and performed Fourier analysis. Their TMV papers are models of clear, precise structural science.</p>
+        </div>
+        <div class="card">
+          <p class="card-label">The TMV Legacy</p>
+          <p class="card-title">Structural Virology</p>
+          <p>Their work on tobacco mosaic virus and other plant viruses founded the field of structural virology. Klug's Nobel lecture in 1982 described Franklin as central to everything that followed — both in specific results and in method.</p>
+        </div>
+      </div>
+
+      <p>Franklin knew she was ill from 1956. She did not stop working. She was planning new research. She was scheduled to present at international conferences. She was mentoring students. She was, in the estimation of those who knew her work best, at the very beginning of what would have been a second great phase of her career — applying the TMV techniques to animal viruses and to more complex structures. The cancer stopped this. It stopped her at thirty-seven.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- COLOPHON -->
+<footer class="colophon">
+  <div class="container">
+    <p class="col-attr">
+      ROOT0-ATTRIBUTION-v1.0<br/>
+      David Lee Wise / ROOT0 / TriPod LLC<br/>
+      Rosalind Franklin Series — Volume 2: Her World<br/>
+      <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a> — Share freely, do not modify without attribution
+    </p>
+    <div class="col-lic">CC-BY-ND-4.0 | ROOT0 | TriPod LLC</div>
+  </div>
+</footer>
+
+</body>
+</html>

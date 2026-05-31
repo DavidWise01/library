@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niels Bohr — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04080a;
+    --cobalt: #1e40af;
+    --gold: #ca8a04;
+    --text: #dce8f0;
+    --muted: #6b8399;
+    --border: #0e1e2e;
+    --card-bg: #07111a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,8,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--cobalt); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #021228 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(30,64,175,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cobalt);
+    color: #e8f0ff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* ENERGY LEVEL DIAGRAM */
+  .diagram-wrap {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 2.5rem 0;
+    display: flex;
+    justify-content: center;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--cobalt); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cobalt);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cobalt);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  .equation-box {
+    background: var(--card-bg);
+    border: 1px solid var(--cobalt);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: #fff;
+  }
+  .equation-box .eq-label {
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-style: normal;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cobalt); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+  /* Debate table */
+  .debate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+  .debate-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--cobalt);
+    color: var(--gold);
+  }
+  .debate-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  .debate-table tr:hover td { background: var(--card-bg); }
+  .year-cell {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--cobalt);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Niels Bohr</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-atom.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Hydrogen energy level diagram with electron jumping and photon emission -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bgGlow1" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#1e40af" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#04080a" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="photonGlow">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="lineGlow">
+        <feGaussianBlur stdDeviation="2"/>
+      </filter>
+    </defs>
+
+    <rect width="900" height="560" fill="url(#bgGlow1)"/>
+
+    <!-- Energy level lines, right side — labeled n=1 to n=6 -->
+    <!-- Positions: n=1 at y=480, n=2 at y=380, n=3 at y=330, n=4 at y=300, n=5 at y=280, n=∞ at y=240 -->
+
+    <!-- n=1 ground state -->
+    <line x1="200" y1="480" x2="680" y2="480" stroke="#ca8a04" stroke-width="2.2" opacity="0.9"/>
+    <text x="690" y="484" fill="#ca8a04" font-family="'Space Mono', monospace" font-size="11">n=1  E=-13.6 eV</text>
+
+    <!-- n=2 -->
+    <line x1="200" y1="380" x2="680" y2="380" stroke="#1e40af" stroke-width="1.6" opacity="0.85"/>
+    <text x="690" y="384" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="10">n=2  E=-3.4 eV</text>
+
+    <!-- n=3 -->
+    <line x1="200" y1="320" x2="680" y2="320" stroke="#1e40af" stroke-width="1.3" opacity="0.75"/>
+    <text x="690" y="324" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="10">n=3  E=-1.51 eV</text>
+
+    <!-- n=4 -->
+    <line x1="200" y1="283" x2="680" y2="283" stroke="#1e40af" stroke-width="1.1" opacity="0.65"/>
+    <text x="690" y="287" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="10">n=4  E=-0.85 eV</text>
+
+    <!-- n=5 -->
+    <line x1="200" y1="258" x2="680" y2="258" stroke="#1e40af" stroke-width="0.9" opacity="0.55"/>
+    <text x="690" y="262" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="10">n=5  E=-0.54 eV</text>
+
+    <!-- n=6 -->
+    <line x1="200" y1="240" x2="680" y2="240" stroke="#1e40af" stroke-width="0.8" opacity="0.45"/>
+    <text x="690" y="244" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="10">n=6</text>
+
+    <!-- Ionization -->
+    <line x1="200" y1="215" x2="680" y2="215" stroke="#6b8399" stroke-width="0.7" stroke-dasharray="4,4" opacity="0.5"/>
+    <text x="690" y="219" fill="#6b8399" font-family="'Space Mono', monospace" font-size="9">ionized  0 eV</text>
+
+    <!-- ELECTRON — animates: starts at n=3 (y=320), jumps to n=1 (y=480), photon emits -->
+    <!-- Phase 1: rest at n=3 -->
+    <!-- Phase 2: jump down -->
+    <!-- Phase 3: rest at n=1 -->
+    <!-- Phase 4: jump up to n=4 (absorb photon) -->
+    <!-- Phase 5: back to n=2 -->
+
+    <!-- Electron dot -->
+    <circle r="7" fill="#fde68a" filter="url(#photonGlow)">
+      <!-- X stays roughly in the middle of the diagram -->
+      <animate attributeName="cx" dur="10s" repeatCount="indefinite"
+        values="430;430;430;430;430;430;430;430;430;430"
+        keyTimes="0;0.18;0.2;0.45;0.47;0.70;0.72;0.85;0.87;1"/>
+      <!-- Y: n=3(320) → n=3 → n=1(480) → n=1 → n=4(283) → n=4 → n=2(380) → n=2 → n=3(320) -->
+      <animate attributeName="cy" dur="10s" repeatCount="indefinite"
+        values="320;320;480;480;283;283;380;380;320;320"
+        keyTimes="0;0.18;0.22;0.45;0.47;0.70;0.72;0.85;0.87;1"
+        calcMode="spline"
+        keySplines="0.4 0 0.6 1;0.1 0.8 0.9 0.2;0.4 0 0.6 1;0.1 0.2 0.9 0.8;0.4 0 0.6 1;0.1 0.8 0.9 0.2;0.4 0 0.6 1;0.1 0.2 0.9 0.8;0.4 0 0.6 1"/>
+    </circle>
+
+    <!-- Photon wave emitted on n=3→n=1 jump (Balmer Hα, red) -->
+    <circle cx="430" cy="400" r="1" fill="none" stroke="#f87171" stroke-width="2.5" opacity="0">
+      <animate attributeName="r" dur="10s" repeatCount="indefinite"
+        values="1;1;1;5;50;120;1"
+        keyTimes="0;0.18;0.22;0.24;0.33;0.42;0.43"/>
+      <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+        values="0;0;0;0.9;0.6;0;0"
+        keyTimes="0;0.18;0.22;0.24;0.33;0.42;0.43"/>
+      <animate attributeName="stroke-width" dur="10s" repeatCount="indefinite"
+        values="2.5;2.5;2.5;3;2;0.5;0"
+        keyTimes="0;0.18;0.22;0.24;0.33;0.42;0.43"/>
+    </circle>
+    <!-- Second wave ring -->
+    <circle cx="430" cy="400" r="1" fill="none" stroke="#f87171" stroke-width="1.5" opacity="0">
+      <animate attributeName="r" dur="10s" repeatCount="indefinite"
+        values="1;1;1;10;70;150;1"
+        keyTimes="0;0.18;0.22;0.25;0.36;0.45;0.46"/>
+      <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+        values="0;0;0;0.6;0.3;0;0"
+        keyTimes="0;0.18;0.22;0.25;0.36;0.45;0.46"/>
+    </circle>
+
+    <!-- Photon absorbed on n=1→n=4 jump (ultraviolet) -->
+    <circle cx="430" cy="380" r="80" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0">
+      <animate attributeName="r" dur="10s" repeatCount="indefinite"
+        values="80;80;80;60;30;5;1"
+        keyTimes="0;0.43;0.45;0.47;0.49;0.50;0.51"/>
+      <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+        values="0;0;0;0.5;0.8;0.9;0"
+        keyTimes="0;0.43;0.45;0.47;0.49;0.50;0.51"/>
+    </circle>
+
+    <!-- Photon emitted n=4→n=2 (Balmer Hβ) -->
+    <circle cx="430" cy="330" r="1" fill="none" stroke="#60a5fa" stroke-width="2.5" opacity="0">
+      <animate attributeName="r" dur="10s" repeatCount="indefinite"
+        values="1;1;5;60;130;1"
+        keyTimes="0;0.72;0.74;0.82;0.87;0.88"/>
+      <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+        values="0;0;0.9;0.5;0;0"
+        keyTimes="0;0.72;0.74;0.82;0.87;0.88"/>
+    </circle>
+
+    <!-- Balmer series label lines on the left side -->
+    <g stroke="#ca8a04" stroke-width="0.8" fill="none" opacity="0.6">
+      <!-- Hα: n=3→n=2 (656nm red) -->
+      <line x1="320" y1="380" x2="320" y2="320" stroke="#f87171" stroke-dasharray="3,3"/>
+      <text x="295" y="350" fill="#f87171" font-family="'Space Mono', monospace" font-size="9" opacity="0.8">Hα 656nm</text>
+      <!-- Hβ: n=4→n=2 (486nm blue) -->
+      <line x1="360" y1="380" x2="360" y2="283" stroke="#60a5fa" stroke-dasharray="3,3"/>
+      <text x="365" y="330" fill="#60a5fa" font-family="'Space Mono', monospace" font-size="9" opacity="0.8">Hβ 486nm</text>
+      <!-- Lyman α: n=2→n=1 (121nm UV) -->
+      <line x1="270" y1="480" x2="270" y2="380" stroke="#a78bfa" stroke-dasharray="3,3"/>
+      <text x="225" y="432" fill="#a78bfa" font-family="'Space Mono', monospace" font-size="9" opacity="0.8">Ly-α 121nm</text>
+    </g>
+
+    <!-- Energy axis arrow on left -->
+    <line x1="195" y1="510" x2="195" y2="195" stroke="#6b8399" stroke-width="1.5" opacity="0.6"/>
+    <polygon points="195,190 190,205 200,205" fill="#6b8399" opacity="0.6"/>
+    <text x="155" y="360" fill="#6b8399" font-family="'Space Mono', monospace" font-size="10" transform="rotate(-90 155 360)" opacity="0.7">Energy</text>
+
+    <!-- Formula label at top -->
+    <text x="450" y="80" fill="#ca8a04" font-family="'Newsreader', serif" font-style="italic" font-size="20" text-anchor="middle" opacity="0.7">E = −13.6 eV / n²</text>
+    <text x="450" y="110" fill="#6b8399" font-family="'Space Mono', monospace" font-size="10" text-anchor="middle" opacity="0.6">HYDROGEN ENERGY LEVELS · BOHR MODEL 1913</text>
+
+    <!-- Faint background grid lines -->
+    <g stroke="#0e1e2e" stroke-width="0.5" opacity="0.4">
+      <line x1="200" y1="150" x2="680" y2="150"/>
+      <line x1="200" y1="530" x2="680" y2="530"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Niels Bohr · 1885–1962 · Volume One</span>
+    <h1 class="hero-title">The Work</h1>
+    <p class="hero-subtitle">The Atom. Complementarity. Copenhagen. The Debate of the Century.</p>
+    <p class="hero-lead">Five contributions that remade physics: quantized orbits, the hydrogen spectrum, the wave-particle duality principle, the Copenhagen interpretation, and the theory of fission — all before the bomb.</p>
+  </div>
+</div>
+
+<div class="band">Bohr Model 1913 · Complementarity 1927 · Einstein Debates 1927–1935 · Fission Theory 1939</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1913</span>
+      <span class="stat-label">Bohr Model Published</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Papers in One Series</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Balmer Series Lines Explained</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1927</span>
+      <span class="stat-label">Complementarity Principle</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1935</span>
+      <span class="stat-label">EPR Rebuttal</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1982</span>
+      <span class="stat-label">Aspect Experiment — Bohr Vindicated</span>
+    </div>
+  </div>
+
+  <!-- BOHR MODEL -->
+  <section id="model">
+    <span class="section-label">I — The Bohr Model (1913)</span>
+    <h2>Electrons in Fixed Orbits</h2>
+    <p>In 1911 Rutherford had established the nuclear atom: a tiny dense positive nucleus surrounded by electrons. But classical physics predicted catastrophe. An orbiting electron, by Maxwell's equations, constantly accelerates and should therefore continuously radiate electromagnetic energy, losing speed and spiraling into the nucleus in less than a microsecond. Matter could not exist. And yet it obviously did.</p>
+    <p>Bohr's solution was audacious: he simply <em>postulated</em> that classical physics did not apply inside the atom. Electrons could only occupy certain specific orbits, which he called <strong>stationary states</strong>. In these orbits, contrary to all classical expectation, electrons did not radiate. An electron only emitted or absorbed energy when it jumped from one orbit to another — and the energy emitted or absorbed was exactly the difference in energy between the two orbits, expressed as a single photon with frequency given by Planck's relation.</p>
+
+    <div class="equation-box">
+      E<sub>photon</sub> = hf = E<sub>upper</sub> − E<sub>lower</sub>
+      <span class="eq-label">Bohr's quantum condition · h = Planck's constant · f = photon frequency</span>
+    </div>
+
+    <p>The allowed orbits were those in which the electron's angular momentum was a whole-number multiple of h/2π — the quantum condition. This was a rule imposed on nature, not derived from anything deeper. Bohr knew it. He was not explaining <em>why</em> the rule held; he was showing that if it held, everything followed.</p>
+
+    <h3>The Hydrogen Spectrum: A Perfect Match</h3>
+    <p>The proof was in the spectrum. Hydrogen, when excited by an electric discharge, emits light at very specific wavelengths — a discrete series of colored lines. The Swiss mathematician Johann Balmer had found a formula describing these lines in 1885, but no one understood why the formula worked. It was empirical pattern without physical basis.</p>
+    <p>Bohr's model, when applied to hydrogen (a single electron orbiting a single proton), produced the Balmer formula from first principles. The energy levels of hydrogen were:</p>
+
+    <div class="equation-box">
+      E<sub>n</sub> = −13.6 eV / n²
+      <span class="eq-label">n = 1, 2, 3 … · Energy in electron-volts · Ground state is n=1 at −13.6 eV</span>
+    </div>
+
+    <p>When an electron dropped from n=3 to n=2, it emitted a photon of 656 nanometers — the red Hα line of the Balmer series. When it dropped from n=4 to n=2, the 486nm blue Hβ line. The match was exact, to the limits of experimental measurement. Physicists who had spent years unable to explain these lines saw Bohr's paper and felt something close to vertigo. The atom had suddenly become legible.</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 500 320" width="500" height="320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Energy level diagram — detailed static version for main content -->
+        <text x="250" y="22" fill="#ca8a04" font-family="'Space Mono', monospace" font-size="10" text-anchor="middle">HYDROGEN ENERGY LEVEL DIAGRAM</text>
+
+        <!-- Levels -->
+        <line x1="60" y1="280" x2="340" y2="280" stroke="#ca8a04" stroke-width="2"/>
+        <text x="345" y="284" fill="#ca8a04" font-family="'Space Mono', monospace" font-size="9">n=1  −13.6 eV</text>
+
+        <line x1="60" y1="210" x2="340" y2="210" stroke="#7dd3fc" stroke-width="1.5"/>
+        <text x="345" y="214" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="9">n=2  −3.40 eV</text>
+
+        <line x1="60" y1="168" x2="340" y2="168" stroke="#7dd3fc" stroke-width="1.2"/>
+        <text x="345" y="172" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="9">n=3  −1.51 eV</text>
+
+        <line x1="60" y1="142" x2="340" y2="142" stroke="#7dd3fc" stroke-width="1"/>
+        <text x="345" y="146" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="9">n=4  −0.85 eV</text>
+
+        <line x1="60" y1="126" x2="340" y2="126" stroke="#7dd3fc" stroke-width="0.9"/>
+        <text x="345" y="130" fill="#7dd3fc" font-family="'Space Mono', monospace" font-size="9">n=5  −0.54 eV</text>
+
+        <line x1="60" y1="115" x2="340" y2="115" stroke="#6b8399" stroke-width="0.7" stroke-dasharray="3,3"/>
+        <text x="345" y="119" fill="#6b8399" font-family="'Space Mono', monospace" font-size="9">n=∞  0 eV</text>
+
+        <!-- Balmer series arrows (n→2) -->
+        <g fill="none">
+          <line x1="130" y1="168" x2="130" y2="210" stroke="#f87171" stroke-width="2"/>
+          <polygon points="130,212 126,202 134,202" fill="#f87171"/>
+          <text x="105" y="192" fill="#f87171" font-family="'Space Mono', monospace" font-size="8">Hα</text>
+          <text x="105" y="202" fill="#f87171" font-family="'Space Mono', monospace" font-size="7">656nm</text>
+
+          <line x1="165" y1="142" x2="165" y2="210" stroke="#60a5fa" stroke-width="2"/>
+          <polygon points="165,212 161,202 169,202" fill="#60a5fa"/>
+          <text x="168" y="178" fill="#60a5fa" font-family="'Space Mono', monospace" font-size="8">Hβ</text>
+          <text x="168" y="188" fill="#60a5fa" font-family="'Space Mono', monospace" font-size="7">486nm</text>
+
+          <line x1="200" y1="126" x2="200" y2="210" stroke="#818cf8" stroke-width="1.5"/>
+          <polygon points="200,212 196,202 204,202" fill="#818cf8"/>
+          <text x="203" y="170" fill="#818cf8" font-family="'Space Mono', monospace" font-size="8">Hγ</text>
+
+          <!-- Lyman series (n→1) -->
+          <line x1="90" y1="210" x2="90" y2="280" stroke="#a78bfa" stroke-width="1.5"/>
+          <polygon points="90,282 86,272 94,272" fill="#a78bfa"/>
+          <text x="40" y="248" fill="#a78bfa" font-family="'Space Mono', monospace" font-size="8">Ly-α</text>
+          <text x="40" y="258" fill="#a78bfa" font-family="'Space Mono', monospace" font-size="7">121nm</text>
+        </g>
+
+        <!-- Animated electron jumping n=3→n=2 -->
+        <circle r="5" fill="#fde68a">
+          <animate attributeName="cx" dur="5s" repeatCount="indefinite"
+            values="270;270;270;270;270" keyTimes="0;0.3;0.35;0.8;1"/>
+          <animate attributeName="cy" dur="5s" repeatCount="indefinite"
+            values="168;168;210;210;168"
+            keyTimes="0;0.3;0.37;0.75;0.82"
+            calcMode="spline" keySplines="0.4 0 0.6 1;0.1 0.8 0.9 0.2;0.4 0 0.6 1;0.1 0.8 0.9 0.2"/>
+        </circle>
+
+        <!-- Photon emission pulse -->
+        <circle cx="270" cy="190" r="1" fill="none" stroke="#f87171" stroke-width="2" opacity="0">
+          <animate attributeName="r" dur="5s" repeatCount="indefinite"
+            values="1;1;1;8;50;1" keyTimes="0;0.3;0.37;0.40;0.55;0.56"/>
+          <animate attributeName="opacity" dur="5s" repeatCount="indefinite"
+            values="0;0;0;0.9;0;0" keyTimes="0;0.3;0.37;0.40;0.55;0.56"/>
+        </circle>
+
+        <!-- Energy axis -->
+        <line x1="50" y1="300" x2="50" y2="100" stroke="#6b8399" stroke-width="1" opacity="0.6"/>
+        <polygon points="50,95 46,110 54,110" fill="#6b8399" opacity="0.6"/>
+        <text x="15" y="205" fill="#6b8399" font-family="'Space Mono', monospace" font-size="8"
+          transform="rotate(-90 15 205)" opacity="0.7">Energy (eV)</text>
+      </svg>
+    </div>
+
+    <p>The Bohr model was not complete — it worked perfectly for hydrogen but failed for multi-electron atoms, and it mixed classical and quantum ideas in ways that were logically uncomfortable. Bohr himself acknowledged this openly. He was not building a final theory; he was finding the seam in nature where old physics ended and new physics had to begin.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COMPLEMENTARITY -->
+  <section id="complementarity">
+    <span class="section-label">II — Complementarity (1927)</span>
+    <h2>Wave and Particle: Both True, Never Both at Once</h2>
+    <p>By 1925–1926 two complete mathematical frameworks for quantum mechanics had emerged: <strong>Heisenberg's matrix mechanics</strong> and <strong>Schrödinger's wave mechanics</strong>. They gave the same predictions but looked completely different. More troublingly, neither gave a clear physical picture of what an electron actually was. Was it a particle following a definite path? Or a wave spread through space? Experiments gave contradictory answers depending on what you measured.</p>
+    <p>Bohr's response was the <strong>principle of complementarity</strong>, announced at the Como conference in September 1927. His argument: the wave description and the particle description are both correct, but they apply to mutually exclusive experimental situations. You cannot design an experiment that reveals both simultaneously — not because of technological limitation, but because of the structure of reality itself.</p>
+    <p>The experimental setup that reveals wave behavior (the double-slit experiment) necessarily destroys the information that would reveal particle behavior. If you try to determine which slit the electron went through, the interference pattern disappears. Nature enforces a boundary between descriptions: each is complete and correct in its domain, and the domains do not overlap.</p>
+
+    <div class="pull-quote">
+      <blockquote>"There is no quantum world. There is only an abstract quantum physical description. It is wrong to think that the task of physics is to find out how nature is. Physics concerns what we can say about nature."</blockquote>
+      <cite>— Niels Bohr, recorded by Aage Petersen, 1963</cite>
+    </div>
+
+    <p>This was more than a technical claim. It was a philosophical revolution. The notion that a physical object has simultaneously real properties — that an electron has both a definite position and a definite momentum simultaneously whether or not we observe them — was, Bohr argued, simply wrong. <em>The classical concept of trajectory does not apply.</em> Nature at the quantum level is irreducibly contextual: what a system "is" depends on what you measure.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COPENHAGEN INTERPRETATION -->
+  <section id="copenhagen">
+    <span class="section-label">III — The Copenhagen Interpretation (1927–1930)</span>
+    <h2>The Standard Model of Quantum Reality</h2>
+    <p>Working with Heisenberg through the autumn of 1926 and into 1927, Bohr refined the framework that became known — initially by its critics, then by everyone — as the <strong>Copenhagen interpretation</strong>. Its core claims:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Claim 1</span>
+        <h4>The Wave Function Is Complete</h4>
+        <p>The quantum state vector (wave function, ψ) gives the most complete possible description of a system. There are no hidden variables that, if known, would allow prediction of individual measurement outcomes.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Claim 2</span>
+        <h4>Measurement Collapses the State</h4>
+        <p>Before measurement, a system exists in a superposition of possible states. Measurement collapses the wave function to a definite outcome. The probability of each outcome is given by Born's rule: |ψ|².</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Claim 3</span>
+        <h4>No Definite Properties Between Measurements</h4>
+        <p>It is meaningless to ask what value a quantum observable has between measurements. The concept of a particle having a definite position or momentum independent of observation simply does not apply.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Claim 4</span>
+        <h4>Uncertainty Is Fundamental</h4>
+        <p>Heisenberg's uncertainty principle (Δx · Δp ≥ ℏ/2) is not a measurement artifact — it reflects an irreducible complementarity in the concepts of position and momentum themselves. Both cannot simultaneously be precise.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Claim 5</span>
+        <h4>Classical Language Is Necessary</h4>
+        <p>The results of any quantum experiment must ultimately be described in classical terms — because the measuring apparatus is classical. This is the "cut" between quantum and classical that Bohr insisted was unavoidable.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Claim 6</span>
+        <h4>Complementarity Is Universal</h4>
+        <p>The complementarity of wave and particle descriptions is not limited to physics. Bohr later extended the concept to biology (vitalism vs. mechanism), psychology (free will vs. determinism), and ethics.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">The Copenhagen interpretation remains the standard interpretation taught in physics curricula worldwide, nearly a century after its formulation. It has never been experimentally refuted. Competing interpretations — Many Worlds, Pilot Wave, QBism — exist but none has achieved Copenhagen's empirical and pedagogical dominance.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BOHR-EINSTEIN DEBATES -->
+  <section id="debates">
+    <span class="section-label">IV — The Bohr–Einstein Debates (1927–1935)</span>
+    <h2>The Greatest Scientific Argument of the Twentieth Century</h2>
+    <p>Einstein was not convinced. He accepted the mathematical formalism of quantum mechanics — he had himself contributed to it — but rejected the Copenhagen interpretation's insistence that quantum mechanics was complete and that physical quantities have no definite values before measurement. His objections were not those of a man who failed to understand quantum mechanics. They were those of a man who understood it and found it philosophically untenable.</p>
+
+    <table class="debate-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Einstein's Challenge</th>
+          <th>Bohr's Response</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="year-cell">1927<br>Solvay 5th</td>
+          <td>Proposes thought experiments showing an electron passing through a double slit could be tracked without disturbing the interference pattern — undermining complementarity.</td>
+          <td>Shows in each case that accounting for the recoil of the apparatus (using uncertainty principle) destroys the which-way information before it can be recorded.</td>
+          <td>Bohr wins the battle. Einstein accepts the defeat — and returns with heavier weapons.</td>
+        </tr>
+        <tr>
+          <td class="year-cell">1930<br>Solvay 6th</td>
+          <td>The photon-box thought experiment: a box containing photons is weighed before and after releasing one; both the energy and the time of release seem precisely determinable, violating the energy-time uncertainty relation.</td>
+          <td>Works through the night. In the morning shows that Einstein had forgotten to apply his own general relativity: the clock's position in gravity affects its rate, and accounting for this precisely restores the uncertainty relation.</td>
+          <td>Bohr wins, using Einstein's own theory against him. Einstein reportedly shaken. A diagram of the photon box was on Bohr's blackboard when he died in 1962.</td>
+        </tr>
+        <tr>
+          <td class="year-cell">1935<br>EPR Paper</td>
+          <td>With Podolsky and Rosen: if two entangled particles are separated and one is measured, the state of the other is immediately determined — either nature is nonlocal (spooky action at a distance) or quantum mechanics is incomplete (there must be hidden variables).</td>
+          <td>Within six weeks, publishes a rebuttal: the EPR argument assumes that physical quantities have definite values prior to and independent of measurement — exactly the assumption quantum mechanics denies. The apparent incompleteness is an artifact of a classical assumption. Bohr: the description is complete.</td>
+          <td>A draw on arguments. The empirical question required new physics to resolve.</td>
+        </tr>
+        <tr>
+          <td class="year-cell">1964<br>Bell's Theorem</td>
+          <td colspan="2">John Bell shows that any local hidden variable theory makes experimentally distinguishable predictions from quantum mechanics. The debate can be decided by experiment.</td>
+          <td>Bell's theorem transforms a philosophical debate into a physics problem.</td>
+        </tr>
+        <tr>
+          <td class="year-cell">1982<br>Aspect Experiment</td>
+          <td colspan="2">Alain Aspect and colleagues in Paris measure the correlations between entangled photons. The results violate Bell inequalities — ruling out local hidden variables — and confirm quantum mechanical predictions exactly.</td>
+          <td>Bohr vindicated. Quantum mechanics is complete and nonlocal correlations are real. Einstein's intuition about a deeper deterministic reality was wrong.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-quote">
+      <blockquote>"God does not play dice." — Einstein.&nbsp;&nbsp; "Stop telling God what to do." — Bohr.</blockquote>
+      <cite>— The most condensed version of the greatest debate in 20th-century physics</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- NUCLEAR FISSION -->
+  <section id="fission">
+    <span class="section-label">V — Nuclear Fission (1939)</span>
+    <h2>The Theory Behind the Bomb</h2>
+    <p>On January 16, 1939, Bohr arrived in New York aboard the SS Drottningholm, carrying news from Europe: Otto Hahn and Fritz Strassmann had split the uranium nucleus — nuclear fission had been achieved. Lise Meitner and her nephew Otto Frisch had supplied the theoretical interpretation: the uranium nucleus, on absorbing a neutron, becomes unstable and splits, releasing enormous energy — as Meitner calculated, about 200 million electron volts per fission.</p>
+    <p>Bohr immediately recognized the theoretical problem: why should <em>uranium-235</em> fission readily on absorbing a slow neutron, while <em>uranium-238</em> — the far more abundant isotope — did not? Working with John Wheeler at Princeton over the following months, Bohr developed the <strong>liquid drop model of fission</strong>: the nucleus behaves like a charged liquid drop; absorbing a neutron causes it to oscillate and, if the neutron energy is right, to elongate and split.</p>
+    <p>Bohr and Wheeler's paper, published in September 1939 — the same week Germany invaded Poland — explained fission theoretically and correctly predicted that U-235, not U-238, was the fissile isotope. This distinction was crucial: it meant that a practical weapon would require isotope separation to concentrate U-235, which drove the entire industrial program of the Manhattan Project. The Bohr-Wheeler paper was the theoretical foundation on which the bomb was built.</p>
+
+    <div class="equation-box">
+      ²³⁵U + n → fission fragments + 2–3 neutrons + ~200 MeV
+      <span class="eq-label">Nuclear fission · Bohr &amp; Wheeler 1939 · E=mc² · chain reaction</span>
+    </div>
+
+    <p>Bohr knew what he had helped to explain. His response was not to suppress the knowledge — it was too late for that — but to argue for the rest of his life that the weapon's existence demanded international institutions capable of controlling it. Science had created the problem; only politics, elevated to science's level of seriousness, could solve it.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Niels Bohr Series · Volume 1: The Work · niels-bohr/1-atom.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

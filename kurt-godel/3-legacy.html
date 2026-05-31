@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gödel — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060608;
+    --silver: #6b7280;
+    --gold: #b45309;
+    --text: #e2ddd6;
+    --muted: #7a7a8a;
+    --border: #1e1e2a;
+    --card-bg: #0c0c10;
+    --cool: #374151;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+    color: var(--gold); letter-spacing: 0.08em; margin-right: 2rem; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; padding: 0.35rem 0.85rem; border: 1px solid transparent; transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--gold); }
+  /* HERO */
+  .hero {
+    position: relative; width: 100%; min-height: 540px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 50%, #050610 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.6; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.2rem; display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; color: #fff;
+    text-shadow: 0 0 60px rgba(107,114,128,0.45); margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif; font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--silver);
+    letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.15rem; color: var(--text); max-width: 640px; margin: 0 auto; opacity: 0.85;
+  }
+  .band {
+    background: var(--silver); color: #08080a; padding: 0.6rem 2rem;
+    text-align: center; font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.75rem; display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.2rem;
+    color: var(--gold); margin-bottom: 0.75rem; margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* LEGACY CARDS */
+  .legacy-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .legacy-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .legacy-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--silver); opacity: 0.5;
+  }
+  .legacy-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--silver); }
+  .legacy-card .era {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--silver); margin-bottom: 0.4rem; display: block;
+  }
+  .legacy-card h4 {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 0.6rem;
+  }
+  .legacy-card p { font-size: 0.88rem; margin: 0; opacity: 0.85; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--gold); padding: 1.5rem 2rem; margin: 3rem 0; background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.4rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* TAPE DISPLAY */
+  .tape-display {
+    background: #06060a; border: 1px solid var(--border); padding: 2rem; margin: 2rem 0; overflow-x: auto;
+  }
+  .tape-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--silver); margin-bottom: 1.25rem; display: block;
+  }
+  .tape {
+    display: flex; gap: 0; margin-bottom: 0.75rem; font-family: 'Space Mono', monospace;
+  }
+  .tape-cell {
+    width: 44px; height: 44px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: var(--text); background: var(--card-bg);
+    flex-shrink: 0;
+  }
+  .tape-cell.active {
+    background: #0a0818; border-color: var(--silver); color: #fff;
+    box-shadow: 0 0 10px rgba(107,114,128,0.4);
+  }
+  .tape-cell.halt {
+    background: #130a00; border-color: var(--gold); color: var(--gold);
+  }
+  .tape-head {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--silver);
+    text-align: left; margin-top: 0.4rem;
+  }
+  /* CONNECTION TABLE */
+  .connection-table {
+    background: var(--card-bg); border: 1px solid var(--border); margin: 2rem 0; overflow-x: auto;
+  }
+  .connection-table table { width: 100%; border-collapse: collapse; }
+  .connection-table th {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--silver); padding: 1rem 1.25rem; text-align: left;
+    border-bottom: 1px solid var(--border); background: #0a0a0e;
+  }
+  .connection-table td {
+    padding: 0.9rem 1.25rem; font-size: 0.9rem; color: var(--text); border-bottom: 1px solid var(--border);
+  }
+  .connection-table tr:last-child td { border-bottom: none; }
+  .connection-table td:first-child { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: var(--gold); font-weight: 700; }
+  .connection-table td:nth-child(2) { color: #fff; }
+  .connection-table tr:hover td { background: #0e0e16; }
+  /* STAT ROW */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 2rem; color: var(--gold);
+    display: block; line-height: 1; margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* HIGHLIGHT */
+  .highlight {
+    background: #08060e; border: 1px solid #2a1f3d;
+    border-left: 4px solid var(--silver); padding: 1.75rem 2rem; margin: 2.5rem 0;
+  }
+  .highlight-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.14em; color: var(--silver); margin-bottom: 0.75rem; display: block;
+  }
+  /* FINAL QUOTE */
+  .final-quote {
+    text-align: center; padding: 4rem 2rem;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 4rem 0;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.45; color: #fff;
+    max-width: 720px; margin: 0 auto 1.5rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--gold);
+  }
+  footer {
+    border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); line-height: 2;
+  }
+  .colophon a { color: var(--silver); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Gödel</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-incompleteness.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Turing machine tape scrolling → halting problem → halt signal -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="legacyGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#040408" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#060608" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="turingGlow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <clipPath id="tapeClip">
+        <rect x="50" y="220" width="800" height="60"/>
+      </clipPath>
+    </defs>
+    <rect width="900" height="540" fill="url(#legacyGlow)"/>
+
+    <!-- Ambient grid -->
+    <g stroke="#6b7280" stroke-width="0.3" fill="none" opacity="0.06">
+      <line x1="0" y1="135" x2="900" y2="135"/>
+      <line x1="0" y1="270" x2="900" y2="270"/>
+      <line x1="0" y1="405" x2="900" y2="405"/>
+      <line x1="225" y1="0" x2="225" y2="540"/>
+      <line x1="450" y1="0" x2="450" y2="540"/>
+      <line x1="675" y1="0" x2="675" y2="540"/>
+    </g>
+
+    <!-- Turing machine tape label -->
+    <text x="450" y="195" text-anchor="middle" font-family="Space Mono,monospace" font-size="9"
+      fill="#6b7280" opacity="0.5" letter-spacing="3">TURING MACHINE — READING GÖDEL SENTENCE</text>
+
+    <!-- Tape background rail -->
+    <rect x="50" y="222" width="800" height="56" rx="2" fill="#0a0a0e" stroke="#1e1e2a" stroke-width="1"/>
+
+    <!-- Tape cells — static (the moving effect is via the head indicator) -->
+    <!-- Cell content sequence: 1 0 0 1 ¬P ⊢ G 0 1 HALT -->
+    <g clip-path="url(#tapeClip)" font-family="Space Mono,monospace" font-size="12">
+      <!-- Cells -->
+      <rect x="56" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="83" y="255" text-anchor="middle" fill="#6b7280">1</text>
+      <rect x="110" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="137" y="255" text-anchor="middle" fill="#6b7280">0</text>
+      <rect x="164" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="191" y="255" text-anchor="middle" fill="#6b7280">0</text>
+      <rect x="218" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="245" y="255" text-anchor="middle" fill="#6b7280">1</text>
+      <rect x="272" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="299" y="255" text-anchor="middle" fill="#6b7280">1</text>
+      <!-- "active" cell — the self-referential symbol -->
+      <rect x="326" y="222" width="60" height="56" fill="#0a0818" stroke="#6b7280" stroke-width="1.5">
+        <animate attributeName="fill" values="#0a0818;#0e0820;#0a0818" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <text x="356" y="255" text-anchor="middle" fill="#b45309" font-size="15" filter="url(#turingGlow)">¬P</text>
+      <rect x="386" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="413" y="255" text-anchor="middle" fill="#6b7280">⊢</text>
+      <rect x="440" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="467" y="255" text-anchor="middle" fill="#b45309" font-size="14">G</text>
+      <rect x="494" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="521" y="255" text-anchor="middle" fill="#6b7280">0</text>
+      <rect x="548" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="575" y="255" text-anchor="middle" fill="#6b7280">1</text>
+      <!-- HALT cell — gold border, gold text -->
+      <rect x="602" y="222" width="60" height="56" fill="#100a00" stroke="#b45309" stroke-width="1.5">
+        <animate attributeName="stroke-opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="632" y="252" text-anchor="middle" fill="#b45309" font-size="10" letter-spacing="1">HALT</text>
+      <text x="632" y="268" text-anchor="middle" fill="#b45309" font-size="8" opacity="0.7">?</text>
+      <rect x="662" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="689" y="255" text-anchor="middle" fill="#6b7280">□</text>
+      <rect x="716" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="743" y="255" text-anchor="middle" fill="#4f5d73">□</text>
+      <rect x="770" y="226" width="54" height="48" fill="#0c0c10" stroke="#1e1e2a"/>
+      <text x="797" y="255" text-anchor="middle" fill="#3a3a50">□</text>
+    </g>
+
+    <!-- Read/write head — triangle above tape, animated position -->
+    <polygon points="356,195 348,215 364,215" fill="#6b7280" filter="url(#turingGlow)">
+      <animate attributeName="points"
+        values="356,195 348,215 364,215;  413,195 405,215 421,215;  467,195 459,215 475,215;  521,195 513,215 529,215;  575,195 567,215 583,215;  632,195 624,215 640,215"
+        dur="6s" repeatCount="indefinite" calcMode="discrete" keyTimes="0;0.17;0.33;0.5;0.67;0.83"/>
+    </polygon>
+
+    <!-- State indicator -->
+    <rect x="340" y="290" width="220" height="36" rx="2" fill="#08060e" stroke="#1e1e2a" opacity="0.9"/>
+    <text x="450" y="313" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b7280">
+      STATE: READING — DOES THIS HALT?
+    </text>
+
+    <!-- Undecidability pulse — expanding rings from HALT cell -->
+    <circle cx="632" cy="250" r="10" fill="none" stroke="#b45309" stroke-width="1" opacity="0">
+      <animate attributeName="r" values="0;80" dur="3s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="opacity" values="0.6;0" dur="3s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+    <circle cx="632" cy="250" r="0" fill="none" stroke="#6b7280" stroke-width="0.8" opacity="0">
+      <animate attributeName="r" values="0;80" dur="3s" repeatCount="indefinite" begin="1s"/>
+      <animate attributeName="opacity" values="0.4;0" dur="3s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+
+    <!-- Floating labels -->
+    <text x="160" y="380" font-family="Space Mono,monospace" font-size="8.5" fill="#b45309" opacity="0.45">INCOMPLETENESS</text>
+    <text x="440" y="400" font-family="Space Mono,monospace" font-size="8.5" fill="#6b7280" opacity="0.4">HALTING PROBLEM</text>
+    <text x="650" y="380" font-family="Space Mono,monospace" font-size="8.5" fill="#4f5d73" opacity="0.4">UNDECIDABILITY</text>
+    <text x="250" y="140" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#b45309" opacity="0.35">P vs NP</text>
+    <text x="560" y="150" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#6b7280" opacity="0.3">Gödel, Escher, Bach</text>
+
+    <!-- Arrows connecting concepts -->
+    <path d="M 200 390 L 410 410" stroke="#b45309" stroke-width="0.6" opacity="0.2" marker-end="url(#arr)"/>
+    <path d="M 530 410 L 630 390" stroke="#6b7280" stroke-width="0.6" opacity="0.2"/>
+
+    <!-- IAS / Turing connection line -->
+    <text x="450" y="480" text-anchor="middle" font-family="Space Mono,monospace" font-size="9"
+      fill="#6b7280" opacity="0.4" letter-spacing="2">GÖDEL 1931 → TURING 1936 → COMPUTABILITY THEORY</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Kurt Gödel · 1906 – 1978 · Volume 3</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">Turing · Computability · The Limits of Mind</p>
+    <p class="hero-lead">Incompleteness did not close mathematics. It opened something larger: the theory of computation, the philosophy of mind, and the permanent question of what machines can and cannot think.</p>
+  </div>
+</div>
+
+<div class="band">The Shattered Dream of Hilbert · Turing 1936 · Penrose · Hofstadter · The Gödel Prize</div>
+
+<main>
+
+  <!-- WHAT INCOMPLETENESS DESTROYED -->
+  <section id="hilbert-death">
+    <span class="section-label">I — What Fell</span>
+    <h2>The Death of Hilbert's Program</h2>
+    <p>David Hilbert's program — to axiomatize all of mathematics completely, consistently, and decidably — had been the dominant ambition of mathematical foundations for three decades when Gödel demolished it in 1931. The response in the mathematical community was not immediate despair; many mathematicians took years to absorb what had happened. Some tried to find a flaw in the argument. There was none.</p>
+    <p>By the mid-1930s the implications were clear. Hilbert himself, aged and increasingly deaf, is said to have accepted them with relative equanimity: the world of mathematics was stranger than he had supposed, but it was still there. The incompleteness theorems did not prevent mathematicians from doing mathematics — they continued to prove theorems, solve problems, and extend knowledge exactly as before. What they could no longer claim was that their formal systems were known to be consistent (except by appeal to a stronger, equally uncertain system) or that truth and provability were the same thing.</p>
+    <p>The distinction between <strong>truth</strong> and <strong>provability</strong> — between what is the case and what can be demonstrated within a given formal framework — is Gödel's most enduring philosophical contribution. It haunts every formal system that has been built since, and every AI that attempts to reason.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1931</span>
+        <span class="stat-label">Incompleteness published</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1936</span>
+        <span class="stat-label">Turing's halting paper</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1979</span>
+        <span class="stat-label">Hofstadter's GEB published</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1993</span>
+        <span class="stat-label">Gödel Prize established</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TURING AND COMPUTABILITY -->
+  <section id="turing">
+    <span class="section-label">II — The Direct Heir</span>
+    <h2>Turing and the Halting Problem: Incompleteness Reborn</h2>
+    <p>In 1936, <strong>Alan Turing</strong> — working independently at Cambridge, aware of Gödel's results but approaching the problem from a different angle — published "On Computable Numbers, with an Application to the Entscheidungsproblem." The Entscheidungsproblem (decision problem) was Hilbert's third question: does there exist an algorithm that can determine, for any given mathematical statement, whether it is provable?</p>
+    <p>Turing's answer was no — and his argument was, structurally, a computational restatement of Gödel's. He defined the concept of a <em>Turing machine</em>: an abstract model of computation consisting of a read/write head moving along an infinite tape, following a finite set of rules. He then posed the <strong>Halting Problem</strong>: given a description of a Turing machine and an input, does the machine eventually halt, or does it run forever?</p>
+
+    <div class="tape-display">
+      <span class="tape-label">Halting Problem — Turing Machine Reading a Gödel-Type Input</span>
+      <div class="tape">
+        <div class="tape-cell">1</div>
+        <div class="tape-cell">0</div>
+        <div class="tape-cell">1</div>
+        <div class="tape-cell active">¬P</div>
+        <div class="tape-cell">⊢</div>
+        <div class="tape-cell">G</div>
+        <div class="tape-cell halt">HALT?</div>
+        <div class="tape-cell">□</div>
+        <div class="tape-cell">□</div>
+        <div class="tape-cell">□</div>
+      </div>
+      <div class="tape-head">▲ Read head at position 4 — state: UNDECIDED — the machine cannot determine its own halting</div>
+    </div>
+
+    <p>Turing proved that no general algorithm exists to solve the Halting Problem. The proof is a diagonal argument structurally identical to Gödel's: assume such an algorithm exists, then construct an input on which it gives the wrong answer. Self-reference again produces paradox. A program that could correctly predict its own halting would need to not halt if it predicts it halts — contradiction.</p>
+    <p>The connection to Gödel is exact. The Halting Problem is the computational expression of the First Incompleteness Theorem. Undecidability in logic and undecidability in computation are the same phenomenon, viewed from different angles. This is not a coincidence — Turing explicitly connected his work to Gödel's, and the Church-Turing thesis unifies the two frameworks.</p>
+
+    <div class="pull-quote">
+      <blockquote>"We may compare a man in the process of computing a real number to a machine which is only capable of a finite number of conditions."</blockquote>
+      <cite>— Alan Turing, "On Computable Numbers," 1936</cite>
+    </div>
+  </section>
+
+  <!-- COMPUTABILITY AND CS -->
+  <section id="cs">
+    <span class="section-label">III — The Foundation</span>
+    <h2>Theoretical Computer Science: Built on the Limit</h2>
+    <p>The field of theoretical computer science is, at its foundations, an investigation of Gödelian limits expressed in computational terms. The entire edifice of complexity theory — the question of what problems are tractable, what problems are intractable, what problems are simply unsolvable — descends from the incompleteness theorems by way of Turing.</p>
+
+    <div class="connection-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Gödel Concept</th>
+            <th>Computational Analogue</th>
+            <th>Modern Relevance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Incompleteness</td>
+            <td>Undecidability (Halting Problem)</td>
+            <td>There exist programs whose behavior cannot be predicted by any algorithm</td>
+          </tr>
+          <tr>
+            <td>Truth vs. Provability</td>
+            <td>Correctness vs. Verifiability</td>
+            <td>A program can be correct without its correctness being checkable automatically</td>
+          </tr>
+          <tr>
+            <td>Gödel Numbering</td>
+            <td>Program as Data</td>
+            <td>The universal Turing machine: a program that reads other programs as input</td>
+          </tr>
+          <tr>
+            <td>Second Incompleteness</td>
+            <td>No program verifies its own correctness</td>
+            <td>Formal verification of software always requires external assumptions</td>
+          </tr>
+          <tr>
+            <td>Self-Reference</td>
+            <td>Quines; self-modifying code</td>
+            <td>Programs that generate copies of themselves; metaprogramming</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The <strong>P vs. NP problem</strong> — the deepest open question in computer science — is Gödelian in structure. It asks whether every problem whose solution can be quickly verified can also be quickly solved. If P ≠ NP (which most researchers believe), there exist problems where truth (a correct answer exists and can be checked) permanently outstrips provability (finding that answer efficiently). Gödel himself wrote a letter to von Neumann in 1956 that is now recognized as the first formal articulation of the P vs. NP question — decades before the problem was named.</p>
+  </section>
+
+  <!-- AI AND MIND -->
+  <section id="mind">
+    <span class="section-label">IV — The Deepest Question</span>
+    <h2>Can Machines Think? The Penrose Argument</h2>
+    <p>The most controversial application of Gödel's theorems — and the one that has generated the most sustained philosophical debate — is in the question of artificial intelligence and the nature of mind.</p>
+    <p>The argument, developed most prominently by the mathematical physicist <strong>Roger Penrose</strong> in <em>The Emperor's New Mind</em> (1989) and <em>Shadows of the Mind</em> (1994), runs roughly as follows: Gödel shows that for any consistent formal system F, there is a true statement that F cannot prove. A human mathematician, however, can <em>see</em> that this statement is true — can grasp its truth by a kind of mathematical insight that transcends formal derivation. Therefore, the human mind cannot itself be a formal system — it must be doing something that no Turing machine can do.</p>
+
+    <div class="highlight">
+      <span class="highlight-label">The Penrose Argument (Simplified)</span>
+      <p>1. For any consistent formal system F, the Gödel sentence G(F) is true but unprovable within F.<br>
+      2. A human mathematician can see that G(F) is true.<br>
+      3. Therefore the human mathematician is not equivalent to any consistent formal system F.<br>
+      4. Therefore the human mind cannot be fully captured by any algorithm or computer program.</p>
+    </div>
+
+    <p>The argument is <strong>highly controversial</strong>. Critics — including philosophers of mind like Daniel Dennett, logicians like Hilary Putnam, and AI researchers — have raised multiple objections. The most fundamental: how do we know that the human mathematician's "seeing" that G is true is itself consistent? If the mathematician is a formal system, their endorsement of G is simply part of a larger formal system, which will have its own unprovable truths. The argument does not escape the regress it describes. Moreover, the argument assumes that the mathematician can reliably recognize mathematical truth — but human mathematicians are fallible and sometimes endorse false statements.</p>
+    <p>The debate has not been resolved. What is certain is that Gödel's theorems draw a permanent line between two things: what can be mechanically derived from axioms, and what is true. Whether human minds sit entirely on one side of that line, or somehow straddle it, remains one of the deepest questions in philosophy of mind.</p>
+
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <span class="era">1989</span>
+        <h4>Penrose — The Emperor's New Mind</h4>
+        <p>Argues that Gödel's theorems demonstrate that the human mind transcends algorithmic computation. Extremely controversial. Widely read.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">1979</span>
+        <h4>Hofstadter — Gödel, Escher, Bach</h4>
+        <p>Pulitzer Prize-winning meditation on self-reference, strange loops, and consciousness. Uses Gödel as the central mathematical spine. Remains one of the great popular works of intellectual synthesis.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">1993</span>
+        <h4>The Gödel Prize</h4>
+        <p>Awarded annually by the European Association for Theoretical Computer Science and ACM SIGACT for outstanding papers in theoretical computer science. Named for Gödel. First winners: László Babai, Shafi Goldwasser, Silvio Micali, Miklós Ajtai.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOFSTADTER -->
+  <section id="hofstadter">
+    <span class="section-label">V — Strange Loops</span>
+    <h2>Gödel, Escher, Bach: The Popular Immortality</h2>
+    <p>In 1979, <strong>Douglas Hofstadter</strong> published <em>Gödel, Escher, Bach: An Eternal Golden Braid</em>. It won the Pulitzer Prize for general non-fiction. It sold millions of copies. It introduced Gödel's incompleteness theorems to an entire generation of readers — computer scientists, musicians, artists, philosophers, students — who might never have encountered a logic textbook.</p>
+    <p>Hofstadter's thesis was that self-reference — the strange loop that a system creates when it loops back to refer to itself — is the key to understanding consciousness. Gödel's self-referential sentence is the mathematical avatar of this phenomenon. Bach's canons, in which musical structure folds back on itself, are the musical avatar. Escher's drawings, in which figures generate each other in infinite regress, are the visual avatar. Hofstadter argued that when any system becomes complex enough to represent itself, something like consciousness or meaning emerges from the loop.</p>
+    <p>This is not what Gödel himself believed — Gödel was a mathematical Platonist who thought truth existed independently of any system, not emergent from self-reference. But Hofstadter's book gave Gödel's work a cultural resonance that few technical mathematical papers have ever achieved, and it seeded decades of thinking about computation, mind, and emergence.</p>
+
+    <div class="pull-quote">
+      <blockquote>"In the end, we are self-perceiving, self-inventing, locked-in mirages that are little miracles of self-reference."</blockquote>
+      <cite>— Douglas Hofstadter, Gödel, Escher, Bach, 1979</cite>
+    </div>
+  </section>
+
+  <!-- THE LONG AFTERLIFE -->
+  <section id="afterlife">
+    <span class="section-label">VI — The Permanent Condition</span>
+    <h2>What Incompleteness Means Today</h2>
+    <p>Ninety-three years after its publication, Gödel's incompleteness theorem is not a historical curiosity. It is a permanent feature of the mathematical and computational landscape — a theorem that shapes what every formal system can and cannot claim about itself.</p>
+
+    <div class="legacy-grid">
+      <div class="legacy-card">
+        <span class="era">Mathematics</span>
+        <h4>Formal Foundations</h4>
+        <p>Every foundational system — ZFC set theory, Martin-Löf type theory, homotopy type theory — operates under Gödel's shadow. Mathematicians know their axioms cannot prove their own consistency.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">Computer Science</span>
+        <h4>Formal Verification</h4>
+        <p>Software verification, type checking, model checking — all operate under the incompleteness constraint. No system can automatically verify its own correctness in full generality.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">AI Research</span>
+        <h4>Machine Reasoning</h4>
+        <p>Any AI system that reasons via formal inference operates within an incomplete formal system. There are truths about its own behavior it cannot establish. The boundary between this and human cognition is the open question.</p>
+      </div>
+      <div class="legacy-card">
+        <span class="era">Physics</span>
+        <h4>Physical Undecidability</h4>
+        <p>Researchers have shown that certain questions in quantum mechanics (e.g., whether a quantum system has a spectral gap) are formally undecidable — the physical world contains Gödelian limits.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE QUOTES -->
+  <section id="words">
+    <span class="section-label">VII — In His Own Words</span>
+    <h2>What Gödel Said</h2>
+    <p>Gödel published relatively little in his lifetime — his collected works are thin compared to most major mathematicians. But his letters, his Nachlass (unpublished papers and notes), and his occasional philosophical essays reveal a mind of extraordinary subtlety. He was not a formalist. He was not a positivist. He was a Platonist who believed that mathematics gives access to a realm of abstract objects as real as physical objects, and that human mathematical intuition — however fallible — genuinely perceives truths in that realm.</p>
+    <p>He believed in God — not in any traditional religious sense, but in a precise philosophical sense: he worked out a formal version of the ontological argument and kept it in his Nachlass, declining to publish it for fear of being dismissed as a crank. He believed the soul was real and that he might survive death. He believed that the limits he had proved on formal systems were evidence that mind exceeds mechanism — though he stated this carefully, aware of the objections.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The world is rational."</blockquote>
+      <cite>— Kurt Gödel — his fundamental conviction, stated simply to Hao Wang</cite>
+    </div>
+
+    <div class="pull-quote">
+      <blockquote>"Either mathematics is too big for the human mind, or the human mind is more than a machine."</blockquote>
+      <cite>— Kurt Gödel</cite>
+    </div>
+  </section>
+
+  <div class="final-quote">
+    <blockquote>"The human mind will never be able to formulate (or mechanize) all its mathematical intuitions. After each formalization, something more remains."</blockquote>
+    <cite>— Kurt Gödel, Some Basic Theorems on the Foundations of Mathematics and Their Implications, 1951</cite>
+  </div>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Kurt Gödel Series · Volume 3: The Legacy · kurt-godel/3-legacy.html<br>
+    Series: <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-incompleteness.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a>
+  </div>
+</footer>
+
+</body>
+</html>

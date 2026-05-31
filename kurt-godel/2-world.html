@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gödel — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060608;
+    --silver: #6b7280;
+    --gold: #b45309;
+    --text: #e2ddd6;
+    --muted: #7a7a8a;
+    --border: #1e1e2a;
+    --card-bg: #0c0c10;
+    --warm: #92400e;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex; align-items: center; flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+    color: var(--gold); letter-spacing: 0.08em; margin-right: 2rem; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    text-decoration: none; padding: 0.35rem 0.85rem; border: 1px solid transparent; transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--gold); }
+  /* HERO */
+  .hero {
+    position: relative; width: 100%; min-height: 540px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #120800 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.2rem; display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; color: #fff;
+    text-shadow: 0 0 60px rgba(180,83,9,0.3); margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif; font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--gold);
+    letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.15rem; color: var(--text); max-width: 640px; margin: 0 auto; opacity: 0.85;
+  }
+  .band {
+    background: var(--silver); color: #08080a; padding: 0.6rem 2rem;
+    text-align: center; font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.75rem; display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.2rem;
+    color: var(--gold); margin-bottom: 0.75rem; margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  /* CARD GRID */
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; position: relative;
+  }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--silver); }
+  .card-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--silver); margin-bottom: 0.6rem; display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--gold); padding: 1.5rem 2rem; margin: 3rem 0; background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: 1.4rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* CIRCLE GRID (Vienna Circle Members) */
+  .circle-table {
+    background: var(--card-bg); border: 1px solid var(--border); margin: 2rem 0; overflow-x: auto;
+  }
+  .circle-table table { width: 100%; border-collapse: collapse; }
+  .circle-table th {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--silver); padding: 1rem 1.25rem; text-align: left;
+    border-bottom: 1px solid var(--border); background: #0a0a0e;
+  }
+  .circle-table td {
+    padding: 0.9rem 1.25rem; font-size: 0.9rem; color: var(--text); border-bottom: 1px solid var(--border);
+  }
+  .circle-table tr:last-child td { border-bottom: none; }
+  .circle-table td:first-child { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--gold); }
+  .circle-table tr:hover td { background: #100e08; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border); padding-left: 2rem; margin-top: 2rem;
+  }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -2.45rem; top: 0.45rem;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(180,83,9,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--silver); margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1rem; color: #fff; margin-bottom: 0.4rem;
+  }
+  .timeline-body { font-size: 0.97rem; color: var(--text); opacity: 0.88; }
+  /* ROUTE BOX */
+  .route-box {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-left: 4px solid var(--silver); padding: 2rem; margin: 2rem 0;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem;
+  }
+  .route-step {
+    display: flex; gap: 1.5rem; align-items: center; margin-bottom: 0.75rem; color: var(--text);
+  }
+  .route-arrow { color: var(--gold); font-size: 1rem; }
+  .route-city { color: #fff; min-width: 140px; }
+  .route-note { color: var(--muted); font-size: 0.72rem; }
+  /* STAT ROW */
+  .stat-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 2rem; color: var(--gold);
+    display: block; line-height: 1; margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted);
+  }
+  /* FINAL QUOTE */
+  .final-quote {
+    text-align: center; padding: 4rem 2rem;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 4rem 0;
+  }
+  .final-quote blockquote {
+    font-family: 'Newsreader', serif; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.45; color: #fff;
+    max-width: 720px; margin: 0 auto 1.5rem;
+  }
+  .final-quote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--gold);
+  }
+  footer {
+    border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center;
+    max-width: 1080px; margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); line-height: 2;
+  }
+  .colophon a { color: var(--silver); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Gödel</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-incompleteness.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO: Vienna café scene — warm amber light, rising steam, conversation fragments -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="cafeGlow" cx="50%" cy="80%" r="55%">
+        <stop offset="0%" stop-color="#2a1200" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#060608" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="lampGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#b45309" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#b45309" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="cafeglow">
+        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="steam"><feGaussianBlur stdDeviation="2.5"/></filter>
+    </defs>
+    <rect width="900" height="540" fill="url(#cafeGlow)"/>
+
+    <!-- Café floor / background suggestion -->
+    <line x1="0" y1="440" x2="900" y2="440" stroke="#2a1800" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Window light from left -->
+    <rect x="0" y="80" width="180" height="320" fill="none" stroke="#6b7280" stroke-width="0.8" opacity="0.12"/>
+    <rect x="90" y="80" width="1" height="320" fill="#6b7280" opacity="0.1"/>
+    <rect x="0" y="240" width="180" height="1" fill="#6b7280" opacity="0.1"/>
+
+    <!-- Café table left -->
+    <ellipse cx="220" cy="400" rx="75" ry="16" fill="#1a0e00" stroke="#3a2200" stroke-width="1.2" opacity="0.9"/>
+    <!-- Coffee cup left -->
+    <ellipse cx="220" cy="385" rx="14" ry="5" fill="#0d0800" stroke="#b45309" stroke-width="1" opacity="0.8"/>
+    <rect x="206" y="374" width="28" height="11" rx="2" fill="#0d0800" stroke="#b45309" stroke-width="0.8" opacity="0.8"/>
+    <!-- Steam wisps left -->
+    <path d="M 215 368 Q 218 355 213 342" fill="none" stroke="#d97706" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite" begin="0s"/>
+      <animate attributeName="d" values="M 215 368 Q 218 355 213 342;M 215 368 Q 212 354 217 340;M 215 368 Q 218 355 213 342" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 222 368 Q 226 353 220 340" fill="none" stroke="#d97706" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" values="0;0.4;0" dur="3.5s" repeatCount="indefinite" begin="1.2s"/>
+      <animate attributeName="d" values="M 222 368 Q 226 353 220 340;M 222 368 Q 219 352 225 339;M 222 368 Q 226 353 220 340" dur="3.5s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Central lamp glow -->
+    <circle cx="450" cy="120" r="80" fill="url(#lampGlow)" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.5;0.8" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Lamp chain -->
+    <line x1="450" y1="0" x2="450" y2="90" stroke="#6b7280" stroke-width="1" opacity="0.4"/>
+    <!-- Lamp shade suggestion -->
+    <path d="M 420 90 L 450 110 L 480 90 Z" fill="#2a1800" stroke="#b45309" stroke-width="1" opacity="0.7"/>
+
+    <!-- Café table right -->
+    <ellipse cx="680" cy="400" rx="75" ry="16" fill="#1a0e00" stroke="#3a2200" stroke-width="1.2" opacity="0.9"/>
+    <!-- Coffee cup right -->
+    <ellipse cx="680" cy="385" rx="14" ry="5" fill="#0d0800" stroke="#b45309" stroke-width="1" opacity="0.8"/>
+    <rect x="666" y="374" width="28" height="11" rx="2" fill="#0d0800" stroke="#b45309" stroke-width="0.8" opacity="0.8"/>
+    <!-- Steam wisps right -->
+    <path d="M 675 368 Q 678 354 673 341" fill="none" stroke="#d97706" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" values="0;0.45;0" dur="3.2s" repeatCount="indefinite" begin="0.8s"/>
+    </path>
+
+    <!-- Floating text fragments — Vienna Circle conversations -->
+    <text x="120" y="310" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#b45309" opacity="0">
+      "Sinn und Bedeutung"
+      <animate attributeName="opacity" values="0;0.35;0.35;0" dur="8s" repeatCount="indefinite" begin="0s"/>
+    </text>
+    <text x="580" y="290" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#6b7280" opacity="0">
+      "Was sagbar ist..."
+      <animate attributeName="opacity" values="0;0.3;0.3;0" dur="9s" repeatCount="indefinite" begin="3s"/>
+    </text>
+    <text x="300" y="200" font-family="Space Mono,monospace" font-size="9" fill="#b45309" opacity="0">
+      Über formal unentscheidbare Sätze...
+      <animate attributeName="opacity" values="0;0.4;0.4;0" dur="10s" repeatCount="indefinite" begin="5s"/>
+    </text>
+    <text x="500" y="380" font-family="Georgia,serif" font-style="italic" font-size="10" fill="#4f5d73" opacity="0">
+      "Logischer Empirismus"
+      <animate attributeName="opacity" values="0;0.28;0.28;0" dur="7s" repeatCount="indefinite" begin="2s"/>
+    </text>
+
+    <!-- Ambient light rays from window -->
+    <path d="M 0 80 L 280 300" stroke="#b45309" stroke-width="0.6" opacity="0.06"/>
+    <path d="M 0 120 L 260 360" stroke="#b45309" stroke-width="0.6" opacity="0.05"/>
+
+    <!-- Very faint architectural details — arches -->
+    <path d="M 350 540 Q 350 420 450 400 Q 550 420 550 540" fill="none" stroke="#3a2200" stroke-width="1" opacity="0.3"/>
+    <path d="M 100 540 Q 100 460 180 440 Q 260 460 260 540" fill="none" stroke="#3a2200" stroke-width="1" opacity="0.2"/>
+    <path d="M 640 540 Q 640 460 720 440 Q 800 460 800 540" fill="none" stroke="#3a2200" stroke-width="1" opacity="0.2"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Kurt Gödel · 1906 – 1978 · Volume 2</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Brno · Vienna · Princeton</p>
+    <p class="hero-lead">The coffeehouses of imperial Vienna, the logical positivists who could not quite hold him, the escape across Siberia, and the lonely walks of Princeton.</p>
+  </div>
+</div>
+
+<div class="band">Brünn 1906 · Vienna Circle 1920s–30s · Trans-Siberian 1940 · Princeton IAS 1940–1978</div>
+
+<main>
+
+  <!-- BRNO AND THE EMPIRE -->
+  <section id="brno">
+    <span class="section-label">I — The City</span>
+    <h2>Brünn Under the Habsburgs</h2>
+    <p>The city of Brünn — Czech: Brno — was in 1906 the second city of the Austrian province of Moravia, and the second city of the Austro-Hungarian Empire's half. It was a textile and manufacturing center, German-speaking in its commercial and professional classes, Czech-speaking in the workshops and neighborhoods that surrounded them. The tension between those communities would intensify and eventually produce catastrophe; in 1906 it was simply the background of urban Mitteleuropa life.</p>
+    <p>The city had an unusual relationship to intellectual history. In the monastery of St. Thomas, the Augustinian friar <strong>Gregor Mendel</strong> had conducted the pea-plant experiments in the 1850s and 1860s that established the laws of heredity — the same laws that would eventually anchor genetics and evolutionary biology. Mendel's results were ignored in his lifetime, understood only after his death. Gödel would have a different fate — understood immediately by a few, misunderstood by many more — but the parallel is suggestive: Brno as a city that gestates discoveries of infinite consequence in very small rooms.</p>
+    <p>Gödel grew up speaking German, identifying as Austrian, and thinking of himself as part of the German-speaking cultural world of Central Europe. He became a Czech citizen after the collapse of the Austro-Hungarian Empire in 1918, then a German citizen briefly under Nazi annexation, then an American. His nationality changed four times without him moving. History moved around him.</p>
+  </section>
+
+  <!-- VIENNA CIRCLE -->
+  <section id="circle">
+    <span class="section-label">II — The Circle</span>
+    <h2>The Vienna Circle: Logic as Philosophy</h2>
+    <p>In the 1920s, the philosopher <strong>Moritz Schlick</strong> began organizing a weekly seminar at the University of Vienna that became one of the most intellectually fertile gatherings in twentieth-century philosophy. The <em>Vienna Circle</em> — Wiener Kreis — brought together logicians, mathematicians, physicists, and philosophers around a shared commitment: that meaningful statements must be either logically verifiable or empirically testable. Metaphysics — claims about the existence of God, the soul, absolute reality — was not merely false but <em>meaningless</em>, a confusion of language masquerading as thought.</p>
+    <p>The core members included <strong>Rudolf Carnap</strong> (who would later become one of the great philosophers of language and science), <strong>Otto Neurath</strong> (encyclopedist and political theorist), <strong>Hans Hahn</strong> (Gödel's dissertation supervisor), and <strong>Friedrich Waismann</strong>. On the periphery, communicating by letter and through emissaries, was <strong>Ludwig Wittgenstein</strong> — whose <em>Tractatus Logico-Philosophicus</em> the Circle read aloud together, sentence by sentence, over many meetings.</p>
+
+    <div class="circle-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Fate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Moritz Schlick</td>
+            <td>Founder, chair</td>
+            <td>Shot dead on Vienna University stairs, 1936, by a former student</td>
+          </tr>
+          <tr>
+            <td>Rudolf Carnap</td>
+            <td>Philosopher of science</td>
+            <td>Emigrated to USA; major figure at Chicago and UCLA</td>
+          </tr>
+          <tr>
+            <td>Otto Neurath</td>
+            <td>Social scientist, encyclopedist</td>
+            <td>Fled to UK via Netherlands; died Oxford, 1945</td>
+          </tr>
+          <tr>
+            <td>Hans Hahn</td>
+            <td>Mathematician, Gödel's supervisor</td>
+            <td>Died Vienna, 1934; last years darkened by political crisis</td>
+          </tr>
+          <tr>
+            <td>Kurt Gödel</td>
+            <td>Attendee, ideological dissenter</td>
+            <td>Fled via Trans-Siberian Railway to Princeton; died 1978</td>
+          </tr>
+          <tr>
+            <td>Ludwig Wittgenstein</td>
+            <td>Peripheral correspondent</td>
+            <td>Dismissed by Circle late; Cambridge career; died 1951</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Gödel attended Circle meetings regularly during his student years and into the early 1930s. But he was never ideologically at home there. The Circle's logical positivism — its flat rejection of metaphysics as meaningless — was precisely what Gödel rejected. He was a mathematical Platonist: he believed that mathematical objects exist independently of human minds and formal systems, and that intuition gives us access to mathematical truth. This was a metaphysical position. The Circle dismissed it. Gödel held it throughout his life.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I am not a positivist. I believe in a world which is not merely the totality of facts."</blockquote>
+      <cite>— Kurt Gödel, on his relationship to the Vienna Circle's program</cite>
+    </div>
+  </section>
+
+  <!-- THE 1930 ANNOUNCEMENT -->
+  <section id="announcement">
+    <span class="section-label">III — The Moment</span>
+    <h2>Königsberg, 1930: When Almost No One Understood</h2>
+    <p>In September 1930, at a conference in Königsberg (the city of Kant) on the foundations of mathematics, Gödel made a brief, quiet announcement at the end of a session. He had found, he said, a statement of arithmetic that was true but unprovable within the formal system of Principia Mathematica.</p>
+    <p>The announcement was received with almost no visible reaction. The distinguished audience — the leading logicians and mathematicians of the German-speaking world — did not immediately grasp what he had said. They moved on. The session ended. People filed out of the room.</p>
+    <p>One person in that room understood immediately. <strong>John von Neumann</strong> — then twenty-six, already recognized as one of the greatest mathematical minds of his generation — approached Gödel afterward. He had grasped the argument in real time. He interrogated Gödel intensively. That evening, or perhaps the next day, he independently derived what would become the <strong>Second Incompleteness Theorem</strong> — no consistent system can prove its own consistency. He was about to send Gödel a letter announcing this independent discovery when Gödel's own published paper arrived, containing the same result. Von Neumann immediately acknowledged priority. He spent the rest of his life citing Gödel's theorems as among the most important mathematical results of the century.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1930</span>
+        <span class="stat-label">Königsberg announcement</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Person who understood in the room (von Neumann)</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1931</span>
+        <span class="stat-label">Paper published in Monatshefte</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">25</span>
+        <span class="stat-label">Gödel's age at announcement</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EUROPE BURNING -->
+  <section id="europe">
+    <span class="section-label">IV — The Darkness</span>
+    <h2>Vienna Unravels, 1933–1938</h2>
+    <p>The 1930s in Vienna were a slow catastrophe. The political situation deteriorated year by year. In 1933, Engelbert Dollfuss suspended parliament and established an authoritarian regime. Street fighting between socialists and Heimwehr fascists in 1934 killed hundreds. The following year Dollfuss was assassinated by Austrian Nazis. Then, in March 1938, came the <strong>Anschluss</strong>: Germany absorbed Austria. The intellectual world of Vienna, so much of it Jewish, was shattered and scattered in a matter of months.</p>
+    <p>Gödel was not Jewish. But the consequences still reached him. His <em>Dozent</em> license — required to lecture at Austrian universities — was abolished under the new Nazi system. He would have needed to reapply for a new category of position under rules that now included political and racial scrutiny. His position at the IAS in Princeton, where he had been a visitor in 1933-34 and 1935-36, offered an alternative. He applied for a permanent visa.</p>
+    <p>In the meantime, Vienna itself had become dangerous in smaller personal ways. In the autumn of 1939, Gödel was accosted on the street by a group of Nazi youth who beat him and took his hat. Adele fought them off with her umbrella. The incident was both frightening and somehow characteristic: Adele defending him physically while he remained in the world of abstract thought.</p>
+  </section>
+
+  <!-- THE ESCAPE -->
+  <section id="escape">
+    <span class="section-label">V — The Flight</span>
+    <h2>East to Princeton: The Trans-Siberian Route</h2>
+    <p>By early 1940, the Atlantic Ocean was a war zone. German U-boats made the crossing genuinely dangerous. Gödel, with the help of the IAS director <strong>Abraham Flexner</strong> and his mathematical colleagues, obtained the necessary Soviet and Japanese transit visas. He and Adele departed Vienna in January 1940.</p>
+
+    <div class="route-box">
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">Vienna</div>
+        <div class="route-note">January 1940. Last sight of the city.</div>
+      </div>
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">Moscow</div>
+        <div class="route-note">Soviet transit visa. The city under Stalin.</div>
+      </div>
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">Trans-Siberian Railway</div>
+        <div class="route-note">~9,000 km across the continent. Fourteen days.</div>
+      </div>
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">Vladivostok → Yokohama</div>
+        <div class="route-note">Sea crossing to Japan. Pacific route.</div>
+      </div>
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">San Francisco</div>
+        <div class="route-note">March 1940. America.</div>
+      </div>
+      <div class="route-step">
+        <div class="route-arrow">→</div>
+        <div class="route-city">Princeton, New Jersey</div>
+        <div class="route-note">Institute for Advanced Study. Permanent arrival.</div>
+      </div>
+    </div>
+
+    <p>The journey took nearly two months. Gödel spent much of it reading and working. He arrived at Princeton carrying what he had always carried: the interior landscape of pure mathematics, self-contained and inviolate. The exterior world had been burning down around him for seven years. He had kept working.</p>
+  </section>
+
+  <!-- PRINCETON -->
+  <section id="princeton">
+    <span class="section-label">VI — The Final City</span>
+    <h2>Princeton: The Institute and the Walk</h2>
+    <p>The Institute for Advanced Study at Princeton was founded in 1930 with the explicit purpose of providing a home for theoretical work unencumbered by teaching, administration, or practical demands. By the time Gödel arrived, it had already assembled an extraordinary faculty: Einstein, John von Neumann, Oswald Veblen, Hermann Weyl. It was, arguably, the greatest concentration of mathematical and theoretical intelligence in one building in history.</p>
+    <p>Gödel settled into a routine. He lived at first in a rented house, then eventually at 145 Linden Lane. He walked to Fuld Hall each morning — and it was on these walks that the friendship with Einstein deepened into what both men seemed to regard as the most intellectually sustaining relationship of their later lives.</p>
+    <p>The walks became famous in Princeton lore. Residents would see the two men — the small, precise Gödel in his white linen suit, the rumpled, white-haired Einstein — moving slowly along the tree-lined paths, deep in conversation. What they talked about remains largely private. Einstein confided to friends that he came to the Institute mainly for the walk home with Gödel. Gödel worked through ideas about the ontological argument for God's existence (he produced a formal logical proof of it, though he declined to publish it in his lifetime, fearing it would be taken as evidence he was mad). They argued about time, about the nature of physical reality, about whether God played dice.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1940</span>
+        <h4>Permanent IAS Position</h4>
+        <p>Gödel is appointed to a permanent membership at the Institute for Advanced Study, eventually holding a full professorship from 1953.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1940–1955</span>
+        <h4>The Daily Walks with Einstein</h4>
+        <p>Morning and afternoon walks across the IAS campus. Einstein says the walks are his main reason for going in. Einstein dies in April 1955.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1949</span>
+        <h4>Rotating Universe Paper</h4>
+        <p>Published in Einstein's Festschrift. A gift of pure mathematics — and a philosophically troubling one, showing that general relativity permits time travel.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1955–1978</span>
+        <h4>Deepening Isolation</h4>
+        <p>After Einstein's death, Gödel's paranoia intensifies. He publishes very little. He conducts a long correspondence with his mother in Vienna. His world contracts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER EINSTEIN -->
+  <section id="after">
+    <span class="section-label">VII — The Long Silence</span>
+    <h2>After Einstein: The Narrowing World</h2>
+    <p>Einstein died on April 18, 1955. Gödel was seventy-three miles away in Princeton, where the news arrived by telephone. He was devastated. The friend who had made Princeton habitable — who had made the walk to work a form of philosophical life — was gone.</p>
+    <p>Gödel's world contracted after that. He continued working, but published almost nothing in his final decades. He had results he did not release, proofs he did not share, philosophical manuscripts he left unfinished or refused to submit. He became reclusive in a way that went beyond introversion into genuine pathology. He communicated increasingly through letters rather than conversation. His correspondence with his mother — meticulous, tender, philosophically charged — continued until her death. His correspondence with his brother was the primary channel through which news of him reached the outside world.</p>
+    <p>The paranoia about poisoning, which had been present in some form since the 1930s, intensified into the governing feature of his existence. He weighed himself obsessively. He kept detailed records of everything he ate and its apparent effects on him. He saw multiple doctors and found none of them trustworthy. He had a complicated relationship with prescription drugs. Only Adele, tasting his food before him, could give him the external verification he required.</p>
+    <p>When she was hospitalized in 1977, the system broke down. He ate almost nothing for months. He was admitted to Princeton Hospital in December 1977 weighing 65 pounds, and died there on January 14, 1978, of self-imposed starvation. He was seventy-one.</p>
+  </section>
+
+  <div class="final-quote">
+    <blockquote>"I don't consider my work a program to be carried out by others. What I have done is to show that the axiomatic method has certain limitations."</blockquote>
+    <cite>— Kurt Gödel</cite>
+  </div>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Kurt Gödel Series · Volume 2: His World · kurt-godel/2-world.html<br>
+    Series: <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-incompleteness.html">Vol. 1 — The Work</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niels Bohr — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04080a;
+    --cobalt: #1e40af;
+    --gold: #ca8a04;
+    --text: #dce8f0;
+    --muted: #6b8399;
+    --border: #0e1e2e;
+    --card-bg: #07111a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,8,10,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--cobalt); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #031120 0%, var(--paper) 68%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.78; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 780px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(30,64,175,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cobalt);
+    color: #e8f0ff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--cobalt); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cobalt);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cobalt);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  /* Legacy chain — horizontal timeline */
+  .chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 2rem 0;
+  }
+  .chain-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .chain-item:last-child { border-bottom: none; }
+  .chain-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--cobalt);
+    letter-spacing: 0.08em;
+    padding-top: 0.15rem;
+  }
+  .chain-body h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.35rem;
+  }
+  .chain-body p { font-size: 0.92rem; opacity: 0.85; margin: 0; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cobalt); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Niels Bohr</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-atom.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Quantum entanglement diagram — two particles, correlated at a distance -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bgGlow3" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#1e40af" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#04080a" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="particleA" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#ca8a04" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="particleB" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#60a5fa" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="entangleGlow">
+        <feGaussianBlur stdDeviation="5" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="ringGlow">
+        <feGaussianBlur stdDeviation="3"/>
+      </filter>
+    </defs>
+
+    <rect width="900" height="540" fill="url(#bgGlow3)"/>
+
+    <!-- Central emission point -->
+    <circle cx="450" cy="270" r="8" fill="#ca8a04" opacity="0.9" filter="url(#entangleGlow)">
+      <animate attributeName="r" values="6;10;6" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="3" fill="#fff" opacity="1"/>
+
+    <!-- Particle A — travels LEFT from center, with oscillating wave -->
+    <g filter="url(#entangleGlow)">
+      <circle r="9" fill="#ca8a04" opacity="0.85">
+        <animate attributeName="cx" dur="6s" repeatCount="indefinite"
+          values="450;200;150;200;450"
+          keyTimes="0;0.3;0.5;0.7;1"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+        <animate attributeName="cy" values="270;270;270;270;270" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.9;0.95;0.9;0" dur="6s" repeatCount="indefinite"
+          keyTimes="0;0.25;0.5;0.75;1"/>
+      </circle>
+    </g>
+
+    <!-- Particle B — travels RIGHT, with correlated state -->
+    <g filter="url(#entangleGlow)">
+      <circle r="9" fill="#60a5fa" opacity="0.85">
+        <animate attributeName="cx" dur="6s" repeatCount="indefinite"
+          values="450;700;750;700;450"
+          keyTimes="0;0.3;0.5;0.7;1"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+        <animate attributeName="cy" values="270;270;270;270;270" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.9;0.95;0.9;0" dur="6s" repeatCount="indefinite"
+          keyTimes="0;0.25;0.5;0.75;1"/>
+      </circle>
+    </g>
+
+    <!-- Entanglement correlation line — pulses between the two particles -->
+    <line x1="200" y1="270" x2="700" y2="270" stroke="#1e40af" stroke-width="1.5" stroke-dasharray="8,6" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.6;0.6;0" dur="6s" repeatCount="indefinite"
+        keyTimes="0;0.28;0.35;0.65;0.72"/>
+      <animate attributeName="stroke-dashoffset" values="0;-28" dur="1s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- Correlation flash at particle A detection -->
+    <circle cx="150" cy="270" r="1" fill="none" stroke="#ca8a04" stroke-width="2" opacity="0">
+      <animate attributeName="r" dur="6s" repeatCount="indefinite"
+        values="1;1;1;5;35;80;1" keyTimes="0;0.45;0.50;0.52;0.58;0.65;0.66"/>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite"
+        values="0;0;0;0.9;0.5;0;0" keyTimes="0;0.45;0.50;0.52;0.58;0.65;0.66"/>
+    </circle>
+
+    <!-- Instant correlation response at B (Bell nonlocality) -->
+    <circle cx="750" cy="270" r="1" fill="none" stroke="#60a5fa" stroke-width="2" opacity="0">
+      <animate attributeName="r" dur="6s" repeatCount="indefinite"
+        values="1;1;1;5;35;80;1" keyTimes="0;0.45;0.50;0.52;0.58;0.65;0.66"/>
+      <animate attributeName="opacity" dur="6s" repeatCount="indefinite"
+        values="0;0;0;0.9;0.5;0;0" keyTimes="0;0.45;0.50;0.52;0.58;0.65;0.66"/>
+    </circle>
+
+    <!-- Probability wave left -->
+    <path d="" fill="none" stroke="#ca8a04" stroke-width="1.2" opacity="0.35">
+      <animate attributeName="d"
+        values="M450,270 Q400,270 350,270 Q300,270 250,270;
+                M450,270 Q400,250 350,270 Q300,290 250,270;
+                M450,270 Q400,290 350,270 Q300,250 250,270;
+                M450,270 Q400,270 350,270 Q300,270 250,270"
+        dur="4s" repeatCount="indefinite" calcMode="spline"
+        keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.35;0.6;0.35;0.5;0.35" dur="4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Probability wave right -->
+    <path d="" fill="none" stroke="#60a5fa" stroke-width="1.2" opacity="0.35">
+      <animate attributeName="d"
+        values="M450,270 Q500,270 550,270 Q600,270 650,270;
+                M450,270 Q500,290 550,270 Q600,250 650,270;
+                M450,270 Q500,250 550,270 Q600,290 650,270;
+                M450,270 Q500,270 550,270 Q600,270 650,270"
+        dur="4s" repeatCount="indefinite" calcMode="spline"
+        keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" values="0.35;0.6;0.35;0.5;0.35" dur="4s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Measurement boxes at each end -->
+    <rect x="110" y="250" width="50" height="40" fill="none" stroke="#ca8a04" stroke-width="1.2" opacity="0.5"/>
+    <text x="135" y="299" fill="#ca8a04" font-family="'Space Mono', monospace" font-size="9" text-anchor="middle" opacity="0.7">Alice</text>
+    <rect x="740" y="250" width="50" height="40" fill="none" stroke="#60a5fa" stroke-width="1.2" opacity="0.5"/>
+    <text x="765" y="299" fill="#60a5fa" font-family="'Space Mono', monospace" font-size="9" text-anchor="middle" opacity="0.7">Bob</text>
+
+    <!-- Spin arrows at Alice (up) and Bob (down) — correlated -->
+    <line x1="135" y1="245" x2="135" y2="225" stroke="#ca8a04" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.9;0.9;0" dur="6s" repeatCount="indefinite"
+        keyTimes="0;0.50;0.55;0.65;0.70"/>
+    </line>
+    <polygon points="135,222 130,232 140,232" fill="#ca8a04" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.9;0.9;0" dur="6s" repeatCount="indefinite"
+        keyTimes="0;0.50;0.55;0.65;0.70"/>
+    </polygon>
+    <line x1="765" y1="255" x2="765" y2="275" stroke="#60a5fa" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.9;0.9;0" dur="6s" repeatCount="indefinite"
+        keyTimes="0;0.50;0.55;0.65;0.70"/>
+    </line>
+    <polygon points="765,278 760,268 770,268" fill="#60a5fa" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.9;0.9;0" dur="6s" repeatCount="indefinite"
+        keyTimes="0;0.50;0.55;0.65;0.70"/>
+    </polygon>
+
+    <!-- Label: entangled pair -->
+    <text x="450" y="220" fill="#6b8399" font-family="'Space Mono', monospace" font-size="10" text-anchor="middle" opacity="0.6">ENTANGLED PHOTON PAIR · ASPECT EXPERIMENT 1982</text>
+    <text x="450" y="370" fill="#ca8a04" font-family="'Space Mono', monospace" font-size="9" text-anchor="middle" opacity="0.5">Bell inequalities violated · Einstein wrong · Bohr vindicated</text>
+
+    <!-- Stars -->
+    <g fill="#1e40af" opacity="0.2">
+      <circle cx="80" cy="70" r="1.2"/><circle cx="200" cy="45" r="0.9"/>
+      <circle cx="790" cy="80" r="1.4"/><circle cx="860" cy="190" r="0.8"/>
+      <circle cx="70" cy="420" r="1"/><circle cx="840" cy="430" r="1.1"/>
+      <circle cx="300" cy="35" r="0.8"/><circle cx="630" cy="490" r="1.3"/>
+    </g>
+
+    <!-- Wavy interference pattern at bottom — legacy waves -->
+    <path fill="none" stroke="#1e40af" stroke-width="0.8" opacity="0.25">
+      <animate attributeName="d"
+        values="M0,500 Q112,490 225,500 Q337,510 450,500 Q562,490 675,500 Q787,510 900,500;
+                M0,500 Q112,510 225,500 Q337,490 450,500 Q562,510 675,500 Q787,490 900,500;
+                M0,500 Q112,490 225,500 Q337,510 450,500 Q562,490 675,500 Q787,510 900,500"
+        dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Niels Bohr · 1885–1962 · Volume Three</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">Copenhagen. Bohrium. Bell's Theorem. The Quantum Revolution Continues.</p>
+    <p class="hero-lead">He died in 1962. His atom model is still in every chemistry textbook. His institute is still one of the world's great physics centers. His debates with Einstein seeded the quantum information revolution. His ideas are still not finished.</p>
+  </div>
+</div>
+
+<div class="band">Copenhagen Interpretation · Bohrium · Bell 1964 · Aspect 1982 · Quantum Computing · Copenhagen Play 1998</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">107</span>
+      <span class="stat-label">Bohrium — Element Named</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1964</span>
+      <span class="stat-label">Bell's Theorem Published</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1982</span>
+      <span class="stat-label">Aspect Experiments</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1998</span>
+      <span class="stat-label">Copenhagen Opens</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2022</span>
+      <span class="stat-label">Bell Nobel Prize</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Complementarity — Still Open</span>
+    </div>
+  </div>
+
+  <!-- BOHR MODEL IN EDUCATION -->
+  <section id="education">
+    <span class="section-label">I — The Model That Outlasted Its Own Replacement</span>
+    <h2>Still the First Thing You Learn</h2>
+    <p>The Bohr model of 1913 was superseded — technically, precisely superseded — by the full quantum mechanical treatment in the mid-1920s. Heisenberg's matrix mechanics and Schrödinger's wave mechanics replaced it with a far more accurate and general framework. In quantum mechanics, electrons do not orbit in fixed circles; they exist in probability clouds described by wave functions, with shapes that only match Bohr's circular orbits in the simplest cases.</p>
+    <p>And yet the Bohr model is still the first model of atomic structure taught in every chemistry class, every high school physics class, in every country in the world. It is still used on the backs of medicine bottles and nuclear energy logos. It is the image of an atom in the mind of most educated people. This is not a failure of education — it is a recognition that the Bohr model is <em>the right model at the right level of complexity</em> for most practical purposes. The concept of quantized energy levels, of electrons jumping between states and emitting photons of specific frequencies, is not wrong. It is less complete than the full theory, but it is not wrong.</p>
+    <p>The Balmer series of hydrogen spectral lines — the precise set of wavelengths that Bohr's model predicted from first principles in 1913 — is still used to identify hydrogen in distant stars, calibrate spectrometers, and teach undergraduate physics. The formula E = −13.6 eV/n² is still exact for the hydrogen atom's energy levels, because Schrödinger's equation gives the same answer.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The Bohr model is a deliberate simplification. It is not a lie. It is a map at the right scale for most journeys."</blockquote>
+      <cite>— Richard Feynman, paraphrased, on the pedagogical role of the Bohr atom</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COPENHAGEN INTERPRETATION -->
+  <section id="interpretation">
+    <span class="section-label">II — The Copenhagen Interpretation Today</span>
+    <h2>Still Standard, Still Contested, Still Necessary</h2>
+    <p>The Copenhagen interpretation of quantum mechanics — that the wave function gives a complete probabilistic description, that measurement collapses the superposition to a definite outcome, and that it is meaningless to ask what a quantum system "is" between measurements — was articulated by Bohr and Heisenberg in 1927. It is, today, nearly a century later, still the interpretation taught in physics curricula worldwide. It is the working framework of every quantum engineer building quantum computers, every chemist modeling molecular bonding, every physicist designing particle detectors.</p>
+    <p>It is also contested. The <strong>Many-Worlds interpretation</strong>, proposed by Hugh Everett in 1957, holds that the wave function never collapses — all outcomes occur, in branching parallel worlds. The <strong>Pilot Wave (de Broglie-Bohm) theory</strong> restores determinism by positing hidden variables guiding particles, but at the cost of explicit nonlocality. <strong>QBism (Quantum Bayesianism)</strong> holds that the wave function represents an agent's beliefs, not physical reality. None of these has displaced Copenhagen in practice, because Copenhagen makes no wrong predictions and requires no additional ontological commitment. It is minimalist and it works.</p>
+    <p>What is now firmly established — settled by Bell's theorem and the Aspect experiments — is that no local hidden variable theory can reproduce quantum mechanical predictions. Einstein's hope that quantum mechanics would be completed by a deeper deterministic theory with local causes was wrong. The world is as strange as Bohr said it was.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Copenhagen · 1927</span>
+        <h4>The Orthodox View</h4>
+        <p>Wave function is complete. Measurement collapses it. No definite properties between measurements. Still the working framework of all applied quantum physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Many Worlds · 1957</span>
+        <h4>Everett's Branching</h4>
+        <p>All outcomes occur in parallel branches. No collapse. Elegant mathematics, profoundly strange ontology. Popular among quantum cosmologists; unused by quantum engineers.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Pilot Wave · 1952</span>
+        <h4>de Broglie-Bohm</h4>
+        <p>Particles follow definite trajectories guided by a pilot wave. Deterministic but explicitly nonlocal. Makes exactly the same predictions as Copenhagen.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">QBism · 2000s</span>
+        <h4>Quantum Bayesianism</h4>
+        <p>The wave function represents an agent's beliefs about future experiences. Sidesteps ontological questions entirely. Anti-realist and controversial.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">The fact that alternative interpretations exist, and that physicists still debate them, is itself a tribute to Bohr. He was the first to insist that quantum mechanics raised genuine philosophical questions — not just calculational difficulties — and that those questions could not be dissolved by looking harder at the math. He was right. The questions remain open. The debate continues.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BELL AND ENTANGLEMENT -->
+  <section id="bell">
+    <span class="section-label">III — Bell's Theorem and the Quantum Revolution</span>
+    <h2>The Seed Becomes a Revolution</h2>
+    <p>In 1964 John Stewart Bell, a physicist at CERN, proved a theorem that transformed the Bohr-Einstein debate from philosophy into physics. Bell showed that any local hidden variable theory — any theory in which quantum systems have definite properties independent of observation, and in which influences travel no faster than light — makes predictions that differ, in specific measurable correlations, from those of standard quantum mechanics.</p>
+    <p>This was a testable claim. The Bohr-Einstein debate, which had seemed to be about metaphysics, was suddenly about experiment. In 1972, Stuart Freedman and John Clauser at Berkeley performed the first test; quantum mechanics won narrowly. In 1982, Alain Aspect and colleagues in Paris performed a definitive series of experiments with improved technology, closing the major loopholes. The results: Bell inequalities were violated — exactly as quantum mechanics predicted — ruling out local hidden variables. <strong>Einstein was wrong. Bohr was right.</strong></p>
+    <p>Aspect, Clauser, and Anton Zeilinger received the Nobel Prize in Physics in 2022 — sixty years after Bohr's death — for these experiments. The Nobel committee's citation explicitly described the work as resolving the Bohr-Einstein debate. It was the longest-running experimental verification of a purely theoretical argument in the history of physics.</p>
+
+    <h3>Quantum Entanglement: From Philosophy to Technology</h3>
+    <p>The Bohr-Einstein debate about entanglement — the "spooky action at a distance" that Einstein found philosophically intolerable — has become the foundation of a technological revolution. Entangled quantum states are now the basic resource of:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Technology</span>
+        <h4>Quantum Computing</h4>
+        <p>Quantum computers use superposition and entanglement to perform certain calculations exponentially faster than classical machines. IBM, Google, and government programs worldwide are building them.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Technology</span>
+        <h4>Quantum Cryptography</h4>
+        <p>Quantum key distribution uses the no-cloning theorem — a consequence of quantum mechanics — to guarantee theoretically unbreakable encryption. Commercial systems exist.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Technology</span>
+        <h4>Quantum Sensing</h4>
+        <p>Entangled sensors achieve measurement precision beyond classical limits. Applications in gravitational wave detection (LIGO), atomic clocks, and medical imaging.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Fundamental</span>
+        <h4>Quantum Teleportation</h4>
+        <p>The quantum state (not matter) of a particle can be transmitted using entanglement and classical communication. Experimentally demonstrated over hundreds of kilometers and in orbit.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem;">None of this technology would exist without the conceptual foundations Bohr laid — the insistence that quantum mechanics is complete, that superposition and entanglement are real features of the world, and that they cannot be explained away by hidden variables. The Bohr-Einstein debate, which looked in 1935 like a philosophical argument with no practical stakes, has become the theoretical foundation of the quantum information industry.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- NIELS BOHR INSTITUTE -->
+  <section id="nbi">
+    <span class="section-label">IV — The Niels Bohr Institute</span>
+    <h2>One Hundred Years of Physics</h2>
+    <p>The Institut for Teoretisk Fysik, founded by Bohr in 1920, was officially renamed the <strong>Niels Bohr Institute</strong> in 1965, three years after his death. It has not diminished. Located still on Blegdamsvej in Copenhagen, it employs approximately 900 researchers and students, hosts conferences, runs particle physics experiments in collaboration with CERN, conducts astrophysics and condensed matter research, and maintains the Bohr Archive — one of the most important collections of primary documents in the history of science.</p>
+    <p>Aage Bohr, Niels's son, served as director of the Institute and won the Nobel Prize in Physics in 1975 for work on the structure of atomic nuclei. The Bohr family's connection to Danish physics has now spanned more than a century. The Institute's culture — the willingness to argue, the insistence on clarity, the practice of taking ideas seriously enough to destroy them — is still recognizably Niels Bohr's culture, transmitted through generations of physicists trained there.</p>
+    <p>The Institute has trained or hosted a remarkable fraction of the physicists who have shaped the last century of science. It is one of a small handful of institutions — along with the Cavendish at Cambridge and the Institute for Advanced Study at Princeton — that can claim to have been genuinely central to the development of modern physics as a discipline, not merely to one or two discoveries within it.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- COMPLEMENTARITY BEYOND PHYSICS -->
+  <section id="philosophy">
+    <span class="section-label">V — Complementarity Beyond Physics</span>
+    <h2>A Principle That Escaped the Laboratory</h2>
+    <p>Bohr was explicit, throughout the second half of his career, that complementarity was not a principle of physics alone. It was, he believed, a universal feature of the relationship between description and reality — applicable wherever two complete but mutually exclusive frameworks are needed to capture the full truth of something.</p>
+    <p>He applied it explicitly to biology: the mechanistic description of a living organism (in terms of physics and chemistry) and the vitalist description (in terms of the organism's whole-organism behavior and purposes) are complementary in the Bohr sense — each complete in its domain, the domains not simultaneously accessible. He applied it to psychology: the deterministic description of mental states as brain events and the phenomenological description of conscious experience as felt from the inside are complementary descriptions of the same reality.</p>
+    <p>Philosophers of science have been arguing about whether this extension is valid ever since. Critics say Bohr was using a technical term loosely; defenders say he was identifying a genuine structural feature of description that quantum mechanics happened to make mathematically precise but that appears wherever different levels of analysis are applied to the same phenomenon. The debate is unresolved. It will probably remain so. That is, in a Bohrian spirit, precisely as it should be.</p>
+
+    <div class="pull-quote">
+      <blockquote>"If anybody says he can think about quantum problems without getting giddy, that only shows he has not understood the first thing about them."</blockquote>
+      <cite>— Niels Bohr</cite>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- BOHRIUM AND CULTURAL LEGACY -->
+  <section id="element">
+    <span class="section-label">VI — Bohrium and the Copenhagen Play</span>
+    <h2>A Name on the Periodic Table, a Name on the Marquee</h2>
+    <p>Element 107, first synthesized at the Gesellschaft für Schwerionenforschung (GSI) in Darmstadt in 1981 and confirmed in 1994, was named <strong>Bohrium</strong> (symbol Bh) by the International Union of Pure and Applied Chemistry in 1997. It is a synthetic transactinide element with atomic number 107 and no stable isotopes — the longest-lived known isotope has a half-life of about 61 seconds. It exists only in particle accelerators. That a radioactive element synthesized in a German laboratory should bear the name of the Danish physicist who argued all his life for international scientific cooperation is a kind of periodic-table poetry.</p>
+
+    <h3>Copenhagen — The Play</h3>
+    <p>In 1998 the British playwright Michael Frayn premiered <em>Copenhagen</em> at the National Theatre in London. The play dramatizes the 1941 meeting between Niels Bohr and Werner Heisenberg in occupied Copenhagen — the meeting that neither man ever fully explained — as a posthumous conversation, the three characters (Bohr, Heisenberg, and Margrethe Bohr) repeatedly staging and restaging the encounter, trying to determine what was said, what was meant, and what was withheld.</p>
+    <p>Frayn structured the play around the uncertainty principle itself: the act of observing — of reconstructing — the meeting changes what is seen. Different "drafts" of the encounter lead to different conclusions. Like a quantum measurement, the attempt to determine the definite state of the 1941 meeting necessarily disturbs it. The play won the Tony Award for Best Play on Broadway in 2000 and has been performed continuously around the world in the decades since. It is the most celebrated dramatic work in the history of physics — partly because it takes physics seriously as subject matter, and partly because it asks questions about moral responsibility and self-knowledge that the physics merely illuminates rather than answers.</p>
+    <p>Copenhagen was rebroadcast by the BBC in 2002, coinciding with the Bohr Archive's release of the unsent letters between Bohr and Heisenberg — documents that added new uncertainty to the uncertainty the play was already exploring.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- LONG CHAIN -->
+  <section id="chain">
+    <span class="section-label">VII — The Long Chain of Consequence</span>
+    <h2>From 1913 to Now</h2>
+    <p>The line of consequence from Bohr's 1913 paper to contemporary quantum technology is direct and traceable. It is worth laying out explicitly.</p>
+
+    <div class="chain">
+      <div class="chain-item">
+        <div class="chain-year">1913</div>
+        <div class="chain-body">
+          <h4>Bohr's Quantum Atom</h4>
+          <p>Explains hydrogen spectrum. Establishes quantized energy levels. Opens the door to quantum theory of matter.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1925–1926</div>
+        <div class="chain-body">
+          <h4>Full Quantum Mechanics</h4>
+          <p>Heisenberg's matrix mechanics; Schrödinger's wave equation. Both developed in Copenhagen's intellectual orbit. Bohr synthesizes them into the Copenhagen interpretation.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1927</div>
+        <div class="chain-body">
+          <h4>Complementarity and Uncertainty</h4>
+          <p>Bohr and Heisenberg at Copenhagen. The philosophical framework that defines quantum mechanics for all subsequent generations.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1935</div>
+        <div class="chain-body">
+          <h4>EPR Paper and Bohr's Rebuttal</h4>
+          <p>Einstein, Podolsky, Rosen propose the entanglement problem. Bohr's rebuttal defends completeness. The seed of Bell's theorem is planted.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1939</div>
+        <div class="chain-body">
+          <h4>Bohr-Wheeler Fission Theory</h4>
+          <p>Explains why U-235 is fissile and U-238 is not. Provides the theoretical foundation for the Manhattan Project and for all subsequent nuclear physics.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1947</div>
+        <div class="chain-body">
+          <h4>Transistor Invented</h4>
+          <p>Shockley, Bardeen, Brattain at Bell Labs. The transistor works because of quantum mechanics — specifically, the quantum theory of solids built on Bohr's foundations. Every semiconductor device in the world runs on Bohr's physics.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1960</div>
+        <div class="chain-body">
+          <h4>Laser Invented</h4>
+          <p>Maiman's first working laser. It operates by stimulated emission — electrons jumping between quantized energy levels and emitting coherent photons. The direct application of the Bohr atom mechanism.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1964</div>
+        <div class="chain-body">
+          <h4>Bell's Theorem</h4>
+          <p>John Bell makes the Bohr-Einstein debate experimentally testable. The EPR argument has become an equation with a predicted inequality.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1982</div>
+        <div class="chain-body">
+          <h4>Aspect Experiments</h4>
+          <p>Quantum mechanics confirmed. Bell inequalities violated. Local hidden variables ruled out. Einstein wrong. Bohr right.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">1994</div>
+        <div class="chain-body">
+          <h4>Shor's Algorithm</h4>
+          <p>Peter Shor proves a quantum computer could factor large integers exponentially faster than any classical algorithm. The quantum computing race begins. The resource it requires: entanglement — the "spooky" phenomenon Einstein objected to in 1935.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">2022</div>
+        <div class="chain-body">
+          <h4>Nobel Prize — Aspect, Clauser, Zeilinger</h4>
+          <p>Awarded for experimental work on entangled photons, establishing the violation of Bell inequalities and enabling quantum information science. The Nobel Committee's citation acknowledges the resolution of the Bohr-Einstein debate.</p>
+        </div>
+      </div>
+      <div class="chain-item">
+        <div class="chain-year">Now</div>
+        <div class="chain-body">
+          <h4>Quantum Information Revolution</h4>
+          <p>Quantum computers, quantum networks, quantum sensors, quantum cryptography — all built on Bohr's conceptual foundations. The physics of the twenty-first century's transformative technologies was established between 1913 and 1935 in Copenhagen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FINAL ASSESSMENT -->
+  <section id="assessment">
+    <span class="section-label">VIII — The Verdict</span>
+    <h2>What He Was</h2>
+    <p>Niels Bohr was not the greatest mathematician among the founders of quantum mechanics — that was Dirac. He was not the most prolific experimenter — that was Rutherford. He was not the most intuitive theorist — arguably Heisenberg, in a certain kind of raw physical imagination. What Bohr had, in a form perhaps unique in the history of physics, was <em>philosophical courage</em>: the willingness to follow an argument to a conclusion that seemed absurd by all prior intuitions, to live with that absurdity while looking for the deeper logic beneath it, and to insist — against Einstein, against de Broglie, against all the classical intuitions of the physicists who preceded him — that nature really was as strange as the equations said.</p>
+    <p>He was right. The experiments have confirmed it. The technology has been built on it. The quantum world is as he described it: probabilistic, contextual, nonlocal in its correlations, irreducibly complementary in its descriptions. The atom is as he first described it: electrons in quantized orbits, emitting discrete photons at frequencies given by Planck's constant and the energy difference between levels. The Institute he built in Copenhagen is still running. The interpretation he articulated is still taught.</p>
+    <p>And his argument for international control of atomic weapons — dismissed by Churchill, shelved by Roosevelt, ignored in the arms race — was correct. It remains correct. It remains unimplemented. He was ahead of his time in physics and ahead of his time in politics, and in both cases the world has been slowly catching up to where he stood.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Every great and deep difficulty bears in itself its own solution. It forces us to change our thinking in order to find it."</blockquote>
+      <cite>— Niels Bohr</cite>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Niels Bohr Series · Volume 3: The Legacy · niels-bohr/3-legacy.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-atom.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a>
+  </div>
+</footer>
+
+</body>
+</html>

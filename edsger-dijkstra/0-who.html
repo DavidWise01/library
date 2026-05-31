@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edsger W. Dijkstra — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050810;
+    --card:#0a0f1e;
+    --card2:#0f1524;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(234,88,12,0.18);
+    --lineb:rgba(29,78,216,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(234,88,12,0.022) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--orange);color:#fff;}
+
+  /* typography */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--orange);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.blue{background:var(--blue);}
+  .band.ghost{background:transparent;color:var(--orange);border:1px solid var(--orange);padding:4px 13px;}
+
+  /* masthead */
+  .mast{border-bottom:3px solid var(--orange);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7.5vw,76px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--orange);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* bicycle / canal SVG animation */
+  @keyframes bikeRoll{0%{transform:translateX(0)}100%{transform:translateX(220px)}}
+  @keyframes wheelSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  @keyframes waterRipple{0%,100%{d:path("M4,0 Q12,-3 20,0 Q28,3 36,0")}50%{d:path("M4,0 Q12,3 20,0 Q28,-3 36,0")}}
+  @keyframes cloudDrift{0%{transform:translateX(0)}100%{transform:translateX(30px)}}
+  @keyframes pedalSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  .bike-group{animation:bikeRoll 6s linear infinite;}
+  .wheel-front{transform-origin:160px 112px;animation:wheelSpin 1.1s linear infinite;}
+  .wheel-rear{transform-origin:120px 112px;animation:wheelSpin 1.1s linear infinite;}
+  .pedal{transform-origin:140px 105px;animation:pedalSpin 1.1s linear infinite;}
+  .cloud1{animation:cloudDrift 8s ease-in-out infinite alternate;}
+  .cloud2{animation:cloudDrift 11s ease-in-out infinite alternate-reverse;}
+  @media(prefers-reduced-motion:reduce){
+    .bike-group,.wheel-front,.wheel-rear,.pedal,.cloud1,.cloud2{animation:none;}
+  }
+
+  /* layout */
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--orange);}
+  .card.blue-hover:hover{box-shadow:5px 5px 0 var(--blue);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--orange);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:2px 7px;margin-top:5px;}
+
+  /* fact table */
+  .fact-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px;}
+  .fact-table tr{border-bottom:1px solid var(--line);}
+  .fact-table tr:last-child{border-bottom:none;}
+  .fact-table td:first-child{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.08em;color:var(--orange);text-transform:uppercase;padding:9px 16px 9px 0;width:160px;white-space:nowrap;}
+  .fact-table td:last-child{color:#c0cad8;padding:9px 0;}
+
+  /* block / blockquote */
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.blue{border-color:var(--lineb);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  /* timeline */
+  .timeline{list-style:none;padding:0;margin:0;}
+  .timeline li{position:relative;padding:10px 0 10px 58px;border-bottom:1px solid var(--line);font-size:14.5px;color:#b0bcd4;line-height:1.5;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline li .yr{position:absolute;left:0;top:11px;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:0.04em;}
+  .timeline li b{color:var(--ink);font-weight:500;}
+
+  /* EWD reference block */
+  .ewd-list{list-style:none;padding:0;margin:0;}
+  .ewd-list li{position:relative;padding:8px 0 8px 80px;border-bottom:1px solid var(--line);font-size:14px;color:#a8b4cc;}
+  .ewd-list li:last-child{border-bottom:none;}
+  .ewd-list li .ewd-num{position:absolute;left:0;top:9px;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:0.04em;}
+  .ewd-list li b{color:var(--ink);font-weight:500;}
+
+  /* colophon */
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  /* nav */
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--orange);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--orange);color:#fff;}
+  .vol-nav a.current{background:var(--orange);color:#fff;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">dijkstra series · volume 0 · who he was</span>
+    <div class="masthead">
+      <div>
+        <h1>Edsger W.<br><em>Dijkstra</em></h1>
+        <p class="dek">
+          Born in Rotterdam, 1930. Died in Nuenen, 2002.
+          He invented the shortest-path algorithm in twenty minutes at a café, banished the GOTO from civilized code,
+          and wrote <b>1,300 handwritten memos</b> that defined the ethics and aesthetics of computer science.
+        </p>
+      </div>
+
+      <!-- Bicycle on Dutch canal SVG -->
+      <svg class="art" width="260" height="160" viewBox="0 0 260 160" role="img" aria-label="animated bicycle riding along a Dutch canal at dusk">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#050810"/>
+            <stop offset="100%" stop-color="#0d1a3a"/>
+          </linearGradient>
+          <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0a1428"/>
+            <stop offset="100%" stop-color="#050810"/>
+          </linearGradient>
+          <clipPath id="sceneClip">
+            <rect width="260" height="160"/>
+          </clipPath>
+        </defs>
+        <rect width="260" height="160" fill="url(#skyGrad)" rx="3"/>
+
+        <!-- stars -->
+        <circle cx="20" cy="14" r="0.8" fill="#fff" opacity="0.6"/>
+        <circle cx="55" cy="8" r="0.7" fill="#fff" opacity="0.5"/>
+        <circle cx="90" cy="18" r="0.9" fill="#fff" opacity="0.7"/>
+        <circle cx="140" cy="6" r="0.7" fill="#fff" opacity="0.5"/>
+        <circle cx="190" cy="15" r="0.8" fill="#fff" opacity="0.6"/>
+        <circle cx="230" cy="9" r="0.7" fill="#fff" opacity="0.55"/>
+        <circle cx="245" cy="22" r="0.6" fill="#fff" opacity="0.4"/>
+
+        <!-- clouds -->
+        <g class="cloud1">
+          <ellipse cx="60" cy="28" rx="22" ry="7" fill="rgba(29,78,216,0.15)"/>
+          <ellipse cx="72" cy="24" rx="14" ry="8" fill="rgba(29,78,216,0.12)"/>
+        </g>
+        <g class="cloud2">
+          <ellipse cx="200" cy="22" rx="18" ry="6" fill="rgba(29,78,216,0.13)"/>
+          <ellipse cx="210" cy="18" rx="12" ry="7" fill="rgba(29,78,216,0.10)"/>
+        </g>
+
+        <!-- windmill (distant, right) -->
+        <g opacity="0.55">
+          <rect x="218" y="58" width="5" height="36" fill="#1d4ed8"/>
+          <rect x="215" y="82" width="11" height="12" fill="#1d4ed8"/>
+          <!-- sails -->
+          <line x1="220.5" y1="58" x2="220.5" y2="36" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+          <line x1="220.5" y1="58" x2="238" y2="58" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+          <line x1="220.5" y1="58" x2="220.5" y2="78" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+          <line x1="220.5" y1="58" x2="203" y2="58" stroke="#1d4ed8" stroke-width="1.5" opacity="0.8"/>
+        </g>
+
+        <!-- towpath / bank -->
+        <rect x="0" y="108" width="260" height="6" fill="#1a2540"/>
+        <!-- canal water -->
+        <rect x="0" y="114" width="260" height="46" fill="url(#waterGrad)"/>
+        <!-- water ripple lines -->
+        <g stroke="rgba(29,78,216,0.25)" stroke-width="1" fill="none">
+          <path d="M10,124 Q30,120 50,124 Q70,128 90,124"/>
+          <path d="M100,130 Q120,126 140,130 Q160,134 180,130"/>
+          <path d="M30,138 Q55,134 80,138 Q105,142 130,138"/>
+          <path d="M150,143 Q175,139 200,143 Q225,147 250,143"/>
+          <path d="M5,148 Q35,144 65,148 Q95,152 125,148"/>
+        </g>
+        <!-- orange canal-light reflection -->
+        <path d="M80,114 L88,160 L96,160 L88,114 Z" fill="rgba(234,88,12,0.07)"/>
+
+        <!-- distant buildings left -->
+        <rect x="0" y="72" width="18" height="36" fill="#0d1426" opacity="0.9"/>
+        <rect x="8" y="64" width="10" height="8" fill="#0d1426" opacity="0.9"/>
+        <rect x="22" y="80" width="14" height="28" fill="#0d1426" opacity="0.85"/>
+        <rect x="38" y="76" width="8" height="32" fill="#0d1426" opacity="0.8"/>
+        <!-- lit windows -->
+        <rect x="4" y="82" width="4" height="3" fill="rgba(234,88,12,0.5)"/>
+        <rect x="4" y="90" width="4" height="3" fill="rgba(234,88,12,0.35)"/>
+        <rect x="25" y="85" width="4" height="3" fill="rgba(234,88,12,0.45)"/>
+        <rect x="32" y="85" width="4" height="3" fill="rgba(234,88,12,0.3)"/>
+
+        <!-- lamp post on towpath -->
+        <rect x="85" y="72" width="2" height="36" fill="#2a3a5c"/>
+        <circle cx="86" cy="72" r="5" fill="rgba(234,88,12,0.6)"/>
+        <circle cx="86" cy="72" r="3" fill="rgba(255,200,100,0.9)"/>
+
+        <!-- ANIMATED BICYCLE GROUP -->
+        <!-- clip to scene so it wraps cleanly -->
+        <g clip-path="url(#sceneClip)">
+          <g class="bike-group" transform="translate(-30,0)">
+            <!-- frame -->
+            <line x1="120" y1="100" x2="140" y2="88" stroke="var(--orange)" stroke-width="2"/>
+            <line x1="140" y1="88" x2="160" y2="100" stroke="var(--orange)" stroke-width="2"/>
+            <line x1="140" y1="88" x2="140" y2="100" stroke="var(--orange)" stroke-width="2"/>
+            <line x1="140" y1="88" x2="152" y2="82" stroke="var(--orange)" stroke-width="2"/>
+            <line x1="120" y1="100" x2="140" y2="100" stroke="var(--orange)" stroke-width="2"/>
+            <!-- handlebars -->
+            <line x1="152" y1="82" x2="156" y2="78" stroke="var(--orange)" stroke-width="1.5"/>
+            <line x1="156" y1="78" x2="160" y2="80" stroke="var(--orange)" stroke-width="1.5"/>
+            <!-- seat post -->
+            <line x1="132" y1="90" x2="128" y2="85" stroke="var(--orange)" stroke-width="1.5"/>
+            <line x1="125" y1="85" x2="132" y2="85" stroke="var(--orange)" stroke-width="1.5"/>
+            <!-- rear wheel -->
+            <g class="wheel-rear">
+              <circle cx="120" cy="112" r="12" fill="none" stroke="rgba(234,88,12,0.6)" stroke-width="1.5"/>
+              <circle cx="120" cy="112" r="2" fill="var(--orange)"/>
+              <line x1="120" y1="100" x2="120" y2="124" stroke="rgba(234,88,12,0.4)" stroke-width="1"/>
+              <line x1="108" y1="112" x2="132" y2="112" stroke="rgba(234,88,12,0.4)" stroke-width="1"/>
+              <line x1="111.5" y1="103.5" x2="128.5" y2="120.5" stroke="rgba(234,88,12,0.3)" stroke-width="1"/>
+              <line x1="128.5" y1="103.5" x2="111.5" y2="120.5" stroke="rgba(234,88,12,0.3)" stroke-width="1"/>
+            </g>
+            <!-- front wheel -->
+            <g class="wheel-front">
+              <circle cx="160" cy="112" r="12" fill="none" stroke="rgba(234,88,12,0.6)" stroke-width="1.5"/>
+              <circle cx="160" cy="112" r="2" fill="var(--orange)"/>
+              <line x1="160" y1="100" x2="160" y2="124" stroke="rgba(234,88,12,0.4)" stroke-width="1"/>
+              <line x1="148" y1="112" x2="172" y2="112" stroke="rgba(234,88,12,0.4)" stroke-width="1"/>
+              <line x1="151.5" y1="103.5" x2="168.5" y2="120.5" stroke="rgba(234,88,12,0.3)" stroke-width="1"/>
+              <line x1="168.5" y1="103.5" x2="151.5" y2="120.5" stroke="rgba(234,88,12,0.3)" stroke-width="1"/>
+            </g>
+            <!-- chain ring -->
+            <circle cx="140" cy="104" r="5" fill="none" stroke="rgba(234,88,12,0.5)" stroke-width="1.5"/>
+            <!-- pedal -->
+            <g class="pedal">
+              <line x1="140" y1="99" x2="140" y2="109" stroke="var(--orange)" stroke-width="1.5"/>
+              <line x1="136" y1="99" x2="144" y2="99" stroke="var(--orange)" stroke-width="1.5"/>
+              <line x1="136" y1="109" x2="144" y2="109" stroke="var(--orange)" stroke-width="1.5"/>
+            </g>
+            <!-- rider silhouette -->
+            <circle cx="138" cy="80" r="5" fill="#e8e4d8" opacity="0.9"/>
+            <path d="M138,85 Q134,92 128,95 Q132,90 140,88 Q148,86 150,88" fill="#c8c4b8" opacity="0.85"/>
+          </g>
+        </g>
+
+        <!-- label -->
+        <text x="4" y="156" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.45)" letter-spacing="0.12em">ROTTERDAM · AMSTERDAM · NUENEN</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html" class="current">0 · Who</a>
+    <a href="1-algorithm.html">1 · Algorithm</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <!-- SECTION: THE MAN -->
+  <div class="band reveal" style="animation-delay:.05s">Rotterdam, 1930</div>
+  <p class="body-text reveal" style="animation-delay:.08s">
+    Edsger Wybe Dijkstra was born on 11 May 1930 in Rotterdam, in a Netherlands still largely confident in its neutrality and prosperity. His father, Douwe Dijkstra, was a chemist — the president of the Dutch Chemical Society. His mother, Brechtje Cornelia Kluijver, was talented in mathematics. The household was intellectually saturated: scientific reasoning was not something done elsewhere by specialists; it was the texture of daily life.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.11s">
+    The war came when Dijkstra was nine. Rotterdam was bombed in May 1940 — one of the most destructive air raids of the war, destroying the historic city center and killing nearly a thousand people. The family survived. But Dijkstra grew up in an occupied country, and this formative experience — of institutions that could be corrupted, of authoritative nonsense that killed people — would leave a lifelong suspicion of intellectual complacency dressed as consensus. He would spend his career asking: <em>are we actually sure?</em>
+  </p>
+  <p class="body-text reveal" style="animation-delay:.13s">
+    After the war he studied physics at Leiden University, the oldest university in the Netherlands. He was good. But physics at that moment was discovering computing, and computing was discovering itself. Dijkstra attended a short course in Cambridge in 1951 and encountered a stored-program computer for the first time. He returned to the Netherlands changed.
+  </p>
+
+  <div class="pull reveal" style="animation-delay:.15s">
+    "The use of COBOL cripples the mind; its teaching should therefore be regarded as a criminal offense."
+    — Edsger W. Dijkstra, EWD 498
+  </div>
+
+  <!-- QUICK FACTS -->
+  <div class="band blue reveal" style="animation-delay:.17s">At a Glance</div>
+  <div class="block blue reveal" style="animation-delay:.19s">
+    <table class="fact-table">
+      <tr><td>Born</td><td>11 May 1930, Rotterdam, Netherlands</td></tr>
+      <tr><td>Died</td><td>6 August 2002, Nuenen, Netherlands, age 72</td></tr>
+      <tr><td>Education</td><td>Physics, Leiden University; programming, Mathematisch Centrum Amsterdam</td></tr>
+      <tr><td>Positions</td><td>Mathematisch Centrum Amsterdam (1952–1962); TU Eindhoven (1962–1984); UT Austin, Schlumberger Centennial Chair (1984–2002)</td></tr>
+      <tr><td>Turing Award</td><td>1972 — "for fundamental contributions to programming as a high, intellectual challenge"</td></tr>
+      <tr><td>Output</td><td>Over 1,300 EWDs (Edsger W. Dijkstra memos), handwritten, archived at UT Austin</td></tr>
+      <tr><td>Languages</td><td>Dutch, English, German, French; ALGOL 60 (as a language designer)</td></tr>
+      <tr><td>Transport</td><td>Bicycle, always. He rode to work at Eindhoven for decades.</td></tr>
+      <tr><td>Hostilities</td><td>BASIC, COBOL, PL/I, later Java; the GOTO statement; untested code; management by slide deck</td></tr>
+    </table>
+  </div>
+
+  <!-- BECOMING A PROGRAMMER -->
+  <div class="band reveal" style="animation-delay:.21s">The First Programmer</div>
+  <p class="body-text reveal" style="animation-delay:.23s">
+    In 1952, Dijkstra joined the Mathematisch Centrum in Amsterdam — one of Europe's earliest computing research institutions — as what he would later describe as one of the first people in the world to call himself a <em>programmer</em>. This was not a modest self-assessment. It was a statement about the state of the art. There was no established discipline of programming. There were no textbooks. There were almost no precedents. You encountered a machine and you figured it out.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.25s">
+    The machines were enormous, slow by any modern standard, unreliable, and deeply strange to reason about. But Dijkstra had a physicist's habit of reducing things to first principles and a mathematician's intolerance for vagueness. He began to formulate questions that nobody had yet articulated: what does it mean to write a <em>correct</em> program? How do you <em>know</em> a program does what you think it does? These questions would drive his entire career.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.27s">
+    He was still nominally a physics student at Leiden, and in 1956 he went to his supervisor — the physicist A. Haantjes — and said he wanted programming to be his profession. Haantjes was blunt: programming was not a recognized field; a physicist would not hire him as a programmer. If Dijkstra intended this seriously, he would have to leave physics. He did. Officially, he dropped his physics studies in 1956, the same year he invented his most famous algorithm.
+  </p>
+
+  <div class="band reveal" style="animation-delay:.29s">Life in Time</div>
+  <div class="block reveal" style="animation-delay:.31s">
+    <ul class="timeline">
+      <li><span class="yr">1930</span><b>Born in Rotterdam.</b> Son of a chemist and a mathematician. The city would be bombed in 1940.</li>
+      <li><span class="yr">1948</span><b>Enters Leiden University</b> to study physics. Shows exceptional mathematical ability.</li>
+      <li><span class="yr">1951</span><b>Cambridge summer course.</b> First encounter with a stored-program computer. Returns to Amsterdam transformed.</li>
+      <li><span class="yr">1952</span><b>Joins Mathematisch Centrum, Amsterdam.</b> Becomes one of the world's first professional programmers.</li>
+      <li><span class="yr">1956</span><b>Dijkstra's algorithm invented</b> — shortest path in a graph, conceived in ~20 minutes at a café in Amsterdam. Drops formal physics studies.</li>
+      <li><span class="yr">1959</span><b>Algorithm published</b> in <em>Numerische Mathematik</em>. Also helps design and implement the ALGOL 60 language.</li>
+      <li><span class="yr">1962</span><b>Professor at TU Eindhoven.</b> Begins building the THE multiprogramming system with students.</li>
+      <li><span class="yr">1965</span><b>Semaphores introduced.</b> Also: the Dining Philosophers problem, still the canonical concurrency illustration.</li>
+      <li><span class="yr">1968</span><b>"Go To Statement Considered Harmful"</b> — letter to CACM launches the structured programming movement. Becomes arguably the most famous letter in computing history.</li>
+      <li><span class="yr">1972</span><b>Turing Award.</b> The highest honor in computer science.</li>
+      <li><span class="yr">1984</span><b>Moves to UT Austin.</b> Schlumberger Centennial Chair in Computer Science. Continues writing EWDs by hand.</li>
+      <li><span class="yr">1999</span><b>Retires from UT Austin.</b> Returns to Nuenen, the Dutch village where Vincent van Gogh once painted.</li>
+      <li><span class="yr">2002</span><b>Dies 6 August</b> in Nuenen, of cancer. He was 72. Awarded the ACM PODC Dijkstra Prize — posthumously, in his own name.</li>
+    </ul>
+  </div>
+
+  <!-- CHARACTER -->
+  <div class="band orange reveal" style="animation-delay:.33s">The Man</div>
+  <p class="body-text reveal" style="animation-delay:.35s">
+    Dijkstra was famously difficult in seminars — but difficult in a specific way. He would sit through a presentation in complete silence, which was unnerving enough. Then he would ask a single question. The question was always precise. It usually revealed that the speaker had not quite understood their own work. He was not cruel; he was exact. He believed that precision in language and precision in thought were the same thing, and that sloppy language was therefore not just aesthetically offensive but intellectually dangerous.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.37s">
+    He wrote everything by hand. Not as an affectation — or not entirely — but because he believed the act of writing slowly was itself a form of thought. He would draft an EWD memo, revise it carefully, and then photocopy it and mail it to a list of colleagues around the world. No email. No word processor. The EWD system ran from the early 1960s until his death in 2002: over forty years of hand-distributed thought.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.39s">
+    He rode a bicycle everywhere. In Eindhoven, colleagues would see him pedaling to the university every morning regardless of weather. In Austin, Texas — a city built around the car — he still rode. The bicycle was, for him, a vehicle of appropriate scale: human-powered, human-speed, honest about what it was. He had no patience for systems that obscured their own workings.
+  </p>
+
+  <div class="pull reveal" style="animation-delay:.41s">
+    "Computer science is no more about computers than astronomy is about telescopes."
+    — Edsger W. Dijkstra
+  </div>
+
+  <!-- CHARACTER CARDS -->
+  <div class="grid reveal" style="animation-delay:.43s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>The Handwritten Memo</h3>
+      <p class="what">1,300+ EWDs, written by hand in fountain pen, photocopied, mailed to colleagues worldwide. Now archived at the University of Texas at Austin and freely available online.</p>
+      <span class="tag">EWD Archive</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>The Seminar Silence</h3>
+      <p class="what">Famously sat through talks in complete silence, then asked one devastating question that exposed the gap between what the speaker said and what the speaker had understood.</p>
+      <span class="tag">Method</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>The Bicycle</h3>
+      <p class="what">Rode to work every day for decades. In Eindhoven, in Austin. An act of consistency with his principles: human-scale, reliable, self-powered, honest.</p>
+      <span class="tag">Character</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>The Hostility to Nonsense</h3>
+      <p class="what">Declared COBOL crippling to the mind. Called BASIC harmful to programmers. Later described Java as teaching students "how to think poorly." He meant it, every time.</p>
+      <span class="tag">Opinions</span>
+    </div>
+    <div class="card blue-hover">
+      <span class="num">05</span>
+      <h3>Precision as Ethics</h3>
+      <p class="what">For Dijkstra, vague thinking was not an intellectual weakness — it was a moral failure. Programmers who could not reason precisely about their programs were dangerous. Imprecision in software kills people.</p>
+      <span class="tag">Philosophy</span>
+    </div>
+    <div class="card blue-hover">
+      <span class="num">06</span>
+      <h3>The Physicist's Training</h3>
+      <p class="what">Never completed his formal physics degree, but kept the physicist's habit of reduction to first principles. His programs were not guessed at; they were derived from specifications, like theorems.</p>
+      <span class="tag">Method</span>
+    </div>
+  </div>
+
+  <!-- FAMILY AND PRIVATE LIFE -->
+  <div class="band reveal" style="animation-delay:.45s">Private Life</div>
+  <p class="body-text reveal" style="animation-delay:.47s">
+    Dijkstra married Maria (Ria) Debets in 1957, and they had three children. By all accounts the domestic sphere was warm and stable — a counterweight to the intellectual severity that colleagues encountered. In Nuenen, the village where he spent his final years and where van Gogh had painted <em>The Potato Eaters</em>, he tended a garden and maintained the same disciplined daily rhythms he had kept his entire life.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.49s">
+    He was diagnosed with renal cell carcinoma in the late 1990s. He retired from UT Austin in 1999 and returned to the Netherlands. His last EWD — number 1,318 — was written in April 2002, four months before his death. It was about teaching, and about beauty. He never stopped thinking about what computing should be.
+  </p>
+
+  <!-- THE EWDs -->
+  <div class="band blue reveal" style="animation-delay:.51s">Selected EWDs</div>
+  <div class="block blue reveal" style="animation-delay:.53s">
+    <ul class="ewd-list">
+      <li><span class="ewd-num">EWD 68</span><b>A constructive approach to the problem of program correctness</b> (1966). One of the earliest arguments that correctness must be proved, not tested.</li>
+      <li><span class="ewd-num">EWD 215</span><b>The humble programmer</b> — his 1972 Turing Award lecture. "The tools we call 'programming languages' are still woefully inadequate."</li>
+      <li><span class="ewd-num">EWD 329</span><b>On the role of scientific thought.</b> The distinction between "doing it" and "thinking about it" — the programmer vs. the scientist.</li>
+      <li><span class="ewd-num">EWD 447</span><b>On the cruelty of really teaching computer science.</b> A polemic against the "familiar old equipment" approach to education.</li>
+      <li><span class="ewd-num">EWD 498</span><b>How do we tell truths that might hurt?</b> Contains the COBOL quote. Also the famous observation about BASIC.</li>
+      <li><span class="ewd-num">EWD 1036</span><b>The strengths of the academic enterprise.</b> The university as the last refuge of real thinking.</li>
+      <li><span class="ewd-num">EWD 1243</span><b>The notational conventions I adopted.</b> On why the choice of notation is not cosmetic — it determines what you can think.</li>
+    </ul>
+  </div>
+
+  <!-- THE NETHERLANDS -->
+  <div class="band reveal" style="animation-delay:.55s">A Dutch Sensibility</div>
+  <p class="body-text reveal" style="animation-delay:.57s">
+    Dijkstra's Dutch identity is not incidental. The Netherlands has a long tradition of pragmatic intellectual rigor — a country that built itself against the sea through engineering and collective discipline. Dutch culture prizes directness to the point of bluntness; there is a word, <em>doe maar gewoon</em>, for the social code of not putting on airs, of being straightforwardly what you are.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.59s">
+    Dijkstra was Dutch to his marrow in this respect. He said what he thought. He did not smooth over intellectual errors to be polite. When he wrote that COBOL "cripples the mind," he was not being provocative for effect — he was stating, in Dutch directness, what he actually believed to be true. His writings have no wasted words, no diplomatic hedging, no appeals to authority. They begin from axioms and proceed to conclusions, and they trust the reader to follow.
+  </p>
+  <div class="block reveal" style="animation-delay:.61s">
+    <blockquote>
+      "The question of whether machines can think is about as relevant as the question of whether submarines can swim."
+      <cite>— Edsger W. Dijkstra, EWD 898</cite>
+    </blockquote>
+  </div>
+
+  <!-- WHAT HE THOUGHT COMPUTING WAS -->
+  <div class="band orange reveal" style="animation-delay:.63s">What Computing Is</div>
+  <p class="body-text reveal" style="animation-delay:.65s">
+    Dijkstra believed computing was a mathematical discipline — not an engineering trade, not a craft, not a form of applied physics. Programs are mathematical objects. Their correctness can be proved. Their complexity can be analyzed. The relationship between a specification and an implementation is one of logical entailment. If you cannot prove your program correct, you do not know that it is correct, regardless of how many tests it passes.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.67s">
+    This view made him a radical — and made him enemies. Much of industrial software practice in the 1960s and 1970s was exactly what he said it was: guessing, testing, patching. He was asking programmers to do something much harder: to think before writing, to derive programs from specifications rather than patching until the output looked right.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.69s">
+    "Testing shows the presence, not the absence, of bugs," he wrote — a statement so compressed and so true that it is still quoted in every software engineering course. His point was not that testing was worthless but that it was insufficient. Testing can never give you certainty. Proof can. And certainty was what he wanted.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.71s">
+    <blockquote>
+      "Testing shows the presence, not the absence, of bugs."
+      <cite>— Edsger W. Dijkstra, EWD 303</cite>
+    </blockquote>
+  </div>
+
+  <!-- COLOPHON -->
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    dijkstra series · volume 0 · who he was · rotterdam 1930 – nuenen 2002<br>
+    "a discipline that was to become one of the most profound intellectual adventures of the 20th century"
+  </p>
+
+</div>
+</body>
+</html>
