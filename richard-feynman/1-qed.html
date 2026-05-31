@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feynman — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04040c;
+    --cyan: #06b6d4;
+    --red: #ef4444;
+    --text: #d4e8ed;
+    --muted: #5a7a84;
+    --border: #0e2029;
+    --card-bg: #080818;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,4,12,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #020d14 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(6,182,212,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cyan);
+    color: #04040c;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--cyan); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cyan);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+
+  /* DIAGRAM SHOWCASE */
+  .diagram-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2.5rem 0;
+  }
+  .diagram-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .diagram-box:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .diagram-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    margin-top: 1rem;
+    display: block;
+    text-align: center;
+  }
+  .diagram-desc {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.78;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* PATH INTEGRAL VIZ */
+  .path-integral-viz {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cyan); text-decoration: none; }
+  .colophon a:hover { color: var(--red); }
+
+  /* HERO ANIMATION KEYFRAMES */
+  @keyframes electronTravel {
+    0% { stroke-dashoffset: 300; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes photonWiggle {
+    0% { stroke-dashoffset: 200; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes vertexPulse {
+    0%, 100% { r: 6; opacity: 1; }
+    50% { r: 9; opacity: 0.7; }
+  }
+  @keyframes arrowFloat {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+  @keyframes labelFade {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    100% { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Feynman</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-qed.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Feynman Diagram — Electron Emitting a Photon -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="heroGlow1" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#04040c" stop-opacity="0"/>
+      </radialGradient>
+      <marker id="arrow-e" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#06b6d4"/>
+      </marker>
+      <marker id="arrow-p" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+      </marker>
+      <filter id="glow1">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#heroGlow1)"/>
+
+    <!-- Feynman diagram: electron comes in from left, emits photon (wavy line going up-right), electron continues lower-right -->
+    <!-- Background grid (very faint) -->
+    <g stroke="#06b6d4" stroke-width="0.3" opacity="0.07">
+      <line x1="0" y1="100" x2="900" y2="100"/><line x1="0" y1="200" x2="900" y2="200"/>
+      <line x1="0" y1="300" x2="900" y2="300"/><line x1="0" y1="400" x2="900" y2="400"/>
+      <line x1="100" y1="0" x2="100" y2="520"/><line x1="300" y1="0" x2="300" y2="520"/>
+      <line x1="500" y1="0" x2="500" y2="520"/><line x1="700" y1="0" x2="700" y2="520"/>
+    </g>
+
+    <!-- Incoming electron: solid line from left, going right to vertex -->
+    <line x1="140" y1="290" x2="420" y2="260"
+      stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"
+      marker-end="url(#arrow-e)"
+      filter="url(#glow1)"
+      stroke-dasharray="280" stroke-dashoffset="280">
+      <animate attributeName="stroke-dashoffset" dur="2.2s" begin="0.2s" fill="freeze"
+        values="280;0" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+    </line>
+    <!-- e⁻ label incoming -->
+    <text x="240" y="250" font-family="'Space Mono', monospace" font-size="18" fill="#06b6d4" opacity="0"
+      style="animation: labelFade 2s 0.4s forwards;">e⁻</text>
+
+    <!-- Vertex dot -->
+    <circle cx="450" cy="258" r="7" fill="#06b6d4" filter="url(#glow1)">
+      <animate attributeName="r" dur="1.6s" repeatCount="indefinite"
+        values="6;10;6" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="opacity" dur="1.6s" repeatCount="indefinite"
+        values="1;0.65;1"/>
+    </circle>
+
+    <!-- Outgoing electron: solid line from vertex down-right -->
+    <line x1="450" y1="258" x2="730" y2="310"
+      stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round"
+      marker-end="url(#arrow-e)"
+      filter="url(#glow1)"
+      stroke-dasharray="290" stroke-dashoffset="290">
+      <animate attributeName="stroke-dashoffset" dur="1.8s" begin="1.8s" fill="freeze"
+        values="290;0" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+    </line>
+    <!-- e⁻ label outgoing -->
+    <text x="590" y="335" font-family="'Space Mono', monospace" font-size="18" fill="#06b6d4" opacity="0"
+      style="animation: labelFade 2s 2s forwards;">e⁻</text>
+
+    <!-- Emitted photon: wavy line from vertex upward-right -->
+    <!-- Wavy path: photon is a sinusoidal line -->
+    <path d="M450,258 Q467,235 484,248 Q501,261 518,238 Q535,215 552,228 Q569,241 586,218 Q603,195 620,208 Q637,221 654,198"
+      stroke="#ef4444" stroke-width="2.2" fill="none" stroke-linecap="round"
+      filter="url(#glow1)"
+      marker-end="url(#arrow-p)"
+      stroke-dasharray="250" stroke-dashoffset="250">
+      <animate attributeName="stroke-dashoffset" dur="2s" begin="1.5s" fill="freeze"
+        values="250;0" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+    </path>
+    <!-- γ photon label -->
+    <text x="640" y="190" font-family="'Space Mono', monospace" font-size="22" fill="#ef4444" opacity="0"
+      style="animation: labelFade 2s 2.4s forwards;">γ</text>
+    <!-- photon label -->
+    <text x="530" y="175" font-family="'Space Mono', monospace" font-size="13" fill="#ef4444" opacity="0"
+      style="animation: labelFade 2s 2.4s forwards;">photon</text>
+
+    <!-- Time axis label -->
+    <text x="60" y="480" font-family="'Space Mono', monospace" font-size="13" fill="#5a7a84" opacity="0.7">time →</text>
+    <line x1="130" y1="473" x2="820" y2="473" stroke="#5a7a84" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Coupling constant annotation -->
+    <text x="430" y="210" font-family="'Space Mono', monospace" font-size="12" fill="#5a7a84" opacity="0.6">vertex ≈ √α ≈ 1/11.7</text>
+
+    <!-- Particle labels left side -->
+    <text x="55" y="215" font-family="'Cinzel', serif" font-size="14" fill="#5a7a84" opacity="0.5">Feynman</text>
+    <text x="55" y="235" font-family="'Cinzel', serif" font-size="14" fill="#5a7a84" opacity="0.5">Diagram</text>
+    <text x="55" y="260" font-family="'Space Mono', monospace" font-size="11" fill="#5a7a84" opacity="0.4">QED vertex</text>
+
+    <!-- Decorative quantized background circles -->
+    <circle cx="160" cy="160" r="40" fill="none" stroke="#06b6d4" stroke-width="0.4" opacity="0.15"/>
+    <circle cx="160" cy="160" r="70" fill="none" stroke="#06b6d4" stroke-width="0.3" opacity="0.1"/>
+    <circle cx="750" cy="400" r="50" fill="none" stroke="#ef4444" stroke-width="0.4" opacity="0.15"/>
+    <circle cx="750" cy="400" r="80" fill="none" stroke="#ef4444" stroke-width="0.3" opacity="0.1"/>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Richard P. Feynman &mdash; The Work &mdash; Vol. 1 of 4</span>
+    <h1 class="hero-title">The Work</h1>
+    <p class="hero-subtitle">QED &middot; Feynman Diagrams &middot; Path Integrals &middot; Quantum Computing</p>
+    <p class="hero-lead">The most precise scientific theory ever tested. A visual language for the invisible. And a plate wobbling in a cafeteria that changed everything.</p>
+  </div>
+</div>
+
+<div class="band">QED — Precise to 12 Decimal Places &middot; The Most Accurate Theory in the History of Science</div>
+
+<main>
+
+  <!-- SECTION: QED -->
+  <section id="qed">
+    <span class="section-label">The Masterwork</span>
+    <h2>Quantum Electrodynamics: The Theory of Everything Electromagnetic</h2>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Decimal places of precision</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1948</span>
+        <span class="stat-label">Shelther Island / Pocono Conferences</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1/137</span>
+        <span class="stat-label">Fine-structure constant α</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞→∞</span>
+        <span class="stat-label">Infinities tamed by renormalization</span>
+      </div>
+    </div>
+
+    <p>Quantum Electrodynamics is the quantum field theory of electromagnetism — the theory that describes how light and matter interact at the most fundamental level. Every electromagnetic phenomenon ever measured — light, electricity, magnetism, chemistry, biology, every photon that has ever struck every retina — is described by QED. It is the bedrock of the physical world as we know it.</p>
+
+    <p>Feynman developed QED between 1946 and 1950, during his years at Cornell and his first years at Caltech. He was not alone: Julian Schwinger at Harvard and Sin-Itiro Tomonaga in Japan developed mathematically equivalent formulations independently and simultaneously. But Feynman's approach was different in kind: where Schwinger's was a tour-de-force of abstract operator mathematics, Feynman's was built on physical intuition, pictures, and a new computational method that made previously intractable calculations tractable.</p>
+
+    <p>The central problem QED solved was <strong>renormalization</strong>: when physicists calculated quantum corrections to electromagnetic quantities, they kept getting infinities. A bare electron, surrounded by a cloud of virtual particles continuously popping in and out of existence, seemed to have infinite energy, infinite mass. Feynman, Schwinger, and Tomonaga — each in their own way — showed that these infinities could be systematically absorbed into measured physical quantities (the mass and charge of the electron) and removed, leaving finite, calculable, experimentally testable predictions.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It is what I would call a dippy process. Having to resort to such hocus-pocus has prevented me from being able to define clearly what is fundamentally wrong with the present methods of quantum field theory."</blockquote>
+      <cite>&mdash; Feynman on renormalization, in "QED: The Strange Theory of Light and Matter," 1985</cite>
+    </div>
+
+    <p>He was never fully comfortable with renormalization. He called it "sweeping the infinities under the rug." He believed the framework was incomplete — that a deeper theory would eventually replace it. He was probably right, but sixty years later, no one has found that deeper theory, and QED remains the most precisely confirmed scientific theory in existence. The magnetic moment of the electron, predicted by QED to twelve decimal places, agrees with measurement to twelve decimal places. This is equivalent to measuring the distance from Los Angeles to New York to within the width of a human hair.</p>
+  </section>
+
+  <!-- SECTION: FEYNMAN DIAGRAMS -->
+  <section id="diagrams">
+    <span class="section-label">Visual Language</span>
+    <h2>Feynman Diagrams: A Grammar for the Invisible</h2>
+
+    <p>Feynman invented his diagrams in 1948, and they constitute perhaps the most influential visual notation in the history of science. Every line in a Feynman diagram has precise mathematical meaning. They are not illustrations — they are computational tools. Each diagram corresponds to a specific mathematical term in a perturbation expansion; summing over diagrams gives the total quantum probability amplitude for a physical process.</p>
+
+    <p>The rules: <strong>straight lines</strong> represent fermions (electrons, quarks, neutrinos). <strong>Wavy lines</strong> represent photons — force-carrying bosons of the electromagnetic field. <strong>Vertices</strong> — the points where lines meet — represent interactions. The amplitude for each vertex is proportional to the coupling constant (for electromagnetism, roughly 1/137). The fewer vertices, the larger the contribution.</p>
+
+    <div class="diagram-showcase">
+
+      <!-- Diagram 1: Electron emitting a photon -->
+      <div class="diagram-box">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <defs>
+            <marker id="ae1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#06b6d4"/>
+            </marker>
+            <marker id="ap1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#ef4444"/>
+            </marker>
+          </defs>
+          <!-- incoming electron -->
+          <line x1="20" y1="150" x2="130" y2="110" stroke="#06b6d4" stroke-width="2" marker-end="url(#ae1)"/>
+          <!-- outgoing electron -->
+          <line x1="130" y1="110" x2="240" y2="140" stroke="#06b6d4" stroke-width="2" marker-end="url(#ae1)"/>
+          <!-- photon (wavy) -->
+          <path d="M130,110 Q143,90 156,102 Q169,114 182,94 Q195,74 208,86 Q221,98 234,78"
+            stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#ap1)"/>
+          <!-- vertex -->
+          <circle cx="130" cy="110" r="5" fill="#06b6d4"/>
+          <!-- labels -->
+          <text x="15" y="178" font-family="'Space Mono', monospace" font-size="11" fill="#06b6d4">e⁻ in</text>
+          <text x="205" y="165" font-family="'Space Mono', monospace" font-size="11" fill="#06b6d4">e⁻ out</text>
+          <text x="220" y="68" font-family="'Space Mono', monospace" font-size="13" fill="#ef4444">γ</text>
+          <!-- time arrow -->
+          <text x="10" y="195" font-family="'Space Mono', monospace" font-size="9" fill="#5a7a84">t →</text>
+          <line x1="35" y1="190" x2="260" y2="190" stroke="#5a7a84" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+        <span class="diagram-label">Electron Emitting a Photon</span>
+        <p class="diagram-desc">An electron (e⁻) interacts with the electromagnetic field, emitting a photon (γ). The vertex factor is proportional to √α ≈ 1/11.7.</p>
+      </div>
+
+      <!-- Diagram 2: Electron-Positron Annihilation -->
+      <div class="diagram-box">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <defs>
+            <marker id="ae2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#06b6d4"/>
+            </marker>
+            <marker id="ap2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#ef4444"/>
+            </marker>
+            <marker id="aa2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#a855f7"/>
+            </marker>
+          </defs>
+          <!-- incoming electron (top left) -->
+          <line x1="20" y1="60" x2="130" y2="100" stroke="#06b6d4" stroke-width="2" marker-end="url(#ae2)"/>
+          <!-- incoming positron (bottom left) — arrow reversed (backward in time) -->
+          <line x1="130" y1="100" x2="20" y2="145" stroke="#a855f7" stroke-width="2" marker-end="url(#aa2)"/>
+          <!-- virtual photon (internal) -->
+          <path d="M130,100 Q155,100 180,100" stroke="#ef4444" stroke-width="2" fill="none"
+            stroke-dasharray="5,3"/>
+          <!-- second vertex -->
+          <circle cx="180" cy="100" r="5" fill="#ef4444"/>
+          <!-- outgoing photon 1 -->
+          <path d="M180,100 Q193,78 206,90 Q219,102 232,82"
+            stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#ap2)"/>
+          <!-- outgoing photon 2 -->
+          <path d="M180,100 Q193,122 206,110 Q219,98 232,118"
+            stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#ap2)"/>
+          <!-- vertex 1 -->
+          <circle cx="130" cy="100" r="5" fill="#06b6d4"/>
+          <!-- labels -->
+          <text x="10" y="50" font-family="'Space Mono', monospace" font-size="10" fill="#06b6d4">e⁻</text>
+          <text x="10" y="158" font-family="'Space Mono', monospace" font-size="10" fill="#a855f7">e⁺</text>
+          <text x="238" y="76" font-family="'Space Mono', monospace" font-size="13" fill="#ef4444">γ</text>
+          <text x="238" y="126" font-family="'Space Mono', monospace" font-size="13" fill="#ef4444">γ</text>
+          <text x="143" y="93" font-family="'Space Mono', monospace" font-size="9" fill="#ef4444">virtual γ</text>
+          <text x="10" y="195" font-family="'Space Mono', monospace" font-size="9" fill="#5a7a84">t →</text>
+          <line x1="35" y1="190" x2="260" y2="190" stroke="#5a7a84" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+        <span class="diagram-label">Electron-Positron Annihilation</span>
+        <p class="diagram-desc">An electron and positron annihilate via a virtual photon, producing two real photons. The basis of PET scanning and pair production physics.</p>
+      </div>
+
+      <!-- Diagram 3: Compton Scattering -->
+      <div class="diagram-box">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <defs>
+            <marker id="ae3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#06b6d4"/>
+            </marker>
+            <marker id="ap3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L7,3 z" fill="#ef4444"/>
+            </marker>
+          </defs>
+          <!-- incoming photon (wavy, top left) -->
+          <path d="M20,60 Q33,42 46,54 Q59,66 72,48 Q85,30 98,42 Q111,54 124,36"
+            stroke="#ef4444" stroke-width="2" fill="none"/>
+          <!-- vertex 1 -->
+          <circle cx="124" cy="36" r="5" fill="#06b6d4"/>
+          <!-- internal electron propagator (vertical) -->
+          <line x1="124" y1="36" x2="124" y2="140" stroke="#06b6d4" stroke-width="2" stroke-dasharray="6,3"/>
+          <!-- vertex 2 -->
+          <circle cx="124" cy="140" r="5" fill="#06b6d4"/>
+          <!-- incoming electron (bottom left) -->
+          <line x1="20" y1="165" x2="124" y2="140" stroke="#06b6d4" stroke-width="2" marker-end="url(#ae3)"/>
+          <!-- outgoing electron (bottom right) -->
+          <line x1="124" y1="140" x2="245" y2="155" stroke="#06b6d4" stroke-width="2" marker-end="url(#ae3)"/>
+          <!-- outgoing photon (top right, wavy) -->
+          <path d="M124,36 Q137,20 150,32 Q163,44 176,26 Q189,8 202,20 Q215,32 228,14"
+            stroke="#ef4444" stroke-width="2" fill="none" marker-end="url(#ap3)"/>
+          <!-- labels -->
+          <text x="8" y="50" font-family="'Space Mono', monospace" font-size="11" fill="#ef4444">γ in</text>
+          <text x="225" y="12" font-family="'Space Mono', monospace" font-size="11" fill="#ef4444">γ out</text>
+          <text x="8" y="185" font-family="'Space Mono', monospace" font-size="10" fill="#06b6d4">e⁻</text>
+          <text x="240" y="175" font-family="'Space Mono', monospace" font-size="10" fill="#06b6d4">e⁻</text>
+          <text x="10" y="199" font-family="'Space Mono', monospace" font-size="9" fill="#5a7a84">t →</text>
+          <line x1="35" y1="193" x2="260" y2="193" stroke="#5a7a84" stroke-width="0.6" opacity="0.5"/>
+        </svg>
+        <span class="diagram-label">Compton Scattering</span>
+        <p class="diagram-desc">A photon scatters off an electron, changing direction and losing energy. Arthur Compton's 1923 experiment demonstrated the particle nature of light.</p>
+      </div>
+
+    </div>
+
+    <p>When Feynman first presented his diagrams at the Pocono Conference in 1948, the audience — including Niels Bohr and Paul Dirac — was baffled or hostile. Dirac asked repeatedly how the diagrams were "derived." Feynman tried to explain that they were not derived from anything — they were a new way of organizing calculations, a visual language whose grammar was given by the rules of QED.</p>
+
+    <p>Freeman Dyson proved in 1949 that Feynman's pictorial method was mathematically equivalent to the more rigorous approaches of Schwinger and Tomonaga. Within five years, Feynman diagrams were the universal language of particle physics. Within twenty years, they were used in nuclear physics, condensed matter physics, and statistical mechanics. Today, billions of Feynman diagrams have been drawn, and every one of them descends from Feynman's 1948 invention.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION: PATH INTEGRALS -->
+  <section id="path-integral">
+    <span class="section-label">Foundations</span>
+    <h2>Path Integrals: Every Particle Takes Every Path</h2>
+
+    <div class="path-integral-viz">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px;">
+        <defs>
+          <marker id="api" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L7,3 z" fill="#06b6d4" opacity="0.7"/>
+          </marker>
+        </defs>
+        <!-- Source point A -->
+        <circle cx="60" cy="100" r="8" fill="#06b6d4"/>
+        <text x="30" y="122" font-family="'Space Mono', monospace" font-size="13" fill="#06b6d4">A</text>
+        <!-- Destination point B -->
+        <circle cx="640" cy="100" r="8" fill="#ef4444"/>
+        <text x="648" y="122" font-family="'Space Mono', monospace" font-size="13" fill="#ef4444">B</text>
+
+        <!-- Many paths (classical + quantum) -->
+        <!-- Classical path (straight, brightest) -->
+        <line x1="68" y1="100" x2="632" y2="100" stroke="#06b6d4" stroke-width="2.5" opacity="0.9" marker-end="url(#api)"/>
+        <!-- Various quantum paths -->
+        <path d="M68,100 Q200,45 350,100 Q500,155 632,100" stroke="#06b6d4" stroke-width="1.2" fill="none" opacity="0.55"/>
+        <path d="M68,100 Q200,145 350,100 Q500,55 632,100" stroke="#06b6d4" stroke-width="1.2" fill="none" opacity="0.55"/>
+        <path d="M68,100 Q150,30 280,100 Q400,170 500,80 Q570,30 632,100" stroke="#06b6d4" stroke-width="0.9" fill="none" opacity="0.35"/>
+        <path d="M68,100 Q150,170 280,100 Q400,30 500,120 Q570,170 632,100" stroke="#06b6d4" stroke-width="0.9" fill="none" opacity="0.35"/>
+        <path d="M68,100 Q200,20 380,130 Q520,160 632,100" stroke="#06b6d4" stroke-width="0.7" fill="none" opacity="0.22"/>
+        <path d="M68,100 Q200,180 380,70 Q520,40 632,100" stroke="#06b6d4" stroke-width="0.7" fill="none" opacity="0.22"/>
+        <path d="M68,100 Q140,55 210,100 Q280,145 350,100 Q420,55 490,100 Q560,145 632,100" stroke="#06b6d4" stroke-width="0.6" fill="none" opacity="0.18"/>
+        <path d="M68,100 Q140,145 210,100 Q280,55 350,100 Q420,145 490,100 Q560,55 632,100" stroke="#06b6d4" stroke-width="0.6" fill="none" opacity="0.18"/>
+
+        <!-- Labels -->
+        <text x="310" y="195" font-family="'Space Mono', monospace" font-size="10" fill="#5a7a84" text-anchor="middle">all paths — classical path is brightest (constructive interference)</text>
+      </svg>
+      <p style="font-size:0.85rem; color:var(--muted); margin-top:1rem; font-family:'Space Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; text-align:center;">Path Integral: Particle travels from A to B via every possible route simultaneously</p>
+    </div>
+
+    <p>Feynman's path integral formulation of quantum mechanics, developed in his 1942 Princeton thesis and published in 1948, is one of the most radical and fruitful ideas in theoretical physics. In classical mechanics, a particle moves along a single definite path from point A to point B — the path of least action. In Feynman's formulation, a quantum particle travels along <em>every possible path</em> simultaneously.</p>
+
+    <p>Each path contributes a quantum amplitude — a complex number with magnitude and phase. The phase of each path's contribution is proportional to the classical action along that path. When you sum the contributions from all paths (the "path integral"), the paths that are close to the classical trajectory add coherently — their phases nearly align. Paths far from the classical trajectory oscillate rapidly in phase and cancel each other out. The result: the classical trajectory <em>emerges</em> from quantum mechanics as the path of constructive interference, not as a fundamental axiom.</p>
+
+    <p>This is not merely a different way to write the same mathematics. The path integral formulation opened doors that the standard operator formalism could not easily enter: quantum field theory, quantum gravity, statistical mechanics, string theory. Modern physics could not exist in its current form without the path integral.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It doesn't matter how beautiful your theory is, it doesn't matter how smart you are. If it doesn't agree with experiment, it's wrong."</blockquote>
+      <cite>&mdash; Richard Feynman</cite>
+    </div>
+  </section>
+
+  <!-- SECTION: QUANTUM COMPUTING & NANOTECHNOLOGY -->
+  <section id="quantum-computing">
+    <span class="section-label">Prophecy</span>
+    <h2>Quantum Computing and Nanotechnology: Two Fields He Invented</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1959</span>
+        <h4>"There's Plenty of Room at the Bottom"</h4>
+        <p>Feynman's landmark Caltech lecture proposing that machines could be built at the atomic scale — that the laws of physics did not prevent it. He offered cash prizes for first demonstration of microscale writing and tiny motors. The prizes were eventually claimed, years later. The lecture is considered the founding text of nanotechnology.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1981</span>
+        <h4>"Simulating Physics with Computers"</h4>
+        <p>Feynman argued that quantum systems cannot be efficiently simulated by classical computers — that the Hilbert space grows exponentially with the number of particles. The solution: build a computer that operates on quantum principles. This is the founding lecture of quantum computing as a field.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1985</span>
+        <h4>The Universal Quantum Computer</h4>
+        <p>Feynman published "Quantum Mechanical Computers," describing a theoretical model of a quantum computer — reversible logic gates, quantum bits, unitary evolution. He showed in principle how any quantum computation could be implemented.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Legacy</span>
+        <h4>The Fields He Founded</h4>
+        <p>Nanotechnology: a multi-trillion-dollar industry. Quantum computing: IBM, Google, IonQ, D-Wave, and dozens of startups are building what Feynman described. Both fields trace their intellectual origin to his Caltech lectures.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: PLATE-WOBBLE -->
+  <section id="plate-wobble">
+    <span class="section-label">The Origin Story</span>
+    <h2>The Wobbling Plate: How QED Began</h2>
+
+    <p>In 1945, Feynman arrived at Cornell after the war. He was depressed. He felt physics was finished — all the important problems solved. He could not work. The weight of Los Alamos, the death of Arline, the atomic bombings — he had withdrawn.</p>
+
+    <p>One day in the Cornell cafeteria, a student tossed a plate into the air. As it wobbled, Feynman noticed the blue Cornell medallion on the rim rotating and wobbling at different rates. On a whim, he worked out the ratio of wobble to rotation — a classical mechanics problem. He found the ratio was 2:1 for small wobbles. He showed his result to Hans Bethe. Bethe asked: "What's the importance of that?" Feynman said: "It has no importance. I just found it interesting."</p>
+
+    <p>But the exercise broke the paralysis. Feynman began playing again. He began working on the electromagnetic interaction of the electron "for the fun of it." He wrote later: "The diagrams and the whole business that I got the Nobel Prize for came from that piddling around with the wobbling plate." The plate-wobble led to QED. The "fun" led to the most precise scientific theory ever constructed.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Physics is like sex: sure, it may give some practical results, but that's not why we do it."</blockquote>
+      <cite>&mdash; Richard Feynman</cite>
+    </div>
+  </section>
+
+  <!-- SECTION: FEYNMAN LECTURES -->
+  <section id="lectures">
+    <span class="section-label">The Greatest Textbook</span>
+    <h2>The Feynman Lectures on Physics</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Volume I — 1963</span>
+        <h4>Mechanics, Radiation, Heat</h4>
+        <p>Kinematics, dynamics, energy, thermodynamics, wave mechanics. Feynman's treatment of energy conservation alone is considered a masterclass in physical thinking. Famously begins: "When we say we understand a group of phenomena, we mean that we've found a model that explains all of them."</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Volume II — 1964</span>
+        <h4>Electromagnetism and Matter</h4>
+        <p>Maxwell's equations, electromagnetic waves, magnetic materials, electrical circuits. Contains Feynman's famous meditation on what it means that a physical equation can predict phenomena not yet observed.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Volume III — 1965</span>
+        <h4>Quantum Mechanics</h4>
+        <p>The only introductory quantum mechanics text that starts from the actual physics — double-slit experiments, spin, the Schrödinger equation emerging from physical reasoning. Considered by many the most illuminating introduction to quantum mechanics ever written.</p>
+      </div>
+    </div>
+
+    <p>The lectures are freely available at <strong>feynmanlectures.caltech.edu</strong>. They are read by physics students worldwide, by working physicists who want to understand something they thought they already knew, and by people with no physics training who simply want to understand what Feynman was trying to say. There is no other textbook in science that has served all three audiences equally well.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    &nbsp;|&nbsp; Vol. 1 of 4 &mdash; Richard Feynman &mdash; The Work &nbsp;|&nbsp;
+    Diagram descriptions are pedagogically simplified representations of QED perturbation theory.
+    <br>
+    <a href="0-who.html">Vol. 0</a> &nbsp;&middot;&nbsp;
+    <a href="1-qed.html">Vol. 1</a> &nbsp;&middot;&nbsp;
+    <a href="2-world.html">Vol. 2</a> &nbsp;&middot;&nbsp;
+    <a href="3-legacy.html">Vol. 3</a>
+  </div>
+</footer>
+
+</body>
+</html>

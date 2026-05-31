@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feynman — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04040c;
+    --cyan: #06b6d4;
+    --red: #ef4444;
+    --text: #d4e8ed;
+    --muted: #5a7a84;
+    --border: #0e2029;
+    --card-bg: #080818;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,4,12,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #120204 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.65;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(239,68,68,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cyan);
+    color: #04040c;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  .band-red {
+    background: var(--red);
+    color: #fff;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--cyan); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cyan);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote-red { border-left-color: var(--red); }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-num-red { color: var(--red); }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  /* PLACE BOX */
+  .place-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cyan);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+  }
+  .place-box.red-accent { border-left-color: var(--red); }
+  .place-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-bottom: 0.6rem;
+  }
+  .place-box.red-accent h4 { color: var(--red); }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cyan); text-decoration: none; }
+  .colophon a:hover { color: var(--red); }
+
+  /* TRINITY PULSE ANIMATION */
+  @keyframes trinityPulse {
+    0% { r: 8; opacity: 1; stroke-width: 3; }
+    100% { r: 220; opacity: 0; stroke-width: 0.5; }
+  }
+  @keyframes flashWhite {
+    0%, 100% { opacity: 0; }
+    5% { opacity: 1; }
+    15% { opacity: 0; }
+  }
+  @keyframes riseCloud {
+    0% { transform: translateY(0) scaleX(1); }
+    100% { transform: translateY(-80px) scaleX(1.4); opacity: 0; }
+  }
+  @keyframes groundShake {
+    0%, 100% { transform: translateX(0); }
+    10% { transform: translateX(-3px); }
+    20% { transform: translateX(3px); }
+    30% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    50% { transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Feynman</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-qed.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Los Alamos Trinity site pulse -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="triGlow" cx="50%" cy="68%" r="35%">
+        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.22"/>
+        <stop offset="60%" stop-color="#ef4444" stop-opacity="0.05"/>
+        <stop offset="100%" stop-color="#04040c" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+        <stop offset="30%" stop-color="#ef4444" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="tritBlur">
+        <feGaussianBlur stdDeviation="4"/>
+      </filter>
+    </defs>
+
+    <rect width="900" height="520" fill="url(#triGlow)"/>
+
+    <!-- Ground plane -->
+    <rect x="0" y="390" width="900" height="130" fill="#080818" opacity="0.8"/>
+    <!-- Jornada del Muerto desert silhouette -->
+    <path d="M0,390 Q100,375 200,385 Q320,370 450,380 Q580,368 700,378 Q800,368 900,375 L900,390 Z"
+      fill="#0a0a18" opacity="0.9"/>
+    <!-- Ground zero marker (Trinity site) -->
+    <circle cx="450" cy="388" r="4" fill="#ef4444" opacity="0.8"/>
+
+    <!-- Flash (instantaneous white) -->
+    <circle cx="450" cy="360" r="35" fill="url(#coreGlow)">
+      <animate attributeName="opacity" dur="8s" repeatCount="indefinite"
+        values="0;1;0;0;0;0;0;0;0;0" keyTimes="0;0.05;0.12;0.2;0.35;0.5;0.65;0.8;0.9;1"/>
+      <animate attributeName="r" dur="8s" repeatCount="indefinite"
+        values="10;55;30;30;30;30;30;30;30;30" keyTimes="0;0.05;0.12;0.2;0.35;0.5;0.65;0.8;0.9;1"/>
+    </circle>
+
+    <!-- Shockwave pulse rings -->
+    <circle cx="450" cy="380" r="8" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0">
+      <animate attributeName="r" dur="8s" begin="0s" repeatCount="indefinite"
+        values="8;260;260" keyTimes="0;0.45;1"
+        calcMode="spline" keySplines="0.1 0 0.4 1;0 0 0 0"/>
+      <animate attributeName="opacity" dur="8s" begin="0s" repeatCount="indefinite"
+        values="0;0.9;0.8;0" keyTimes="0;0.05;0.45;0.55"/>
+    </circle>
+    <circle cx="450" cy="380" r="8" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0">
+      <animate attributeName="r" dur="8s" begin="0.4s" repeatCount="indefinite"
+        values="8;240;240" keyTimes="0;0.45;1"
+        calcMode="spline" keySplines="0.1 0 0.4 1;0 0 0 0"/>
+      <animate attributeName="opacity" dur="8s" begin="0.4s" repeatCount="indefinite"
+        values="0;0.65;0.5;0" keyTimes="0;0.05;0.45;0.55"/>
+    </circle>
+    <circle cx="450" cy="380" r="8" fill="none" stroke="#ef4444" stroke-width="1" opacity="0">
+      <animate attributeName="r" dur="8s" begin="0.9s" repeatCount="indefinite"
+        values="8;220;220" keyTimes="0;0.45;1"
+        calcMode="spline" keySplines="0.1 0 0.4 1;0 0 0 0"/>
+      <animate attributeName="opacity" dur="8s" begin="0.9s" repeatCount="indefinite"
+        values="0;0.45;0.3;0" keyTimes="0;0.05;0.45;0.55"/>
+    </circle>
+    <!-- Cyan shockwave (secondary) -->
+    <circle cx="450" cy="380" r="8" fill="none" stroke="#06b6d4" stroke-width="0.8" opacity="0">
+      <animate attributeName="r" dur="8s" begin="1.6s" repeatCount="indefinite"
+        values="8;280;280" keyTimes="0;0.5;1"
+        calcMode="spline" keySplines="0.05 0 0.35 1;0 0 0 0"/>
+      <animate attributeName="opacity" dur="8s" begin="1.6s" repeatCount="indefinite"
+        values="0;0.4;0.25;0" keyTimes="0;0.05;0.5;0.6"/>
+    </circle>
+
+    <!-- Mushroom cloud column (simplified) -->
+    <g opacity="0">
+      <animate attributeName="opacity" dur="8s" repeatCount="indefinite"
+        values="0;0;0.7;0.7;0.4;0" keyTimes="0;0.1;0.25;0.55;0.75;0.9"/>
+      <!-- Stem -->
+      <rect x="435" y="200" width="30" height="190" rx="8" fill="#1a0808" opacity="0.7"/>
+      <!-- Cap -->
+      <ellipse cx="450" cy="200" rx="90" ry="45" fill="#1a0808" opacity="0.75"/>
+      <ellipse cx="450" cy="195" rx="75" ry="38" fill="#2a1010" opacity="0.5"/>
+    </g>
+
+    <!-- Mountain silhouette (Jornada del Muerto, NM) -->
+    <path d="M0,440 Q80,410 160,430 Q240,415 320,435 Q380,425 450,440 Q520,427 600,435 Q680,420 760,432 Q830,418 900,428 L900,520 L0,520 Z"
+      fill="#050510" opacity="0.95"/>
+
+    <!-- Stars -->
+    <g fill="#fff" opacity="0.4">
+      <circle cx="80" cy="50" r="0.8"/><circle cx="200" cy="30" r="1"/><circle cx="350" cy="60" r="0.7"/>
+      <circle cx="600" cy="40" r="0.9"/><circle cx="750" cy="25" r="0.8"/><circle cx="850" cy="70" r="1.1"/>
+      <circle cx="130" cy="100" r="0.7"/><circle cx="680" cy="80" r="0.8"/><circle cx="500" cy="110" r="0.6"/>
+      <circle cx="280" cy="80" r="0.9"/><circle cx="820" cy="130" r="0.7"/><circle cx="60" cy="150" r="0.8"/>
+    </g>
+
+    <!-- "TRINITY, JULY 16, 1945 — 05:29 MWT" label -->
+    <text x="450" y="490" text-anchor="middle"
+      font-family="'Space Mono', monospace" font-size="11" fill="#5a7a84" opacity="0.6"
+      letter-spacing="0.15em">TRINITY SITE · JORNADA DEL MUERTO · JULY 16, 1945 · 05:29 MWT</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Richard P. Feynman &mdash; His World &mdash; Vol. 2 of 4</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Far Rockaway &middot; Los Alamos &middot; Cornell &middot; Caltech &middot; Cape Canaveral</p>
+    <p class="hero-lead">The places that made him, the people he worked among, and the moments that tested what physics and a physicist could actually do.</p>
+  </div>
+</div>
+
+<div class="band band-red">Trinity Test — July 16, 1945 — Feynman Watched Without Goggles — "The Only Person at the Test With Naked Eyes"</div>
+
+<main>
+
+  <!-- SECTION: FAR ROCKAWAY -->
+  <section id="far-rockaway">
+    <span class="section-label">Origins</span>
+    <h2>Far Rockaway: The Tinkerer's Neighborhood</h2>
+
+    <div class="place-box">
+      <h4>Far Rockaway, Queens, New York &mdash; 1918&ndash;1935</h4>
+      <p>A beachfront community at the southeastern tip of Queens, separated from the mainland by Jamaica Bay. Working-class, Jewish, full of small shops and near-identical houses with garages. The ocean is three blocks east. Manhattan is forty minutes by subway.</p>
+    </div>
+
+    <p>The Feynman family house at 11 New Broadway, Far Rockaway, was the laboratory. Melville Feynman, a uniform manufacturer from Minsk who had taught himself to think scientifically, built his son a chemistry set and encouraged him to question everything. Richard dismantled and rebuilt radios from the age of twelve. He taught himself trigonometry from a library book, having found the notation in his schoolbooks inferior. He devised his own notation for trigonometric functions, which he used throughout high school before discovering, at MIT, that his notation was non-standard and he would have to relearn from the conventional system.</p>
+
+    <p>The neighborhood produced an unusual density of physicists and mathematicians — it was the kind of place where smart, curious, ambitious children of immigrants grew up wanting to prove something about the world. Feynman's closest childhood friend was Koby Bernstein; his physics teacher at Far Rockaway High School, Abram Bader, recognized him immediately and taught him from advanced texts. The school's science culture was serious, competitive, and completely local — no one expected these children to change the world. Richard Feynman changed the world anyway.</p>
+
+    <div class="pull-quote">
+      <blockquote>"My father taught me that when you understand something, you can describe it to someone else. If you can't, you don't really understand it."</blockquote>
+      <cite>&mdash; Feynman, on Melville Feynman's influence</cite>
+    </div>
+  </section>
+
+  <!-- SECTION: MIT & PRINCETON -->
+  <section id="mit-princeton">
+    <span class="section-label">Education</span>
+    <h2>MIT and Princeton: The Making of a Physicist</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">MIT — 1935&ndash;1939</span>
+        <h4>The Putnam Student</h4>
+        <p>Feynman scored so high on the Putnam mathematics competition that the professor initially assumed error. He mastered the standard undergraduate curriculum in two years, spent the remaining two years doing research. Published two papers before graduating.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Princeton — 1939&ndash;1942</span>
+        <h4>Wheeler's Student</h4>
+        <p>John Archibald Wheeler — cosmologist, visionary, coiner of "black hole" — became Feynman's doctoral advisor. Wheeler gave Feynman freedom and the largest possible questions. Their collaboration produced the Wheeler-Feynman absorber theory and the seeds of the path integral.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Tea Party, 1939</span>
+        <h4>The Social Education</h4>
+        <p>At Princeton's welcome tea for new graduate students, Feynman was asked by the Dean's wife whether he wanted cream or lemon in his tea. He said "both." She said "Surely you're joking, Mr. Feynman" — the incident that would title his most famous book, published forty-six years later.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Thesis Defense, 1942</span>
+        <h4>Einstein, Pauli, Von Neumann in the Room</h4>
+        <p>Feynman defended his doctoral dissertation on a new formulation of quantum mechanics. Albert Einstein, Wolfgang Pauli, and John von Neumann attended. It was, by every account, one of the great doctoral defenses in the history of physics. Feynman was twenty-four.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION: LOS ALAMOS -->
+  <section id="los-alamos">
+    <span class="section-label">1943&ndash;1945</span>
+    <h2>Los Alamos: The Bomb, the Safes, and Oppenheimer</h2>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num stat-num-red">1943</span>
+        <span class="stat-label">Feynman arrives Los Alamos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">24</span>
+        <span class="stat-label">His age — youngest senior physicist</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num stat-num-red">1945</span>
+        <span class="stat-label">Trinity test: July 16</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">21</span>
+        <span class="stat-label">Kiloton yield, Trinity device</span>
+      </div>
+    </div>
+
+    <p>The Manhattan Project brought the greatest concentration of scientific talent in human history to a plateau in the mountains of New Mexico — Site Y, Los Alamos. J. Robert Oppenheimer was the scientific director. Hans Bethe ran the Theoretical Division and recruited Feynman. Enrico Fermi was there, having already built the first nuclear reactor under the stands of Stagg Field in Chicago. Niels Bohr worked under the alias "Nicholas Baker." Edward Teller argued constantly about the hydrogen bomb.</p>
+
+    <p>Feynman was the youngest senior scientist and the most conspicuous troublemaker. He cracked safes. He communicated with his wife Arline (in the tuberculosis sanitarium forty miles south in Albuquerque) in elaborate codes, deliberately designed to baffle censors. When the censors complained and told Feynman to stop sending coded letters, he wrote back: "I will agree to this, provided you stop opening and reading my wife's letters — she has been told to put all codes at the beginning, so you can tell immediately that they are codes." The censors did not know how to respond.</p>
+
+    <div class="place-box red-accent">
+      <h4>The Safe-Cracking Campaign</h4>
+      <p>The filing cabinets at Los Alamos contained the secrets of the atomic bomb. Feynman cracked all of them — Oppenheimer's, Bethe's, the security office's. He used a combination of social engineering (most people used memorable dates), observation (people often left their combinations written nearby), and simple mathematics. He left notes inside the cabinets saying he had read specific documents. He kept a log. The security office was furious. Oppenheimer was quietly amused. Feynman was never disciplined.</p>
+    </div>
+
+    <h3>The People Around Him</h3>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Scientific Director</span>
+        <h4>J. Robert Oppenheimer</h4>
+        <p>Feynman admired Oppenheimer — his ability to hold the entire project together, his intelligence, his sensitivity to the scientists around him. Oppenheimer, for his part, wrote glowing letters of recommendation for Feynman, predicting he would be one of the outstanding physicists of his generation.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Theoretical Division Chief</span>
+        <h4>Hans Bethe</h4>
+        <p>Bethe became a father figure and lifelong friend. He recruited Feynman to Los Alamos, recognized his genius immediately, and trusted him with the most demanding calculations. After the war, Bethe brought Feynman to Cornell. He said Feynman was the most brilliant young physicist he had ever met.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Experimentalist</span>
+        <h4>Enrico Fermi</h4>
+        <p>Feynman had a complex relationship with Fermi — intense admiration for his physical intuition, competitive respect. When Feynman presented an early QED result, Fermi interrupted and derived the same result in minutes using a different method. "Oh," said Feynman. "Much simpler."</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Antagonist</span>
+        <h4>Edward Teller</h4>
+        <p>Teller was already obsessed with the hydrogen bomb — the "Super" — while the uranium and plutonium bombs were still being built. Feynman found Teller's single-mindedness exhausting. Their relationship was polite and unclose.</p>
+      </div>
+    </div>
+
+    <h3>Trinity and Its Aftermath</h3>
+    <p>On July 16, 1945, at 5:29 AM Mountain War Time, the first nuclear weapon was detonated at the Trinity test site in the Jornada del Muerto desert, New Mexico. The yield was approximately 21 kilotons. The flash was visible in Albuquerque, 120 miles north. The sound reached Los Alamos forty seconds later as a sustained thunderclap.</p>
+
+    <p>Feynman was among the observers. He reasoned that sitting behind a truck's windshield would filter the dangerous ultraviolet radiation from the fireball while allowing him to see the visible light. He was apparently the only observer at the test who watched it with unprotected eyes. He described the fireball: first white, then yellow, then orange, then the purple-grey shock wave emerging from the base. He watched the entire sequence.</p>
+
+    <p>Three weeks later, Hiroshima. One week after that, Nagasaki. Feynman felt what he described as a "tremendous elation" at the end of the war — and then, walking through New York City, a delayed horror. He saw people building a bridge and thought: <em>"Why are they building that? Don't they know the bomb can destroy it all?"</em> The feeling eventually passed. The moral weight never fully did.</p>
+
+    <div class="pull-quote pull-quote-red">
+      <blockquote>"I had started to think there was no point to anything and I was in a kind of depressive funk for a while after the war."</blockquote>
+      <cite>&mdash; Feynman, on the post-war period</cite>
+    </div>
+  </section>
+
+  <!-- SECTION: CORNELL -->
+  <section id="cornell">
+    <span class="section-label">1945&ndash;1950</span>
+    <h2>Cornell: Depression, the Plate, and the Recovery</h2>
+
+    <div class="place-box">
+      <h4>Cornell University, Ithaca, New York &mdash; 1945&ndash;1950</h4>
+      <p>Hans Bethe arranged a faculty position for Feynman at Cornell before the war was over. Feynman arrived in fall 1945 unable to work. The depression lasted almost two years. He played drums, visited bars, did not publish. Then the plate wobbled.</p>
+    </div>
+
+    <p>The Cornell period is one of the most important and least discussed episodes in Feynman's life. He was twenty-seven, the most promising young physicist in America, and he could not do physics. The war had hollowed something out of him. He sat at his desk and thought: <em>I already know everything I'm going to discover. What's the point?</em> He believed this. He was wrong.</p>
+
+    <p>The recovery began in the cafeteria. A student threw a plate into the air; it wobbled. Feynman watched the wobble — the Cornell medallion spinning faster than the plate tilted. He worked out the ratio: for small wobbles, it was 2:1. He told Hans Bethe. Bethe asked what it was for. Feynman said: nothing — it was just interesting. But the calculation had restarted something. He began playing again with the electron's electromagnetic self-interaction. The play led to QED. The wobble led to the Nobel Prize.</p>
+  </section>
+
+  <!-- SECTION: CALTECH -->
+  <section id="caltech">
+    <span class="section-label">1950&ndash;1988</span>
+    <h2>Caltech: His Permanent Home</h2>
+
+    <div class="place-box">
+      <h4>California Institute of Technology, Pasadena, California &mdash; 1950&ndash;1988</h4>
+      <p>Feynman moved to Caltech in 1950, drawn by the sunshine, the culture, the proximity to the Pacific, and an offer he found more interesting than Princeton's. He would never leave. He worked there for thirty-eight years.</p>
+    </div>
+
+    <p>Pasadena in the 1950s and 60s was a remarkable place: aerospace, JPL, earthquake science, computing, Caltech itself. Feynman fit it perfectly. He was outdoors constantly, drove to the beach on weekends, played bongos at jazz clubs on Colorado Boulevard, frequented a topless bar called "Gianonni's" (he claimed — apparently sincerely — that it was the only place quiet enough to think). He painted under the pseudonym "Ofey" and sold work at exhibitions. He kept an office at Caltech that was covered in equations and Feynman diagrams and, in the corner, bongo drums.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Pasadena</span>
+        <h4>The Topless Bar</h4>
+        <p>Feynman became notorious for working at a topless bar in Pasadena. His explanation: it was the only public place where people left him alone. He worked on physics while the performers danced. The physics was genuine. The explanation was also genuine.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Brazil Sabbatical, 1951</span>
+        <h4>Rio and the Samba Schools</h4>
+        <p>Feynman spent a year in Brazil, teaching physics in Portuguese (he learned the language) and playing frigideira with samba schools. He found Brazilian physics education deeply misguided — students could recite formulas but did not know what they meant. He wrote a blistering critique.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Nobel Prize, 1965</span>
+        <h4>The Prize He Almost Declined</h4>
+        <p>When told he had won the Nobel Prize, Feynman's first instinct was to refuse it. He hated ceremonies, detested the social machinery around prizes, and thought the attention would be disruptive. His wife Gweneth persuaded him that refusing would create even more disturbance than accepting.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Gweneth Howarth</span>
+        <h4>His Lasting Partnership</h4>
+        <p>He met Gweneth Howarth in Geneva in 1958 — she was working as an au pair. They married in 1960. Their son Carl and daughter Michelle grew up in Pasadena. Gweneth, by every account of those who knew them, gave Feynman the stability he had never had and recognized his greatness without being diminished by it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CHALLENGER -->
+  <section id="challenger">
+    <span class="section-label">January 1986</span>
+    <h2>Challenger: The Outsider Who Found the Truth</h2>
+
+    <p>On January 28, 1986, Space Shuttle Challenger disintegrated 73 seconds after launch. All seven crew members died — including schoolteacher Christa McAuliffe, who was to have taught lessons from orbit. The Rogers Commission was convened to investigate. Feynman was asked to serve. He was sixty-seven and already battling kidney cancer. He agreed reluctantly.</p>
+
+    <p>Feynman's approach to the investigation was characteristically non-institutional. While the Commission held formal hearings, he called NASA engineers directly, visited contractors, and read internal memos that had not been presented to the Commission. An engineer named Boisjoly had warned before the launch that the O-ring seals in the solid rocket boosters became dangerously inelastic at low temperatures. The warning had been overridden. The launch had occurred on the coldest morning in Cape Canaveral history — 29°F.</p>
+
+    <div class="pull-quote pull-quote-red">
+      <blockquote>"I believe this has some significance for our problem."</blockquote>
+      <cite>&mdash; Feynman, setting a clamped O-ring sample on the Rogers Commission table after removing it from ice water, February 11, 1986</cite>
+    </div>
+
+    <p>The demonstration was six seconds long. It was the clearest scientific communication of a complex finding in the history of public inquiries. Feynman had submerged a piece of O-ring material in the ice water in his glass, squeezed it with a clamp, and held it up for the cameras. When he released the clamp, the material did not recover its original shape. At 29°F, the O-rings would not seal. The hot combustion gases had blown through the gap and ignited the external fuel tank.</p>
+
+    <p>NASA management had known about O-ring concerns for at least two years. Internal documents showed engineers had repeatedly flagged the temperature dependence. The decision to launch had been made by managers who dismissed or overrode these concerns. Feynman documented this pattern of institutional decision-making — the gap between the claimed safety probability (1 in 100,000) and the actual engineering estimate (1 in 100). His personal appendix to the Rogers Commission Report, nearly suppressed, was blunt about what this meant for NASA's safety culture.</p>
+
+    <p>The appendix concluded with the sentence that has since been quoted in every discussion of scientific integrity in public life: <em>"For a successful technology, reality must take precedence over public relations, for Nature cannot be fooled."</em></p>
+  </section>
+
+  <!-- SECTION: FINAL DAYS -->
+  <section id="final">
+    <span class="section-label">1987&ndash;1988</span>
+    <h2>The Final Years</h2>
+
+    <p>After the Challenger investigation, Feynman's health deteriorated. He had undergone surgery in 1986 to remove a large cancerous kidney — the first of the two cancers. The second, myxoid chondrosarcoma, is an extremely rare soft-tissue cancer that occurs in fewer than 1 in a million people. Feynman had both simultaneously. His oncologists were baffled. He was not.</p>
+
+    <p>He continued working at Caltech through 1987, attending seminars, working on physics, living with Gweneth and their children. In January 1988 his second kidney began to fail. He was offered dialysis, which might have extended his life by months. He declined. He said he had lived well, done his work, and preferred not to die on a machine.</p>
+
+    <p>On February 15, 1988, at UCLA Medical Center, Richard Feynman died of kidney failure. He was sixty-nine. The last documented words from his medical record: <em>"I'd hate to die twice. It's so boring."</em></p>
+
+    <p>His blackboard at Caltech, cleaned and preserved, bore two sentences written in his hand — found after his death, apparently left there for a long time: <strong>"What I cannot create, I do not understand."</strong> And, in smaller letters below: <em>"Know how to solve every problem that has been solved."</em></p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    &nbsp;|&nbsp; Vol. 2 of 4 &mdash; Richard Feynman &mdash; His World &nbsp;|&nbsp;
+    Trinity yield figure sourced from declassified US government records.
+    <br>
+    <a href="0-who.html">Vol. 0</a> &nbsp;&middot;&nbsp;
+    <a href="1-qed.html">Vol. 1</a> &nbsp;&middot;&nbsp;
+    <a href="2-world.html">Vol. 2</a> &nbsp;&middot;&nbsp;
+    <a href="3-legacy.html">Vol. 3</a>
+  </div>
+</footer>
+
+</body>
+</html>

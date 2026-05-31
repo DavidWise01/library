@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feynman — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04040c;
+    --cyan: #06b6d4;
+    --red: #ef4444;
+    --text: #d4e8ed;
+    --muted: #5a7a84;
+    --border: #0e2029;
+    --card-bg: #080818;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,4,12,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--cyan);
+    border-color: var(--cyan);
+  }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #020d14 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.72;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(6,182,212,0.4);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--cyan);
+    color: #04040c;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--cyan); font-style: italic; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--cyan);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote-red { border-left-color: var(--red); }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-num-red { color: var(--red); }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+
+  /* PRECISION TARGET */
+  .precision-target {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0;
+  }
+
+  /* INFLUENCE MAP */
+  .influence-tree {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* FEYNMAN TECHNIQUE BOX */
+  .technique-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--cyan);
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .technique-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-bottom: 1rem;
+  }
+  .technique-step {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: start;
+  }
+  .step-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--cyan);
+    line-height: 1;
+    padding-top: 0.2rem;
+  }
+  .step-text {
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  .step-text strong { color: #fff; }
+
+  /* QUOTE WALL */
+  .quote-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .quote-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--cyan);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .quote-item:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .quote-item.red-top { border-top-color: var(--red); }
+  .quote-item blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .quote-item cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cyan); text-decoration: none; }
+  .colophon a:hover { color: var(--red); }
+
+  /* HERO SVG ANIMATION: QED precision target with 12 decimal rings */
+  @keyframes ringFade {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.45; }
+  }
+  @keyframes sweepRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes centerPulse {
+    0%, 100% { r: 12; opacity: 1; }
+    50% { r: 16; opacity: 0.7; }
+  }
+  @keyframes digitFloat {
+    0% { opacity: 0; transform: translateY(10px); }
+    15% { opacity: 1; transform: translateY(0); }
+    85% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Feynman</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-qed.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: QED precision target with 12 decimal rings -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="targetGlow" cx="50%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#04040c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="targetBlur">
+        <feGaussianBlur stdDeviation="2"/>
+      </filter>
+      <filter id="glowFilter">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <rect width="900" height="520" fill="url(#targetGlow)"/>
+
+    <!-- 12 precision rings, each labeled with a decimal place -->
+    <!-- Outer rings (faintest) -->
+    <g transform="translate(450, 265)" filter="url(#targetBlur)">
+      <!-- Ring 12 — outermost -->
+      <circle cx="0" cy="0" r="230" fill="none" stroke="#06b6d4" stroke-width="0.6" opacity="0.12">
+        <animate attributeName="opacity" dur="7s" repeatCount="indefinite" begin="0s"
+          values="0.08;0.22;0.08" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 11 -->
+      <circle cx="0" cy="0" r="208" fill="none" stroke="#06b6d4" stroke-width="0.6" opacity="0.14">
+        <animate attributeName="opacity" dur="6.5s" repeatCount="indefinite" begin="0.3s"
+          values="0.1;0.25;0.1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 10 -->
+      <circle cx="0" cy="0" r="186" fill="none" stroke="#06b6d4" stroke-width="0.7" opacity="0.18">
+        <animate attributeName="opacity" dur="6s" repeatCount="indefinite" begin="0.6s"
+          values="0.12;0.28;0.12" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 9 -->
+      <circle cx="0" cy="0" r="164" fill="none" stroke="#06b6d4" stroke-width="0.8" opacity="0.22">
+        <animate attributeName="opacity" dur="5.5s" repeatCount="indefinite" begin="0.9s"
+          values="0.15;0.32;0.15" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 8 -->
+      <circle cx="0" cy="0" r="142" fill="none" stroke="#06b6d4" stroke-width="0.9" opacity="0.27">
+        <animate attributeName="opacity" dur="5s" repeatCount="indefinite" begin="1.2s"
+          values="0.18;0.38;0.18" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 7 -->
+      <circle cx="0" cy="0" r="120" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.33">
+        <animate attributeName="opacity" dur="4.5s" repeatCount="indefinite" begin="1.5s"
+          values="0.22;0.45;0.22" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 6 -->
+      <circle cx="0" cy="0" r="100" fill="none" stroke="#06b6d4" stroke-width="1.1" opacity="0.4">
+        <animate attributeName="opacity" dur="4s" repeatCount="indefinite" begin="1.8s"
+          values="0.28;0.52;0.28" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 5 -->
+      <circle cx="0" cy="0" r="82" fill="none" stroke="#06b6d4" stroke-width="1.2" opacity="0.48">
+        <animate attributeName="opacity" dur="3.5s" repeatCount="indefinite" begin="2.1s"
+          values="0.35;0.6;0.35" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 4 -->
+      <circle cx="0" cy="0" r="65" fill="none" stroke="#06b6d4" stroke-width="1.4" opacity="0.55">
+        <animate attributeName="opacity" dur="3s" repeatCount="indefinite" begin="2.4s"
+          values="0.4;0.68;0.4" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 3 -->
+      <circle cx="0" cy="0" r="50" fill="none" stroke="#06b6d4" stroke-width="1.6" opacity="0.65">
+        <animate attributeName="opacity" dur="2.5s" repeatCount="indefinite" begin="2.7s"
+          values="0.5;0.78;0.5" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 2 -->
+      <circle cx="0" cy="0" r="36" fill="none" stroke="#06b6d4" stroke-width="1.8" opacity="0.75">
+        <animate attributeName="opacity" dur="2s" repeatCount="indefinite" begin="3s"
+          values="0.6;0.88;0.6" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+      <!-- Ring 1 — innermost -->
+      <circle cx="0" cy="0" r="24" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.85">
+        <animate attributeName="opacity" dur="1.6s" repeatCount="indefinite"
+          values="0.7;1;0.7" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </circle>
+    </g>
+
+    <!-- Rotating crosshair (measurement sweep) -->
+    <g transform="translate(450, 265)" filter="url(#glowFilter)">
+      <g style="transform-origin:0 0; animation: sweepRotate 12s linear infinite;">
+        <line x1="0" y1="-230" x2="0" y2="230" stroke="#06b6d4" stroke-width="0.4" opacity="0.18"/>
+        <line x1="-230" y1="0" x2="230" y2="0" stroke="#06b6d4" stroke-width="0.4" opacity="0.18"/>
+        <!-- Sweep arc highlight -->
+        <path d="M0,-230 A230,230 0 0,1 230,0" stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.3"/>
+      </g>
+    </g>
+
+    <!-- Center bullseye -->
+    <g transform="translate(450, 265)" filter="url(#glowFilter)">
+      <circle cx="0" cy="0" r="12" fill="#ef4444" opacity="0.9">
+        <animate attributeName="r" dur="1.8s" repeatCount="indefinite"
+          values="10;16;10" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+        <animate attributeName="opacity" dur="1.8s" repeatCount="indefinite"
+          values="0.9;0.6;0.9"/>
+      </circle>
+      <circle cx="0" cy="0" r="4" fill="#fff" opacity="0.9"/>
+    </g>
+
+    <!-- 12 decimal digit labels around the rings -->
+    <g font-family="'Space Mono', monospace" font-size="10" fill="#06b6d4" opacity="0.55">
+      <!-- Place these at the right side of each ring -->
+      <text x="688" y="261">1.00115965218128</text>
+      <text x="120" y="261" font-size="9" fill="#5a7a84">←  12 decimal places  →</text>
+    </g>
+
+    <!-- Measurement annotation -->
+    <text x="450" y="510" text-anchor="middle"
+      font-family="'Space Mono', monospace" font-size="10" fill="#5a7a84" letter-spacing="0.12em">
+      g/2 = 1.00115965218128(18) — QED prediction matches experiment to 12 decimal places
+    </text>
+
+    <!-- Decimal ring labels (small, outside each ring) -->
+    <g font-family="'Space Mono', monospace" font-size="8.5" fill="#5a7a84" transform="translate(450,265)">
+      <text x="233" y="-3">·000000000001</text>
+      <text x="211" y="-3">·00000000001</text>
+      <text x="189" y="-3">·0000000001</text>
+      <text x="167" y="-3">·000000001</text>
+      <text x="145" y="-3">·00000001</text>
+      <text x="123" y="-3">·0000001</text>
+      <text x="103" y="-3">·000001</text>
+      <text x="85" y="-3">·00001</text>
+      <text x="68" y="-3">·0001</text>
+      <text x="53" y="-3">·001</text>
+      <text x="39" y="-3">·01</text>
+      <text x="26" y="-3" fill="#ef4444">·1</text>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Richard P. Feynman &mdash; The Legacy &mdash; Vol. 4 of 4</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">QED &middot; Standard Model &middot; Quantum Computing &middot; The Lectures &middot; The Technique</p>
+    <p class="hero-lead">He died in 1988. Everything he built is still running — and most of it has become civilization.</p>
+  </div>
+</div>
+
+<div class="band">QED — Still the Most Precise Theory in Human History &middot; Every Quantum Field Theory Built in His Framework</div>
+
+<main>
+
+  <!-- SECTION: QED LEGACY -->
+  <section id="qed-legacy">
+    <span class="section-label">The Theoretical Foundation</span>
+    <h2>QED and the Architecture of Modern Physics</h2>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1948</span>
+        <span class="stat-label">QED formulated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Decimal places of precision</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Fundamental forces in Standard Model</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num stat-num-red">∞</span>
+        <span class="stat-label">Feynman diagrams drawn since 1948</span>
+      </div>
+    </div>
+
+    <p>Quantum Electrodynamics is not a piece of the Standard Model. It is the <em>template</em> on which the Standard Model was built. When Glashow, Weinberg, and Salam constructed the electroweak theory in the 1960s, they built it as a QFT using Feynman's methods. When Gross, Politzer, and Wilczek developed Quantum Chromodynamics (QCD) — the theory of the strong nuclear force — they built it using Feynman diagrams, path integrals, and renormalization group techniques derived from Feynman's QED framework. The Higgs mechanism, the W and Z bosons, the gluon, the quarks — all described by theories whose mathematical language was established by Feynman in 1948.</p>
+
+    <p>The precision of QED remains unmatched. The anomalous magnetic moment of the electron (g-2) is predicted by QED to be <strong>1.00115965218128</strong> and has been measured experimentally to agree with this prediction to twelve significant figures. This is equivalent to predicting the distance from Earth to the Moon to within the width of a human hair. No other theory in science has ever been confirmed to this precision. No other theory even comes close.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It is the jewel of physics — our proudest possession."</blockquote>
+      <cite>&mdash; Richard Feynman, on QED, in "QED: The Strange Theory of Light and Matter," 1985</cite>
+    </div>
+
+    <p>String theory, loop quantum gravity, and every speculative framework in modern theoretical physics is attempting to do what QED already did: produce a mathematically consistent, experimentally testable theory of a fundamental interaction. QED succeeded. Everything since has been working in its shadow.</p>
+  </section>
+
+  <!-- SECTION: FEYNMAN DIAGRAMS LEGACY -->
+  <section id="diagrams-legacy">
+    <span class="section-label">Visual Language of Physics</span>
+    <h2>Feynman Diagrams: Still the Universal Language</h2>
+
+    <p>In 1948, Feynman invented a notation. By 1955, it was used by every particle physicist in the world. By 1975, it had spread to condensed matter physics, statistical mechanics, and nuclear physics. Today it is used in quantum chemistry, quantum gravity research, financial mathematics, and machine learning. The Feynman diagram is the most universally adopted scientific notation since decimal numerals.</p>
+
+    <p>Every diagram drawn in particle physics — every diagram in every paper at CERN, Fermilab, SLAC, KEK, DESY, every diagram in every textbook on quantum field theory — is a descendant of Feynman's 1948 invention. When physicists at CERN discovered the Higgs boson in 2012, the processes they were calculating and the analyses they were performing were organized around Feynman diagrams. When gravitational wave physicists calculate the orbital inspiral of binary black holes to post-Newtonian order, they use an effective field theory organized around Feynman-diagram-like structures.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Particle Physics</span>
+        <h4>CERN and the LHC</h4>
+        <p>Every hard-scattering cross-section calculated at the Large Hadron Collider uses Feynman diagrams. The Higgs boson was discovered in 2012; its expected production rates and decay modes were calculated using thousands of Feynman diagrams at next-to-next-to-leading order in perturbation theory.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Condensed Matter</span>
+        <h4>Many-Body Physics</h4>
+        <p>Feynman diagrams organize perturbation theory in condensed matter systems — superconductors, superfluids, Fermi liquids. The BCS theory of superconductivity and the theory of the fractional quantum Hall effect both use diagrammatic methods derived from Feynman's formalism.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Quantum Gravity</span>
+        <h4>String Theory and Beyond</h4>
+        <p>In string theory, Feynman diagrams are replaced by Feynman string diagrams — two-dimensional surfaces instead of one-dimensional lines — but the organizing principle is identical. The diagrams Feynman invented in 1948 are the conceptual ancestor of every perturbative calculation in quantum gravity.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Unexpected Domains</span>
+        <h4>Finance and Machine Learning</h4>
+        <p>Diagrammatic techniques related to Feynman diagrams appear in stochastic processes, perturbative expansions in financial mathematics, and even in the analysis of neural network training dynamics. The formalism is more general than its origin.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION: PATH INTEGRAL LEGACY -->
+  <section id="path-integral-legacy">
+    <span class="section-label">Mathematical Framework</span>
+    <h2>Path Integrals Throughout Modern Physics</h2>
+
+    <p>The path integral formulation of quantum mechanics that Feynman developed in his 1942 thesis and 1948 paper has become one of the dominant mathematical languages of theoretical physics. It appears in contexts Feynman never specifically addressed:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">String Theory</span>
+        <h4>Polyakov Path Integral</h4>
+        <p>Alexander Polyakov's 1981 formulation of string theory as a path integral over two-dimensional worldsheet metrics is the direct descendant of Feynman's particle path integral. String perturbation theory is organized as a sum over topologies of the worldsheet — precisely Feynman's "sum over histories" applied to strings instead of particles.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Statistical Mechanics</span>
+        <h4>Partition Functions</h4>
+        <p>The Euclidean path integral (Feynman's path integral with imaginary time) is mathematically identical to the partition function in statistical mechanics. This correspondence, discovered in the 1950s and 60s, unified quantum field theory with classical statistical mechanics in a single mathematical framework.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Quantum Gravity</span>
+        <h4>Sum over Geometries</h4>
+        <p>The path integral approach to quantum gravity — summing over all possible spacetime geometries — is the most natural generalization of Feynman's formalism. The Hartle-Hawking no-boundary proposal, Causal Dynamical Triangulations, and the Regge calculus approaches all use path-integral-type sums.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finance</span>
+        <h4>Black-Scholes and Beyond</h4>
+        <p>The path integral over all possible price trajectories of a financial instrument is mathematically equivalent to Feynman's sum over particle paths. Physicists who moved into finance in the 1990s imported the formalism directly, producing path-integral derivations of option pricing formulas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: QUANTUM COMPUTING LEGACY -->
+  <section id="quantum-computing-legacy">
+    <span class="section-label">The Field He Founded</span>
+    <h2>Quantum Computing: Feynman's Prophecy Realized</h2>
+
+    <p>In 1981, at a conference at MIT called "Physics of Computation," Feynman gave a lecture titled "Simulating Physics with Computers." He argued that classical computers cannot efficiently simulate quantum mechanical systems — the Hilbert space of a quantum system grows exponentially with the number of particles, making exact simulation intractable. His conclusion: to simulate quantum physics, you need a computer that itself operates on quantum principles.</p>
+
+    <p>This lecture is the founding document of quantum computing. The field that Feynman described in 1981 now employs tens of thousands of researchers worldwide and has attracted hundreds of billions of dollars in investment from governments and private companies. IBM, Google, IonQ, Rigetti, D-Wave, Quantinuum, Microsoft, Amazon, and dozens of other organizations are building quantum computers. China has made quantum computing a national strategic priority.</p>
+
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1981</span>
+        <span class="stat-label">Feynman proposes quantum computing</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1000+</span>
+        <span class="stat-label">Physical qubits, leading systems (2025)</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num stat-num-red">$35B</span>
+        <span class="stat-label">Global quantum investment 2023–2024</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">44</span>
+        <span class="stat-label">Years from proposal to major industry</span>
+      </div>
+    </div>
+
+    <p>Google's 2019 "quantum supremacy" demonstration — a 53-qubit processor performing a specific calculation that would take a classical supercomputer 10,000 years — was a direct realization of what Feynman had described. The task was artificial, the claim was disputed, but the proof of principle was real: a quantum system had performed a computation that a classical system could not practically replicate.</p>
+
+    <p>Feynman's 1959 lecture "There's Plenty of Room at the Bottom" — proposing nanotechnology and atomic-scale machines — has fared equally well. The atomic force microscope (1986), the scanning tunneling microscope (Nobel Prize 1986), MEMS devices, molecular motors, DNA nanotechnology: each is a realization of what Feynman described as possible. The Nobel Prize in Chemistry 2016 was awarded for the design and synthesis of molecular machines — devices Feynman had proposed sixty years earlier.</p>
+  </section>
+
+  <!-- SECTION: THE LECTURES -->
+  <section id="lectures-legacy">
+    <span class="section-label">The Greatest Textbook</span>
+    <h2>The Feynman Lectures: Still the Best Introduction to Physics</h2>
+
+    <p>The Feynman Lectures on Physics, published in 1963–1965, are free online at <strong>feynmanlectures.caltech.edu</strong>. They have been in continuous print for sixty years. They are assigned in physics curricula at universities worldwide. They are read by people who have no physics training and want to understand what the universe is. They are read by Nobel laureates who want to understand something they thought they already knew.</p>
+
+    <p>What makes the Lectures unique is not the physics — it is all standard — but the <em>mode of explanation</em>. Feynman does not present physics as a collection of formulas to be memorized. He presents it as a system of ideas, each connected to the others, each arising from a physical picture of how the world behaves. Reading the Lectures is like listening to someone who actually understands the material explain it to you personally — and that person happens to be the greatest physics teacher in the history of the subject.</p>
+
+    <div class="pull-quote">
+      <blockquote>"If you think you understand quantum mechanics, you don't understand quantum mechanics."</blockquote>
+      <cite>&mdash; Attributed to Richard Feynman — the most widely quoted statement in the history of physics pedagogy</cite>
+    </div>
+
+    <p>This quotation has been cited in tens of thousands of papers, lectures, and books. It encapsulates a genuine epistemological claim: quantum mechanics is mathematically precise and experimentally confirmed, but its conceptual interpretation — what it means for a particle to be in a superposition, whether the wave function is real, what "measurement" is — remains genuinely unsettled. Feynman meant it. He did not believe anyone, including himself, had a satisfying conceptual picture of what quantum mechanics was describing.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION: THE FEYNMAN TECHNIQUE -->
+  <section id="feynman-technique">
+    <span class="section-label">Pedagogy</span>
+    <h2>The Feynman Technique: Teaching as Understanding</h2>
+
+    <div class="technique-box">
+      <h4>The Feynman Learning Method — Four Steps</h4>
+      <div class="technique-step">
+        <span class="step-num">1</span>
+        <span class="step-text"><strong>Choose the concept.</strong> Pick anything — quantum mechanics, the French Revolution, compound interest. Write the concept name at the top of a blank page.</span>
+      </div>
+      <div class="technique-step">
+        <span class="step-num">2</span>
+        <span class="step-text"><strong>Explain it in plain language.</strong> Write an explanation as if you were teaching it to someone with no prior knowledge. Use simple words. Do not use jargon. If you cannot do this, you do not understand it.</span>
+      </div>
+      <div class="technique-step">
+        <span class="step-num">3</span>
+        <span class="step-text"><strong>Find the gaps.</strong> Where you faltered, simplified too much, or had to use a technical term you cannot explain — that is where your understanding is incomplete. Go back to the source material and fill those gaps.</span>
+      </div>
+      <div class="technique-step">
+        <span class="step-num">4</span>
+        <span class="step-text"><strong>Simplify and use analogies.</strong> Once you can explain it plainly, refine the explanation. Use concrete analogies. If the analogy breaks down, examine where and why — the breakdown tells you something about the limits of the concept.</span>
+      </div>
+    </div>
+
+    <p>Feynman did not invent this method in a paper or lecture. He <em>was</em> this method. His approach to any new subject was to find the simplest possible explanation — not because simple was easier, but because simplicity was the test of understanding. He would say: "If you can't explain it simply, you don't understand it well enough." The formulation has been attributed to him in so many forms that the exact wording is disputed, but the idea is unmistakably his.</p>
+
+    <p>The Feynman Technique is now cited in educational psychology literature, learning science research, and popular self-help literature. It is one of the most widely taught study methods in the world. The man who developed it was trying to do physics. The method was a byproduct.</p>
+  </section>
+
+  <!-- SECTION: CHALLENGER LEGACY -->
+  <section id="challenger-legacy">
+    <span class="section-label">Scientific Communication</span>
+    <h2>The O-Ring Demonstration: A Masterclass</h2>
+
+    <p>Feynman's six-second O-ring demonstration before the Rogers Commission on February 11, 1986, is studied in science communication courses, public policy courses, and engineering ethics courses worldwide. It is the canonical example of how a complex technical finding can be communicated to a non-expert audience without sacrificing accuracy.</p>
+
+    <p>The elements that made it effective: physical demonstration (not verbal description), everyday materials (ice water and a clamp, not technical equipment), direct connection between evidence and conclusion (the material didn't recover — here is why the seal failed), and Feynman's understatement ("I believe this has some significance for our problem"). The demonstration was complete in six seconds and fully resolved the central technical question of the investigation.</p>
+
+    <p>His personal appendix to the Rogers Commission Report — nearly suppressed by NASA management — extended the demonstration into a broader critique of institutional decision-making. He showed that NASA's claimed probability of catastrophic failure (1 in 100,000 per flight) was not based on engineering analysis but was reverse-engineered from management decisions about acceptable risk. The actual engineering estimate was approximately 1 in 100. The difference represents a systematic failure of scientific integrity in an institution that claimed to operate on scientific principles.</p>
+
+    <div class="pull-quote pull-quote-red">
+      <blockquote>"For a successful technology, reality must take precedence over public relations, for Nature cannot be fooled."</blockquote>
+      <cite>&mdash; Feynman's personal appendix, Rogers Commission Report on the Space Shuttle Challenger, 1986</cite>
+    </div>
+
+    <p>This sentence is now one of the most quoted statements about the relationship between science and institutional power. It has appeared in engineering ethics textbooks, government reform documents, scientific integrity guidelines, and public debate about climate science, vaccine safety, and technological risk. Feynman wrote it once, in a footnote, for a government report that NASA did not want to include. It has outlasted everything else the Rogers Commission produced.</p>
+  </section>
+
+  <!-- SECTION: QUOTE WALL -->
+  <section id="quotes">
+    <span class="section-label">In His Own Words</span>
+    <h2>The Sayings That Survived Him</h2>
+
+    <div class="quote-wall">
+      <div class="quote-item">
+        <blockquote>"What I cannot create, I do not understand."</blockquote>
+        <cite>Written on Feynman's Caltech blackboard, found February 1988</cite>
+      </div>
+      <div class="quote-item red-top">
+        <blockquote>"I would rather have questions that can't be answered than answers that can't be questioned."</blockquote>
+        <cite>Widely attributed; source unverified but consistent with documented views</cite>
+      </div>
+      <div class="quote-item">
+        <blockquote>"Study hard what interests you the most in the most undisciplined, irreverent and original manner possible."</blockquote>
+        <cite>Letter to a student, 1950s</cite>
+      </div>
+      <div class="quote-item red-top">
+        <blockquote>"If you think you understand quantum mechanics, you don't understand quantum mechanics."</blockquote>
+        <cite>Attributed; consistent with documented statements on QM interpretation</cite>
+      </div>
+      <div class="quote-item">
+        <blockquote>"The first principle is that you must not fool yourself — and you are the easiest person to fool."</blockquote>
+        <cite>Caltech commencement address, 1974</cite>
+      </div>
+      <div class="quote-item red-top">
+        <blockquote>"Nature uses only the longest threads to weave her patterns, so each small piece of her fabric reveals the organization of the entire tapestry."</blockquote>
+        <cite>The Character of Physical Law, 1965</cite>
+      </div>
+      <div class="quote-item">
+        <blockquote>"I was born not knowing and have had only a little time to change that here and there."</blockquote>
+        <cite>Feynman, on his own ignorance</cite>
+      </div>
+      <div class="quote-item red-top">
+        <blockquote>"Physics is like sex: sure, it may give some practical results, but that's not why we do it."</blockquote>
+        <cite>Widely attributed; source in lecture recordings</cite>
+      </div>
+      <div class="quote-item">
+        <blockquote>"There is a computer disease that anybody who works with computers knows about. It's a very serious disease and it interferes completely with the work. The trouble with computers is that you 'play' with them!"</blockquote>
+        <cite>Feynman, on the distraction of computing tools</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: THE MEASURE OF THE MAN -->
+  <section id="measure">
+    <span class="section-label">Final Assessment</span>
+    <h2>What Remains</h2>
+
+    <p>Richard Feynman died in 1988. The things he created are:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Still Running</span>
+        <h4>Quantum Electrodynamics</h4>
+        <p>The most precisely confirmed theory in science. Used every day by physicists at every particle accelerator on Earth. The theoretical foundation of chemistry, materials science, optics, and electronics. Unchanged since 1948.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Universal Language</span>
+        <h4>Feynman Diagrams</h4>
+        <p>Drawn billions of times since 1948. Used in particle physics, condensed matter, quantum gravity, and statistical mechanics. The most successful scientific notation since Newton's calculus.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Major Industry</span>
+        <h4>Quantum Computing</h4>
+        <p>The field he described in 1981 is now a global industry with hundreds of billions in investment. IBM, Google, and dozens of others are building what he described. Commercial quantum advantage is approaching.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Free Online</span>
+        <h4>The Feynman Lectures</h4>
+        <p>Three volumes. Freely available at feynmanlectures.caltech.edu. Read by millions annually. Still the finest introduction to physics ever written. Still the book physicists turn to when they want to understand something.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Mathematical Language</span>
+        <h4>Path Integrals</h4>
+        <p>Used throughout modern physics — quantum field theory, string theory, statistical mechanics, quantum gravity. One of the most powerful mathematical tools in theoretical physics, invented in a Princeton thesis in 1942.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Living Method</span>
+        <h4>The Feynman Technique</h4>
+        <p>Cited in educational psychology literature and taught in schools worldwide. The simplest and most powerful learning method ever described. He never wrote it down explicitly — it was just how he worked.</p>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <blockquote>"Feynman was not a great physicist in the way Einstein was great, by standing apart from everyone and seeing what no one else could see. He was great in a more human way — by being more intensely, more joyfully, more completely alive to physics than anyone else who has ever lived."</blockquote>
+      <cite>&mdash; Freeman Dyson, who first proved the mathematical equivalence of Feynman's QED to Schwinger's and Tomonaga's formulations</cite>
+    </div>
+
+    <p>He was born in a beachfront neighborhood in Queens, the son of a uniform salesman who taught him to question everything. He died in a hospital in Los Angeles, having declined to be kept alive by machine, with the equation he most wanted to understand still unresolved on the blackboard of his Caltech office. Between those two moments, he rebuilt the human understanding of light and matter, invented the visual language of modern physics, proposed two fields that became industries, wrote the greatest physics textbook in the history of science, and solved a NASA engineering failure in six seconds with a glass of ice water.</p>
+
+    <p>The blackboard said: <em>"What I cannot create, I do not understand."</em></p>
+
+    <p>He understood more than almost anyone. He created even more.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    &nbsp;|&nbsp; Vol. 3 of 4 &mdash; Richard Feynman &mdash; The Legacy &nbsp;|&nbsp;
+    g/2 value sourced from CODATA 2022; investment figures from McKinsey Global Institute 2024.
+    <br>
+    <a href="0-who.html">Vol. 0</a> &nbsp;&middot;&nbsp;
+    <a href="1-qed.html">Vol. 1</a> &nbsp;&middot;&nbsp;
+    <a href="2-world.html">Vol. 2</a> &nbsp;&middot;&nbsp;
+    <a href="3-legacy.html">Vol. 3</a>
+  </div>
+</footer>
+
+</body>
+</html>

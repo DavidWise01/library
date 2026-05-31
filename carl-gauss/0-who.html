@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carl Friedrich Gauss — Vol. 0: Who He Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #060a08;
+      --paper-mid: #0c1410;
+      --paper-light: #122018;
+      --forest: #166534;
+      --forest-dim: #0f4a25;
+      --forest-glow: rgba(22,101,52,0.18);
+      --cream: #d4c89a;
+      --cream-dim: #b0a47a;
+      --cream-glow: rgba(212,200,154,0.12);
+      --text: #e6dfc8;
+      --text-dim: #9a9278;
+      --text-faint: #3a4035;
+      --border: rgba(22,101,52,0.22);
+      --border-cream: rgba(212,200,154,0.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(6,10,8,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 2rem;
+      display: flex; gap: 0; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+    }
+    nav .series-label {
+      color: var(--text-faint);
+      margin-right: auto;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.62rem;
+    }
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      padding: 0.3rem 0.9rem;
+      border-left: 1px solid var(--border);
+    }
+    nav a:hover { color: var(--cream); }
+    nav a.active { color: var(--forest); color: #4ade80; }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 55%, #081408 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 72% 50%, rgba(22,101,52,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--forest);
+      color: #4ade80;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    h1 .surname {
+      display: block;
+      color: var(--cream);
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.48em;
+      color: #4ade80;
+      letter-spacing: 0.14em;
+      margin-top: 0.5rem;
+    }
+    .masthead-lede {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.6rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--forest);
+      padding-left: 1.2rem;
+      line-height: 1.65;
+    }
+    .masthead-lede b { color: var(--cream); font-style: normal; font-weight: 500; }
+
+    .masthead-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: var(--cream);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    /* ── KICK & BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      color: #4ade80;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .band {
+      display: inline-block;
+      background: var(--forest);
+      color: var(--cream);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25em 0.8em;
+      margin-right: 0.4rem;
+      margin-bottom: 0.35rem;
+      vertical-align: middle;
+    }
+    .band-cream {
+      background: var(--cream-dim);
+      color: var(--paper);
+    }
+
+    /* ── CARD GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .card {
+      border: 1px solid var(--border);
+      background: var(--paper-mid);
+      padding: 1.2rem 1.3rem 1.3rem;
+      position: relative;
+      transition: transform 0.13s ease, box-shadow 0.13s ease;
+    }
+    .card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 5px 5px 0 var(--forest);
+    }
+    .card-num {
+      position: absolute;
+      top: 0.7rem; right: 0.9rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: #4ade80;
+      letter-spacing: 0.06em;
+    }
+    .card h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin: 0 1.5rem 0.5rem 0;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin: 0 0 0.6rem;
+      max-width: none;
+      line-height: 1.5;
+    }
+    .card .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #4ade80;
+      border: 1px solid var(--forest);
+      padding: 0.1em 0.5em;
+      margin-top: 0.4rem;
+    }
+    .card .meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-faint);
+      margin: 0.5rem 0 0;
+      line-height: 1.5;
+    }
+    .card .meta b { color: var(--text); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.3rem; }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin: 2rem 0 3rem;
+      padding-left: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.55rem;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 1px;
+      background: var(--border);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 1.8rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.55rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--forest);
+      border: 1px solid #4ade80;
+    }
+    .tl-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: #4ade80;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+    }
+    .tl-item h3 {
+      font-size: 1.05rem;
+      margin: 0 0 0.3rem;
+    }
+    .tl-item p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin: 0;
+      max-width: 64ch;
+    }
+
+    /* ── BLOCK / RULES ── */
+    .block {
+      border: 1px solid var(--border);
+      background: var(--paper-mid);
+      padding: 1.5rem 1.8rem;
+      margin: 1rem 0 2.5rem;
+    }
+    .rules { list-style: none; padding: 0; }
+    .rules li {
+      position: relative;
+      padding: 0.75rem 0 0.75rem 1.8rem;
+      font-size: 0.97rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .rules li:last-child { border-bottom: none; }
+    .rules li::before {
+      content: '◆';
+      position: absolute;
+      left: 0; top: 0.75rem;
+      font-size: 0.55rem;
+      color: var(--forest);
+      color: #4ade80;
+    }
+    .rules b { color: var(--cream); font-weight: 500; }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 4px solid var(--forest);
+      margin: 2.5rem 0;
+      padding: 1.2rem 2rem;
+      background: var(--paper-light);
+    }
+    .pull-quote p {
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--cream);
+      margin: 0 0 0.5rem;
+      max-width: none;
+      line-height: 1.55;
+    }
+    .pull-quote cite {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); text-decoration: underline; }
+
+    /* ── 17-GON ANIMATION ── */
+    @keyframes heptadecagon-draw {
+      from { stroke-dashoffset: 1400; opacity: 0.3; }
+      to   { stroke-dashoffset: 0; opacity: 1; }
+    }
+    @keyframes vertex-appear {
+      0%   { r: 0; opacity: 0; }
+      60%  { r: 5; opacity: 1; }
+      100% { r: 3.5; opacity: 1; }
+    }
+    @keyframes compass-arc {
+      from { stroke-dashoffset: 500; opacity: 0; }
+      to   { stroke-dashoffset: 0; opacity: 0.35; }
+    }
+    @keyframes center-pulse {
+      0%, 100% { r: 2; opacity: 0.6; }
+      50% { r: 4; opacity: 1; }
+    }
+    .poly-path {
+      stroke-dasharray: 1400;
+      animation: heptadecagon-draw 3.5s cubic-bezier(0.4,0,0.2,1) 0.5s both;
+    }
+    .v1  { animation: vertex-appear 0.3s ease 0.6s both; }
+    .v2  { animation: vertex-appear 0.3s ease 0.8s both; }
+    .v3  { animation: vertex-appear 0.3s ease 1.0s both; }
+    .v4  { animation: vertex-appear 0.3s ease 1.2s both; }
+    .v5  { animation: vertex-appear 0.3s ease 1.4s both; }
+    .v6  { animation: vertex-appear 0.3s ease 1.6s both; }
+    .v7  { animation: vertex-appear 0.3s ease 1.8s both; }
+    .v8  { animation: vertex-appear 0.3s ease 2.0s both; }
+    .v9  { animation: vertex-appear 0.3s ease 2.2s both; }
+    .v10 { animation: vertex-appear 0.3s ease 2.4s both; }
+    .v11 { animation: vertex-appear 0.3s ease 2.6s both; }
+    .v12 { animation: vertex-appear 0.3s ease 2.8s both; }
+    .v13 { animation: vertex-appear 0.3s ease 3.0s both; }
+    .v14 { animation: vertex-appear 0.3s ease 3.2s both; }
+    .v15 { animation: vertex-appear 0.3s ease 3.4s both; }
+    .v16 { animation: vertex-appear 0.3s ease 3.6s both; }
+    .v17 { animation: vertex-appear 0.3s ease 3.8s both; }
+    .compass-arc-1 { stroke-dasharray: 500; animation: compass-arc 2s ease 0.3s both; }
+    .compass-arc-2 { stroke-dasharray: 500; animation: compass-arc 2s ease 0.7s both; }
+    .center-dot { animation: center-pulse 2s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .poly-path, .v1, .v2, .v3, .v4, .v5, .v6, .v7, .v8, .v9, .v10, .v11, .v12, .v13, .v14, .v15, .v16, .v17,
+      .compass-arc-1, .compass-arc-2, .center-dot {
+        animation: none; stroke-dashoffset: 0; opacity: 1; r: 3.5;
+      }
+    }
+    @media (max-width: 700px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2.5rem; min-height: auto; }
+      .masthead-art { display: none; }
+      nav { padding: 0.5rem 1rem; gap: 0; }
+      nav a { padding: 0.25rem 0.5rem; font-size: 0.6rem; }
+      main { padding: 2rem 1.2rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Gauss · 4 Volumes</span>
+  <a href="0-who.html" class="active">0 · Who</a>
+  <a href="1-work.html">1 · Work</a>
+  <a href="2-world.html">2 · World</a>
+  <a href="3-legacy.html">3 · Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <p class="volume-label">Volume 0 &nbsp;·&nbsp; Who He Was</p>
+    <h1>Carl Friedrich<span class="surname">Gauss</span><span class="subtitle">1777 – 1855 · Prince of Mathematics</span></h1>
+    <p class="masthead-lede">A poor child in a German duchy who summed 1 to 100 at age seven — and spent the next seven decades remaking <b>number theory, statistics, astronomy, and physics</b>. He published less than he discovered, kept results secret for years, and remained the foremost mathematician alive for fifty years regardless.</p>
+  </div>
+
+  <div class="masthead-art" aria-label="Animated construction of the regular 17-gon with compass and straightedge">
+    <!-- 17-GON CONSTRUCTION ANIMATION -->
+    <!-- Vertices of regular 17-gon, r=155, centered at 190,195 -->
+    <!-- angle_k = 2π·k/17, k=0..16, starting at top -->
+    <svg width="380" height="390" viewBox="0 0 380 390" role="img" aria-label="Regular 17-gon drawn by compass and straightedge — Gauss's construction at age 17">
+      <defs>
+        <radialGradient id="bg17" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0c2016"/>
+          <stop offset="100%" stop-color="#060a08"/>
+        </radialGradient>
+      </defs>
+      <rect width="380" height="390" fill="url(#bg17)" rx="4"/>
+
+      <!-- Circumscribed circle -->
+      <circle cx="190" cy="195" r="155" fill="none" stroke="#166534" stroke-width="0.8" opacity="0.3"/>
+
+      <!-- Construction arcs (compass strokes, decorative) -->
+      <path class="compass-arc-1" d="M 190 40 A 155 155 0 0 1 345 195" fill="none" stroke="#4ade80" stroke-width="1" stroke-dasharray="500"/>
+      <path class="compass-arc-2" d="M 35 195 A 155 155 0 0 1 190 350" fill="none" stroke="#4ade80" stroke-width="1" stroke-dasharray="500"/>
+
+      <!-- Diameter lines (construction reference) -->
+      <line x1="190" y1="40" x2="190" y2="350" stroke="#166534" stroke-width="0.5" opacity="0.2"/>
+      <line x1="35" y1="195" x2="345" y2="195" stroke="#166534" stroke-width="0.5" opacity="0.2"/>
+
+      <!-- The 17-gon polygon (vertices computed: r=155, center 190,195) -->
+      <!-- k=0: top, angle = -90° = -π/2; k++ rotates 360/17 ≈ 21.176° -->
+      <!-- Precomputed vertices (deg = -90 + k*360/17): -->
+      <!-- 0: 190,40   1: 246.05,43.98   2: 334.71,133.54  ... -->
+      <polygon class="poly-path"
+        fill="none"
+        stroke="#d4c89a"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+        points="
+          190,40
+          246.0,43.9
+          292.3,67.8
+          327.5,108.2
+          347.0,158.6
+          348.1,211.6
+          330.4,260.4
+          296.7,299.4
+          251.3,323.9
+          200.1,330.8
+          149.0,319.6
+          103.5,291.8
+          68.5,250.5
+          48.5,199.5
+          45.9,146.2
+          62.3,96.1
+          96.7,56.1
+        "
+      />
+
+      <!-- Vertex dots -->
+      <circle class="v1"  cx="190"  cy="40"   r="3.5" fill="#d4c89a"/>
+      <circle class="v2"  cx="246"  cy="43.9" r="3.5" fill="#d4c89a"/>
+      <circle class="v3"  cx="292.3" cy="67.8" r="3.5" fill="#d4c89a"/>
+      <circle class="v4"  cx="327.5" cy="108.2" r="3.5" fill="#d4c89a"/>
+      <circle class="v5"  cx="347"  cy="158.6" r="3.5" fill="#d4c89a"/>
+      <circle class="v6"  cx="348.1" cy="211.6" r="3.5" fill="#d4c89a"/>
+      <circle class="v7"  cx="330.4" cy="260.4" r="3.5" fill="#d4c89a"/>
+      <circle class="v8"  cx="296.7" cy="299.4" r="3.5" fill="#d4c89a"/>
+      <circle class="v9"  cx="251.3" cy="323.9" r="3.5" fill="#d4c89a"/>
+      <circle class="v10" cx="200.1" cy="330.8" r="3.5" fill="#d4c89a"/>
+      <circle class="v11" cx="149"  cy="319.6" r="3.5" fill="#d4c89a"/>
+      <circle class="v12" cx="103.5" cy="291.8" r="3.5" fill="#d4c89a"/>
+      <circle class="v13" cx="68.5" cy="250.5" r="3.5" fill="#d4c89a"/>
+      <circle class="v14" cx="48.5" cy="199.5" r="3.5" fill="#d4c89a"/>
+      <circle class="v15" cx="45.9" cy="146.2" r="3.5" fill="#d4c89a"/>
+      <circle class="v16" cx="62.3" cy="96.1"  r="3.5" fill="#d4c89a"/>
+      <circle class="v17" cx="96.7" cy="56.1"  r="3.5" fill="#d4c89a"/>
+
+      <!-- Center dot -->
+      <circle class="center-dot" cx="190" cy="195" r="2" fill="#4ade80"/>
+
+      <!-- Label -->
+      <text x="190" y="375" text-anchor="middle" font-family="Space Mono, monospace" font-size="10" fill="#4ade80" letter-spacing="0.12em" text-transform="uppercase">17-GON · COMPASS &amp; STRAIGHTEDGE</text>
+      <text x="190" y="388" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#166534" letter-spacing="0.08em">age 17 · Brunswick · 1794</text>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <span class="kick">Volume 0 of 4 — The Person</span>
+  <h2>The Boy from Brunswick</h2>
+
+  <p>Carl Friedrich Gauss was born on 30 April 1777 in the Duchy of Brunswick, in what is now north-central Germany. His family was working-class: his father labored as a canal tender, gardener, and bricklayer; his mother, Dorothea Benze, was illiterate. Neither parent had any mathematical training. What they had was a son who could read before anyone had taught him to, who corrected his father's wage arithmetic at age three, and who summed the integers from 1 to 100 in his head at age seven before the schoolmaster had finished writing the problem on the board.</p>
+
+  <p>The story of the sum is almost certainly true, though the precise details have been softened by repetition. The key insight was not speed but pattern: Gauss recognized that pairing the smallest and largest terms always yields the same total (1+100 = 101, 2+99 = 101, and so on), so fifty pairs each summing to 101 give 5,050. He grasped a structural fact about arithmetic that most adults never see. He was seven years old.</p>
+
+  <div class="pull-quote">
+    <p>"He could calculate before he could speak, and could read before he could calculate."</p>
+    <cite>— Wolfgang Sartorius von Waltershausen, Gauss's first biographer</cite>
+  </div>
+
+  <h2>The Duke's Investment</h2>
+
+  <p>Brunswick was a minor duchy under the shadow of larger powers, but its duke, Carl Wilhelm Ferdinand, ran an unusually enlightened court. Word of Gauss's gifts reached him, and from 1792 onward he funded the boy's education: first at the Collegium Carolinum in Brunswick, then at the University of Göttingen from 1795. The Duke paid Gauss a stipend for the rest of his own life — he died at the Battle of Jena in 1806, a year into the Napoleonic occupation of Brunswick. Gauss, who admired and depended on him, called it one of the great losses of his life.</p>
+
+  <p>At Göttingen, Gauss had access to one of the finest mathematical libraries in the German states. He read Euler, Newton, and Lagrange with the same voracious attention he gave to everything. He filled notebooks rather than papers; ideas came faster than he could publish them, and the habit of hoarding results would persist for his entire career.</p>
+
+  <h2>The PhD and the Disquisitiones</h2>
+
+  <p>In 1799, at age twenty-two, Gauss completed his doctoral dissertation at the University of Helmstedt. Its subject was the Fundamental Theorem of Algebra — the proof that every non-constant polynomial with complex coefficients has at least one complex root. Earlier proofs by d'Alembert and others had gaps; Gauss's was the first fully rigorous demonstration. He would return to the theorem and give three more independent proofs over his lifetime, each illuminating a different aspect of the result.</p>
+
+  <p>In 1801 he published <em>Disquisitiones Arithmeticae</em> — a treatise on number theory that he had largely drafted by the time he was twenty-one. It introduced the modern notation of modular arithmetic (the congruence symbol ≡), gave a systematic theory of quadratic forms, and proved quadratic reciprocity. The book was so far ahead of its readers that it was barely understood for a generation. Today it is still the foundational text of number theory, cited in twenty-first-century research papers two and a quarter centuries after publication.</p>
+
+  <div class="grid">
+    <article class="card">
+      <span class="card-num">01</span>
+      <h3>The prodigy's method</h3>
+      <p>The famous classroom sum (1+2+...+100 = 5050) was not memorized or computed digit by digit. Gauss recognized that the sum pairs symmetrically: 50 pairs, each totaling 101.</p>
+      <p class="meta"><b>insight</b> n(n+1)/2 — general formula for triangular numbers</p>
+      <span class="tag">age 7 · 1784</span>
+    </article>
+    <article class="card">
+      <span class="card-num">02</span>
+      <h3>The 17-gon moment</h3>
+      <p>At seventeen, Gauss proved that the regular heptadecagon (17-sided polygon) can be constructed with compass and straightedge alone — the first new constructible polygon found since antiquity. He was so delighted he decided to become a mathematician rather than a philologist.</p>
+      <p class="meta"><b>year</b> 1796 · <b>his diary entry</b> "I have succeeded in solving..."</p>
+      <span class="tag">age 17 · Brunswick</span>
+    </article>
+    <article class="card">
+      <span class="card-num">03</span>
+      <h3>Doctoral thesis at 22</h3>
+      <p>The Fundamental Theorem of Algebra — proved rigorously for the first time. Every polynomial equation of degree n has exactly n roots in the complex numbers. The proof took full advantage of the complex plane, which Gauss was already developing.</p>
+      <p class="meta"><b>university</b> Helmstedt, 1799</p>
+      <span class="tag">PhD · 1799</span>
+    </article>
+    <article class="card">
+      <span class="card-num">04</span>
+      <h3>Disquisitiones at 24</h3>
+      <p>Published 1801. Modular arithmetic, quadratic reciprocity, theory of quadratic forms. Written mostly by age 21. Still cited as foundational. The notation "a ≡ b (mod n)" is his invention.</p>
+      <p class="meta"><b>status</b> in print, continuously, for 224 years</p>
+      <span class="tag">1801 · number theory</span>
+    </article>
+  </div>
+
+  <h2>The Man: Character and Personality</h2>
+
+  <p>Gauss was not easy. He was famously reluctant to publish: his personal motto, <em>pauca sed matura</em> — few but ripe — described a perfectionism that meant results sat in notebooks for years or decades while other mathematicians struggled toward the same discoveries independently. When Bolyai published his non-Euclidean geometry in 1832, Gauss wrote to say he had known all this for thirty years — a comment that delighted no one, least of all Bolyai's father who had written excitedly to announce his son's achievement.</p>
+
+  <p>He was conservative in politics and cautious in intellectual controversy. He lived through the Napoleonic wars, the post-Congress of Vienna restoration, and the revolutionary movements of 1848, forming no public opinions on any of it. His private correspondence reveals strong views; his published writings reveal almost nothing about the man's politics.</p>
+
+  <p>As a teacher he was demanding and could be dismissive. Bernhard Riemann, who would become one of the greatest mathematicians of the century, was his student at Göttingen — and Gauss recognized his quality instantly, though he was not warm about it. His lecture on the foundations of geometry, delivered in 1854 as Gauss lay dying, was the last intellectual event Gauss witnessed and reportedly moved the old man to silence.</p>
+
+  <h2>Two Marriages, Private Grief</h2>
+
+  <p>Gauss married Johanna Osthoff in 1805; they had three children together. Johanna died in 1809, shortly after the birth of their third child. He was devastated. In 1810 he married Minna Waldeck, a close friend of Johanna's, with whom he had three more children. Minna suffered chronic illness throughout their marriage and died in 1831. Gauss rarely wrote about his emotional life publicly, but his letters after Johanna's death make clear the depth of what he lost.</p>
+
+  <h2>The Great Survey</h2>
+
+  <p>From 1818 to 1825, Gauss directed a geodetic survey of the Kingdom of Hanover — one of the most ambitious land measurement projects in European history. He did not merely supervise it from an office; he walked the terrain himself, sometimes staying weeks at remote triangulation stations, carrying the heliotrope he had invented (a device that reflected sunlight over long distances to enable precise angle measurements). The survey required solving a problem of fitting a curved surface — the earth — into a flat map, which led Gauss to develop the mathematics of differential geometry, including the concept of intrinsic curvature that Riemann would later generalize into the geometry Einstein needed for general relativity.</p>
+
+  <div class="pull-quote">
+    <p>"Mathematics is the queen of the sciences, and number theory is the queen of mathematics."</p>
+    <cite>— Carl Friedrich Gauss, attributed by Sartorius von Waltershausen (1856)</cite>
+  </div>
+
+  <h2>Life at Göttingen</h2>
+
+  <p>In 1807 Gauss was appointed professor of astronomy and director of the new astronomical observatory at Göttingen University, a position he held for the rest of his life — nearly fifty years. He is the rare mathematician-scientist who contributed fundamentally to pure mathematics, applied mathematics, astronomy, geodesy, and physics in the same career. Unlike Newton or Leibniz, who had wide philosophical interests, Gauss was almost entirely technical: he cared about precision, proof, and measurement. Outside mathematics, he was interested in languages (he taught himself Russian in his sixties to read Lobachevsky in the original) and in practical instrumentation.</p>
+
+  <div class="grid">
+    <article class="card">
+      <span class="card-num">05</span>
+      <h3>The hoarder of results</h3>
+      <p>His diary (discovered in 1898, long after his death) showed that he had independently discovered non-Euclidean geometry, elliptic functions, and the prime number theorem — all before others published them. He said nothing publicly.</p>
+      <p class="meta"><b>motto</b> pauca sed matura — few but ripe</p>
+      <span class="tag">perfectionism</span>
+    </article>
+    <article class="card">
+      <span class="card-num">06</span>
+      <h3>The observatory director</h3>
+      <p>Appointed 1807. Led the Göttingen Observatory for 48 years. His astronomical work — especially the recovery of Ceres — made him internationally famous before he was 30. The observatory was his institutional home for life.</p>
+      <p class="meta"><b>tenure</b> 1807–1855 · Göttingen</p>
+      <span class="tag">astronomy · Göttingen</span>
+    </article>
+    <article class="card">
+      <span class="card-num">07</span>
+      <h3>The surveyor</h3>
+      <p>Directed the geodetic survey of Hanover 1818–1825. Invented the heliotrope. Walked the terrain personally. The math he developed — curved surface geometry — became the foundation of Riemannian geometry and, later, general relativity.</p>
+      <p class="meta"><b>tool invented</b> heliotrope · mirror-signal device</p>
+      <span class="tag">geodesy · 1818–1825</span>
+    </article>
+    <article class="card">
+      <span class="card-num">08</span>
+      <h3>Last years and death</h3>
+      <p>In his final decade he heard Riemann's groundbreaking lecture on the foundations of geometry — moved to silence. He died on 23 February 1855 in Göttingen, aged 77. His brain was preserved and studied; it was found to be of exceptional complexity.</p>
+      <p class="meta"><b>death</b> 23 February 1855 · Göttingen</p>
+      <span class="tag">1855 · Göttingen</span>
+    </article>
+  </div>
+
+  <h2>The Shape of His Life</h2>
+
+  <div class="block">
+    <ul class="rules">
+      <li><b>Born</b> 30 April 1777, Brunswick, Duchy of Brunswick-Wolfenbüttel. Father a laborer; mother illiterate.</li>
+      <li><b>Age 7:</b> Summed 1+2+...+100 = 5050 in his head, by pairing: 50 × 101.</li>
+      <li><b>Age 17 (1794):</b> Proved the regular 17-gon is constructible with compass and straightedge. Resolved to become a mathematician.</li>
+      <li><b>1795–1798:</b> University of Göttingen, funded by the Duke of Brunswick.</li>
+      <li><b>1799:</b> PhD at Helmstedt — first rigorous proof of the Fundamental Theorem of Algebra.</li>
+      <li><b>1801:</b> <em>Disquisitiones Arithmeticae</em> published. Found Ceres using least-squares. Age 24.</li>
+      <li><b>1805:</b> Married Johanna Osthoff. Their first son born 1806.</li>
+      <li><b>1806:</b> Duke of Brunswick killed at Jena. Gauss loses his patron.</li>
+      <li><b>1807:</b> Appointed director of Göttingen Observatory — a post he holds for 48 years.</li>
+      <li><b>1809:</b> Published <em>Theoria Motus</em> (theory of orbital mechanics). Johanna dies.</li>
+      <li><b>1810:</b> Married Minna Waldeck.</li>
+      <li><b>1818–1825:</b> Directed the geodetic survey of Hanover.</li>
+      <li><b>1831:</b> Minna Waldeck dies. Gauss begins collaboration with physicist Wilhelm Weber on magnetism.</li>
+      <li><b>1854:</b> Heard Riemann's lecture on the foundations of geometry from his sickbed.</li>
+      <li><b>23 February 1855:</b> Died in Göttingen, aged 77. Interred at Albanifriedhof cemetery.</li>
+    </ul>
+  </div>
+
+  <!-- Timeline -->
+  <span class="kick">Chronological overview</span>
+  <h2>Timeline</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <p class="tl-year">1777</p>
+      <h3>Born in Brunswick</h3>
+      <p>30 April. Working-class family. His father's accounts were corrected by his son before Carl could write.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1784 (age 7)</p>
+      <h3>The sum to 100</h3>
+      <p>Summed 1 through 100 instantaneously in class. Recognized arithmetic structure rather than performing rote addition.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1792–1795</p>
+      <h3>Collegium Carolinum</h3>
+      <p>Secondary studies in Brunswick, financed by Duke Carl Wilhelm Ferdinand. Mastered classical languages and mathematics simultaneously.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1794–1796</p>
+      <h3>The 17-gon</h3>
+      <p>Discovered the constructibility of the regular 17-gon. His diary entry for 30 March 1796 marks this as the moment he chose mathematics over philology.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1795–1798</p>
+      <h3>Göttingen</h3>
+      <p>University of Göttingen. Access to the mathematical library. Began filling the mathematical diary that would not be published until 1898, forty-three years after his death.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1799</p>
+      <h3>PhD: Fundamental Theorem of Algebra</h3>
+      <p>Helmstedt. First fully rigorous proof. He would give three more independent proofs over his lifetime.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1801</p>
+      <h3>Disquisitiones Arithmeticae · Ceres</h3>
+      <p>Published the founding text of modern number theory. Also predicted the orbit of Ceres — the first asteroid — after it was lost behind the sun, using the method of least squares. Astronomers found Ceres exactly where Gauss said it would be.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1807–1855</p>
+      <h3>Göttingen Observatory</h3>
+      <p>Professor of astronomy and director of the observatory for 48 years. The longest tenure of any major position in the history of German science at that point.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1818–1825</p>
+      <h3>Survey of Hanover</h3>
+      <p>Triangulated the Kingdom of Hanover with unprecedented precision. Invented the heliotrope. Developed the mathematics of curved surfaces — laying groundwork for Riemannian geometry.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1831–1840s</p>
+      <h3>Magnetism and physics</h3>
+      <p>With Wilhelm Weber, established the first electromagnetic telegraph, defined the gauss (unit of magnetic flux density), and mapped the earth's magnetic field.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1854</p>
+      <h3>Riemann's lecture</h3>
+      <p>Attended — from his sickbed — the lecture in which his student Bernhard Riemann outlined the geometry of curved spaces. Reportedly the only time Gauss was seen visibly moved by another mathematician's work.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-year">1855</p>
+      <h3>Death in Göttingen</h3>
+      <p>Died 23 February 1855. His brain was preserved; studies found unusual convolution complexity. The 10-Deutsche-Mark note, in circulation 1991–2001, bore his portrait alongside the normal distribution curve.</p>
+    </div>
+  </div>
+
+  <div class="colophon">
+    <p>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</p>
+    <p>Carl Friedrich Gauss Series &nbsp;·&nbsp; Volume 0: Who He Was &nbsp;·&nbsp; 0-who.html</p>
+    <p>Sources: Gauss, <em>Disquisitiones Arithmeticae</em> (1801); Sartorius von Waltershausen, <em>Gauss zum Gedächtniss</em> (1856); W.K. Bühler, <em>Gauss: A Biographical Study</em> (1981); Brian Hayes, "Gauss's Day of Reckoning," <em>American Scientist</em> (2006).</p>
+  </div>
+</main>
+
+</body>
+</html>

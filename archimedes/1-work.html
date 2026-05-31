@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archimedes — Vol. 1: The Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0d0a06;
+      --bronze: #b45309;
+      --sand: #d4a853;
+      --dim: #7a5c2e;
+      --mid: #1e1508;
+      --card-bg: #120e05;
+      --border: rgba(180,83,9,0.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--sand);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(13,10,6,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--sand); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--sand);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--bronze);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(212,168,83,0.82);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+    .masthead-art svg { width: 100%; height: auto; }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--bronze);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--sand);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+    p {
+      margin-bottom: 1.1rem;
+      color: rgba(212,168,83,0.88);
+    }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--bronze);
+      color: #0d0a06;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--bronze);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: rgba(212,168,83,0.72);
+      line-height: 1.65;
+    }
+    .card .formula {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--sand);
+      background: rgba(180,83,9,0.08);
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.9rem;
+      margin: 0.8rem 0;
+      display: block;
+      letter-spacing: 0.05em;
+    }
+
+    blockquote {
+      border-left: 3px solid var(--bronze);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(180,83,9,0.06);
+    }
+    blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--sand);
+      margin: 0;
+    }
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .formula-block {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--sand);
+      background: rgba(180,83,9,0.07);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--bronze);
+      padding: 1.2rem 1.6rem;
+      margin: 1.5rem 0;
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+
+    /* WORK GRID — full width, 2 columns */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .work-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .work-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .work-card .wnum {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--bronze);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .work-card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--sand);
+      margin-bottom: 0.5rem;
+    }
+    .work-card .wtag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+    .work-card p {
+      font-size: 0.88rem;
+      color: rgba(212,168,83,0.7);
+      line-height: 1.62;
+    }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+    .vol-nav a:hover { color: var(--sand); border-color: var(--bronze); }
+    .vol-nav a.current {
+      color: var(--sand);
+      border-color: var(--bronze);
+      background: rgba(180,83,9,0.1);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+    .colophon a { color: var(--dim); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      nav { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Archimedes — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html" class="active">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 1 of 4 &nbsp;·&nbsp; Archimedes of Syracuse</span>
+    <h1>The Work</h1>
+    <div class="subtitle">Lever, Pi, Buoyancy, Calculus</div>
+    <p class="lede">Eight monumental achievements across mathematics, physics, and engineering — each sufficient to secure lasting fame. He proved the lever. He bounded pi. He discovered buoyancy. He invented a form of integral calculus. He built the machine that still irrigates fields. He designed war engines that held off Rome for two years. And he computed the number of sand grains in the universe.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Lever balancing + pi polygon exhaustion -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1005"/>
+          <stop offset="100%" stop-color="#0d0a06"/>
+        </radialGradient>
+      </defs>
+
+      <circle cx="180" cy="180" r="178" fill="url(#bg1)" stroke="#b45309" stroke-width="0.5" opacity="0.5"/>
+
+      <!-- PI POLYGON (top half) — 12-gon slowly gaining sides -->
+      <!-- Static 12-gon inscribed in circle, top area -->
+      <g transform="translate(180,105)">
+        <!-- Outer circle r=72 -->
+        <circle cx="0" cy="0" r="72" fill="none" stroke="#b45309" stroke-width="0.8" opacity="0.4"/>
+        <!-- 12-sided polygon inscribed -->
+        <polygon points="72,0 62.35,36 36,62.35 0,72 -36,62.35 -62.35,36 -72,0 -62.35,-36 -36,-62.35 0,-72 36,-62.35 62.35,-36"
+          fill="rgba(180,83,9,0.06)" stroke="#d4a853" stroke-width="1" opacity="0.7">
+          <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="30 0 0" dur="16s" repeatCount="indefinite"/>
+        </polygon>
+        <!-- 24-sided (more refined) — counter-rotating faint -->
+        <polygon points="72,0 69.3,18.7 62.35,36 51.2,52.4 36,62.35 18.7,69.3 0,72 -18.7,69.3 -36,62.35 -52.4,51.2 -62.35,36 -69.3,18.7 -72,0 -69.3,-18.7 -62.35,-36 -51.2,-52.4 -36,-62.35 -18.7,-69.3 0,-72 18.7,-69.3 36,-62.35 52.4,-51.2 62.35,-36 69.3,-18.7"
+          fill="none" stroke="#b45309" stroke-width="0.5" opacity="0.35">
+          <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-30 0 0" dur="22s" repeatCount="indefinite"/>
+        </polygon>
+        <!-- π label -->
+        <text x="-8" y="5" font-family="Newsreader, serif" font-size="20" fill="#d4a853" opacity="0.7" font-style="italic">π</text>
+      </g>
+
+      <!-- Divider line -->
+      <line x1="40" y1="198" x2="320" y2="198" stroke="#b45309" stroke-width="0.5" stroke-dasharray="4 6" opacity="0.3"/>
+
+      <!-- LEVER (bottom half) -->
+      <!-- Fulcrum triangle -->
+      <polygon points="180,285 165,308 195,308" fill="none" stroke="#b45309" stroke-width="1.2" opacity="0.6"/>
+      <line x1="130" y1="308" x2="230" y2="308" stroke="#b45309" stroke-width="1.5" opacity="0.5"/>
+
+      <!-- Lever beam — tilting slowly back and forth -->
+      <g transform="translate(180,285)">
+        <animateTransform attributeName="transform" type="rotate" from="-8 0 0" to="8 0 0" dur="5s" repeatCount="indefinite" additive="sum" calcMode="spline" keySplines="0.45 0.05 0.55 0.95"/>
+        <!-- Beam -->
+        <line x1="-100" y1="0" x2="100" y2="0" stroke="#d4a853" stroke-width="2.5" opacity="0.75"/>
+        <!-- Left weight (Earth — large) -->
+        <rect x="-110" y="-18" width="22" height="22" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="1.2" opacity="0.8"/>
+        <text x="-104" y="-2" font-family="Space Mono, monospace" font-size="6" fill="#d4a853" opacity="0.6">EARTH</text>
+        <!-- Right weight (small — Archimedes) -->
+        <rect x="92" y="-10" width="12" height="12" fill="rgba(212,168,83,0.2)" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+      </g>
+
+      <!-- Label bottom -->
+      <text x="18" y="342" font-family="Space Mono, monospace" font-size="7.5" fill="#b45309" opacity="0.55" letter-spacing="2">LEVER · PI · SYRACUSE c.250 BCE</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-work.html" class="current">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: THE LEVER -->
+  <section>
+    <span class="kick">Mechanics · On the Equilibrium of Planes</span>
+    <h2>I. The Lever — "Give Me a Place to Stand"</h2>
+    <p>The lever was not Archimedes's invention — human beings had used levers since prehistory. What Archimedes invented was its <em>proof</em>. In his treatise <em>On the Equilibrium of Planes</em>, he derived the law of the lever from first principles with the rigor of a mathematician. This was the first time a physical principle had been derived mathematically — not observed and described, but proved.</p>
+
+    <div class="formula-block">
+      The Law of the Lever:<br>
+      W₁ × d₁ = W₂ × d₂<br><br>
+      A weight W₁ at distance d₁ from the fulcrum<br>
+      balances a weight W₂ at distance d₂ — if and<br>
+      only if the products are equal.
+    </div>
+
+    <p>This seems obvious to us. It was not obvious in the 3rd century BCE. Archimedes's proof proceeds from postulates about equilibrium — that equal weights at equal distances balance, that unequal weights do not — and builds up to the general case through rigorous argument. He uses a center of gravity concept he was also developing simultaneously. The result is a mathematical physics: nature described by equations derived from reason, not just observation.</p>
+    <p>The boast — "Give me a place to stand and I will move the Earth" — was reportedly demonstrated, at least symbolically: Archimedes used a compound pulley system (which applies lever mathematics repeatedly) to haul the fully loaded Syracusia, the largest ship in the ancient world, across the harbor of Syracuse single-handedly, pulling a rope while seated. Plutarch reports that King Hiero, watching, "was astonished and begged him to show him other things."</p>
+
+    <blockquote>
+      <p>"Give me a place to stand and I will move the Earth."</p>
+      <cite>— Attributed to Archimedes, demonstrating the law of the lever. Reported by Pappus of Alexandria, c. 340 CE.</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 2: PI -->
+  <section>
+    <span class="kick">Mathematics · Measurement of a Circle</span>
+    <h2>II. Pi — The Method of Exhaustion</h2>
+    <p>Archimedes's computation of pi, contained in his treatise <em>Measurement of a Circle</em>, was the most accurate calculation of the ratio of a circle's circumference to its diameter achieved in antiquity — and it remained the most accurate for many centuries afterward. More importantly, the <em>method</em> he used established the template for calculus.</p>
+    <p>His approach is called the method of exhaustion, inherited from Eudoxus of Cnidus (c. 408–355 BCE) but taken to a new level of precision. The idea: inscribe a regular polygon inside a circle and circumscribe another outside. The circle's circumference lies between the perimeters of the two polygons. Double the number of sides of both polygons. The bounds get tighter. Keep doubling — the polygons "exhaust" the gap and squeeze the true value into an ever-narrower interval.</p>
+
+    <div class="formula-block">
+      Archimedes used a 96-sided polygon (hexagon doubled four times)<br><br>
+      Inscribed 96-gon perimeter &lt; circumference &lt; circumscribed 96-gon perimeter<br><br>
+      Result: 3 + 10/71 &lt; π &lt; 3 + 1/7<br><br>
+      i.e., 3.1408... &lt; π &lt; 3.1428...<br><br>
+      True value: π ≈ 3.14159...
+    </div>
+
+    <p>The calculation required computing square roots of large numbers by hand to many decimal places, without modern notation, without algebra as we know it. Every step of the 96-gon calculation involves finding the perimeter of the polygons using what amounts to repeated application of the Pythagorean theorem and rational approximation of square roots. It is a tour de force of computational precision.</p>
+    <p>The bound 3 1/7 (≈ 3.1429) was widely used as the practical approximation for pi for centuries. The better bound 3 10/71 (≈ 3.1408) gives a two-sided squeeze that proves both bounds are correct. Archimedes did not give a single approximation — he proved that pi lies strictly between two known values. That is a mathematician's approach, not an engineer's.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">The Method</span>
+        <h4>Method of Exhaustion</h4>
+        <p>Invented by Eudoxus, perfected by Archimedes. Inscribe and circumscribe polygons with progressively more sides. The polygon areas squeeze toward the circle area. Take the limit — though Archimedes did not use that word — and you have the exact value. This is the direct precursor to the integral calculus concept of a limit.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Polygon</span>
+        <h4>Starting from a Hexagon</h4>
+        <p>Archimedes started with a regular hexagon (6 sides), whose perimeter he could compute exactly. He then doubled to 12, 24, 48, and finally 96 sides. Each doubling requires computing the new side length from the old — essentially computing cos(θ/2) from cos(θ) — using only rational arithmetic and approximate square roots.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Achievement</span>
+        <h4>More Accurate Than Babylon</h4>
+        <p>The Babylonians used π ≈ 3.125. The Egyptian Rhind Papyrus (c. 1650 BCE) used π ≈ 3.1605. Archimedes's lower bound 3 10/71 ≈ 3.1408 was more accurate than both. His upper bound 3 1/7 ≈ 3.1429 remained the standard engineering approximation for over a millennium. Today we use 3.14159265… — but Archimedes knew it was between his two values.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BUOYANCY / EUREKA -->
+  <section>
+    <span class="kick">Physics · On Floating Bodies</span>
+    <h2>III. Buoyancy — The Eureka Principle</h2>
+    <p>Archimedes's principle of buoyancy, stated in his treatise <em>On Floating Bodies</em>, is one of the oldest quantitative laws of physics still taught in its original form. Every introductory physics course covers it. Every naval architect uses it. It was derived around 250 BCE and it is still correct.</p>
+
+    <div class="formula-block">
+      Archimedes's Principle:<br><br>
+      A body immersed in a fluid experiences an upward<br>
+      buoyant force equal to the weight of the fluid<br>
+      displaced by the body.<br><br>
+      F_buoyancy = ρ_fluid × V_submerged × g
+    </div>
+
+    <p>The derivation in <em>On Floating Bodies</em> is purely mathematical — he proves it from first principles about fluid pressure, not from bath observation. The "Eureka" story (reported by Vitruvius two centuries later) may or may not describe the moment of insight, but the resulting treatise is a piece of rigorous physics. Archimedes does not just state the principle; he proves it and then uses it to determine conditions for floating, sinking, and the stability of floating bodies.</p>
+
+    <h3>The Crown Problem</h3>
+    <p>King Hiero II had commissioned a golden crown and suspected the goldsmith had substituted silver for some of the gold. He asked Archimedes to determine the truth without destroying the crown. The solution — compare the crown's weight in air to its weight submerged in water, and compare that ratio to the same ratio for pure gold — follows directly from Archimedes's principle. The volume of water displaced equals the volume of the object. If the crown has a greater volume than the same weight of pure gold (because silver is less dense), it will displace more water. The crown was indeed impure. The goldsmith, reportedly, was executed.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">The Principle</span>
+        <h4>Weight of Displaced Fluid</h4>
+        <p>A ship floats because it displaces its own weight in water before it is fully submerged. A stone sinks because its weight exceeds the weight of water it could displace before going completely under. A fish adjusts its swim bladder to equalize displaced weight with body weight, achieving neutral buoyancy. All of this follows from Archimedes's 2,200-year-old proof.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">On Floating Bodies</span>
+        <h4>Two Books of Physics</h4>
+        <p>The treatise goes well beyond the basic principle. Book II derives the conditions under which a paraboloid of revolution (a shape like a bowl) is stable when floating at various angles — the analysis needed for a ship's hull stability. This is mathematical hydrodynamics 2,000 years before the field was named. Modern ship designers use the same stability criteria.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Legend</span>
+        <h4>Eureka — I Have Found It</h4>
+        <p>Vitruvius reports that Archimedes, stepping into his bath and noticing the water overflow, understood the solution instantly. He ran naked through the streets of Syracuse crying "Eureka! Eureka!" — Greek for "I have found it." Whether this happened, the word entered Greek, Latin, and every modern European language as the universal expression of sudden discovery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE METHOD / PROTO-CALCULUS -->
+  <section>
+    <span class="kick">Mathematics · The Method · The Palimpsest</span>
+    <h2>IV. The Method — Proto-Calculus, 1,800 Years Early</h2>
+    <p>This is the most extraordinary of Archimedes's achievements, and it was completely unknown to the modern world until 1906. In a text called <em>The Method of Mechanical Theorems</em>, addressed to Eratosthenes, Archimedes describes the private heuristic method he used to <em>discover</em> results before he could formally prove them — and the method is a form of integral calculus.</p>
+    <p>The idea: to find the area or volume of a curved figure, imagine slicing it into infinitely thin strips. "Weigh" each strip against a known figure on a lever (using the law of the lever Archimedes had already proved). The total "weight" of all the slices gives the area or volume of the figure. Then — and this is the key — you have your result, and you can go back and prove it rigorously by the method of exhaustion.</p>
+
+    <blockquote>
+      <p>"I deemed it well to write out for you and explain in detail in the same book the peculiarity of a certain method, by which it will be possible for you to get a start to enable you to investigate some of the problems in mathematics by means of mechanics."</p>
+      <cite>— Archimedes, <em>The Method</em>, addressed to Eratosthenes of Cyrene, c. 250 BCE. From the Archimedes Palimpsest.</cite>
+    </blockquote>
+
+    <p>What Archimedes is doing: he is computing areas by treating curved figures as made up of infinitely many one-dimensional "slices" — each slice a line segment — and summing them. This is exactly what an integral does. He even says, explicitly, that a plane figure is "made up of" its lines and a solid is "made up of" its plane cross-sections. This is the Cavalieri principle, which Bonaventura Cavalieri would not publish until 1635 CE. Newton and Leibniz would formalize it as calculus in the 1660s–1680s.</p>
+    <p>Archimedes had no formal notation for the limit process. He knew his slicing method was heuristically convincing but not rigorous — which is why he used it only to discover results, then proved them again formally. But the core idea — sum infinitely many infinitely thin slices — is calculus. He was doing proto-calculus approximately 1,800 years before it was invented.</p>
+    <p>The tragedy: <em>The Method</em> was lost. It survived only in a single manuscript in Constantinople, which was overwritten with a Christian prayer book in the 13th century (creating a palimpsest). The Danish philologist Johan Ludvig Heiberg identified it in 1906. If it had been known to medieval or Renaissance mathematicians, the development of calculus might have been accelerated by centuries.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">The Technique</span>
+        <h4>Mechanical Integration</h4>
+        <p>Archimedes "weighs" a curved figure against a known shape using the lever. Each infinitesimally thin slice of the curved figure balances against a corresponding slice of the known figure. Sum all the slices: the total balance gives the ratio of areas. The technique works for areas, volumes, and centers of gravity — all problems that calculus handles with integrals.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">A Result</span>
+        <h4>Area of a Parabolic Segment</h4>
+        <p>Using The Method, Archimedes proved that the area of a parabolic segment (the region bounded by a parabola and a chord) is exactly 4/3 of the area of the inscribed triangle. He gives both a mechanical derivation (in The Method) and a rigorous exhaustion proof (in Quadrature of the Parabola). The mechanical proof is the discovery; the exhaustion proof is the verification.</p>
+        <span class="formula">A = (4/3) × A_triangle</span>
+      </div>
+      <div class="card">
+        <span class="card-num">The Loss and Recovery</span>
+        <h4>The Palimpsest</h4>
+        <p>The only copy of The Method was in a 10th-century Byzantine manuscript. In the 13th century, parchment was scraped clean and used for a prayer book. The text of Archimedes — along with two other lost works — remained faintly visible beneath. Heiberg read it in 1906. The manuscript was sold at Christie's in 1998 for $2 million and subjected to modern imaging that recovered nearly all the text.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE SCREW -->
+  <section>
+    <span class="kick">Engineering · Irrigation</span>
+    <h2>V. The Archimedes Screw — Still in Use</h2>
+    <p>The Archimedes screw is a helical device for raising water: a screw-shaped surface enclosed in a cylinder, turned by hand or animal power, lifts water from a lower reservoir to a higher one as the rotation moves the water up the helical chamber. It was used in antiquity for irrigation and mine drainage. It is still used today — in irrigation, in sewage treatment plants, in some hydroelectric turbines, in grain handling, in fish ladders.</p>
+    <p>Whether Archimedes invented it from scratch or codified and improved an existing device is disputed. Diodorus Siculus reports that Archimedes invented it during a visit to Egypt to help drain irrigation channels. Others attribute it to earlier Egyptian or Babylonian practice. What is certain is that Archimedes understood the mathematics of the helix sufficiently to optimize the device, and his name has attached to it for 2,200 years.</p>
+    <p>The screw is Archimedes's most commercially successful legacy. Pumps based on its principle exist on every continent. A single Archimedes screw can lift thousands of gallons per minute and requires no seals, no valves, and minimal maintenance. Modern wastewater treatment plants use them routinely. The oldest working pump design in human history continues to work.</p>
+  </section>
+
+  <!-- SECTION 6: WAR MACHINES -->
+  <section>
+    <span class="kick">Engineering · Defense of Syracuse</span>
+    <h2>VI. War Machines — Two Years Against Rome</h2>
+    <p>When Rome besieged Syracuse in 214 BCE, Archimedes — then in his seventies — turned his mathematical knowledge to military engineering. The machines he designed held off the Roman fleet and army for two years. Plutarch's account is vivid: Roman soldiers became so terrified of Archimedes's devices that they would flee if they saw so much as a rope or a timber appearing over the city walls.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">Machine I</span>
+        <h4>The Claw of Archimedes</h4>
+        <p>A crane-like device that could reach over the city walls, hook onto Roman ships that came close to shore, lift them partially out of the water, and then drop them — capsizing the ship or smashing it against rocks. Plutarch describes ships being "plucked up into the air" and "spun about." Modern engineers have reconstructed working models and confirmed the physics is sound.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Machine II</span>
+        <h4>Catapults and Artillery</h4>
+        <p>Archimedes designed a system of catapults calibrated for different ranges — some for long-range bombardment of ships, some for close-range defense of the walls. Polybius describes the Roman ships being unable to approach at any range without being hit: close-range machines hit them if they came near, long-range machines prevented them from withdrawing to a safe distance. The entire bay was covered.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Machine III</span>
+        <h4>Burning Mirrors — Disputed</h4>
+        <p>The most spectacular claim: that Archimedes used parabolic bronze mirrors to focus sunlight and set Roman ships on fire. This story does not appear in Polybius or Livy — our most reliable sources — only in later accounts. Modern experiments have produced mixed results: MIT students demonstrated it was possible under optimal conditions. Most historians consider it unlikely as a battlefield weapon but possible as a demonstration of optics. The physics of a parabolic mirror focusing light is mathematically correct; Archimedes certainly understood it.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Result</span>
+        <h4>Two Years of Resistance</h4>
+        <p>The Roman siege of Syracuse lasted from 214 to 212 BCE — two full years against one of the most powerful armies in the world. Archimedes's machines were directly responsible. General Marcellus eventually took the city not by assault but by discovering an undefended section of wall during a festival. Marcellus said, reportedly, that he was "fighting a geometrical Briareus" — a hundred-armed giant, each arm reaching out a different machine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: SPHERES/CYLINDERS -->
+  <section>
+    <span class="kick">Mathematics · His Proudest Result</span>
+    <h2>VII. Sphere and Cylinder — The Tomb Theorem</h2>
+    <p>Of all his discoveries, Archimedes considered this the most beautiful: if a sphere is inscribed in a cylinder of the same height and diameter, the volume of the sphere is exactly 2/3 the volume of the cylinder, and the surface area of the sphere is exactly 2/3 the total surface area of the cylinder. The same ratio — 2:3 — governs both surface and volume simultaneously. He asked for a diagram of this to be carved on his tomb.</p>
+
+    <div class="formula-block">
+      Let r = radius of sphere. Cylinder has radius r, height 2r.<br><br>
+      V_sphere = (4/3)πr³<br>
+      V_cylinder = πr² × 2r = 2πr³<br>
+      Ratio: V_sphere / V_cylinder = (4/3)πr³ / 2πr³ = 2/3 ✓<br><br>
+      A_sphere = 4πr²<br>
+      A_cylinder (total, with caps) = 2πr² + 2πr(2r) = 6πr²<br>
+      Ratio: A_sphere / A_cylinder = 4πr² / 6πr² = 2/3 ✓
+    </div>
+
+    <p>Both ratios are exactly 2/3. That this perfect coincidence holds simultaneously for both surface area and volume struck Archimedes as one of the most beautiful facts in mathematics. He proved it rigorously using the method of exhaustion. It had never been known before. And it remained on his tomb — still legible when Cicero found it 137 years later, still beautiful, still true.</p>
+  </section>
+
+  <!-- SECTION 8: THE SAND RECKONER -->
+  <section>
+    <span class="kick">Mathematics · Cosmological Arithmetic</span>
+    <h2>VIII. The Sand Reckoner — A Number System for the Universe</h2>
+    <p>In <em>The Sand Reckoner</em>, addressed to King Hiero's son Gelon, Archimedes sets out to answer a question that had no practical motivation: how many grains of sand would fit in the universe? The answer required him to invent a system for expressing numbers far larger than Greek notation could handle — what we would recognize as a positional notation with very large bases.</p>
+
+    <div class="formula-block">
+      Greek numerals had no symbol beyond the myriad (10,000).<br>
+      Archimedes defined:<br>
+        - Numbers up to 10⁸ as "first order"<br>
+        - Numbers up to 10¹⁶ as "second order"<br>
+        - ... up to 10^(8×10⁸) = a "myriad-myriad-th order"<br><br>
+      His estimate for the universe's sand capacity: ~10⁶³ grains<br>
+      (Using Aristarchus's heliocentric universe estimate for scale)
+    </div>
+
+    <p>The Sand Reckoner also contains the only surviving ancient reference to the heliocentric model of Aristarchus of Samos — Archimedes uses Aristarchus's (much larger) estimate of the universe's size as his upper bound, which meant he had to use a universe centered on the Sun, not the Earth. This is the text that preserves the fact that a heliocentric theory predated Copernicus by 1,800 years.</p>
+    <p>The underlying mathematics is essentially scientific notation: expressing very large numbers as powers of a base, then operating on those exponents. Archimedes developed this specifically for this problem. The same idea — powers of ten, additive exponents — underlies every logarithm table, every slide rule, and every scientific calculator ever made.</p>
+  </section>
+
+  <!-- SECTION 9: COMPLETE WORKS GRID -->
+  <section>
+    <span class="kick">The Corpus</span>
+    <h2>All Surviving Works</h2>
+
+    <div class="work-grid">
+      <div class="work-card">
+        <span class="wnum">Work I</span>
+        <h4>On the Equilibrium of Planes</h4>
+        <span class="wtag">Two Books · Mechanics / Mathematics</span>
+        <p>Derives the law of the lever from first principles. Proves that bodies balance when their weights are inversely proportional to their distances from the fulcrum. Develops the concept of center of gravity for plane figures, including the triangle and the trapezoid. The first rigorous mathematical treatment of a physical principle in history.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work II</span>
+        <h4>Measurement of a Circle</h4>
+        <span class="wtag">One Book · Mathematics</span>
+        <p>Three propositions. Proves that the area of a circle equals that of a right triangle with legs equal to the radius and circumference. Bounds pi between 3 10/71 and 3 1/7 using a 96-sided polygon. Proves that the ratio of circumference to diameter is the same for all circles (what we call pi). The most accurate pi calculation in antiquity.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work III</span>
+        <h4>On the Sphere and Cylinder</h4>
+        <span class="wtag">Two Books · Mathematics</span>
+        <p>His proudest work. Proves that the surface area of a sphere is 4πr². Proves the 2/3 relationship between sphere and circumscribed cylinder — both for volume and surface area. Derives the surface area and volume of a spherical cap (the portion of a sphere cut by a plane). Requested carved on his tomb.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work IV</span>
+        <h4>On Conoids and Spheroids</h4>
+        <span class="wtag">One Book · Mathematics</span>
+        <p>Computes the volumes of paraboloids of revolution (a parabola rotated about its axis) and hyperboloids and ellipsoids. These are three-dimensional figures obtained by rotating conic sections. The calculations required the method of exhaustion applied in three dimensions. Mathematically sophisticated beyond anything attempted before him.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work V</span>
+        <h4>On Spirals</h4>
+        <span class="wtag">One Book · Mathematics</span>
+        <p>Defines and studies the spiral now called the Archimedean spiral — the curve traced by a point moving at constant speed along a rotating ray. Finds the area enclosed by one turn of the spiral. Proves properties of tangents to the spiral. Uses this to construct a procedure for squaring the circle (given a spiral of known construction). A purely theoretical mathematical achievement.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work VI</span>
+        <h4>Quadrature of the Parabola</h4>
+        <span class="wtag">One Book · Mathematics</span>
+        <p>Proves that the area of a parabolic segment is 4/3 times the area of the inscribed triangle. Does this twice: once by the mechanical method (proto-calculus) and once by the rigorous method of exhaustion (a geometric series summing to 4/3). The most complete demonstration of the relationship between his mechanical discovery method and his formal proof method.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work VII</span>
+        <h4>On Floating Bodies</h4>
+        <span class="wtag">Two Books · Physics / Mathematics</span>
+        <p>Book I: derives Archimedes's principle of buoyancy from mathematical axioms about fluid pressure. Book II: determines the conditions of stability for a floating paraboloid at various orientations — essentially a treatment of ship stability. The first rigorous quantitative treatment of hydrostatics. Still used as a reference.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work VIII</span>
+        <h4>The Sand Reckoner</h4>
+        <span class="wtag">One Book · Mathematics / Cosmology</span>
+        <p>Invents a system for expressing numbers larger than Greek notation allowed (precursor to scientific notation). Estimates the number of sand grains that would fill the universe, using Aristarchus's heliocentric model as the upper bound for the universe's size. Contains the only ancient reference to Aristarchus's heliocentric theory. Addressed to King Hiero's son Gelon.</p>
+      </div>
+      <div class="work-card">
+        <span class="wnum">Work IX</span>
+        <h4>The Method of Mechanical Theorems</h4>
+        <span class="wtag">One Book · Mathematics · Lost Until 1906</span>
+        <p>The most important lost and recovered work in the history of mathematics. Explains Archimedes's private heuristic method for discovering results — treating plane figures as made of infinitely many line-segments, balancing them on a lever. This is proto-integral calculus. Lost for 1,800 years; survived only as a palimpsest overwritten in the 13th century; recovered by Heiberg in 1906 in Constantinople.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Archimedes of Syracuse — A Library in Four Volumes &nbsp;|&nbsp; Vol. 1: The Work<br>
+    Sources: T. L. Heath, <em>The Works of Archimedes</em> (1897); Reviel Netz, <em>The Works of Archimedes</em> Vol. I–II (2004, 2009); Plutarch, <em>Life of Marcellus</em>; Polybius, <em>Histories</em> VIII; Vitruvius, <em>De Architectura</em> IX.3; Sherman Stein, <em>Archimedes: What Did He Do Besides Cry Eureka?</em> (1999)
+  </div>
+</footer>
+
+</body>
+</html>

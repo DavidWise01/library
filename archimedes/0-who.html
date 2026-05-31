@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archimedes — Vol. 0: Who He Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0d0a06;
+      --bronze: #b45309;
+      --sand: #d4a853;
+      --dim: #7a5c2e;
+      --mid: #1e1508;
+      --card-bg: #120e05;
+      --border: rgba(180,83,9,0.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--sand);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* NAV */
+    nav {
+      background: rgba(13,10,6,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--sand); }
+
+    /* MASTHEAD */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--sand);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--bronze);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(212,168,83,0.82);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+    .masthead-art svg { width: 100%; height: auto; }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--bronze);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--sand);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+    p {
+      margin-bottom: 1.1rem;
+      color: rgba(212,168,83,0.88);
+    }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--bronze);
+      color: #0d0a06;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    /* CARD GRID */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--bronze);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: rgba(212,168,83,0.72);
+      line-height: 1.65;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--bronze);
+      border-radius: 50%;
+    }
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--bronze);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-item p { font-size: 0.92rem; }
+
+    /* PULL QUOTE */
+    blockquote {
+      border-left: 3px solid var(--bronze);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(180,83,9,0.06);
+    }
+    blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--sand);
+      margin: 0;
+    }
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* FACT TABLE */
+    .fact-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.93rem;
+    }
+    .fact-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+    .fact-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(180,83,9,0.12);
+      color: rgba(212,168,83,0.82);
+      vertical-align: top;
+    }
+    .fact-table tr:last-child td { border-bottom: none; }
+    .status-known {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #7ec87e;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .status-unknown {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #c87e7e;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .status-inferred {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--bronze);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* VOL NAV */
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+    .vol-nav a:hover { color: var(--sand); border-color: var(--bronze); }
+    .vol-nav a.current {
+      color: var(--sand);
+      border-color: var(--bronze);
+      background: rgba(180,83,9,0.1);
+    }
+
+    /* COLOPHON */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+    .colophon a { color: var(--dim); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      nav { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Archimedes — A Library in Four Volumes</span>
+  <a href="0-who.html" class="active">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 0 of 4 &nbsp;·&nbsp; Archimedes of Syracuse</span>
+    <h1>Who He Was</h1>
+    <div class="subtitle">The Greatest Scientist of Antiquity</div>
+    <p class="lede">He proved the mathematics of the lever. He computed pi more accurately than anyone before him. He derived calculus eighteen centuries before Newton — and the evidence was hidden inside a medieval prayer book until 1906. He died defending his city with war machines he had built himself, drawing circles in the sand.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Sphere inscribed in cylinder — Archimedes' requested tomb marker -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg0" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1005"/>
+          <stop offset="100%" stop-color="#0d0a06"/>
+        </radialGradient>
+        <radialGradient id="sphereGrad" cx="42%" cy="35%" r="55%">
+          <stop offset="0%" stop-color="#d4a853" stop-opacity="0.35"/>
+          <stop offset="60%" stop-color="#b45309" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#0d0a06" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Background -->
+      <circle cx="180" cy="180" r="178" fill="url(#bg0)" stroke="#b45309" stroke-width="0.5" opacity="0.5"/>
+
+      <!-- Cylinder outer rectangle (static) -->
+      <rect x="90" y="68" width="180" height="224" rx="0" fill="none" stroke="#b45309" stroke-width="1.2" opacity="0.5"/>
+      <!-- Cylinder top ellipse -->
+      <ellipse cx="180" cy="68" rx="90" ry="28" fill="none" stroke="#b45309" stroke-width="1.2" opacity="0.5"/>
+      <!-- Cylinder bottom ellipse -->
+      <ellipse cx="180" cy="292" rx="90" ry="28" fill="none" stroke="#b45309" stroke-width="1.2" opacity="0.5"/>
+      <!-- Cylinder vertical side lines -->
+      <line x1="90" y1="68" x2="90" y2="292" stroke="#b45309" stroke-width="1.2" opacity="0.5"/>
+      <line x1="270" y1="68" x2="270" y2="292" stroke="#b45309" stroke-width="1.2" opacity="0.5"/>
+
+      <!-- Inscribed sphere — slowly pulsing opacity -->
+      <circle cx="180" cy="180" r="112" fill="url(#sphereGrad)" stroke="#d4a853" stroke-width="1.5" opacity="0.7">
+        <animate attributeName="opacity" values="0.7;0.9;0.7" dur="6s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Rotating equatorial line on sphere -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="20s" repeatCount="indefinite" additive="sum"/>
+        <ellipse cx="0" cy="0" rx="112" ry="22" fill="none" stroke="#d4a853" stroke-width="0.8" opacity="0.45"/>
+      </g>
+
+      <!-- Rotating meridian -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="28s" repeatCount="indefinite" additive="sum"/>
+        <ellipse cx="0" cy="0" rx="22" ry="112" fill="none" stroke="#d4a853" stroke-width="0.8" opacity="0.35"/>
+      </g>
+
+      <!-- Radius lines showing 2:3 ratio annotation -->
+      <line x1="180" y1="180" x2="180" y2="68" stroke="#d4a853" stroke-width="0.6" stroke-dasharray="3 5" opacity="0.4"/>
+      <line x1="180" y1="180" x2="270" y2="180" stroke="#d4a853" stroke-width="0.6" stroke-dasharray="3 5" opacity="0.4"/>
+
+      <!-- Ratio label -->
+      <text x="222" y="176" font-family="Space Mono, monospace" font-size="8" fill="#d4a853" opacity="0.55" letter-spacing="1">r</text>
+      <text x="178" y="130" font-family="Space Mono, monospace" font-size="8" fill="#d4a853" opacity="0.55" letter-spacing="1">h/2</text>
+
+      <!-- Pulsing outer ring -->
+      <circle cx="180" cy="180" r="172" fill="none" stroke="#b45309" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0.25;0" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="172;178;172" dur="5s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Label -->
+      <text x="18" y="342" font-family="Space Mono, monospace" font-size="7.5" fill="#b45309" opacity="0.55" letter-spacing="2">SPHERE IN CYLINDER · HIS TOMB</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html" class="current">Vol. 0 — Who He Was</a>
+    <a href="1-work.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: THE MAN -->
+  <section>
+    <span class="kick">The Historical Person</span>
+    <h2>A Genius With a Biography</h2>
+    <p>Unlike his predecessor Euclid, Archimedes is not a ghost. We know when and where he was born, roughly what he looked like in legend, who his father was, which king he served, how he died, and what he asked to have carved on his tombstone. He is one of the most vivid personalities of the ancient world — not despite the sparse record, but because the record that survives is so specific and so strange.</p>
+    <p>He was born around 287 BCE in Syracuse, the great Greek city-state on the eastern coast of Sicily. His father was Phidias, an astronomer. He studied in Alexandria — then the intellectual capital of the world — under the successors of Euclid, probably at the Museum. He returned to Syracuse and spent the rest of his life there, serving the court of King Hiero II as a mathematician, engineer, and inventor. He died in 212 BCE when a Roman soldier killed him during the sack of Syracuse — against the direct orders of the Roman general Marcellus, who admired Archimedes and wanted him taken alive.</p>
+    <p>What makes Archimedes distinctive is not just the scale of his achievement but his self-awareness about it. He was proud. He published work he considered preliminary. He wrote letters to colleagues presenting results as puzzles before revealing proofs. He had a favorite theorem — the relationship between a sphere and its circumscribed cylinder — and he asked for a diagram of it to be carved on his tomb. We know this because Cicero, visiting Syracuse 137 years after Archimedes's death, found the tomb neglected and overgrown but still bearing the image: a sphere inside a cylinder.</p>
+
+    <blockquote>
+      <p>"Do not disturb my circles."</p>
+      <cite>— Attributed to Archimedes, to the Roman soldier who killed him, 212 BCE. Reported by Valerius Maximus. He was reportedly drawing geometric figures in the sand when interrupted.</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 2: LIFE TIMELINE -->
+  <section>
+    <span class="kick">Life in Time</span>
+    <h2>The Arc of a Life</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">c. 287 BCE</div>
+        <h4>Born in Syracuse, Sicily</h4>
+        <p>Syracuse was the largest and most powerful Greek city-state in the western Mediterranean. Founded by Corinthians in 734 BCE, it had repelled an Athenian invasion in 415–413 BCE — one of the great military disasters of the ancient world — and now thrived under the rule of Hiero II, a pragmatic and culturally ambitious king. Archimedes's father Phidias was an astronomer, suggesting an educated household. The date 287 BCE derives from the historian John Tzetzes, writing in the 12th century CE, who gives his age at death as 75.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 270–260 BCE</div>
+        <h4>Study in Alexandria</h4>
+        <p>As a young man, Archimedes traveled to Alexandria — the only place in the ancient world where you could encounter all prior mathematical knowledge in one place. He studied under the successors of Euclid, particularly Conon of Samos, who became a close friend. The relationship mattered: Archimedes's surviving letters mention Conon repeatedly and with evident affection. He also corresponded with Eratosthenes, the librarian who measured the circumference of the Earth. Alexandria gave Archimedes access to every mathematical idea that had come before him.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 260 BCE</div>
+        <h4>Return to Syracuse — Court Mathematician</h4>
+        <p>Archimedes returned to Syracuse and remained there for the rest of his life — never, so far as we know, leaving again. He served King Hiero II in a relationship that was more partnership than servitude. Hiero was genuinely interested in practical ingenuity: he commissioned the largest ship ever built in antiquity (the Syracusia), and he asked Archimedes to verify whether his crown was pure gold without melting it down. That last commission led to the Eureka moment. Archimedes also designed war machines, irrigation systems, and astronomical instruments.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 250–215 BCE</div>
+        <h4>The Mathematical Works</h4>
+        <p>During this period Archimedes wrote the surviving treatises — On the Sphere and Cylinder, Measurement of a Circle, On Conoids and Spheroids, On Spirals, On the Equilibrium of Planes, The Sand Reckoner, The Method, On Floating Bodies, and others. He was in correspondence with mathematicians in Alexandria throughout, sending problems and results across the Mediterranean. Several texts survive only because he sent them as letters: <em>The Method</em> is addressed directly to Eratosthenes. He was not a reclusive genius; he was an active participant in the international scholarly community of his era.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">214 BCE</div>
+        <h4>Rome Besieges Syracuse</h4>
+        <p>The Second Punic War had drawn Syracuse into conflict with Rome. After the death of King Hiero II, Syracuse allied with Carthage. Rome responded by sending a fleet under Marcus Claudius Marcellus to take the city. Archimedes — by now in his seventies — designed the defensive weapons that held the Roman forces off for two full years. The Roman soldiers, according to Plutarch, became so terrified of Archimedes's machines that they would flee if they saw a piece of rope or timber appearing over the city walls, fearing some new device.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">212 BCE</div>
+        <h4>Death During the Sack of Syracuse</h4>
+        <p>Syracuse fell in 212 BCE. Marcellus had given explicit orders that Archimedes was not to be harmed. A Roman soldier — accounts differ on the circumstances — killed him anyway. The most famous account, reported by Valerius Maximus, says Archimedes was working on a geometric problem, drawing figures in the sand, and when the soldier interrupted him he said: "Do not disturb my circles." He was approximately 75 years old. Marcellus, reportedly, wept.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: WHAT WE KNOW -->
+  <section>
+    <span class="kick">The Evidence</span>
+    <h2>What We Can Verify</h2>
+
+    <table class="fact-table">
+      <thead>
+        <tr>
+          <th>Fact</th>
+          <th>Status</th>
+          <th>Source / Basis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Born c. 287 BCE in Syracuse, Sicily</td>
+          <td><span class="status-inferred">Inferred</span></td>
+          <td>John Tzetzes (12th c. CE) gives age at death as 75; death date 212 BCE is confirmed</td>
+        </tr>
+        <tr>
+          <td>Father was Phidias, an astronomer</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Archimedes states this himself in <em>The Sand Reckoner</em></td>
+        </tr>
+        <tr>
+          <td>Studied in Alexandria under Euclid's successors</td>
+          <td><span class="status-inferred">Inferred</span></td>
+          <td>His letters to Conon of Samos and Eratosthenes; his knowledge of Euclidean work</td>
+        </tr>
+        <tr>
+          <td>Served King Hiero II of Syracuse</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Multiple ancient sources; <em>The Sand Reckoner</em> is dedicated to Hiero's son Gelon</td>
+        </tr>
+        <tr>
+          <td>Designed war machines used at the siege of Syracuse (214–212 BCE)</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Polybius, Livy, Plutarch all describe the siege; machines are explicitly attributed</td>
+        </tr>
+        <tr>
+          <td>Killed in 212 BCE during the Roman sack of Syracuse</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Multiple independent ancient sources: Livy, Plutarch, Valerius Maximus</td>
+        </tr>
+        <tr>
+          <td>The "Eureka" story and the crown</td>
+          <td><span class="status-unknown">Tradition</span></td>
+          <td>Vitruvius (1st c. BCE), writing ~200 years after the event; no contemporary account</td>
+        </tr>
+        <tr>
+          <td>Requested sphere-in-cylinder on his tomb</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Cicero (<em>Tusculan Disputations</em>) reports finding the tomb with the diagram, 75 BCE</td>
+        </tr>
+        <tr>
+          <td>His personal appearance</td>
+          <td><span class="status-unknown">Unknown</span></td>
+          <td>No authentic portrait; all images postdate him by many centuries</td>
+        </tr>
+        <tr>
+          <td>Nine surviving mathematical treatises</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Manuscript tradition; the palimpsest (discovered 1906) added <em>The Method</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION 4: PERSONALITY AND LEGEND -->
+  <section>
+    <span class="kick">The Man Behind the Mathematics</span>
+    <h2>Character and Legend</h2>
+    <p>Archimedes is unusual among ancient scientists in that we have a clear sense of his personality — partly from his own writings, partly from accounts of people who knew or knew of him. He was, by all evidence, both a genuine theorist of the first rank and a consummate engineer. He appears to have delighted in both modes. He was also, by his own admission, proud.</p>
+    <p>His surviving prefaces reveal a mathematician who understood his own significance. He sends problems to colleagues before revealing the solutions — partly to give them the pleasure of discovery, but partly, he admits, to catch those who might claim credit for results they did not find. He describes his method as something entirely new and describes specific results as the most beautiful he has found. He is not falsely modest.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">CHARACTER</span>
+        <h4>The Proud Geometer</h4>
+        <p>Archimedes identified most with his pure mathematics — the work on spheres and cylinders, spirals, parabolas. He considered his mechanical inventions beneath his dignity, remarkable as they were. Plutarch reports that he "looked upon the work of an engineer and every art that ministers to the needs of life as ignoble and vulgar." Whether this is accurate or an Athenian prejudice Plutarch projected onto him, we cannot say. But his request for the geometric tomb marker speaks for itself.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">LEGEND</span>
+        <h4>Eureka — The Bath and the Crown</h4>
+        <p>King Hiero II suspected his crown was not pure gold. He asked Archimedes to determine the truth without melting it. The story — recorded by Vitruvius two centuries later — says Archimedes solved it in his bath: noticing that water displaced by his body was proportional to his volume, he leapt out and ran naked through the streets crying "Eureka!" (Greek: I have found it). The word entered every European language.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">LEGEND</span>
+        <h4>Give Me a Place to Stand</h4>
+        <p>"Give me a place to stand and I will move the Earth." Archimedes is said to have made this boast about the lever, and proved it — at least partially — by using a compound pulley system to haul the fully loaded Syracusia (the largest ship of the ancient world) across the harbor single-handed, reportedly while seated, pulling a rope. The story is reported by Plutarch. The physics is correct; whether the demonstration happened exactly this way is uncertain.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">DEATH</span>
+        <h4>Do Not Disturb My Circles</h4>
+        <p>Three accounts survive of Archimedes's death; all agree a Roman soldier killed him against orders. The version with the circles and the last words has become the defining image of the mathematical temperament: a man so absorbed in a problem that he cannot be bothered by conquest. Whether it is literally true, it is spiritually accurate. His work shows a mind capable of exactly that absorption.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">TOMB</span>
+        <h4>The Sphere and Cylinder</h4>
+        <p>Of all his discoveries, Archimedes was proudest of the proof that a sphere inscribed in a cylinder has a volume equal to 2/3 the volume of the cylinder, and a surface area equal to 2/3 the total surface area of the cylinder. He asked for this diagram to be carved on his tomb. Cicero found it, overgrown but legible, when he served as quaestor in Sicily in 75 BCE — 137 years after Archimedes's death.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">CORRESPONDENCE</span>
+        <h4>Letters Across the Mediterranean</h4>
+        <p>Archimedes maintained active correspondence with mathematicians in Alexandria — Conon of Samos (his closest intellectual friend), Dositheus (who received several treatises after Conon's death), and Eratosthenes (to whom <em>The Method</em> is addressed). This network of correspondence preserved his work and situated it within the broader mathematical culture of the Hellenistic world.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE NINE SURVIVING WORKS -->
+  <section>
+    <span class="kick">The Corpus</span>
+    <h2>Nine Works, No Originals</h2>
+    <p>We have nine surviving works by Archimedes — or rather, nine surviving manuscript traditions. No original manuscript by Archimedes exists. Everything we have is copies of copies, the oldest surviving ones dating from the Byzantine era (roughly 9th–13th centuries CE). Most of what we know survives through a single manuscript tradition from Constantinople, and much of the corpus was nearly lost.</p>
+    <p>The most dramatic case is <em>The Method</em>. This text, in which Archimedes explains the private heuristic reasoning that let him discover results before he could prove them formally — a method that amounts to a form of integral calculus — was completely unknown until 1906. That year, the Danish philologist Johan Ludvig Heiberg examined a 10th-century Byzantine manuscript in Constantinople and found, beneath a 13th-century Christian prayer book, traces of erased mathematical text. The prayer book was a palimpsest: monks had scraped off the parchment and written over it. The text beneath was Archimedes.</p>
+
+    <blockquote>
+      <p>"Since I see, however, as I said, that you are a capable scholar and a prominent teacher of philosophy, and also that you understand how to value a mathematical method of investigation when the opportunity is offered…"</p>
+      <cite>— Archimedes, opening of <em>The Method</em>, addressed to Eratosthenes, Head of the Library of Alexandria. c. 250 BCE.</cite>
+    </blockquote>
+
+    <p>The treatises range from pure mathematics (areas and volumes of curved figures) to applied physics (floating bodies, lever equilibrium) to a kind of cosmic arithmetic (the Sand Reckoner). They are unified by an approach: mathematical proof from first principles, often via the "method of exhaustion" — enclosing a curved figure between polygons whose areas are known and compressing them together. It is the direct ancestor of the limit concept in calculus.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Archimedes of Syracuse — A Library in Four Volumes &nbsp;|&nbsp; Vol. 0: Who He Was<br>
+    Sources: Plutarch, <em>Life of Marcellus</em>; Polybius, <em>Histories</em>; T. L. Heath, <em>The Works of Archimedes</em> (1897); Reviel Netz &amp; William Noel, <em>The Archimedes Codex</em> (2007); Cicero, <em>Tusculan Disputations</em> V.64; Vitruvius, <em>De Architectura</em> IX.3
+  </div>
+</footer>
+
+</body>
+</html>

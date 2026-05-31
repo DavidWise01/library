@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregor Mendel — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050a05;
+    --card:#0b100b;
+    --ink:#e8e4d8;
+    --dim:#6b7a5a;
+    --pea:#65a30d;
+    --violet:#7c3aed;
+    --line:rgba(101,163,13,0.18);
+    --violetline:rgba(124,58,237,0.22);
+    --peatint:rgba(101,163,13,0.07);
+    --violettint:rgba(124,58,237,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(101,163,13,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--pea);color:#050a05;}
+  a{color:var(--pea);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--peatint);color:var(--pea);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--pea);}
+  .mast{border-bottom:4px solid var(--pea);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--pea);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:620px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--pea);}
+  .art{flex:0 0 auto;}
+
+  /* PUNNETT SQUARE SVG ANIMATIONS */
+  @keyframes cell-fill{0%{opacity:0;transform:scale(0.6)}100%{opacity:1;transform:scale(1)}}
+  @keyframes label-appear{0%{opacity:0}100%{opacity:1}}
+  @keyframes border-draw{0%{stroke-dashoffset:400}100%{stroke-dashoffset:0}}
+  .punnett-grid{stroke-dasharray:400;stroke-dashoffset:400;animation:border-draw 1s ease 0.3s forwards;}
+  .cell-pp{opacity:0;animation:cell-fill 0.4s ease 1.2s forwards;}
+  .cell-pp2{opacity:0;animation:cell-fill 0.4s ease 1.5s forwards;}
+  .cell-pp3{opacity:0;animation:cell-fill 0.4s ease 1.8s forwards;}
+  .cell-rr{opacity:0;animation:cell-fill 0.4s ease 2.1s forwards;}
+  .lbl-1{opacity:0;animation:label-appear 0.3s ease 1.1s forwards;}
+  .lbl-2{opacity:0;animation:label-appear 0.3s ease 1.4s forwards;}
+  .lbl-3{opacity:0;animation:label-appear 0.3s ease 1.7s forwards;}
+  .lbl-4{opacity:0;animation:label-appear 0.3s ease 2.0s forwards;}
+  .ratio-lbl{opacity:0;animation:label-appear 0.5s ease 2.5s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .punnett-grid{animation:none;stroke-dashoffset:0;}
+    .cell-pp,.cell-pp2,.cell-pp3,.cell-rr,.lbl-1,.lbl-2,.lbl-3,.lbl-4,.ratio-lbl{animation:none;opacity:1;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--pea);
+    color:#050a05;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.violet{background:var(--violet);color:#e8e4d8;}
+  .band.dim{background:#0f160a;color:var(--pea);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--pea);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--pea);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.tight{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+  .grid.seven{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--pea);}
+  .card.v:hover{box-shadow:5px 5px 0 var(--violet);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--pea);
+  }
+  .card.v .num{color:var(--violet);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--pea);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.v .meta b{color:var(--violet);}
+  .trait-dominant{color:var(--pea);font-weight:600;}
+  .trait-recessive{color:#9d5cf5;font-style:italic;}
+
+  /* PUNNETT WRAPPER */
+  .punnett-wrap{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start;margin:18px 0;}
+  .punnett-box{background:var(--card);border:1px solid var(--line);padding:16px;flex:0 0 auto;}
+  .punnett-box h3{margin-bottom:12px;}
+
+  /* RATIO BAR */
+  .ratio-bar{display:flex;height:32px;margin:14px 0;border:1px solid var(--line);overflow:hidden;}
+  .ratio-dom{background:var(--pea);flex:3;display:flex;align-items:center;justify-content:center;
+    font-family:"Space Mono",monospace;font-size:11px;color:#050a05;letter-spacing:0.08em;}
+  .ratio-rec{background:var(--violet);flex:1;display:flex;align-items:center;justify-content:center;
+    font-family:"Space Mono",monospace;font-size:11px;color:#e8e4d8;letter-spacing:0.08em;}
+
+  /* BLOCK QUOTE */
+  .pull{
+    border-left:4px solid var(--violet);padding:14px 20px;margin:22px 0;
+    background:var(--violettint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COLUMN PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{
+    background:var(--card);border:1px solid var(--line);padding:12px 16px;
+    flex:1;min-width:130px;
+  }
+  .stat .n{
+    font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--pea);
+    display:block;line-height:1;
+  }
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* DATA TABLE */
+  .data-table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0;}
+  .data-table th{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--pea);border-bottom:2px solid var(--line);padding:8px 10px;text-align:left;}
+  .data-table td{padding:8px 10px;border-bottom:1px solid rgba(101,163,13,0.1);vertical-align:top;}
+  .data-table tr:hover td{background:var(--peatint);}
+  .data-table .dom{color:var(--pea);}
+  .data-table .rec{color:#9d5cf5;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}.card{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Mendel series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-heredity.html" class="active">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">mendel series · volume 1 · the work</span>
+    <div class="masthead">
+      <div>
+        <h1>The Laws of <em>Heredity</em></h1>
+        <p class="dek">Between <b>1856 and 1863</b>, in a monastery garden in Brno, a monk counted 29,000 pea plants and found the hidden mathematics of inheritance. He invented genetics before there was a word for it — and did it with arithmetic, patience, and peas.</p>
+      </div>
+      <!-- ANIMATED PUNNETT SQUARE SVG -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img"
+           aria-label="Animated Punnett square filling in with dominant and recessive allele combinations">
+        <!-- Header labels (parent alleles) -->
+        <text x="110" y="28" text-anchor="middle" font-family="Cinzel,serif" font-size="13" font-weight="700" fill="#65a30d" class="lbl-1">P</text>
+        <text x="160" y="28" text-anchor="middle" font-family="Cinzel,serif" font-size="13" font-weight="700" fill="#9d5cf5" class="lbl-2">p</text>
+        <text x="60" y="68" text-anchor="middle" font-family="Cinzel,serif" font-size="13" font-weight="700" fill="#65a30d" class="lbl-3">P</text>
+        <text x="60" y="118" text-anchor="middle" font-family="Cinzel,serif" font-size="13" font-weight="700" fill="#9d5cf5" class="lbl-4">p</text>
+        <!-- Grid border -->
+        <rect class="punnett-grid" x="78" y="36" width="120" height="120" stroke="#65a30d" stroke-width="1.5" fill="none" stroke-dasharray="400" stroke-dashoffset="400"/>
+        <line class="punnett-grid" x1="138" y1="36" x2="138" y2="156" stroke="#65a30d" stroke-width="1" stroke-dasharray="400" stroke-dashoffset="400"/>
+        <line class="punnett-grid" x1="78" y1="96" x2="198" y2="96" stroke="#65a30d" stroke-width="1" stroke-dasharray="400" stroke-dashoffset="400"/>
+        <!-- Cell 1: PP (dominant/dominant) -->
+        <rect class="cell-pp" x="80" y="38" width="56" height="56" fill="rgba(101,163,13,0.15)" rx="2"/>
+        <text class="cell-pp" x="108" y="62" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#65a30d">P</text>
+        <text class="cell-pp" x="108" y="80" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#65a30d">P</text>
+        <!-- Cell 2: Pp (dominant/recessive) -->
+        <rect class="cell-pp2" x="140" y="38" width="56" height="56" fill="rgba(101,163,13,0.15)" rx="2"/>
+        <text class="cell-pp2" x="168" y="62" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#65a30d">P</text>
+        <text class="cell-pp2" x="168" y="80" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#9d5cf5">p</text>
+        <!-- Cell 3: Pp (recessive/dominant) -->
+        <rect class="cell-pp3" x="80" y="98" width="56" height="56" fill="rgba(101,163,13,0.15)" rx="2"/>
+        <text class="cell-pp3" x="108" y="122" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#65a30d">P</text>
+        <text class="cell-pp3" x="108" y="140" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#9d5cf5">p</text>
+        <!-- Cell 4: pp (recessive/recessive) -->
+        <rect class="cell-rr" x="140" y="98" width="56" height="56" fill="rgba(124,58,237,0.15)" rx="2"/>
+        <text class="cell-rr" x="168" y="122" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#9d5cf5">p</text>
+        <text class="cell-rr" x="168" y="140" text-anchor="middle" font-family="Cinzel,serif" font-size="14" font-weight="700" fill="#9d5cf5">p</text>
+        <!-- Ratio label -->
+        <text class="ratio-lbl" x="105" y="185" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#65a30d" letter-spacing="0.08em">3 DOMINANT : 1 RECESSIVE</text>
+        <text class="ratio-lbl" x="105" y="198" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#6b7a5a" letter-spacing="0.06em">F₂ GENERATION RATIO</text>
+        <!-- Corner label -->
+        <text x="60" y="28" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#6b7a5a">×</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- STAT ROW -->
+  <div class="stats reveal" style="animation-delay:.1s">
+    <div class="stat"><span class="n">29,000</span><span class="l">Plants Counted</span></div>
+    <div class="stat"><span class="n">7</span><span class="l">Traits Studied</span></div>
+    <div class="stat"><span class="n">3:1</span><span class="l">F₂ Ratio</span></div>
+    <div class="stat"><span class="n">2</span><span class="l">Laws Discovered</span></div>
+    <div class="stat"><span class="n">1866</span><span class="l">Year Published</span></div>
+  </div>
+
+  <!-- THE SEVEN TRAITS -->
+  <div class="band">The Seven Traits of <em>Pisum Sativum</em></div>
+  <div class="reveal" style="animation-delay:.15s">
+    <p>Mendel did not choose seven traits at random. He spent two full years testing varieties to find traits that were <strong>clearly distinct</strong> (no gradations or blending), <strong>stably inherited</strong> (each variety bred true), and <strong>visible without microscopy</strong> (so he could count thousands of plants without instruments). His final seven were a near-perfect set for the experiment he had in mind.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Trait</th>
+          <th>Dominant Form</th>
+          <th>Recessive Form</th>
+          <th>F₂ Ratio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Seed shape</td>
+          <td class="dom">Round</td>
+          <td class="rec">Wrinkled</td>
+          <td>2.96 : 1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Seed color</td>
+          <td class="dom">Yellow</td>
+          <td class="rec">Green</td>
+          <td>3.01 : 1</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Pod shape</td>
+          <td class="dom">Inflated</td>
+          <td class="rec">Constricted</td>
+          <td>2.95 : 1</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Pod color</td>
+          <td class="dom">Green</td>
+          <td class="rec">Yellow</td>
+          <td>2.82 : 1</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Flower color</td>
+          <td class="dom">Purple / violet</td>
+          <td class="rec">White</td>
+          <td>3.15 : 1</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Flower position</td>
+          <td class="dom">Axial (along stem)</td>
+          <td class="rec">Terminal (at top)</td>
+          <td>3.14 : 1</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Plant height</td>
+          <td class="dom">Tall (6–7 ft)</td>
+          <td class="rec">Dwarf (0.75–1.5 ft)</td>
+          <td>2.84 : 1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Notice the ratios: none is exactly 3:1, but all cluster tightly around it. Mendel recognized this pattern because he was counting thousands of plants per trait — enough that statistical noise averaged out and the underlying ratio became visible. Earlier hybridizers had seen similar plants without ever noticing the mathematics, because they hadn't counted large enough samples.</p>
+  </div>
+
+  <!-- THE METHODOLOGY -->
+  <div class="band violet">The Method That Changed Science</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <div class="prose-2">
+      <div>
+        <h2>Why <em>Peas</em>?</h2>
+        <p>Garden peas (<em>Pisum sativum</em>) were chosen with deliberate precision. They self-fertilize by default — their flowers close around the stamens before opening, so each plant naturally produces offspring identical to itself unless manually cross-pollinated. This made establishing "pure lines" straightforward. Mendel grew each variety for two years to confirm it bred true, discarding any that didn't.</p>
+        <p>Peas also grow fast, produce many seeds, and are easy to handle in bulk. Their traits are cleanly discrete — a seed is either round or wrinkled, never "somewhat wrinkled." There is no continuum. This binarity was essential for the counting approach Mendel planned.</p>
+      </div>
+      <div>
+        <h2>The Statistical <em>Revolution</em></h2>
+        <p>Mendel's true revolution was not botanical — it was methodological. He applied <strong>quantitative statistical reasoning</strong> to biology a full generation before it became standard practice. His training under Christian Doppler in Vienna had given him a physicist's instinct for counting, measuring, and looking for numerical laws underlying phenomena.</p>
+        <p>Before Mendel, hybridization studies described what plants looked like. Mendel counted how many. He tabulated results in thousands, derived ratios, and asked what mathematical law could produce those ratios. The answer — that each parent contributes one of two "factors" and the factors separate randomly during reproduction — was not a botanical observation. It was a logical deduction from numbers.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAW 1: SEGREGATION -->
+  <div class="band">Law I — Segregation</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <p>Mendel's <strong>First Law</strong>, the Law of Segregation, states: each organism carries two copies of each heritable factor (what we now call alleles); these two copies separate (segregate) during the formation of reproductive cells (gametes); each gamete receives exactly one copy; and the offspring receives one copy from each parent.</p>
+
+    <div class="punnett-wrap">
+      <div class="punnett-box">
+        <h3>F₁ Cross: PP × pp (Pure Round × Pure Wrinkled)</h3>
+        <svg width="180" height="140" viewBox="0 0 180 140" role="img" aria-label="F1 cross Punnett square showing all Pp offspring">
+          <!-- All cells Pp -->
+          <text x="70" y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">p</text>
+          <text x="120" y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">p</text>
+          <text x="28" y="62" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">P</text>
+          <text x="28" y="102" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">P</text>
+          <rect x="42" y="28" width="100" height="100" stroke="#65a30d" stroke-width="1" fill="none"/>
+          <line x1="92" y1="28" x2="92" y2="128" stroke="#65a30d" stroke-width="0.8"/>
+          <line x1="42" y1="78" x2="142" y2="78" stroke="#65a30d" stroke-width="0.8"/>
+          <text x="67" y="57" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#65a30d">P</text>
+          <text x="67" y="72" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#9d5cf5">p</text>
+          <text x="117" y="57" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#65a30d">P</text>
+          <text x="117" y="72" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#9d5cf5">p</text>
+          <text x="67" y="100" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#65a30d">P</text>
+          <text x="67" y="115" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#9d5cf5">p</text>
+          <text x="117" y="100" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#65a30d">P</text>
+          <text x="117" y="115" text-anchor="middle" font-family="Cinzel,serif" font-size="12" fill="#9d5cf5">p</text>
+          <text x="92" y="138" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#6b7a5a">All Pp — All Round</text>
+        </svg>
+        <p style="font-size:13px;margin-top:8px;color:#b8b4a4">All F₁ offspring carry one dominant (P) and one recessive (p) allele. All show the dominant phenotype (round seeds). The recessive trait is hidden, not lost.</p>
+      </div>
+
+      <div class="punnett-box">
+        <h3>F₂ Cross: Pp × Pp (F₁ self-pollination)</h3>
+        <svg width="180" height="140" viewBox="0 0 180 140" role="img" aria-label="F2 cross Punnett square showing 3:1 ratio">
+          <text x="70" y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">P</text>
+          <text x="120" y="22" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#9d5cf5">p</text>
+          <text x="28" y="62" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#65a30d">P</text>
+          <text x="28" y="102" text-anchor="middle" font-family="Cinzel,serif" font-size="12" font-weight="700" fill="#9d5cf5">p</text>
+          <rect x="42" y="28" width="100" height="100" stroke="#65a30d" stroke-width="1" fill="none"/>
+          <line x1="92" y1="28" x2="92" y2="128" stroke="#65a30d" stroke-width="0.8"/>
+          <line x1="42" y1="78" x2="142" y2="78" stroke="#65a30d" stroke-width="0.8"/>
+          <!-- PP -->
+          <rect x="43" y="29" width="48" height="48" fill="rgba(101,163,13,0.2)" rx="1"/>
+          <text x="67" y="53" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#65a30d" font-weight="700">PP</text>
+          <!-- Pp -->
+          <rect x="93" y="29" width="48" height="48" fill="rgba(101,163,13,0.12)" rx="1"/>
+          <text x="117" y="53" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#65a30d" font-weight="700">Pp</text>
+          <!-- Pp -->
+          <rect x="43" y="79" width="48" height="48" fill="rgba(101,163,13,0.12)" rx="1"/>
+          <text x="67" y="103" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#65a30d" font-weight="700">Pp</text>
+          <!-- pp -->
+          <rect x="93" y="79" width="48" height="48" fill="rgba(124,58,237,0.18)" rx="1"/>
+          <text x="117" y="103" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#9d5cf5" font-weight="700">pp</text>
+          <text x="92" y="138" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#65a30d">3 Round : 1 Wrinkled</text>
+        </svg>
+        <p style="font-size:13px;margin-top:8px;color:#b8b4a4">In F₂, the ratio is 3 dominant phenotype : 1 recessive phenotype, but the underlying genotype is 1 PP : 2 Pp : 1 pp. Mendel proved this by growing F₂ plants and self-pollinating them a third generation.</p>
+      </div>
+    </div>
+
+    <!-- RATIO BAR -->
+    <div class="ratio-bar" aria-label="Phenotype ratio: 3 dominant to 1 recessive">
+      <div class="ratio-dom">3 — Dominant (Round)</div>
+      <div class="ratio-rec">1 — Recessive (Wrinkled)</div>
+    </div>
+  </div>
+
+  <!-- LAW 2: INDEPENDENT ASSORTMENT -->
+  <div class="band violet">Law II — Independent Assortment</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <p>Mendel's <strong>Second Law</strong>, the Law of Independent Assortment, states: when two or more traits are inherited together, the factors controlling each trait segregate independently of one another during gamete formation. The inheritance of seed color, for example, has no bearing on the inheritance of seed shape.</p>
+    <p>To demonstrate this, Mendel performed <strong>dihybrid crosses</strong> — tracking two traits simultaneously. He crossed plants that were true-breeding for <span class="trait-dominant">Round, Yellow</span> seeds with plants true-breeding for <span class="trait-recessive">Wrinkled, Green</span> seeds. All F₁ plants showed Round Yellow (both dominant). When F₁ plants were self-pollinated, F₂ produced four classes in a 9:3:3:1 ratio:</p>
+
+    <div class="stats">
+      <div class="stat"><span class="n" style="font-size:20px">9</span><span class="l">Round + Yellow</span></div>
+      <div class="stat"><span class="n" style="font-size:20px;color:var(--violet)">3</span><span class="l">Round + Green</span></div>
+      <div class="stat"><span class="n" style="font-size:20px;color:var(--violet)">3</span><span class="l">Wrinkled + Yellow</span></div>
+      <div class="stat"><span class="n" style="font-size:20px;color:#9d5cf5">1</span><span class="l">Wrinkled + Green</span></div>
+    </div>
+
+    <p>The 9:3:3:1 ratio is precisely what you get if you multiply two independent 3:1 ratios together: (3 Round + 1 Wrinkled) × (3 Yellow + 1 Green) = 9 RY + 3 Ry + 3 rY + 1 ry. The two traits behave as if they have nothing to do with each other. Mendel had discovered that hereditary factors are modular and independent — not blended, not fused, not influenced by adjacency.</p>
+
+    <div class="pull">
+      "The behavior of each pair of differentiating characters in a hybrid association is independent of all other differences in the two parental plants."
+      <cite>— Mendel, Versuche über Pflanzenhybriden (1866), translated</cite>
+    </div>
+  </div>
+
+  <!-- DOMINANT / RECESSIVE -->
+  <div class="band">Dominant &amp; Recessive</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="prose-2">
+      <div>
+        <h2>The <em>Discovery</em></h2>
+        <p>One of Mendel's most fundamental observations came from the F₁ generation: when he crossed a pure-breeding Round plant with a pure-breeding Wrinkled plant, <strong>all</strong> the offspring were Round. The Wrinkled trait had vanished — completely, with no blending, no compromise, no intermediate "slightly wrinkled" seeds. It was as if the Wrinkled hereditary factor had simply ceased to exist.</p>
+        <p>But then he self-pollinated the F₁ plants. The Wrinkled trait came back — in exactly one quarter of the F₂ offspring. It had not been destroyed. It had been <em>masked</em>. Mendel named the masking trait <strong>"dominant"</strong> and the masked trait <strong>"recessive"</strong> — terms he introduced in his 1866 paper and that remain in use today, unchanged.</p>
+      </div>
+      <div>
+        <h2>What It <em>Means</em></h2>
+        <p>The distinction between dominant and recessive has a molecular basis that Mendel could not have known: dominant alleles typically produce a functional protein that overrides the absence of function caused by a recessive allele. In the case of seed shape, the dominant allele codes for a functional starch-branching enzyme; the recessive allele does not — leading to wrinkled seeds with a different sugar composition. But at Mendel's level of analysis, all this was invisible. He worked with phenotypes — observable traits — and inferred the mathematical logic from the ratios alone.</p>
+        <p>The key insight: <strong>information is not destroyed in inheritance</strong>. A recessive trait hidden for one generation reappears unchanged in the next. Hereditary factors are discrete, stable, and persistent. This was the death of the "blending inheritance" theory — the prevailing idea that offspring traits were simply a mixture of the parents'. Mendel proved blending was wrong in 1866. The scientific world did not notice for 34 years.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE SEVEN TRAITS AS CARDS -->
+  <div class="band">Each of the Seven Traits</div>
+  <div class="reveal" style="animation-delay:.4s">
+    <div class="grid seven">
+
+      <div class="card">
+        <span class="num">T1</span>
+        <h3>Seed Shape</h3>
+        <p class="what"><span class="trait-dominant">Round</span> vs. <span class="trait-recessive">Wrinkled</span>. 5,474 round : 1,850 wrinkled = 2.96:1. The most iconic Mendelian trait. Roundness is caused by a functional starch-branching enzyme; wrinkledness by its absence.</p>
+        <div class="meta"><b>Ratio:</b> 2.96 : 1 &nbsp;·&nbsp; <b>Total counted:</b> 7,324</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T2</span>
+        <h3>Seed Color</h3>
+        <p class="what"><span class="trait-dominant">Yellow</span> vs. <span class="trait-recessive">Green</span>. 6,022 yellow : 2,001 green = 3.01:1. Mendel noted that yellow always dominated green in F₁ regardless of which parent supplied which color.</p>
+        <div class="meta"><b>Ratio:</b> 3.01 : 1 &nbsp;·&nbsp; <b>Total counted:</b> 8,023</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T3</span>
+        <h3>Pod Shape</h3>
+        <p class="what"><span class="trait-dominant">Inflated / smooth</span> vs. <span class="trait-recessive">Constricted / pinched</span> between seeds. Mendel observed this trait carefully over multiple years; the constricted form tends to appear only as the pod dries.</p>
+        <div class="meta"><b>Ratio:</b> 2.95 : 1</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T4</span>
+        <h3>Pod Color</h3>
+        <p class="what"><span class="trait-dominant">Green</span> vs. <span class="trait-recessive">Yellow</span> pods. Note: green pod is dominant over yellow pod — the reverse of the seed color situation where yellow seed is dominant over green. Dominant/recessive depends on the specific alleles, not on any general principle about colors.</p>
+        <div class="meta"><b>Ratio:</b> 2.82 : 1</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T5</span>
+        <h3>Flower Color</h3>
+        <p class="what"><span class="trait-dominant">Purple / violet</span> vs. <span class="trait-recessive">White</span>. 705 violet : 224 white = 3.15:1. The violet color is controlled by pigment production; white flowers lack the functional pigment enzyme. All F₁ plants had violet flowers regardless of which parent was violet.</p>
+        <div class="meta"><b>Ratio:</b> 3.15 : 1</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T6</span>
+        <h3>Flower Position</h3>
+        <p class="what"><span class="trait-dominant">Axial</span> (distributed along the stem) vs. <span class="trait-recessive">Terminal</span> (clustered at the top of the plant). 651 axial : 207 terminal = 3.14:1. This trait is less visually dramatic but equally clean in its ratios.</p>
+        <div class="meta"><b>Ratio:</b> 3.14 : 1</div>
+      </div>
+
+      <div class="card">
+        <span class="num">T7</span>
+        <h3>Plant Height</h3>
+        <p class="what"><span class="trait-dominant">Tall</span> (6–7 feet) vs. <span class="trait-recessive">Dwarf</span> (9–18 inches). 787 tall : 277 dwarf = 2.84:1. The height difference is caused by a single gene controlling gibberellin biosynthesis — the dwarf form lacks functional production of this plant hormone.</p>
+        <div class="meta"><b>Ratio:</b> 2.84 : 1</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STATISTICAL APPROACH -->
+  <div class="band violet">The Statistical Mind</div>
+  <div class="reveal" style="animation-delay:.45s">
+    <p>What made Mendel's approach revolutionary was not the peas or the monastery garden. It was the numbers. He counted everything — every seed, every plant, every generation. When he observed 5,474 round seeds and 1,850 wrinkled ones, he did not simply say "round is more common." He computed the ratio (2.96:1) and recognized that it approximated a clean mathematical ideal (3:1). He then asked: what theoretical model of inheritance would generate this ratio?</p>
+
+    <p>The answer he arrived at — two factors per individual, one from each parent, dominant masking recessive — was not observed. It was <em>inferred</em> from the mathematics, then tested against the data across all seven traits. This is hypothetico-deductive reasoning applied to biology. It was Doppler's physics method transplanted into botany by a monk in a garden in Brno.</p>
+
+    <div class="pull">
+      "It requires indeed some courage to undertake a labor of such far-reaching extent; this appears, however, to be the only right way by which we can finally reach the solution of a question the importance of which cannot be overestimated."
+      <cite>— Mendel, opening of Versuche über Pflanzenhybriden (1866)</cite>
+    </div>
+
+    <p>Later, in 1936, the statistician Ronald Fisher analyzed Mendel's published data and concluded that the results were statistically <em>too good</em> — too close to theoretical expectation to have arisen by chance alone, even with large sample sizes. Fisher suggested that a research assistant had unconsciously (or consciously) discarded ambiguous results. The controversy has never been definitively settled. What is settled is this: whether or not the data were lightly curated, the laws Mendel described are correct. Modern genetics has confirmed every claim he made in 1866.</p>
+  </div>
+
+  <!-- THE PAPER -->
+  <div class="band">The Paper Itself</div>
+  <div class="reveal" style="animation-delay:.5s">
+    <div class="grid tight">
+      <div class="card">
+        <span class="num">§1</span>
+        <h3>Introduction</h3>
+        <p class="what">Mendel opens by surveying the sorry state of hybridization research — results accumulated without rigorous method. He proposes an experiment designed from the outset to yield statistically meaningful results across multiple generations.</p>
+        <div class="meta"><b>Key claim:</b> Quantitative method required</div>
+      </div>
+      <div class="card">
+        <span class="num">§2</span>
+        <h3>Selection of Experimental Plants</h3>
+        <p class="what">Justification for the choice of peas, the two-year pre-experiment to establish pure-breeding lines, and the criteria for selecting the seven traits — each cleanly binary, each stably inherited, each visible to the naked eye.</p>
+        <div class="meta"><b>Preparation time:</b> 2 years before crossing</div>
+      </div>
+      <div class="card">
+        <span class="num">§3–7</span>
+        <h3>Monohybrid Experiments</h3>
+        <p class="what">The core data: each of the seven traits crossed separately. Generation-by-generation tabulation. Derivation of the 3:1 ratio. Introduction of dominant and recessive terminology. The F₃ verification: growing F₂ dominant plants forward to confirm 1/3 are pure-breeding PP and 2/3 are hybrid Pp.</p>
+        <div class="meta"><b>Punchline:</b> 1:2:1 genotype ratio proven</div>
+      </div>
+      <div class="card">
+        <span class="num">§8–9</span>
+        <h3>Dihybrid &amp; Trihybrid</h3>
+        <p class="what">Crossing two and then three traits simultaneously. The 9:3:3:1 ratio for dihybrids. The 27:9:9:9:3:3:3:1 for trihybrids. Mendel shows these are exactly what you get from independent segregation — the multiplication of independent 3:1 ratios.</p>
+        <div class="meta"><b>Law II:</b> Independent assortment proven</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Mendel Series · Vol. 1 of 4 · <em>The Work</em> &nbsp;·&nbsp; Series: gregor-mendel</div>
+    <div style="margin-top:4px;font-size:9px;">Content compiled for educational purposes. Primary source: Mendel, <em>Versuche über Pflanzenhybriden</em> (1866); Olby, <em>Origins of Mendelism</em> (1985); Fisher, "Has Mendel's Work Been Rediscovered?" (1936).</div>
+  </div>
+
+</div>
+</body>
+</html>

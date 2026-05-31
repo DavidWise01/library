@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archimedes — Vol. 3: His Long Afterlife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0d0a06;
+      --bronze: #b45309;
+      --sand: #d4a853;
+      --dim: #7a5c2e;
+      --mid: #1e1508;
+      --card-bg: #120e05;
+      --border: rgba(180,83,9,0.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--sand);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(13,10,6,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--sand); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--sand);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--bronze);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(212,168,83,0.82);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+    .masthead-art svg { width: 100%; height: auto; }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--bronze);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--sand);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+    p {
+      margin-bottom: 1.1rem;
+      color: rgba(212,168,83,0.88);
+    }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--bronze);
+      color: #0d0a06;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--bronze);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: rgba(212,168,83,0.72);
+      line-height: 1.65;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--bronze);
+      border-radius: 50%;
+    }
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--bronze);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-item p { font-size: 0.92rem; }
+
+    blockquote {
+      border-left: 3px solid var(--bronze);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(180,83,9,0.06);
+    }
+    blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--sand);
+      margin: 0;
+    }
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* PALIMPSEST PANEL */
+    .palimpsest-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--bronze);
+      padding: 2.5rem;
+      margin: 2.5rem 0;
+    }
+    .palimpsest-panel h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    .palimpsest-panel .meta-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .palimpsest-panel .meta-item .mlabel {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--bronze);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .palimpsest-panel .meta-item .mval {
+      font-family: 'Newsreader', serif;
+      font-size: 0.95rem;
+      color: var(--sand);
+    }
+
+    /* LEGACY IMPACT CARDS — full width -->
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .impact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .impact-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .impact-card .inum {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--bronze);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .impact-card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--sand);
+      margin-bottom: 0.5rem;
+    }
+    .impact-card p {
+      font-size: 0.88rem;
+      color: rgba(212,168,83,0.7);
+      line-height: 1.62;
+    }
+
+    /* WORD SPOTLIGHT */
+    .word-spotlight {
+      background: rgba(180,83,9,0.06);
+      border: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      margin: 2.5rem 0;
+      text-align: center;
+    }
+    .word-spotlight .greek-word {
+      font-family: 'Cinzel', serif;
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--sand);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .word-spotlight .transliteration {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--bronze);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .word-spotlight .definition {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(212,168,83,0.8);
+      max-width: 40ch;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+    .vol-nav a:hover { color: var(--sand); border-color: var(--bronze); }
+    .vol-nav a.current {
+      color: var(--sand);
+      border-color: var(--bronze);
+      background: rgba(180,83,9,0.1);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+    .colophon a { color: var(--dim); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .impact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      nav { gap: 1rem; }
+      .palimpsest-panel { padding: 1.5rem; }
+      .word-spotlight .greek-word { font-size: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Archimedes — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — The Work</a>
+  <a href="2-world.html">Vol. 2 — His World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 3 of 4 &nbsp;·&nbsp; Archimedes of Syracuse</span>
+    <h1>His Long Afterlife</h1>
+    <div class="subtitle">From the Palimpsest to the Present Day</div>
+    <p class="lede">A manuscript scraped clean and reused for a prayer book. A philologist in 1906 who could read what remained. An auction at Christie's in 1998. Multi-spectral imaging that recovered text erased 700 years before. The most important lost scientific text in history, found inside a medieval prayer book — and what it proved Archimedes had known 1,800 years before Newton.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Palimpsest — text being revealed beneath erased layers -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1005"/>
+          <stop offset="100%" stop-color="#0d0a06"/>
+        </radialGradient>
+        <clipPath id="pageClip">
+          <rect x="60" y="45" width="240" height="285" rx="4"/>
+        </clipPath>
+      </defs>
+
+      <circle cx="180" cy="180" r="178" fill="url(#bg3)" stroke="#b45309" stroke-width="0.5" opacity="0.5"/>
+
+      <!-- Parchment page background -->
+      <rect x="60" y="45" width="240" height="285" rx="4" fill="rgba(180,83,9,0.06)" stroke="#b45309" stroke-width="1" opacity="0.7"/>
+
+      <!-- PRAYER BOOK TEXT (top layer, fading out) — stylized lines -->
+      <g clip-path="url(#pageClip)">
+        <g opacity="1">
+          <animate attributeName="opacity" values="0.55;0.15;0.55" dur="7s" repeatCount="indefinite"/>
+          <!-- Prayer lines — regular, vertical text of a medieval codex -->
+          <line x1="85" y1="80" x2="275" y2="80" stroke="#b45309" stroke-width="0.8" opacity="0.7"/>
+          <line x1="85" y1="94" x2="275" y2="94" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+          <line x1="85" y1="108" x2="260" y2="108" stroke="#b45309" stroke-width="0.8" opacity="0.65"/>
+          <line x1="85" y1="122" x2="275" y2="122" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+          <line x1="85" y1="136" x2="240" y2="136" stroke="#b45309" stroke-width="0.8" opacity="0.55"/>
+          <line x1="85" y1="150" x2="275" y2="150" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+          <line x1="85" y1="164" x2="265" y2="164" stroke="#b45309" stroke-width="0.8" opacity="0.65"/>
+          <line x1="85" y1="178" x2="275" y2="178" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+          <line x1="85" y1="192" x2="250" y2="192" stroke="#b45309" stroke-width="0.8" opacity="0.55"/>
+          <line x1="85" y1="206" x2="275" y2="206" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+        </g>
+
+        <!-- ARCHIMEDES TEXT beneath (emerging, pulsing) -->
+        <g>
+          <animate attributeName="opacity" values="0;0.7;0" dur="7s" repeatCount="indefinite"/>
+          <!-- Archimedes math text — diagonal/horizontal, crossing the prayer lines -->
+          <!-- Looks like rotated/erased text underneath -->
+          <g transform="rotate(-90 180 180)">
+            <line x1="85" y1="72" x2="275" y2="72" stroke="#d4a853" stroke-width="1.2" opacity="0.9"/>
+            <line x1="85" y1="90" x2="275" y2="90" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+            <line x1="85" y1="108" x2="260" y2="108" stroke="#d4a853" stroke-width="1.1" opacity="0.85"/>
+            <line x1="85" y1="126" x2="275" y2="126" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+            <line x1="85" y1="144" x2="240" y2="144" stroke="#d4a853" stroke-width="1.2" opacity="0.9"/>
+            <line x1="85" y1="162" x2="275" y2="162" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+            <line x1="85" y1="180" x2="265" y2="180" stroke="#d4a853" stroke-width="1.1" opacity="0.85"/>
+            <line x1="85" y1="198" x2="275" y2="198" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+            <line x1="85" y1="216" x2="250" y2="216" stroke="#d4a853" stroke-width="1.2" opacity="0.9"/>
+            <line x1="85" y1="234" x2="275" y2="234" stroke="#d4a853" stroke-width="1" opacity="0.8"/>
+            <line x1="85" y1="252" x2="258" y2="252" stroke="#d4a853" stroke-width="1.1" opacity="0.85"/>
+            <!-- Mathematical symbols / diagrams faint -->
+            <circle cx="160" cy="180" r="30" fill="none" stroke="#d4a853" stroke-width="0.8" opacity="0.6"/>
+            <circle cx="160" cy="180" r="18" fill="none" stroke="#d4a853" stroke-width="0.7" opacity="0.5"/>
+            <line x1="130" y1="180" x2="190" y2="180" stroke="#d4a853" stroke-width="0.6" opacity="0.55"/>
+          </g>
+        </g>
+      </g>
+
+      <!-- Page corner fold -->
+      <path d="M285,330 L285,305 L310,330 Z" fill="rgba(180,83,9,0.12)" stroke="#b45309" stroke-width="0.8" opacity="0.5"/>
+
+      <!-- Multi-spectral light scan beam -->
+      <rect x="60" y="45" width="15" height="285" fill="rgba(212,168,83,0.04)" rx="2">
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="240 0" dur="6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1"/>
+        <animate attributeName="opacity" values="0;0.35;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Label -->
+      <text x="18" y="342" font-family="Space Mono, monospace" font-size="7.5" fill="#b45309" opacity="0.55" letter-spacing="2">THE METHOD · PALIMPSEST · c.10TH C.</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-work.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="current">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: THE PALIMPSEST — FULL TREATMENT -->
+  <section>
+    <span class="kick">The Greatest Recovery in Mathematical History</span>
+    <h2>The Archimedes Palimpsest</h2>
+    <p>A palimpsest is a manuscript from which the original text has been scraped or washed away so that the parchment can be reused. In the 13th century, a Byzantine monk or scribe took a 10th-century parchment book — a copy of several works by Archimedes — and recycled it. The Archimedes text was erased, the parchment was refolded and recut, and a liturgical prayer book (a Euchologion) was written over it in a perpendicular orientation. The mathematical text beneath was effectively invisible.</p>
+    <p>The manuscript passed through centuries of obscurity. It was in a monastery library in Constantinople. It survived the fall of Constantinople to the Ottomans in 1453. By the early 20th century it had reached a library in the city, and in 1906 the Danish classical philologist Johan Ludvig Heiberg — already one of the world's authorities on Archimedes — examined it. Using only a magnifying glass, he could see, running at right angles beneath the prayer text, faint traces of a different hand. He transcribed what he could read. Among the texts he identified was one entirely unknown: <em>The Method of Mechanical Theorems</em>.</p>
+
+    <div class="palimpsest-panel">
+      <h3>The Manuscript — Key Facts</h3>
+      <div class="meta-row">
+        <div class="meta-item">
+          <span class="mlabel">Original text copied</span>
+          <span class="mval">c. 10th century CE, Constantinople</span>
+        </div>
+        <div class="meta-item">
+          <span class="mlabel">Overwritten as palimpsest</span>
+          <span class="mval">c. 1229 CE</span>
+        </div>
+        <div class="meta-item">
+          <span class="mlabel">Discovered by Heiberg</span>
+          <span class="mval">1906, Constantinople</span>
+        </div>
+        <div class="meta-item">
+          <span class="mlabel">Sold at Christie's, New York</span>
+          <span class="mval">October 29, 1998 — $2,000,000</span>
+        </div>
+        <div class="meta-item">
+          <span class="mlabel">Current location</span>
+          <span class="mval">Walters Art Museum, Baltimore</span>
+        </div>
+        <div class="meta-item">
+          <span class="mlabel">Imaging completed</span>
+          <span class="mval">2008 — multi-spectral + X-ray</span>
+        </div>
+      </div>
+      <p>The buyer at Christie's, who has remained anonymous, immediately made the manuscript available to scholars and funded a complete imaging project. Between 1999 and 2008, a team used multi-spectral imaging, ultraviolet light, and synchrotron X-ray fluorescence to recover the complete Archimedes text — including portions Heiberg could not read. The results were published in a major scholarly edition in 2011.</p>
+    </div>
+
+    <p>The palimpsest contained seven treatises by Archimedes — including <em>On the Sphere and Cylinder</em>, <em>Measurement of a Circle</em>, <em>On the Equilibrium of Planes</em>, <em>On Floating Bodies</em>, <em>On Spirals</em>, and <em>On Conoids and Spheroids</em>. But the unique and irreplaceable texts were three: <em>The Method</em> (previously completely unknown), <em>Stomachion</em> (a combinatorial puzzle, largely unknown), and a Greek text of <em>On Floating Bodies</em> (previously known only through a Latin translation). <em>The Method</em> alone was worth the entire effort of recovery.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">The Method</span>
+        <h4>Proto-Calculus, Hidden for 1,800 Years</h4>
+        <p>The most significant mathematical text recovered. Archimedes describes his private heuristic method: treating plane figures as composed of infinitely many line segments, balancing them on a lever to find areas and volumes. This is integral calculus in everything but name and notation. If known to medieval or Renaissance scholars, it might have accelerated the development of calculus by centuries.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Stomachion</span>
+        <h4>A Combinatorial Puzzle</h4>
+        <p>A partially recovered text about the Stomachion — a 14-piece dissection puzzle (like a tangram) played in antiquity. Archimedes was apparently computing the number of ways the pieces can be assembled into a square. This would make it the oldest known combinatorics problem — a field normally considered to begin with Leibniz in the 17th century. The recovered text is fragmentary.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">On Floating Bodies</span>
+        <h4>The Greek Original Recovered</h4>
+        <p>This treatise was previously known only from a 13th-century Latin translation by William of Moerbeke — an excellent translation, but a translation nonetheless. The palimpsest provided the original Greek text. Comparing the two revealed that Moerbeke's translation was remarkably accurate — and also revealed specific mathematical passages that only the Greek text could disambiguate.</p>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>"The Method… enables us to investigate some of the problems in mathematics by means of mechanics, by the aid of which I apprehended some problems, which, although I afterwards produced proofs of them by means of geometry proper, still the initial discovery was made through mechanics."</p>
+      <cite>— Archimedes, <em>The Method</em>, c. 250 BCE. Recovered from the Archimedes Palimpsest, published by Heiberg 1907.</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 2: THE TRANSMISSION HISTORY -->
+  <section>
+    <span class="kick">2,200 Years of Survival</span>
+    <h2>How His Works Survived</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">212 BCE</div>
+        <h4>Death — Works in Syracuse and Alexandria</h4>
+        <p>Archimedes's works existed in Syracuse (at his house and possibly the court library), in Alexandria (copies sent to colleagues), and probably in other Greek libraries. The sack of Syracuse in 212 BCE likely destroyed some copies. The works in Alexandria were more secure — for a time.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 75 BCE</div>
+        <h4>Cicero Finds the Tomb</h4>
+        <p>Cicero, serving as quaestor in Sicily, finds Archimedes's neglected tomb, choked with vegetation but still bearing the sphere-and-cylinder diagram. He describes it in <em>Tusculan Disputations</em> V.64 — the best evidence we have that the tomb existed and that the request for the carving was real.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 100–300 CE</div>
+        <h4>Greek and Latin Commentaries</h4>
+        <p>Roman-era scholars — Pappus of Alexandria (c. 290–350 CE), Hero of Alexandria (c. 10–70 CE), Theon of Alexandria (c. 335–405 CE) — comment on and preserve portions of Archimedes's work. Pappus's <em>Collection</em> is a crucial secondary source. The works circulate within the scholarly network of the later Roman Empire.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">6th–9th century CE</div>
+        <h4>Byzantine Preservation</h4>
+        <p>The works survive in Constantinople under the Byzantine Empire. The encyclopedic culture of the Byzantine court — which collected and commented on classical texts systematically — is the primary reason Archimedes's mathematical works were not lost entirely. A 6th-century commentary by Eutocius of Ascalon on three Archimedean treatises is particularly important for the textual tradition.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 950 CE</div>
+        <h4>The Palimpsest Exemplar Copied</h4>
+        <p>The 10th-century Byzantine copy that became the palimpsest is made — probably in Constantinople. It is this copy (or an immediate ancestor) that contains <em>The Method</em>, <em>Stomachion</em>, and the Greek text of <em>On Floating Bodies</em>. Without this one copy, made by an unknown scribe in the Byzantine capital, those texts would be lost entirely.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">1269 CE</div>
+        <h4>William of Moerbeke's Latin Translation</h4>
+        <p>The Flemish Dominican friar William of Moerbeke translates the available Archimedean works from Greek into Latin at the papal court in Viterbo, Italy. His translation brings Archimedes to the Western Latin scholarly world for the first time in a rigorous form. Several of his translations survive as the only witness to specific Greek texts. The Latin Archimedes reaches European universities.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 1229 CE</div>
+        <h4>The Palimpsest Created — The Text Erased</h4>
+        <p>A scribe (possibly in the monastery of Mar Saba in Palestine, or in Constantinople) scrapes the 10th-century Archimedes manuscript clean and writes a prayer book over it. The mathematical text is hidden but not destroyed — ink pigments and stylus impressions remain in the parchment.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">1906</div>
+        <h4>Heiberg Reads the Palimpsest</h4>
+        <p>Johan Ludvig Heiberg, examining the manuscript in Constantinople with a magnifying glass, transcribes as much of the Archimedes text as he can read. He publishes his findings in 1907, including the first modern edition of <em>The Method</em>. The mathematical world is astonished: Archimedes had been doing proto-calculus 1,800 years before Newton and Leibniz.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">1998</div>
+        <h4>Christie's Auction — $2,000,000</h4>
+        <p>The palimpsest is auctioned at Christie's New York on October 29, 1998. It sells for $2,000,000 to an anonymous buyer who immediately loans it to the Walters Art Museum in Baltimore for a complete conservation and imaging project. The price reflects not the prayer book but what is hidden beneath it.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">1999–2011</div>
+        <h4>Multi-Spectral Recovery and Publication</h4>
+        <p>A team of scholars, conservators, and imaging specialists work on the manuscript for over a decade. Multi-spectral imaging, X-ray fluorescence, and ultraviolet photography recover text invisible to the naked eye — including passages in <em>The Method</em> that Heiberg could not read. The complete scholarly edition is published in 2011. The Archimedes text is now fully recovered.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: LEGACY IN MATHEMATICS -->
+  <section>
+    <span class="kick">Mathematical Inheritance</span>
+    <h2>What Mathematics Inherited</h2>
+    <p>Archimedes's influence on mathematics runs in two parallel channels: direct inheritance (ideas traceable specifically to him) and structural inheritance (the style and standard of mathematical proof he established). Both are significant. Both continue.</p>
+
+    <div class="impact-grid">
+      <div class="impact-card">
+        <span class="inum">Direct Inheritance · I</span>
+        <h4>The Method of Exhaustion → Calculus</h4>
+        <p>Archimedes's method of exhaustion — squeezing a curved figure between polygons whose areas are known — is the direct precursor to the limit concept in calculus. When Newton and Leibniz formalized calculus in the 1660s–80s, they were inventing notation and rigor for an intuition that Archimedes had already mastered. <em>The Method</em> shows he went further still: he was summing infinitely thin slices, exactly as an integral does. The connection between Archimedes and calculus is not metaphorical. It is direct.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Direct Inheritance · II</span>
+        <h4>Pi — Still Between His Bounds</h4>
+        <p>Archimedes's bound 3 10/71 &lt; π &lt; 3 1/7 remained the most accurate known computation of pi for several centuries. The upper bound 22/7 was the practical standard approximation in Europe well into the medieval period. More significantly, his polygon-doubling method was the dominant algorithm for computing pi until the development of infinite series (Leibniz series, 1676; Machin's formula, 1706) provided faster convergence. The method of exhaustion → limits → series is a direct line of inheritance.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Direct Inheritance · III</span>
+        <h4>Archimedes's Principle — Every Physics Course</h4>
+        <p>The principle of buoyancy from <em>On Floating Bodies</em> — a submerged body experiences an upward force equal to the weight of displaced fluid — appears in every introductory physics curriculum in the world. Every naval architect, submarine engineer, and fluid mechanicist uses it. The formula F = ρVg is Archimedes's, stated in verbal form 2,200 years ago. It has never needed correction.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Direct Inheritance · IV</span>
+        <h4>The Lever — Mechanical Engineering</h4>
+        <p>Archimedes's proof of the lever law — the first mathematical derivation of a physical principle — is the foundation of classical mechanics. The concept of moment (force × distance) that he established is used in every structural engineering calculation, every bridge design, every mechanical system analysis. The modern concept of torque is a generalization of Archimedes's lever theorem. It is one of the most-applied results in the history of science.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Direct Inheritance · V</span>
+        <h4>The Archimedes Screw — Still Pumping</h4>
+        <p>The Archimedes screw is the oldest pump design still in active commercial use. Modern installations exist in sewage treatment plants across Europe and North America, in grain elevators, in fish ladders (allowing fish to move past dams), and in some low-head hydroelectric systems. Several installations can pump millions of gallons per day. The device is 2,200 years old and still the optimal solution for many fluid-moving problems.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Structural Inheritance</span>
+        <h4>Mathematical Proof as a Standard</h4>
+        <p>Archimedes established the standard that physical principles should be derived mathematically — not just observed and described. This standard, transmitted through the classical tradition, shaped how physics was done: Galileo explicitly modeled his <em>Two New Sciences</em> on Archimedean method. Newton's <em>Principia</em> is written in Euclidean-Archimedean geometric proof style. The marriage of mathematics and physics that defines modern science has Archimedes at its origin.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE ADMIRERS -->
+  <section>
+    <span class="kick">2,200 Years of Recognition</span>
+    <h2>What the Great Said About Him</h2>
+
+    <blockquote>
+      <p>"Superhuman Archimedes."</p>
+      <cite>— Galileo Galilei, <em>Two New Sciences</em> (Discorsi, 1638). Galileo explicitly modeled his mechanical derivations on Archimedean method.</cite>
+    </blockquote>
+
+    <blockquote>
+      <p>"Not Newton himself was able to demonstrate the properties of the figure in a more elegant and rigorous manner than Archimedes had done."</p>
+      <cite>— John Playfair, mathematician, 1812, comparing Newton's and Archimedes's methods in hydrostatics.</cite>
+    </blockquote>
+
+    <blockquote>
+      <p>"He was the greatest mathematician and physicist of antiquity — indeed the greatest geometer who ever lived."</p>
+      <cite>— Alfred North Whitehead, mathematician and philosopher, 20th century.</cite>
+    </blockquote>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">Galileo, 1638</span>
+        <h4>The Archimedean Template</h4>
+        <p>Galileo Galilei, writing in 1638, described Archimedes repeatedly as "divine" and "superhuman" — and structured his own derivation of the laws of motion on Archimedean method: postulates, definitions, geometric proofs, results. The <em>Two New Sciences</em>, which founded the science of mechanics, is explicitly modeled on Archimedes. The line from Archimedes to Newton runs through Galileo.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Newton, 1687</span>
+        <h4>Calculus and the Archimedean Tradition</h4>
+        <p>Newton's <em>Principia Mathematica</em> (1687) is written in geometric proof style, not the calculus Newton had invented, precisely because the Archimedean standard of geometric proof was considered more rigorous. Newton was recovering and formalizing what Archimedes had intuited. The discovery in 1906 that Archimedes had already done proto-calculus in <em>The Method</em> gives this relationship an unexpected depth.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Gauss, 19th c.</span>
+        <h4>The Short List</h4>
+        <p>Carl Friedrich Gauss, asked who he considered the three greatest mathematicians in history, named Newton, Archimedes, and Ferdinand Eisenstein. The order varies by source. In all versions, Archimedes appears alongside Newton — separated by 1,900 years — as one of the supreme mathematical intellects of human history. Modern historians of mathematics consistently agree.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Cicero, 75 BCE</span>
+        <h4>Finding the Forgotten Tomb</h4>
+        <p>"While I was quaestor in Sicily I managed to track down his grave; the Syracusans knew nothing about it, and indeed denied that any such thing existed. But there it was, completely surrounded and hidden by bushes of bramble and thorn... I found the grave adorned with a small column just showing above the undergrowth; this had a sphere and a cylinder carved on it."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: EUREKA — THE WORD -->
+  <section>
+    <span class="kick">The Word That Escaped the Bath</span>
+    <h2>Eureka — A Word for the World</h2>
+
+    <div class="word-spotlight">
+      <span class="greek-word">εὕρηκα</span>
+      <span class="transliteration">heureka · I have found it · Greek perfect tense of heuriskein</span>
+      <span class="definition">The singular exclamation of discovery, attributed to Archimedes, that entered every European language and became the universal word for a sudden insight.</span>
+    </div>
+
+    <p>The word "eureka" is a first-person perfect active indicative of the Greek verb <em>heuriskein</em> — "to find." The perfect tense in Greek expresses a completed action with present relevance: not "I found" (aorist, past) but "I have found" — the finding is done and its result stands now. It is grammatically exact for discovery: the act is complete, the result is present.</p>
+    <p>Vitruvius reports — writing about 200 years after the fact — that Archimedes ran naked through the streets of Syracuse crying "Eureka! Eureka!" when he understood how to measure the crown's volume using water displacement. Whether this is literally true is uncertain. What is certain is that the word, attached to this story, spread. It appears in Latin texts, then in medieval European writing, then in every modern European language. California's state motto is "Eureka" (adopted 1849, referencing the Gold Rush). It is the word every cartoonist uses to indicate a lightbulb moment.</p>
+    <p>Archimedes did not coin the word — it is ordinary Greek. But the story gave it a specific meaning: the sudden insight of genius, the moment when everything becomes clear. That the word is 2,500 years old and still in daily use is its own kind of eureka.</p>
+  </section>
+
+  <!-- SECTION 6: LIVING LEGACY -->
+  <section>
+    <span class="kick">Present Tense</span>
+    <h2>Archimedes in the Present Day</h2>
+    <p>The gap between Archimedes's death in 212 BCE and the present is 2,236 years. In that time, every empire that surrounded him — Rome, Byzantium, the Caliphates, the Crusader states, the Ottoman Empire — has risen and fallen. Every political structure of his world has dissolved. And the results he derived still appear in physics textbooks, engineering curricula, and manufacturing plants around the world.</p>
+
+    <div class="impact-grid">
+      <div class="impact-card">
+        <span class="inum">Present Use · I</span>
+        <h4>Buoyancy in Every Ship</h4>
+        <p>Every ship afloat — from a rubber duck to an aircraft carrier — obeys Archimedes's principle. Naval architects calculate displacement using exactly the formula he derived. Submarine ballast systems use precise control of displaced volume to achieve neutral buoyancy. Offshore oil platforms are designed with Archimedes's stability analysis as a foundation. The principle is not a historical curiosity: it is actively used in every calculation involving floating bodies.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Present Use · II</span>
+        <h4>The Screw — Sewage and Grain</h4>
+        <p>Modern Archimedes screws handle municipal wastewater flows of millions of gallons per day at treatment plants across Europe and North America. They appear in grain elevators, industrial bulk material handling, and fish passage systems (fish ladders). A design essentially unchanged in 2,200 years remains commercially competitive with every modern pump technology for low-head, high-volume, debris-tolerant fluid moving. No maintenance issues. No seals to fail.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Present Use · III</span>
+        <h4>The Lever — Every Torque Calculation</h4>
+        <p>The concept of moment (force × arm length) that Archimedes proved in <em>On the Equilibrium of Planes</em> appears in every structural engineering calculation involving rotation or bending: bridges, buildings, machine tools, vehicle suspensions, aircraft control surfaces. The physical intuition that Archimedes formalized — equal and opposite moments produce equilibrium — is the basis of every torque wrench, every balanced crane, every structural frame analysis.</p>
+      </div>
+      <div class="impact-card">
+        <span class="inum">Present Use · IV</span>
+        <h4>Fluid Mechanics — The Formal Field</h4>
+        <p>Modern fluid mechanics is conventionally dated from Euler (18th century) and Navier-Stokes (19th century) — but its physical foundations are Archimedean. Every fluid mechanics textbook opens with hydrostatics: buoyancy, pressure at depth, floating body stability. These are the results of <em>On Floating Bodies</em>. Archimedes is cited in the opening chapters of texts used at MIT, Cambridge, and Caltech today.</p>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>"There is more imagination in the head of Archimedes than in that of Homer."</p>
+      <cite>— Attributed to Voltaire. Whether authentic or not, it captures what has struck readers of Archimedes for two millennia: that his mathematics required a creative leap, not just calculation.</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 7: CLOSING -->
+  <section>
+    <span class="kick">In Conclusion</span>
+    <h2>The Circles in the Sand</h2>
+    <p>The story of Archimedes's death — drawing circles in the sand as Rome sacked his city, killed for refusing to leave his problem — is almost certainly embellished. The "do not disturb my circles" line is reported only by Valerius Maximus, writing two centuries later. Other accounts give different circumstances. We do not know exactly how he died.</p>
+    <p>But the image is accurate in the way that images can be accurate without being literal. Archimedes was, above all, a man absorbed in mathematics. He worked on pure geometry when he could have worked on more profitable things. He proved theorems about spheres and parabolas that had no immediate practical application. He asked for a diagram of the relationship between a sphere and its circumscribed cylinder to be carved on his tomb — not "inventor of the catapult" or "defender of Syracuse" or "solver of the crown problem." A picture of pure mathematics.</p>
+    <p>He was also, when required, a practical genius of the first order: the lever, the screw, the war machines, the measurement of pi, the principle of buoyancy. He moved between pure and applied with an ease that later centuries would struggle to match. He was, as Gauss recognized when asked for the three greatest mathematicians, not a historical figure to be remembered but a living standard to be measured against.</p>
+    <p>The circles he was drawing when the soldier came have been disturbed — temporarily, by conquest and the accidents of manuscript survival. They are still there, if you know how to look. In every fluid mechanics textbook. In every field irrigated by a screw pump. In every ship afloat. In the recovered text of <em>The Method</em>, where you can read, in his own words, translated across 2,200 years, how he was computing integrals before anyone had named the concept.</p>
+    <p>Do not disturb my circles. He made that, in the end, impossible.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Archimedes of Syracuse — A Library in Four Volumes &nbsp;|&nbsp; Vol. 3: His Long Afterlife<br>
+    Sources: Reviel Netz &amp; William Noel, <em>The Archimedes Codex</em> (2007); Johan Ludvig Heiberg, <em>Archimedis Opera Omnia</em> (1910); Cicero, <em>Tusculan Disputations</em> V.64; Plutarch, <em>Life of Marcellus</em>; Valerius Maximus, <em>Factorum et Dictorum Memorabilium</em> VIII.7; T. L. Heath, <em>The Works of Archimedes</em> (1897); Galileo Galilei, <em>Discorsi e Dimostrazioni Matematiche</em> (1638)
+  </div>
+</footer>
+
+</body>
+</html>

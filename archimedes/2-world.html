@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archimedes — Vol. 2: His World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0d0a06;
+      --bronze: #b45309;
+      --sand: #d4a853;
+      --dim: #7a5c2e;
+      --mid: #1e1508;
+      --card-bg: #120e05;
+      --border: rgba(180,83,9,0.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--sand);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(13,10,6,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--sand); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--sand);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--bronze);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(212,168,83,0.82);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+    .masthead-art svg { width: 100%; height: auto; }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--bronze);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--sand);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+    p {
+      margin-bottom: 1.1rem;
+      color: rgba(212,168,83,0.88);
+    }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--bronze);
+      color: #0d0a06;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--bronze);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: rgba(212,168,83,0.72);
+      line-height: 1.65;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--bronze);
+      border-radius: 50%;
+    }
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--bronze);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-item p { font-size: 0.92rem; }
+
+    blockquote {
+      border-left: 3px solid var(--bronze);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(180,83,9,0.06);
+    }
+    blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--sand);
+      margin: 0;
+    }
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* MAP / GEOGRAPHY PANEL */
+    .geo-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .geo-panel h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--sand);
+      margin-bottom: 0.6rem;
+    }
+    .geo-panel p {
+      font-size: 0.88rem;
+      color: rgba(212,168,83,0.72);
+    }
+
+    /* PERSON CARD */
+    .person-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0;
+    }
+    .person-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--bronze);
+      padding: 1.4rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .person-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 0 var(--bronze);
+    }
+    .person-card .pname {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--sand);
+      margin-bottom: 0.3rem;
+    }
+    .person-card .pdate {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--bronze);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+    .person-card p {
+      font-size: 0.85rem;
+      color: rgba(212,168,83,0.68);
+      line-height: 1.6;
+    }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+    .vol-nav a:hover { color: var(--sand); border-color: var(--bronze); }
+    .vol-nav a.current {
+      color: var(--sand);
+      border-color: var(--bronze);
+      background: rgba(180,83,9,0.1);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+    .colophon a { color: var(--dim); text-decoration: none; }
+
+    @media (max-width: 900px) {
+      .geo-panel { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      nav { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Archimedes — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — The Work</a>
+  <a href="2-world.html" class="active">Vol. 2 — His World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 2 of 4 &nbsp;·&nbsp; Archimedes of Syracuse</span>
+    <h1>His World</h1>
+    <div class="subtitle">Syracuse, Alexandria, Rome, and War</div>
+    <p class="lede">The 3rd century BCE Mediterranean: a world between the death of Alexander and the rise of Rome, held together by Greek language and Hellenistic culture, threatened by Carthage from the west and Rome from the north. Sicily sat at the center of the collision. Syracuse was its jewel. Archimedes lived inside one of the most consequential geopolitical crises in ancient history.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Catapult / war machine — arm swinging -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1005"/>
+          <stop offset="100%" stop-color="#0d0a06"/>
+        </radialGradient>
+      </defs>
+
+      <circle cx="180" cy="180" r="178" fill="url(#bg2)" stroke="#b45309" stroke-width="0.5" opacity="0.5"/>
+
+      <!-- CITY WALLS (stylized) -->
+      <rect x="40" y="270" width="280" height="18" fill="rgba(180,83,9,0.15)" stroke="#b45309" stroke-width="1" opacity="0.6"/>
+      <!-- Battlements -->
+      <rect x="45" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="70" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="95" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="120" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="145" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="170" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="195" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="220" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="245" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="270" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+      <rect x="295" y="258" width="14" height="12" fill="rgba(180,83,9,0.2)" stroke="#b45309" stroke-width="0.8" opacity="0.6"/>
+
+      <!-- CATAPULT base -->
+      <rect x="145" y="248" width="70" height="12" fill="rgba(180,83,9,0.1)" stroke="#b45309" stroke-width="1" opacity="0.7"/>
+      <!-- Wheels -->
+      <circle cx="158" cy="260" r="8" fill="none" stroke="#b45309" stroke-width="1" opacity="0.6"/>
+      <circle cx="202" cy="260" r="8" fill="none" stroke="#b45309" stroke-width="1" opacity="0.6"/>
+
+      <!-- CATAPULT ARM — swinging -->
+      <g transform="translate(180, 248)">
+        <animateTransform attributeName="transform" type="rotate" from="-70 0 0" to="20 0 0" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.8 0 0.2 1" additive="sum"/>
+        <!-- Arm -->
+        <line x1="0" y1="0" x2="-18" y2="-95" stroke="#d4a853" stroke-width="3" opacity="0.8" stroke-linecap="round"/>
+        <!-- Sling/projectile at end -->
+        <circle cx="-18" cy="-95" r="7" fill="rgba(212,168,83,0.3)" stroke="#d4a853" stroke-width="1.5" opacity="0.9"/>
+        <!-- Counter-weight short end -->
+        <line x1="0" y1="0" x2="12" y2="22" stroke="#b45309" stroke-width="3" opacity="0.7" stroke-linecap="round"/>
+        <rect x="5" y="22" width="14" height="14" fill="rgba(180,83,9,0.4)" stroke="#b45309" stroke-width="1" opacity="0.8"/>
+      </g>
+
+      <!-- SEA (stylized waves) -->
+      <path d="M40,320 Q80,312 120,320 Q160,328 200,320 Q240,312 280,320 Q310,328 320,320" fill="none" stroke="#b45309" stroke-width="1" opacity="0.3"/>
+      <path d="M40,330 Q80,322 120,330 Q160,338 200,330 Q240,322 280,330 Q310,338 320,330" fill="none" stroke="#b45309" stroke-width="0.7" opacity="0.2"/>
+
+      <!-- Roman ship (stylized) -->
+      <g transform="translate(290,300)">
+        <animateTransform attributeName="transform" type="translate" from="320 305" to="40 305" dur="18s" repeatCount="indefinite"/>
+        <ellipse cx="0" cy="0" rx="30" ry="10" fill="rgba(180,83,9,0.1)" stroke="#b45309" stroke-width="1" opacity="0.6"/>
+        <line x1="0" y1="-10" x2="0" y2="-32" stroke="#b45309" stroke-width="1" opacity="0.5"/>
+        <line x1="-14" y1="-20" x2="14" y2="-20" stroke="#b45309" stroke-width="0.8" opacity="0.4"/>
+      </g>
+
+      <!-- Stars in sky area -->
+      <circle cx="80" cy="90" r="1.2" fill="#d4a853" opacity="0.5"/>
+      <circle cx="140" cy="60" r="1" fill="#d4a853" opacity="0.4"/>
+      <circle cx="220" cy="80" r="1.3" fill="#d4a853" opacity="0.45"/>
+      <circle cx="290" cy="100" r="1" fill="#d4a853" opacity="0.4"/>
+      <circle cx="60" cy="140" r="0.9" fill="#d4a853" opacity="0.35"/>
+      <circle cx="310" cy="140" r="1.1" fill="#d4a853" opacity="0.4"/>
+      <circle cx="180" cy="50" r="1.4" fill="#d4a853" opacity="0.55"/>
+
+      <!-- Pulsing alert — signal fire on tower -->
+      <circle cx="95" cy="250" r="4" fill="#b45309" opacity="0">
+        <animate attributeName="opacity" values="0;0.7;0" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="3;7;3" dur="2s" repeatCount="indefinite"/>
+      </circle>
+
+      <text x="18" y="342" font-family="Space Mono, monospace" font-size="7.5" fill="#b45309" opacity="0.55" letter-spacing="2">SIEGE OF SYRACUSE · 214–212 BCE</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-work.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="current">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: SYRACUSE -->
+  <section>
+    <span class="kick">The City · Sicily · Greek West</span>
+    <h2>Syracuse — City at the Edge of the Greek World</h2>
+    <p>Archimedes's entire life — except his student years in Alexandria — was spent in Syracuse. To understand him, you have to understand what that city was: not a quiet provincial backwater but one of the largest, most powerful, and most culturally ambitious Greek cities in the world. In the 3rd century BCE, Syracuse may have had a population of 200,000 or more. It was larger than Athens.</p>
+    <p>Syracuse had been founded in 734 BCE by Corinthian colonists on the island of Ortygia — a small island connected to the Sicilian mainland by a causeway — and had expanded dramatically across the adjacent mainland over the following four centuries. It occupied a naturally fortified position: the island of Ortygia as a citadel, the Great Harbor (one of the finest natural harbors in the ancient Mediterranean) protecting its southern flank, and a series of limestone plateaus (Achradina, Tyche, Neapolis, Epipolae) rising behind it toward the interior.</p>
+    <p>The city was famous for repelling the Athenian Expedition of 415–413 BCE, in which Athens sent its largest naval force in history to conquer Sicily — and lost it entirely. Syracuse had faced and survived the greatest military power of classical Greece. By Archimedes's time it had been through a series of tyrants, democratic periods, and military crises, and had arrived under the relatively stable and enlightened rule of King Hiero II (r. 270–215 BCE), who would be Archimedes's patron for most of his working life.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">Geography</span>
+        <h4>Sicily — Center of the Mediterranean</h4>
+        <p>Sicily sits at the center of the Mediterranean, 140 km from the African coast, 3 km from the Italian peninsula. It was coveted by every power in the region: Greek colonists from the east, Carthaginians from North Africa to the west, and eventually Rome from the north. Archimedes's world was defined by this geography — Sicily was always caught between empires.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The City</span>
+        <h4>Syracuse in the 3rd Century BCE</h4>
+        <p>A city of perhaps 200,000, with monumental temples to Athena (later converted to the Christian cathedral, still standing today), a theater carved into the living rock, extensive quarries (the Latomie) once used as prisons, and an elaborate system of walls and fortifications. It was wealthy from trade, grain, and the surrounding agricultural plain — the Syracuse of Archimedes was a prosperous, confident city.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Culture</span>
+        <h4>Greek, Not Greek-Only</h4>
+        <p>Sicily was Hellenistic but not purely Greek. Sicilian Sikels, Phoenicians, Libyans, and others shared the island with Greek colonists. The Greek language and culture dominated the cities, but the island was always a contact zone between civilizations. The Hellenistic synthesis — Greek language carrying knowledge from across the known world — was visible everywhere in Syracuse's cosmopolitan life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: KING HIERO II -->
+  <section>
+    <span class="kick">The Patron · The Court</span>
+    <h2>King Hiero II — The Wise Patron</h2>
+    <p>Hiero II is one of history's underrated rulers. He governed Syracuse from roughly 270 to 215 BCE — a reign of over fifty years — and kept the city prosperous, independent, and culturally flourishing during one of the most dangerous periods in Mediterranean history. He was a pragmatic statesman, an able military commander, and a genuine intellectual patron.</p>
+    <p>Hiero's relationship with Archimedes was more than that of a ruler commissioning practical engineering. Archimedes dedicated <em>The Sand Reckoner</em> to Hiero's son Gelon — a gesture that implies the royal family was literate enough to appreciate mathematical astronomy. The crown problem shows Hiero trusting Archimedes with a sensitive political investigation. The war machines show Archimedes trusting Hiero enough to put his inventions to lethal use in defense of the city.</p>
+    <p>Hiero managed the remarkable trick of navigating between Rome and Carthage for most of his reign. He allied with Rome after an early military defeat, and Syracuse prospered under that alliance. He commissioned the Syracusia, reportedly the largest ship built in antiquity — a floating palace of multiple decks, gardens, a library, and baths, built under Archimedes's technical supervision. It was too large to enter most harbors and was eventually given as a gift to Ptolemy III of Egypt.</p>
+
+    <blockquote>
+      <p>"He began at once to regard the genius of Archimedes with wonder and amazement, and entreated him to put his art to the service of the state."</p>
+      <cite>— Plutarch, <em>Life of Marcellus</em>, describing King Hiero's response to seeing Archimedes move the Syracusia with a compound pulley.</cite>
+    </blockquote>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">Rule</span>
+        <h4>50 Years of Stability</h4>
+        <p>Hiero II ruled Syracuse for approximately 54 years — an extraordinary reign in an era of constant political violence. He neutralized internal opposition, built strong city finances through fair taxation (the "Hiero tax" on grain production was still being used by Roman Sicily long after his death), and kept Syracuse out of ruinous wars. He was, simply, a very capable ruler.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Diplomacy</span>
+        <h4>Between Rome and Carthage</h4>
+        <p>Hiero's political achievement was to keep Syracuse allied with Rome during the First Punic War (264–241 BCE) — after initially fighting against Rome — and to maintain that alliance profitably for decades. Syracuse was the one Sicilian city not absorbed into the Roman province when Rome took control of the island. It retained nominal independence through Hiero's death in 215 BCE.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">Death and Consequence</span>
+        <h4>The Heir Who Changed Everything</h4>
+        <p>When Hiero died in 215 BCE — at over 90 years old, according to most accounts — his young grandson Hieronymus inherited the throne. Within months, Hieronymus switched Syracuse's alliance to Carthage, triggering the Roman siege of 214 BCE that Archimedes would spend his last years trying to defend against. Hiero's death thus directly caused the crisis that killed Archimedes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: ALEXANDRIA -->
+  <section>
+    <span class="kick">The Intellectual Hub · Egypt</span>
+    <h2>Alexandria — The World's Library</h2>
+    <p>Alexandria, founded by Alexander the Great in 331 BCE and developed under the Ptolemaic dynasty, was the intellectual capital of the Hellenistic world during Archimedes's lifetime. The city was new — only about 50 years old when Archimedes arrived as a student — but the institutions Ptolemy I and Ptolemy II had built were already the most important in the world.</p>
+    <p>The Library of Alexandria at its peak held an estimated 400,000 to 700,000 papyrus scrolls — the entire recorded knowledge of the ancient world. The Ptolemies collected with extraordinary aggression: they required all ships docking at Alexandria to surrender their books for copying (keeping the originals and returning copies). They sent agents to buy libraries across the Mediterranean. The Library was not just a collection; it was an active attempt to possess all knowledge.</p>
+    <p>Attached to the Library was the Mouseion (Museum) — a research institution funded by the royal court, where scholars received stipends, lodging, and access to the collection. Mathematicians, astronomers, physicians, poets, and grammarians worked side by side. It was the ancient equivalent of a research university, and it was there that Archimedes spent his formative years, absorbing the complete prior mathematical tradition and forming the friendships — with Conon of Samos and Eratosthenes of Cyrene — that would sustain his intellectual life in Syracuse.</p>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="pname">Euclid of Alexandria</div>
+        <span class="pdate">c. 330–270 BCE</span>
+        <p>Archimedes arrived in Alexandria shortly after Euclid's death, but studied under his immediate successors. The <em>Elements</em> was the foundation of Archimedes's mathematical education, and he cites Euclidean results throughout his own works. He also built past Euclid — computing what Euclid could not: volumes of curved solids.</p>
+      </div>
+      <div class="person-card">
+        <div class="pname">Conon of Samos</div>
+        <span class="pdate">c. 280–220 BCE</span>
+        <p>Archimedes's closest mathematical friend. An astronomer and mathematician who remained in Alexandria after Archimedes returned to Syracuse. Archimedes sent several of his discoveries to Conon before publishing them — giving him the pleasure of attempting the problems first. When Conon died, Archimedes expressed genuine grief in the preface to <em>On the Sphere and Cylinder</em>.</p>
+      </div>
+      <div class="person-card">
+        <div class="pname">Eratosthenes of Cyrene</div>
+        <span class="pdate">c. 276–194 BCE</span>
+        <p>Head Librarian of Alexandria and one of the great polymaths of antiquity — geographer, mathematician, poet, philosopher. He measured the circumference of the Earth with remarkable accuracy. <em>The Method</em> is addressed directly to him. Archimedes trusted Eratosthenes with his most personal text — the one describing his private discovery process. Their correspondence shows genuine mutual regard.</p>
+      </div>
+      <div class="person-card">
+        <div class="pname">Dositheus of Pelusium</div>
+        <span class="pdate">active c. 240–220 BCE</span>
+        <p>After Conon's death, Archimedes addressed most of his major treatises to Dositheus — <em>On the Sphere and Cylinder</em>, <em>On Conoids and Spheroids</em>, <em>On Spirals</em>, <em>Quadrature of the Parabola</em>, and <em>On Floating Bodies</em>. Dositheus was apparently a trusted mathematician who continued the correspondence network that Conon had anchored. Almost nothing else is known about him.</p>
+      </div>
+      <div class="person-card">
+        <div class="pname">Aristarchus of Samos</div>
+        <span class="pdate">c. 310–230 BCE</span>
+        <p>The ancient Copernicus. Aristarchus proposed a heliocentric model — the Sun at the center, the Earth revolving around it — roughly 1,800 years before Copernicus. Archimedes discusses this model in <em>The Sand Reckoner</em>, using Aristarchus's much larger (heliocentric) universe estimate for his upper bound. Archimedes is thus our primary source for the existence of ancient heliocentrism.</p>
+      </div>
+      <div class="person-card">
+        <div class="pname">Apollonius of Perga</div>
+        <span class="pdate">c. 240–190 BCE</span>
+        <p>The great geometer of conic sections — parabolas, ellipses, hyperbolas. A near-contemporary of Archimedes, also associated with Alexandria. Archimedes's work on parabolas and paraboloids connects directly to Apollonius's conic sections. There may have been professional rivalry: Archimedes prefaces one work by noting he is publishing before certain results are claimed by others.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE PUNIC WARS / GEOPOLITICS -->
+  <section>
+    <span class="kick">Geopolitics · The World at War</span>
+    <h2>The Punic Wars — Sicily at the Crossroads</h2>
+    <p>Archimedes's life coincided almost exactly with the first two Punic Wars — the epochal struggle between Rome and Carthage for control of the western Mediterranean. Sicily was the prize that made the wars inevitable and the battlefield where they were largely decided. Archimedes could not have lived in Syracuse without living inside this conflict.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">264–241 BCE · First Punic War</div>
+        <h4>The First War — Sicily Changes Hands</h4>
+        <p>The First Punic War began when Rome intervened in a local conflict in Messana (northeastern Sicily) and escalated into a 23-year war for control of the island. Sicily had been divided between Greek cities (including Syracuse), Carthaginian western settlements, and indigenous Sikels. The war ended with Rome winning its first overseas province: most of Sicily became Roman. Hiero II had initially supported Carthage, switched to Rome early in the war, and kept Syracuse independent under a treaty of alliance. Archimedes was in his twenties during this war.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">218–201 BCE · Second Punic War</div>
+        <h4>Hannibal and the Crisis of the West</h4>
+        <p>Hannibal Barca led the Carthaginian army across the Alps and into Italy in 218 BCE — one of the most audacious military campaigns in history. He won three crushing victories over Roman armies (Trebia 218 BCE, Lake Trasimene 217 BCE, Cannae 216 BCE) and seemed poised to destroy Rome. Many Roman allies defected. Syracuse, under the young Hieronymus after Hiero's death in 215 BCE, switched to Carthage. Rome could not allow this: the siege of Syracuse began in 214 BCE.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">214–212 BCE · Siege of Syracuse</div>
+        <h4>Archimedes's Last Stand</h4>
+        <p>Rome sent Marcus Claudius Marcellus with a substantial fleet and army to retake Syracuse. Marcellus was an experienced and capable general — he would go on to become one of the most celebrated Roman commanders of the era. The siege lasted two years. Archimedes's war machines — catapults calibrated for all ranges, cranes that could grab and capsize ships, possibly burning mirrors — made the city effectively impregnable by direct assault. Syracuse fell only when Marcellus found an unguarded section of wall during a festival night.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">212 BCE</div>
+        <h4>The Sack — and Archimedes's Death</h4>
+        <p>When the city fell, Marcellus gave orders that Archimedes was not to be harmed — he wanted the old mathematician taken alive. The order was not obeyed. Multiple ancient accounts agree that a Roman soldier killed Archimedes. The versions differ on the circumstances: was he killed for refusing to leave his work, for carrying mathematical instruments that a soldier mistook for valuables, or simply in the chaos of a sack? All versions agree: Marcellus was devastated, gave Archimedes an honorable burial, and sought out his surviving family to make restitution.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: MARCELLUS -->
+  <section>
+    <span class="kick">The Roman General</span>
+    <h2>Marcus Claudius Marcellus — The Admiring Enemy</h2>
+    <p>Marcus Claudius Marcellus (c. 270–208 BCE) is one of history's more complex figures: a skilled and ruthless Roman general who also displayed a genuine sensitivity to the civilizations he conquered. He was the first Roman general to have conquered a Greek city outright — and he was deeply conflicted about what he had done to Syracuse.</p>
+    <p>Marcellus looted Syracuse extensively, sending its art to Rome — which Cicero would later condemn, and which began the Roman habit of stripping Greek cities for artistic treasure. But he also gave Archimedes an honorable burial (against his soldiers' actions), sought out Archimedes's family, and spent the rest of his life reportedly pained by the mathematician's death. Plutarch — our source for much of this — writes that Marcellus "wept when he saw the city at his feet" and turned away from the sight of its destruction.</p>
+    <p>The story of Marcellus and Archimedes is about what happens when the world of power meets the world of knowledge. Marcellus won every battle but could not protect the one thing he most wanted to preserve. It has struck readers across two millennia as a comment on the vulnerability of intellectual life to political and military force.</p>
+
+    <blockquote>
+      <p>"He lamented the death of Archimedes, and heaped reproaches upon the man who had slain him as the murderer of one illustrious for his learning."</p>
+      <cite>— Plutarch, <em>Life of Marcellus</em>, 19. Written c. 75–100 CE.</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 6: THE HELLENISTIC WORLD -->
+  <section>
+    <span class="kick">Context · The Broader Culture</span>
+    <h2>The Hellenistic World — Knowledge as a Project</h2>
+    <p>Archimedes was not an isolated genius. He was embedded in the most intellectually productive culture in antiquity: the Hellenistic world that succeeded Alexander the Great's empire. In this culture — centered on Alexandria but extending across Greek-speaking cities from Spain to India — knowledge was understood as a collective, cumulative project. Scholars built on each other's work. Libraries collected everything. Kings funded research. Mathematicians corresponded across the Mediterranean.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">The Network</span>
+        <h4>Letters Across the Sea</h4>
+        <p>Archimedes maintained active correspondence with colleagues in Alexandria throughout his career. He sent problems, results, and full treatises by letter — the ancient equivalent of a preprint server. Several of his treatises survive only because they were addressed to colleagues by name, preserving not just the mathematics but the social fabric of Hellenistic scholarship.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Language</span>
+        <h4>Koine Greek — The Universal Tongue</h4>
+        <p>The Greek koine (common dialect) that Alexander spread across his conquests became the international language of scholarship. Archimedes wrote in it; so did Euclid in Alexandria, Eratosthenes in Cyrene, and scholars in Antioch, Pergamon, and Athens. This linguistic unity made the correspondence network possible and the preservation of texts more likely — there was a large, literate Greek-reading audience across the Mediterranean.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The Competition</span>
+        <h4>Pergamon vs Alexandria</h4>
+        <p>By the 2nd century BCE, the Library of Alexandria faced serious competition from the Library of Pergamon in Asia Minor. The rivalry was intense enough that, according to Pliny, Egypt banned papyrus exports to Pergamon, forcing the Pergamenes to develop parchment (pergamena) as a writing material. This competition accelerated the preservation and copying of manuscripts — including, eventually, Archimedes's works.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">The End</span>
+        <h4>Rome and the Hellenistic World</h4>
+        <p>The sack of Syracuse in 212 BCE was a turning point: the first Greek city conquered outright by Rome. Over the next century, Rome would absorb the entire Hellenistic world — Greece in 146 BCE, Asia Minor in 133 BCE, Egypt in 30 BCE. The conquest was militarily total but culturally complex: Rome took Greek art, Greek learning, and Greek scholars as prizes. The transmission of Archimedes's works into Latin was part of this absorption.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Archimedes of Syracuse — A Library in Four Volumes &nbsp;|&nbsp; Vol. 2: His World<br>
+    Sources: Polybius, <em>Histories</em> VIII; Plutarch, <em>Life of Marcellus</em>; Livy, <em>Ab Urbe Condita</em> XXIV–XXV; Peter Green, <em>Alexander to Actium: The Historical Evolution of the Hellenistic Age</em> (1990); Brian Caven, <em>The Punic Wars</em> (1980); Roger Lancelyn Green, <em>Classical Sicily</em>
+  </div>
+</footer>
+
+</body>
+</html>

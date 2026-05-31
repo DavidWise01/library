@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregor Mendel — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050a05;
+    --card:#0b100b;
+    --ink:#e8e4d8;
+    --dim:#6b7a5a;
+    --pea:#65a30d;
+    --violet:#7c3aed;
+    --line:rgba(101,163,13,0.18);
+    --violetline:rgba(124,58,237,0.22);
+    --peatint:rgba(101,163,13,0.07);
+    --violettint:rgba(124,58,237,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(101,163,13,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--pea);color:#050a05;}
+  a{color:var(--pea);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--peatint);color:var(--pea);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--pea);}
+  .mast{border-bottom:4px solid var(--pea);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--pea);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:620px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--pea);}
+  .art{flex:0 0 auto;}
+
+  /* ANIMATED PEA PLANT SVG */
+  @keyframes stem-grow{0%{stroke-dashoffset:220}100%{stroke-dashoffset:0}}
+  @keyframes branch-grow{0%{stroke-dashoffset:100}100%{stroke-dashoffset:0}}
+  @keyframes leaf-pop{0%,85%{opacity:0;transform:scale(0)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pod-pop{0%,90%{opacity:0;rx:0;ry:0}100%{opacity:1;rx:10;ry:6}}
+  @keyframes flower-bloom{0%,75%{opacity:0;r:0}100%{opacity:1;r:6}}
+  @keyframes soil-fade{0%{opacity:0}100%{opacity:1}}
+  .svg-stem{stroke-dasharray:220;stroke-dashoffset:220;animation:stem-grow 1.4s cubic-bezier(.2,.8,.2,1) 0.2s forwards;}
+  .svg-br1{stroke-dasharray:100;stroke-dashoffset:100;animation:branch-grow 0.9s cubic-bezier(.2,.8,.2,1) 1.2s forwards;}
+  .svg-br2{stroke-dasharray:100;stroke-dashoffset:100;animation:branch-grow 0.9s cubic-bezier(.2,.8,.2,1) 1.5s forwards;}
+  .svg-br3{stroke-dasharray:80;stroke-dashoffset:80;animation:branch-grow 0.8s cubic-bezier(.2,.8,.2,1) 1.8s forwards;}
+  .svg-leaf1{opacity:0;transform-origin:60px 120px;animation:leaf-pop 0.5s ease 1.7s forwards;}
+  .svg-leaf2{opacity:0;transform-origin:140px 120px;animation:leaf-pop 0.5s ease 1.9s forwards;}
+  .svg-leaf3{opacity:0;transform-origin:50px 75px;animation:leaf-pop 0.5s ease 2.2s forwards;}
+  .svg-leaf4{opacity:0;transform-origin:150px 75px;animation:leaf-pop 0.5s ease 2.4s forwards;}
+  .svg-pod1{opacity:0;animation:pod-pop 0.6s ease 2.6s forwards;}
+  .svg-pod2{opacity:0;animation:pod-pop 0.6s ease 2.8s forwards;}
+  .svg-flower{opacity:0;animation:flower-bloom 0.5s ease 3.0s forwards;}
+  .svg-soil{opacity:0;animation:soil-fade 0.6s ease 0.1s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .svg-stem,.svg-br1,.svg-br2,.svg-br3{animation:none;stroke-dashoffset:0;}
+    .svg-leaf1,.svg-leaf2,.svg-leaf3,.svg-leaf4,.svg-pod1,.svg-pod2,.svg-flower,.svg-soil{animation:none;opacity:1;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--pea);
+    color:#050a05;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.violet{background:var(--violet);color:#e8e4d8;}
+  .band.dim{background:#0f160a;color:var(--pea);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--pea);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--pea);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.tight{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--pea);}
+  .card.v:hover{box-shadow:5px 5px 0 var(--violet);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--pea);
+  }
+  .card.v .num{color:var(--violet);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--pea);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.v .meta b{color:var(--violet);}
+
+  /* TIMELINE */
+  .timeline{list-style:none;padding:0;margin:0;border-left:2px solid var(--line);}
+  .timeline li{
+    position:relative;padding:10px 0 10px 24px;font-size:15px;border-bottom:1px solid var(--line);
+  }
+  .timeline li:last-child{border-bottom:none;}
+  .timeline li::before{
+    content:"";position:absolute;left:-5px;top:16px;
+    width:8px;height:8px;background:var(--pea);border-radius:50%;
+  }
+  .timeline .yr{
+    font-family:"Space Mono",monospace;font-size:10px;font-weight:700;
+    color:var(--pea);letter-spacing:0.12em;display:block;margin-bottom:2px;
+  }
+  .timeline b{color:var(--ink);font-weight:500;}
+
+  /* BLOCK QUOTE */
+  .pull{
+    border-left:4px solid var(--violet);padding:14px 20px;margin:22px 0;
+    background:var(--violettint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COLUMN PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{
+    background:var(--card);border:1px solid var(--line);padding:12px 16px;
+    flex:1;min-width:130px;
+  }
+  .stat .n{
+    font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--pea);
+    display:block;line-height:1;
+  }
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}.card{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Mendel series navigation">
+    <a href="0-who.html" class="active">Vol. 0 — Who</a>
+    <a href="1-heredity.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">mendel series · volume 0 · who he was</span>
+    <div class="masthead">
+      <div>
+        <h1>Gregor <em>Mendel</em></h1>
+        <p class="dek">Born <b>Johann Mendel</b> on 22 July 1822 in Hynčice, Silesia — a village in what is now the Czech Republic. Died <b>6 January 1884</b> in Brno, still believing himself a failure. In between: the discovery that governs every living thing on Earth.</p>
+      </div>
+      <!-- ANIMATED PEA PLANT SVG -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img"
+           aria-label="Animated pea plant growing in monastery garden soil">
+        <!-- Soil -->
+        <rect class="svg-soil" x="0" y="180" width="210" height="30" rx="3" fill="#1a2a0a"/>
+        <rect class="svg-soil" x="20" y="175" width="170" height="12" rx="4" fill="#213412"/>
+        <!-- Stem -->
+        <path class="svg-stem" d="M105 178 Q100 150 105 120 Q108 95 100 60 Q98 42 105 20"
+              stroke="#65a30d" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Branches -->
+        <line class="svg-br1" x1="104" y1="140" x2="60" y2="115" stroke="#65a30d" stroke-width="2" stroke-linecap="round"/>
+        <line class="svg-br2" x1="103" y1="105" x2="150" y2="80" stroke="#65a30d" stroke-width="2" stroke-linecap="round"/>
+        <line class="svg-br3" x1="102" y1="72" x2="60" y2="52" stroke="#65a30d" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Leaves (ellipses) -->
+        <ellipse class="svg-leaf1" cx="50" cy="112" rx="16" ry="9" fill="#65a30d" opacity="0.85" transform="rotate(-30 50 112)"/>
+        <ellipse class="svg-leaf2" cx="162" cy="77" rx="16" ry="9" fill="#65a30d" opacity="0.85" transform="rotate(25 162 77)"/>
+        <ellipse class="svg-leaf3" cx="50" cy="50" rx="13" ry="7" fill="#65a30d" opacity="0.75" transform="rotate(-20 50 50)"/>
+        <ellipse class="svg-leaf4" cx="105" cy="18" rx="11" ry="6" fill="#65a30d" opacity="0.7"/>
+        <!-- Pea Pods -->
+        <ellipse class="svg-pod1" cx="62" cy="102" rx="10" ry="6" fill="#4a8a08" transform="rotate(-40 62 102)"/>
+        <ellipse class="svg-pod2" cx="148" cy="66" rx="10" ry="6" fill="#4a8a08" transform="rotate(20 148 66)"/>
+        <!-- Flower (violet!) -->
+        <circle class="svg-flower" cx="70" cy="50" r="6" fill="#7c3aed" opacity="0.9"/>
+        <circle class="svg-flower" cx="63" cy="45" r="4" fill="#9d5cf5" opacity="0.8" style="animation-delay:3.15s"/>
+        <!-- Ground details -->
+        <line x1="35" y1="178" x2="35" y2="185" stroke="#2d4a10" stroke-width="1.5"/>
+        <line x1="70" y1="178" x2="68" y2="186" stroke="#2d4a10" stroke-width="1.5"/>
+        <line x1="140" y1="178" x2="142" y2="186" stroke="#2d4a10" stroke-width="1.5"/>
+        <line x1="170" y1="178" x2="170" y2="185" stroke="#2d4a10" stroke-width="1.5"/>
+        <!-- Label -->
+        <text x="105" y="205" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#6b7a5a" letter-spacing="0.1em">PISUM SATIVUM</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- STAT ROW -->
+  <div class="stats reveal" style="animation-delay:.1s">
+    <div class="stat"><span class="n">62</span><span class="l">Years Lived</span></div>
+    <div class="stat"><span class="n">29,000</span><span class="l">Pea Plants Grown</span></div>
+    <div class="stat"><span class="n">7</span><span class="l">Traits Studied</span></div>
+    <div class="stat"><span class="n">8</span><span class="l">Years of Experiments</span></div>
+    <div class="stat"><span class="n">16</span><span class="l">Years Until Rediscovery</span></div>
+  </div>
+
+  <!-- ORIGINS -->
+  <div class="band">Family &amp; Origins</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <div class="prose-2">
+      <div>
+        <h2>Born <em>Johann</em> Mendel</h2>
+        <p>On <strong>22 July 1822</strong>, in the small farming village of Hynčice (then called Heinzendorf) in the Silesian region of the Austrian Empire — now part of the Czech Republic — a son was born to Anton and Rosine Mendel. They named him Johann. The family scratched a living from a small farm on the border of German-speaking Silesia and Moravian Bohemia, growing fruit trees and keeping a household perpetually one bad harvest from poverty.</p>
+        <p>Anton Mendel was a veteran of the Napoleonic wars, compelled to spend years of his life doing forced labor on the local lord's estate — a common obligation for peasant landholders. The family's farm was small and the work was hard. But even in this constrained world, education was prized. Johann was a precocious child and his teachers recognized it early.</p>
+      </div>
+      <div>
+        <h2>The <em>Farming</em> Background</h2>
+        <p>The irony of Mendel's origins deserves to be savored. The man who would decode the mathematics of heredity was raised in a family of <em>practical plant breeders</em> — his father cultivated fruit trees and his village had a long tradition of working with the soil. When Mendel later spent seven years crossing pea plants in a monastery garden, he was not abandoning his origins. He was returning to them, but armed with a scientist's precision and a mathematician's eye.</p>
+        <p>Mendel had one elder sister, Veronika, and one younger, Theresia. The family's poverty was real enough that when Johann needed to continue his education — and the costs began to mount — it was Theresia who sacrificed part of her dowry to help fund his studies. He never forgot this. Years later, as a prosperous abbot, he helped educate all three of Theresia's sons.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <div class="band violet">Education &amp; the Path to the Monastery</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <div class="grid">
+
+      <div class="card v">
+        <span class="num">01</span>
+        <h3>Piarist School, Lipník</h3>
+        <p class="what">At age eleven, Johann was sent to the Piarist school in Lipník (Leipnik), some distance from home — a sacrifice for the family. His teachers praised his abilities consistently. He studied philosophy, natural science, mathematics, and Latin. At sixteen he moved to the Gymnasium in Opava (Troppau) for two more years of advanced study.</p>
+        <div class="meta"><b>Years:</b> 1833–1840 &nbsp;·&nbsp; <b>Verdict:</b> Exceptional student</div>
+      </div>
+
+      <div class="card v">
+        <span class="num">02</span>
+        <h3>Olomouc Philosophical Institute</h3>
+        <p class="what">In 1840, at age 18, Mendel enrolled at the two-year philosophical course in Olomouc — the prerequisite for university studies. He was so poor that he could barely eat; he described suffering from "a life-threatening illness" likely caused by chronic hunger and stress. He nonetheless graduated in the top tier of his class. His physics professor Friedrich Franz wrote a glowing recommendation — the same professor who would later introduce him to the Augustinian monastery at Brno.</p>
+        <div class="meta"><b>Years:</b> 1840–1843 &nbsp;·&nbsp; <b>Verdict:</b> Top of class, near starvation</div>
+      </div>
+
+      <div class="card v">
+        <span class="num">03</span>
+        <h3>Entering the Monastery</h3>
+        <p class="what">In 1843, at age 21, Johann Mendel entered the Augustinian monastery of St. Thomas in Brno. He took the name <strong>Gregor</strong> in honor of St. Gregory. The decision was not purely spiritual: the monastery offered a funded path to education for a young man whose family could not support him. Abbot Cyrill Franz Napp — a remarkable man, scientifically sophisticated — immediately recognized Mendel's gifts and sent him to study in Vienna.</p>
+        <div class="meta"><b>Year:</b> 1843 &nbsp;·&nbsp; <b>Takes name:</b> Gregor</div>
+      </div>
+
+      <div class="card v">
+        <span class="num">04</span>
+        <h3>University of Vienna, 1851–53</h3>
+        <p class="what">Abbot Napp sent Mendel to the University of Vienna to study physics and natural sciences. This proved decisive. Mendel studied under <strong>Christian Doppler</strong> (of the Doppler Effect) and Franz Unger, a pioneering plant physiologist who believed in the transmutation of species. Vienna gave Mendel the mathematical rigor that would make his plant experiments revolutionary. He returned to Brno in 1853, changed.</p>
+        <div class="meta"><b>Years:</b> 1851–1853 &nbsp;·&nbsp; <b>Key teacher:</b> Christian Doppler</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- THE FAILED EXAMINATIONS -->
+  <div class="band">The Teacher Who Failed the Teaching Exam — Twice</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <p>The single most darkly comic fact in the history of science: <strong>Gregor Mendel failed the teacher certification examination twice</strong> — and in both cases, his weakest subjects included natural history and geology. The man who would found the science of genetics could not pass a biology exam.</p>
+
+    <div class="pull">
+      "He became so agitated during the oral examination that he could not demonstrate the knowledge he undoubtedly possessed."
+      <cite>— Contemporary account of Mendel's 1850 examination failure</cite>
+    </div>
+
+    <div class="prose-2">
+      <div>
+        <h2>First Failure, <em>1850</em></h2>
+        <p>Mendel sat the teaching certification exam in Vienna in 1850, before his university studies there. The written component went acceptably. The oral exam was a disaster — the examiner in natural history, Johann Karl Baumgartner, was reportedly unsympathetic and Mendel's nerves shattered him. The examiner wrote that Mendel had a "lack of insight" and an "unclear manner of speaking." The failure was bitter and humiliating. It was also the prompt that sent him to Vienna for two years of proper university training.</p>
+      </div>
+      <div>
+        <h2>Second Failure, <em>1856</em></h2>
+        <p>After two formative years in Vienna, Mendel returned to Brno and attempted the exam a second time. He never finished it. On the first day, the examiner in zoology — a different man, Professor Kner — provoked such a dispute that Mendel withdrew from the examination entirely rather than continue. He submitted a written protest. He never sat the exam again. He taught as a substitute teacher for fourteen years without ever holding a full certificate. He was, ironically, a beloved and effective teacher of both physics and natural history.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE PEA EXPERIMENTS -->
+  <div class="band">The Pea Garden, 1856–1863</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <p>In 1856 — the same year he failed his second teaching exam and the same year Darwin was quietly urging forward his species theory in England — Mendel began the experiments that would define his legacy. The monastery garden at St. Thomas was an ideal laboratory: sheltered, well-maintained, approximately 35 meters long. Mendel cultivated up to <strong>29,000 pea plants</strong> over seven growing seasons, 1856 to 1863. He planted, crossed, harvested, counted, and recorded with meticulous precision.</p>
+
+    <div class="stats">
+      <div class="stat"><span class="n">29,000</span><span class="l">Pea Plants</span></div>
+      <div class="stat"><span class="n">7</span><span class="l">Traits Tracked</span></div>
+      <div class="stat"><span class="n">7</span><span class="l">Years of Work</span></div>
+      <div class="stat"><span class="n">~40</span><span class="l">Scientist Copies Sent</span></div>
+    </div>
+
+    <p>Mendel chose <em>Pisum sativum</em> (the garden pea) deliberately. He spent two years first testing that his seed varieties bred true — that each trait was stable across generations before he began crossing them. He identified seven traits that each came in exactly two distinct forms, each dominant or recessive. He was not lucky in his choice: peas were a near-perfect experimental organism, their traits inherited independently (as we now know, because the genes happen to sit on different chromosomes).</p>
+    <p>The results were stunning, but only if you could read the mathematics. Mendel could. He tabulated thousands of observations and recognized the ratios: 3:1 in the second generation, 1:2:1 in the underlying genotypes. No biologist before him had done this. He was thinking statistically in an era when biology was still largely narrative and descriptive.</p>
+  </div>
+
+  <!-- PUBLICATION & SILENCE -->
+  <div class="band violet">Publication, 1866 — and the Long Silence</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="prose-2">
+      <div>
+        <h2><em>Versuche über Pflanzenhybriden</em></h2>
+        <p>Mendel presented his results to the Natural History Society of Brno in two lectures, on <strong>8 February</strong> and <strong>8 March 1865</strong>. The following year, in 1866, the paper was published in the Society's proceedings: <em>Verhandlungen des naturforschenden Vereines in Brünn</em> — the journal of an obscure provincial scientific society in a provincial city of the Austrian Empire. The paper's title translates as <em>Experiments on Plant Hybridization</em>.</p>
+        <p>Mendel was thorough: he had <strong>40 reprints</strong> made and sent them to prominent scientists across Europe, including several who corresponded with Darwin. He almost certainly sent a copy to the botanist Carl von Nägeli in Munich — who became his main scientific correspondent but famously failed to grasp the importance of what Mendel had found, redirecting him toward hawkweeds (<em>Hieracium</em>), which are apomictic and would have confounded Mendel's results irreparably.</p>
+      </div>
+      <div>
+        <h2>The <em>Silence</em></h2>
+        <p>The paper was cited only a handful of times in the next 35 years. The reasons for the failure were structural: Mendel's work was too mathematical for botanists of the era, who were not accustomed to statistical reasoning. The journal was obscure and not widely circulated. And crucially, Mendel himself was modest and isolated — he did not push his findings aggressively or travel to international conferences to argue for them.</p>
+        <p>Darwin almost certainly had access to the paper or to a report of it. His personal library contained Focke's <em>Die Pflanzenmischlinge</em> (1881), which cited Mendel's paper multiple times. Darwin's copy shows no annotations on those pages. Whether he read past them, we cannot know. The two men who together hold the key to life were separated by little more than inattention and circumstance.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABBOT & LATER LIFE -->
+  <div class="band">Abbot, 1868–1884</div>
+  <div class="reveal" style="animation-delay:.4s">
+    <p>In 1868, Mendel was elected <strong>Abbot of St. Thomas</strong> — the head of his monastery. He was 46 years old. The election honored him and effectively ended his scientific career. Administrative duties consumed his time; ecclesiastical politics consumed his energy. The Austrian government imposed a new tax on monasteries, and Mendel spent his final years locked in a bitter legal dispute with the government over it — a fight he conducted with characteristic stubbornness and which he never won.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="num">1868</span>
+        <h3>Elected Abbot</h3>
+        <p class="what">His election was a recognition of his standing within the Augustinian order. He was a careful and effective administrator and a generous benefactor. But the role ate his science. His breeding experiments never resumed at scale.</p>
+        <div class="meta"><b>Age at election:</b> 46</div>
+      </div>
+      <div class="card">
+        <span class="num">1870s</span>
+        <h3>Tax Dispute</h3>
+        <p class="what">The Austro-Hungarian government's new religious property tax provoked Mendel into years of bureaucratic warfare. He refused to pay. The government sequestered monastery revenues. He corresponded endlessly with lawyers, bishops, and government officials. He never capitulated — and the dispute was still unresolved at his death.</p>
+        <div class="meta"><b>Duration:</b> ~10 years</div>
+      </div>
+      <div class="card">
+        <span class="num">1880s</span>
+        <h3>Declining Health</h3>
+        <p class="what">In his final years Mendel suffered from chronic nephritis (kidney disease). He smoked heavily and had grown corpulent. Contemporary accounts describe a melancholy man who felt his scientific work had been ignored and his administrative work futile. He continued his meteorological observations until near the end.</p>
+        <div class="meta"><b>Final hobby:</b> Meteorology &amp; beekeeping</div>
+      </div>
+      <div class="card">
+        <span class="num">6 Jan 1884</span>
+        <h3>Death</h3>
+        <p class="what">Mendel died of chronic kidney failure on 6 January 1884, aged 61. He was mourned locally as a well-regarded abbot and civic figure. His scientific paper was not mentioned in his obituary. The new abbot, Anselm Rambousek, ordered most of Mendel's scientific papers burned. The pea plant notebooks were lost.</p>
+        <div class="meta"><b>Obituary mentions his science:</b> No</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REDISCOVERY -->
+  <div class="band violet">Rediscovery, 1900</div>
+  <div class="reveal" style="animation-delay:.45s">
+    <p>Sixteen years after Mendel's death, three botanists independently rediscovered his laws while conducting their own plant hybridization experiments. <strong>Hugo de Vries</strong> (Netherlands), <strong>Carl Correns</strong> (Germany), and <strong>Erich von Tschermak</strong> (Austria) each published papers in 1900 describing results that matched Mendel's. Each, in searching the literature, found Mendel's 1866 paper — and realized he had preceded them all by a generation.</p>
+    <p>De Vries initially tried to minimize Mendel's priority in his first publication; Correns forced the acknowledgment. The year 1900 is taken as the birth of <em>Mendelian genetics</em> as a recognized scientific discipline. The founder had been dead for sixteen years. His notebooks had been burned. The world had to reconstruct his methods from his published paper alone.</p>
+
+    <div class="pull">
+      "My time will come."
+      <cite>— Attributed to Mendel in his final years, possibly apocryphal, certainly true</cite>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="band">Life Chronology</div>
+  <div class="reveal" style="animation-delay:.5s">
+    <ul class="timeline">
+      <li><span class="yr">22 Jul 1822</span><b>Born</b> Johann Mendel in Hynčice (Heinzendorf), Silesia, Austrian Empire (now Czech Republic).</li>
+      <li><span class="yr">1833</span>Enters Piarist school in Lipník; recognized as exceptional student.</li>
+      <li><span class="yr">1840–1843</span><b>Olomouc Philosophical Institute.</b> Near starvation, graduates at top of class.</li>
+      <li><span class="yr">6 Oct 1843</span>Enters Augustinian monastery of St. Thomas, Brno. Takes name <b>Gregor</b>.</li>
+      <li><span class="yr">1847</span>Ordained as a Roman Catholic priest.</li>
+      <li><span class="yr">1850</span><b>First teaching exam failure.</b> Examiner cites "lack of insight." Mendel is crushed.</li>
+      <li><span class="yr">1851–1853</span><b>University of Vienna.</b> Studies physics under Christian Doppler; plant physiology under Franz Unger.</li>
+      <li><span class="yr">1854</span>Returns to Brno; begins teaching physics and natural history as substitute teacher.</li>
+      <li><span class="yr">1856</span><b>Second teaching exam failure.</b> Withdraws mid-examination after dispute with examiner.</li>
+      <li><span class="yr">1856–1863</span><b>The pea experiments.</b> 29,000 plants; 7 traits; seven growing seasons in the monastery garden.</li>
+      <li><span class="yr">8 Feb &amp; 8 Mar 1865</span>Presents results to the Natural History Society of Brno in two lectures.</li>
+      <li><span class="yr">1866</span><em>Versuche über Pflanzenhybriden</em> published in the Brno society's proceedings. 40 reprints sent to scientists. Silence.</li>
+      <li><span class="yr">1868</span><b>Elected Abbot</b> of St. Thomas monastery. Science ends; administration begins.</li>
+      <li><span class="yr">1870s</span>Bitter multi-year tax dispute with Austrian government over monastery property tax.</li>
+      <li><span class="yr">6 Jan 1884</span><b>Dies</b> of kidney failure, aged 61. Scientific work not mentioned in obituary.</li>
+      <li><span class="yr">After 1884</span>New abbot orders Mendel's scientific papers burned. Notebooks lost.</li>
+      <li><span class="yr">1900</span><b>Rediscovery</b> by de Vries, Correns, and Tschermak — simultaneously, independently.</li>
+    </ul>
+  </div>
+
+  <!-- CHARACTER -->
+  <div class="band">The Man Himself</div>
+  <div class="reveal" style="animation-delay:.55s">
+    <div class="grid">
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Stubborn</h3>
+        <p class="what">Mendel refused to pay the monastery's tax for a decade, knowing he would probably lose. He refused to stop his hawkweed experiments even when von Nägeli's indifference was obvious. He submitted to two failed exams rather than simply abandon the teaching credential. Stubbornness runs through every chapter of his life.</p>
+        <div class="meta"><b>Tax dispute:</b> Never resolved, even at death</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Meticulous</h3>
+        <p class="what">Mendel spent two full years testing seed varieties for consistency before beginning his crossing experiments. He counted thousands of individual seeds, flowers, and pods by hand, season after season. His published paper contains tables of data so precise that later statisticians argued — controversially — that the numbers were too good to be true.</p>
+        <div class="meta"><b>Too perfect?</b> Fisher's 1936 analysis debated to this day</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Solitary</h3>
+        <p class="what">Unlike Darwin, who corresponded internationally and had a network of supportive colleagues, Mendel was largely alone. His main scientific correspondent, von Nägeli, never believed in him. He published once on peas, once on hawkweeds, and then stopped. He had no scientific community to sustain him when the world ignored his work.</p>
+        <div class="meta"><b>Key correspondent:</b> Von Nägeli (skeptic)</div>
+      </div>
+      <div class="card">
+        <span class="num">★</span>
+        <h3>Prescient</h3>
+        <p class="what">Mendel wrote to von Nägeli in 1867: "I am convinced that it will not be long before the whole world acknowledges the results of my work." He died thinking himself a failure. He was right about the world — only wrong about the timeline. It took 34 years, not the few he imagined.</p>
+        <div class="meta"><b>Self-assessment, 1884:</b> A failure. Wrong.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Mendel Series · Vol. 0 of 4 · <em>Who He Was</em> &nbsp;·&nbsp; Series: gregor-mendel</div>
+    <div style="margin-top:4px;font-size:9px;">Content compiled for educational purposes. Primary sources: Iltis, <em>Life of Mendel</em> (1932); Orel, <em>Gregor Mendel: The First Geneticist</em> (1996); Mendel, <em>Versuche über Pflanzenhybriden</em> (1866).</div>
+  </div>
+
+</div>
+</body>
+</html>

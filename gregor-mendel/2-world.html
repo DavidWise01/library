@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregor Mendel — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050a05;
+    --card:#0b100b;
+    --ink:#e8e4d8;
+    --dim:#6b7a5a;
+    --pea:#65a30d;
+    --violet:#7c3aed;
+    --line:rgba(101,163,13,0.18);
+    --violetline:rgba(124,58,237,0.22);
+    --peatint:rgba(101,163,13,0.07);
+    --violettint:rgba(124,58,237,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(101,163,13,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--pea);color:#050a05;}
+  a{color:var(--pea);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--peatint);color:var(--pea);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--pea);}
+  .mast{border-bottom:4px solid var(--pea);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--pea);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:620px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--pea);}
+  .art{flex:0 0 auto;}
+
+  /* MONASTERY MAP SVG ANIMATIONS */
+  @keyframes wall-draw{0%{stroke-dashoffset:600}100%{stroke-dashoffset:0}}
+  @keyframes room-fill{0%{opacity:0}100%{opacity:1}}
+  @keyframes path-walk{0%{stroke-dashoffset:300}100%{stroke-dashoffset:0}}
+  @keyframes label-in{0%{opacity:0;transform:translateY(4px)}100%{opacity:1;transform:none}}
+  .wall-anim{stroke-dasharray:600;stroke-dashoffset:600;animation:wall-draw 1.6s ease 0.2s forwards;}
+  .room1{opacity:0;animation:room-fill 0.4s ease 1.4s forwards;}
+  .room2{opacity:0;animation:room-fill 0.4s ease 1.7s forwards;}
+  .room3{opacity:0;animation:room-fill 0.4s ease 2.0s forwards;}
+  .room4{opacity:0;animation:room-fill 0.4s ease 2.3s forwards;}
+  .garden-path{stroke-dasharray:300;stroke-dashoffset:300;animation:path-walk 1s ease 2.5s forwards;}
+  .map-lbl1{opacity:0;animation:label-in 0.4s ease 1.5s forwards;}
+  .map-lbl2{opacity:0;animation:label-in 0.4s ease 1.8s forwards;}
+  .map-lbl3{opacity:0;animation:label-in 0.4s ease 2.1s forwards;}
+  .map-lbl4{opacity:0;animation:label-in 0.4s ease 2.4s forwards;}
+  .map-lbl5{opacity:0;animation:label-in 0.4s ease 2.8s forwards;}
+  @media(prefers-reduced-motion:reduce){
+    .wall-anim{animation:none;stroke-dashoffset:0;}
+    .room1,.room2,.room3,.room4,.garden-path,.map-lbl1,.map-lbl2,.map-lbl3,.map-lbl4,.map-lbl5{animation:none;opacity:1;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--pea);
+    color:#050a05;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.violet{background:var(--violet);color:#e8e4d8;}
+  .band.dim{background:#0f160a;color:var(--pea);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--pea);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--pea);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.tight{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--pea);}
+  .card.v:hover{box-shadow:5px 5px 0 var(--violet);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--pea);
+  }
+  .card.v .num{color:var(--violet);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--pea);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.v .meta b{color:var(--violet);}
+
+  /* BLOCK QUOTE */
+  .pull{
+    border-left:4px solid var(--violet);padding:14px 20px;margin:22px 0;
+    background:var(--violettint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COLUMN PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* THREE-COLUMN PROSE */
+  .prose-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
+  @media(max-width:700px){.prose-3{grid-template-columns:1fr;}}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{
+    background:var(--card);border:1px solid var(--line);padding:12px 16px;
+    flex:1;min-width:130px;
+  }
+  .stat .n{
+    font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--pea);
+    display:block;line-height:1;
+  }
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}.card{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Mendel series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-heredity.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">mendel series · volume 2 · his world</span>
+    <div class="masthead">
+      <div>
+        <h1>Brno, <em>1856</em></h1>
+        <p class="dek">A monastery garden in the Habsburg Empire. A physics lab run by monks. <b>Darwin</b> publishing in London — the other half of the same great problem. A provincial city that housed, unknowingly, the future of all biology.</p>
+      </div>
+      <!-- ANIMATED MONASTERY GARDEN MAP SVG -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img"
+           aria-label="Animated schematic map of the Augustinian monastery of St. Thomas in Brno showing the garden, church, physics lab, and cloister">
+        <!-- Outer monastery wall -->
+        <rect class="wall-anim" x="8" y="8" width="194" height="194" rx="4" stroke="#65a30d" stroke-width="2" fill="none" stroke-dasharray="600"/>
+        <!-- Church (top left) -->
+        <rect class="room1" x="14" y="14" width="60" height="70" fill="rgba(101,163,13,0.12)" stroke="#65a30d" stroke-width="1"/>
+        <!-- Cloister (bottom left) -->
+        <rect class="room2" x="14" y="100" width="60" height="60" fill="rgba(124,58,237,0.10)" stroke="#7c3aed" stroke-width="1"/>
+        <!-- Physics Lab / Study rooms (right, top) -->
+        <rect class="room3" x="90" y="14" width="108" height="55" fill="rgba(101,163,13,0.08)" stroke="#65a30d" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- Garden (right, bottom — the key space) -->
+        <rect class="room4" x="90" y="85" width="108" height="109" fill="rgba(101,163,13,0.18)" stroke="#65a30d" stroke-width="1.5"/>
+        <!-- Garden rows (pea beds) -->
+        <line x1="100" y1="100" x2="190" y2="100" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <line x1="100" y1="115" x2="190" y2="115" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <line x1="100" y1="130" x2="190" y2="130" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <line x1="100" y1="145" x2="190" y2="145" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <line x1="100" y1="160" x2="190" y2="160" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <line x1="100" y1="175" x2="190" y2="175" stroke="#65a30d" stroke-width="0.8" stroke-dasharray="3,4" opacity="0.5"/>
+        <!-- Garden path -->
+        <line class="garden-path" x1="90" y1="140" x2="150" y2="140" stroke="#4a8a08" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="300"/>
+        <!-- Cross symbol in church -->
+        <line x1="44" y1="28" x2="44" y2="72" stroke="#65a30d" stroke-width="1.5" opacity="0.5"/>
+        <line x1="26" y1="46" x2="62" y2="46" stroke="#65a30d" stroke-width="1.5" opacity="0.5"/>
+        <!-- Labels -->
+        <text class="map-lbl1" x="44" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#65a30d" letter-spacing="0.05em">CHURCH</text>
+        <text class="map-lbl2" x="44" y="168" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#9d5cf5" letter-spacing="0.05em">CLOISTER</text>
+        <text class="map-lbl3" x="144" y="60" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#65a30d" letter-spacing="0.05em">PHYSICS LAB</text>
+        <text class="map-lbl4" x="144" y="71" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#6b7a5a">STUDY ROOMS</text>
+        <text class="map-lbl5" x="144" y="100" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#65a30d" font-weight="700" letter-spacing="0.06em">MENDEL'S GARDEN</text>
+        <text class="map-lbl5" x="144" y="112" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#6b7a5a">35m × 7m</text>
+        <!-- North indicator -->
+        <text x="190" y="200" text-anchor="end" font-family="Space Mono,monospace" font-size="8" fill="#6b7a5a">N↑</text>
+        <!-- Scale note -->
+        <text x="8" y="206" font-family="Space Mono,monospace" font-size="6" fill="#6b7a5a">ST. THOMAS MONASTERY · BRNO · 1856</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- STAT ROW -->
+  <div class="stats reveal" style="animation-delay:.1s">
+    <div class="stat"><span class="n">1322</span><span class="l">Monastery Founded</span></div>
+    <div class="stat"><span class="n">35m</span><span class="l">Garden Length</span></div>
+    <div class="stat"><span class="n">50,000</span><span class="l">Brno Population 1860</span></div>
+    <div class="stat"><span class="n">1859</span><span class="l">Origin of Species</span></div>
+    <div class="stat"><span class="n">40</span><span class="l">Paper Copies Sent</span></div>
+  </div>
+
+  <!-- BRNO & THE AUSTRIAN EMPIRE -->
+  <div class="band">Brno: City &amp; Empire</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <div class="prose-2">
+      <div>
+        <h2>The City of <em>Brno</em></h2>
+        <p>Mendel's monastery stood in <strong>Brno</strong> (known in German as Brünn), the capital of the Margraviate of Moravia in the Austrian Empire — the empire that would later become Austria-Hungary. In the mid-nineteenth century, Brno was a moderately prosperous city of around 50,000 people, known principally for its textile industry. It was neither a great capital nor a backwater: it had a theater, a natural history society, a philosophical institute, and a modest but genuine intellectual community.</p>
+        <p>The city sat at the crossroads of Germanic and Slavic Central Europe — most educated residents spoke German as their primary scientific and civic language, though Czech was the language of the surrounding countryside and the working class. Mendel, from Silesia's German-speaking region, conducted all his work and correspondence in German.</p>
+      </div>
+      <div>
+        <h2>The <em>Habsburg</em> Context</h2>
+        <p>The Austrian Empire under Franz Joseph I (who came to power in 1848 — the same year Europe's revolutionary upheavals forced a new generation of liberal and scientific thinking) was a complex, multi-ethnic, multi-lingual state. Vienna was its cultural and scientific capital, and Mendel's two years there (1851–1853) exposed him to the best natural science the empire had to offer.</p>
+        <p>The Habsburg tradition was not hostile to science. The empire had a strong natural history culture — the Vienna Natural History Museum, founded in the eighteenth century, was one of the great scientific collections of Europe. Provincial societies like Brno's Natural History Society (founded 1861) were part of a network of civic scientific culture that the empire actively encouraged. It was this provincial network that published Mendel's paper in 1866 — and that, paradoxically, made it invisible to the international scientific world.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE MONASTERY -->
+  <div class="band violet">The Monastery of St. Thomas</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <p>The Augustinian Monastery of St. Thomas in Brno was, by any measure, a remarkable intellectual community. Founded in 1322, it had evolved by the nineteenth century into something approaching a scientific institution as much as a religious one. This was not unusual among Central European monasteries of the era — the Augustinian order in particular had a tradition of academic engagement — but St. Thomas took it further than most.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Abbot Cyrill Franz Napp</h3>
+        <p class="what">The abbot who admitted Mendel in 1843, and who would become his most important patron. Napp was scientifically sophisticated — he had been interested in plant hybridization and breeding since the 1830s and encouraged the monastery's monks to pursue natural science. It was Napp who sent Mendel to Vienna for formal university training, and Napp who provided the resources and the garden for the pea experiments.</p>
+        <div class="meta"><b>Abbot:</b> 1824–1867 &nbsp;·&nbsp; <b>Role:</b> Intellectual patron</div>
+      </div>
+
+      <div class="card">
+        <span class="num">02</span>
+        <h3>The Physics Laboratory</h3>
+        <p class="what">By the time Mendel returned from Vienna, St. Thomas had an active physics laboratory. Mendel taught physics and natural history at the nearby Realschule (technical secondary school) for fourteen years as a substitute teacher, and the monastery's resources supported his continued experimental work. The notion that Mendel worked in primitive conditions is false — he had access to equipment, a library, and institutional support that many university researchers of the era lacked.</p>
+        <div class="meta"><b>Equipment:</b> Meteorological station, physics instruments</div>
+      </div>
+
+      <div class="card">
+        <span class="num">03</span>
+        <h3>The Meteorological Station</h3>
+        <p class="what">Mendel maintained a careful meteorological record throughout his adult life — temperature, barometric pressure, rainfall, wind direction — for Brno and the surrounding region. His meteorological work was respected and published. After his election as abbot ended his biological experiments, meteorology was the scientific outlet that remained. He published papers on tornadoes and sunspot cycles.</p>
+        <div class="meta"><b>Years of records:</b> 1856–1884</div>
+      </div>
+
+      <div class="card">
+        <span class="num">04</span>
+        <h3>The Intellectual Community</h3>
+        <p class="what">The monastery's monks included Franz Klácel, a Hegelian philosopher who had corresponded with other European intellectual radicals; Aurelius Thaler, who worked on plant hybridization before Mendel arrived; and others engaged in serious scientific and philosophical work. Mendel grew up intellectually inside a community of inquiry, not isolation. This context shaped his willingness to apply rigorous method to what others treated as a botanical curiosity.</p>
+        <div class="meta"><b>Tradition:</b> Augustinian academic engagement</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE GARDEN -->
+  <div class="band">The Garden as Laboratory</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <div class="prose-2">
+      <div>
+        <h2>The <em>Monastic</em> Garden</h2>
+        <p>The monastery garden where Mendel conducted his experiments was approximately <strong>35 meters long by 7 meters wide</strong> — roughly the size of a large modern apartment. It was sheltered by monastery walls, well-maintained, and had been used for cultivation of medicinal and food plants for generations. Mendel was allocated this space specifically for his breeding experiments, with the full support of Abbot Napp.</p>
+        <p>He grew up to <strong>29,000 pea plants</strong> there over seven growing seasons, plus additional plants in greenhouse conditions for winter crosses. He also maintained separate experimental beds for hawkweeds (<em>Hieracium</em>), fuchsias, and various other hybrid investigations. The garden was a working scientific laboratory — just one built in stone, consecrated, and centuries old.</p>
+      </div>
+      <div>
+        <h2>The <em>Practical</em> Tradition</h2>
+        <p>The monastic garden as laboratory has a long history that predates modern science. Medieval monasteries cultivated herbs for medicine, food plants for sustenance, and decorative gardens for contemplation. By the Renaissance, botanic gardens attached to universities had formalized the tradition of systematic plant cultivation for scientific purposes. Mendel's garden was heir to all of this.</p>
+        <p>But Mendel transformed the tradition. Where earlier monks grew plants for use — medicine, food, beauty — Mendel grew plants for information. Each plant in his garden was not a crop but a data point. The monastery garden became a counting machine, an instrument of mathematical inquiry disguised as horticulture. The monks who tended it with him probably did not fully understand what they were helping to build.</p>
+      </div>
+    </div>
+
+    <div class="pull">
+      "In this experiment, I have taken the greatest care possible to avoid all errors in observation or counting, so that I can state these numbers with complete confidence."
+      <cite>— Mendel, Versuche über Pflanzenhybriden (1866)</cite>
+    </div>
+  </div>
+
+  <!-- DARWIN: THE OTHER HALF -->
+  <div class="band violet">Darwin: The Other Half of the Same Problem</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <p>In November 1859 — three years after Mendel began his pea experiments — <strong>Charles Darwin</strong> published <em>On the Origin of Species</em> in London. The two men never met, never corresponded, and almost certainly never knew of each other's work with any real comprehension. Yet they were, simultaneously and independently, solving the two halves of the same great question about life.</p>
+
+    <div class="prose-3">
+      <div>
+        <h3>Darwin's Question</h3>
+        <p style="font-size:14px;color:#b8b4a4">How do species change over time? What mechanism drives the divergence of life into its extraordinary variety? Darwin's answer: <em>natural selection</em>. Organisms vary; some variants are better suited to their environment; those variants survive and reproduce more; their traits accumulate across generations; over deep time, populations diverge into new species.</p>
+      </div>
+      <div>
+        <h3>Mendel's Question</h3>
+        <p style="font-size:14px;color:#b8b4a4">How does inheritance work? When organisms reproduce, what exactly is transmitted from parent to offspring, and in what quantities? Mendel's answer: discrete, stable factors — one from each parent; dominant masks recessive; factors segregate independently. He solved the mechanism that Darwin could not explain.</p>
+      </div>
+      <div>
+        <h3>The Missing Link</h3>
+        <p style="font-size:14px;color:#b8b4a4">Darwin's great weakness was heredity. He knew variation existed, but he had no theory of how it was transmitted or maintained. He even proposed, late in life, his own tentative and incorrect theory of heredity — "pangenesis" — involving imaginary "gemmules" floating in the blood. Mendel had the correct answer in 1866. Neither man knew.</p>
+      </div>
+    </div>
+
+    <div class="grid tight" style="margin-top:22px">
+      <div class="card v">
+        <span class="num">1857</span>
+        <h3>Darwin, in Kent</h3>
+        <p class="what">While Mendel tended his monastery garden in Brno, Darwin at Down House in Kent was engaged in a parallel obsession: working up the massive manuscript he would eventually compress into <em>On the Origin of Species</em>. He too was a methodical counter and experimenter — his barnacle work, his orchid studies, his earthworm experiments share Mendel's patient quantitative spirit.</p>
+        <div class="meta"><b>Distance from Brno:</b> ~1,200 km</div>
+      </div>
+      <div class="card v">
+        <span class="num">1859</span>
+        <h3>Origin Published</h3>
+        <p class="what">Darwin's <em>On the Origin of Species</em> is published 24 November 1859. The first edition of 1,250 copies sells out the same day. Mendel, in Brno, read German-language accounts and eventually read the book. His annotations on his copy, if they existed, have not survived.</p>
+        <div class="meta"><b>Mendel's reaction:</b> Attentive, engaged</div>
+      </div>
+      <div class="card v">
+        <span class="num">1866</span>
+        <h3>Ships Passing</h3>
+        <p class="what">Mendel publishes his pea paper. Darwin's library at Down House later acquires Focke's <em>Pflanzenmischlinge</em> (1881), which cites Mendel multiple times. Darwin's copy survives. The pages that cite Mendel are not annotated. Whether Darwin read them, no one can say.</p>
+        <div class="meta"><b>Darwin's annotations on Mendel:</b> None found</div>
+      </div>
+      <div class="card v">
+        <span class="num">1882</span>
+        <h3>Darwin Dies</h3>
+        <p class="what">Darwin dies 19 April 1882, honored as a national treasure, buried in Westminster Abbey. Mendel, still alive in Brno, is immersed in his tax dispute with the Austrian government, his scientific work long since set aside. He has two years left to live. The two halves of biology's greatest theory will not be joined for another eighteen years.</p>
+        <div class="meta"><b>Mendel at Darwin's death:</b> Still alive, unrecognized</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE FAILURE OF RECEPTION -->
+  <div class="band">The Failure of Scientific Reception</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="prose-2">
+      <div>
+        <h2>Too Mathematical for <em>Biologists</em></h2>
+        <p>The structural reason Mendel was not understood in 1866 is well-documented: his paper was too quantitative for the biological science of his day. Botanists worked descriptively. They catalogued, classified, and described; they did not compute ratios and derive theoretical models from them. Mendel's tables of numbers and his algebraic notation for hybrid combinations looked to biologists like mathematics, which they neither trusted nor knew how to evaluate.</p>
+        <p>The irony is devastating: Mendel had solved biology's central problem with the methods of physics, because his teacher had been Christian Doppler. He brought the physicist's instinct for mathematical law to a field that was not yet ready to receive it. The interdisciplinary gap killed his discovery for a generation.</p>
+      </div>
+      <div>
+        <h2>Too Biological for <em>Mathematicians</em></h2>
+        <p>The converse failure is less often noted: Mendel's paper was published in a biology journal, not a mathematics one. Mathematicians and statisticians — who would have recognized immediately that his ratios were meaningful and his reasoning sound — never saw it. There was no mechanism in 1866 for a paper about peas to reach the attention of people who could evaluate its statistical claims.</p>
+        <p>Von Nägeli, Mendel's most sustained scientific interlocutor, was a botanist of the old school — he had worked with Darwin's correspondent Asa Gray and had strong opinions about hybridization. He read Mendel's paper carefully and wrote back extensively — and missed the point entirely. He thought Mendel's results were interesting but probably specific to peas. He redirected Mendel toward hawkweeds. The redirection was catastrophic.</p>
+      </div>
+    </div>
+
+    <!-- The hawkweed disaster -->
+    <div class="pull">
+      "I know that the result I obtained with Pisum does not apply without qualification to the other species. I could not assume that the behavior of Pisum in its hybrid productions would necessarily be repeated in other genera and species."
+      <cite>— Mendel, letter to von Nägeli, April 1867 — already sensing the limits</cite>
+    </div>
+
+    <p>Von Nägeli directed Mendel toward <em>Hieracium</em> (hawkweed) — a genus of plant that reproduces primarily through <strong>apomixis</strong>: asexual seed production without fertilization. This means hawkweeds do not follow Mendelian ratios, because they do not undergo normal sexual reproduction. The traits do not segregate. Mendel spent years crossing hawkweeds and got results that contradicted his pea findings — results he could not explain and that genuinely disturbed him. He could not have known that he had been sent to study the one major group of flowering plants for which his laws do not apply.</p>
+  </div>
+
+  <!-- THE PROVINCIAL WORLD -->
+  <div class="band dim">The World Beyond the Garden</div>
+  <div class="reveal" style="animation-delay:.4s">
+    <div class="grid">
+      <div class="card">
+        <span class="num">1848</span>
+        <h3>Year of Revolutions</h3>
+        <p class="what">Mendel's early adulthood was shaped by the revolutionary upheavals of 1848 that swept across Europe. In the Habsburg Empire, the revolutions produced short-lived constitutional reforms before imperial reaction reasserted itself. The intellectual climate of the 1850s was shaped by this aftermath — a generation of scientists and scholars who had seen political change and had retreated, often, into the laboratory.</p>
+        <div class="meta"><b>Effect on science:</b> Retreat into empiricism</div>
+      </div>
+      <div class="card">
+        <span class="num">1856</span>
+        <h3>Industrial Brno</h3>
+        <p class="what">The Brno in which Mendel worked was changing fast. The city's textile mills made it one of the most industrialized cities in the empire — the "Manchester of the East," some called it. The railroad had reached Brno in 1839. The city was connected to Vienna and to the world. And yet the world of science that mattered — London, Paris, Berlin — remained distant enough that a paper in the Brno natural history proceedings might as well have been in Siberia.</p>
+        <div class="meta"><b>Nickname:</b> "Manchester of Moravia"</div>
+      </div>
+      <div class="card">
+        <span class="num">1860s</span>
+        <h3>The Naturalist Movement</h3>
+        <p class="what">The 1860s saw an explosion of natural history societies across Central Europe — citizen science before the term existed. The Brno Natural History Society, founded 1861, was one of hundreds of such organizations across the empire. These societies published their own journals, held meetings, and conducted field studies. They were well-intentioned but provincial — and their publications rarely reached the major scientific centers of the era.</p>
+        <div class="meta"><b>Society founded:</b> 1861 &nbsp;·&nbsp; <b>Mendel's paper:</b> 1866</div>
+      </div>
+      <div class="card">
+        <span class="num">1866</span>
+        <h3>The Austro-Prussian War</h3>
+        <p class="what">The same year Mendel published his pea paper, the Austrian Empire was decisively defeated by Prussia at the Battle of Königgrätz — a catastrophe that reshaped European politics and sent the empire into a prolonged constitutional and economic crisis. Scientific publishing was not a priority in Brno in the summer of 1866. The journal that carried Mendel's work was delayed. The world had other things on its mind.</p>
+        <div class="meta"><b>Battle of Königgrätz:</b> 3 July 1866</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Mendel Series · Vol. 2 of 4 · <em>His World</em> &nbsp;·&nbsp; Series: gregor-mendel</div>
+    <div style="margin-top:4px;font-size:9px;">Content compiled for educational purposes. Primary sources: Orel, <em>Gregor Mendel: The First Geneticist</em> (1996); Henig, <em>The Monk in the Garden</em> (2000); Browne, <em>Charles Darwin: The Power of Place</em> (2002).</div>
+  </div>
+
+</div>
+</body>
+</html>

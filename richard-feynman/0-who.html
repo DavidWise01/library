@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feynman — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #04040c;
+    --cyan: #06b6d4;
+    --red: #ef4444;
+    --text: #d4e8ed;
+    --muted: #5a7a84;
+    --border: #0e2029;
+    --card-bg: #080818;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(4,4,12,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--cyan);
+    border-color: var(--cyan);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #020d14 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 780px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(6,182,212,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--cyan);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  /* BAND */
+  .band {
+    background: var(--cyan);
+    color: #04040c;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  .band-red {
+    background: var(--red);
+    color: #fff;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section {
+    margin-bottom: 5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--cyan);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--cyan); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cyan);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(6,182,212,0.6);
+  }
+  .timeline-item.red-event::before {
+    background: var(--red);
+    box-shadow: 0 0 8px rgba(239,68,68,0.6);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--cyan);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p {
+    font-size: 0.9rem;
+    opacity: 0.82;
+    margin: 0;
+  }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--cyan);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .pull-quote-red {
+    border-left-color: var(--red);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--cyan);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-num-red { color: var(--red); }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DIVIDER */
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4rem 0;
+  }
+  /* COLOPHON */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--cyan); text-decoration: none; }
+  .colophon a:hover { color: var(--red); }
+
+  /* ARLINE SPECIAL BOX */
+  .arline-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    padding: 2rem;
+    margin: 2.5rem 0;
+  }
+  .arline-box h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--red);
+    margin-bottom: 0.75rem;
+  }
+
+  /* BONGO ANIMATION */
+  @keyframes ripple1 {
+    0% { r: 45; opacity: 0.9; }
+    100% { r: 180; opacity: 0; }
+  }
+  @keyframes ripple2 {
+    0% { r: 45; opacity: 0.7; }
+    100% { r: 180; opacity: 0; }
+  }
+  @keyframes ripple3 {
+    0% { r: 45; opacity: 0.5; }
+    100% { r: 180; opacity: 0; }
+  }
+  @keyframes drumHit {
+    0%, 90%, 100% { transform: scaleY(1); }
+    45% { transform: scaleY(0.94); }
+  }
+  @keyframes stickBeat {
+    0%, 100% { transform: rotate(-15deg) translateY(0); }
+    45% { transform: rotate(-32deg) translateY(6px); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Feynman</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-qed.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Bongo drum with sound-wave ripples -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="glow0" cx="50%" cy="58%" r="42%">
+        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#04040c" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="redglow" cx="50%" cy="58%" r="30%">
+        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="#04040c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="softblur">
+        <feGaussianBlur stdDeviation="1.8"/>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#glow0)"/>
+    <rect width="900" height="520" fill="url(#redglow)"/>
+
+    <!-- Left bongo drum -->
+    <g transform="translate(330, 270)">
+      <!-- Shell -->
+      <ellipse cx="0" cy="0" rx="52" ry="18" fill="#1a0a04" stroke="#ef4444" stroke-width="1.5" style="animation: drumHit 1.4s ease-in-out infinite;"/>
+      <rect x="-52" y="0" width="104" height="52" rx="4" fill="#1a0a04" stroke="#ef4444" stroke-width="1.2"/>
+      <ellipse cx="0" cy="52" rx="52" ry="14" fill="#0d0606" stroke="#5a1f1f" stroke-width="1"/>
+      <!-- Drum head rings -->
+      <ellipse cx="0" cy="0" rx="44" ry="13" fill="none" stroke="#ef4444" stroke-width="0.7" opacity="0.5"/>
+      <ellipse cx="0" cy="0" rx="36" ry="10" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.3"/>
+    </g>
+
+    <!-- Right bongo drum (slightly larger) -->
+    <g transform="translate(440, 278)">
+      <ellipse cx="0" cy="0" rx="62" ry="20" fill="#1a0a04" stroke="#ef4444" stroke-width="1.5" style="animation: drumHit 1.4s ease-in-out infinite 0.05s;"/>
+      <rect x="-62" y="0" width="124" height="60" rx="4" fill="#1a0a04" stroke="#ef4444" stroke-width="1.2"/>
+      <ellipse cx="0" cy="60" rx="62" ry="16" fill="#0d0606" stroke="#5a1f1f" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="52" ry="15" fill="none" stroke="#ef4444" stroke-width="0.7" opacity="0.5"/>
+      <ellipse cx="0" cy="0" rx="42" ry="11" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="0.3"/>
+    </g>
+
+    <!-- Drumstick hand -->
+    <g transform="translate(330, 220)" style="transform-origin: 0 60px; animation: stickBeat 1.4s ease-in-out infinite;">
+      <line x1="0" y1="60" x2="-18" y2="-30" stroke="#c4a882" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="-18" cy="-30" r="5" fill="#c4a882"/>
+    </g>
+
+    <!-- Sound wave ripples emanating from left drum -->
+    <g transform="translate(330, 270)">
+      <circle cx="0" cy="0" r="45" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0">
+        <animate attributeName="r" dur="2.8s" begin="0s" repeatCount="indefinite"
+          values="45;180" keyTimes="0;1" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" dur="2.8s" begin="0s" repeatCount="indefinite"
+          values="0.9;0" keyTimes="0;1"/>
+      </circle>
+      <circle cx="0" cy="0" r="45" fill="none" stroke="#06b6d4" stroke-width="1.2" opacity="0">
+        <animate attributeName="r" dur="2.8s" begin="0.7s" repeatCount="indefinite"
+          values="45;180" keyTimes="0;1" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" dur="2.8s" begin="0.7s" repeatCount="indefinite"
+          values="0.7;0" keyTimes="0;1"/>
+      </circle>
+      <circle cx="0" cy="0" r="45" fill="none" stroke="#06b6d4" stroke-width="0.9" opacity="0">
+        <animate attributeName="r" dur="2.8s" begin="1.4s" repeatCount="indefinite"
+          values="45;180" keyTimes="0;1" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" dur="2.8s" begin="1.4s" repeatCount="indefinite"
+          values="0.5;0" keyTimes="0;1"/>
+      </circle>
+    </g>
+
+    <!-- Sound wave ripples from right drum (red) -->
+    <g transform="translate(440, 278)">
+      <circle cx="0" cy="0" r="55" fill="none" stroke="#ef4444" stroke-width="1.5" opacity="0">
+        <animate attributeName="r" dur="2.8s" begin="0.15s" repeatCount="indefinite"
+          values="55;200" keyTimes="0;1" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" dur="2.8s" begin="0.15s" repeatCount="indefinite"
+          values="0.8;0" keyTimes="0;1"/>
+      </circle>
+      <circle cx="0" cy="0" r="55" fill="none" stroke="#ef4444" stroke-width="1" opacity="0">
+        <animate attributeName="r" dur="2.8s" begin="0.85s" repeatCount="indefinite"
+          values="55;200" keyTimes="0;1" calcMode="spline" keySplines="0.2 0 0.8 1"/>
+        <animate attributeName="opacity" dur="2.8s" begin="0.85s" repeatCount="indefinite"
+          values="0.6;0" keyTimes="0;1"/>
+      </circle>
+    </g>
+
+    <!-- Decorative frequency lines left -->
+    <g opacity="0.25" stroke="#06b6d4" stroke-width="0.8" fill="none">
+      <path d="M50,260 Q100,220 150,260 Q200,300 250,260">
+        <animate attributeName="d" dur="3s" repeatCount="indefinite"
+          values="M50,260 Q100,220 150,260 Q200,300 250,260;M50,260 Q100,240 150,260 Q200,280 250,260;M50,260 Q100,220 150,260 Q200,300 250,260"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M50,290 Q100,250 150,290 Q200,330 250,290">
+        <animate attributeName="d" dur="3.5s" repeatCount="indefinite"
+          values="M50,290 Q100,250 150,290 Q200,330 250,290;M50,290 Q100,270 150,290 Q200,310 250,290;M50,290 Q100,250 150,290 Q200,330 250,290"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+    </g>
+
+    <!-- Decorative frequency lines right -->
+    <g opacity="0.25" stroke="#ef4444" stroke-width="0.8" fill="none">
+      <path d="M660,268 Q710,228 760,268 Q810,308 860,268">
+        <animate attributeName="d" dur="2.8s" repeatCount="indefinite"
+          values="M660,268 Q710,228 760,268 Q810,308 860,268;M660,268 Q710,248 760,268 Q810,288 860,268;M660,268 Q710,228 760,268 Q810,308 860,268"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+      <path d="M660,300 Q710,260 760,300 Q810,340 860,300">
+        <animate attributeName="d" dur="3.2s" repeatCount="indefinite"
+          values="M660,300 Q710,260 760,300 Q810,340 860,300;M660,300 Q710,280 760,300 Q810,320 860,300;M660,300 Q710,260 760,300 Q810,340 860,300"
+          calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+      </path>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">Richard P. Feynman &mdash; 1918&ndash;1988 &mdash; Vol. 0 of 4</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Physicist &middot; Bongo Player &middot; Safe-Cracker &middot; Nobel Laureate</p>
+    <p class="hero-lead">He was the most original physicist since Einstein, and possibly the most fully alive human being in the history of science.</p>
+  </div>
+</div>
+
+<div class="band">Far Rockaway, Queens &middot; 1918 &mdash; Los Angeles, California &middot; 1988 &middot; Age 69 &middot; Nobel Prize 1965</div>
+
+<main>
+
+  <!-- SECTION: VITAL STATISTICS -->
+  <section id="vitals">
+    <span class="section-label">Vitals</span>
+    <h2>Richard Phillips Feynman</h2>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">1918</span>
+        <span class="stat-label">Born, Far Rockaway</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1942</span>
+        <span class="stat-label">PhD, Princeton, age 24</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1965</span>
+        <span class="stat-label">Nobel Prize in Physics</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num stat-num-red">12</span>
+        <span class="stat-label">Decimal places: QED precision</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1988</span>
+        <span class="stat-label">Died, Los Angeles, age 69</span>
+      </div>
+    </div>
+
+    <p>Richard Phillips Feynman was born on <strong>May 11, 1918</strong>, in Far Rockaway, a beachfront neighborhood in Queens, New York. His father, Melville Feynman, was a uniform salesman with a deep love for science; his mother, Lucille, gave him his irrepressible sense of humor. From childhood, Feynman was unusual: he rebuilt radios from scratch, taught himself trigonometry and calculus before high school, and became the kind of person who asked not "what is this?" but "why does it do that?"</p>
+
+    <p>He enrolled at the <strong>Massachusetts Institute of Technology</strong> in 1935, where he scored a perfect 100 on the Putnam mathematics competition — a feat so exceptional that a professor assumed he had cheated. He completed his undergraduate degree in physics in 1939 and went to Princeton for graduate school, submitting a doctoral dissertation that contained the seed of what would later become the path integral formulation of quantum mechanics. He was 24 years old. John Wheeler was his advisor. Albert Einstein, Wolfgang Pauli, and others attended his thesis defense.</p>
+
+    <p>What followed was one of the strangest, most productive, most human scientific careers of the twentieth century.</p>
+  </section>
+
+  <!-- SECTION: THE EARLY YEARS -->
+  <section id="early">
+    <span class="section-label">Origins</span>
+    <h2>Far Rockaway and the Self-Taught Tinkerer</h2>
+
+    <p>Feynman's father was not a scientist, but he was something better: a man who <em>thought like one</em>. He taught young Richard to see patterns, to question, to refuse mere naming in favor of actual understanding. They would walk in the woods and his father would say: "That bird — do you know what it's called in fourteen languages? But none of that tells you anything about the bird. Do you see how it searches for food? How it holds its head?" This mode of thinking — never satisfied by labels, always driving toward mechanism — became Feynman's defining intellectual character.</p>
+
+    <p>The garage in Far Rockaway became a laboratory. Feynman repaired neighbors' radios, redesigned circuits, built amplifiers. He read textbooks ahead of school. When he encountered calculus, he invented his own notation — some of which he had to unlearn. By the time he reached MIT, he was already doing physics, not just learning it.</p>
+
+    <div class="pull-quote">
+      <blockquote>"When I was a kid, I had a lab. It wasn't a place where I made things. It was a place where I <em>found out</em> things."</blockquote>
+      <cite>&mdash; Richard Feynman, "Surely You're Joking, Mr. Feynman!"</cite>
+    </div>
+
+    <p>His score of 105 out of 100 (with extra credit) on MIT's physics entrance exam was, in the folklore of the department, simply what Feynman had done. He graduated in 1939 and arrived at Princeton that fall in a rumpled suit, unable to navigate a formal tea party but entirely capable of solving any physics problem in the building.</p>
+  </section>
+
+  <!-- SECTION: ARLINE -->
+  <section id="arline">
+    <span class="section-label">Love</span>
+    <h2>Arline Greenbaum</h2>
+
+    <div class="arline-box">
+      <h4>Arline Greenbaum Feynman (1921&ndash;1945)</h4>
+      <p>They had known each other since childhood on Long Island. Feynman loved her completely and knew she was ill — diagnosed with tuberculosis — before they married. His family opposed the marriage; his father had died. His mother worried. Richard married Arline anyway, in a civil ceremony on June 29, 1942, the day before he reported for war work. She was already a patient; they arranged the ceremony around her wheelchair.</p>
+    </div>
+
+    <p>Arline was placed in a sanitarium in Albuquerque while Feynman worked at Los Alamos, forty miles north in the mountains. Every weekend he could, he hitchhiked or cadged rides to see her. She was funny, fierce, and completely unintimidated by his brilliance. She sent him puzzles. She decorated her room. She refused to be pathetic about dying.</p>
+
+    <p>Arline died on <strong>June 16, 1945</strong> — seven weeks before the Trinity test, before the bombing of Hiroshima. She was twenty-five. Feynman drove back to Los Alamos and told no one for hours. That night he worked. He later said he did not cry until a year later, walking past a dress shop in Oak Ridge and seeing a dress she would have liked.</p>
+
+    <div class="pull-quote pull-quote-red">
+      <blockquote>"I find I am not able, I can make the words, but not that much depth of feeling comes into them. I know you would want me to go on and enjoy life. I am going to try."</blockquote>
+      <cite>&mdash; Feynman's unsent letter to Arline, written October 17, 1946 &mdash; sixteen months after her death</cite>
+    </div>
+
+    <p>The letter was found among his papers after his own death, forty-two years later. It was still sealed. It ended: <em>"Please excuse my not mailing this — but I don't know your new address."</em></p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION: MANHATTAN PROJECT -->
+  <section id="manhattan">
+    <span class="section-label">War &amp; Physics</span>
+    <h2>Los Alamos and the Bomb</h2>
+
+    <p>In 1943, Feynman joined the Manhattan Project at Los Alamos, New Mexico, recruited by Hans Bethe to work in the Theoretical Division. He was twenty-four. Around him: J. Robert Oppenheimer, Enrico Fermi, Niels Bohr (working under the alias "Nicholas Baker"), Bethe, John von Neumann, Edward Teller. Feynman was by far the youngest senior physicist. He was also, by common account, the most disruptive.</p>
+
+    <p>He cracked safes. Not as a party trick — as a philosophical project. The base was theoretically highly secure; Feynman demonstrated it was not. He picked the combination locks on filing cabinets containing atomic bomb secrets, sometimes leaving notes inside: <em>"I borrowed document LA-4."</em> The security officers hated him. Oppenheimer quietly found it funny.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Intellectual Sport</span>
+        <h4>Safe-Cracking</h4>
+        <p>Feynman cracked the filing cabinet safes of senior Los Alamos physicists using a combination of social engineering, observed habits, and simple mathematics. He kept a written log of his methods.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Counterintelligence</span>
+        <h4>Coded Letters</h4>
+        <p>He and Arline exchanged coded and censored letters, deliberately designed to baffle and frustrate military censors. He included ciphers she had to decode. The censors required him to stop, in writing.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Computation</span>
+        <h4>Human Computers</h4>
+        <p>Feynman organized the human computer teams at Los Alamos, managing teams of people with mechanical calculators performing iterative numerical calculations. He optimized their efficiency like a factory floor.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Trinity, July 1945</span>
+        <h4>The Test</h4>
+        <p>Feynman watched the Trinity nuclear test without protective goggles, reasoning that the windshield of the truck he sat in would block the ultraviolet radiation. He was likely correct. He was the only person at the test to watch it with naked eyes.</p>
+      </div>
+    </div>
+
+    <p>After Hiroshima and Nagasaki, Feynman experienced a delayed moral crisis. He later wrote that walking through New York City after the war, watching people build bridges and plan futures, he could only think: <em>it's all pointless, the bomb will destroy it all</em>. The crisis passed. But it left a permanent scar in his thinking about the relationship between science and its consequences.</p>
+  </section>
+
+  <!-- SECTION: CHARACTER -->
+  <section id="character">
+    <span class="section-label">The Man</span>
+    <h2>Character: Bongos, Bars, Paintings, and Pure Curiosity</h2>
+
+    <p>Feynman played bongo drums seriously — not as an affectation but because he genuinely loved percussion. He performed at venues in Pasadena. He played in a ballet production. He played late at night in his office at Caltech until colleagues complained. The physics and the bongos came from the same source: pure, unmediated engagement with the sensory world.</p>
+
+    <p>He taught himself to draw and painted under the pseudonym <strong>"Ofey"</strong> — a name derived from a French obscenity. He sold paintings and held exhibitions. His subjects were often nudes; he was unapologetic. Several of his paintings depicted the stripper Cleo who performed at a Pasadena bar that Feynman frequented — not because of the strippers but, he claimed sincerely, because it was the only genuinely quiet place he could think and write.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Music</span>
+        <h4>Bongo Drums</h4>
+        <p>Feynman learned to play bongos from a professional percussionist and took it seriously enough to perform publicly. He also learned frigideira (a Brazilian percussion instrument) and played with samba schools in Rio.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Visual Art</span>
+        <h4>Painter "Ofey"</h4>
+        <p>Self-taught painter who sold work under the pseudonym Ofey. Exhibited in Pasadena. Believed that science and art arose from the same capacity for wonder, not from separate faculties.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Security</span>
+        <h4>Safe-Cracker</h4>
+        <p>Cracked safes at Los Alamos, Princeton, and Caltech as an intellectual hobby. Read extensively on lock-picking, safecracking, and social engineering. Was asked, politely, to stop doing it to colleagues' offices.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Languages</span>
+        <h4>Tuva &amp; Portuguese</h4>
+        <p>Learned conversational Portuguese for a sabbatical in Brazil. Spent years trying to visit Tuva (a tiny Soviet republic) simply because he found the name "Kyzyl" irresistible. He died before he could go.</p>
+      </div>
+    </div>
+
+    <h3>Three Marriages</h3>
+    <p>He married three times after Arline. His second marriage, to Mary Louise Bell in 1952, lasted only two years; she reportedly cited his obsession with mathematics as grounds for divorce. His third and lasting marriage was to <strong>Gweneth Howarth</strong>, an English woman he met in Geneva in 1958. They had two children. Gweneth, by all accounts, was the person who finally gave him a stable home — and he gave her, she said, a life she could never have imagined.</p>
+  </section>
+
+  <!-- SECTION: CALTECH & TEACHING -->
+  <section id="caltech">
+    <span class="section-label">The Lectures</span>
+    <h2>"The Feynman Lectures on Physics"</h2>
+
+    <p>In 1961, Caltech asked Feynman to redesign the introductory physics curriculum for freshmen and sophomores. What followed was one of the great teaching experiments in the history of science. Feynman lectured twice weekly for two years. The students often could not follow him in real time. Professors and graduate students filled the back rows, taking notes. The lectures were recorded on audio tape and photographed.</p>
+
+    <p>The resulting three-volume textbook — <em>The Feynman Lectures on Physics</em> — is still in print, still the most widely read advanced physics text in the world, and still considered by many physicists to be the finest presentation of physics ever written. Volume I covers mechanics, radiation, and heat. Volume II covers electromagnetism. Volume III covers quantum mechanics.</p>
+
+    <div class="pull-quote">
+      <blockquote>"What I cannot create, I do not understand."</blockquote>
+      <cite>&mdash; Written on Feynman's blackboard at Caltech, found after his death, February 1988</cite>
+    </div>
+
+    <p>The lectures are now freely available online at <strong>feynmanlectures.caltech.edu</strong>, placed there by the California Institute of Technology. They have been read by millions of people who never met Feynman, in countries he never visited, in languages he never learned.</p>
+  </section>
+
+  <!-- SECTION: FINAL YEARS -->
+  <section id="final">
+    <span class="section-label">1986&ndash;1988</span>
+    <h2>Challenger and the End</h2>
+
+    <p>In January 1986, the Space Shuttle Challenger broke apart 73 seconds after launch, killing all seven crew members. President Reagan appointed the Rogers Commission to investigate. Feynman, by then battling kidney cancer, was asked to serve. He nearly declined — he hated committees, ceremonies, and bureaucracy. He agreed only after persuasion by his wife and by former NASA administrator William Graham.</p>
+
+    <p>The Commission was investigating in an unfocused way, circling around the real cause. Feynman, characteristically, went around the formal process. He called engineers directly, visited contractors, read internal documents. He identified the O-ring seals in the solid rocket boosters as the likely failure point — and identified the key variable that the Rogers Commission was not looking at: <strong>temperature</strong>. The O-rings became significantly less pliable at low temperatures. The launch had occurred on one of the coldest mornings in Cape Canaveral history.</p>
+
+    <p>At a formal televised Commission hearing, Feynman asked for a glass of ice water, produced a piece of O-ring material, submerged it, and squeezed it with a clamp. When he removed it, the material had not returned to its original shape. He set it on the table and said: <em>"I believe this has some significance for our problem."</em></p>
+
+    <div class="pull-quote pull-quote-red">
+      <blockquote>"For a successful technology, reality must take precedence over public relations, for Nature cannot be fooled."</blockquote>
+      <cite>&mdash; Feynman's personal appendix to the Rogers Commission Report, 1986</cite>
+    </div>
+
+    <p>NASA management had not wanted this finding. Feynman's appendix was nearly excluded from the report. He threatened to withdraw his name from the report entirely if his appendix was not included. It was included.</p>
+
+    <p>By 1987 the cancer had spread. He had already survived one operation for kidney cancer in 1986 and a second rare cancer, myxoid chondrosarcoma, was progressing. On February 15, 1988, his kidneys failed. He was offered dialysis; he declined. <strong>Richard Feynman died on February 15, 1988</strong>, in Los Angeles. He was sixty-nine years old. His last words, reported by those at his bedside: "I'd hate to die twice. It's so boring."</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">Chronology</span>
+    <h2>Life at a Glance</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1918</div>
+        <div class="timeline-title">Born, Far Rockaway, Queens, New York</div>
+        <div class="timeline-body">May 11. Father Melville, mother Lucille. The neighborhood is a beachfront community south of JFK airport.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1935</div>
+        <div class="timeline-title">MIT — Perfect Putnam Score</div>
+        <div class="timeline-body">Undergraduate physics. Scores a perfect 100 on the Putnam mathematics competition in 1939.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1939</div>
+        <div class="timeline-title">Princeton Graduate School</div>
+        <div class="timeline-body">Advisor: John Wheeler. Thesis defense attended by Einstein and Pauli. Invents the path integral formulation.</div>
+      </div>
+      <div class="timeline-item red-event">
+        <div class="timeline-year">1942</div>
+        <div class="timeline-title">Marries Arline Greenbaum &mdash; Manhattan Project Begins</div>
+        <div class="timeline-body">Civil ceremony June 29; she is already ill with tuberculosis. He joins the theoretical division at Los Alamos.</div>
+      </div>
+      <div class="timeline-item red-event">
+        <div class="timeline-year">1945</div>
+        <div class="timeline-title">Arline Dies &mdash; Trinity Test</div>
+        <div class="timeline-body">Arline dies June 16, age 25. Trinity test July 16. Hiroshima August 6. Feynman watches Trinity with naked eyes.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1945</div>
+        <div class="timeline-title">Cornell University</div>
+        <div class="timeline-body">Accepts professorship. A period of depression and creative paralysis follows. Cannot work. Thinks physics is finished.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1947</div>
+        <div class="timeline-title">The Plate-Wobble Insight</div>
+        <div class="timeline-body">Watching a plate wobble in the Cornell cafeteria, he begins playing with the mathematics. The play leads directly to QED.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1950</div>
+        <div class="timeline-title">Caltech — His Permanent Home</div>
+        <div class="timeline-body">Moves to the California Institute of Technology. He will remain there for the rest of his career.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1959</div>
+        <div class="timeline-title">"There's Plenty of Room at the Bottom"</div>
+        <div class="timeline-body">Lecture at Caltech proposing nanotechnology and molecular-scale machines — 35 years before the field exists.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1961</div>
+        <div class="timeline-title">The Feynman Lectures Begin</div>
+        <div class="timeline-body">Two-year introductory physics course at Caltech. Recorded, transcribed, and published as three volumes.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1965</div>
+        <div class="timeline-title">Nobel Prize in Physics</div>
+        <div class="timeline-body">Awarded with Julian Schwinger and Sin-Itiro Tomonaga for the development of quantum electrodynamics. He almost declines.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1981</div>
+        <div class="timeline-title">Proposes Quantum Computing</div>
+        <div class="timeline-body">Lecture "Simulating Physics with Computers." Argues that quantum systems can only be efficiently simulated by quantum machines.</div>
+      </div>
+      <div class="timeline-item red-event">
+        <div class="timeline-year">1986</div>
+        <div class="timeline-title">Challenger Investigation</div>
+        <div class="timeline-body">O-ring demonstration before the Rogers Commission. His personal appendix is nearly suppressed; he threatens to withdraw his name.</div>
+      </div>
+      <div class="timeline-item red-event">
+        <div class="timeline-year">1988</div>
+        <div class="timeline-title">Death</div>
+        <div class="timeline-body">February 15, Los Angeles. Kidney failure after two rare cancers. Declines dialysis. Last words: "I'd hate to die twice. It's so boring."</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a>
+    &nbsp;|&nbsp; Vol. 0 of 4 &mdash; Richard Feynman &mdash; The Person &nbsp;|&nbsp;
+    Research sourced from published biographies, primary documents, and the Feynman archives at Caltech.
+    <br>
+    <a href="0-who.html">Vol. 0</a> &nbsp;&middot;&nbsp;
+    <a href="1-qed.html">Vol. 1</a> &nbsp;&middot;&nbsp;
+    <a href="2-world.html">Vol. 2</a> &nbsp;&middot;&nbsp;
+    <a href="3-legacy.html">Vol. 3</a>
+  </div>
+</footer>
+
+</body>
+</html>

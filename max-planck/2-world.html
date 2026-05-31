@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Planck — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #090608;
+    --quantum: #dc2626;
+    --violet: #7c3aed;
+    --text: #e8e0d0;
+    --muted: #8a7f72;
+    --border: #251a1a;
+    --card-bg: #0f0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--quantum);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--quantum); border-color: var(--quantum); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 45%, #110810 0%, var(--paper) 72%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 820px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--quantum);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(124,58,237,0.3);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--violet);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead { font-style: italic; font-size: 1.15rem; color: var(--text); max-width: 640px; margin: 0 auto; opacity: 0.85; }
+  .band {
+    background: var(--quantum);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--quantum);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--violet);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--quantum); font-style: italic; }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--quantum);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--quantum);
+  }
+  .card.violet-top { border-top-color: var(--violet); }
+  .card.violet-top:hover { box-shadow: 6px 6px 0 var(--violet); }
+  .card-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--violet); margin-bottom: 0.6rem; display: block; }
+  .card h4 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem; }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--quantum);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote { font-style: italic; font-size: 1.35rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem; }
+  .pull-quote cite { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num { font-family: 'Cinzel', serif; font-weight: 800; font-size: 2.2rem; color: var(--quantum); display: block; line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  /* COLLEAGUE ROSTER */
+  .colleague-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .colleague-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .colleague-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--violet); }
+  .colleague-name { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 0.25rem; }
+  .colleague-role { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--violet); margin-bottom: 0.5rem; display: block; }
+  .colleague-rel { font-size: 0.85rem; color: var(--text); opacity: 0.82; }
+  /* WARNING BOX */
+  .warning-box {
+    background: #120508;
+    border: 1px solid var(--quantum);
+    border-left: 5px solid var(--quantum);
+    padding: 1.75rem 2rem;
+    margin: 2.5rem 0;
+  }
+  .warning-label { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--quantum); margin-bottom: 0.75rem; display: block; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); line-height: 2; }
+  .colophon a { color: var(--violet); text-decoration: none; }
+  .colophon a:hover { color: var(--quantum); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Max Planck</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-quantum.html">Vol. 1 — The Work</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Berlin Physics Institute - architectural wireframe with animated window lights -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="berlinGlow" cx="50%" cy="40%" r="45%">
+        <stop offset="0%" stop-color="#1a0824" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#090608" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="windowBlur"><feGaussianBlur stdDeviation="2"/></filter>
+      <filter id="archBlur"><feGaussianBlur stdDeviation="1"/></filter>
+    </defs>
+
+    <rect width="900" height="540" fill="url(#berlinGlow)"/>
+
+    <!-- Night sky stars -->
+    <g fill="#ffffff" opacity="0.35">
+      <circle cx="50" cy="40" r="1"/><circle cx="120" cy="25" r="0.8"/><circle cx="200" cy="55" r="1.2"/>
+      <circle cx="310" cy="20" r="0.9"/><circle cx="400" cy="35" r="0.7"/><circle cx="510" cy="18" r="1.1"/>
+      <circle cx="620" cy="42" r="0.8"/><circle cx="720" cy="28" r="1.3"/><circle cx="820" cy="15" r="0.9"/>
+      <circle cx="860" cy="50" r="0.7"/><circle cx="80" cy="70" r="0.6"/><circle cx="750" cy="65" r="0.8"/>
+    </g>
+
+    <!-- Ground line -->
+    <line x1="0" y1="440" x2="900" y2="440" stroke="#2a1520" stroke-width="1.5"/>
+
+    <!-- BUILDING: Humboldt University / Physics Institute silhouette -->
+    <!-- Main building body -->
+    <rect x="150" y="210" width="600" height="230" fill="#0d070d" stroke="#3d2040" stroke-width="1"/>
+
+    <!-- Central pediment / classical frontispiece -->
+    <polygon points="340,140 450,90 560,140" fill="#0d070d" stroke="#4a2850" stroke-width="1.5"/>
+    <line x1="340" y1="140" x2="560" y2="140" stroke="#4a2850" stroke-width="1.5"/>
+
+    <!-- Columns (classical portico) -->
+    <g fill="none" stroke="#3d2040" stroke-width="1.5">
+      <line x1="360" y1="140" x2="360" y2="210"/>
+      <line x1="390" y1="140" x2="390" y2="210"/>
+      <line x1="420" y1="140" x2="420" y2="210"/>
+      <line x1="450" y1="140" x2="450" y2="210"/>
+      <line x1="480" y1="140" x2="480" y2="210"/>
+      <line x1="510" y1="140" x2="510" y2="210"/>
+      <line x1="540" y1="140" x2="540" y2="210"/>
+    </g>
+
+    <!-- Left wing -->
+    <rect x="80" y="260" width="80" height="180" fill="#0a060a" stroke="#3d2040" stroke-width="1"/>
+    <!-- Right wing -->
+    <rect x="740" y="260" width="80" height="180" fill="#0a060a" stroke="#3d2040" stroke-width="1"/>
+
+    <!-- Main entrance door -->
+    <rect x="425" y="360" width="50" height="80" rx="25" fill="#1a0f1a" stroke="#4a2850" stroke-width="1.5"/>
+
+    <!-- WINDOWS — main building, row 1 (upper) -->
+    <!-- These windows animate to flicker on and off like late-night working physicists -->
+    <g>
+      <!-- Window 1 -->
+      <rect x="175" y="230" width="40" height="35" rx="2" fill="#dc2626" opacity="0.0">
+        <animate attributeName="opacity" values="0;0;0.6;0.5;0;0;0;0.7;0.6;0" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="fill" values="#dc2626;#dc2626;#ffd080;#ffa040;#dc2626;#dc2626;#dc2626;#ffc060;#ffdd88;#dc2626" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Window 2 -->
+      <rect x="235" y="230" width="40" height="35" rx="2" fill="#7c3aed" opacity="0.0">
+        <animate attributeName="opacity" values="0;0.5;0.4;0;0;0;0.6;0.5;0;0" dur="7s" repeatCount="indefinite" begin="1.2s"/>
+        <animate attributeName="fill" values="#ffd080;#ffc060;#ffdd88;#ffd080;#7c3aed;#7c3aed;#ffd080;#ffc060;#ffd080;#7c3aed" dur="7s" repeatCount="indefinite" begin="1.2s"/>
+      </rect>
+      <!-- Window 3 -->
+      <rect x="630" y="230" width="40" height="35" rx="2" fill="#ffd080" opacity="0.55">
+        <animate attributeName="opacity" values="0.55;0.5;0.6;0.55;0.4;0.6;0.55;0.5;0.55" dur="9s" repeatCount="indefinite" begin="0.5s"/>
+      </rect>
+      <!-- Window 4 -->
+      <rect x="690" y="230" width="40" height="35" rx="2" fill="#ffd080" opacity="0.0">
+        <animate attributeName="opacity" values="0;0;0;0.5;0.6;0.5;0;0;0.4;0" dur="11s" repeatCount="indefinite" begin="3s"/>
+      </rect>
+
+      <!-- Row 2 windows -->
+      <rect x="175" y="290" width="40" height="35" rx="2" fill="#ffd080" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.45;0.55;0.5;0.6;0.5;0.45;0.5" dur="13s" repeatCount="indefinite" begin="2s"/>
+      </rect>
+      <rect x="235" y="290" width="40" height="35" rx="2" fill="#ffd080" opacity="0.0">
+        <animate attributeName="opacity" values="0;0;0.5;0.45;0.55;0.5;0;0;0.6;0" dur="10s" repeatCount="indefinite" begin="0.8s"/>
+      </rect>
+      <rect x="630" y="290" width="40" height="35" rx="2" fill="#ffd080" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.55;0.65;0.6;0.5;0.55;0.6" dur="6s" repeatCount="indefinite" begin="1.5s"/>
+      </rect>
+      <rect x="690" y="290" width="40" height="35" rx="2" fill="#ffd080" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.45;0.4;0.35;0.45;0.4;0.5;0.4" dur="15s" repeatCount="indefinite" begin="4s"/>
+      </rect>
+
+      <!-- Row 3 windows (lower) -->
+      <rect x="175" y="350" width="40" height="35" rx="2" fill="#ffd080" opacity="0.0">
+        <animate attributeName="opacity" values="0;0.5;0.45;0.55;0;0;0.6;0.5;0;0" dur="12s" repeatCount="indefinite" begin="5s"/>
+      </rect>
+      <rect x="235" y="350" width="40" height="35" rx="2" fill="#ffd080" opacity="0.55">
+        <animate attributeName="opacity" values="0.55;0.5;0.6;0.55;0.5;0.55;0.6;0.55" dur="8s" repeatCount="indefinite" begin="2.5s"/>
+      </rect>
+      <rect x="630" y="350" width="40" height="35" rx="2" fill="#ffd080" opacity="0.0">
+        <animate attributeName="opacity" values="0;0;0.5;0.6;0.5;0;0;0;0.45;0" dur="9s" repeatCount="indefinite" begin="6s"/>
+      </rect>
+      <rect x="690" y="350" width="40" height="35" rx="2" fill="#ffd080" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.55;0.5;0.45;0.5;0.55;0.5" dur="7s" repeatCount="indefinite" begin="1s"/>
+      </rect>
+    </g>
+
+    <!-- Glow effects beneath windows -->
+    <rect x="160" y="255" width="70" height="20" fill="#ffa040" opacity="0.0" filter="url(#windowBlur)">
+      <animate attributeName="opacity" values="0;0;0.15;0.12;0;0;0;0.18;0.15;0" dur="8s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Streetlamps -->
+    <g stroke="#4a2850" stroke-width="1.2" fill="none">
+      <line x1="100" y1="350" x2="100" y2="440"/>
+      <circle cx="100" cy="348" r="5" fill="#ffd080" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.55;0.65;0.6" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <line x1="800" y1="350" x2="800" y2="440"/>
+      <circle cx="800" cy="348" r="5" fill="#ffd080" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.65;0.55;0.6" dur="4s" repeatCount="indefinite" begin="1s"/>
+      </circle>
+    </g>
+
+    <!-- Institution label -->
+    <text x="450" y="195" text-anchor="middle" font-family="'Space Mono', monospace" font-size="10" fill="#7c3aed" letter-spacing="3" opacity="0.7">
+      UNIVERSITÄT BERLIN — PHYSIKALISCHES INSTITUT — c.1900
+    </text>
+
+    <!-- Gas lamp glow on ground -->
+    <ellipse cx="100" cy="442" rx="30" ry="5" fill="#ffa040" opacity="0.08"/>
+    <ellipse cx="800" cy="442" rx="30" ry="5" fill="#ffa040" opacity="0.08"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Max Planck · His World · Volume Two</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Wilhelmine Berlin · The Physics Institute · Colleagues, Wars, and the Fall</p>
+    <p class="hero-lead">Berlin in 1900 was the capital of the world's most confident scientific civilization. Planck lived through its highest pride and its most complete destruction — and watched his colleagues build and tear down the world he had inhabited.</p>
+  </div>
+</div>
+
+<div class="band">Wilhelmine Germany · Berlin Physics · Boltzmann · Einstein · Manifesto of the 93 · Nazi Persecution · The Ruins</div>
+
+<main>
+
+  <div class="stat-row">
+    <div class="stat"><span class="stat-num">1871</span><span class="stat-label">German Empire Founded</span></div>
+    <div class="stat"><span class="stat-num">1889</span><span class="stat-label">Planck to Berlin</span></div>
+    <div class="stat"><span class="stat-num">93</span><span class="stat-label">Manifesto Signatories</span></div>
+    <div class="stat"><span class="stat-num">1933</span><span class="stat-label">Nazi Takeover</span></div>
+    <div class="stat"><span class="stat-num">1944</span><span class="stat-label">Berlin Home Bombed</span></div>
+    <div class="stat"><span class="stat-num">1945</span><span class="stat-label">Erwin Executed</span></div>
+  </div>
+
+  <!-- WILHELMINE GERMANY -->
+  <section id="wilhelmine">
+    <span class="section-label">I — The World He Entered</span>
+    <h2>Wilhelmine Germany: The Confident Empire</h2>
+    <p>Max Planck lived the first sixty years of his life in one of the most self-assured civilizations in European history. The German Empire, unified under Bismarck in 1871, had transformed itself within a single generation from a patchwork of kingdoms and duchies into the dominant industrial, scientific, and military power in continental Europe. By 1900, Germany led the world in chemical industry, electrical engineering, and academic research. Its universities — Berlin, Göttingen, Munich, Leipzig — were the destinations that ambitious scientists from America, Britain, and across Europe came to for graduate training. The German university system, with its emphasis on research as an institutional mission, had produced Darwin's theory being tested, Maxwell's equations being extended, and thermodynamics being systematized, all under the broad umbrella of <em>Wissenschaft</em> — the pursuit of rigorous, organized knowledge.</p>
+    <p>This was Planck's native environment. He was not merely a product of it; he was one of its most distinguished representatives. His whole personality — formal, orderly, deeply respectful of systematic learning — was the personality of the Wilhelmine academic establishment given individual form. When he wrote about physics as a vocation, he was also writing about the ethos of an entire civilization that believed, with some justification, that it was doing something historically unprecedented: building organized knowledge of the natural world on a comprehensive, institutional scale.</p>
+    <p>The confidence of this world was both its strength and its catastrophic weakness. It could not imagine being wrong about itself. And it was, catastrophically, in ways that became apparent only after it destroyed itself twice.</p>
+  </section>
+
+  <!-- BERLIN -->
+  <section id="berlin-world">
+    <span class="section-label">II — The City</span>
+    <h2>Berlin: World Center of Physics in 1900</h2>
+    <p>Berlin in the decades around 1900 was, by a reasonable argument, the most intellectually productive city on earth. The University of Berlin had been founded on the Humboldtian principle — research and teaching unified in the same institution — and had attracted a constellation of talent that included Helmholtz, Kirchhoff, and after them, Planck. The Physikalisch-Technische Reichsanstalt (PTR), the imperial standards bureau founded in 1887, provided precise experimental infrastructure that no other country had matched: it was there that Lummer and Pringsheim performed the blackbody measurements that Planck was trying to explain.</p>
+    <p>The city also had the Prussian Academy of Sciences, one of the oldest and most prestigious learned societies in Europe, of which Planck became permanent secretary. And it had a concentration of the next generation: Nernst, Einstein, Laue, Haber, Franck, Hertz — the people who would define twentieth-century physics and chemistry were all, at various points, working in Berlin within a few miles of each other. The exchanges between them — in seminars, at the Physics Colloquium, in private correspondence, at the occasional soirees where chamber music was played — constituted the most fertile scientific conversation of the era.</p>
+    <p>Planck was at the center of this world, not as the most flamboyant figure but as the most reliable: the person who showed up, maintained standards, kept institutions functioning, recognized talent in others, and brought it to the places where it could do the most good. When Einstein was a young nobody in a Swiss patent office, Planck championed his Special Relativity papers to skeptical colleagues in Berlin. When Einstein needed a position worthy of his reputation, it was Planck who organized the offer that brought him to Berlin in 1914.</p>
+  </section>
+
+  <!-- THE EXPERIMENT -->
+  <section id="experiment">
+    <span class="section-label">III — The Data</span>
+    <h2>Lummer, Pringsheim, and the Precision Measurements</h2>
+    <p>The blackbody problem that Planck solved was not an abstract puzzle. It had been generated by specific, careful, beautifully precise experimental data produced at the PTR by Otto Lummer and Ernst Pringsheim between 1895 and 1900. They built blackbody cavities of exceptional quality — cavities that could be maintained at stable, known temperatures across a wide range, and whose radiation could be measured spectrally with high precision across a broad range of frequencies. Their measurements in 1900 confirmed definitively that the classical Rayleigh-Jeans formula was wrong at high frequencies, that Wien's empirical formula was wrong at low frequencies, and that neither existing theoretical prediction matched the full experimental curve.</p>
+    <p>Planck knew these people. He was their colleague, a few kilometers away at the university. He attended their seminars. He saw their data. The problem he solved was not a theoretical puzzle he invented — it was a crisis generated by the best experimental physics in the world, and it landed on his desk because he was the theorist most likely to resolve it. He responded with the intellectual equivalent of field surgery: introduce an assumption that cannot be justified, see if it produces the right formula, deal with the justification later. The assumption was quantization. The formula was exact. The justification, it turned out, required abandoning classical physics entirely — though Planck didn't know that in October 1900 when he found the formula.</p>
+
+    <div class="pull-quote">
+      <blockquote>"On the very day when I formulated this law, I spoke with my son Erwin about it and said to him that I believed I had made a discovery of the first rank, comparable perhaps only with Newton's discoveries."</blockquote>
+      <cite>— Max Planck, recalling October 19, 1900</cite>
+    </div>
+  </section>
+
+  <!-- COLLEAGUES -->
+  <section id="colleagues">
+    <span class="section-label">IV — The People</span>
+    <h2>Colleagues: Boltzmann, Einstein, Nernst, Wien</h2>
+
+    <div class="colleague-grid">
+      <div class="colleague-card">
+        <div class="colleague-name">Ludwig Boltzmann</div>
+        <span class="colleague-role">Vienna · Statistical Mechanics</span>
+        <p class="colleague-rel">Planck initially resisted Boltzmann's statistical interpretation of the second law of thermodynamics, believing entropy was an objective physical quantity rather than a statistical one. When Planck was forced to use Boltzmann's statistics to derive his radiation formula, he acknowledged the debt — though Boltzmann had died by suicide in 1906, never knowing how central his methods would become.</p>
+      </div>
+      <div class="colleague-card">
+        <div class="colleague-name">Albert Einstein</div>
+        <span class="colleague-role">Bern / Berlin · Relativity, Photoelectric</span>
+        <p class="colleague-rel">Planck was among the first to recognize Einstein's special relativity papers in 1905. He championed them to German physicists and assigned a student (Max von Laue) to extend the theory. He orchestrated Einstein's appointment to Berlin in 1914. Their relationship was warm, respectful, and occasionally strained by their disagreement over quantum indeterminism — Planck was nearly as troubled by it as Einstein.</p>
+      </div>
+      <div class="colleague-card">
+        <div class="colleague-name">Walther Nernst</div>
+        <span class="colleague-role">Berlin · Thermodynamics, Third Law</span>
+        <p class="colleague-rel">A friend and sometime collaborator. Nernst helped organize the first Solvay Conference in 1911, which brought together all the major figures grappling with the new quantum theory. His third law of thermodynamics (absolute zero is unattainable) complemented Planck's work in thermodynamics.</p>
+      </div>
+      <div class="colleague-card">
+        <div class="colleague-name">Wilhelm Wien</div>
+        <span class="colleague-role">Berlin / Munich · Radiation Laws</span>
+        <p class="colleague-rel">Wien's empirical radiation formula was one of the two Planck was trying to reconcile with theory. Wien's displacement law — which gives the frequency of peak emission as proportional to temperature — is automatically contained in Planck's distribution. Wien received the Nobel Prize in 1911 for his work on heat radiation laws.</p>
+      </div>
+      <div class="colleague-card">
+        <div class="colleague-name">Niels Bohr</div>
+        <span class="colleague-role">Copenhagen · Atomic Model</span>
+        <p class="colleague-rel">Bohr's 1913 quantum atomic model used Planck's constant to derive the discrete energy levels of hydrogen. Planck recognized its brilliance but was also troubled by the ad hoc nature of the quantum rules Bohr imposed. When matrix mechanics and wave mechanics superseded the Bohr model in the 1920s, Bohr's Copenhagen interpretation — which Planck and Einstein both found philosophically troubling — became the standard.</p>
+      </div>
+      <div class="colleague-card">
+        <div class="colleague-name">Werner Heisenberg</div>
+        <span class="colleague-role">Göttingen / Berlin · Matrix Mechanics</span>
+        <p class="colleague-rel">Heisenberg's 1925 matrix mechanics and his 1927 uncertainty principle (ΔxΔp ≥ ℏ/2) built the formal structure of quantum mechanics on Planck's foundation. Planck respected the mathematics. He was never fully at peace with the physical interpretation — the indeterminism at the heart of it violated his deepest intuitions about nature.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WWI AND THE MANIFESTO -->
+  <section id="manifesto">
+    <span class="section-label">V — The Great War</span>
+    <h2>The Manifesto of the 93: The Wound That Did Not Heal</h2>
+    <p>In September 1914, six weeks into the First World War, ninety-three prominent German intellectuals — scientists, artists, writers, and philosophers — signed a public declaration entitled "Appeal to the World of Culture" (Aufruf an die Kulturwelt). The manifesto defended Germany's declaration of war, denied German atrocities in Belgium (which had occurred), and attacked critics of German militarism as enemies of civilization. Among the signatories: Max Planck, Wilhelm Röntgen, Fritz Haber, and many others who represented the cream of German academic life.</p>
+    <p>Planck later said he had signed without reading it carefully, that he regretted it, that he had been swept up by the patriotic atmosphere of August 1914. This may be largely true — he was not a warmonger and his private letters from that period show no enthusiasm for violence. But the act damaged his international reputation and his relationships with foreign colleagues. Einstein, who had not signed (and had signed a counter-declaration against the war), regarded the manifesto episode as evidence of the catastrophic conformism that German intellectual culture was capable of. The friendship between Planck and Einstein was not broken by it, but it was a shadow.</p>
+
+    <div class="warning-box">
+      <span class="warning-label">Historical Note</span>
+      <p style="margin:0; font-size:0.95rem;">The Manifesto of the 93 is considered one of the most visible failures of German intellectual independence in the twentieth century — a moment when the structures of academic loyalty and national identity overrode individual moral judgment. Planck publicly acknowledged his regret after the war. Several other signatories did the same. Fritz Haber, who developed poison gas for the German war effort, received a more lasting condemnation: he was awarded the Nobel Prize for Chemistry in 1918 (for the Haber-Bosch process, which feeds the world), but is also remembered as the father of chemical warfare.</p>
+    </div>
+
+    <h3>After the War</h3>
+    <p>The German defeat in 1918 destroyed the Wilhelmine world Planck had inhabited. The monarchy collapsed. The Weimar Republic was unstable, contested, economically devastated by the Versailles reparations. German physics continued to flourish — the 1920s were the decade of quantum mechanics, and Berlin was still at the center — but the broader cultural confidence was gone. Planck remained at his post, continued his work, continued to provide institutional leadership in a fragile environment. He was now sixty and the elder statesman of a physics world that was moving faster than he could follow.</p>
+  </section>
+
+  <!-- NAZI GERMANY -->
+  <section id="nazis">
+    <span class="section-label">VI — The Catastrophe</span>
+    <h2>Nazi Germany: The Systematic Destruction of Science</h2>
+    <p>Adolf Hitler became Chancellor of Germany on January 30, 1933. Within weeks, the new government began dismantling the scientific institutions Planck had spent his career building. The Law for the Restoration of the Professional Civil Service (April 1933) required the dismissal of all Jewish employees from government positions — which included university faculty. In a single stroke, German universities lost a significant fraction of their best scientists: Einstein (already in America and not returning), James Franck, Max Born, Richard Courant, Fritz Haber, Leo Szilard, and dozens of others.</p>
+    <p>Planck, as president of the Kaiser Wilhelm Society (Germany's premier research organization), was in a position of institutional responsibility. He met personally with Hitler on May 16, 1933, attempting to argue that dismissing Jewish scientists was damaging Germany's scientific capacity. Hitler's response was a rambling monologue about Jews and communists. Planck left having accomplished nothing. He later described the meeting as one of the most disheartening experiences of his life.</p>
+    <p>He stayed. This is the most contested decision of his life. He believed, as he wrote to Einstein, that he could do more to protect colleagues by remaining inside the institutions than by leaving them. He attempted to maintain positions for Jewish scientists where he could, delayed some dismissals, argued within the bureaucracy. How much he actually accomplished is disputed. What is clear is that he watched the systematic destruction of the world he had built, and was unable to prevent it, and that the cost of staying was complicity — even if a reluctant, grieving complicity.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1933</span>
+        <h4>The Meeting with Hitler</h4>
+        <p>Planck argues that dismissing Jewish scientists damages German scientific prestige. Hitler responds with an anti-Semitic monologue. Planck achieves nothing and leaves shaken.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1933–1945</span>
+        <h4>"Deutsche Physik"</h4>
+        <p>Nazi ideologues promoted "Aryan physics" and denounced Einstein's relativity and quantum mechanics as "Jewish physics." Planck publicly resisted this — to limited effect.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1944</span>
+        <h4>His Home Destroyed</h4>
+        <p>Allied bombing raids on Berlin destroy Planck's home in Grunewald. He loses his library, manuscripts, and personal archives. He is eighty-six. He shelters with friends.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">January 1945</span>
+        <h4>Erwin's Execution</h4>
+        <p>His son Erwin is hanged by the Nazis for alleged participation in the July 20 plot to kill Hitler. Planck's direct appeals to Hitler, Himmler, and Göring for his son's life are refused.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESCUE AND SURVIVAL -->
+  <section id="survival">
+    <span class="section-label">VII — The End of the World</span>
+    <h2>Rescue and the Last Years</h2>
+    <p>By early 1945, Germany was collapsing. Berlin was under Soviet bombardment, Allied forces were advancing from the west, and Planck — now eighty-seven, his home destroyed, his son dead — was sheltering in the countryside outside Berlin. An American officer, Robert Hart, who recognized his name and understood his significance, found him sheltering under trees in the freezing forest east of Magdeburg, where he had fled from his bombed-out refuge. Hart and a small detachment of American soldiers drove Planck to the city of Göttingen, which was in the American zone of occupation, and housed him with a physics colleague.</p>
+    <p>In Göttingen, Planck spent his final two years. He was frail but mentally alert. He gave lectures. He answered letters. He wrote philosophical essays. He took walks. He played piano. The Max Planck Society — the successor to the Kaiser Wilhelm Society, reconstituted under the Allied occupation — was named in his honor in 1948, the year after his death. He did not live to see it formally established, but he knew the decision had been made.</p>
+    <p>He died on October 4, 1947, at the age of eighty-nine, from arteriosclerosis — the slow narrowing of blood vessels. He was buried in the Stadtfriedhof cemetery in Göttingen. The gravestone is simple: his name, dates, and the value of his constant, h, engraved in stone. A man who believed in permanent truths resting under the most permanent truth he found.</p>
+  </section>
+
+  <!-- HIS PHYSICS CIRCLE -->
+  <section id="circle">
+    <span class="section-label">VIII — The Circle</span>
+    <h2>The World of German Physics: An Ecology</h2>
+    <p>To understand Planck's world is to understand a particular ecology of scientific practice that no longer exists and cannot be recreated. It was organized around a small number of institutions, a set of shared values about what constituted knowledge and how it was to be pursued, a culture of serious intellectual exchange conducted in seminars, journals, and correspondence, and a deeply held belief — shared by virtually everyone in it — that physics was among the highest forms of human activity. This belief was not arrogance; it was vocation. The physicists of Planck's Berlin worked with the seriousness of people who believed they were reading the mind of God.</p>
+    <p>The ecology sustained itself through generational transmission: Planck trained students who trained students, and the methods and values passed along with the techniques. It also sustained itself through institutional investment — the German government's funding of the PTR, the Prussian Academy, the Kaiser Wilhelm Society — which gave physicists tools and time unavailable elsewhere. What destroyed it was not internal failure. It was external catastrophe: the Nazi ideology that equated racial identity with intellectual worth, that drove out or killed the people who embodied the tradition, and that broke, in a decade, what had been built over a century.</p>
+    <p>Max Planck outlived the world he inhabited. He was the last man standing in a landscape of ruins — scientific, personal, civilizational. That he continued to write, to correspond, to think about the philosophical foundations of science, until he was eighty-nine, is not merely admirable. It is, in its quiet way, one of the more remarkable demonstrations of human resilience in the history of science.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Max Planck Series · Volume 2: His World · max-planck/2-world.html<br>
+    <a href="0-who.html">Vol. 0 — The Person</a> · <a href="1-quantum.html">Vol. 1 — The Work</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>

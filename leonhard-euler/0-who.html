@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leonhard Euler — Vol. 0: Who He Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080810;
+      --paper-mid: #0d0d1a;
+      --paper-light: #12122a;
+      --blue: #2563eb;
+      --blue-dim: #1d4ed8;
+      --blue-glow: rgba(37,99,235,0.18);
+      --gold: #ca8a04;
+      --gold-dim: #a16207;
+      --gold-glow: rgba(202,138,4,0.15);
+      --text: #e2e8f8;
+      --text-dim: #94a3b8;
+      --text-faint: #3a4060;
+      --border: rgba(37,99,235,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 60%, #080830 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(37,99,235,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.5em;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .masthead-lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--blue);
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* ── MASTHEAD ART ── */
+    .masthead-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    /* ── KICK & BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--blue);
+      color: #e2e8f8;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      vertical-align: middle;
+    }
+
+    .band-gold {
+      background: var(--gold-dim);
+      color: #080810;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin: 2rem 0 3rem;
+      padding-left: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.6rem; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.2rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.1rem; top: 1.5rem;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 2px solid var(--paper);
+    }
+    .timeline-item:hover {
+      border-color: var(--blue);
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 20px var(--blue-glow);
+    }
+    .timeline-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-event { font-size: 1rem; color: var(--text); line-height: 1.5; }
+    .timeline-event em { color: var(--text-dim); }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+    .card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 24px var(--blue-glow);
+      border-color: var(--blue);
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      background: var(--paper-light);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .stat {
+      flex: 1 1 160px;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--blue);
+      display: block;
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: var(--paper-light);
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+    }
+    .highlight-box h3 { margin-top: 0; color: var(--gold); }
+
+    /* ── VOL NAV ── */
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      margin-top: 6rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Leonhard Euler · Library Series</span>
+  <a href="0-who.html" class="active">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 0 of 4 &middot; Biography</span>
+    <h1>
+      Leonhard Euler
+      <span class="subtitle">Who He Was &middot; 1707 &ndash; 1783</span>
+    </h1>
+    <p class="masthead-lede">
+      The most prolific mathematician in history: born in Basel, educated by the
+      Bernoullis, blinded in both eyes, and still producing mathematics by
+      dictation until the last hours of his life. He named the symbols the world
+      thinks in.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Animated SVG: e^(iπ)+1=0 appearing stroke by stroke -->
+    <svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" width="380" height="380">
+      <defs>
+        <radialGradient id="bg0" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0d0d2a"/>
+          <stop offset="100%" stop-color="#080810"/>
+        </radialGradient>
+        <filter id="glow0">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="textglow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background -->
+      <circle cx="190" cy="190" r="180" fill="url(#bg0)"/>
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Grid lines faint -->
+      <g stroke="#2563eb" stroke-width="0.4" opacity="0.12">
+        <line x1="10" y1="190" x2="370" y2="190"/>
+        <line x1="190" y1="10" x2="190" y2="370"/>
+        <circle cx="190" cy="190" r="80" fill="none"/>
+        <circle cx="190" cy="190" r="140" fill="none"/>
+      </g>
+
+      <!-- The equation: e^(iπ) + 1 = 0 in large glowing text, letter by letter -->
+      <!-- e -->
+      <text x="60" y="210" font-family="Georgia, serif" font-style="italic" font-size="52"
+            fill="#2563eb" filter="url(#textglow)" opacity="0">
+        e
+        <animate attributeName="opacity" from="0" to="1" begin="0.4s" dur="0.5s" fill="freeze"/>
+      </text>
+      <!-- ^(iπ) superscript -->
+      <text x="97" y="188" font-family="Georgia, serif" font-style="italic" font-size="28"
+            fill="#ca8a04" filter="url(#textglow)" opacity="0">
+        i&#x3C0;
+        <animate attributeName="opacity" from="0" to="1" begin="1.0s" dur="0.5s" fill="freeze"/>
+      </text>
+      <!-- + -->
+      <text x="140" y="210" font-family="Georgia, serif" font-size="48"
+            fill="#e2e8f8" opacity="0">
+        +
+        <animate attributeName="opacity" from="0" to="1" begin="1.6s" dur="0.4s" fill="freeze"/>
+      </text>
+      <!-- 1 -->
+      <text x="178" y="210" font-family="Georgia, serif" font-size="52"
+            fill="#e2e8f8" opacity="0">
+        1
+        <animate attributeName="opacity" from="0" to="1" begin="2.0s" dur="0.4s" fill="freeze"/>
+      </text>
+      <!-- = -->
+      <text x="213" y="210" font-family="Georgia, serif" font-size="48"
+            fill="#e2e8f8" opacity="0">
+        =
+        <animate attributeName="opacity" from="0" to="1" begin="2.4s" dur="0.4s" fill="freeze"/>
+      </text>
+      <!-- 0 -->
+      <text x="257" y="210" font-family="Georgia, serif" font-size="52"
+            fill="#2563eb" filter="url(#textglow)" opacity="0">
+        0
+        <animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze"/>
+      </text>
+
+      <!-- Underline appears after full equation -->
+      <line x1="58" y1="220" x2="300" y2="220" stroke="#ca8a04" stroke-width="1.5"
+            opacity="0" stroke-dasharray="250" stroke-dashoffset="250">
+        <animate attributeName="opacity" from="0" to="0.6" begin="3.2s" dur="0.3s" fill="freeze"/>
+        <animate attributeName="stroke-dashoffset" from="250" to="0" begin="3.2s" dur="0.8s" fill="freeze"/>
+      </line>
+
+      <!-- Label below -->
+      <text x="190" y="280" font-family="'Space Mono', monospace" font-size="9"
+            fill="#94a3b8" text-anchor="middle" letter-spacing="3" opacity="0">
+        EULER'S IDENTITY · 1748
+        <animate attributeName="opacity" from="0" to="0.8" begin="4.0s" dur="0.6s" fill="freeze"/>
+      </text>
+
+      <!-- Orbiting dot -->
+      <circle r="5" fill="#ca8a04" filter="url(#glow0)">
+        <animateMotion dur="6s" repeatCount="indefinite" begin="4s">
+          <mpath href="#orbit0"/>
+        </animateMotion>
+      </circle>
+      <path id="orbit0" d="M 190 130 A 60 60 0 1 1 189.9 130" fill="none"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <h2>A Pastor's Son from Basel</h2>
+
+  <p>
+    <span class="kick">Origin &middot; 15 April 1707</span>
+    Leonhard Euler was born in Basel, Switzerland, the first child of Paul Euler,
+    a Calvinist pastor, and Marguerite Brucker. His father was an amateur
+    mathematician who had studied under Jacob Bernoulli — one of the most
+    distinguished mathematical families in Europe. From the beginning, Euler
+    inhabited a world where mathematics was spoken at the dinner table.
+  </p>
+
+  <p>
+    The family moved to Riehen, a village outside Basel, when Leonhard was young.
+    He was sent back to Basel for schooling, boarding with his maternal
+    grandmother, and at thirteen he enrolled at the University of Basel — a
+    prodigy in a city full of them.
+  </p>
+
+  <blockquote>
+    "Euler calculated without any apparent effort, just as men breathe, or as eagles
+    sustain themselves in the air."
+    <cite>— Franc&ocirc;is Arago, French astronomer</cite>
+  </blockquote>
+
+  <h2>The Bernoulli Connection</h2>
+
+  <p>
+    <span class="kick">Mentor &middot; Johann Bernoulli</span>
+    At the University of Basel, the young Euler came to the attention of Johann
+    Bernoulli — the greatest living mathematician of the age and a man of
+    formidable ego. Johann recognized something rare in the teenager and arranged
+    private Saturday afternoon tutorials. He did not spoon-feed: he gave Euler
+    books and told him to work through difficulties alone, coming to him only with
+    questions he truly could not resolve.
+  </p>
+
+  <p>
+    This method forged the mathematician. Euler graduated with a master's degree
+    in philosophy at sixteen, comparing the philosophies of Descartes and Newton.
+    Johann's sons — Daniel and Nicolaus — were Euler's close friends. It was they
+    who would open the door to St. Petersburg and change the course of his life.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Paul Euler</h4>
+      <p>His father. A Calvinist pastor who had studied mathematics under Jacob Bernoulli — planted the seed that became the greatest flowering in the history of mathematics.</p>
+    </div>
+    <div class="card">
+      <h4>Johann Bernoulli</h4>
+      <p>His tutor. The elder Bernoulli recognized Euler's gifts early and gave him rigorous private instruction. Called Euler "the greatest mathematician in the world" late in life.</p>
+    </div>
+    <div class="card">
+      <h4>Daniel Bernoulli</h4>
+      <p>His friend and peer. Daniel invited Euler to join him at the St. Petersburg Academy. Their correspondence continued for decades across the great European courts.</p>
+    </div>
+  </div>
+
+  <h2>St. Petersburg: The First Act</h2>
+
+  <p>
+    <span class="kick">Russia &middot; 1727 &ndash; 1741</span>
+    Peter the Great had founded the Imperial Academy of Sciences in St. Petersburg
+    in 1724, determined to import European intellectual capital. When Daniel
+    Bernoulli went in 1725, he wrote to Euler urging him to follow. Euler arrived
+    in 1727, the same week Peter the Great's wife Catherine I died — the Academy
+    teetered on dissolution, and Euler was briefly assigned to the Navy medical
+    service before a mathematical position opened.
+  </p>
+
+  <p>
+    But the Academy stabilized, and Euler found his footing with remarkable speed.
+    Within a decade he had solved the Basel Problem (the sum of 1/n&sup2;, which
+    had defeated all of Europe for nearly a century), published thousands of pages
+    on mechanics, number theory, and music theory, and become the most productive
+    mathematician in the world — at an age when most mathematicians are still
+    finding their legs.
+  </p>
+
+  <h3>The Loss of the Right Eye — 1738</h3>
+
+  <p>
+    In 1738, Euler lost the sight in his right eye. The cause is uncertain — fever,
+    overwork, a botched medical procedure. He accepted the loss with characteristic
+    equanimity, remarking that it would reduce distractions. A portrait from this
+    period shows him half-turned, the damaged eye away from the viewer. He kept
+    working.
+  </p>
+
+  <div class="highlight-box">
+    <h3>The Tsar's Mathematician</h3>
+    <p>
+      During his first St. Petersburg period (1727–1741), Euler produced work in
+      mechanics, number theory, infinite series, music theory, cartography, and
+      naval architecture. He was made a full Professor of Mathematics in 1733 at
+      age 26, the same year he married Katharina Gsell, daughter of a Swiss
+      painter at the Russian court. They would have thirteen children, of whom
+      three sons and two daughters survived to adulthood.
+    </p>
+  </div>
+
+  <h2>Berlin: Twenty-Five Years at Frederick's Court</h2>
+
+  <p>
+    <span class="kick">Prussia &middot; 1741 &ndash; 1766</span>
+    Frederick the Great — "Frederick the Great" — prided himself on being a
+    philosopher-king in the French Enlightenment manner. He preferred Voltaire
+    and the brilliant conversationalists of Paris to a Swiss mathematician who
+    spoke rarely, worked constantly, and held sincere religious beliefs. Frederick
+    called Euler "my great Cyclops" — the insult arrived after the loss of the
+    right eye — and complained that he could not get a word out of him at dinner.
+  </p>
+
+  <p>
+    Euler didn't care. He ran the mathematics and physics sections of the Berlin
+    Academy for twenty-five years, supervised its observatory and botanical
+    gardens, advised the government on pensions and lotteries, oversaw the
+    construction of a canal, and — while doing all of this administrative work —
+    produced approximately half of all the mathematics he would ever write.
+  </p>
+
+  <blockquote>
+    "He was a one-eyed man in the kingdom of the blind, and he was the king."
+    <cite>— Contemporary assessment of Euler at Berlin</cite>
+  </blockquote>
+
+  <h2>Complete Blindness — and Increased Output</h2>
+
+  <p>
+    <span class="kick">St. Petersburg (second period) &middot; 1766 &ndash; 1783</span>
+    Catherine the Great, newly on the Russian throne, wanted Euler back. She
+    offered a salary, a house, money for his family, and a cook. Euler accepted
+    and returned to St. Petersburg in 1766. The following year, a cataract
+    worsened. He had a brief moment of restored sight after surgery, then
+    inflammation closed his remaining eye completely. In 1771, Leonhard Euler went
+    totally blind at sixty-three years old.
+  </p>
+
+  <p>
+    What happened next confounded expectations. Euler's output <em>increased</em>.
+    He had always done much of his work in his head; losing his eyes removed an
+    input channel, not the engine. He dictated to his sons and to a young Swiss
+    student, Nicolas Fuss, who became his amanuensis. His memory — already
+    legendary — sharpened under necessity. He could recite the <em>Aeneid</em>
+    from memory and state the first six powers of any number under 100 without
+    hesitation. He composed mathematics at a rate that embarrassed sighted men
+    a third his age.
+  </p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-number">886</span>
+      <span class="stat-label">Papers &amp; Books</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">92</span>
+      <span class="stat-label">Opera Omnia Volumes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">400+</span>
+      <span class="stat-label">Published after Death</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">76</span>
+      <span class="stat-label">Years of Life</span>
+    </div>
+  </div>
+
+  <h2>The Life in Full: A Timeline</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">1707</div>
+      <div class="timeline-event">Born in Basel, Switzerland, 15 April. Father is a Calvinist pastor with mathematical training under Jacob Bernoulli.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1720</div>
+      <div class="timeline-event">Enrolled at the University of Basel at age thirteen. Studies Saturday afternoons with Johann Bernoulli.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1723</div>
+      <div class="timeline-event">Master's degree at sixteen, comparing Descartes and Newton. Father hopes he will enter the ministry; Bernoulli intervenes.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1727</div>
+      <div class="timeline-event">Arrives St. Petersburg. Catherine I dies that week; Academy nearly dissolved. Euler is briefly assigned to the Russian Navy before a mathematical post opens.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1733</div>
+      <div class="timeline-event">Full Professor of Mathematics at 26. Marries Katharina Gsell. The Swiss mathematician is now the most prolific mathematical mind in Russia.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1735</div>
+      <div class="timeline-event">Solves the Basel Problem in a single year: the sum 1 + 1/4 + 1/9 + 1/16 + ... = &pi;&sup2;/6. European mathematicians are astonished.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1736</div>
+      <div class="timeline-event">Publishes the Seven Bridges of K&ouml;nigsberg solution. Invents graph theory to prove it impossible to cross all bridges exactly once.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1738</div>
+      <div class="timeline-event">Loses sight in right eye. Reportedly remarks it will reduce distractions. Continues at full speed.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1741</div>
+      <div class="timeline-event">Invited to the Berlin Academy by Frederick the Great of Prussia. Accepts, partly due to political instability in Russia.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1748</div>
+      <div class="timeline-event">Publishes <em>Introductio in analysin infinitorum</em> — establishing e, i, &pi;, and the notation of modern mathematics. Euler's identity appears here.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1755</div>
+      <div class="timeline-event">Publishes <em>Institutiones calculi differentialis</em> — introduces f(x) notation for functions. Modern calculus textbooks descend directly from this book.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1766</div>
+      <div class="timeline-event">Catherine the Great recalls him to St. Petersburg with a generous offer. Euler accepts and returns to Russia for the last time.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1771</div>
+      <div class="timeline-event">Goes completely blind. His house burns in a fire; he is rescued by a man who carries him out. He loses manuscripts in the blaze but keeps calculating.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1771–1783</div>
+      <div class="timeline-event">The blind years. Dictates to sons and to Nicolas Fuss. Produces hundreds of papers — more per year than most mathematicians produce in a lifetime.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">18 September 1783</div>
+      <div class="timeline-event">"He ceased to calculate, and to live." — Condorcet's eulogy. Euler died of a brain hemorrhage while doing mental calculations on Uranus and drinking tea.</div>
+    </div>
+  </div>
+
+  <h2>The Man Himself</h2>
+
+  <p>
+    Euler was, by all accounts, genuinely pleasant. He was warm with students,
+    patient as a teacher, and — unlike many great men of his era — modest about
+    his gifts. He held sincere Protestant faith throughout his life and was
+    unmoved by the fashionable deism of the French philosophes. When Diderot
+    reportedly visited the Russian court and tried to undermine religious belief
+    with casual materialism, Euler (the story, perhaps apocryphal, claims) stood
+    up and declared: "Sir, (a + b&sup2;)/n = x, therefore God exists. Reply!" The
+    court burst into laughter. Diderot, ignorant of mathematics, was silenced.
+  </p>
+
+  <p>
+    He loved his enormous family. He worked with his grandchildren climbing on
+    him. He had, according to every witness, a quality rare in genius: he was
+    <em>happy</em>.
+  </p>
+
+  <blockquote>
+    "He was a man who was as simple as a child, tranquil and cheerful, who ate
+    and drank without excess, worked without ceasing, and loved his family
+    tenderly."
+    <cite>— Nicolas Fuss, his amanuensis and grandson-in-law</cite>
+  </blockquote>
+
+  <h2>The Notation He Left Behind</h2>
+
+  <p>
+    Before Euler, mathematical writing was a chaos of competing notations.
+    After Euler, it converged on a single language — his. The symbols below
+    are all Euler introductions or popularizations. Every working scientist
+    and mathematician on Earth uses them daily.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>e = 2.71828&hellip;</h4>
+      <p>Euler's number. The base of natural logarithms, the rate of pure growth. He named it <em>e</em> in a 1736 manuscript — possibly for "exponential," possibly his own initial.</p>
+    </div>
+    <div class="card">
+      <h4>i = &radic;&minus;1</h4>
+      <p>The imaginary unit. Euler systematized its use and made complex numbers a working tool of mathematics rather than a philosophical scandal.</p>
+    </div>
+    <div class="card">
+      <h4>&pi; (pi)</h4>
+      <p>He didn't invent &pi; — but Euler's use of the symbol in 1736 made it universal. Before Euler, &pi; was written variously as p, c, or nothing at all.</p>
+    </div>
+    <div class="card">
+      <h4>&Sigma; (sigma)</h4>
+      <p>Euler introduced the capital sigma for summation in 1755. Every statistics textbook in the world carries his mark.</p>
+    </div>
+    <div class="card">
+      <h4>f(x)</h4>
+      <p>Function notation. Euler introduced the idea of writing a function as f(x) in 1734 — the modern concept of "function" is essentially his creation.</p>
+    </div>
+    <div class="card">
+      <h4>&Delta;, &nabla;, sin, cos</h4>
+      <p>Euler standardized the abbreviations for sine and cosine, introduced &Delta; for differences, and shaped the notational landscape we inhabit.</p>
+    </div>
+  </div>
+
+  <div class="vol-nav">
+    <a href="1-work.html">Vol. 1 — The Work &rarr;</a>
+    <a href="2-world.html">Vol. 2 — His World &rarr;</a>
+    <a href="3-legacy.html">Vol. 3 — His Legacy &rarr;</a>
+  </div>
+
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: David Lee Wise &nbsp;|&nbsp; Organization: ROOT0 / TriPod LLC</div>
+    <div>Series: The Library &mdash; Leonhard Euler, Volume 0 of 4</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></div>
+    <div style="margin-top:0.8rem; opacity:0.5;">
+      Written in Basel / St. Petersburg / Berlin / St. Petersburg &mdash; wherever mathematics lives
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

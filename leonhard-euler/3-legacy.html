@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leonhard Euler — Vol. 3: His Legacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080810;
+      --paper-mid: #0d0d1a;
+      --paper-light: #12122a;
+      --blue: #2563eb;
+      --blue-dim: #1d4ed8;
+      --blue-glow: rgba(37,99,235,0.18);
+      --gold: #ca8a04;
+      --gold-dim: #a16207;
+      --gold-glow: rgba(202,138,4,0.15);
+      --text: #e2e8f8;
+      --text-dim: #94a3b8;
+      --text-faint: #3a4060;
+      --border: rgba(37,99,235,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 60%, #04040e 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(202,138,4,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.5em;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .masthead-lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--blue);
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .masthead-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--blue);
+      color: #e2e8f8;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #080810; }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+    .card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 24px var(--blue-glow);
+      border-color: var(--blue);
+    }
+    .card-domain {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
+    /* ── NOTATION DISPLAY ── */
+    .notation-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .notation-chip {
+      background: var(--paper-light);
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      min-width: 120px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .notation-chip:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 20px var(--blue-glow);
+    }
+    .notation-symbol {
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: 2.2rem;
+      color: var(--blue);
+      display: block;
+      line-height: 1;
+    }
+    .notation-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: var(--paper-light);
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+    }
+    .highlight-box h3 { color: var(--gold); margin-top: 0; }
+    .highlight-box p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 0.8rem; }
+    .highlight-box p:last-child { margin-bottom: 0; }
+
+    /* ── RIEMANN BOX ── */
+    .riemann-box {
+      background: linear-gradient(135deg, var(--paper-light), #0a0818);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .riemann-box::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(202,138,4,0.04) 0%, transparent 70%);
+    }
+    .riemann-box h3 { color: var(--gold); margin-top: 0; position: relative; z-index: 1; }
+    .riemann-box p { color: var(--text-dim); font-size: 0.95rem; position: relative; z-index: 1; margin-bottom: 0.8rem; }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      background: var(--paper-light);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 2rem 0; }
+    .stat {
+      flex: 1 1 140px;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-number { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 800; color: var(--blue); display: block; line-height: 1; }
+    .stat-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.4rem; display: block; }
+
+    /* ── VOLUME NAV ── */
+    .vol-nav { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 4rem; flex-wrap: wrap; }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      margin-top: 6rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Leonhard Euler · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 3 of 4 &middot; The Long Afterlife</span>
+    <h1>
+      His Legacy
+      <span class="subtitle">What Euler Left Behind</span>
+    </h1>
+    <p class="masthead-lede">
+      His notation is the language of mathematics. His graph theory underlies
+      the internet. His zeta function work is connected to the greatest unsolved
+      problem in mathematics. His topology defines the field. He died in 1783.
+      He has not stopped being useful.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Graph network with pulsing nodes — Euler's graph theory lives on -->
+    <svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" width="380" height="380">
+      <defs>
+        <radialGradient id="bg3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0a0a22"/>
+          <stop offset="100%" stop-color="#080810"/>
+        </radialGradient>
+        <filter id="glow3">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="edgeglow">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#bg3)"/>
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Graph edges (drawn first, under nodes) -->
+      <g stroke="#2563eb" stroke-width="1.2" opacity="0.5" filter="url(#edgeglow)">
+        <!-- Hub to nodes -->
+        <line x1="190" y1="190" x2="110" y2="130"/>
+        <line x1="190" y1="190" x2="270" y2="130"/>
+        <line x1="190" y1="190" x2="290" y2="220"/>
+        <line x1="190" y1="190" x2="210" y2="290"/>
+        <line x1="190" y1="190" x2="100" y2="260"/>
+        <line x1="190" y1="190" x2="120" y2="200"/>
+        <!-- Outer connections -->
+        <line x1="110" y1="130" x2="270" y2="130"/>
+        <line x1="270" y1="130" x2="290" y2="220"/>
+        <line x1="290" y1="220" x2="210" y2="290"/>
+        <line x1="210" y1="290" x2="100" y2="260"/>
+        <line x1="100" y1="260" x2="110" y2="130"/>
+        <!-- Cross connections -->
+        <line x1="110" y1="130" x2="120" y2="200"/>
+        <line x1="270" y1="130" x2="120" y2="200"/>
+        <line x1="120" y1="200" x2="100" y2="260"/>
+        <!-- Outer ring connections -->
+        <line x1="60" y1="170" x2="110" y2="130"/>
+        <line x1="60" y1="170" x2="100" y2="260"/>
+        <line x1="330" y1="170" x2="270" y2="130"/>
+        <line x1="330" y1="170" x2="290" y2="220"/>
+        <line x1="190" y1="60" x2="110" y2="130"/>
+        <line x1="190" y1="60" x2="270" y2="130"/>
+        <line x1="190" y1="340" x2="210" y2="290"/>
+        <line x1="190" y1="340" x2="100" y2="260"/>
+      </g>
+
+      <!-- Animated pulse along edges -->
+      <circle r="3" fill="#ca8a04" opacity="0.85" filter="url(#glow3)">
+        <animateMotion dur="2.5s" repeatCount="indefinite">
+          <mpath href="#pulse-path-1"/>
+        </animateMotion>
+      </circle>
+      <path id="pulse-path-1" d="M190,190 L110,130 L270,130 L290,220 L210,290 L100,260 Z" fill="none"/>
+
+      <circle r="2.5" fill="#2563eb" opacity="0.7" filter="url(#glow3)">
+        <animateMotion dur="3.5s" repeatCount="indefinite" begin="1s">
+          <mpath href="#pulse-path-2"/>
+        </animateMotion>
+      </circle>
+      <path id="pulse-path-2" d="M190,190 L290,220 L270,130 L190,60 L110,130 L60,170 L100,260 L190,190" fill="none"/>
+
+      <!-- Graph nodes -->
+      <!-- Central hub -->
+      <circle cx="190" cy="190" r="14" fill="#2563eb" filter="url(#glow3)">
+        <animate attributeName="r" values="14;17;14" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="190" y="194" font-family="'Space Mono', monospace" font-size="7" fill="white" text-anchor="middle">Euler</text>
+
+      <!-- Outer major nodes -->
+      <circle cx="110" cy="130" r="9" fill="#1d4ed8" filter="url(#glow3)">
+        <animate attributeName="r" values="9;11;9" dur="2.8s" begin="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="78" y="118" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8">Graph Theory</text>
+
+      <circle cx="270" cy="130" r="9" fill="#1d4ed8" filter="url(#glow3)">
+        <animate attributeName="r" values="9;11;9" dur="2.5s" begin="0.8s" repeatCount="indefinite"/>
+      </circle>
+      <text x="278" y="118" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8">Topology</text>
+
+      <circle cx="290" cy="220" r="9" fill="#1d4ed8" filter="url(#glow3)">
+        <animate attributeName="r" values="9;11;9" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="300" y="216" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8">Cryptography</text>
+
+      <circle cx="210" cy="290" r="9" fill="#1d4ed8" filter="url(#glow3)">
+        <animate attributeName="r" values="9;11;9" dur="2.2s" begin="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="215" y="308" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8">Internet</text>
+
+      <circle cx="100" cy="260" r="9" fill="#1d4ed8" filter="url(#glow3)">
+        <animate attributeName="r" values="9;11;9" dur="2.6s" begin="0.7s" repeatCount="indefinite"/>
+      </circle>
+      <text x="40" y="270" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8">Analysis</text>
+
+      <circle cx="120" cy="200" r="7" fill="#ca8a04" filter="url(#glow3)">
+        <animate attributeName="r" values="7;9;7" dur="3.2s" begin="1.5s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Outer ring nodes -->
+      <circle cx="60" cy="170" r="6" fill="#0d0d30" stroke="#2563eb" stroke-width="1.5">
+        <animate attributeName="r" values="6;8;6" dur="4s" begin="0.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="330" cy="170" r="6" fill="#0d0d30" stroke="#2563eb" stroke-width="1.5">
+        <animate attributeName="r" values="6;8;6" dur="3.8s" begin="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="190" cy="60" r="6" fill="#0d0d30" stroke="#ca8a04" stroke-width="1.5">
+        <animate attributeName="r" values="6;8;6" dur="3.5s" begin="0.9s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="190" cy="340" r="6" fill="#0d0d30" stroke="#ca8a04" stroke-width="1.5">
+        <animate attributeName="r" values="6;8;6" dur="4.2s" begin="2s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Label -->
+      <text x="190" y="358" font-family="'Space Mono', monospace" font-size="8" fill="#94a3b8" text-anchor="middle" letter-spacing="2">EULER'S LIVING GRAPH</text>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <h2>The Language of Mathematics</h2>
+
+  <p>
+    In every branch of mathematics, every day, billions of people use notation
+    that Leonhard Euler introduced or standardized. This is not metaphor. The
+    symbols below — which appear in every textbook, every paper, every
+    calculation — were either invented or made universal by one man from Basel,
+    working in the eighteenth century.
+  </p>
+
+  <div class="notation-row">
+    <div class="notation-chip">
+      <span class="notation-symbol">e</span>
+      <span class="notation-name">Euler's Number<br>2.71828&hellip;</span>
+    </div>
+    <div class="notation-chip">
+      <span class="notation-symbol">i</span>
+      <span class="notation-name">Imaginary Unit<br>&radic;&minus;1</span>
+    </div>
+    <div class="notation-chip">
+      <span class="notation-symbol">&pi;</span>
+      <span class="notation-name">Pi — Universal<br>after Euler</span>
+    </div>
+    <div class="notation-chip">
+      <span class="notation-symbol">&Sigma;</span>
+      <span class="notation-name">Summation<br>Sigma Notation</span>
+    </div>
+    <div class="notation-chip">
+      <span class="notation-symbol">f(x)</span>
+      <span class="notation-name">Function<br>Notation</span>
+    </div>
+    <div class="notation-chip">
+      <span class="notation-symbol">&Delta;</span>
+      <span class="notation-name">Difference<br>Operator</span>
+    </div>
+  </div>
+
+  <p>
+    Before Euler standardized these symbols, mathematics was a Babel of competing
+    notations. Different countries, different schools, different mathematicians wrote
+    the same concepts in incompatible ways. Euler's textbooks — the <em>Introductio</em>
+    of 1748, the calculus texts of the 1750s and 1760s — became the international
+    standard because they were clear, comprehensive, and used notation that actually
+    worked. The notation was adopted because it was good.
+  </p>
+
+  <blockquote>
+    "Read Euler, read Euler, he is the master of us all."
+    <cite>— Pierre-Simon Laplace, mathematician and astronomer, c. 1790</cite>
+  </blockquote>
+
+  <h2>Graph Theory: From K&ouml;nigsberg to the Internet</h2>
+
+  <p>
+    <span class="kick">1736 &rarr; Now</span>
+    When Euler proved in 1736 that the Seven Bridges of K&ouml;nigsberg could not
+    be traversed in a single walk, he invented a new kind of mathematics. He had
+    abstracted the physical geography — islands, rivers, bridges — into nodes and
+    edges, and asked a structural question about connectivity. The specific details
+    of K&ouml;nigsberg didn't matter; what mattered was the pattern.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-domain">Internet Infrastructure</span>
+      <h4>Routing Algorithms</h4>
+      <p>Every packet of data traveling across the internet is routed through a network graph. The algorithms that find shortest paths — Dijkstra's, A* — are direct descendants of Euler's work on graph traversal.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Social Networks</span>
+      <h4>Network Analysis</h4>
+      <p>Facebook, LinkedIn, Twitter — every social network is a mathematical graph. The mathematics of viral spread, degrees of separation, and influence maximization comes directly from Eulerian graph theory.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Hardware Design</span>
+      <h4>Circuit Board Layout</h4>
+      <p>Designing a circuit board without crossing wires is literally a planarity problem in graph theory. Every CPU, every integrated circuit, owes its layout to Euler's 1736 paper.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Logistics</span>
+      <h4>Traveling Salesman &amp; Routing</h4>
+      <p>The Chinese Postman Problem — finding the shortest route that traverses every edge of a graph — is a direct generalization of Euler's bridge problem. UPS and FedEx use it daily.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Biology</span>
+      <h4>Protein Interaction Networks</h4>
+      <p>Mapping how proteins interact inside cells — one of the frontiers of molecular biology — uses graph theory to model and analyze the network structure.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Epidemiology</span>
+      <h4>Disease Spread Modeling</h4>
+      <p>How a pathogen spreads through a population is modeled as propagation on a contact network graph. Graph theory is essential to pandemic response.</p>
+    </div>
+  </div>
+
+  <h2>The Riemann Hypothesis: Euler's Unfinished Business</h2>
+
+  <div class="riemann-box">
+    <h3>What Euler Started — Riemann Continued — Nobody Has Finished</h3>
+    <p>
+      In solving the Basel Problem, Euler introduced what is now called the
+      Riemann zeta function: the sum of 1/n<sup>s</sup> for all positive integers n.
+      For s = 2, the answer is &pi;&sup2;/6. Euler computed it for all even positive
+      integers. He left the odd integers and complex values of s as open territory.
+    </p>
+    <p>
+      In 1859, Bernhard Riemann extended Euler's function to complex numbers and
+      made a conjecture about where its zeros lie — the Riemann Hypothesis. The
+      Riemann Hypothesis states that all non-trivial zeros of the zeta function
+      have real part exactly 1/2. It remains unproven.
+    </p>
+    <p>
+      The Riemann Hypothesis is one of the Clay Mathematics Institute's Millennium
+      Prize Problems — a $1,000,000 prize awaits its proof. It has implications for
+      the distribution of prime numbers, cryptography, and the foundations of
+      number theory. Every attempt to prove it begins with Euler's 1735 work on
+      the Basel Problem.
+    </p>
+    <p>
+      Euler opened a door that the best mathematical minds of the past 165 years
+      have not been able to close.
+    </p>
+  </div>
+
+  <h2>Topology: From V &minus; E + F = 2</h2>
+
+  <p>
+    <span class="kick">1750 &rarr; Modern geometry</span>
+    Euler's polyhedron formula — V &minus; E + F = 2 — seems at first like a
+    curiosity about counting corners and sides of solid shapes. It is, in fact,
+    one of the deepest insights in mathematics. The quantity V &minus; E + F is an
+    invariant: it doesn't change when you continuously deform the shape. Stretch
+    a cube into a sphere, and V &minus; E + F remains 2.
+  </p>
+
+  <p>
+    This invariant is now called the Euler characteristic, and it is fundamental
+    to topology — the mathematics of shapes considered up to continuous
+    deformation. The Euler characteristic distinguishes a sphere (characteristic 2)
+    from a torus — a donut shape (characteristic 0) from a shape with two holes
+    (characteristic &minus;2). Modern topologists classify all surfaces by their
+    Euler characteristics.
+  </p>
+
+  <div class="highlight-box">
+    <h3>Algebraic Topology: Euler's Child</h3>
+    <p>
+      The entire field of algebraic topology — which uses algebraic structures
+      to study topological spaces — can be traced to Euler's 1750 letter to
+      Goldbach announcing his polyhedron formula. The field now includes
+      homology theory, cohomology, homotopy theory, and K-theory. It is one of
+      the most active areas of pure mathematics research.
+    </p>
+    <p>
+      Euler did not see this coming. He proved a fact about polyhedra. Mathematics
+      decided it was the foundation of a field.
+    </p>
+  </div>
+
+  <h2>Cryptography: The Totient Function</h2>
+
+  <p>
+    <span class="kick">1763 &rarr; Every secure website</span>
+    Euler's totient function &phi;(n) counts how many integers from 1 to n share
+    no common factor with n. Euler proved a fundamental theorem: a<sup>&phi;(n)</sup>
+    &equiv; 1 (mod n) whenever a and n are coprime. This is Euler's theorem.
+  </p>
+
+  <p>
+    In 1977, Rivest, Shamir, and Adleman used Euler's theorem as the mathematical
+    core of RSA encryption — the first practical public-key cryptosystem. Every
+    HTTPS connection, every encrypted email, every secure online transaction uses
+    RSA or a system derived from it. The mathematical heart of internet security
+    is Euler's 1763 paper.
+  </p>
+
+  <h2>Mechanics and Engineering</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-domain">Aerospace</span>
+      <h4>Euler's Rotation Equations</h4>
+      <p>The equations of motion for a rigid rotating body — Euler's equations — are used to compute satellite attitude control, aircraft maneuvers, and gyroscope dynamics. Every spacecraft orientation calculation is Euler's.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Civil Engineering</span>
+      <h4>Euler's Column Formula</h4>
+      <p>The critical load at which a column buckles under compression is given by Euler's formula from 1744. Every structural engineer designing buildings, bridges, or struts uses it.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Fluid Dynamics</span>
+      <h4>Euler's Fluid Equations</h4>
+      <p>Euler's equations of fluid motion (1757) are the foundation of aerodynamics and hydrodynamics. The Navier-Stokes equations — a Millennium Prize Problem — generalize Euler's equations.</p>
+    </div>
+    <div class="card">
+      <span class="card-domain">Physics</span>
+      <h4>Euler-Lagrange Equations</h4>
+      <p>The variational principle of classical mechanics — the principle of least action — is formalized through the Euler-Lagrange equations. All of theoretical physics uses them.</p>
+    </div>
+  </div>
+
+  <h2>The Opera Omnia: Still Publishing</h2>
+
+  <p>
+    <span class="kick">1911 &rarr; Present</span>
+    The <em>Opera Omnia Euleri</em> — the complete collected works — began
+    publication in 1911. It was expected to take a few decades. As of the 2020s,
+    it has reached 92 volumes and is not yet complete. Euler published so much,
+    in so many areas, with such depth, that a multi-generational international
+    editorial project has spent over a century cataloguing it.
+  </p>
+
+  <p>
+    The Euler Archive at the University of the Pacific digitizes and translates
+    his work. The Euler Society holds annual conferences. Papers are still being
+    translated into English for the first time. His work on infinite series, number
+    theory, and combinatorics continues to be studied, cited, and built upon by
+    working mathematicians.
+  </p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-number">92</span>
+      <span class="stat-label">Opera Omnia Volumes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">1911</span>
+      <span class="stat-label">Year Publishing Began</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">886</span>
+      <span class="stat-label">Individual Works</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">&gt;240</span>
+      <span class="stat-label">Years and Counting</span>
+    </div>
+  </div>
+
+  <h2>The Verdict of History</h2>
+
+  <p>
+    In mathematics, there is a standard by which greatness is measured: how much
+    of what followed would have been different if you had not existed? By this
+    measure, Euler stands beside Newton and Archimedes at the very peak.
+  </p>
+
+  <p>
+    Remove Euler from history and you lose: the notation system of all mathematics,
+    the foundations of graph theory, the foundations of topology, the path to the
+    Riemann Hypothesis, the mathematical core of internet security, the equations
+    of classical and fluid mechanics, the treatment of complex numbers that makes
+    quantum mechanics possible, and several hundred other results scattered across
+    every field of mathematics.
+  </p>
+
+  <p>
+    None of these would be forever lost — other mathematicians would have found
+    their way, eventually, to many of the same places. But the landscape of
+    mathematics would be decades or centuries behind where it is now. And it
+    would speak a different language.
+  </p>
+
+  <blockquote>
+    "Euler is the Shakespeare of mathematics — omnipresent, and just as
+    unreachable. We live inside the world he made."
+    <cite>— William Dunham, <em>Euler: The Master of Us All</em>, 1999</cite>
+  </blockquote>
+
+  <blockquote>
+    "He ceased to calculate, and to live."
+    <cite>— Marquis de Condorcet, <em>Eloge de M. Euler</em>, 1783</cite>
+  </blockquote>
+
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol. 0 — Who He Was</a>
+    <a href="1-work.html">&larr; Vol. 1 — The Work</a>
+    <a href="2-world.html">&larr; Vol. 2 — His World</a>
+  </div>
+
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: David Lee Wise &nbsp;|&nbsp; Organization: ROOT0 / TriPod LLC</div>
+    <div>Series: The Library &mdash; Leonhard Euler, Volume 3 of 4</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></div>
+    <div style="margin-top:0.8rem; opacity:0.5;">
+      1707 &ndash; 1783 &mdash; still calculating
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

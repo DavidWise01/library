@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gregor Mendel — Vol. 3: Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#050a05;
+    --card:#0b100b;
+    --ink:#e8e4d8;
+    --dim:#6b7a5a;
+    --pea:#65a30d;
+    --violet:#7c3aed;
+    --line:rgba(101,163,13,0.18);
+    --violetline:rgba(124,58,237,0.22);
+    --peatint:rgba(101,163,13,0.07);
+    --violettint:rgba(124,58,237,0.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 28px,rgba(101,163,13,0.022) 28px 29px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.68;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:30px 22px 80px;}
+  ::selection{background:var(--pea);color:#050a05;}
+  a{color:var(--pea);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* NAV */
+  .sitenav{display:flex;gap:0;flex-wrap:wrap;margin-bottom:28px;border:1px solid var(--line);background:var(--card);}
+  .sitenav a{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--dim);padding:9px 15px;border-right:1px solid var(--line);transition:background .12s,color .12s;
+    white-space:nowrap;
+  }
+  .sitenav a:hover,.sitenav a.active{background:var(--peatint);color:var(--pea);text-decoration:none;}
+  .sitenav a:last-child{border-right:none;}
+
+  /* MASTHEAD */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--pea);}
+  .mast{border-bottom:4px solid var(--pea);padding-bottom:22px;margin-bottom:8px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.9;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:9em;}
+  .mast h1 em{font-style:normal;color:var(--pea);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:620px;margin:20px 0 0;color:#c8c4b4;}
+  .dek b{font-weight:500;color:var(--pea);}
+  .art{flex:0 0 auto;}
+
+  /* DNA HELIX + PEA PLANT SVG ANIMATIONS */
+  @keyframes helix-strand1{0%{stroke-dashoffset:500}100%{stroke-dashoffset:0}}
+  @keyframes helix-strand2{0%{stroke-dashoffset:500}100%{stroke-dashoffset:0}}
+  @keyframes rung-pop{0%{opacity:0;transform:scaleX(0)}100%{opacity:1;transform:scaleX(1)}}
+  @keyframes pea-grow-legacy{0%{stroke-dashoffset:150}100%{stroke-dashoffset:0}}
+  @keyframes node-pulse{0%{r:3;opacity:0.4}50%{r:5;opacity:1}100%{r:3;opacity:0.4}}
+  @keyframes connect-line{0%{stroke-dashoffset:100}100%{stroke-dashoffset:0}}
+  .helix-s1{stroke-dasharray:500;stroke-dashoffset:500;animation:helix-strand1 2s ease 0.3s forwards;}
+  .helix-s2{stroke-dasharray:500;stroke-dashoffset:500;animation:helix-strand2 2s ease 0.5s forwards;}
+  .rung1{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 1.5s forwards;}
+  .rung2{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 1.7s forwards;}
+  .rung3{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 1.9s forwards;}
+  .rung4{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 2.1s forwards;}
+  .rung5{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 2.3s forwards;}
+  .rung6{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 2.5s forwards;}
+  .rung7{opacity:0;transform-origin:center;animation:rung-pop 0.3s ease 2.7s forwards;}
+  .pea-stem-l{stroke-dasharray:150;stroke-dashoffset:150;animation:pea-grow-legacy 1.2s ease 2.8s forwards;}
+  .pea-leaf-l1{opacity:0;animation:rung-pop 0.4s ease 3.5s forwards;}
+  .pea-leaf-l2{opacity:0;animation:rung-pop 0.4s ease 3.7s forwards;}
+  .connect-arc{stroke-dasharray:100;stroke-dashoffset:100;animation:connect-line 0.8s ease 3.0s forwards;}
+  .node-a{animation:node-pulse 2s ease-in-out 3.5s infinite;}
+  .node-b{animation:node-pulse 2s ease-in-out 3.7s infinite;}
+  @media(prefers-reduced-motion:reduce){
+    .helix-s1,.helix-s2{animation:none;stroke-dashoffset:0;}
+    .rung1,.rung2,.rung3,.rung4,.rung5,.rung6,.rung7,
+    .pea-stem-l,.pea-leaf-l1,.pea-leaf-l2,.connect-arc{animation:none;opacity:1;stroke-dashoffset:0;}
+    .node-a,.node-b{animation:none;}
+  }
+
+  /* TYPOGRAPHY */
+  .band{
+    display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;background:var(--pea);
+    color:#050a05;padding:5px 14px;margin:36px 0 14px;
+  }
+  .band.violet{background:var(--violet);color:#e8e4d8;}
+  .band.dim{background:#0f160a;color:var(--pea);border:1px solid var(--line);}
+  h2{font-family:"Cinzel";font-weight:700;font-size:clamp(18px,2.8vw,24px);margin:0 0 10px;letter-spacing:0.03em;}
+  h2 em{font-style:normal;color:var(--pea);}
+  h3{font-family:"Cinzel";font-weight:600;font-size:17px;margin:0 0 8px;letter-spacing:0.02em;color:var(--pea);}
+  p{margin:0 0 14px;font-size:16px;}
+  p em{font-style:italic;color:#d4d0c4;}
+
+  /* GRID + CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .grid.tight{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--card);
+    padding:16px 17px 17px;transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--pea);}
+  .card.v:hover{box-shadow:5px 5px 0 var(--violet);}
+  .card .num{
+    position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;
+    font-weight:700;font-size:11px;color:var(--pea);
+  }
+  .card.v .num{color:var(--violet);}
+  .card h3{font-size:16px;margin:0 24px 6px 0;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 8px;color:#b8b4a4;line-height:1.5;}
+  .card .meta{font-family:"Space Mono",monospace;font-size:10px;color:var(--dim);margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);}
+  .card .meta b{color:var(--pea);font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-right:4px;}
+  .card.v .meta b{color:var(--violet);}
+
+  /* TIMELINE */
+  .timeline{list-style:none;padding:0;margin:0;border-left:2px solid var(--line);}
+  .timeline li{
+    position:relative;padding:10px 0 10px 24px;font-size:15px;border-bottom:1px solid var(--line);
+  }
+  .timeline li:last-child{border-bottom:none;}
+  .timeline li::before{
+    content:"";position:absolute;left:-5px;top:16px;
+    width:8px;height:8px;background:var(--pea);border-radius:50%;
+  }
+  .timeline li.v::before{background:var(--violet);}
+  .timeline .yr{
+    font-family:"Space Mono",monospace;font-size:10px;font-weight:700;
+    color:var(--pea);letter-spacing:0.12em;display:block;margin-bottom:2px;
+  }
+  .timeline li.v .yr{color:var(--violet);}
+  .timeline b{color:var(--ink);font-weight:500;}
+
+  /* BLOCK QUOTE */
+  .pull{
+    border-left:4px solid var(--violet);padding:14px 20px;margin:22px 0;
+    background:var(--violettint);font-size:17px;font-style:italic;color:#d4d0c4;
+    line-height:1.7;
+  }
+  .pull cite{
+    display:block;font-style:normal;font-family:"Space Mono",monospace;
+    font-size:10px;letter-spacing:0.1em;color:var(--dim);margin-top:10px;text-transform:uppercase;
+  }
+
+  /* TWO-COLUMN PROSE */
+  .prose-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  @media(max-width:640px){.prose-2{grid-template-columns:1fr;}}
+
+  /* STAT ROW */
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .stat{
+    background:var(--card);border:1px solid var(--line);padding:12px 16px;
+    flex:1;min-width:130px;
+  }
+  .stat .n{
+    font-family:"Cinzel";font-weight:700;font-size:clamp(22px,4vw,32px);color:var(--pea);
+    display:block;line-height:1;
+  }
+  .stat .l{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  /* GENE CHAIN DISPLAY */
+  .gene-chain{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0;align-items:center;}
+  .gene-node{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;
+    border:1px solid var(--pea);color:var(--pea);padding:4px 10px;background:var(--peatint);
+    white-space:nowrap;
+  }
+  .gene-arrow{color:var(--dim);font-family:"Space Mono",monospace;font-size:12px;margin:0 2px;}
+  .gene-node.v{border-color:var(--violet);color:#9d5cf5;background:var(--violettint);}
+
+  /* COLOPHON */
+  .colophon{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.07em;
+    color:var(--dim);text-align:center;margin-top:48px;padding-top:18px;
+    border-top:1px solid var(--line);line-height:1.8;
+  }
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{
+    body{background:#fff;color:#000}.card{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- SITE NAV -->
+  <nav class="sitenav" aria-label="Mendel series navigation">
+    <a href="0-who.html">Vol. 0 — Who</a>
+    <a href="1-heredity.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+  </nav>
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">mendel series · volume 3 · the long afterlife</span>
+    <div class="masthead">
+      <div>
+        <h1>The Long <em>Afterlife</em></h1>
+        <p class="dek">He died in <b>1884</b>, thinking himself forgotten. By <b>1953</b> his laws had led, link by link, to the double helix. By <b>2003</b> the human genome had been sequenced. Every living thing on Earth is governed by what Mendel found in a monastery garden in Brno.</p>
+      </div>
+      <!-- ANIMATED DNA DOUBLE HELIX + PEA PLANT SVG -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img"
+           aria-label="Animated DNA double helix on the left connecting via an arc to a pea plant growing on the right, showing Mendel's link to molecular biology">
+        <!-- DNA strand 1 (left backbone) -->
+        <path class="helix-s1"
+          d="M40,10 C25,30 55,50 40,70 C25,90 55,110 40,130 C25,150 55,170 40,190"
+          stroke="#65a30d" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- DNA strand 2 (right backbone) -->
+        <path class="helix-s2"
+          d="M70,10 C85,30 55,50 70,70 C85,90 55,110 70,130 C85,150 55,170 70,190"
+          stroke="#7c3aed" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Rungs (base pairs) -->
+        <line class="rung1" x1="40" y1="20" x2="70" y2="20" stroke="#65a30d" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung2" x1="38" y1="40" x2="72" y2="40" stroke="#9d5cf5" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung3" x1="55" y1="56" x2="55" y2="56"/><!-- invisible spacer -->
+        <line class="rung3" x1="36" y1="60" x2="74" y2="60" stroke="#65a30d" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung4" x1="38" y1="80" x2="72" y2="80" stroke="#9d5cf5" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung5" x1="40" y1="100" x2="70" y2="100" stroke="#65a30d" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung6" x1="38" y1="120" x2="72" y2="120" stroke="#9d5cf5" stroke-width="1.5" opacity="0.8"/>
+        <line class="rung7" x1="36" y1="140" x2="74" y2="140" stroke="#65a30d" stroke-width="1.5" opacity="0.8"/>
+        <!-- Pulsing nodes at bottom of DNA -->
+        <circle class="node-a" cx="40" cy="180" r="3" fill="#65a30d"/>
+        <circle class="node-b" cx="70" cy="180" r="3" fill="#7c3aed"/>
+        <!-- Connection arc from DNA to pea plant -->
+        <path class="connect-arc"
+          d="M55,170 Q105,185 145,160"
+          stroke="#65a30d" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-linecap="round" stroke-dashoffset="100" opacity="0.6"/>
+        <!-- Pea plant (right side) -->
+        <path class="pea-stem-l"
+          d="M155,195 Q150,170 155,140 Q158,120 152,95"
+          stroke="#65a30d" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="150"/>
+        <line class="pea-stem-l" x1="154" y1="165" x2="135" y2="145" stroke="#65a30d" stroke-width="1.5" stroke-linecap="round"/>
+        <line class="pea-stem-l" x1="154" y1="130" x2="175" y2="112" stroke="#65a30d" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Pea leaves -->
+        <ellipse class="pea-leaf-l1" cx="126" cy="142" rx="12" ry="7" fill="#65a30d" opacity="0.8" transform="rotate(-30 126 142)"/>
+        <ellipse class="pea-leaf-l2" cx="182" cy="108" rx="12" ry="7" fill="#65a30d" opacity="0.8" transform="rotate(25 182 108)"/>
+        <!-- Pea pod -->
+        <ellipse class="pea-leaf-l2" cx="175" cy="98" rx="8" ry="5" fill="#4a8a08" transform="rotate(20 175 98)"/>
+        <!-- Violet flower at top -->
+        <circle class="pea-leaf-l2" cx="150" cy="92" r="5" fill="#7c3aed" opacity="0.9"/>
+        <!-- Labels -->
+        <text x="55" y="204" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#65a30d" letter-spacing="0.04em">DNA</text>
+        <text x="155" y="204" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#65a30d" letter-spacing="0.04em">PISUM</text>
+        <text x="105" y="210" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#6b7a5a" letter-spacing="0.05em">MENDEL'S LAWS → DOUBLE HELIX</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- STAT ROW -->
+  <div class="stats reveal" style="animation-delay:.1s">
+    <div class="stat"><span class="n">16</span><span class="l">Years to Rediscovery</span></div>
+    <div class="stat"><span class="n">1900</span><span class="l">Mendelian Genetics Born</span></div>
+    <div class="stat"><span class="n">1953</span><span class="l">Double Helix Solved</span></div>
+    <div class="stat"><span class="n">3B</span><span class="l">Human Genome Base Pairs</span></div>
+    <div class="stat"><span class="n">∞</span><span class="l">Living Things Governed</span></div>
+  </div>
+
+  <!-- REDISCOVERY 1900 -->
+  <div class="band">1900 — Triple Rediscovery</div>
+  <div class="reveal" style="animation-delay:.15s">
+    <p>One of the most remarkable coincidences in the history of science: in the spring of 1900, <strong>three scientists independently</strong> rediscovered Mendel's laws while conducting their own plant hybridization experiments — and each, searching the literature, found the same 1866 paper in a Brno proceedings journal that the world had ignored for thirty-four years.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="num">Mar 1900</span>
+        <h3>Hugo de Vries</h3>
+        <p class="what">The Dutch botanist Hugo de Vries had been conducting hybridization experiments with evening primrose and other plants. He submitted a paper to the French Academy of Sciences in March 1900 describing ratios in his hybrid offspring — without mentioning Mendel. A colleague pointed him toward the 1866 paper. De Vries initially resisted acknowledging Mendel's priority; Carl Correns forced the acknowledgment with his own publication.</p>
+        <div class="meta"><b>Country:</b> Netherlands &nbsp;·&nbsp; <b>Plant:</b> <em>Oenothera</em></div>
+      </div>
+      <div class="card">
+        <span class="num">Apr 1900</span>
+        <h3>Carl Correns</h3>
+        <p class="what">The German botanist Carl Correns had independently derived the same segregation ratios from crosses of maize and peas. Unlike de Vries, Correns fully and generously acknowledged Mendel's priority when he found the paper. He was the first to use the phrase "Mendel's laws" in print. His paper, submitted to the German Botanical Society in April 1900, explicitly names Mendel as the discoverer of the principles Correns had reinvented.</p>
+        <div class="meta"><b>Country:</b> Germany &nbsp;·&nbsp; <b>Plant:</b> Maize, peas</div>
+      </div>
+      <div class="card">
+        <span class="num">Jun 1900</span>
+        <h3>Erich von Tschermak</h3>
+        <p class="what">The Austrian agronomist Erich von Tschermak was the third, and arguably had understood Mendel's paper the least deeply of the three — his initial work was on pea breeding with practical rather than theoretical goals. He too found the 1866 paper independently and acknowledged Mendel. The three simultaneous rediscoveries created what historians call the "Mendelian moment" — the explosive recognition that a complete theory of heredity had been sitting, unread, in a provincial journal since 1866.</p>
+        <div class="meta"><b>Country:</b> Austria &nbsp;·&nbsp; <b>Plant:</b> Peas</div>
+      </div>
+      <div class="card">
+        <span class="num">1900</span>
+        <h3>What Happened</h3>
+        <p class="what">The year 1900 is now taken as the founding date of Mendelian genetics as a recognized science. Within five years, "genetics" was a recognized discipline with its own journals and societies. Mendel's name was everywhere. He had been dead for sixteen years. His pea notebooks had been burned. The world reconstructed his methods from his published paper alone, and confirmed every claim he had made.</p>
+        <div class="meta"><b>Mendel's death:</b> 1884 &nbsp;·&nbsp; <b>Justice:</b> 1900</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILDING THE SCIENCE -->
+  <div class="band violet">Building the Science, 1900–1953</div>
+  <div class="reveal" style="animation-delay:.2s">
+    <p>The half-century between the rediscovery of Mendel's laws and the discovery of the double helix is one of the most productive periods in the history of science. Each decade added a crucial layer to the structure Mendel had begun.</p>
+
+    <!-- Gene chain visualization -->
+    <div class="gene-chain">
+      <div class="gene-node">Mendel's Factors<br><span style="font-size:8px;color:var(--dim)">1866</span></div>
+      <div class="gene-arrow">→</div>
+      <div class="gene-node">Gene (Johannsen)<br><span style="font-size:8px;color:var(--dim)">1909</span></div>
+      <div class="gene-arrow">→</div>
+      <div class="gene-node">Chromosome (Morgan)<br><span style="font-size:8px;color:var(--dim)">1910</span></div>
+      <div class="gene-arrow">→</div>
+      <div class="gene-node v">DNA = Gene<br><span style="font-size:8px;color:var(--dim)">1944</span></div>
+      <div class="gene-arrow">→</div>
+      <div class="gene-node v">Double Helix<br><span style="font-size:8px;color:var(--dim)">1953</span></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="num">1909</span>
+        <h3>Johannsen Coins "Gene"</h3>
+        <p class="what">The Danish botanist Wilhelm Johannsen introduced the word <em>gene</em> in 1909 to describe Mendel's "factors" — the discrete heritable units whose existence Mendel had inferred from his ratio data. Johannsen also distinguished between <em>genotype</em> (the genetic makeup of an organism) and <em>phenotype</em> (its observable appearance) — a distinction fundamental to all subsequent genetics. Mendel had the concept; Johannsen gave it the vocabulary.</p>
+        <div class="meta"><b>Terms coined:</b> Gene, genotype, phenotype</div>
+      </div>
+
+      <div class="card">
+        <span class="num">1910</span>
+        <h3>Morgan &amp; Chromosomes</h3>
+        <p class="what">Thomas Hunt Morgan at Columbia University began working with the fruit fly <em>Drosophila melanogaster</em> around 1908. By 1910 he had observed that certain traits were linked — they did not assort independently, as Mendel's Second Law predicted. The reason: they were on the same chromosome. Morgan proved that genes are physically located on chromosomes, establishing the chromosomal theory of inheritance. He won the Nobel Prize in Physiology or Medicine in 1933.</p>
+        <div class="meta"><b>Organism:</b> <em>Drosophila</em> &nbsp;·&nbsp; <b>Nobel:</b> 1933</div>
+      </div>
+
+      <div class="card">
+        <span class="num">1928–1944</span>
+        <h3>DNA as the Carrier</h3>
+        <p class="what">In 1928, Frederick Griffith showed that something from dead bacteria could transform living bacteria — the first hint of a molecular carrier of hereditary information. In 1944, Oswald Avery, Colin MacLeod, and Maclyn McCarty identified that "something" as DNA, not protein. This was the most important experiment in molecular biology before the double helix — and was initially dismissed by many scientists who could not believe nucleic acids were complex enough to carry genetic information.</p>
+        <div class="meta"><b>Avery et al.:</b> 1944 — "transforming principle" = DNA</div>
+      </div>
+
+      <div class="card v">
+        <span class="num">25 Apr 1953</span>
+        <h3>Watson, Crick &amp; Franklin</h3>
+        <p class="what">James Watson and Francis Crick published their model of the DNA double helix on 25 April 1953 in <em>Nature</em> — nine pages, with a single figure. The model showed that DNA consisted of two complementary strands wound around each other, with base pairs (A-T, G-C) as the rungs. The structure immediately explained how genetic information could be copied: each strand serves as a template for its partner. Rosalind Franklin's X-ray diffraction data was decisive — and she received no Nobel Prize (she died in 1958, before the award was made in 1962).</p>
+        <div class="meta"><b>Franklin's role:</b> Essential, unacknowledged at award</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE MODERN SYNTHESIS -->
+  <div class="band">The Modern Synthesis</div>
+  <div class="reveal" style="animation-delay:.25s">
+    <div class="prose-2">
+      <div>
+        <h2>Darwin + Mendel = <em>Everything</em></h2>
+        <p>The <strong>Modern Synthesis</strong> — developed primarily in the 1930s and 1940s by Ronald Fisher, J.B.S. Haldane, Sewall Wright, Theodosius Dobzhansky, Ernst Mayr, and G.G. Simpson — unified Darwin's natural selection with Mendel's genetics into a single coherent theory of evolution. It answered the question neither man could answer alone.</p>
+        <p>Darwin had explained <em>why</em> organisms change across generations (selection pressure) and <em>how fast</em> (gradually, over many generations). But he had no mechanism for how variation was maintained or transmitted. Without a correct theory of heredity, his theory had a hole at its center.</p>
+      </div>
+      <div>
+        <h2>The <em>Mechanism</em> Supplied</h2>
+        <p>Mendel's genetics supplied exactly what Darwin needed. Genes, as discrete units, do not blend — they segregate cleanly. Recessive alleles can hide for generations in heterozygotes and resurface unchanged when two carriers mate. Mutation creates new alleles. Natural selection acts on the differential survival of phenotypes, which reflects the underlying genotype. Population genetics — the mathematics developed by Fisher, Haldane, and Wright — showed precisely how allele frequencies change under selection across generations.</p>
+        <p>The Modern Synthesis is the theoretical foundation on which all of contemporary biology rests. Its two parents were Charles Darwin and Gregor Mendel — who were solving the same problem simultaneously, from different ends, on opposite sides of Europe, and who never knew it.</p>
+      </div>
+    </div>
+
+    <div class="pull">
+      "Nothing in biology makes sense except in the light of evolution."
+      <cite>— Theodosius Dobzhansky, 1973 — the synthesis that joined Darwin's selection to Mendel's laws</cite>
+    </div>
+  </div>
+
+  <!-- THE AFTERLIFE: MEDICAL GENETICS -->
+  <div class="band violet">Genetics Becomes Medicine</div>
+  <div class="reveal" style="animation-delay:.3s">
+    <p>The line from Mendel's monastery garden to the genetics clinic runs straight. Every piece of medical genetics — from carrier testing to cancer risk prediction to gene therapy — is founded on the intellectual structure Mendel built with peas and patience in Brno between 1856 and 1863.</p>
+
+    <div class="grid tight">
+      <div class="card v">
+        <span class="num">1902</span>
+        <h3>Archibald Garrod</h3>
+        <p class="what">Only two years after the rediscovery, the British physician Archibald Garrod showed that alkaptonuria — a rare metabolic disorder — followed Mendelian recessive inheritance in families. This was the first demonstration that human disease could be inherited according to Mendel's laws. Garrod coined the phrase "inborn errors of metabolism." Mendelian medicine had begun.</p>
+        <div class="meta"><b>Disease:</b> Alkaptonuria &nbsp;·&nbsp; <b>Pattern:</b> Autosomal recessive</div>
+      </div>
+      <div class="card v">
+        <span class="num">1950s–60s</span>
+        <h3>Newborn Screening</h3>
+        <p class="what">Robert Guthrie's development of the Guthrie test for phenylketonuria (PKU) in 1961 created the first population-wide genetic screening program. PKU, a Mendelian recessive disorder of phenylalanine metabolism, causes severe intellectual disability if untreated — and is entirely manageable with dietary intervention if caught early. Mendel's logic of dominant and recessive, applied to biochemistry, saved millions of children from preventable harm.</p>
+        <div class="meta"><b>Disease:</b> PKU &nbsp;·&nbsp; <b>Impact:</b> Millions screened annually</div>
+      </div>
+      <div class="card v">
+        <span class="num">1970s–80s</span>
+        <h3>Carrier Testing</h3>
+        <p class="what">The expansion of carrier testing — for Tay-Sachs disease, sickle cell anemia, cystic fibrosis, and hundreds of other Mendelian disorders — gave couples information about their risk of having affected children before or during pregnancy. Each test depends on Mendel's insight that heterozygous carriers, who show no symptoms, nonetheless carry and transmit the recessive allele. The asymmetry of dominant and recessive, discovered in a pea garden, protects families today.</p>
+        <div class="meta"><b>Basis:</b> Mendelian recessive carrier detection</div>
+      </div>
+      <div class="card v">
+        <span class="num">1990s–now</span>
+        <h3>BRCA &amp; Cancer Genes</h3>
+        <p class="what">The discovery of BRCA1 (1994) and BRCA2 (1995) — genes whose mutations dramatically increase breast and ovarian cancer risk — is a direct descendant of Mendelian thinking. The mutations are inherited in an autosomal dominant pattern: one copy of the mutant allele is sufficient to elevate risk. Genetic testing for BRCA mutations, and the clinical decisions that follow, are Mendelian medicine applied to one of the most feared diseases on Earth.</p>
+        <div class="meta"><b>Pattern:</b> Autosomal dominant &nbsp;·&nbsp; <b>Discovery:</b> 1994–95</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRISPR -->
+  <div class="band">CRISPR and the Rewrite</div>
+  <div class="reveal" style="animation-delay:.35s">
+    <div class="prose-2">
+      <div>
+        <h2>From Observation to <em>Editing</em></h2>
+        <p>Mendel observed how alleles were transmitted. Watson and Crick revealed the molecular structure that carries them. The Human Genome Project (1990–2003) read the complete sequence of human DNA — all three billion base pairs. And then, in 2012, Jennifer Doudna and Emmanuelle Charpentier published a paper describing <strong>CRISPR-Cas9</strong> — a molecular tool, borrowed from bacterial immune systems, that can cut DNA at precisely specified locations and allow it to be edited.</p>
+        <p>CRISPR makes Mendel's passive observation active: we no longer merely read the alleles we inherit — we can, in principle, change them. The same logic Mendel used to predict which peas would be round and which wrinkled now underlies therapies that correct the single-letter mutations responsible for sickle cell disease, beta-thalassemia, and dozens of other Mendelian disorders. Clinical trials are ongoing. Cures are arriving.</p>
+      </div>
+      <div>
+        <h2>The <em>Ethical</em> Weight</h2>
+        <p>The power that flows from Mendel's garden is not morally neutral. Eugenics — the historical misapplication of Mendelian genetics to argue for state-controlled human breeding — represents the darkest chapter in the afterlife of Mendel's work. The eugenics movements of the early twentieth century used Mendelian language to justify forced sterilizations, immigration restrictions, and ultimately the Nazi genocide. The science was distorted, but the scientific authority of Mendelian genetics was claimed as cover.</p>
+        <p>Mendel himself was a plant breeder operating entirely within the monasticand civic tradition of agricultural improvement. He had no theory of racial hierarchy, no political program. His laws describe how traits are transmitted — nothing about which traits are desirable or who should be permitted to reproduce. The misuse of his work belongs to the people who misused it, not to him. But the misuse was real, and its victims numbered in the millions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE BURNED NOTEBOOKS -->
+  <div class="band dim">The Burned Notebooks</div>
+  <div class="reveal" style="animation-delay:.4s">
+    <p>When Mendel died on 6 January 1884, his successor as abbot of St. Thomas, Anselm Rambousek, ordered Mendel's personal papers cleared from his study. Most of his scientific notebooks, correspondence drafts, and unpublished records were burned. The monastery's records do not explain why — presumably the new abbot considered them of no particular value and wanted the room cleared.</p>
+    <p>We will never know what was in those notebooks. We know from his published correspondence with von Nägeli that he had conducted experiments on beans, maize, and other plants in addition to peas and hawkweeds. He may have had insights about the limits of his own laws — why hawkweeds didn't behave as expected, for example — that could have accelerated the science. He may have had nothing more than the data we can reconstruct from his letters. The bonfire made the question permanent.</p>
+
+    <div class="pull">
+      "All that I ask of you is that you will not judge me by what you see, but wait for the result."
+      <cite>— Mendel, letter to von Nägeli, 1867 — words that apply to his entire legacy</cite>
+    </div>
+  </div>
+
+  <!-- THE LONG TIMELINE -->
+  <div class="band">The Legacy Timeline</div>
+  <div class="reveal" style="animation-delay:.45s">
+    <ul class="timeline">
+      <li><span class="yr">1866</span><b>Publication:</b> <em>Versuche über Pflanzenhybriden</em>. 40 reprints circulated. No response.</li>
+      <li><span class="yr">1884</span><b>Mendel dies.</b> Notebooks burned. Obituary does not mention his science.</li>
+      <li class="v"><span class="yr">1900</span><b>Triple rediscovery</b> by de Vries, Correns, and Tschermak. "Mendelian laws" enters scientific vocabulary. The word "genetics" coined by William Bateson (1905).</li>
+      <li><span class="yr">1902</span>Garrod demonstrates Mendelian inheritance of human metabolic disease — first Mendelian medicine.</li>
+      <li><span class="yr">1909</span>Johannsen coins "gene," "genotype," and "phenotype."</li>
+      <li><span class="yr">1910</span>Morgan proves genes are on chromosomes using <em>Drosophila</em> crosses.</li>
+      <li><span class="yr">1918</span>Ronald Fisher publishes "The Correlation of Relatives" — reconciles Mendelism with continuous variation using polygenic models. Mendelian genetics and Darwinian evolution begin to unify.</li>
+      <li><span class="yr">1930–1942</span><b>Modern Synthesis:</b> Fisher, Haldane, Wright, Dobzhansky, Mayr unite natural selection with Mendelian population genetics into a single evolutionary framework.</li>
+      <li><span class="yr">1944</span>Avery, MacLeod, and McCarty identify DNA as the material of heredity.</li>
+      <li class="v"><span class="yr">25 Apr 1953</span><b>Watson and Crick</b> (and Franklin) solve the double helix structure of DNA. The molecular basis of Mendel's laws is revealed: discrete alleles are sequences of base pairs on chromosomes.</li>
+      <li><span class="yr">1961</span>Guthrie test for PKU — the first population newborn screening program. Mendelian medicine goes clinical and universal.</li>
+      <li><span class="yr">1972</span>Paul Berg creates the first recombinant DNA molecule — genetic engineering begins.</li>
+      <li><span class="yr">1976</span>First human genetic disease gene cloned (sickle cell hemoglobin).</li>
+      <li><span class="yr">1990–2003</span><b>Human Genome Project:</b> The complete sequence of the human genome — 3 billion base pairs, ~20,000 protein-coding genes — is read. Mendel's discrete factors mapped at molecular resolution.</li>
+      <li><span class="yr">1994–95</span>BRCA1 and BRCA2 identified — autosomal dominant cancer-predisposition genes. Mendelian genetics in the cancer clinic.</li>
+      <li class="v"><span class="yr">2012</span>Doudna and Charpentier publish CRISPR-Cas9 — a precise tool for editing the genome. Mendel's observed factors become writable. Nobel Prize 2020.</li>
+      <li><span class="yr">2023</span>FDA approves CASGEVY — the first CRISPR-based therapy, for sickle cell disease. A Mendelian single-gene disorder, corrected at the molecular level. The monastery garden in Brno has become a clinical cure.</li>
+    </ul>
+  </div>
+
+  <!-- POSTHUMOUS JUSTICE -->
+  <div class="band violet">Posthumous Justice</div>
+  <div class="reveal" style="animation-delay:.5s">
+    <div class="prose-2">
+      <div>
+        <h2>The Man Who <em>Died Failing</em></h2>
+        <p>Gregor Mendel died believing that his scientific work had been a failure. The experiments he had devoted seven years of his prime life to had produced a paper that the world had not read. His subsequent work on hawkweeds had contradicted his own earlier findings in ways he could not explain. His administrative career as abbot had been consumed by a tax dispute he had not won. He was, by any external measure of the era, a minor provincial ecclesiastic whose scientific hobby had come to nothing.</p>
+        <p>The posthumous justice is extraordinary and strange. The man who discovered the mechanism of inheritance — the most fundamental fact about life short of chemistry itself — died thinking he had failed. The world spent the next sixteen years confirming his obscurity. Then, in the space of a single spring, three botanists on three desks in three countries found his paper and understood what it meant.</p>
+      </div>
+      <div>
+        <h2>The <em>Measure</em> of the Work</h2>
+        <p>How do we measure what Mendel gave us? Every crop bred for disease resistance, every cancer drug targeting a specific mutation, every child screened at birth for a metabolic disorder, every person who knows they carry a risk gene and can plan accordingly — all of them are living in the world Mendel made possible. The genome sequencer and the CRISPR scientist and the genetic counselor and the oncologist are all, at some foundational level, applying a framework that a monk built in a garden in Brno because he was curious about peas.</p>
+        <p>Darwin gave us the why of biological change. Mendel gave us the how of biological continuity. Together — never meeting, never knowing — they gave us the complete picture. The burned notebooks are the only tragedy. Everything else is the slow unfolding of a discovery that was right, and patient, and always going to win.</p>
+      </div>
+    </div>
+
+    <div class="pull">
+      "My time will come."
+      <cite>— Attributed to Mendel, final years — a prophecy he did not live to see fulfilled</cite>
+    </div>
+  </div>
+
+  <!-- FINAL RECOGNITION -->
+  <div class="band">Recognition</div>
+  <div class="reveal" style="animation-delay:.55s">
+    <div class="grid tight">
+      <div class="card">
+        <span class="num">1911</span>
+        <h3>Mendel Institute Founded</h3>
+        <p class="what">The Mendelianum — now the Mendel Museum — was established at the monastery of St. Thomas in Brno to commemorate Mendel's work. The monastery garden where the pea experiments were conducted was preserved. Today it is a UNESCO Memory of the World site. Visitors can walk the length of the garden where the laws of heredity were found.</p>
+        <div class="meta"><b>Location:</b> St. Thomas Monastery, Brno</div>
+      </div>
+      <div class="card">
+        <span class="num">1965</span>
+        <h3>Mendel Centenary</h3>
+        <p class="what">The centenary of Mendel's 1865 lectures was marked by international symposia, publications, and formal recognition by scientific bodies worldwide. By the mid-twentieth century, Mendel was firmly established as one of the canonical figures of science — his portrait appearing in every genetics textbook, his name attached to the fundamental laws of the field he founded.</p>
+        <div class="meta"><b>Recognition:</b> Universal, if posthumous</div>
+      </div>
+      <div class="card">
+        <span class="num">Ongoing</span>
+        <h3>Mendel Prize</h3>
+        <p class="what">The Gregor Mendel Medal, awarded by the German Academy of Sciences Leopoldina (one of the world's oldest scientific academies), recognizes outstanding contributions to genetics. The Mendel Medal of the Genetics Society (UK) similarly honors his name. He is commemorated in the names of laboratories, buildings, and awards on six continents.</p>
+        <div class="meta"><b>Eponyms:</b> Mendelian, Mendelism, Mendel's laws</div>
+      </div>
+      <div class="card">
+        <span class="num">2022</span>
+        <h3>The 200th Anniversary</h3>
+        <p class="what">In 2022, the bicentennial of Mendel's birth was marked by events in Brno and across the scientific world. The Czech Republic issued commemorative stamps. New analyses of Mendel's surviving correspondence continued. The debate over Fisher's "too good" statistical critique remains unsettled. Mendel's paper remains in print, in print-on-demand, and freely available online — the most influential paper from the most overlooked scientist in history.</p>
+        <div class="meta"><b>Paper availability:</b> Freely accessible worldwide</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0</div>
+    <div style="margin-top:4px;">Mendel Series · Vol. 3 of 4 · <em>The Long Afterlife</em> &nbsp;·&nbsp; Series: gregor-mendel</div>
+    <div style="margin-top:4px;font-size:9px;">Content compiled for educational purposes. Primary sources: Orel (1996); Henig (2000); Watson &amp; Crick, <em>Nature</em> (1953); Doudna &amp; Charpentier, <em>Science</em> (2012); Human Genome Project Consortium (2003).</div>
+  </div>
+
+</div>
+</body>
+</html>

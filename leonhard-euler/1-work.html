@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leonhard Euler — Vol. 1: The Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080810;
+      --paper-mid: #0d0d1a;
+      --paper-light: #12122a;
+      --blue: #2563eb;
+      --blue-dim: #1d4ed8;
+      --blue-glow: rgba(37,99,235,0.18);
+      --gold: #ca8a04;
+      --gold-dim: #a16207;
+      --gold-glow: rgba(202,138,4,0.15);
+      --text: #e2e8f8;
+      --text-dim: #94a3b8;
+      --text-faint: #3a4060;
+      --border: rgba(37,99,235,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 60%, #050520 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(37,99,235,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.5em;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .masthead-lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--blue);
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .masthead-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--blue);
+      color: #e2e8f8;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #080810; }
+
+    /* ── IDENTITY HERO ── */
+    .identity-hero {
+      background: var(--paper-light);
+      border: 1px solid var(--blue);
+      border-radius: 8px;
+      padding: 3rem 2rem;
+      margin: 2rem 0 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .identity-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.08) 0%, transparent 70%);
+    }
+    .identity-eq {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-style: italic;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.03em;
+    }
+    .identity-eq .e-base { color: var(--blue); }
+    .identity-eq .exponent { font-size: 0.55em; vertical-align: super; color: var(--gold); }
+    .identity-eq .zero { color: var(--blue); }
+    .identity-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .identity-decode {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.8rem;
+      position: relative;
+      z-index: 1;
+    }
+    .decode-chip {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+    }
+    .decode-chip strong { color: var(--blue); font-style: italic; }
+    .decode-chip span { color: var(--text-dim); font-size: 0.82rem; }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      font-family: 'Newsreader', Georgia, serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      text-align: center;
+      color: var(--text);
+    }
+    .formula-box .formula-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      font-style: normal;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 0.8rem;
+      display: block;
+    }
+    .formula-box .sup { font-size: 0.7em; vertical-align: super; }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+    .card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 24px var(--blue-glow);
+      border-color: var(--blue);
+    }
+    .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
+    /* ── KÖNIGSBERG DIAGRAM ── */
+    .bridge-section {
+      background: var(--paper-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+    .bridge-section h3 { color: var(--gold); margin-top: 0; }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      background: var(--paper-light);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 2rem 0; }
+    .stat {
+      flex: 1 1 160px;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-number { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 800; color: var(--blue); display: block; line-height: 1; }
+    .stat-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.4rem; display: block; }
+
+    /* ── VOL NAV ── */
+    .vol-nav { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 4rem; flex-wrap: wrap; }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      margin-top: 6rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+      .identity-eq { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Leonhard Euler · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html" class="active">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 1 of 4 &middot; The Mathematics</span>
+    <h1>
+      The Work
+      <span class="subtitle">What Euler Actually Did</span>
+    </h1>
+    <p class="masthead-lede">
+      A rotating phasor traces the unit circle. The Basel Problem yields &pi;&sup2;/6.
+      The bridges of K&ouml;nigsberg cannot be crossed. Every breakthrough is a door
+      Euler opened alone — and then left unlocked for everyone.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Animated phasor e^(ix) tracing the unit circle -->
+    <svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" width="380" height="380">
+      <defs>
+        <radialGradient id="bg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0a0a20"/>
+          <stop offset="100%" stop-color="#080810"/>
+        </radialGradient>
+        <filter id="glow1">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="dotglow">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#bg1)"/>
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Axes -->
+      <line x1="50" y1="190" x2="330" y2="190" stroke="#2563eb" stroke-width="0.8" opacity="0.4"/>
+      <line x1="190" y1="50" x2="190" y2="330" stroke="#2563eb" stroke-width="0.8" opacity="0.4"/>
+
+      <!-- Axis labels -->
+      <text x="325" y="185" font-family="Georgia" font-style="italic" font-size="13" fill="#94a3b8" opacity="0.8">Re</text>
+      <text x="194" y="55" font-family="Georgia" font-style="italic" font-size="13" fill="#94a3b8" opacity="0.8">Im</text>
+
+      <!-- Unit circle -->
+      <circle cx="190" cy="190" r="110" fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.6"/>
+
+      <!-- Tick marks on unit circle -->
+      <g stroke="#2563eb" stroke-width="1" opacity="0.4">
+        <line x1="300" y1="187" x2="300" y2="193"/><!-- +1 -->
+        <line x1="80" y1="187" x2="80" y2="193"/><!-- -1 -->
+        <line x1="187" y1="80" x2="193" y2="80"/><!-- +i -->
+        <line x1="187" y1="300" x2="193" y2="300"/><!-- -i -->
+      </g>
+      <text x="304" y="206" font-family="Georgia" font-size="11" fill="#94a3b8" opacity="0.7">1</text>
+      <text x="68" y="206" font-family="Georgia" font-size="11" fill="#94a3b8" opacity="0.7">-1</text>
+      <text x="196" y="76" font-family="Georgia" font-style="italic" font-size="11" fill="#94a3b8" opacity="0.7">i</text>
+      <text x="194" y="316" font-family="Georgia" font-style="italic" font-size="11" fill="#94a3b8" opacity="0.7">-i</text>
+
+      <!-- Phasor arm (rotates) -->
+      <g transform="translate(190,190)">
+        <!-- The rotating arm -->
+        <line x1="0" y1="0" x2="110" y2="0" stroke="#2563eb" stroke-width="2" filter="url(#glow1)">
+          <animateTransform attributeName="transform" type="rotate"
+            from="0" to="-360" dur="4s" repeatCount="indefinite"/>
+        </line>
+        <!-- Dot at tip of phasor -->
+        <circle r="7" fill="#2563eb" filter="url(#dotglow)">
+          <animateTransform attributeName="transform" type="rotate"
+            from="0" to="-360" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="cx" values="110;0;-110;0;110" dur="4s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+
+      <!-- Traced dot on circle -->
+      <circle r="6" fill="#ca8a04" filter="url(#dotglow)" opacity="0.9">
+        <animateMotion dur="4s" repeatCount="indefinite">
+          <mpath href="#unitcircle1"/>
+        </animateMotion>
+      </circle>
+      <path id="unitcircle1" d="M300,190 A110,110 0 1,0 300.001,190" fill="none"/>
+
+      <!-- Formula label -->
+      <text x="190" y="355" font-family="Georgia" font-style="italic" font-size="13" fill="#2563eb" text-anchor="middle" filter="url(#glow1)" opacity="0.9">
+        e<tspan dy="-5" font-size="9">ix</tspan><tspan dy="5"> = cos(x) + i·sin(x)</tspan>
+      </text>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <!-- EULER'S IDENTITY -->
+  <h2>Euler's Identity: The Most Beautiful Equation</h2>
+
+  <div class="identity-hero">
+    <div class="identity-eq">
+      <span class="e-base">e</span><span class="exponent">i&pi;</span> + 1 = <span class="zero">0</span>
+    </div>
+    <div class="identity-label">Euler's Identity &middot; 1748 &middot; <em>Introductio in analysin infinitorum</em></div>
+    <div class="identity-decode">
+      <div class="decode-chip"><strong>e</strong><br><span>Growth, compounding, natural change</span></div>
+      <div class="decode-chip"><strong>i</strong><br><span>Rotation in the complex plane</span></div>
+      <div class="decode-chip"><strong>&pi;</strong><br><span>Half a full rotation &mdash; the circle</span></div>
+      <div class="decode-chip"><strong>1</strong><br><span>The multiplicative identity</span></div>
+      <div class="decode-chip"><strong>0</strong><br><span>The additive identity</span></div>
+    </div>
+  </div>
+
+  <p>
+    In a 2004 poll by <em>Physics World</em>, mathematicians and physicists voted
+    Euler's identity the most beautiful equation in all of mathematics. It is not
+    merely beautiful in the aesthetic sense — it is philosophically startling.
+    Five fundamental constants of mathematics, arising from completely different
+    branches of the subject, are bound together in a single equation of perfect
+    economy.
+  </p>
+
+  <p>
+    <em>e</em> comes from the study of continuous growth and natural logarithms.
+    <em>i</em> is the square root of &minus;1, the imaginary unit that makes the
+    complex numbers work. <em>&pi;</em> is the ratio of a circle's circumference
+    to its diameter, discovered by the ancient Greeks. That they are connected at
+    all — and connected this simply — is not obvious. Euler saw it.
+  </p>
+
+  <blockquote>
+    "Like a Shakespearean sonnet that captures the essence of love, or a
+    painting that brings out the beauty of the human form that is far more
+    than just skin deep, Euler's equation reaches down into the very depths
+    of existence."
+    <cite>— Keith Devlin, Stanford mathematician</cite>
+  </blockquote>
+
+  <h2>Euler's Formula: The Parent Equation</h2>
+
+  <p>
+    The identity is a special case of the more general formula, which is one
+    of the most used equations in all of physics and engineering:
+  </p>
+
+  <div class="formula-box">
+    e<span class="sup">ix</span> = cos(x) + i &middot; sin(x)
+    <span class="formula-label">Euler's Formula &middot; For any real number x</span>
+  </div>
+
+  <p>
+    When x = &pi;, the cosine of &pi; is &minus;1 and the sine of &pi; is 0.
+    The formula collapses to: e<sup>i&pi;</sup> = &minus;1, i.e., e<sup>i&pi;</sup> + 1 = 0.
+  </p>
+
+  <p>
+    The formula expresses something geometrically profound: multiplying by
+    e<sup>ix</sup> is the same as rotating by angle x in the complex plane.
+    Every oscillation in physics — sound waves, light waves, quantum wave
+    functions, alternating current — is computed using this formula. Electrical
+    engineers, quantum physicists, and signal processors all work in Euler's
+    framework every day.
+  </p>
+
+  <h2>The Basel Problem: &pi;&sup2;/6</h2>
+
+  <p>
+    <span class="kick">Number Theory &middot; 1735</span>
+    Since 1650, when Pietro Mengoli posed it, the Basel Problem had resisted every
+    European mathematician who approached it. The question: what is the exact sum of
+    the reciprocals of the squares of all positive integers?
+  </p>
+
+  <div class="formula-box">
+    1 + <sup>1</sup>&frasl;<sub>4</sub> + <sup>1</sup>&frasl;<sub>9</sub> + <sup>1</sup>&frasl;<sub>16</sub> + <sup>1</sup>&frasl;<sub>25</sub> + &hellip; = <sup>&pi;&sup2;</sup>&frasl;<sub>6</sub>
+    <span class="formula-label">The Basel Problem Solution &middot; Euler, 1735 &middot; Shocking because &pi; appears in a sum of fractions with no circles</span>
+  </div>
+
+  <p>
+    Euler solved it in 1735. The proof is a masterwork of mathematical audacity —
+    he treated an infinite polynomial using methods that were, strictly speaking,
+    not yet justified, and the answer was &pi;&sup2;/6. Mathematicians across Europe
+    were stupefied. Why should &pi; — a number about circles — appear in a sum
+    of fractions about integers? The answer reveals a deep connection between the
+    geometry of circles and the distribution of numbers that runs through all
+    of modern mathematics.
+  </p>
+
+  <p>
+    Euler later generalized this to the Riemann zeta function — the object
+    at the center of the Riemann Hypothesis, the most famous unsolved problem
+    in mathematics to this day.
+  </p>
+
+  <h2>The Seven Bridges of K&ouml;nigsberg: Birth of Graph Theory</h2>
+
+  <div class="bridge-section">
+    <h3>The Problem, 1736</h3>
+    <p>
+      K&ouml;nigsberg, Prussia (now Kaliningrad, Russia) was built across two islands
+      in the Pregel River, connected to the mainland by seven bridges. The citizens
+      had a puzzle: was it possible to walk through the city crossing each bridge
+      exactly once?
+    </p>
+
+    <!-- Königsberg bridge SVG diagram -->
+    <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;display:block;margin:1.5rem auto;" role="img" aria-label="Königsberg bridge diagram">
+      <defs>
+        <filter id="islandglow">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Water background -->
+      <rect width="500" height="280" fill="#0a0a20" rx="6"/>
+      <rect width="500" height="280" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.3" rx="6"/>
+
+      <!-- River regions (water) -->
+      <path d="M0,80 Q100,70 200,75 Q300,80 400,72 L500,75 L500,200 Q400,208 300,205 Q200,200 100,208 Q50,210 0,205 Z" fill="#0d1535" opacity="0.8"/>
+
+      <!-- North mainland (top) -->
+      <ellipse cx="250" cy="40" rx="220" ry="35" fill="#12122a" stroke="#2563eb" stroke-width="1" opacity="0.9"/>
+      <text x="250" y="44" font-family="'Space Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle" letter-spacing="1">NORTH BANK</text>
+
+      <!-- South mainland (bottom) -->
+      <ellipse cx="250" cy="245" rx="220" ry="30" fill="#12122a" stroke="#2563eb" stroke-width="1" opacity="0.9"/>
+      <text x="250" y="249" font-family="'Space Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle" letter-spacing="1">SOUTH BANK</text>
+
+      <!-- Kneiphof Island (center-left island) -->
+      <ellipse cx="165" cy="140" rx="70" ry="40" fill="#1a1a40" stroke="#ca8a04" stroke-width="1.5"/>
+      <text x="165" y="137" font-family="'Space Mono', monospace" font-size="8" fill="#ca8a04" text-anchor="middle">KNEIPHOF</text>
+      <text x="165" y="148" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8" text-anchor="middle">ISLAND</text>
+
+      <!-- Lomse Island (center-right island) -->
+      <ellipse cx="335" cy="140" rx="65" ry="38" fill="#1a1a40" stroke="#ca8a04" stroke-width="1.5"/>
+      <text x="335" y="137" font-family="'Space Mono', monospace" font-size="8" fill="#ca8a04" text-anchor="middle">LOMSE</text>
+      <text x="335" y="148" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8" text-anchor="middle">ISLAND</text>
+
+      <!-- Bridges (7 total) drawn as rectangles -->
+      <!-- Bridge 1: North bank to Kneiphof (left) -->
+      <rect x="118" y="68" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="100" y="60" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B1</text>
+
+      <!-- Bridge 2: North bank to Kneiphof (right) -->
+      <rect x="175" y="68" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="185" y="60" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B2</text>
+
+      <!-- Bridge 3: South bank to Kneiphof (left) -->
+      <rect x="118" y="173" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="100" y="222" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B3</text>
+
+      <!-- Bridge 4: South bank to Kneiphof (right) -->
+      <rect x="175" y="173" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="185" y="222" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B4</text>
+
+      <!-- Bridge 5: North bank to Lomse -->
+      <rect x="308" y="68" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="315" y="60" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B5</text>
+
+      <!-- Bridge 6: South bank to Lomse -->
+      <rect x="308" y="173" width="10" height="35" rx="2" fill="#2563eb" opacity="0.85"/>
+      <text x="315" y="222" font-family="'Space Mono', monospace" font-size="8" fill="#2563eb">B6</text>
+
+      <!-- Bridge 7: Kneiphof to Lomse (center bridge) -->
+      <rect x="233" y="132" width="36" height="10" rx="2" fill="#ca8a04" opacity="0.85"/>
+      <text x="238" y="124" font-family="'Space Mono', monospace" font-size="8" fill="#ca8a04">B7</text>
+
+      <!-- Euler's PROOF: impossible marker -->
+      <text x="250" y="16" font-family="'Space Mono', monospace" font-size="8" fill="#94a3b8" text-anchor="middle" letter-spacing="2">IMPOSSIBLE — EULER PROVED IT, 1736</text>
+    </svg>
+
+    <p style="font-size:0.95rem; color:var(--text-dim); margin-top:1rem;">
+      Euler did not try to solve the puzzle by trial and error. He recognized
+      that the specific geography was irrelevant — what mattered was the pattern
+      of connections. He abstracted the landmasses to <em>nodes</em> and the
+      bridges to <em>edges</em>, and asked: for a path traversing every edge
+      exactly once to exist, how many edges must connect to each node?
+    </p>
+    <p style="font-size:0.95rem; color:var(--text-dim);">
+      His answer: at most two nodes can have an odd number of connections (the
+      start and end points). In K&ouml;nigsberg, all four landmasses have an odd
+      number of bridges. Therefore, no Eulerian path exists. The proof is
+      exactly one page. It founded the entire discipline of graph theory.
+    </p>
+  </div>
+
+  <h2>Euler's Number: e = 2.71828&hellip;</h2>
+
+  <p>
+    <span class="kick">Analysis &middot; Introduced 1736, formalized thereafter</span>
+    Euler didn't discover the number <em>e</em> — Jacob Bernoulli had encountered
+    it studying compound interest, and Leibniz had mentioned it. But Euler named
+    it, systematized it, connected it to logarithms, and showed it was the natural
+    base for all exponential functions.
+  </p>
+
+  <div class="formula-box">
+    e = lim<sub>n&rarr;&infin;</sub> (1 + <sup>1</sup>&frasl;<sub>n</sub>)<sup>n</sup> = 2.71828182845&hellip;
+    <span class="formula-label">The number of pure, continuous growth &middot; Irrational and transcendental</span>
+  </div>
+
+  <p>
+    The number <em>e</em> is what you get if you compound interest continuously.
+    It is the rate of natural decay and natural growth. It appears in probability
+    (the normal distribution), in calculus (the only function that is its own
+    derivative), in complex analysis, in quantum mechanics, in information theory.
+    Its ubiquity rivals &pi;'s.
+  </p>
+
+  <h2>Euler's Polyhedron Formula</h2>
+
+  <p>
+    <span class="kick">Topology &middot; 1750 &ndash; 1752</span>
+    Consider any convex polyhedron — a tetrahedron, a cube, a dodecahedron.
+    Count its vertices (V), edges (E), and faces (F). Euler discovered:
+  </p>
+
+  <div class="formula-box">
+    V &minus; E + F = 2
+    <span class="formula-label">Euler's Characteristic &middot; True for any convex polyhedron &middot; Foundation of topology</span>
+  </div>
+
+  <p>
+    A cube: 8 vertices &minus; 12 edges + 6 faces = 2. A tetrahedron:
+    4 &minus; 6 + 4 = 2. Always 2. This is not a coincidence — it is a topological
+    invariant, a property that remains constant under continuous deformation.
+    The quantity V &minus; E + F is now called the Euler characteristic, and it
+    is one of the central concepts in algebraic topology.
+  </p>
+
+  <h2>The f(x) Notation: Mathematics Gets a Language</h2>
+
+  <p>
+    In 1734, Euler introduced the notation f(x) for a function of x. Before
+    Euler, different mathematicians wrote functions in completely different ways.
+    The modern concept of a function as a rule mapping inputs to outputs — and
+    the notation f(x), g(x), h(x) — is essentially Euler's invention. Every
+    calculus student in the world inherits his notation.
+  </p>
+
+  <h2>Ten Major Contributions: A Card Survey</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-num">01 &middot; Identity</span>
+      <h4>Euler's Identity</h4>
+      <p>e<sup>i&pi;</sup> + 1 = 0. Five fundamental constants in one equation. Voted the most beautiful equation in mathematics.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">02 &middot; Analysis</span>
+      <h4>Euler's Formula</h4>
+      <p>e<sup>ix</sup> = cos(x) + i·sin(x). The parent equation. Used by every physicist, engineer, and signal processor.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">03 &middot; Graph Theory</span>
+      <h4>K&ouml;nigsberg Bridges</h4>
+      <p>Proved the walk impossible. Invented graph theory to do it. Now underlies the internet, circuit design, and logistics.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">04 &middot; Number Theory</span>
+      <h4>Basel Problem</h4>
+      <p>&Sigma;1/n&sup2; = &pi;&sup2;/6. Solved the 85-year-old problem. Opened the path to the Riemann zeta function.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">05 &middot; Topology</span>
+      <h4>Polyhedron Formula</h4>
+      <p>V &minus; E + F = 2. The Euler characteristic. Foundation of modern topology and algebraic geometry.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">06 &middot; Notation</span>
+      <h4>e, i, &pi;, f(x), &Sigma;</h4>
+      <p>He named or popularized every symbol mathematicians use. The language of mathematics is Euler's vocabulary.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">07 &middot; Mechanics</span>
+      <h4>Rigid Body Dynamics</h4>
+      <p>Euler's equations of motion for rotating bodies. Every aerospace engineer computes satellite rotation with his formulas.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">08 &middot; Number Theory</span>
+      <h4>Euler's Totient Function</h4>
+      <p>&phi;(n): counts integers coprime to n. Essential in modern RSA encryption — every secure web transaction uses it.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">09 &middot; Analysis</span>
+      <h4>Calculus of Variations</h4>
+      <p>Euler-Lagrange equations. The mathematical framework for all of classical mechanics and much of quantum field theory.</p>
+    </div>
+    <div class="card">
+      <span class="card-num">10 &middot; Hydrodynamics</span>
+      <h4>Euler's Fluid Equations</h4>
+      <p>First mathematical description of fluid dynamics. The ancestor of the Navier-Stokes equations, one of the Millennium Problems.</p>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-number">886</span>
+      <span class="stat-label">Published Works</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">~25%</span>
+      <span class="stat-label">Of All 18th-century Mathematics</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">92</span>
+      <span class="stat-label">Opera Omnia Volumes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">&infin;</span>
+      <span class="stat-label">Influence (estimated)</span>
+    </div>
+  </div>
+
+  <blockquote>
+    "Read Euler, read Euler, he is the master of us all."
+    <cite>— Pierre-Simon Laplace, the "Newton of France"</cite>
+  </blockquote>
+
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol. 0 — Who He Was</a>
+    <a href="2-world.html">Vol. 2 — His World &rarr;</a>
+    <a href="3-legacy.html">Vol. 3 — His Legacy &rarr;</a>
+  </div>
+
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: David Lee Wise &nbsp;|&nbsp; Organization: ROOT0 / TriPod LLC</div>
+    <div>Series: The Library &mdash; Leonhard Euler, Volume 1 of 4</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></div>
+    <div style="margin-top:0.8rem; opacity:0.5;">
+      The equation that connects everything &mdash; discovered by a man who could not see
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leonhard Euler — Vol. 2: His World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #080810;
+      --paper-mid: #0d0d1a;
+      --paper-light: #12122a;
+      --blue: #2563eb;
+      --blue-dim: #1d4ed8;
+      --blue-glow: rgba(37,99,235,0.18);
+      --gold: #ca8a04;
+      --gold-dim: #a16207;
+      --gold-glow: rgba(202,138,4,0.15);
+      --text: #e2e8f8;
+      --text-dim: #94a3b8;
+      --text-faint: #3a4060;
+      --border: rgba(37,99,235,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,8,16,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 60%, #060618 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(202,138,4,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.5em;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .masthead-lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--blue);
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .masthead-art {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--blue);
+      color: #e2e8f8;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #080810; }
+
+    /* ── PLACE CARDS ── */
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+    .place-card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .place-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 24px var(--blue-glow);
+      border-color: var(--blue);
+    }
+    .place-card .place-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .place-card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .place-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
+    /* ── PERSON CARDS ── */
+    .person-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+    .person-card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .person-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 4px 4px 24px var(--blue-glow);
+      border-color: var(--blue);
+    }
+    .person-card .relation {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .person-card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .person-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: var(--paper-light);
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+    }
+    .highlight-box h3 { color: var(--gold); margin-top: 0; }
+    .highlight-box p { color: var(--text-dim); font-size: 0.95rem; }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      background: var(--paper-light);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 2rem 0; }
+    .stat {
+      flex: 1 1 140px;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-number { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 800; color: var(--blue); display: block; line-height: 1; }
+    .stat-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--text-dim); text-transform: uppercase; margin-top: 0.4rem; display: block; }
+
+    /* ── VOL NAV ── */
+    .vol-nav { display: flex; gap: 1rem; justify-content: flex-end; margin-top: 4rem; flex-wrap: wrap; }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      margin-top: 6rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Leonhard Euler · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-work.html">Vol. 1 — Work</a>
+  <a href="2-world.html" class="active">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 2 of 4 &middot; Context &amp; Circumstances</span>
+    <h1>
+      His World
+      <span class="subtitle">Basel, St. Petersburg, Berlin</span>
+    </h1>
+    <p class="masthead-lede">
+      Three cities, two empires, one family of mathematicians, and a man who could not
+      stop working even after the world went dark. The circumstances that shaped
+      the most prolific mind in the history of mathematics.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Königsberg bridge map with highlighted bridges -->
+    <svg viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" width="380" height="380">
+      <defs>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0a0a22"/>
+          <stop offset="100%" stop-color="#080810"/>
+        </radialGradient>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#bg2)"/>
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#2563eb" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Europe map simplified outlines -->
+      <!-- German/Central Europe landmass suggestion -->
+      <path d="M80,120 Q120,100 160,110 Q200,115 240,108 Q280,100 310,120 Q330,140 320,160 Q310,180 290,190 Q270,200 250,195 Q230,190 210,200 Q190,210 170,205 Q150,200 130,210 Q110,220 100,200 Q85,180 80,155 Z"
+            fill="#12122a" stroke="#2563eb" stroke-width="0.8" opacity="0.7"/>
+
+      <!-- City dots -->
+      <!-- Basel -->
+      <circle cx="145" cy="168" r="5" fill="#ca8a04" filter="url(#glow2)">
+        <animate attributeName="r" values="5;7;5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="108" y="164" font-family="'Space Mono', monospace" font-size="9" fill="#ca8a04">Basel</text>
+
+      <!-- Berlin -->
+      <circle cx="220" cy="135" r="5" fill="#2563eb" filter="url(#glow2)">
+        <animate attributeName="r" values="5;7;5" dur="3s" begin="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="228" y="131" font-family="'Space Mono', monospace" font-size="9" fill="#2563eb">Berlin</text>
+
+      <!-- St. Petersburg (off to north-east, simplified) -->
+      <circle cx="300" cy="88" r="5" fill="#ca8a04" filter="url(#glow2)">
+        <animate attributeName="r" values="5;7;5" dur="3s" begin="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="258" y="82" font-family="'Space Mono', monospace" font-size="9" fill="#ca8a04">St. Petersburg</text>
+
+      <!-- Königsberg -->
+      <circle cx="263" cy="112" r="4" fill="#94a3b8" filter="url(#glow2)"/>
+      <text x="270" y="118" font-family="'Space Mono', monospace" font-size="8" fill="#94a3b8">Königsberg</text>
+
+      <!-- Travel lines (Euler's journeys) -->
+      <path d="M145,168 Q180,148 220,135" stroke="#ca8a04" stroke-width="1.5" fill="none"
+            stroke-dasharray="4 4" opacity="0.6">
+        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M220,135 Q265,105 300,88" stroke="#2563eb" stroke-width="1.5" fill="none"
+            stroke-dasharray="4 4" opacity="0.6">
+        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" begin="1s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Bottom label -->
+      <text x="190" y="340" font-family="'Space Mono', monospace" font-size="9" fill="#94a3b8" text-anchor="middle" letter-spacing="2">EULER'S EUROPE · THREE CITIES</text>
+
+      <!-- Year labels along path -->
+      <text x="170" y="162" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8" opacity="0.7">→ 1741</text>
+      <text x="248" y="110" font-family="'Space Mono', monospace" font-size="7" fill="#94a3b8" opacity="0.7">← 1766</text>
+
+      <!-- Decorative border ring -->
+      <circle cx="190" cy="190" r="165" fill="none" stroke="#2563eb" stroke-width="0.3" opacity="0.2" stroke-dasharray="4 8"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <h2>Three Cities, One Mathematician</h2>
+
+  <p>
+    Leonhard Euler's life was defined by three cities: Basel, where he was born
+    and educated; St. Petersburg, where he did his greatest early work and returned
+    for the final seventeen years of his life; and Berlin, where Frederick the
+    Great tolerated him for twenty-five productive years without quite understanding
+    what he had. Each city represents not just a geography but a political and
+    intellectual climate that shaped what mathematics got written.
+  </p>
+
+  <div class="place-grid">
+    <div class="place-card">
+      <span class="place-dates">1707 &ndash; 1727 · Origin</span>
+      <h4>Basel, Switzerland</h4>
+      <p>Reformed Protestant city on the Rhine. Home of the Bernoulli family. The intellectual soil in which Euler germinated. He left at twenty and never returned, but Basel formed his character: industrious, devout, methodical.</p>
+    </div>
+    <div class="place-card">
+      <span class="place-dates">1727 &ndash; 1741 · First Period</span>
+      <h4>St. Petersburg, Russia</h4>
+      <p>Peter the Great's modernization project. The Academy of Sciences needed mathematicians. Euler arrived young, worked ferociously, lost his right eye, solved the Basel Problem, and invented graph theory — all before forty.</p>
+    </div>
+    <div class="place-card">
+      <span class="place-dates">1741 &ndash; 1766 · Middle Years</span>
+      <h4>Berlin, Prussia</h4>
+      <p>Frederick the Great's court. Frederick preferred French philosophers and found Euler dull. Euler ran the Academy for twenty-five years and produced approximately half his life's work. He was indifferent to Frederick's opinion.</p>
+    </div>
+    <div class="place-card">
+      <span class="place-dates">1766 &ndash; 1783 · Final Chapter</span>
+      <h4>St. Petersburg, Russia</h4>
+      <p>Catherine the Great recalled him with a generous offer. He returned, went completely blind, and produced more mathematics per year than ever before. He died here in 1783, mid-calculation.</p>
+    </div>
+  </div>
+
+  <h2>Peter the Great's Grand Project</h2>
+
+  <p>
+    <span class="kick">Political context &middot; The St. Petersburg Academy</span>
+    The Imperial Academy of Sciences was Peter the Great's instrument for dragging
+    Russia into the European intellectual mainstream. He designed it before he died
+    in 1725; it was formally inaugurated under his widow Catherine I. The early
+    Academy was almost entirely staffed by imported Europeans — mainly Germans and
+    Swiss — paid handsomely to think.
+  </p>
+
+  <p>
+    Euler arrived in 1727, invited by Daniel Bernoulli. The political situation was
+    unstable — Catherine I died the same week Euler arrived, and the Academy
+    nearly collapsed in the power struggle that followed. Euler briefly found
+    himself assigned to the Navy medical corps, waiting. Then Anna of Russia
+    stabilized the throne, the Academy reopened, and one of history's great
+    pairings — brilliant young mathematician, well-funded academy — began.
+  </p>
+
+  <blockquote>
+    "In Berlin I shall have a king who will be master, while in Russia he will
+    be a servant. I shall therefore remain in Russia."
+    <cite>— Attributed remark explaining why Euler preferred St. Petersburg to Berlin</cite>
+  </blockquote>
+
+  <h2>Frederick the Great: The Patron Who Didn't Appreciate His Mathematician</h2>
+
+  <p>
+    <span class="kick">Berlin &middot; 1741 &ndash; 1766</span>
+    Frederick II of Prussia — "Frederick the Great" — was one of the most
+    cultivated monarchs of the Enlightenment. He was a gifted flautist, wrote
+    poetry in French, corresponded with Voltaire, and modeled himself on the
+    philosopher-king ideal of classical antiquity. He was also profoundly dismissive
+    of German culture and of mathematics that he could not follow.
+  </p>
+
+  <p>
+    Frederick called Euler "my one-eyed mathematician" and complained privately
+    that Euler never said anything interesting at dinner. He wanted Voltaire at
+    his table, not a Swiss calculator who talked about infinite series. Euler,
+    for his part, was happy. He had resources, a position, and peace to work.
+    He ran the Berlin Academy's mathematical and physical sciences divisions,
+    supervised its botanical gardens and observatory, advised the state on
+    technical matters ranging from the Russian canal system to pension
+    calculations, and published hundreds of papers.
+  </p>
+
+  <p>
+    The relationship ended in 1766 when Frederick brought d'Alembert to Berlin
+    as his preferred mathematician and made clear that Euler was an also-ran.
+    Catherine the Great's offer arrived at the right moment. Euler packed up
+    his household — large enough to require a convoy — and returned to Russia.
+  </p>
+
+  <h2>Catherine the Great: The Patron Who Got It Right</h2>
+
+  <p>
+    <span class="kick">Russia &middot; 1766</span>
+    Catherine II, Empress of All the Russias, was a genuine Enlightenment figure.
+    She corresponded with Voltaire and Diderot, liberalized parts of Russian
+    law, and had a strong intuition for talent. She wanted Euler back and made
+    an offer he could not refuse: a substantial salary, a house in St. Petersburg,
+    a pension for his wife, and court positions for his sons.
+  </p>
+
+  <p>
+    Euler accepted. Catherine honored every commitment and added more — when his
+    house burned in the great fire of 1771, she replaced it personally. She
+    understood, even if she could not follow the mathematics, that she was housing
+    one of the wonders of the age.
+  </p>
+
+  <div class="highlight-box">
+    <h3>The 1771 Fire</h3>
+    <p>
+      Euler's St. Petersburg house caught fire. He was completely blind by this
+      point and had to be carried out by a Swiss craftsman named Peter Grimm who
+      risked his life to save him. Many manuscripts were lost. Euler was uninjured.
+      He resumed work the same week. Catherine the Great funded a complete
+      replacement of the house and its contents.
+    </p>
+  </div>
+
+  <h2>The Bernoulli Family: His Mathematical Roots</h2>
+
+  <div class="person-grid">
+    <div class="person-card">
+      <span class="relation">Great-uncle of discipline</span>
+      <h4>Jacob Bernoulli (1655–1705)</h4>
+      <p>Euler's father studied under him. Jacob solved the Basel Problem's predecessor questions. He died two years before Euler was born but shaped the mathematical culture Euler entered.</p>
+    </div>
+    <div class="person-card">
+      <span class="relation">Teacher &amp; Patron</span>
+      <h4>Johann Bernoulli (1667–1748)</h4>
+      <p>Euler's greatest teacher. Gave him Saturday tutorials. Pushed him hard. Recognized his genius early. Later called him "the greatest mathematician alive" — the student had surpassed the master.</p>
+    </div>
+    <div class="person-card">
+      <span class="relation">Friend &amp; Peer</span>
+      <h4>Daniel Bernoulli (1700–1782)</h4>
+      <p>Johann's son, Euler's closest friend and contemporary. Invited Euler to St. Petersburg. They corresponded for decades. Their rivalry — affectionate but real — drove both to greater heights.</p>
+    </div>
+    <div class="person-card">
+      <span class="relation">Peer &amp; Rival</span>
+      <h4>Nicolaus II Bernoulli (1695–1726)</h4>
+      <p>Daniel's brother, also at St. Petersburg. Died tragically young in 1726, one year before Euler arrived. His position opened the door for Euler.</p>
+    </div>
+  </div>
+
+  <h2>Blindness: The Adaptation</h2>
+
+  <p>
+    <span class="kick">1771 &ndash; 1783 &middot; The blind years</span>
+    In 1771, Euler underwent surgery for a cataract in his remaining good eye. The
+    surgery briefly restored some sight, then inflammation destroyed it permanently.
+    At sixty-four, he was completely blind. He had been effectively one-eyed since
+    1738. Total blindness might have ended any other career.
+  </p>
+
+  <p>
+    It did not end Euler's. He dictated his mathematics first to his sons Johann
+    Albrecht and Christoph, then increasingly to Nicolas Fuss, a talented young
+    Swiss mathematician who became his primary amanuensis and later his
+    grandson-in-law. Euler composed entire papers in his head before dictating.
+    His mental arithmetic was already legendary — he was said to be able to perform
+    in his head calculations that required hours with pencil and paper.
+  </p>
+
+  <p>
+    In the twelve years of total blindness, Euler produced over 400 papers.
+    The year he went blind, he wrote the complete text of the second edition of
+    his <em>Algebra</em> by dictating it to a servant who had no mathematical
+    training. The servant learned the subject as he transcribed.
+  </p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-number">400+</span>
+      <span class="stat-label">Papers in Blind Years</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">12</span>
+      <span class="stat-label">Years Totally Blind</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">13</span>
+      <span class="stat-label">Children (3 to adulthood)</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">56</span>
+      <span class="stat-label">Years of Active Publication</span>
+    </div>
+  </div>
+
+  <h2>The Family Man</h2>
+
+  <p>
+    <span class="kick">Personal life &middot; Katharina Gsell, 1733</span>
+    Euler married Katharina Gsell in 1733, when he was twenty-six. She was the
+    daughter of Georg Gsell, a Swiss painter employed at the Russian court.
+    Euler was notably domestic for a man of his output. He loved his children
+    and worked with grandchildren playing on his lap — this is not legend but
+    recorded testimony from multiple witnesses. The household was enormous,
+    cheerful, and mathematically saturated.
+  </p>
+
+  <p>
+    Katharina died in 1773. After three years of widowhood, Euler married her
+    half-sister Salome Abigail Gsell, largely to ensure the household was managed
+    — he was blind and needed someone who knew how things worked. His family's
+    loyalty and care sustained the final decades of production.
+  </p>
+
+  <p>
+    Of his thirteen children, three sons — Johann Albrecht, Karl, and Christoph —
+    survived to adulthood and contributed to his final period of production as
+    secretaries, calculators, and copyists. The mathematical workshop of the blind
+    Euler was a family enterprise.
+  </p>
+
+  <blockquote>
+    "Euler retained his mental powers entirely to the end. On the 7th of September 1783
+    he gave a lesson to one of his grandchildren, then discussed with Lexell his newly
+    computed orbit for Uranus, drank tea, and died."
+    <cite>— Nicolas Fuss, eyewitness account of Euler's last day</cite>
+  </blockquote>
+
+  <h2>The St. Petersburg Academy: Home Base</h2>
+
+  <p>
+    The Imperial Academy of Sciences was, for its era, an extraordinary institution.
+    It paid well, expected results, and left its members largely free to choose
+    their problems. Euler thrived in such conditions. He was not merely a resident
+    genius but an engaged administrator — editing the Academy's journal, supervising
+    map production for the Russian Empire, advising the government on hydraulic
+    systems, and solving practical navigation problems for the Navy.
+  </p>
+
+  <p>
+    The breadth was deliberate. Euler did not distinguish between pure and applied
+    mathematics. The same mind that proved the Basel Problem also designed better
+    lenses for telescopes, worked out the mathematics of ship design, and computed
+    the motions of the moon for navigational tables. He saw no border between
+    the two modes of mathematical work.
+  </p>
+
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol. 0 — Who He Was</a>
+    <a href="1-work.html">&larr; Vol. 1 — The Work</a>
+    <a href="3-legacy.html">Vol. 3 — His Legacy &rarr;</a>
+  </div>
+
+  <div class="colophon">
+    <div>ROOT0-ATTRIBUTION-v1.0</div>
+    <div>Author: David Lee Wise &nbsp;|&nbsp; Organization: ROOT0 / TriPod LLC</div>
+    <div>Series: The Library &mdash; Leonhard Euler, Volume 2 of 4</div>
+    <div>License: <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a></div>
+    <div style="margin-top:0.8rem; opacity:0.5;">
+      Basel &rarr; St. Petersburg &rarr; Berlin &rarr; St. Petersburg &mdash; and then, in 1783, silence
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

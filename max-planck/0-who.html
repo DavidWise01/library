@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Planck — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #090608;
+    --quantum: #dc2626;
+    --violet: #7c3aed;
+    --text: #e8e0d0;
+    --muted: #8a7f72;
+    --border: #251a1a;
+    --card-bg: #0f0a0a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(9,6,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--quantum);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--quantum);
+    border-color: var(--quantum);
+  }
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 540px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 55%, #1a0505 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--quantum);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(220,38,38,0.35);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--quantum);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  /* BAND */
+  .band {
+    background: var(--quantum);
+    color: #fff;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  /* MAIN LAYOUT */
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--quantum);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--quantum);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--quantum); font-style: italic; }
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--quantum);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(220,38,38,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body {
+    font-size: 0.97rem;
+    color: var(--text);
+    opacity: 0.88;
+  }
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--quantum);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--quantum);
+  }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--violet);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  /* PULL QUOTE */
+  .pull-quote {
+    border-left: 4px solid var(--quantum);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat {
+    background: var(--card-bg);
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--quantum);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  /* TRAGEDY BOX */
+  .tragedy-box {
+    background: #120408;
+    border: 1px solid var(--quantum);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+  }
+  .tragedy-box .tragedy-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--quantum);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .tragedy-list { list-style: none; padding: 0; }
+  .tragedy-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.97rem;
+    color: var(--text);
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+  .tragedy-list li:last-child { border-bottom: none; }
+  .tragedy-list .yr {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--quantum);
+    text-transform: uppercase;
+    padding-top: 0.15rem;
+  }
+  /* COLOPHON */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--violet); text-decoration: none; }
+  .colophon a:hover { color: var(--quantum); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Max Planck</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-quantum.html">Vol. 1 — The Work</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<!-- ANIMATED HERO SVG: Blackbody Glow shifting from deep red to white with temperature -->
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <!-- Blackbody temperature color animation gradients -->
+      <radialGradient id="bodyGlow" cx="50%" cy="52%" r="42%">
+        <stop offset="0%" stop-color="#fff7f0" stop-opacity="0.18">
+          <animate attributeName="stop-color"
+            values="#3d0000;#7a1200;#c43800;#e86b00;#ffa040;#ffd080;#fff0c0;#ffffff;#fff7f0;#ffd080;#c43800;#3d0000"
+            dur="10s" repeatCount="indefinite"/>
+          <animate attributeName="stop-opacity"
+            values="0.10;0.14;0.18;0.22;0.25;0.28;0.30;0.32;0.28;0.22;0.15;0.10"
+            dur="10s" repeatCount="indefinite"/>
+        </stop>
+        <stop offset="100%" stop-color="#090608" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="bbblur"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="softblur"><feGaussianBlur stdDeviation="12"/></filter>
+    </defs>
+    <!-- Background temperature wash -->
+    <rect width="900" height="540" fill="url(#bodyGlow)"/>
+    <!-- Glowing sphere — the blackbody -->
+    <circle cx="450" cy="270" r="110" filter="url(#softblur)" opacity="0.45">
+      <animate attributeName="fill"
+        values="#3d0000;#7a1200;#c43800;#e86b00;#ffa040;#ffd080;#fff7e0;#ffffff;#fff0c0;#ffd080;#c43800;#3d0000"
+        dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="100;112;120;115;108;105;108;115;112;105;100" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="55" filter="url(#bbblur)" opacity="0.8">
+      <animate attributeName="fill"
+        values="#5a0000;#aa2000;#e05000;#ff8020;#ffc060;#ffee90;#fffce0;#ffffff;#ffedd0;#ffc060;#e05000;#5a0000"
+        dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="22" opacity="0.95">
+      <animate attributeName="fill"
+        values="#8b0000;#cc3300;#ff6600;#ffaa33;#ffdd66;#fffacc;#ffffff;#fffacc;#ffdd66;#ffaa33;#ff6600;#8b0000"
+        dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Radiation halo rings -->
+    <circle cx="450" cy="270" r="160" fill="none" stroke-width="1" opacity="0.18">
+      <animate attributeName="stroke"
+        values="#3d0000;#7a1200;#c43800;#e86b00;#ffa040;#ffffff;#ffffff;#ffd080;#c43800;#3d0000"
+        dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="160;170;180;175;168;165;168;175;170;160" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="270" r="210" fill="none" stroke-width="0.7" opacity="0.12">
+      <animate attributeName="stroke"
+        values="#3d0000;#9a2000;#dc4800;#ffa040;#ffffff;#ffd080;#dc4800;#3d0000"
+        dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Radiation emission lines — photon streaks -->
+    <g opacity="0.3">
+      <line x1="450" y1="150" x2="450" y2="80" stroke="#dc2626" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.8;0;0.6;0" dur="3.2s" repeatCount="indefinite"/>
+      </line>
+      <line x1="450" y1="390" x2="450" y2="460" stroke="#dc2626" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.6;0;0.8;0" dur="2.8s" repeatCount="indefinite" begin="0.7s"/>
+      </line>
+      <line x1="330" y1="200" x2="270" y2="140" stroke="#ff8844" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.7;0;0.5;0" dur="3.5s" repeatCount="indefinite" begin="1.1s"/>
+      </line>
+      <line x1="570" y1="200" x2="630" y2="140" stroke="#ff8844" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.5;0;0.7;0" dur="3.1s" repeatCount="indefinite" begin="0.4s"/>
+      </line>
+      <line x1="330" y1="340" x2="270" y2="400" stroke="#ff8844" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.6;0;0.4;0" dur="2.6s" repeatCount="indefinite" begin="1.8s"/>
+      </line>
+      <line x1="570" y1="340" x2="630" y2="400" stroke="#ff8844" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0;0.4;0;0.6;0" dur="3.8s" repeatCount="indefinite" begin="0.9s"/>
+      </line>
+      <line x1="345" y1="165" x2="300" y2="100" stroke="#ffcc88" stroke-width="0.8">
+        <animate attributeName="stroke-opacity" values="0;1;0" dur="2.1s" repeatCount="indefinite" begin="0.3s"/>
+      </line>
+      <line x1="555" y1="165" x2="600" y2="100" stroke="#ffcc88" stroke-width="0.8">
+        <animate attributeName="stroke-opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite" begin="1.3s"/>
+      </line>
+      <line x1="345" y1="375" x2="300" y2="440" stroke="#ffcc88" stroke-width="0.8">
+        <animate attributeName="stroke-opacity" values="0;0.9;0" dur="2.7s" repeatCount="indefinite" begin="0.6s"/>
+      </line>
+      <line x1="555" y1="375" x2="600" y2="440" stroke="#ffcc88" stroke-width="0.8">
+        <animate attributeName="stroke-opacity" values="0;0.9;0" dur="2.2s" repeatCount="indefinite" begin="2.0s"/>
+      </line>
+    </g>
+    <!-- Temperature label -->
+    <text x="450" y="490" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#8a7f72" letter-spacing="3">
+      BLACKBODY RADIATION — ALL TEMPERATURES
+    </text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Max Planck · 1858–1947 · Volume Zero</span>
+    <h1 class="hero-title">The Person</h1>
+    <p class="hero-subtitle">Conservative. Meticulous. Revolutionary by Accident.</p>
+    <p class="hero-lead">A German professor who believed deeply in classical physics, who introduced the quantum as an act of desperation to make the mathematics work, and spent twenty years wishing he could take it back — because it was true.</p>
+  </div>
+</div>
+
+<div class="band">Kiel 1858 · Munich · Berlin 1889 · Quantum Hypothesis 1900 · Nobel 1918 · Died 1947</div>
+
+<main>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-num">1858</span>
+      <span class="stat-label">Born, Kiel</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1900</span>
+      <span class="stat-label">Quantum Hypothesis</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1918</span>
+      <span class="stat-label">Nobel Prize</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">89</span>
+      <span class="stat-label">Years Lived</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Children Lost</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1947</span>
+      <span class="stat-label">Died, Göttingen</span>
+    </div>
+  </div>
+
+  <!-- ORIGINS -->
+  <section id="origins">
+    <span class="section-label">I — Origins</span>
+    <h2>Born in Kiel, Raised in an Academic Family</h2>
+    <p>Max Karl Ernst Ludwig Planck was born on April 23, 1858, in Kiel, in the Duchy of Holstein — then under Danish rule, shortly to become part of the new German Empire. His was a family of lawyers, pastors, and professors stretching back generations. His grandfather and great-grandfather were both professors of theology at Göttingen. His father, Johann Julius Wilhelm Planck, was a professor of civil law at Kiel, later Munich. The weight of academic seriousness was simply the atmosphere of the household.</p>
+    <p>When Max was nine, his father received a professorship at the University of Munich, and the family relocated to Bavaria. Munich was a city of particular cultural vitality in the 1860s — the first Oktoberfest had already been running for fifty years, the Bavarian king Ludwig II was building his absurdly romantic castles, and the university had become a serious center of scholarship. It was a city that took learning with Germanic gravity, and it shaped Planck completely. He was, throughout his life, the product of Munich: thorough, conservative, technically impeccable, and deeply respectful of received scientific authority.</p>
+
+    <h3>A Student of Unassuming Brilliance</h3>
+    <p>Planck attended the Maximilian Gymnasium in Munich, where he showed exceptional ability in mathematics, classics, and music. He was not a prodigy in the splashy sense — no early published theorems, no famous anecdotes of childhood genius. He was simply extremely capable and extremely disciplined. His music was perhaps more conspicuously gifted than his mathematics in those years: he studied piano and organ seriously, composed songs, and for a time considered music as a vocation. He chose physics instead, as he later put it, from an urgent internal need to understand the absolute laws of nature — to find what was <em>permanently true</em> regardless of human convention.</p>
+    <p>He enrolled in physics at the University of Munich in 1874, then transferred to the University of Berlin in 1877 to study under two of the most distinguished physicists in the German world: Hermann von Helmholtz and Gustav Kirchhoff. He was unimpressed — he found their lectures dull and poorly organized — but their substance was formative. It was from Kirchhoff's work on radiation that Planck would eventually derive the crisis his work resolved.</p>
+  </section>
+
+  <!-- THE ADVICE HE IGNORED -->
+  <section id="advice">
+    <span class="section-label">II — The Advice He Ignored</span>
+    <h2>"Almost Everything Is Already Discovered"</h2>
+    <p>Before Planck enrolled in physics at Munich, he sought advice from Philipp von Jolly, the professor of physics at the university. Jolly's counsel was direct and, in hindsight, spectacularly wrong.</p>
+
+    <div class="pull-quote">
+      <blockquote>"In this field, almost everything is already discovered, and all that remains is to fill a few holes."</blockquote>
+      <cite>— Philipp von Jolly to Max Planck, c. 1874</cite>
+    </div>
+
+    <p>This was not eccentricity — it was the consensus. Classical physics in the 1870s had achieved breathtaking systematization. Newton's mechanics governed large bodies. Maxwell's electromagnetism, completed in the 1860s, governed light and electromagnetic fields. Thermodynamics had been formalized by Clausius and Kelvin. The periodic table had been organized by Mendeleev. Physics seemed, to many of its practitioners, like a discipline approaching completion. The task remaining was measurement and refinement, not discovery.</p>
+    <p>Planck acknowledged the advice. He replied, politely but firmly, that he was not seeking to discover anything new — only to understand and perhaps deepen the existing foundations. He studied physics anyway. He received his doctoral dissertation in 1879 on the second law of thermodynamics from the University of Munich. He was twenty-one. He then spent six unhappy years as a lecturer whose work was largely ignored before receiving a professorship. The path to recognition was not quick.</p>
+  </section>
+
+  <!-- PROFESSOR BERLIN -->
+  <section id="berlin">
+    <span class="section-label">III — Berlin</span>
+    <h2>Professor at Berlin, 1889</h2>
+    <p>After a professorship at the University of Kiel (1885–1889), Planck was called to the University of Berlin in 1889 to succeed Kirchhoff in the chair of theoretical physics — at thirty-one, one of the most prestigious positions in German science. Berlin was the capital of the Reich, the center of German intellectual and cultural life, and its university was second to none in the German-speaking world.</p>
+    <p>Planck was, by temperament, exactly right for Berlin. He was formal, correct, and deeply serious — never a celebrity, never a self-promoter, but respected by everyone who engaged with his work. He dressed precisely, spoke carefully, and believed with genuine intensity that physics was a vocation almost moral in character: the pursuit of objective truth against human error and illusion. He was devoutly Lutheran, politically conservative, and an ardent German patriot. He was also one of the finest theoretical physicists alive.</p>
+    <p>He served as secretary of the Prussian Academy of Sciences, as rector of the University of Berlin, and for decades as the most important institutional voice in German physics. He was the person who brought Einstein to Berlin in 1914. He recognized genius in others with clarity and generosity. His own genius was of a quieter, more painstaking kind — and it produced one of the most consequential papers in the history of science.</p>
+  </section>
+
+  <!-- THE QUANTUM HYPOTHESIS -->
+  <section id="quantum">
+    <span class="section-label">IV — The Hypothesis</span>
+    <h2>1900: An Act of Desperation</h2>
+    <p>In 1900, Planck was trying to explain the blackbody radiation spectrum — the precise distribution of light emitted by a hot object at different frequencies. The experimental measurements were precise. The classical theoretical prediction was catastrophically wrong. After months of attempting to derive the correct formula from classical physics, Planck found a mathematical expression that fit the data perfectly. But it required an assumption that he could not justify from first principles: that the energy of the oscillators emitting radiation must be discrete, not continuous. Energy had to come in packets proportional to frequency: E = hf.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It was an act of desperation. I had to obtain a positive result, under any circumstances and at whatever cost to my convictions."</blockquote>
+      <cite>— Max Planck, on the quantum hypothesis</cite>
+    </div>
+
+    <p>He presented the result to the German Physical Society on December 14, 1900. That date is now regarded as the birthday of quantum mechanics. Planck himself regarded it as a temporary mathematical artifice that would eventually be derived from deeper classical principles. It was not. It was the discovery of a fundamental structure of reality. He had hoped to fix a hole in classical physics; instead he had broken it open from the inside.</p>
+    <p>The value of the constant he introduced — now called Planck's constant, h = 6.626 × 10⁻³⁴ J·s — is one of the fundamental constants of the universe, appearing in every quantum equation ever written. He spent the next decade and more trying to <em>eliminate</em> it from his theory, or to derive it from classical mechanics. He could not. Einstein, in 1905, went the other direction: he took h seriously as physics, and proved that light itself was quantized. Planck, the father of quantum theory, considered Einstein's step too radical. The child had outpaced the parent.</p>
+  </section>
+
+  <!-- CONSERVATIVE REVOLUTIONARY -->
+  <section id="conservative">
+    <span class="section-label">V — The Conservative Revolutionary</span>
+    <h2>The Man Who Could Not Accept What He Had Found</h2>
+    <p>The tension at the center of Planck's scientific life was genuine and poignant. He was, philosophically, an arch-conservative: he believed in the continuity of nature, in the completeness of classical mechanics, in the Newtonian worldview that had governed physics for two centuries. He introduced the quantum as a mathematical trick he expected to eventually eliminate. When it became clear — through Einstein's photoelectric work, through Bohr's atomic model, through the entire edifice of quantum mechanics built by Heisenberg, Schrödinger, and Dirac in the 1920s — that the quantum was not a trick but a fundamental feature of reality, Planck was privately disturbed by what that implied. A discrete universe. Probability as fundamental. The abandonment of strict causality.</p>
+    <p>He accepted the results because he was rigorous enough to accept evidence. But his intellectual temperament never fully made peace with quantum indeterminism. He believed, with Einstein, that a deeper deterministic theory must underlie the quantum formalism. Both men spent the latter parts of their careers working toward this unified, classical-in-spirit completion. Neither found it. The generation that built on their work — Bohr, Heisenberg, Dirac, Born — had no such qualms.</p>
+    <p>There is something genuinely moving about Planck's predicament. He was not a revolutionary by temperament, by training, or by desire. He was the most methodical and conservative of German professors. And he accidentally detonated the most radical restructuring of physical reality since Newton. He did not run from it — he published, explained, and defended his work. But he could not celebrate it as the thing it was.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Classical Beliefs</span>
+        <h4>What Planck Wanted to Preserve</h4>
+        <p>Continuous energy, determinism, strict causality, the Newtonian-Maxwellian worldview. Physics as the discovery of objective reality.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">What He Found Instead</span>
+        <h4>What the Data Required</h4>
+        <p>Discrete energy packets (quanta), h as a fundamental constant, a formula that broke the classical prediction and could not be derived without the new assumption.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">What Came After</span>
+        <h4>The World He Opened</h4>
+        <p>Einstein's photons (1905), Bohr's atomic model (1913), Heisenberg's uncertainty principle (1927), Schrödinger's wave equation (1926), quantum field theory, the Standard Model.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONAL TRAGEDIES -->
+  <section id="tragedy">
+    <span class="section-label">VI — Personal Life</span>
+    <h2>A Life of Losses</h2>
+    <p>Against the intellectual drama of his scientific work, Max Planck's personal life was marked by a series of losses so severe that they constitute a separate tragedy, running in parallel to his career and barely commented upon in the scientific literature. He bore them with the stoic dignity that defined his character, and that may have hidden the full weight.</p>
+
+    <div class="tragedy-box">
+      <span class="tragedy-label">Chronology of Loss</span>
+      <ul class="tragedy-list">
+        <li><span class="yr">1909</span>His first wife, Marie Merck, died of tuberculosis. They had been married since 1885. She left four children: Karl, twins Emma and Grete, and Erwin.</li>
+        <li><span class="yr">1914–18</span>Karl, Planck's eldest son from his first marriage, was killed in action during the First World War at the Battle of Verdun. He died in 1916.</li>
+        <li><span class="yr">1917</span>His daughter Emma died in childbirth. She had been deeply ill with a difficult delivery; the child did not survive either.</li>
+        <li><span class="yr">1919</span>His daughter Grete, Emma's twin, died in childbirth the following year under nearly identical circumstances — having gone to help care for Emma's surviving child. A grief beyond reckoning.</li>
+        <li><span class="yr">1944</span>Allied bombing destroyed Planck's home in Berlin. He lost his library, his manuscripts, his scientific notebooks — the physical record of his working life.</li>
+        <li><span class="yr">1945</span>His younger son Erwin — his last surviving son, the child of his first marriage, whom he loved with particular closeness — was arrested by the Gestapo for alleged involvement in the July 20, 1944 plot to assassinate Hitler. Planck personally petitioned Hitler, Himmler, and Göring for Erwin's life. The appeals were denied. Erwin Planck was executed by hanging in January 1945. Max Planck was eighty-six years old.</li>
+      </ul>
+    </div>
+
+    <p>He remarried in 1911, two years after Marie's death. His second wife, Marga von Hoesslin, was his niece — a relationship considered unusual but not improper in the conventions of the time. They had one son, Hermann, who survived the war. Planck spent the last months of World War II a refugee, evacuated by American soldiers from the besieged ruins of Germany, sheltered by a professor in Göttingen. He was eighty-seven. He wrote, in those final years, about the consolation of a personal God and the question of whether science and religion could coexist. He concluded, with characteristic precision, that they operated on separate domains and need not conflict.</p>
+  </section>
+
+  <!-- NOBEL PRIZE -->
+  <section id="nobel">
+    <span class="section-label">VII — Recognition</span>
+    <h2>Nobel Prize in Physics, 1918</h2>
+    <p>The Nobel Prize in Physics for 1918 was awarded to Planck "in recognition of the services he rendered to the advancement of Physics by his discovery of energy quanta." The award was presented in 1919, delayed by one year as was customary. It came eighteen years after the discovery itself — the Nobel Committee waited to be sure. By 1918 there was no serious question: the quantum hypothesis was not a mathematical trick. It was a revolution.</p>
+    <p>Planck received the prize with the same gravity and understatement he brought to everything. He did not suddenly become a public figure or a popular celebrity. He continued his institutional work in Berlin, continued his administrative role in German physics, continued his correspondence with Einstein and the other great minds of European science. He was, by any measure, one of the most respected men in German scientific life — and one of the loneliest. The science he had built was now a young person's game, and the young persons were going places he had not intended.</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline">
+    <span class="section-label">VIII — Chronology</span>
+    <h2>A Life in Time</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">23 April 1858</div>
+        <div class="timeline-title">Born in Kiel, Duchy of Holstein</div>
+        <div class="timeline-body">Second son of Johann Julius Wilhelm Planck, professor of civil law, and Emma Patzig. Family is deeply academic on both sides.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1867</div>
+        <div class="timeline-title">Family moves to Munich</div>
+        <div class="timeline-body">Father appointed to professorship at the University of Munich. Max attends the Maximilian Gymnasium, excels in mathematics and music.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1874–1879</div>
+        <div class="timeline-title">University Studies: Munich and Berlin</div>
+        <div class="timeline-body">Studies physics despite Jolly's advice that the field is essentially complete. Studies under Helmholtz and Kirchhoff in Berlin. Doctoral dissertation on the second law of thermodynamics, 1879.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1885</div>
+        <div class="timeline-title">Professor at Kiel; Marries Marie Merck</div>
+        <div class="timeline-body">Appointed associate professor at Kiel. Marries Marie Merck; they will have four children. Six relatively obscure years before the Berlin call.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1889</div>
+        <div class="timeline-title">Professor at University of Berlin</div>
+        <div class="timeline-body">Succeeds Kirchhoff in the chair of theoretical physics. Enters the center of German scientific life. Begins working on blackbody radiation.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1894–1900</div>
+        <div class="timeline-title">The Blackbody Problem</div>
+        <div class="timeline-body">Becomes obsessed with the blackbody radiation spectrum after Lummer and Pringsheim's precision measurements reveal that classical theory predicts impossibly wrong results.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">14 December 1900</div>
+        <div class="timeline-title">Quantum Hypothesis: E = hf</div>
+        <div class="timeline-body">Presents his radiation law to the German Physical Society. Introduces h — Planck's constant. Describes the step privately as "an act of desperation." Later recognized as the founding moment of quantum mechanics.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1905</div>
+        <div class="timeline-title">Einstein Extends the Quantum</div>
+        <div class="timeline-body">Einstein's photoelectric paper treats the quantum as physically real — light itself is quantized. Planck is skeptical. Einstein goes further than Planck intended or, privately, welcomed.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1909–1919</div>
+        <div class="timeline-title">The Great Losses Begin</div>
+        <div class="timeline-body">Marie Planck dies (1909). Son Karl killed at Verdun (1916). Daughter Emma dies in childbirth (1917). Daughter Grete dies in childbirth (1919). Planck remarries Marga von Hoesslin in 1911.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1918</div>
+        <div class="timeline-title">Nobel Prize in Physics</div>
+        <div class="timeline-body">Awarded for the discovery of energy quanta. The prize is presented in 1919. Planck is 60. The quantum revolution he started has by now transformed atomic physics.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1933–1945</div>
+        <div class="timeline-title">Nazi Germany and the Last Losses</div>
+        <div class="timeline-body">Works to protect Jewish colleagues. Meets Hitler personally in 1933 — fails to convince him. His Berlin home is destroyed by Allied bombing (1944). Son Erwin is executed by the Nazis (January 1945).</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">4 October 1947</div>
+        <div class="timeline-title">Died in Göttingen, Age 89</div>
+        <div class="timeline-body">Rescued from wartime Germany by American soldiers, sheltered by colleagues at Göttingen. Continues to write and correspond until the end. Died peacefully of a stroke, having outlived his entire first family.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARACTER -->
+  <section id="character">
+    <span class="section-label">IX — The Man</span>
+    <h2>Character and Personality</h2>
+    <p>Planck was in almost all respects the opposite of what we imagine a revolutionary scientist to be. He was not iconoclastic, not theatrical, not driven by ambition for fame. He was deeply religious in the Lutheran tradition — not dogmatically, but in the sense that he believed the universe was rationally ordered and that to do physics was to participate in the discovery of something genuinely sacred. He was politically a German patriot, conservative in the best sense: respectful of institutions, committed to the republic of learning, loyal to colleagues. He was also, by all accounts, an excellent pianist and organist — he once performed with Einstein (violin), and friends described their chamber music as enthusiastically mediocre and entirely joyful.</p>
+    <p>His letters reveal a man of extraordinary precision and equally extraordinary warmth. He took students seriously. He fought institutional battles on behalf of younger scientists he believed in. He brought Einstein to Berlin not despite Einstein's radical ideas but because of them. When the Nazis began destroying the scientific institutions Planck had spent his life building, he stayed — in part out of German loyalty, in part out of genuine belief that he could mitigate the damage. He was wrong about how much he could mitigate. But the attempt was genuine and costly.</p>
+    <p>He died on October 4, 1947, in Göttingen, at the age of eighty-nine. The universe he left behind was not the one he had been trained to inhabit. It was stranger, more discontinuous, more probabilistic, more unsettling. It was, in large part, his creation. Whether he was at peace with that is a question he answered only indirectly, in late essays that conclude with characteristic understatement: the laws of physics point toward something beyond themselves, something the human intellect cannot fully grasp, and that is not a failure of physics. It is, perhaps, its highest achievement.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | <a href="https://creativecommons.org/licenses/by-nd/4.0/" target="_blank">CC-BY-ND-4.0</a><br>
+    Max Planck Series · Volume 0: The Person · max-planck/0-who.html<br>
+    Series: <a href="1-quantum.html">Vol. 1 — The Work</a> · <a href="2-world.html">Vol. 2 — His World</a> · <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</footer>
+
+</body>
+</html>
