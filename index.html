@@ -247,6 +247,42 @@ footer a{color:var(--gold);text-decoration:none}
 const LIBRARY = [
 
   {
+    slug: "euclid",
+    name: "Euclid",
+    era: "c. 300 BCE",
+    eraSort: -300,
+    place: "Alexandria, Egypt",
+    role: "Mathematician · Father of Geometry · Axiomatic Proof",
+    desc: "Wrote the Elements (~300 BCE) — 13 books, 465 propositions, the axiomatic method that all mathematics still runs on. Proved the infinitude of primes. Built the foundation Turing, Gödel, and every formal system stands on. We don't know his face, his dates, or his birthplace.",
+    color: "#c9a227",
+    entry: "euclid/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",      href:"euclid/0-who.html" },
+      { n:"1", title:"The Elements",    href:"euclid/1-elements.html" },
+      { n:"2", title:"His World",       href:"euclid/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"euclid/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "al-khwarizmi",
+    name: "Al-Khwarizmi",
+    era: "c. 780–850 CE",
+    eraSort: 780,
+    place: "Baghdad, House of Wisdom",
+    role: "Mathematician · Father of Algebra · Named the Algorithm",
+    desc: "Wrote Kitab al-jabr (830 CE) — the book whose title gave us the word \"algebra.\" His name, Latinized to Algoritmi, gave us the word \"algorithm.\" Transmitted the Hindu-Arabic numeral system to the West. Every algorithm ever written traces to his framework.",
+    color: "#c07818",
+    entry: "al-khwarizmi/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",       href:"al-khwarizmi/0-who.html" },
+      { n:"1", title:"The Algebra",      href:"al-khwarizmi/1-algebra.html" },
+      { n:"2", title:"His World",        href:"al-khwarizmi/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"al-khwarizmi/3-legacy.html" },
+    ]
+  },
+
+  {
     slug: "enheduanna",
     name: "Enheduanna",
     era: "c. 2300 BCE",
@@ -265,6 +301,24 @@ const LIBRARY = [
   },
 
   {
+    slug: "isaac-newton",
+    name: "Isaac Newton",
+    era: "1643–1727",
+    eraSort: 1643,
+    place: "Woolsthorpe · Cambridge · London",
+    role: "Physicist · Mathematician · Calculus · Gravity · Optics",
+    desc: "Invented calculus and the law of universal gravitation during a single plague year alone at Woolsthorpe, 1665–1666. The Principia Mathematica (1687) ran the solar system as a mathematical proof. Every rocket, bridge, and satellite still uses his equations.",
+    color: "#991b1b",
+    entry: "isaac-newton/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",       href:"isaac-newton/0-who.html" },
+      { n:"1", title:"The Principia",    href:"isaac-newton/1-principia.html" },
+      { n:"2", title:"His World",        href:"isaac-newton/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"isaac-newton/3-legacy.html" },
+    ]
+  },
+
+  {
     slug: "ada-lovelace",
     name: "Ada Lovelace",
     era: "1815–1852",
@@ -279,6 +333,42 @@ const LIBRARY = [
       { n:"1", title:"The Notes (1843)",  href:"ada-lovelace/1-notes.html" },
       { n:"2", title:"Her World",         href:"ada-lovelace/2-world.html" },
       { n:"3", title:"Her Long Afterlife",href:"ada-lovelace/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "george-boole",
+    name: "George Boole",
+    era: "1815–1864",
+    eraSort: 1815,
+    place: "Lincoln · Cork",
+    role: "Mathematician · Boolean Algebra · The Logic of Computing",
+    desc: "Self-taught son of a cobbler. Wrote The Laws of Thought (1854) — turned Aristotelian logic into algebra where variables are only 0 or 1. Ignored for 73 years. Then Shannon proved in 1937 it maps exactly to electrical circuits. Every transistor, gate, and CPU runs on Boole's 1854 algebra.",
+    color: "#059669",
+    entry: "george-boole/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"george-boole/0-who.html" },
+      { n:"1", title:"The Logic",          href:"george-boole/1-logic.html" },
+      { n:"2", title:"His World",          href:"george-boole/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"george-boole/3-legacy.html" },
+    ]
+  },
+
+  {
+    slug: "james-maxwell",
+    name: "James Clerk Maxwell",
+    era: "1831–1879",
+    eraSort: 1831,
+    place: "Edinburgh · Aberdeen · London · Cambridge",
+    role: "Physicist · Four Equations · Proved Light is Electromagnetic",
+    desc: "Wrote four equations that unified electricity, magnetism, and light. Calculated c = 1/√(ε₀μ₀) and recognized it as the speed of light — proving light IS an electromagnetic wave. Died at 48. Hertz proved it experimentally 8 years later. Every photon, radio signal, and WiFi packet runs on Maxwell.",
+    color: "#7c3aed",
+    entry: "james-maxwell/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"james-maxwell/0-who.html" },
+      { n:"1", title:"The Four Equations", href:"james-maxwell/1-equations.html" },
+      { n:"2", title:"His World",          href:"james-maxwell/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"james-maxwell/3-legacy.html" },
     ]
   },
 
@@ -320,6 +410,24 @@ const LIBRARY = [
       { n:"7",  title:"Parts",                href:"workbench/7-parts.html" },
       { n:"8",  title:"Tools & The Bench",    href:"workbench/8-tools.html" },
       { n:"+",  title:"Slayer Exciter Manual",href:"workbench/slayer-exciter-manual.html" },
+    ]
+  },
+
+  {
+    slug: "john-von-neumann",
+    name: "John von Neumann",
+    era: "1903–1957",
+    eraSort: 1903,
+    place: "Budapest · Princeton · Los Alamos",
+    role: "Mathematician · Computer Architecture · Game Theory · Quantum",
+    desc: "Memorized the Budapest phone book at 6. Invented the stored-program architecture every computer uses (1945). Co-invented game theory (1944). Formalized quantum mechanics in Hilbert space (1932). Invented cellular automata. Died at 53. Wheeler: \"It is just barely possible for a man to be smart enough that he can figure out most things from first principles.\"",
+    color: "#1d4ed8",
+    entry: "john-von-neumann/0-who.html",
+    works: [
+      { n:"0", title:"Who He Was",         href:"john-von-neumann/0-who.html" },
+      { n:"1", title:"The Architecture",   href:"john-von-neumann/1-architecture.html" },
+      { n:"2", title:"His World",          href:"john-von-neumann/2-world.html" },
+      { n:"3", title:"His Long Afterlife", href:"john-von-neumann/3-legacy.html" },
     ]
   },
 

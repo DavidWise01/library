@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isaac Newton — Vol. 0: Who He Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0d0a05;
+      --paper-mid: #14100a;
+      --paper-light: #1e1810;
+      --crimson: #991b1b;
+      --crimson-dim: #7a1515;
+      --crimson-glow: rgba(153,27,27,0.18);
+      --gold: #c49a2a;
+      --gold-dim: #a07d1e;
+      --gold-glow: rgba(196,154,42,0.15);
+      --text: #e8dfc8;
+      --text-dim: #a89880;
+      --text-faint: #5a4f40;
+      --border: rgba(196,154,42,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,5,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a {
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label {
+      color: var(--text-faint);
+      margin-right: auto;
+    }
+
+    /* ── MASTHEAD ── */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 60%, #1a0d0d 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(153,27,27,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--crimson);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    h1 .subtitle {
+      display: block;
+      font-weight: 500;
+      font-size: 0.5em;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-top: 0.4rem;
+    }
+
+    .masthead-lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      max-width: 55ch;
+      border-left: 3px solid var(--crimson);
+      padding-left: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* ── APPLE SVG ANIMATION ── */
+    .masthead-art {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .apple-svg {
+      width: 380px;
+      height: 380px;
+      opacity: 0.92;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin: 3.5rem 0 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+    }
+
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    /* ── KICK & BAND ── */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--crimson);
+      color: #f5e8d0;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2em 0.7em;
+      border-radius: 2px;
+      margin-right: 0.5rem;
+      margin-bottom: 0.3rem;
+      vertical-align: middle;
+    }
+
+    .band-gold {
+      background: var(--gold-dim);
+      color: #0d0a05;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      margin: 2rem 0 3rem;
+      padding-left: 2.5rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.6rem; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--crimson), var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.2rem;
+      padding: 1.2rem 1.5rem;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.1rem; top: 1.5rem;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      border: 2px solid var(--paper);
+    }
+    .timeline-item:hover {
+      border-color: var(--gold);
+      transform: translateX(4px);
+      box-shadow: -4px 0 20px var(--gold-glow);
+    }
+    .timeline-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .timeline-event {
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .timeline-event em { color: var(--text-dim); }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px var(--crimson-glow);
+      border-color: var(--crimson);
+    }
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 2.5rem 0;
+      padding: 1.8rem 2rem;
+      background: var(--paper-light);
+      border-left: 4px solid var(--crimson);
+      border-radius: 0 6px 6px 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .stat {
+      flex: 1 1 160px;
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--crimson);
+      display: block;
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+      display: block;
+    }
+
+    /* ── COLOPHON ── */
+    .colophon {
+      margin-top: 6rem;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      text-align: center;
+      line-height: 2;
+    }
+    .colophon a { color: var(--text-faint); }
+
+    /* ── VOL NAV ── */
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 4rem;
+      flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Isaac Newton · Library Series</span>
+  <a href="0-who.html" class="active">Vol. 0 — Who</a>
+  <a href="1-principia.html">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 0 of 4 · Biography</span>
+    <h1>
+      Isaac Newton
+      <span class="subtitle">Who He Was · 1643 – 1727</span>
+    </h1>
+    <p class="masthead-lede">
+      A premature infant born on Christmas Day in a Lincolnshire farmhouse who
+      became the architect of the modern scientific world — re-ordering the cosmos
+      with pen, prism, and a singular, solitary mind.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Falling apple + gravity field animation -->
+    <svg class="apple-svg" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a0d0d" />
+          <stop offset="100%" stop-color="#0d0a05" />
+        </radialGradient>
+        <radialGradient id="appleGrad" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#cc2222" />
+          <stop offset="60%" stop-color="#991b1b" />
+          <stop offset="100%" stop-color="#5a0e0e" />
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background circle -->
+      <circle cx="190" cy="190" r="180" fill="url(#bgGrad)" />
+
+      <!-- Gravity field lines (concentric dashed circles emanating from tree) -->
+      <g opacity="0.12" stroke="#c49a2a" fill="none">
+        <circle cx="190" cy="80" r="40" stroke-dasharray="3 6"/>
+        <circle cx="190" cy="80" r="80" stroke-dasharray="3 8"/>
+        <circle cx="190" cy="80" r="120" stroke-dasharray="3 10"/>
+        <circle cx="190" cy="80" r="160" stroke-dasharray="3 14"/>
+      </g>
+
+      <!-- Tree trunk -->
+      <rect x="183" y="100" width="14" height="80" rx="3" fill="#3a2010" />
+      <!-- Tree canopy -->
+      <ellipse cx="190" cy="90" rx="52" ry="46" fill="#1a3a15" />
+      <ellipse cx="165" cy="105" rx="34" ry="28" fill="#1e4018" />
+      <ellipse cx="215" cy="108" rx="32" ry="26" fill="#183816" />
+
+      <!-- Ground -->
+      <rect x="0" y="280" width="380" height="100" rx="0" fill="#14100a" opacity="0.6"/>
+      <ellipse cx="190" cy="280" rx="170" ry="8" fill="#1a1206" />
+
+      <!-- Woolsthorpe manor silhouette (simple) -->
+      <g fill="#1a1208" opacity="0.7">
+        <rect x="100" y="240" width="180" height="40" />
+        <rect x="115" y="220" width="50" height="22" />
+        <rect x="215" y="218" width="50" height="24" />
+        <rect x="160" y="230" width="60" height="10" />
+        <!-- chimney -->
+        <rect x="123" y="205" width="10" height="18"/>
+        <rect x="248" y="203" width="10" height="18"/>
+      </g>
+
+      <!-- Falling apple (animated) -->
+      <g id="fallingApple">
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values="0,0; 0,0; 4,12; 10,30; 18,55; 28,85; 35,118; 40,148; 43,165"
+          keyTimes="0; 0.25; 0.35; 0.45; 0.55; 0.65; 0.75; 0.85; 1"
+          dur="3.4s"
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0 0 1 1; 0 0 0.6 1; 0 0 0.6 1; 0 0 0.6 1; 0 0 0.6 1; 0 0 0.6 1; 0 0 0.6 1; 0 0 0.6 1"
+        />
+        <!-- apple body -->
+        <ellipse cx="218" cy="98" rx="11" ry="13" fill="url(#appleGrad)" filter="url(#glow)"/>
+        <!-- stem -->
+        <path d="M218 85 Q221 79 224 76" stroke="#3a2010" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- leaf -->
+        <ellipse cx="223" cy="78" rx="7" ry="4" fill="#2a5020" transform="rotate(-20 223 78)"/>
+        <!-- highlight -->
+        <ellipse cx="213" cy="93" rx="3.5" ry="4.5" fill="rgba(255,200,200,0.25)" />
+      </g>
+
+      <!-- Impact flash (appears when apple lands) -->
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0.9;0" keyTimes="0;0.25;0.35;0.45;0.55;0.65;0.75;0.85;0.95;1" dur="3.4s" repeatCount="indefinite"/>
+        <ellipse cx="258" cy="268" rx="18" ry="5" fill="var(--gold)" opacity="0.5"/>
+      </g>
+
+      <!-- F = Gm₁m₂/r² label -->
+      <text x="190" y="340" text-anchor="middle" font-family="'Space Mono', monospace" font-size="13" fill="#c49a2a" letter-spacing="1" opacity="0.85">F = Gm₁m₂/r²</text>
+
+      <!-- Border ring -->
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#c49a2a" stroke-width="0.8" opacity="0.25"/>
+    </svg>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <section id="vitals">
+    <span class="kick">Essential Facts</span>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-number">1643</span>
+        <span class="stat-label">Year of Birth</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">84</span>
+        <span class="stat-label">Years Lived</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1687</span>
+        <span class="stat-label">Principia Published</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1727</span>
+        <span class="stat-label">Year of Death</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="origins">
+    <h2>Origins — Woolsthorpe, Lincolnshire</h2>
+
+    <p>
+      Isaac Newton was born on <strong>25 December 1642</strong> (Old Style, Julian calendar) —
+      or <strong>4 January 1643</strong> in the Gregorian calendar now in use — at
+      Woolsthorpe Manor, a modest limestone farmhouse in Lincolnshire, England. His
+      father, also named Isaac Newton, had died three months before his birth; his
+      mother, Hannah Ayscough, described the infant as so small he could fit inside a
+      quart pot. He was not expected to survive.
+    </p>
+
+    <p>
+      He survived. More than survived: when Hannah remarried the Reverend Barnabas
+      Smith in 1645 and moved to the next village, three-year-old Isaac was left in
+      the care of his maternal grandmother, Margery Ayscough. This separation marked
+      him. He later confessed, in a catalogue of his sins, to threatening to burn down
+      his stepfather's house — with his mother and stepfather inside it.
+    </p>
+
+    <blockquote>
+      "I do not know what I may appear to the world, but to myself I seem to have been
+      only like a boy playing on the sea-shore, and diverting myself in now and then
+      finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean
+      of truth lay all undiscovered before me."
+      <cite>— Isaac Newton, reported by Joseph Spence, c. 1730</cite>
+    </blockquote>
+
+    <p>
+      He attended the King's School in Grantham from around 1655, lodging with a local
+      apothecary. He was, by most accounts, a mediocre student who came alive only when
+      mechanics and mathematics captured his attention. He built elaborate mechanical
+      models — sundials, wind-powered mills — and reportedly obsessed over the geometry
+      of a comet's tail. His uncle recognized something and recommended Cambridge.
+    </p>
+  </section>
+
+  <section id="cambridge">
+    <h2>Cambridge — Sizar to Lucasian Professor</h2>
+
+    <p>
+      Newton entered Trinity College, Cambridge in June 1661 as a <em>sizar</em> —
+      a student who earned his keep by performing menial services for wealthier
+      classmates and fellows. He was eighteen. The curriculum was still largely
+      Aristotelian. Newton quietly discarded it and taught himself Descartes, Kepler,
+      Galileo, Wallis, and Barrow from the texts he found in the bookshops of Cambridge.
+    </p>
+
+    <p>
+      In 1664 he purchased a copy of Descartes' <em>Géométrie</em> and plunged into
+      mathematics. Within a year he had extended it beyond what Descartes had done.
+      He also purchased a prism at Stourbridge Fair in 1664 — the beginning of
+      everything with light.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">&#127979;</span>
+        <h4>Trinity College</h4>
+        <p>Entered 1661 as a sizar. Received his BA in 1665. Elected Fellow of Trinity in 1667.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128218;</span>
+        <h4>Self-Directed Study</h4>
+        <p>Skipped the curriculum. Mastered Descartes, Galileo, Kepler, and Wallis independently by age 22.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#127788;</span>
+        <h4>Lucasian Professor</h4>
+        <p>Appointed Lucasian Professor of Mathematics in 1669 at age 26, succeeding Isaac Barrow who vacated the chair for him.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128081;</span>
+        <h4>Royal Society</h4>
+        <p>Elected Fellow in 1672. Presented his reflecting telescope to the Society — they were astonished.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="annus">
+    <h2>The Miracle Year — Annus Mirabilis, 1665–1666</h2>
+
+    <p>
+      In the summer of 1665, plague swept England. Cambridge University closed and
+      sent its students home. Newton, twenty-two years old, returned to Woolsthorpe
+      Manor. Over the next eighteen months he worked in near-total isolation —
+      and produced what may be the greatest intellectual achievement in the history
+      of science.
+    </p>
+
+    <p>
+      He had no laboratory, no colleagues, no institution. He had notebooks, a prism,
+      the apple orchard outside the window, and a mind that would not rest.
+    </p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-year">1665 — Summer</div>
+        <div class="timeline-event">
+          <span class="band">Calculus</span>
+          Develops the method of fluxions — what we now call differential calculus.
+          He frames the derivative as the "fluxion" of a quantity changing in time.
+          He extends this to the integral (the "fluent") and proves the Fundamental
+          Theorem of Calculus: that differentiation and integration are inverse operations.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1665 — Autumn</div>
+        <div class="timeline-event">
+          <span class="band">Binomial Theorem</span>
+          Generalizes the binomial expansion to fractional and negative exponents.
+          This becomes the foundation for infinite series analysis and power series expansions.
+          <em>He is twenty-two years old.</em>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1666 — January</div>
+        <div class="timeline-event">
+          <span class="band band-gold">Optics</span>
+          Purchases prisms and sets up his darkened room experiment. Passes white light
+          through a prism and discovers it is not pure but composed of a spectrum of colors.
+          He invents the term "spectrum." He demonstrates the prism does not add color — it
+          reveals color already present in white light.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">1666 — Spring / Summer</div>
+        <div class="timeline-event">
+          <span class="band">Gravity</span>
+          Sitting in the Woolsthorpe orchard — and perhaps observing an apple fall — he
+          poses the decisive question: if the force that pulls an apple to Earth diminishes
+          with distance, could the same force reach the Moon? He calculates. The numbers
+          almost fit. He sets the problem aside and returns to it twenty years later.
+        </div>
+      </div>
+
+    </div>
+
+    <p>
+      Newton later recalled: "In the two plague years of 1665 and 1666, I was in the
+      prime of my age for invention, and minded Mathematicks and Philosophy more than
+      at any time since." This is characteristic understatement: those two years
+      produced calculus, the spectral theory of light, and the seed of universal gravitation.
+    </p>
+  </section>
+
+  <section id="personality">
+    <h2>The Man Himself — Character and Rivals</h2>
+
+    <p>
+      Newton was famously difficult — solitary, secretive, obsessive, and capable of
+      sudden and ferocious vindictiveness toward those he perceived as having wronged him.
+      He published reluctantly and only under pressure. He carried grudges for decades.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">&#9876;</span>
+        <h4>Robert Hooke</h4>
+        <p>Hooke claimed priority in the inverse-square law of gravity. Newton's rage was bottomless. After Hooke's death in 1703, Newton became President of the Royal Society and — according to some accounts — ensured Hooke's portrait was lost.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#9995;</span>
+        <h4>Gottfried Wilhelm Leibniz</h4>
+        <p>Leibniz independently invented calculus and published first (1684). Newton, who had the priority by two decades but published nothing, launched a war of attrition. The Royal Society — stacked with Newton's allies — officially declared Newton the sole inventor in 1712. History gives credit to both.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128197;</span>
+        <h4>Edmond Halley</h4>
+        <p>One of the very few men Newton seemed to trust. Halley personally funded the publication of the <em>Principia</em>, cajoled Newton into finishing it, and corrected the proofs. Without Halley, the <em>Principia</em> may never have been published.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128270;</span>
+        <h4>The Secret Notebooks</h4>
+        <p>Newton wrote more on alchemy and theology than on physics. He believed the prisca sapientia — the ancient wisdom — had encoded the structure of the cosmos. He wrote over a million words on biblical prophecy. He was privately, deeply, heterodox.</p>
+      </div>
+    </div>
+
+    <blockquote>
+      "Nature and Nature's laws lay hid in night: God said, Let Newton be! and all was light."
+      <cite>— Alexander Pope, epitaph proposed for Newton's tomb</cite>
+    </blockquote>
+  </section>
+
+  <section id="later">
+    <h2>Later Life — The Mint, the Royal Society, and Death</h2>
+
+    <p>
+      After the <em>Principia</em> (1687) and <em>Opticks</em> (1704), Newton's creative
+      scientific work was essentially complete. But his public life was only beginning.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1689</div>
+        <div class="timeline-event">
+          <span class="band">Parliament</span>
+          Elected Member of Parliament for Cambridge University. He served quietly;
+          according to legend his only recorded contribution to debate was a request
+          to close a drafty window.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1693</div>
+        <div class="timeline-event">
+          <span class="band band-gold">Breakdown</span>
+          Suffered a severe nervous breakdown — possibly mercury poisoning from his
+          alchemical experiments. Sent disturbing letters to John Locke and Samuel
+          Pepys. He later claimed he could not remember writing them.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1696</div>
+        <div class="timeline-event">
+          <span class="band">The Mint</span>
+          Appointed Warden of the Royal Mint in London. Oversaw the Great Recoinage —
+          replacing clipped and debased coinage with milled, machine-made coin.
+          Prosecuted counterfeiters relentlessly, sending at least twenty to the gallows.
+          Became Master of the Mint in 1699.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1703</div>
+        <div class="timeline-event">
+          <span class="band band-gold">Royal Society</span>
+          Elected President of the Royal Society. Re-elected every year until his death.
+          Ran it with iron authority. Published <em>Opticks</em> in English (rather than Latin)
+          the following year — a deliberate move for a wider audience.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1705</div>
+        <div class="timeline-event">
+          <span class="band">Knighthood</span>
+          Knighted by Queen Anne at Trinity College, Cambridge — the first scientist
+          to be knighted for scientific work.
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1727</div>
+        <div class="timeline-event">
+          <span class="band">Death</span>
+          Died 20 March 1727 (NS) in Kensington, aged 84. Buried with full state honors
+          in Westminster Abbey. He never married. He reportedly died a virgin.
+          Voltaire attended the funeral and marveled at England's treatment of its great mind.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="character-summary">
+    <h2>What He Was</h2>
+
+    <p>
+      Isaac Newton was not a warm man or an easy one. He was solitary to an extreme,
+      driven to a pathological degree, and capable of sustained cruelty toward rivals.
+      He was also, quite simply, the most powerful scientific mind that had yet lived
+      on Earth — and one of a very small number who reshaped not just a discipline
+      but the entire framework of human knowledge.
+    </p>
+
+    <p>
+      He re-ordered the sky. He revealed what light is made of. He invented a
+      mathematics sufficient to describe motion in the universe. He did most of this
+      alone, in his twenties, in a farmhouse during a plague.
+    </p>
+
+    <p>
+      The rest, as they say, is the modern world.
+    </p>
+  </section>
+
+  <div class="vol-nav">
+    <a href="1-principia.html">Next: Vol. 1 — The Work &rarr;</a>
+  </div>
+
+  <footer class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp;
+    David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    CC-BY-ND-4.0 &nbsp;|&nbsp;
+    Isaac Newton Library Series &nbsp;|&nbsp;
+    Volume 0: Who He Was
+  </footer>
+
+</main>
+</body>
+</html>

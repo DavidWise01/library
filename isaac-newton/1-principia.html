@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isaac Newton — Vol. 1: The Work</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0d0a05;
+      --paper-mid: #14100a;
+      --paper-light: #1e1810;
+      --crimson: #991b1b;
+      --crimson-dim: #7a1515;
+      --crimson-glow: rgba(153,27,27,0.18);
+      --gold: #c49a2a;
+      --gold-dim: #a07d1e;
+      --gold-glow: rgba(196,154,42,0.15);
+      --text: #e8dfc8;
+      --text-dim: #a89880;
+      --text-faint: #5a4f40;
+      --border: rgba(196,154,42,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--text);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,5,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 55%, #0d0a1a 100%);
+      border-bottom: 1px solid var(--border);
+      min-height: 480px;
+      position: relative;
+      overflow: hidden;
+    }
+    .masthead::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(196,154,42,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    h1 .subtitle {
+      display: block; font-weight: 500; font-size: 0.5em;
+      color: var(--crimson); letter-spacing: 0.12em; margin-top: 0.4rem;
+    }
+    .masthead-lede {
+      font-size: 1.15rem; font-style: italic; color: var(--text-dim);
+      margin-top: 1.5rem; max-width: 55ch;
+      border-left: 3px solid var(--gold); padding-left: 1.2rem; line-height: 1.6;
+    }
+    .masthead-art { position: relative; display: flex; align-items: center; justify-content: center; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.7rem;
+      color: var(--gold); margin: 3.5rem 0 1.2rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 {
+      font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.15rem;
+      color: var(--text); margin: 2rem 0 0.6rem;
+    }
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 0.3rem;
+    }
+    .band {
+      display: inline-block; background: var(--crimson); color: #f5e8d0;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.2em 0.7em; border-radius: 2px;
+      margin-right: 0.5rem; margin-bottom: 0.3rem; vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #0d0a05; }
+
+    /* ── EQUATION DISPLAY ── */
+    .equation-block {
+      margin: 2.5rem 0;
+      padding: 2.5rem 2rem;
+      background: var(--paper-mid);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .equation-block::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, var(--gold-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .equation-label {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 1rem; display: block;
+    }
+    .equation {
+      font-family: 'Space Mono', monospace; font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--gold); letter-spacing: 0.06em; line-height: 1.4;
+      text-shadow: 0 0 30px rgba(196,154,42,0.3);
+    }
+    .equation-desc {
+      margin-top: 1.2rem; font-size: 0.92rem; color: var(--text-dim);
+      font-style: italic; max-width: 50ch; margin-left: auto; margin-right: auto;
+    }
+    .equation-vars {
+      margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.8rem;
+      justify-content: center; position: relative; z-index: 1;
+    }
+    .var-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em;
+      background: var(--paper-light); border: 1px solid var(--border);
+      padding: 0.3em 0.8em; border-radius: 3px; color: var(--text-dim);
+    }
+    .var-tag strong { color: var(--gold); }
+
+    /* ── LAW CARDS ── */
+    .law-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 3rem;
+    }
+    .law-card {
+      background: var(--paper-mid);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .law-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px var(--crimson-glow);
+      border-color: var(--crimson);
+    }
+    .law-card::before {
+      content: attr(data-law);
+      position: absolute; top: -0.2rem; right: 1rem;
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 5rem;
+      color: rgba(153,27,27,0.08); line-height: 1; pointer-events: none;
+    }
+    .law-number {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 0.6rem;
+    }
+    .law-card h3 { font-size: 1.05rem; margin: 0 0 0.8rem; color: var(--text); }
+    .law-card p { font-size: 0.93rem; color: var(--text-dim); margin: 0 0 1rem; line-height: 1.55; max-width: none; }
+    .law-eq {
+      font-family: 'Space Mono', monospace; font-size: 1.05rem;
+      color: var(--gold); background: var(--paper-light);
+      display: inline-block; padding: 0.4em 0.9em; border-radius: 4px;
+      border: 1px solid var(--border); margin-top: 0.5rem;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem; margin: 2rem 0 3rem;
+    }
+    .card {
+      background: var(--paper-mid); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.5rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px var(--gold-glow);
+      border-color: var(--gold);
+    }
+    .card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
+    .card h4 { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 600; color: var(--gold); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.92rem; color: var(--text-dim); line-height: 1.5; margin: 0; }
+
+    blockquote {
+      margin: 2.5rem 0; padding: 1.8rem 2rem;
+      background: var(--paper-light); border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0; font-style: italic; font-size: 1.15rem; color: var(--text);
+    }
+    blockquote cite {
+      display: block; font-style: normal; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-dim);
+      margin-top: 0.8rem; text-transform: uppercase;
+    }
+
+    .kepler-box {
+      background: var(--paper-mid); border: 1px solid var(--border);
+      border-radius: 8px; padding: 2rem; margin: 2rem 0;
+    }
+    .kepler-box h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin-bottom: 1rem; }
+    .kepler-law {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      margin-bottom: 1.2rem; padding-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(196,154,42,0.1);
+    }
+    .kepler-law:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .kepler-num {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--crimson);
+      background: var(--paper-light); border: 1px solid var(--crimson);
+      padding: 0.3em 0.6em; border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+    }
+    .kepler-text { font-size: 0.95rem; color: var(--text-dim); line-height: 1.5; }
+    .kepler-text em { color: var(--text); font-style: normal; }
+
+    .vol-nav {
+      display: flex; gap: 1rem; justify-content: space-between;
+      margin-top: 4rem; flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    .colophon {
+      margin-top: 6rem; padding: 2rem; border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--text-faint); text-align: center; line-height: 2;
+    }
+
+    /* ── ORBIT SVG ── */
+    .orbit-svg { width: 380px; height: 380px; }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+      .equation { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Isaac Newton · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-principia.html" class="active">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 1 of 4 · The Scientific Work</span>
+    <h1>
+      The Work
+      <span class="subtitle">Principia · Opticks · Calculus · 1666–1704</span>
+    </h1>
+    <p class="masthead-lede">
+      Three laws that moved the heavens. One equation that unified the cosmos.
+      A prism that shattered the myth of pure white light. The <em>Principia Mathematica</em>
+      is the most consequential scientific text ever written.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Orbital animation: planet circling the sun -->
+    <svg class="orbit-svg" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="spaceGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0d0a14"/>
+          <stop offset="100%" stop-color="#0d0a05"/>
+        </radialGradient>
+        <radialGradient id="sunGrad" cx="40%" cy="35%" r="60%">
+          <stop offset="0%" stop-color="#ffe066"/>
+          <stop offset="50%" stop-color="#c49a2a"/>
+          <stop offset="100%" stop-color="#7a5810"/>
+        </radialGradient>
+        <radialGradient id="planetGrad" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#6699cc"/>
+          <stop offset="100%" stop-color="#334466"/>
+        </radialGradient>
+        <filter id="sunGlow">
+          <feGaussianBlur stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="planetGlow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#spaceGrad)"/>
+
+      <!-- Star field -->
+      <g fill="white" opacity="0.5">
+        <circle cx="45" cy="55" r="0.8"/><circle cx="120" cy="30" r="0.6"/>
+        <circle cx="280" cy="40" r="1"/><circle cx="340" cy="90" r="0.7"/>
+        <circle cx="360" cy="155" r="0.6"/><circle cx="350" cy="280" r="0.8"/>
+        <circle cx="290" cy="340" r="0.6"/><circle cx="80" cy="330" r="0.9"/>
+        <circle cx="30" cy="260" r="0.6"/><circle cx="55" cy="180" r="0.7"/>
+        <circle cx="165" cy="22" r="0.5"/><circle cx="230" cy="18" r="0.6"/>
+        <circle cx="310" cy="200" r="0.5"/><circle cx="22" cy="140" r="0.7"/>
+      </g>
+
+      <!-- Orbit ellipse -->
+      <ellipse cx="190" cy="190" rx="130" ry="90"
+        fill="none" stroke="#c49a2a" stroke-width="0.8"
+        stroke-dasharray="4 5" opacity="0.35"/>
+
+      <!-- Force arrows (four cardinal points, pointing inward) -->
+      <g opacity="0.22" stroke="#991b1b" stroke-width="1.2" fill="#991b1b">
+        <line x1="320" y1="190" x2="295" y2="190"/>
+        <polygon points="295,186 285,190 295,194"/>
+        <line x1="60" y1="190" x2="85" y2="190"/>
+        <polygon points="85,186 95,190 85,194"/>
+        <line x1="190" y1="60" x2="190" y2="85"/>
+        <polygon points="186,85 190,95 194,85"/>
+        <line x1="190" y1="320" x2="190" y2="295"/>
+        <polygon points="186,295 190,285 194,295"/>
+      </g>
+
+      <!-- Sun (at focus of ellipse, offset) -->
+      <circle cx="190" cy="190" r="28" fill="url(#sunGrad)" filter="url(#sunGlow)"/>
+      <circle cx="183" cy="183" r="10" fill="rgba(255,240,150,0.15)"/>
+
+      <!-- F = Gm₁m₂/r² label on orbit -->
+      <text x="270" y="148" font-family="'Space Mono', monospace" font-size="10"
+        fill="#c49a2a" opacity="0.75" transform="rotate(-26 270 148)">F = Gm₁m₂/r²</text>
+
+      <!-- Orbiting planet -->
+      <g>
+        <!-- Animated along the ellipse path -->
+        <circle r="14" fill="url(#planetGrad)" filter="url(#planetGlow)">
+          <animateMotion
+            path="M 320,190 A 130,90 0 1,1 319.9,190"
+            dur="6s"
+            repeatCount="indefinite"
+            rotate="auto"
+          />
+        </circle>
+        <!-- planet highlight -->
+        <circle r="5" fill="rgba(180,210,255,0.2)">
+          <animateMotion
+            path="M 316,186 A 130,90 0 1,1 315.9,186"
+            dur="6s"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </g>
+
+      <!-- Velocity vector (tangent to orbit, shown at right) -->
+      <line x1="316" y1="186" x2="316" y2="160" stroke="#c49a2a" stroke-width="1.5" opacity="0.5">
+        <animateMotion path="M 0,0" dur="0s"/>
+      </line>
+
+      <!-- Equations ring -->
+      <text x="190" y="358" text-anchor="middle" font-family="'Space Mono', monospace"
+        font-size="11" fill="#c49a2a" letter-spacing="1" opacity="0.8">
+        Principia Mathematica · MDCLXXXVII
+      </text>
+
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#c49a2a" stroke-width="0.8" opacity="0.2"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <!-- THE PRINCIPIA -->
+  <section id="principia">
+    <h2>Philosophiæ Naturalis Principia Mathematica — 1687</h2>
+
+    <p>
+      The full title means <em>Mathematical Principles of Natural Philosophy.</em>
+      Published on 5 July 1687, it was written in Latin — the universal language of
+      scholarship — and presented as a rigorous geometric deduction from first principles.
+      Edmond Halley, astronomer and friend, paid for its publication from his own pocket
+      after the Royal Society demurred.
+    </p>
+
+    <p>
+      The <em>Principia</em> has three books. Book I establishes the mathematics of motion
+      in a void. Book II treats motion through resisting media. Book III — <em>The System
+      of the World</em> — applies the mathematics to the actual solar system, deriving the
+      motions of planets, moons, comets, and tides from a single force law.
+    </p>
+
+    <blockquote>
+      "I have not been able to discover the cause of those properties of gravity from phenomena,
+      and I frame no hypotheses… It is enough that gravity does really exist, and act according
+      to the laws which we have explained."
+      <cite>— Newton, General Scholium, Principia (3rd ed., 1726)</cite>
+    </blockquote>
+  </section>
+
+  <!-- THE THREE LAWS -->
+  <section id="laws">
+    <h2>The Three Laws of Motion</h2>
+    <p>
+      Newton opens the <em>Principia</em> with three axioms — the Laws of Motion —
+      from which all of classical mechanics follows. They remain the foundation
+      of engineering and physics for every problem at human scales.
+    </p>
+
+    <div class="law-cards">
+      <div class="law-card" data-law="I">
+        <div class="law-number">First Law · Lex I · Inertia</div>
+        <h3>The Law of Inertia</h3>
+        <p>
+          Every body perseveres in its state of being at rest, or of moving uniformly
+          straight forward, except insofar as it is compelled to change its state by
+          forces impressed upon it.
+        </p>
+        <p style="color: var(--text-dim); font-size: 0.88rem;">
+          An object at rest stays at rest. An object in motion stays in motion —
+          in a straight line at constant speed — unless acted on by a net external force.
+          This demolished Aristotle's physics, which required continuous force to maintain motion.
+        </p>
+        <span class="law-eq">v = constant if F_net = 0</span>
+      </div>
+
+      <div class="law-card" data-law="II">
+        <div class="law-number">Second Law · Lex II · Force</div>
+        <h3>The Law of Acceleration</h3>
+        <p>
+          A change in motion is proportional to the motive force impressed and takes place
+          along the straight line in which that force is impressed.
+        </p>
+        <p style="color: var(--text-dim); font-size: 0.88rem;">
+          Force equals the rate of change of momentum. When mass is constant, this becomes
+          Force equals mass times acceleration. This is the master equation of mechanics —
+          every rocket, bridge, and projectile calculation rests on it.
+        </p>
+        <span class="law-eq">F = ma</span>
+      </div>
+
+      <div class="law-card" data-law="III">
+        <div class="law-number">Third Law · Lex III · Reaction</div>
+        <h3>The Law of Equal and Opposite Forces</h3>
+        <p>
+          To every action there is always an equal and opposite reaction; the mutual actions
+          of two bodies upon each other are always equal, and directed to contrary parts.
+        </p>
+        <p style="color: var(--text-dim); font-size: 0.88rem;">
+          Forces always come in pairs. When Earth pulls you downward, you pull Earth upward
+          with equal force. When a rocket engine pushes exhaust backward, the exhaust pushes
+          the rocket forward. Every propulsion system in history obeys this law.
+        </p>
+        <span class="law-eq">F&#x2081;₂ = −F&#x2082;₁</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIVERSAL GRAVITATION -->
+  <section id="gravity">
+    <h2>Universal Law of Gravitation</h2>
+
+    <p>
+      The crown of the <em>Principia</em>: a single equation that describes the force
+      of attraction between any two masses in the universe — from an apple to a galaxy.
+      The force is proportional to the product of the masses and inversely proportional
+      to the square of the distance between them.
+    </p>
+
+    <div class="equation-block">
+      <span class="equation-label">Universal Law of Gravitation · Newton, 1687</span>
+      <div class="equation">F = Gm₁m₂ / r²</div>
+      <p class="equation-desc">
+        The gravitational force between two bodies equals the gravitational constant
+        times the product of their masses, divided by the square of the distance between them.
+      </p>
+      <div class="equation-vars">
+        <span class="var-tag"><strong>F</strong> = gravitational force (Newtons)</span>
+        <span class="var-tag"><strong>G</strong> = 6.674 × 10⁻¹¹ N·m²/kg² (gravitational constant)</span>
+        <span class="var-tag"><strong>m₁, m₂</strong> = masses of the two bodies (kg)</span>
+        <span class="var-tag"><strong>r</strong> = distance between centers (meters)</span>
+      </div>
+    </div>
+
+    <p>
+      The inverse-square relationship — the force falls off as the square of the distance —
+      is the key insight. Double the distance, the force drops to one-quarter.
+      Triple the distance, one-ninth. This is the same falloff as light intensity from a
+      point source, and Newton suspected it from geometric arguments about spheres.
+    </p>
+
+    <p>
+      The constant <strong>G</strong> — the gravitational constant — Newton could not
+      determine numerically. It was first measured by Henry Cavendish in 1798, using
+      a torsion balance, seventy-one years after Newton's death.
+    </p>
+
+    <h3>Deriving Kepler's Laws as a Consequence</h3>
+
+    <p>
+      The supreme demonstration of the <em>Principia</em>'s power was Newton's proof
+      that Kepler's three laws of planetary motion — empirical observations gathered
+      by Kepler from Tycho Brahe's data without any understanding of their cause —
+      follow mathematically from the law of universal gravitation combined with the
+      Second Law of Motion. Kepler's laws were not axioms; they were theorems.
+    </p>
+
+    <div class="kepler-box">
+      <h3>Kepler's Laws — Derived, Not Assumed</h3>
+      <div class="kepler-law">
+        <span class="kepler-num">Kepler I</span>
+        <div class="kepler-text">
+          <em>The orbit of a planet is an ellipse with the Sun at one focus.</em>
+          Newton proved this follows from the inverse-square law: only 1/r² gravity produces
+          conic sections (ellipses, parabolas, hyperbolas) as orbits.
+        </div>
+      </div>
+      <div class="kepler-law">
+        <span class="kepler-num">Kepler II</span>
+        <div class="kepler-text">
+          <em>A line from the Sun to a planet sweeps equal areas in equal times.</em>
+          Newton proved this follows from conservation of angular momentum, which in turn
+          follows from the force always pointing toward the Sun (central force).
+        </div>
+      </div>
+      <div class="kepler-law">
+        <span class="kepler-num">Kepler III</span>
+        <div class="kepler-text">
+          <em>The square of a planet's orbital period equals the cube of its semi-major axis: T² ∝ a³.</em>
+          Newton proved this is an exact consequence of the inverse-square law.
+          The constant of proportionality involves G and the Sun's mass.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTICKS -->
+  <section id="opticks">
+    <h2>Opticks — 1704 — The Nature of Light</h2>
+
+    <p>
+      Published in English (not Latin) in 1704, <em>Opticks</em> is Newton's account of
+      his experiments with light and color — work begun in 1666 with a prism purchased
+      at Stourbridge Fair. Where the <em>Principia</em> was dense deductive geometry,
+      <em>Opticks</em> was empirical and readable — the Royal Society's members could
+      follow it without Newton's mathematical apparatus.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">&#127752;</span>
+        <h4>The Prism Experiment</h4>
+        <p>White sunlight through a prism produces a full spectrum of colors — red, orange, yellow, green, blue, indigo, violet. Newton named these colors. He proved the prism does not add color: it refracts different frequencies by different amounts, revealing colors already present.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128301;</span>
+        <h4>Experimentum Crucis</h4>
+        <p>Newton passed spectrum light through a second prism: each individual color remained unchanged. This "crucial experiment" proved that color is a property of the light ray itself, not an artifact of the glass — overthrowing a century of wrong theory.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#127775;</span>
+        <h4>Corpuscular Theory</h4>
+        <p>Newton proposed light consists of particles (corpuscles). This was later challenged by Huygens' wave theory and ultimately superseded by Maxwell and then quantum mechanics (photons). Newton was wrong about the mechanism but right about the spectrum.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128101;</span>
+        <h4>Newton's Rings</h4>
+        <p>Circular interference patterns produced when a curved glass surface is placed on a flat one. Newton observed them but could not explain them with his particle theory — they require wave theory. They now bear his name as an irony of science history.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULUS -->
+  <section id="calculus">
+    <h2>The Calculus — Method of Fluxions</h2>
+
+    <p>
+      Newton invented what he called the "method of fluxions" in 1665–1666. A
+      <em>fluent</em> is any continuously changing quantity; a <em>fluxion</em> is its
+      rate of change — what we now call a derivative. The notation he used was
+      dot-notation (ẋ for the fluxion of x), which survives today in physics for
+      time derivatives.
+    </p>
+
+    <div class="equation-block">
+      <span class="equation-label">Fundamental Theorem of Calculus</span>
+      <div class="equation" style="font-size: clamp(1.2rem, 3vw, 2rem);">
+        d/dt[∫ f(t) dt] = f(t)
+      </div>
+      <p class="equation-desc">
+        Differentiation and integration are inverse operations — Newton's most powerful insight,
+        unifying what had seemed to be two unrelated mathematical techniques.
+      </p>
+    </div>
+
+    <p>
+      Newton also extended the binomial theorem to fractional and negative exponents —
+      crucial for series expansions — and developed power series methods that allowed
+      functions to be expressed as infinite polynomials. These are now standard tools
+      in every branch of analysis.
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">&#128208;</span>
+        <h4>Fluxions vs. Differentials</h4>
+        <p>Leibniz invented calculus independently (published 1684) using dy/dx notation — the notation we use today. Newton's fluxion notation (ẋ) survives mainly in physics. The mathematics is identical; the notation was different.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128220;</span>
+        <h4>Priority vs. Publication</h4>
+        <p>Newton had the calculus by 1666 but did not publish until 1704 (in an appendix to <em>Opticks</em>). Leibniz published in 1684. Newton's secrecy cost him recognition and gave rise to the bitter priority dispute that consumed the last decades of both men's lives.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">&#128290;</span>
+        <h4>The Binomial Theorem</h4>
+        <p>Newton generalized (a + b)ⁿ to cases where n is any rational number — fractional or negative — producing an infinite series. This was the first major result he achieved at Woolsthorpe in 1665, aged twenty-two.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTING TELESCOPE -->
+  <section id="telescope">
+    <h2>The Reflecting Telescope — Built by Hand, 1668</h2>
+
+    <p>
+      Understanding that a prism refracts different colors at different angles — causing
+      chromatic aberration in refracting telescopes — Newton designed a telescope that used
+      a concave mirror rather than a lens to focus light. This eliminated chromatic aberration
+      entirely. He ground the mirrors himself and built the instrument with his own hands
+      in 1668.
+    </p>
+
+    <p>
+      The instrument was about 6 inches long but performed comparably to a 40-inch
+      refractor. Newton presented it to the Royal Society in 1671; they were impressed
+      enough to elect him Fellow. The reflecting telescope design — the Newtonian reflector —
+      remains the most common design for amateur astronomy today.
+    </p>
+
+    <div class="equation-block" style="border-color: var(--crimson);">
+      <span class="equation-label">The Three Laws of Motion — In One Frame</span>
+      <div style="font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--text-dim); text-align: left; max-width: 540px; margin: 0 auto; line-height: 2.2;">
+        <div style="margin-bottom:0.5rem;"><span style="color:var(--gold);">Lex I:</span>&nbsp;&nbsp;&nbsp;v = const &nbsp;&nbsp;if&nbsp;&nbsp; F<sub>net</sub> = 0</div>
+        <div style="margin-bottom:0.5rem;"><span style="color:var(--gold);">Lex II:</span>&nbsp;&nbsp;F = ma &nbsp;&nbsp;(or F = dp/dt)</div>
+        <div><span style="color:var(--gold);">Lex III:</span>&nbsp;F&#x2081;₂ = −F&#x2082;₁</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="vol-nav">
+    <a href="0-who.html">&larr; Vol. 0 — Who He Was</a>
+    <a href="2-world.html">Vol. 2 — His World &rarr;</a>
+  </div>
+
+  <footer class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp;
+    David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    CC-BY-ND-4.0 &nbsp;|&nbsp;
+    Isaac Newton Library Series &nbsp;|&nbsp;
+    Volume 1: The Work
+  </footer>
+
+</main>
+</body>
+</html>

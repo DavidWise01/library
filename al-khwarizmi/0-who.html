@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Khwarizmi — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0f0e09;
+    --amber: #c07818;
+    --amber-dim: #7a4c10;
+    --amber-glow: rgba(192,120,24,0.18);
+    --teal: #0d9488;
+    --teal-dim: #0a6b61;
+    --teal-glow: rgba(13,148,136,0.15);
+    --text: #e8e0cc;
+    --text-dim: #9e9580;
+    --border: rgba(192,120,24,0.22);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-hover-bg: rgba(192,120,24,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,14,9,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(6px);
+  }
+  .nav-series {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+
+  /* MASTHEAD */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .masthead-text {}
+
+  .vol-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .masthead-lede {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--text);
+    max-width: 55ch;
+    line-height: 1.8;
+  }
+
+  /* SVG art */
+  .masthead-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 4rem;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+
+  .section-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--teal);
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+  }
+
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+    max-width: 72ch;
+  }
+
+  p + p { }
+
+  /* KICK */
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-variant: small-caps;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* BAND */
+  .band {
+    display: inline-block;
+    background: var(--amber);
+    color: #0f0e09;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.4rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    cursor: default;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(192,120,24,0.18);
+    background: var(--card-hover-bg);
+  }
+
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .card-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-family: 'Newsreader', serif;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--amber);
+  }
+
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  /* QUOTE */
+  .pull-quote {
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--amber-glow);
+    max-width: 65ch;
+  }
+
+  .pull-quote p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+    max-width: none;
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* NAME TABLE */
+  .name-table {
+    border-top: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+
+  .name-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0;
+    align-items: start;
+  }
+
+  .name-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--teal);
+    padding-top: 0.1rem;
+  }
+
+  .name-val {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .name-val em {
+    color: var(--amber);
+    font-style: italic;
+  }
+
+  /* COLOPHON */
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .colophon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+
+  .colophon-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  /* HIGHLIGHTS */
+  strong { color: var(--amber); font-weight: 500; }
+  em { color: var(--text); }
+
+  .teal { color: var(--teal); }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-series">AL-KHWARIZMI — A FOUR-VOLUME STUDY</span>
+  <ul class="nav-links">
+    <li><a href="0-who.html" class="active">Vol. 0 — Who</a></li>
+    <li><a href="1-algebra.html">Vol. 1 — The Work</a></li>
+    <li><a href="2-world.html">Vol. 2 — His World</a></li>
+    <li><a href="3-legacy.html">Vol. 3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-label">Volume 0 &mdash; The Man</span>
+    <h1>Muhammad<br>ibn Musa<br>al-Khwarizmi</h1>
+    <p class="subtitle">780 &ndash; 850 CE &nbsp;·&nbsp; Khwarezm to Baghdad</p>
+    <p class="masthead-lede">He gave mathematics two of its most enduring words. His name became <em>algorithm</em>. His book title became <em>algebra</em>. He worked in a library beside the Tigris River at the center of the known world, and he changed what humans could calculate forever.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Geometric Islamic star pattern with golden rotation -->
+    <svg width="380" height="380" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1710"/>
+          <stop offset="100%" stop-color="#0f0e09"/>
+        </radialGradient>
+        <filter id="glow-amber">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-teal">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Background circle -->
+      <circle cx="190" cy="190" r="185" fill="url(#bg-grad)" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.3"/>
+
+      <!-- Outer rotating ring of geometric marks -->
+      <g style="transform-origin:190px 190px; animation: spin-slow 60s linear infinite;">
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="60s" repeatCount="indefinite"/>
+        <!-- 12-fold ring -->
+        <g opacity="0.4" stroke="#c07818" stroke-width="0.8" fill="none">
+          <circle cx="190" cy="40" r="4"/>
+          <circle cx="280" cy="65" r="4"/>
+          <circle cx="340" cy="150" r="4"/>
+          <circle cx="340" cy="230" r="4"/>
+          <circle cx="280" cy="315" r="4"/>
+          <circle cx="190" cy="340" r="4"/>
+          <circle cx="100" cy="315" r="4"/>
+          <circle cx="40" cy="230" r="4"/>
+          <circle cx="40" cy="150" r="4"/>
+          <circle cx="100" cy="65" r="4"/>
+        </g>
+      </g>
+
+      <!-- Inner star, counter-rotating -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="-360 190 190" dur="90s" repeatCount="indefinite"/>
+        <!-- 8-pointed star -->
+        <polygon points="190,80 210,165 285,130 225,190 285,250 210,215 190,300 170,215 95,250 155,190 95,130 170,165"
+          fill="none" stroke="#c07818" stroke-width="1.2" stroke-opacity="0.55" filter="url(#glow-amber)"/>
+      </g>
+
+      <!-- Hexagonal lattice, slow rotation -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="120s" repeatCount="indefinite"/>
+        <polygon points="190,110 240,140 240,200 190,230 140,200 140,140"
+          fill="none" stroke="#0d9488" stroke-width="1" stroke-opacity="0.5"/>
+        <polygon points="190,125 232,149 232,198 190,222 148,198 148,149"
+          fill="none" stroke="#0d9488" stroke-width="0.5" stroke-opacity="0.3"/>
+      </g>
+
+      <!-- Calligraphic geometric arc lines -->
+      <g fill="none" stroke="#c07818" stroke-opacity="0.3" stroke-width="0.7">
+        <path d="M190,55 Q310,110 310,190 Q310,270 190,325 Q70,270 70,190 Q70,110 190,55Z"/>
+        <path d="M190,80 Q285,125 285,190 Q285,255 190,300 Q95,255 95,190 Q95,125 190,80Z"/>
+      </g>
+
+      <!-- Central mandala -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="30s" repeatCount="indefinite"/>
+        <!-- 6-fold inner mandala -->
+        <g fill="none" stroke="#c07818" stroke-width="1.5" filter="url(#glow-amber)">
+          <line x1="190" y1="155" x2="190" y2="225" stroke-opacity="0.6"/>
+          <line x1="157" y1="172" x2="223" y2="208" stroke-opacity="0.6"/>
+          <line x1="157" y1="208" x2="223" y2="172" stroke-opacity="0.6"/>
+        </g>
+        <circle cx="190" cy="190" r="30" fill="none" stroke="#0d9488" stroke-width="1" stroke-opacity="0.5"/>
+        <circle cx="190" cy="190" r="18" fill="none" stroke="#c07818" stroke-width="1.5" stroke-opacity="0.7"/>
+      </g>
+
+      <!-- Central point, pulsing -->
+      <circle cx="190" cy="190" r="6" fill="#c07818" opacity="0.9">
+        <animate attributeName="r" values="5;8;5" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.9;0.5;0.9" dur="4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Radial spokes -->
+      <g stroke="#c07818" stroke-width="0.5" stroke-opacity="0.2">
+        <line x1="190" y1="55" x2="190" y2="325"/>
+        <line x1="55" y1="190" x2="325" y2="190"/>
+        <line x1="95" y1="95" x2="285" y2="285"/>
+        <line x1="285" y1="95" x2="95" y2="285"/>
+      </g>
+
+      <!-- Corner ornaments -->
+      <g fill="#c07818" opacity="0.15">
+        <rect x="20" y="20" width="20" height="1"/>
+        <rect x="20" y="20" width="1" height="20"/>
+        <rect x="340" y="20" width="20" height="1"/>
+        <rect x="359" y="20" width="1" height="20"/>
+        <rect x="20" y="359" width="20" height="1"/>
+        <rect x="20" y="340" width="1" height="20"/>
+        <rect x="340" y="359" width="20" height="1"/>
+        <rect x="359" y="340" width="1" height="20"/>
+      </g>
+
+      <!-- Floating equation label -->
+      <text x="190" y="370" text-anchor="middle" font-family="Space Mono, monospace" font-size="8" fill="#c07818" opacity="0.45" letter-spacing="3">AL-KHWARIZMI · 780–850 CE</text>
+    </svg>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Section: Identity -->
+  <section class="section">
+    <span class="kick">Full Name &amp; Identity</span>
+    <h2>The Man Behind the Words</h2>
+    <div class="section-rule"></div>
+
+    <div class="name-table">
+      <div class="name-row">
+        <span class="name-key">Full Arabic Name</span>
+        <span class="name-val"><em>Muḥammad ibn Mūsā al-Khwārizmī</em></span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Latin Name</span>
+        <span class="name-val"><em>Algoritmi</em> — the Latinization from which "algorithm" derives</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Born</span>
+        <span class="name-val">c. 780 CE — Khwarezm region, modern Uzbekistan / Khorezm Province</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Died</span>
+        <span class="name-val">c. 850 CE — Baghdad, Abbasid Caliphate</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Active Period</span>
+        <span class="name-val">813–833 CE (flourished under Caliph al-Ma'mun)</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Institution</span>
+        <span class="name-val">Bayt al-Ḥikma (House of Wisdom), Baghdad</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Fields</span>
+        <span class="name-val">Mathematics, Astronomy, Geography, Cartography</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">Patron</span>
+        <span class="name-val">Caliph al-Ma'mun (r. 813–833 CE), Abbasid dynasty</span>
+      </div>
+      <div class="name-row">
+        <span class="name-key">The name means</span>
+        <span class="name-val"><em>"Muhammad, son of Moses, native of Khwarezm"</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Origin -->
+  <section class="section">
+    <span class="kick">Origins</span>
+    <h2>From the Banks of the Oxus</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi was born in the region of <strong>Khwarezm</strong> — the fertile delta where the Amu Darya (the ancient Oxus River) meets the Aral Sea, in the land that is now Uzbekistan. It was a crossroads civilization: Persian in culture, Zoroastrian and then Islamic in religion, sitting at the junction of the Silk Road routes that connected China to the Mediterranean.</p>
+
+    <p>His family's origins may have been Persian-speaking Zoroastrian converts to Islam — a common trajectory for intellectuals absorbed into the early Abbasid empire's cosmopolitan project. The epithet "al-Khwarizmi" simply means "the one from Khwarezm," a practice of geographic naming that identified scholars by their homeland long after they had traveled to the imperial capital.</p>
+
+    <p>At some point in his youth or early adulthood — the exact date is unknown — he made the journey to <strong>Baghdad</strong>, then the largest and most cosmopolitan city on Earth, home to perhaps one million people, the seat of Abbasid power, and the location of the institution that would define his life: the House of Wisdom.</p>
+
+    <div class="pull-quote">
+      <p>"He was the most learned of his time in the science of the stars and mathematics and the things related thereto."</p>
+      <cite>— Ibn al-Nadim, 10th-century bibliographer, in al-Fihrist</cite>
+    </div>
+  </section>
+
+  <!-- Section: Key facts grid -->
+  <section class="section">
+    <span class="kick">At a Glance</span>
+    <h2>Essential Facts</h2>
+    <div class="section-rule"></div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">~780</div>
+        <div class="card-label">Year of Birth</div>
+        <div class="card-body">Born in Khwarezm, a Persian-speaking region that is now Uzbekistan. Exact date unknown — estimated from the chronology of his works.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">~830</div>
+        <div class="card-label">Year of the Algebra</div>
+        <div class="card-body">Al-Kitab al-mukhtasar — the book on al-jabr — was completed and dedicated to Caliph al-Ma'mun, roughly 830 CE.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">~850</div>
+        <div class="card-label">Year of Death</div>
+        <div class="card-body">Died in Baghdad after a productive scholarly career spanning at least four decades. Outlived his patron al-Ma'mun by 17 years.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">6</div>
+        <div class="card-label">Canonical Equation Types</div>
+        <div class="card-body">In his algebra, he classified all linear and quadratic equations into six canonical forms — a classification that endured for centuries.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">2</div>
+        <div class="card-label">Words Given to English</div>
+        <div class="card-body">"Algorithm" from his Latinized name, "Algebra" from his book's title. Two words that underpin modern mathematics and computer science.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">70+</div>
+        <div class="card-label">Geographers Coordinated</div>
+        <div class="card-body">He oversaw the collaboration of 70 geographers to produce the "Book of the Image of the Earth" — an updated world map under al-Ma'mun's commission.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1145</div>
+        <div class="card-label">Latin Translation Year</div>
+        <div class="card-body">Robert of Chester translated his algebra into Latin in 1145 CE — nearly three centuries after al-Khwarizmi wrote it, launching it into European mathematics.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">∞</div>
+        <div class="card-label">Algorithms Descended</div>
+        <div class="card-body">Every algorithm in computer science — search, sort, encrypt, compress — traces its conceptual lineage to the systematic step-by-step method he formalized.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Character -->
+  <section class="section">
+    <span class="kick">The Scholar</span>
+    <h2>Who He Actually Was</h2>
+    <div class="section-rule"></div>
+
+    <p>We know al-Khwarizmi almost entirely through his works — he left no memoir, no letters survive, and no contemporary described his personality in detail. What we can reconstruct is the picture of a man of extraordinary synthetic intelligence: someone who could read Indian mathematical texts, Greek geometry, Babylonian astronomical tables, and Persian cartographic traditions, then distill them into entirely new frameworks.</p>
+
+    <p>His algebra book opens with explicit religious framing — he praises God and dedicates it to Caliph al-Ma'mun — which was standard practice. But the mathematical content itself is strikingly practical. He was not a theorist in the pure Greek sense. He was solving problems: inheritance division, land measurement, trade calculation. The six canonical equation forms in his algebra were not abstract — they came with worked examples from commercial and legal life.</p>
+
+    <p>This combination — <strong>rigorous classification married to practical application</strong> — is perhaps his defining intellectual signature. He was not trying to prove theorems for their own sake. He was trying to give people a complete, teachable method for solving the problems of everyday quantitative life.</p>
+
+    <p>He also worked across disciplines without apparent hierarchy. Astronomy, geography, mathematics — he moved between them fluidly. His astronomical tables (Zij al-Sindhind) synthesized Greek Ptolemaic astronomy with Indian positional astronomy. His geographic work updated Ptolemy's Geography with 2,400 corrected coordinates. The breadth suggests someone who saw the integration of knowledge traditions as itself a worthy intellectual goal.</p>
+
+    <div class="pull-quote">
+      <p>"The first to write on <em>al-jabr wa'l-muqabala</em>. Al-Khwarizmi wrote on it before any of the ancients of his time."</p>
+      <cite>— al-Qifti, 13th-century historian, in Tarikh al-Hukama</cite>
+    </div>
+
+    <h3>The Name Problem</h3>
+    <p>Some historians have proposed the epithet <em>al-Majusi</em> (the Magian, i.e., Zoroastrian) appears in a few sources near his name — suggesting a Zoroastrian family background. This remains disputed. By the time of his recorded works, he was clearly writing as a Muslim. The question of his precise ethnic and religious background before his move to Baghdad is, at this remove, unanswerable with confidence.</p>
+
+    <p>What is not disputed: the intellectual tradition he drew from was genuinely international. He synthesized <strong>Greek</strong> geometry, <strong>Indian</strong> numerals and decimal place-value, <strong>Babylonian</strong> astronomical observation, and <strong>Persian</strong> administrative traditions into a new unified framework — one that could only have been assembled at Baghdad's House of Wisdom, which specifically collected and translated texts from all these traditions.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Timeline -->
+  <section class="section">
+    <span class="kick">Life &amp; Career</span>
+    <h2>A Life in Dates</h2>
+    <div class="section-rule"></div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">c. 780 CE</div>
+        <div class="timeline-title">Born in Khwarezm</div>
+        <div class="timeline-desc">Born in the Khwarezm region along the Amu Darya River (modern Uzbekistan). The region had been under Arab/Muslim administration since the 710s but retained its Persian cultural character.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 800–810 CE</div>
+        <div class="timeline-title">Arrives in Baghdad</div>
+        <div class="timeline-desc">Moves to Baghdad during or before the reign of Caliph Harun al-Rashid (786–809) or the subsequent civil war period. Baghdad is already the world's largest city and center of Abbasid power.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">813 CE</div>
+        <div class="timeline-title">Al-Ma'mun Becomes Caliph</div>
+        <div class="timeline-desc">Al-Ma'mun, the great intellectual patron, wins the Abbasid civil war and becomes Caliph. He immediately expands the House of Wisdom and brings scholars from across the empire to Baghdad.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 820 CE</div>
+        <div class="timeline-title">Zij al-Sindhind (Astronomical Tables)</div>
+        <div class="timeline-desc">Completes his first major work — a set of astronomical tables synthesizing Indian and Greek astronomy. These tables were later translated into Latin by Adelard of Bath (c. 1126) and influenced European astronomy for centuries.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 825 CE</div>
+        <div class="timeline-title">Book on Hindu-Arabic Numerals</div>
+        <div class="timeline-desc">Writes his treatise on the Hindu numeral system (including zero and positional notation). The Latin translation of this book — beginning "Dixit Algoritmi..." — gave the word "algorithm" to Western languages.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 830 CE</div>
+        <div class="timeline-title">Al-Kitab al-Mukhtasar (The Algebra)</div>
+        <div class="timeline-desc">Completes and dedicates to Caliph al-Ma'mun the book on al-jabr wa'l-muqabala — the book whose title gives English the word "algebra." Six canonical equation types, geometric proofs, practical applications.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 833 CE</div>
+        <div class="timeline-title">Geographic Survey</div>
+        <div class="timeline-desc">Coordinates a team of 70 geographers to produce Kitab Surat al-Ard (Book of the Image of the Earth) — an updated and corrected version of Ptolemy's Geography with 2,402 place coordinates.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">833 CE</div>
+        <div class="timeline-title">Al-Ma'mun Dies</div>
+        <div class="timeline-desc">Al-Khwarizmi's great patron dies. He continues working under successors al-Mu'tasim and al-Wathiq, but the golden period of his patronage ends.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 850 CE</div>
+        <div class="timeline-title">Death in Baghdad</div>
+        <div class="timeline-desc">Dies in Baghdad after approximately 70 years of life. His works survive — copied, translated, commented upon — and continue to spread throughout the Islamic world and eventually into Christian Europe.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Works overview -->
+  <section class="section">
+    <span class="kick">Bibliography</span>
+    <h2>His Major Works</h2>
+    <div class="section-rule"></div>
+
+    <p>At least six major works survive in whole or in part, along with several attributed texts of uncertain authorship.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="band">c. 830</span>
+        <div class="card-label">Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala</div>
+        <div class="card-body">The Compendious Book on Calculation by Completion and Balancing. The algebra. First systematic treatment of quadratic equations. Gave English the word "algebra."</div>
+      </div>
+      <div class="card">
+        <span class="band">c. 825</span>
+        <div class="card-label">Kitab al-Jam' wal-Tafriq bi-Hisab al-Hind</div>
+        <div class="card-body">Book on Addition and Subtraction after the Method of the Indians. Introduced Hindu-Arabic numerals (including zero) to the Islamic world. The Latin translation gave us "algorithm."</div>
+      </div>
+      <div class="card">
+        <span class="band">c. 820</span>
+        <div class="card-label">Zij al-Sindhind</div>
+        <div class="card-body">A set of astronomical tables synthesizing Indian (Sindhind = Siddhanta) and Ptolemaic astronomy. 37 chapters on calendars, astronomy, and trigonometry. Widely copied.</div>
+      </div>
+      <div class="card">
+        <span class="band">c. 833</span>
+        <div class="card-label">Kitab Surat al-Ard</div>
+        <div class="card-body">Book of the Image of the Earth. A world geography listing 2,402 localities with coordinates, correcting and extending Ptolemy's Geography. A product of collaboration with 70 scholars.</div>
+      </div>
+      <div class="card">
+        <span class="band">c. 825</span>
+        <div class="card-label">Kitab al-Tarikh</div>
+        <div class="card-body">A historical chronicle. Largely lost — known primarily through references in later Islamic historiography. Dealt with the early Islamic period.</div>
+      </div>
+      <div class="card">
+        <span class="band">c. 840</span>
+        <div class="card-label">Risala fi Istikhraj Tarikh al-Yahud</div>
+        <div class="card-body">A treatise on the Jewish calendar. Demonstrates his engagement with multiple calendar systems — Islamic, Julian, Jewish — that he would have needed for his astronomical and chronological work.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Language legacy -->
+  <section class="section">
+    <span class="kick">Linguistic Legacy</span>
+    <h2>Two Words, One Man</h2>
+    <div class="section-rule"></div>
+
+    <p>Few scholars have given two words to a language — let alone words as foundational as these.</p>
+
+    <h3>Algorithm</h3>
+    <p>When his arithmetic text was translated into Latin in the 12th century, the translator rendered his name as <em>Algoritmi</em>. The text began "<em>Dixit Algoritmi...</em>" — "Thus spake Algoritmi." Medieval Europeans who learned the method of Hindu-Arabic calculation began calling it "algorism" — calculation by the method of Algoritmi. Over centuries, the word shifted to <strong>algorithm</strong>, and its meaning expanded: any step-by-step procedure for solving a problem. By the 20th century, algorithms were the foundation of computer science.</p>
+
+    <h3>Algebra</h3>
+    <p>His algebra book's full title includes the phrase <em>al-jabr wa'l-muqabala</em>. "Al-jabr" (الجبر) means "restoration" or "completion" — the operation of moving a subtracted quantity to the other side of an equation. "Wa'l-muqabala" means "and balancing" — the reduction of equal terms on both sides. When Robert of Chester translated the book into Latin in 1145, the term <em>algebra</em> entered the Latin mathematical vocabulary directly from the Arabic title. It has never left.</p>
+
+    <p>There is a curiosity here: <em>al-jabr</em> also traveled to medieval Spain as a medical term. Bone-setters — who restored (jabara) broken bones to their proper position — were called <strong>algebristas</strong> in Spanish. The same word described the mathematical operation and the surgical one: both were about restoring something displaced to its proper state.</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <div class="colophon-text">
+      ROOT0-ATTRIBUTION-v1.0<br>
+      David Lee Wise / ROOT0 / TriPod LLC<br>
+      CC-BY-ND-4.0 &nbsp;·&nbsp; All rights reserved as noted
+    </div>
+    <div class="colophon-vol">
+      AL-KHWARIZMI LIBRARY &nbsp;·&nbsp; VOL. 0 OF 3 &nbsp;·&nbsp; WHO HE WAS
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

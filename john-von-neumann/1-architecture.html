@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John von Neumann — Vol. 1: The Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#060a14;
+    --card:#0d1426;
+    --card2:#111827;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(29,78,216,0.18);
+    --lineo:rgba(234,88,12,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(29,78,216,0.028) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--blue);color:#fff;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--blue);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.orange{background:var(--orange);}
+
+  .mast{border-bottom:3px solid var(--blue);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,76px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;}
+  .mast h1 em{font-style:normal;color:var(--blue);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* VON NEUMANN ARCHITECTURE DIAGRAM */
+  .arch-wrap{margin:20px 0;overflow-x:auto;}
+  .arch-wrap svg{display:block;max-width:100%;height:auto;}
+
+  /* animated data pulses on the bus */
+  @keyframes pulseRight{0%{transform:translateX(-60px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(60px);opacity:0}}
+  @keyframes pulseLeft{0%{transform:translateX(60px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateX(-60px);opacity:0}}
+  @keyframes pulseDown{0%{transform:translateY(-30px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(30px);opacity:0}}
+  @keyframes pulseUp{0%{transform:translateY(30px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(-30px);opacity:0}}
+  @keyframes busGlow{0%,100%{opacity:0.35}50%{opacity:0.8}}
+  .pulse-r{animation:pulseRight 1.8s ease-in-out infinite;}
+  .pulse-l{animation:pulseLeft 1.8s ease-in-out infinite 0.9s;}
+  .pulse-d{animation:pulseDown 1.8s ease-in-out infinite 0.3s;}
+  .pulse-u{animation:pulseUp 1.8s ease-in-out infinite 1.1s;}
+  .pulse-r2{animation:pulseRight 1.8s ease-in-out infinite 0.6s;}
+  .pulse-l2{animation:pulseLeft 1.8s ease-in-out infinite 1.5s;}
+  .bus-glow{animation:busGlow 2.4s ease-in-out infinite;}
+  @media(prefers-reduced-motion:reduce){.pulse-r,.pulse-l,.pulse-d,.pulse-u,.pulse-r2,.pulse-l2,.bus-glow{animation:none;opacity:0.7}}
+
+  /* grid and cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.orange-h:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--blue);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .yr{font-family:"Space Mono",monospace;font-size:11px;color:var(--orange);letter-spacing:0.06em;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--lineo);padding:2px 7px;margin-top:6px;}
+  .card .tag.blue{color:var(--blue);border-color:var(--line);}
+
+  /* large contribution block */
+  .contrib{border:1px solid var(--line);background:var(--card2);padding:22px 24px;margin-bottom:18px;}
+  .contrib.orange-b{border-color:var(--lineo);}
+  .contrib .contrib-head{display:flex;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+  .contrib .contrib-title{font-family:"Cinzel";font-weight:700;font-size:22px;color:var(--ink);margin:0;}
+  .contrib .contrib-year{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;color:var(--orange);}
+  .contrib p{font-size:clamp(14.5px,1.6vw,16.5px);color:#a8b4cc;line-height:1.65;margin:0 0 10px;}
+  .contrib p:last-child{margin-bottom:0;}
+  .contrib em{font-style:italic;color:#c8cce0;}
+
+  /* code-style display */
+  .mono-block{font-family:"Space Mono",monospace;font-size:12px;background:#0a1020;border:1px solid var(--line);padding:14px 16px;color:#7baaf7;line-height:1.8;overflow-x:auto;margin:12px 0;}
+
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.orange{border-color:var(--lineo);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--blue);color:#fff;}
+  .vol-nav a.current{background:var(--blue);color:#fff;}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.contrib{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">von neumann series · volume 1 · the architecture</span>
+    <div class="masthead">
+      <div>
+        <h1>The <em>Work</em></h1>
+        <p class="dek">
+          Five fields. Five revolutions. One man. <b>Stored-program computing, game theory, quantum formalism, cellular automata, Monte Carlo simulation</b> — each would have secured a permanent reputation. He did all five in a decade.
+        </p>
+      </div>
+      <!-- Architecture SVG - masthead version (compact) -->
+      <svg class="art" width="220" height="190" viewBox="0 0 220 190" role="img" aria-label="Von Neumann architecture: CPU connected to Memory and I/O via system bus">
+        <rect width="220" height="190" fill="#0d1426" rx="4"/>
+        <!-- CPU box -->
+        <rect x="70" y="20" width="80" height="50" fill="#0a1828" stroke="var(--blue)" stroke-width="1.5" rx="3"/>
+        <text x="110" y="41" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#7baaf7" font-weight="700">CPU</text>
+        <text x="110" y="57" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(123,170,247,0.6)">ALU · CU</text>
+        <!-- Memory box -->
+        <rect x="10" y="120" width="80" height="50" fill="#0a1828" stroke="var(--orange)" stroke-width="1.5" rx="3"/>
+        <text x="50" y="141" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#f87340" font-weight="700">MEMORY</text>
+        <text x="50" y="157" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(248,115,64,0.6)">DATA+PROGRAM</text>
+        <!-- I/O box -->
+        <rect x="130" y="120" width="80" height="50" fill="#0a1828" stroke="rgba(29,78,216,0.6)" stroke-width="1.5" rx="3"/>
+        <text x="170" y="141" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#7baaf7" font-weight="700">I/O</text>
+        <text x="170" y="157" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(123,170,247,0.6)">INPUT·OUTPUT</text>
+        <!-- System bus line -->
+        <line x1="110" y1="170" x2="110" y2="175" stroke="rgba(29,78,216,0.3)" stroke-width="1"/>
+        <line x1="10" y1="175" x2="210" y2="175" stroke="rgba(29,78,216,0.5)" stroke-width="2" class="bus-glow"/>
+        <!-- Bus connections -->
+        <line x1="50" y1="170" x2="50" y2="175" stroke="rgba(234,88,12,0.5)" stroke-width="1.5"/>
+        <line x1="170" y1="170" x2="170" y2="175" stroke="rgba(29,78,216,0.5)" stroke-width="1.5"/>
+        <line x1="110" y1="70" x2="110" y2="90" stroke="rgba(29,78,216,0.5)" stroke-width="1.5"/>
+        <line x1="110" y1="90" x2="110" y2="175" stroke="rgba(29,78,216,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+        <!-- animated pulses on bus -->
+        <rect class="pulse-r" x="50" y="172" width="12" height="4" fill="var(--orange)" rx="2"/>
+        <rect class="pulse-l" x="160" y="172" width="12" height="4" fill="var(--blue)" rx="2"/>
+        <rect class="pulse-r2" x="100" y="172" width="10" height="4" fill="#7baaf7" rx="2"/>
+        <!-- label -->
+        <text x="110" y="186" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(29,78,216,0.5)" letter-spacing="0.08em">SYSTEM BUS · 1945</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-architecture.html" class="current">1 · Architecture</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <!-- SECTION 1: VON NEUMANN ARCHITECTURE -->
+  <div class="band reveal" style="animation-delay:.05s">I. The Stored-Program Computer · 1945</div>
+  <p class="body-text reveal" style="animation-delay:.08s">
+    In June 1945, von Neumann circulated a 101-page document titled <em>First Draft of a Report on the EDVAC.</em> It was technically a draft, written for internal distribution among the engineers building the EDVAC machine at the University of Pennsylvania. It was never formally published. His name appeared on the cover because he happened to be the one who wrote it up — a point of bitter contention with co-inventors Eckert and Mauchly for the rest of their lives.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.10s">
+    What that draft described was nothing less than the logical architecture of every computer that has ever been built since. The key idea — so obvious in retrospect that it seems impossible it had to be invented — was the <em>stored-program concept:</em> the program (the sequence of instructions) should be stored in the same memory as the data it operates on, in the same format, accessible to the CPU in the same way.
+  </p>
+  <div class="pull reveal" style="animation-delay:.12s">
+    Before 1945, computers were programmed by physically rewiring plugboards or setting switches. A new problem required a new machine — or days of recabling. Von Neumann's insight made every program a data structure. The machine became universal.
+  </div>
+
+  <!-- FULL ARCHITECTURE DIAGRAM -->
+  <div class="band reveal" style="animation-delay:.14s">The Architecture Diagram</div>
+  <div class="arch-wrap reveal" style="animation-delay:.16s">
+    <svg width="760" height="300" viewBox="0 0 760 300" role="img" aria-label="Full Von Neumann architecture diagram with animated data flow pulses between CPU, Memory, and I/O units">
+      <rect width="760" height="300" fill="#060a14" rx="6"/>
+
+      <!-- ===== SYSTEM BUS (horizontal backbone) ===== -->
+      <rect x="60" y="197" width="640" height="12" fill="#0c1530" stroke="rgba(29,78,216,0.4)" stroke-width="1" rx="3"/>
+      <text x="380" y="220" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="rgba(29,78,216,0.6)" letter-spacing="0.12em">SYSTEM BUS — ADDRESS · DATA · CONTROL</text>
+
+      <!-- ===== CPU (center) ===== -->
+      <rect x="290" y="30" width="180" height="150" fill="#0a1828" stroke="#1d4ed8" stroke-width="2" rx="5"/>
+      <text x="380" y="56" text-anchor="middle" font-family="Cinzel,serif" font-size="15" fill="#7baaf7" font-weight="700" letter-spacing="0.06em">CPU</text>
+      <!-- ALU sub-box -->
+      <rect x="305" y="68" width="68" height="42" fill="#0f2040" stroke="rgba(29,78,216,0.5)" stroke-width="1" rx="3"/>
+      <text x="339" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#5a8af7">ALU</text>
+      <text x="339" y="96" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.6)">ARITHMETIC</text>
+      <text x="339" y="106" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.6)">LOGIC UNIT</text>
+      <!-- CU sub-box -->
+      <rect x="387" y="68" width="68" height="42" fill="#0f2040" stroke="rgba(29,78,216,0.5)" stroke-width="1" rx="3"/>
+      <text x="421" y="84" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#5a8af7">CU</text>
+      <text x="421" y="96" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.6)">CONTROL</text>
+      <text x="421" y="106" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.6)">UNIT</text>
+      <!-- Registers sub-box -->
+      <rect x="305" y="120" width="150" height="46" fill="#0f2040" stroke="rgba(29,78,216,0.4)" stroke-width="1" rx="3"/>
+      <text x="380" y="138" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#4a7af0">REGISTERS</text>
+      <text x="380" y="153" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(74,122,240,0.6)">PC · IR · ACC · MAR · MBR</text>
+      <!-- CPU to bus -->
+      <line x1="380" y1="180" x2="380" y2="197" stroke="rgba(29,78,216,0.7)" stroke-width="2"/>
+      <!-- animated pulse down to bus -->
+      <rect class="pulse-d" x="374" y="178" width="12" height="5" fill="var(--blue)" rx="2"/>
+      <rect class="pulse-u" x="374" y="194" width="12" height="5" fill="#7baaf7" rx="2"/>
+
+      <!-- ===== MEMORY (left) ===== -->
+      <rect x="60" y="50" width="170" height="130" fill="#0a1828" stroke="#ea580c" stroke-width="2" rx="5"/>
+      <text x="145" y="76" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#f87340" font-weight="700" letter-spacing="0.04em">MEMORY</text>
+      <!-- Memory rows (address visualization) -->
+      <g fill="none" stroke="rgba(234,88,12,0.25)" stroke-width="0.75">
+        <line x1="75" y1="90" x2="215" y2="90"/>
+        <line x1="75" y1="102" x2="215" y2="102"/>
+        <line x1="75" y1="114" x2="215" y2="114"/>
+        <line x1="75" y1="126" x2="215" y2="126"/>
+        <line x1="75" y1="138" x2="215" y2="138"/>
+      </g>
+      <text x="79" y="99" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.7)">0x0000  PROG INSTR</text>
+      <text x="79" y="111" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.7)">0x0010  PROG INSTR</text>
+      <text x="79" y="123" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.5)">0x0020  DATA ·····</text>
+      <text x="79" y="135" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.5)">0x0030  DATA ·····</text>
+      <text x="79" y="147" font-family="Space Mono,monospace" font-size="8" fill="rgba(234,88,12,0.35)">0x0040  ··········</text>
+      <text x="145" y="166" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(248,115,64,0.5)">PROGRAM + DATA UNIFIED</text>
+      <!-- Memory to bus -->
+      <line x1="145" y1="180" x2="145" y2="197" stroke="rgba(234,88,12,0.7)" stroke-width="2"/>
+      <rect class="pulse-d" x="139" y="178" width="12" height="5" fill="var(--orange)" rx="2" style="animation-delay:0.5s"/>
+      <rect class="pulse-u" x="139" y="194" width="12" height="5" fill="#f87340" rx="2" style="animation-delay:1.3s"/>
+
+      <!-- ===== I/O (right) ===== -->
+      <rect x="530" y="50" width="170" height="130" fill="#0a1828" stroke="rgba(29,78,216,0.7)" stroke-width="1.5" rx="5"/>
+      <text x="615" y="76" text-anchor="middle" font-family="Cinzel,serif" font-size="14" fill="#7baaf7" font-weight="700" letter-spacing="0.04em">I/O</text>
+      <!-- I/O device representations -->
+      <rect x="546" y="88" width="50" height="32" fill="#0f2040" stroke="rgba(29,78,216,0.4)" stroke-width="1" rx="2"/>
+      <text x="571" y="103" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(123,170,247,0.8)">INPUT</text>
+      <text x="571" y="114" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.5)">KEYBOARD</text>
+      <rect x="604" y="88" width="50" height="32" fill="#0f2040" stroke="rgba(29,78,216,0.4)" stroke-width="1" rx="2"/>
+      <text x="629" y="103" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(123,170,247,0.8)">OUTPUT</text>
+      <text x="629" y="114" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.5)">DISPLAY</text>
+      <!-- storage -->
+      <rect x="546" y="130" width="108" height="32" fill="#0f2040" stroke="rgba(29,78,216,0.3)" stroke-width="1" rx="2"/>
+      <text x="600" y="145" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="rgba(123,170,247,0.7)">SECONDARY STORAGE</text>
+      <text x="600" y="156" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.4)">DISK · TAPE · FLASH</text>
+      <!-- I/O to bus -->
+      <line x1="615" y1="180" x2="615" y2="197" stroke="rgba(29,78,216,0.7)" stroke-width="2"/>
+      <rect class="pulse-d" x="609" y="178" width="12" height="5" fill="#7baaf7" rx="2" style="animation-delay:0.9s"/>
+      <rect class="pulse-u" x="609" y="194" width="12" height="5" fill="var(--blue)" rx="2" style="animation-delay:0.2s"/>
+
+      <!-- ===== BUS DATA PULSES (horizontal) ===== -->
+      <!-- CPU → Memory -->
+      <rect class="pulse-l" x="220" y="199" width="14" height="6" fill="var(--orange)" rx="3" style="animation-duration:2.0s"/>
+      <!-- Memory → CPU -->
+      <rect class="pulse-r" x="200" y="202" width="14" height="6" fill="#7baaf7" rx="3" style="animation-duration:2.0s;animation-delay:1.0s"/>
+      <!-- CPU → I/O -->
+      <rect class="pulse-r2" x="430" y="199" width="14" height="6" fill="var(--blue)" rx="3" style="animation-duration:2.2s"/>
+      <!-- I/O → CPU -->
+      <rect class="pulse-l2" x="460" y="202" width="14" height="6" fill="var(--orange)" rx="3" style="animation-duration:2.2s;animation-delay:1.1s"/>
+
+      <!-- LEGEND -->
+      <rect x="60" y="240" width="10" height="10" fill="var(--orange)" rx="1"/>
+      <text x="76" y="250" font-family="Space Mono,monospace" font-size="9" fill="rgba(248,115,64,0.8)">DATA WRITE</text>
+      <rect x="185" y="240" width="10" height="10" fill="var(--blue)" rx="1"/>
+      <text x="201" y="250" font-family="Space Mono,monospace" font-size="9" fill="rgba(123,170,247,0.8)">DATA READ</text>
+      <rect x="310" y="240" width="10" height="10" fill="#7baaf7" rx="1"/>
+      <text x="326" y="250" font-family="Space Mono,monospace" font-size="9" fill="rgba(123,170,247,0.6)">CONTROL SIGNAL</text>
+      <text x="700" y="250" text-anchor="end" font-family="Space Mono,monospace" font-size="9" fill="rgba(29,78,216,0.5)">VON NEUMANN ARCH. · 1945</text>
+
+      <!-- border -->
+      <rect width="760" height="300" fill="none" stroke="rgba(29,78,216,0.25)" stroke-width="1" rx="6"/>
+    </svg>
+  </div>
+
+  <div class="mono-block reveal" style="animation-delay:.18s">
+; Von Neumann's key insight — program stored in memory, same as data:<br>
+MEMORY[0x0000] = LOAD  R1, MEMORY[0x0100]   ; ← this IS data too<br>
+MEMORY[0x0001] = ADD   R1, R2<br>
+MEMORY[0x0002] = STORE R1, MEMORY[0x0101]<br>
+MEMORY[0x0003] = JUMP  0x0000<br>
+;<br>
+; Before 1945: program = physical wiring. After: program = data.<br>
+; One machine. Every program. The universal computer.
+  </div>
+
+  <p class="body-text reveal" style="animation-delay:.20s">
+    The three components of the Von Neumann architecture — <em>CPU, Memory, and I/O</em> — communicate through a shared system bus. The CPU fetches an instruction from memory, decodes it, executes it, stores the result back to memory. This fetch-decode-execute cycle, repeated billions of times per second, is the heartbeat of every smartphone, laptop, server, and embedded controller built since 1945.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.22s">
+    The famous "Von Neumann bottleneck" — the bandwidth constraint between CPU and memory — was identified later by John Backus (1977 Turing Award lecture). The CPU is always faster than the memory bus. Modern architectures add caches, pipelines, and parallel buses to work around it — but they don't escape the fundamental architecture. We are still building von Neumann machines.
+  </p>
+
+  <!-- SECTION 2: GAME THEORY -->
+  <div class="band orange reveal" style="animation-delay:.24s">II. Game Theory · 1928 / 1944</div>
+  <div class="contrib orange-b reveal" style="animation-delay:.26s">
+    <div class="contrib-head">
+      <h2 class="contrib-title">Theory of Games and Economic Behavior</h2>
+      <span class="contrib-year">1928 (minimax) · 1944 (book, with Morgenstern)</span>
+    </div>
+    <p>Von Neumann proved the <em>minimax theorem</em> in 1928: in any two-person zero-sum game, there exists an optimal strategy for both players that minimizes the maximum possible loss. The proof required fixed-point theory and was considered one of the most elegant results in mathematics of its era.</p>
+    <p>In 1944, with economist Oskar Morgenstern, he expanded this into a 650-page book that founded the mathematical discipline of game theory. The book introduced utility theory, cooperative game theory, and the concept of rational strategic interaction. It was immediately applied to economics, military strategy, evolutionary biology, and political science.</p>
+    <p>Nash equilibrium (Nash, 1950) built directly on von Neumann's framework. The entire edifice of modern microeconomics, mechanism design, auction theory, and evolutionary game theory descends from the minimax theorem proved in that 1928 paper.</p>
+  </div>
+
+  <!-- SECTION 3: QUANTUM MECHANICS -->
+  <div class="band reveal" style="animation-delay:.28s">III. Quantum Mechanics · 1932</div>
+  <div class="contrib reveal" style="animation-delay:.30s">
+    <div class="contrib-head">
+      <h2 class="contrib-title">Mathematical Foundations of Quantum Mechanics</h2>
+      <span class="contrib-year">1932</span>
+    </div>
+    <p>Quantum mechanics in the 1920s existed in two incompatible mathematical forms: Heisenberg's matrix mechanics and Schrödinger's wave mechanics. Physicists knew they gave the same answers but didn't know why. Von Neumann, at age 25, resolved the question definitively.</p>
+    <p>He showed that both formalisms were representations of the same underlying mathematical object: a self-adjoint operator on a Hilbert space. He axiomatized the entire theory in this framework: states are vectors in Hilbert space, observables are self-adjoint operators, measurement collapses the state vector. This formalism is still how quantum mechanics is taught and practiced today.</p>
+    <p>He also gave the first rigorous mathematical proof of the <em>uncertainty principle</em> and introduced the concept of the <em>density matrix</em> for describing mixed states (statistical ensembles of quantum systems). Both remain central to quantum information theory and modern physics.</p>
+  </div>
+
+  <!-- SECTION 4: CELLULAR AUTOMATA -->
+  <div class="band orange reveal" style="animation-delay:.32s">IV. Cellular Automata · 1948–1952</div>
+  <div class="contrib orange-b reveal" style="animation-delay:.34s">
+    <div class="contrib-head">
+      <h2 class="contrib-title">Theory of Self-Reproducing Automata</h2>
+      <span class="contrib-year">1948–1966 (completed posthumously by Burks)</span>
+    </div>
+    <p>Von Neumann posed the question: can a machine reproduce itself? Not in biology — in pure mathematics. He designed a universal constructor operating on a 29-state cellular automaton grid. The constructor, given a description of any machine (including itself), could build a copy of that machine. He proved this works in principle.</p>
+    <p>This was the first mathematical theory of self-reproduction. It preceded the discovery of DNA's role in biological reproduction by several years, and it identified the same logical structure: a self-reproducing system needs both a <em>constructor</em> (to build the child) and a <em>description</em> (the genome/program) that gets copied separately. Biology arrived at the same architecture independently.</p>
+    <p>Conway's Game of Life (1970) is a simplified version of von Neumann's cellular automaton. The entire field of artificial life, digital organisms, and much of modern complex systems theory descends from this work.</p>
+  </div>
+
+  <!-- SECTION 5: MONTE CARLO -->
+  <div class="band reveal" style="animation-delay:.36s">V. Monte Carlo Method · 1946</div>
+  <div class="contrib reveal" style="animation-delay:.38s">
+    <div class="contrib-head">
+      <h2 class="contrib-title">Monte Carlo Simulation</h2>
+      <span class="contrib-year">1946–1947 (with Stanislaw Ulam)</span>
+    </div>
+    <p>While working at Los Alamos, Stanislaw Ulam (recovering from encephalitis) found himself playing solitaire and wondering: what is the probability that a deal of Canfield solitaire can be completed? He realized that random sampling — running the game many times and counting outcomes — would be faster than combinatorial analysis. He told von Neumann.</p>
+    <p>Von Neumann immediately saw the implications for computing neutron diffusion and shockwave propagation in nuclear weapon design. He formalized the method and programmed it on the ENIAC — the first major scientific computation run on an electronic computer. The name "Monte Carlo" was suggested by Nicholas Metropolis, after the Monaco casino, since Ulam's uncle frequently borrowed money to gamble there.</p>
+    <p>Monte Carlo methods today underlie financial risk modeling, climate simulation, Bayesian inference (MCMC), machine learning (dropout, data augmentation), and computational physics. Every time a large language model generates a token via sampling, it is performing a Monte Carlo operation.</p>
+  </div>
+
+  <!-- FIVE FIELDS CARDS -->
+  <div class="band reveal" style="animation-delay:.40s">The Five Revolutions</div>
+  <div class="grid reveal" style="animation-delay:.42s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>Stored-Program Architecture</h3>
+      <p class="what">Every computer ever built. The fetch-decode-execute cycle. CPU + Memory + I/O on a shared bus. Program as data.</p>
+      <div class="yr">1945 · EDVAC Report</div>
+      <span class="tag blue">Computing</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>Game Theory</h3>
+      <p class="what">Minimax theorem, zero-sum games, utility theory. The mathematical language of strategic decision-making under uncertainty.</p>
+      <div class="yr">1928 / 1944 · with Morgenstern</div>
+      <span class="tag">Economics</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>Quantum Formalism</h3>
+      <p class="what">Unified Heisenberg and Schrödinger via Hilbert spaces. Density matrix, measurement theory. Still the standard axiomatization.</p>
+      <div class="yr">1932 · Math Foundations QM</div>
+      <span class="tag blue">Physics</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>Cellular Automata</h3>
+      <p class="what">Self-reproducing machines proven possible. Universal constructor. The logical structure of DNA reproduction — before DNA was known.</p>
+      <div class="yr">1948–1952 · Self-Repro. Automata</div>
+      <span class="tag">Life</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">05</span>
+      <h3>Monte Carlo Method</h3>
+      <p class="what">Random sampling as computation. Nuclear physics, financial modeling, MCMC, LLM token sampling — all Monte Carlo.</p>
+      <div class="yr">1946 · Los Alamos, with Ulam</div>
+      <span class="tag">Simulation</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">+</span>
+      <h3>And Beyond</h3>
+      <p class="what">Operator algebras, ergodic theory, continuous geometry, fluid dynamics, numerical analysis, von Neumann algebras. Fields that bear his name for a reason.</p>
+      <div class="yr">1925–1955</div>
+      <span class="tag blue">Mathematics</span>
+    </div>
+  </div>
+
+  <div class="block orange reveal" style="animation-delay:.44s">
+    <blockquote>
+      "Young man, in mathematics you don't understand things. You just get used to them."
+      <cite>— John von Neumann, to a student who said he didn't understand the proof</cite>
+    </blockquote>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon reveal" style="animation-delay:.46s">
+    ROOT0-ATTRIBUTION-v1.0<br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    John von Neumann Series · Volume 1: The Architecture<br>
+    CC-BY-ND-4.0 · 2025
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>

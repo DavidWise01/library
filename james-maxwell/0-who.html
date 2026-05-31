@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James Clerk Maxwell — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0814;
+    --violet: #7c3aed;
+    --violet-dim: #5b21b6;
+    --violet-glow: rgba(124,58,237,0.18);
+    --cyan: #06b6d4;
+    --cyan-dim: #0891b2;
+    --cyan-glow: rgba(6,182,212,0.15);
+    --text: #e8e3f0;
+    --text-dim: #a89fc0;
+    --border: rgba(124,58,237,0.25);
+    --card-bg: rgba(124,58,237,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,8,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  nav .vol-links {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  nav a:hover, nav a.active { color: var(--cyan); }
+  nav a.active { color: var(--violet); }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: center;
+    padding: 5rem 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+    .masthead-art { order: -1; }
+  }
+
+  .masthead-text .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--violet);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .masthead-text h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .masthead-text h1 span { color: var(--violet); }
+  .masthead-text .subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--cyan);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .masthead-text .lede {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 540px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── EM WAVE SVG ── */
+  .masthead-art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .em-wave-container {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+  }
+  .em-wave-svg {
+    width: 100%;
+    height: 220px;
+    overflow: visible;
+  }
+
+  /* Wave animation */
+  @keyframes wave-march {
+    from { stroke-dashoffset: 120; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes wave-march-b {
+    from { stroke-dashoffset: 120; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  @keyframes arrow-slide {
+    0%   { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(18px); opacity: 0; }
+  }
+
+  .e-wave {
+    stroke: var(--violet);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-dasharray: 8 4;
+    animation: wave-march 1.2s linear infinite;
+  }
+  .b-wave {
+    stroke: var(--cyan);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-dasharray: 8 4;
+    animation: wave-march-b 1.2s linear infinite;
+  }
+  .axis-line {
+    stroke: rgba(232,227,240,0.15);
+    stroke-width: 1;
+  }
+  .wave-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    fill: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+  .wave-label-e { fill: var(--violet); font-size: 11px; font-weight: 700; }
+  .wave-label-b { fill: var(--cyan); font-size: 11px; font-weight: 700; }
+  .prop-arrow {
+    stroke: rgba(232,227,240,0.5);
+    stroke-width: 1.5;
+    fill: rgba(232,227,240,0.5);
+  }
+
+  /* ── BANDS ── */
+  .band {
+    display: inline-block;
+    background: var(--violet);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.18em 0.7em;
+    border-radius: 2px;
+    vertical-align: middle;
+  }
+  .band-cyan {
+    background: var(--cyan-dim);
+  }
+
+  /* ── MAIN CONTENT ── */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 4rem 6rem;
+  }
+  @media (max-width: 900px) {
+    .content { padding: 0 1.5rem 4rem; }
+  }
+
+  section { margin-bottom: 4rem; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    color: var(--text);
+  }
+
+  p { margin-bottom: 1.2em; }
+  p:last-child { margin-bottom: 0; }
+
+  em { color: var(--text); font-style: italic; }
+  strong { color: var(--cyan); font-style: normal; font-weight: 500; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem 1.5rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    opacity: 0;
+    transition: opacity 0.22s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--violet-glow), 0 2px 8px rgba(0,0,0,0.4);
+    border-color: rgba(124,58,237,0.5);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card .card-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+  }
+  .card h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--violet), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.45rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--violet);
+    box-shadow: 0 0 8px var(--violet);
+  }
+  .timeline-item .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--violet);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.25rem;
+  }
+  .timeline-item h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .timeline-item p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ── PULL QUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--violet);
+    margin: 2.5rem 0;
+    padding: 1rem 2rem;
+    background: var(--card-bg);
+    border-radius: 0 6px 6px 0;
+  }
+  blockquote p {
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 0.5em;
+  }
+  blockquote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  .stat-box {
+    flex: 1;
+    min-width: 140px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 1.4rem;
+    text-align: center;
+  }
+  .stat-box .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--violet);
+    display: block;
+  }
+  .stat-box .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  /* ── SERIES NAV ── */
+  .series-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .series-nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .series-nav a:hover {
+    color: var(--violet);
+    border-color: var(--violet);
+    background: var(--violet-glow);
+  }
+  .series-nav a.next {
+    background: var(--violet-glow);
+    color: var(--text);
+    border-color: var(--violet);
+  }
+  .series-nav a.next:hover {
+    background: rgba(124,58,237,0.3);
+  }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    margin-top: 5rem;
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    background: rgba(10,8,20,0.6);
+  }
+  @media (max-width: 900px) { .colophon { padding: 2rem 1.5rem; } }
+  .colophon-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .colophon p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin: 0;
+    line-height: 1.8;
+  }
+  .colophon .cc {
+    color: var(--violet);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05));
+    border: 1px solid rgba(124,58,237,0.35);
+    border-radius: 8px;
+    padding: 1.8rem 2rem;
+    margin: 2.5rem 0;
+  }
+  .highlight-box .hb-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .highlight-box p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  /* ── AGES ROW ── */
+  .ages-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .age-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .age-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px var(--violet-glow);
+  }
+  .age-card .age-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .age-card .age-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.3rem;
+    color: var(--violet);
+    font-weight: 700;
+  }
+  .age-card .age-field {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Maxwell // Four Volumes</span>
+  <div class="vol-links">
+    <a href="0-who.html" class="active">Vol 0 — Who He Was</a>
+    <a href="1-equations.html">Vol 1 — The Four Equations</a>
+    <a href="2-world.html">Vol 2 — His World</a>
+    <a href="3-legacy.html">Vol 3 — His Long Afterlife</a>
+  </div>
+</nav>
+
+<!-- ── MASTHEAD ── -->
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="kick">Volume 0 &nbsp;·&nbsp; Who He Was</span>
+    <h1>James Clerk <span>Maxwell</span></h1>
+    <div class="subtitle">1831 – 1879 &nbsp;·&nbsp; Edinburgh to Cambridge</div>
+    <p class="lede">He lived 48 years. In that span he proved that light is an electromagnetic wave, photographed color for the first time, solved Saturn's rings, and founded statistical mechanics. He is the bridge between Newton and Einstein.</p>
+    <span class="band">Born 13 June 1831</span>&nbsp;
+    <span class="band band-cyan">Edinburgh, Scotland</span>
+  </div>
+
+  <div class="masthead-art">
+    <div class="em-wave-container">
+      <!-- Animated EM Wave SVG -->
+      <svg class="em-wave-svg" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" aria-label="Animated electromagnetic wave showing perpendicular E and B fields propagating rightward">
+
+        <!-- Background subtle grid -->
+        <line x1="20" y1="110" x2="400" y2="110" class="axis-line"/>
+        <line x1="20" y1="50" x2="20" y2="170" class="axis-line"/>
+
+        <!-- Propagation arrow -->
+        <g>
+          <line x1="20" y1="110" x2="400" y2="110" stroke="rgba(232,227,240,0.08)" stroke-width="1"/>
+          <polygon points="400,106 412,110 400,114" fill="rgba(232,227,240,0.35)"/>
+          <text x="350" y="128" class="wave-label" fill="rgba(232,227,240,0.35)">propagation</text>
+        </g>
+
+        <!-- E field sine wave (vertical — Y plane) -->
+        <!-- Uses a long path with dasharray to animate marching -->
+        <path class="e-wave" d="
+          M 20,110
+          C 35,110 38,50 55,50
+          C 72,50 75,170 92,170
+          C 109,170 112,50 129,50
+          C 146,50 149,170 166,170
+          C 183,170 186,50 203,50
+          C 220,50 223,170 240,170
+          C 257,170 260,50 277,50
+          C 294,50 297,170 314,170
+          C 331,170 334,50 351,50
+          C 368,50 371,170 388,170
+        " stroke-dasharray="12 5" stroke-dashoffset="0"/>
+
+        <!-- B field cosine wave (horizontal — Z plane, drawn as a secondary wave offset) -->
+        <path class="b-wave" d="
+          M 20,110
+          C 35,110 38,75 55,75
+          C 72,75 75,145 92,145
+          C 109,145 112,75 129,75
+          C 146,75 149,145 166,145
+          C 183,145 186,75 203,75
+          C 220,75 223,145 240,145
+          C 257,145 260,75 277,75
+          C 294,75 297,145 314,145
+          C 331,145 334,75 351,75
+          C 368,75 371,145 388,145
+        " stroke-dasharray="12 5" stroke-dashoffset="0" opacity="0.75"/>
+
+        <!-- Labels -->
+        <text x="24" y="45" class="wave-label wave-label-e">E</text>
+        <text x="24" y="72" class="wave-label wave-label-b">B</text>
+
+        <!-- Corner labels -->
+        <text x="22" y="195" class="wave-label">ELECTRIC FIELD (E)</text>
+        <text x="22" y="207" class="wave-label" fill="var(--cyan)">MAGNETIC FIELD (B)</text>
+        <text x="320" y="207" class="wave-label">→ c = 3×10⁸ m/s</text>
+
+        <!-- Small tick marks on axis -->
+        <line x1="92" y1="107" x2="92" y2="113" stroke="rgba(232,227,240,0.2)" stroke-width="1"/>
+        <line x1="184" y1="107" x2="184" y2="113" stroke="rgba(232,227,240,0.2)" stroke-width="1"/>
+        <line x1="276" y1="107" x2="276" y2="113" stroke="rgba(232,227,240,0.2)" stroke-width="1"/>
+        <line x1="368" y1="107" x2="368" y2="113" stroke="rgba(232,227,240,0.2)" stroke-width="1"/>
+        <text x="86" y="125" class="wave-label" fill="rgba(232,227,240,0.25)">λ/4</text>
+        <text x="178" y="125" class="wave-label" fill="rgba(232,227,240,0.25)">λ/2</text>
+        <text x="269" y="125" class="wave-label" fill="rgba(232,227,240,0.25)">3λ/4</text>
+        <text x="363" y="125" class="wave-label" fill="rgba(232,227,240,0.25)">λ</text>
+
+        <!-- Perpendicular indicator arrows at a crest -->
+        <line x1="92" y1="50" x2="92" y2="75" stroke="rgba(232,227,240,0.3)" stroke-width="1" stroke-dasharray="3 2"/>
+        <text x="96" y="65" class="wave-label" fill="rgba(232,227,240,0.3)">⊥</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="content">
+
+  <!-- WHO WAS HE -->
+  <section id="who">
+    <div class="section-header">
+      <span class="kick">I.</span>
+      <h2>The Man Himself</h2>
+    </div>
+
+    <p>James Clerk Maxwell was born on 13 June 1831 at 14 India Street, Edinburgh, Scotland, to John Clerk Maxwell — a lawyer — and Frances Cay. He grew up on the family estate at Glenlair in Galloway, a rural southwest Scottish property that he loved throughout his life and returned to whenever he could. His mother died when he was eight, a loss that shaped him profoundly. His father, a gentle and curious man, fostered in the boy an insatiable habit of asking how and why.</p>
+
+    <p>He was sent to Edinburgh Academy at ten, arriving in a homemade country suit with unusual shoes, and was immediately nicknamed <em>"Dafty"</em> by his classmates. It was not a cruel nickname — it was bewildered recognition that this child operated on a different frequency. He did not fit the expected molds of what a clever boy looked like. He was not quick or showy; he was <strong>deep</strong>.</p>
+
+    <blockquote>
+      <p>"What is the go of it? What is the particular go of it?"</p>
+      <cite>Maxwell's childhood question — his compulsive query about every mechanism he encountered</cite>
+    </blockquote>
+
+    <p>By fourteen he had submitted his first original paper to the Royal Society of Edinburgh — a geometric method for drawing mathematical curves using a piece of string — deemed too good to have been written by a child, and presented by his father on his behalf. He was correct, of course. The method was original and the proof was clean.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-num">48</span>
+        <span class="stat-label">Years Lived</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">1861</span>
+        <span class="stat-label">First Color Photo</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Equations Unifying Physics</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">14</span>
+        <span class="stat-label">Age at First Paper</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-header">
+      <span class="kick">II.</span>
+      <h2>Formation: Edinburgh and Cambridge</h2>
+    </div>
+
+    <p>Maxwell entered the University of Edinburgh at fifteen, studying under William Hamilton the philosopher and James David Forbes the physicist — two of the finest scientific minds in Scotland. Forbes in particular recognized what he had in front of him and gave the boy access to the laboratory and his own time. Maxwell published two more papers while an undergraduate in Edinburgh.</p>
+
+    <p>In 1850, at nineteen, he transferred to Cambridge. He sat the Mathematical Tripos — the brutal examination regime that was Victorian England's supreme intellectual ordeal, a test not of understanding but of speed, precision, and trained mathematical reflex, administered over days. Maxwell placed <strong>Second Wrangler</strong> in 1854, behind Edward Routh. But he also sat the Smith's Prize examination, considered the deeper test, and was placed first equal with Routh. Both results announced that a significant talent had arrived.</p>
+
+    <p>He stayed on at Cambridge as a Fellow of Trinity. He read Faraday's <em>Experimental Researches in Electricity</em> and began the project that would define his life: translating Faraday's intuitive picture of electric and magnetic field lines into rigorous mathematics.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">The Faraday Connection</span>
+      <p>Michael Faraday — already in this library — was Maxwell's intellectual predecessor and hero. Faraday saw the fields. Maxwell made them computable. When Maxwell published his first electromagnetic paper in 1855–56, he sent a copy to Faraday. Faraday wrote back: the old experimenter, now sixty-four and in failing health, could not follow all the mathematics, but he recognized what was happening. "I was at first almost frightened when I saw such mathematical force made to bear upon the subject," he wrote.</p>
+    </div>
+  </section>
+
+  <!-- CAREER -->
+  <section id="career">
+    <div class="section-header">
+      <span class="kick">III.</span>
+      <h2>The Academic Posts</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-year">1856</div>
+        <h3>Chair of Natural Philosophy, Marischal College, Aberdeen</h3>
+        <p>Maxwell was twenty-four when he took the Chair — one of the youngest professors in Britain. Here he began his work on Saturn's rings and the kinetic theory of gases. In 1860 the two Aberdeen colleges merged and Maxwell's chair was eliminated. He was not reappointed. The committee who let him go did not realize what they had.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1860</div>
+        <h3>Chair of Natural Philosophy, King's College London</h3>
+        <p>His most productive period. He developed the full electromagnetic field theory, produced the first color photograph, and worked out the distribution of molecular velocities in gases. He resigned in 1865 due to ill health and retreated to Glenlair, where he revised his <em>Treatise on Electricity and Magnetism</em> over several years.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1871</div>
+        <h3>First Cavendish Professor of Physics, Cambridge</h3>
+        <p>Maxwell was appointed to design and build the Cavendish Laboratory from scratch — the greatest physics laboratory of the twentieth century. He oversaw its construction and equipment, selected its instruments, wrote the operating protocols, and began organizing the unpublished manuscripts of Henry Cavendish. He died before seeing the laboratory's full flowering. Every experiment done at Cavendish from 1874 onward — the discovery of the electron, the discovery of the neutron, the structure of DNA — begins with the space Maxwell built.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">5 Nov 1879</div>
+        <h3>Death at Cambridge</h3>
+        <p>Maxwell died of abdominal cancer at age 48. His last months were marked by what his physician called an extraordinary equanimity. He was 48 years, 5 months old. His mother had died at exactly the same age, of the same cancer, and Maxwell had known for years that his time would likely match hers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTRIBUTIONS -->
+  <section id="contributions">
+    <div class="section-header">
+      <span class="kick">IV.</span>
+      <h2>What He Did: The Principal Contributions</h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-year">1857–1859</div>
+        <h3>Saturn's Rings</h3>
+        <p>The Adams Prize problem asked whether Saturn's rings were solid, liquid, or composed of particles. Maxwell proved mathematically that only a vast collection of separate particles could be stable. No telescope could see individual ring particles in 1859. Maxwell deduced their existence from mechanics alone. The Cassini mission confirmed it 145 years later.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">1855–1865</div>
+        <h3>Electromagnetic Field Theory</h3>
+        <p>The central work. Maxwell showed that electricity, magnetism, and light are three aspects of a single phenomenon. His four equations — published in full in 1865 — predicted electromagnetic waves traveling at the speed of light. He calculated c = 1/√(ε₀μ₀) and recognized immediately that this was the measured speed of light.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">1861</div>
+        <h3>First Color Photograph</h3>
+        <p>Demonstrating the Young-Helmholtz three-component theory of color vision, Maxwell photographed a tartan ribbon through three color filters (red, green, blue), then projected the three images simultaneously through the same filters, superimposing them. The first true color photograph appeared on a screen at the Royal Institution.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">1860–1867</div>
+        <h3>Kinetic Theory of Gases</h3>
+        <p>Maxwell derived the Maxwell-Boltzmann velocity distribution — the statistical distribution of speeds among molecules in a gas. This was the first time statistical reasoning was applied rigorously to physics. It was the founding act of statistical mechanics. It also proved that atoms and molecules had to exist.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">1867</div>
+        <h3>Maxwell's Demon</h3>
+        <p>A thought experiment to probe the second law of thermodynamics: could an intelligent being, controlling a tiny trapdoor between two compartments of gas, sort fast from slow molecules and create a temperature difference without doing work? The resolution took nearly a century: measurement requires energy, information has thermodynamic cost. Maxwell's Demon is the founding question of information thermodynamics.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">1855–1870</div>
+        <h3>Color Vision Theory</h3>
+        <p>Maxwell extended the Young-Helmholtz trichromatic theory of human color vision with experimental rigor, designing the Maxwell disc — a rotating disc of colored sectors — to measure color matching. His quantitative color triangle remains the foundation of modern colorimetry and the CIE color space used in every display standard today.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 48 YEARS -->
+  <section id="age">
+    <div class="section-header">
+      <span class="kick">V.</span>
+      <h2>Forty-Eight Years: The Company He Keeps</h2>
+    </div>
+
+    <p>Maxwell died at 48 — an age that should feel tragic but somehow feels even more so when you list the others who died at the same age. There is a small, terrible club of those who changed the world and were gone before fifty. Maxwell's membership is among the most distinguished.</p>
+
+    <div class="ages-row">
+      <div class="age-card">
+        <div class="age-name">John Keats</div>
+        <div class="age-num">25</div>
+        <div class="age-field">Poet</div>
+      </div>
+      <div class="age-card">
+        <div class="age-name">W.A. Mozart</div>
+        <div class="age-num">35</div>
+        <div class="age-field">Composer</div>
+      </div>
+      <div class="age-card">
+        <div class="age-name">Raphael</div>
+        <div class="age-num">37</div>
+        <div class="age-field">Painter</div>
+      </div>
+      <div class="age-card">
+        <div class="age-name">J.C. Maxwell</div>
+        <div class="age-num">48</div>
+        <div class="age-field">Physicist</div>
+      </div>
+      <div class="age-card">
+        <div class="age-name">Nikola Tesla</div>
+        <div class="age-num">86</div>
+        <div class="age-field">Engineer</div>
+      </div>
+      <div class="age-card">
+        <div class="age-name">Michael Faraday</div>
+        <div class="age-num">75</div>
+        <div class="age-field">Physicist</div>
+      </div>
+    </div>
+
+    <p>The difference between Maxwell and the figures above is not merely scientific — it is what he left behind. Keats left poems. Mozart left symphonies. Maxwell left the mathematical structure of a third of modern physics. Every wireless signal in the world today is an application of equations completed by a man who was dead at 48 and forgotten by the general public within a generation of his death.</p>
+
+    <blockquote>
+      <p>"The special theory of relativity owes its origins to Maxwell's equations of the electromagnetic field."</p>
+      <cite>Albert Einstein</cite>
+    </blockquote>
+
+    <p>Einstein kept three portraits on his study wall: Newton, Faraday, and Maxwell. He has said explicitly that Maxwell's work was the most profound and fruitful that physics had experienced since Newton. This is not polite tribute. It is accurate accounting.</p>
+  </section>
+
+  <!-- CHARACTER -->
+  <section id="character">
+    <div class="section-header">
+      <span class="kick">VI.</span>
+      <h2>Character</h2>
+    </div>
+
+    <p>Maxwell was a deeply religious man — not in a conventional Victorian piety but in a genuine, searching, personal theology. He was interested in the boundary between what could be known and what could not, and he approached both with the same fundamental curiosity. He wrote verse throughout his life — not as a hobby but as thinking-by-other-means. His poems range from comic to profound and reveal a man more multi-dimensional than his equations alone suggest.</p>
+
+    <p>He was also a devoted husband. He married Katherine Mary Dewar in 1858. Katherine was his close intellectual partner, running experiments alongside him, particularly those involving the viscosity of gases. The experiments were done in their home at Glenlair. Katherine held the timing equipment while Maxwell observed. Their collaboration was genuine and constant.</p>
+
+    <p>To his students he was approachable, patient, and occasionally baffling. His lectures were famous for their density — he thought faster than he could organize, and the organizational gap sometimes appeared in what he said aloud. He was not performing for an audience. He was thinking, and he allowed others to watch.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">A Characteristic Story</span>
+      <p>When asked by a fellow scientist why he bothered writing verse, Maxwell replied that mathematics was one way of seeing a thing and poetry was another, and that a man who had only one way of seeing might be missing half the truth. He was serious. His poem "A Student's Evening Hymn" and his comic verse about the kinetic theory of gases are equally Maxwell — the same mind working in two different registers, both in pursuit of <em>the particular go of it</em>.</p>
+    </div>
+
+    <p>He died on 5 November 1879. His physician, Dr. Paget, wrote afterward that he had never seen a person "die so calmly and peacefully," and that during his final months Maxwell "conversed with remarkable freedom on subjects which men generally avoid." He was forty-eight years and five months old. The Cavendish Laboratory was five years old. Heinrich Hertz would not demonstrate electromagnetic waves for another eight years. Maxwell would not live to see the first confirmation of what he had proved.</p>
+  </section>
+
+  <div class="series-nav">
+    <a href="1-equations.html" class="next">Vol 1: The Four Equations →</a>
+  </div>
+
+</main>
+
+<footer class="colophon">
+  <div class="colophon-inner">
+    <p>
+      ROOT0-ATTRIBUTION-v1.0<br>
+      James Clerk Maxwell — Volume 0: Who He Was<br>
+      <span class="cc">CC-BY-ND-4.0</span> &nbsp;·&nbsp; David Lee Wise / ROOT0 / TriPod LLC
+    </p>
+    <p>
+      Vol 0: Who He Was &nbsp;|&nbsp; Vol 1: The Four Equations<br>
+      Vol 2: His World &nbsp;|&nbsp; Vol 3: His Long Afterlife<br>
+      Library Series &nbsp;·&nbsp; 2024
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

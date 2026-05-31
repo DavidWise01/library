@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Euclid — Vol. 3: His Long Afterlife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0f1108;
+      --gold: #c9a227;
+      --ivory: #e8d8a0;
+      --dim: #6b6540;
+      --mid: #2a2910;
+      --card-bg: #141509;
+      --border: rgba(201,162,39,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ivory);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(15,17,8,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--ivory);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(232,216,160,0.8);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--ivory);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.1rem; color: rgba(232,216,160,0.88); }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--gold);
+      color: #0f1108;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.6rem;
+    }
+
+    .card p { font-size: 0.9rem; color: rgba(232,216,160,0.72); line-height: 1.65; }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(201,162,39,0.05);
+    }
+
+    blockquote p { font-size: 1.15rem; font-style: italic; color: var(--ivory); margin: 0; }
+
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* GEOMETRY COMPARISON PANEL */
+    .geometry-comparison {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .geom-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.4rem;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .geom-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .geom-panel svg { width: 140px; height: 100px; margin: 0 auto 1rem; display: block; }
+
+    .geom-panel .geom-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .geom-panel h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--ivory);
+      margin-bottom: 0.5rem;
+    }
+
+    .geom-panel p { font-size: 0.85rem; color: rgba(232,216,160,0.7); text-align: left; }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-item p { font-size: 0.92rem; }
+
+    /* STAT BLOCK */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.4rem;
+      text-align: center;
+    }
+
+    .stat-block .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-block .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* PROOF SYSTEM TABLE */
+    .system-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .system-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+
+    .system-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(201,162,39,0.1);
+      color: rgba(232,216,160,0.82);
+      vertical-align: top;
+    }
+
+    .system-table tr:last-child td { border-bottom: none; }
+    .system-table tr:hover td { background: rgba(201,162,39,0.04); }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .vol-nav a:hover { color: var(--gold); border-color: var(--gold); }
+    .vol-nav a.current { color: var(--gold); border-color: var(--gold); background: rgba(201,162,39,0.08); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    @media (max-width: 900px) {
+      .geometry-comparison { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Euclid — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-elements.html">Vol. 1 — Elements</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 3 of 4 &nbsp;·&nbsp; Euclid of Alexandria</span>
+    <h1>His Long Afterlife</h1>
+    <div class="subtitle">2,300 Years of a Textbook, and What It Broke Open</div>
+    <p class="lede">For two millennia, Euclid's Elements was the mathematics curriculum. It shaped how Western civilization understood proof, space, and reason. And then, in the nineteenth century, three mathematicians independently discovered that its fifth postulate was optional — and the discovery remade physics, philosophy, and our understanding of the universe.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: diverging parallel lines (hyperbolic geometry suggestion) -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1b09"/>
+          <stop offset="100%" stop-color="#0f1108"/>
+        </radialGradient>
+      </defs>
+      <circle cx="180" cy="180" r="178" fill="url(#bg3)" stroke="#c9a227" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Euclidean: parallel horizontal lines -->
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0.8;0.8;0;0" dur="12s" repeatCount="indefinite"/>
+        <line x1="40" y1="160" x2="320" y2="160" stroke="#c9a227" stroke-width="1.2"/>
+        <line x1="40" y1="200" x2="320" y2="200" stroke="#c9a227" stroke-width="1.2"/>
+        <text x="180" y="240" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c9a227" letter-spacing="2">EUCLIDEAN</text>
+        <text x="180" y="252" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.6" letter-spacing="1">ONE PARALLEL</text>
+      </g>
+
+      <!-- Hyperbolic: lines diverging -->
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;0.8;0.8;0;0" dur="12s" repeatCount="indefinite"/>
+        <path d="M 180,180 C 140,165 80,140 40,120" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+        <path d="M 180,180 C 220,165 280,140 320,120" fill="none" stroke="#c9a227" stroke-width="1.2" opacity="0.5"/>
+        <path d="M 180,180 C 150,175 90,170 40,175" fill="none" stroke="#c9a227" stroke-width="0.8" stroke-dasharray="3 3"/>
+        <text x="180" y="240" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c9a227" letter-spacing="2">HYPERBOLIC</text>
+        <text x="180" y="252" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.6" letter-spacing="1">INFINITE PARALLELS</text>
+      </g>
+
+      <!-- Elliptic: lines converging (great circles on sphere) -->
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.8;0.8;0" dur="12s" repeatCount="indefinite"/>
+        <!-- Sphere outline -->
+        <circle cx="180" cy="160" r="80" fill="none" stroke="#c9a227" stroke-width="0.8" opacity="0.4"/>
+        <!-- Great circles converging -->
+        <path d="M 40,160 Q 180,100 320,160" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+        <path d="M 40,160 Q 180,220 320,160" fill="none" stroke="#c9a227" stroke-width="1.2"/>
+        <!-- Intersection points (poles) -->
+        <circle cx="40" cy="160" r="4" fill="#c9a227" opacity="0.8"/>
+        <circle cx="320" cy="160" r="4" fill="#c9a227" opacity="0.8"/>
+        <text x="180" y="270" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c9a227" letter-spacing="2">ELLIPTIC</text>
+        <text x="180" y="282" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.6" letter-spacing="1">NO PARALLELS</text>
+      </g>
+
+      <!-- Rotating outer ring -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="90s" repeatCount="indefinite" additive="sum"/>
+        <circle cx="0" cy="0" r="148" fill="none" stroke="#c9a227" stroke-width="0.4" stroke-dasharray="2 8" opacity="0.3"/>
+      </g>
+
+      <circle cx="180" cy="180" r="3" fill="#c9a227" opacity="0.7"/>
+
+      <!-- GEOMETRY LABEL -->
+      <text x="180" y="338" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.45" letter-spacing="2">THREE GEOMETRIES</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-elements.html">Vol. 1 — The Elements</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="current">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: THE DOMINANCE -->
+  <section>
+    <span class="kick">The Longest Textbook</span>
+    <h2>2,300 Years as the Standard</h2>
+    <p>There is no parallel in intellectual history. For roughly two thousand three hundred years, from the Hellenistic period through the early twentieth century, Euclid's Elements served as the standard textbook for the teaching of mathematics — specifically geometry — in schools and universities across the Mediterranean, the Islamic world, and the West. It was, after the Bible, the most printed book in the history of Western publishing.</p>
+
+    <div class="stat-row">
+      <div class="stat-block">
+        <div class="stat-number">2,300</div>
+        <div class="stat-label">Years as standard textbook</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">1,000+</div>
+        <div class="stat-label">Printed editions since 1482</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">#2</div>
+        <div class="stat-label">Most printed Western book (after the Bible)</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-number">28</div>
+        <div class="stat-label">Languages of translation</div>
+      </div>
+    </div>
+
+    <p>Isaac Newton learned geometry from the Elements as a student at Cambridge. So did Abraham Lincoln — who reportedly carried a copy of the Elements on the circuit courts of Illinois, reading it by firelight to train his mind in logical argument. So did Bertrand Russell, who later wrote in his autobiography about the shock and delight of his first encounter with Euclid at age eleven. So did Albert Einstein, who recalled encountering a "holy little geometry book" at age twelve that gave him his first sense of the power of pure reason.</p>
+
+    <blockquote>
+      <p>"At the age of twelve I experienced a second wonder of a totally different nature: in a little book dealing with Euclidean plane geometry, which came into my hands at the beginning of a school year. Here were assertions, as for example the intersection of the three altitudes of a triangle in one point, which — though by no means evident — could nevertheless be proved with such certainty that any doubt appeared to be out of the question. This lucidity and certainty made an indescribable impression upon me."</p>
+      <cite>— Albert Einstein, Autobiographical Notes, 1949</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 2: THE CURRICULUM -->
+  <section>
+    <span class="kick">In the Classroom</span>
+    <h2>Euclid in the Curriculum — A Long History</h2>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">c. 300 BCE – 300 CE</div>
+        <h4>The Hellenistic and Roman World</h4>
+        <p>The Elements was the standard geometry text at the Museum of Alexandria and in Greek schools across the Mediterranean. It was commented on by Heron of Alexandria (c. 10–70 CE), Pappus of Alexandria (c. 290–350 CE), and Proclus (c. 412–485 CE). The text was already treated as authoritative within a generation of its writing.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">c. 800–1200 CE</div>
+        <h4>The Islamic Golden Age</h4>
+        <p>Translated into Arabic multiple times under the Abbasid caliphate. Studied and commented on by al-Kindi, al-Farabi, al-Haytham, al-Tusi, and Omar Khayyam. The Islamic engagement with the parallel postulate was the most sophisticated mathematical wrestling with the text since antiquity, and it directly prepared the ground for non-Euclidean geometry.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">1120–1600 CE</div>
+        <h4>Medieval and Renaissance Europe</h4>
+        <p>After Adelard of Bath's Latin translation (1120 CE), the Elements entered the European university curriculum as part of the quadrivium (arithmetic, geometry, music, astronomy). It was taught at Oxford, Paris, Bologna, and every major European university. Roger Bacon (c. 1214–1292) called mathematics — meaning Euclidean geometry — the gateway to all other sciences.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">1482 CE</div>
+        <h4>First Print Edition</h4>
+        <p>The Ratdolt edition, published in Venice, was one of the first printed mathematical books and the first with geometric figures. It was not based on the original Greek (which was still largely unknown in Western Europe) but on Campanus of Novara's Latin translation from Arabic. Within a century, dozens of editions appeared across Europe.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">1533–1570 CE</div>
+        <h4>First Greek Editions Printed</h4>
+        <p>Simon Grynaeus published the first printed Greek edition in 1533 in Basel. John Dee (the mathematician and occultist) wrote the preface to Henry Billingsley's 1570 English translation — the first in English. The Elements was now available in every major European language.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">1600–1900 CE</div>
+        <h4>Standard University Text</h4>
+        <p>The Elements remained the standard geometry textbook at Cambridge and Oxford through the nineteenth century. The Cambridge Mathematical Tripos — the competitive examination that determined academic careers — was largely based on Euclidean geometry. Every major English scientist of the 18th and 19th centuries learned their mathematics through Euclid.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="year">1868–1900 CE</div>
+        <h4>The Great Euclid Debate</h4>
+        <p>British mathematicians debated whether to replace the Elements with a more modern textbook. The Association for the Improvement of Geometrical Teaching (founded 1871) campaigned against Euclidean teaching. By 1900, most countries had moved to more modern curricula. The Elements was no longer the exclusive textbook — but its method remained the model.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: FAMOUS READERS -->
+  <section>
+    <span class="kick">Notable Encounters</span>
+    <h2>Readers Who Were Changed by Euclid</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">ISAAC NEWTON — c. 1661</span>
+        <h4>The Student at Cambridge</h4>
+        <p>Newton encountered the Elements as a student and initially found it "trivially obvious." He moved rapidly through it. His Principia Mathematica (1687) was written in the Euclidean style — definitions, axioms, propositions — a deliberate rhetorical choice to give his mechanics the authority of geometry.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">BARUCH SPINOZA — 1677</span>
+        <h4>Philosophy as Geometry</h4>
+        <p>The Dutch philosopher wrote his Ethics "more geometrico" — in geometric style. It opens with definitions and axioms and proceeds through propositions with proofs. Spinoza genuinely believed that ethical truths, properly organized, could achieve the certainty of geometric theorems. The ambition is purely Euclidean.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THOMAS HOBBES — c. 1629</span>
+        <h4>The Political Philosopher's Conversion</h4>
+        <p>Aubrey's Brief Lives reports that Hobbes first encountered the Elements in a library at about age 40, fell open to the Pythagorean theorem. He reportedly exclaimed "By God, this is impossible!" — then read the proof, which traced back to postulates he could not deny. He became obsessed with geometry and its method of certain proof.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">ABRAHAM LINCOLN — 1840s</span>
+        <h4>Logic for a Lawyer</h4>
+        <p>Lincoln carried a copy of Euclid while riding the Illinois circuit courts and studied it by firelight. He later wrote: "I said to myself, 'Lincoln, you can never make a lawyer if you do not understand what demonstrate means... I went home to my father's house, and stayed there till I could give any proposition in the six books of Euclid at sight.'"</p>
+      </div>
+      <div class="card">
+        <span class="card-num">BERTRAND RUSSELL — 1883</span>
+        <h4>A Revelation at Eleven</h4>
+        <p>Russell wrote in his autobiography: "At the age of eleven, I began Euclid, with my brother as my tutor. This was one of the great events of my life, as dazzling as first love. I had not imagined there was anything so delicious in the world." He would later, with A.N. Whitehead, write Principia Mathematica — the attempt to show all mathematics derivable from logic.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">ALBERT EINSTEIN — 1891</span>
+        <h4>The Holy Little Geometry Book</h4>
+        <p>Einstein received a small geometry book at age 12 — containing Euclidean geometry — and described it as one of two "wonders" of his childhood (the other being a compass). The certainty of geometric proof made an "indescribable impression." The physicist who would eventually need non-Euclidean geometry began with Euclid.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: NON-EUCLIDEAN GEOMETRY -->
+  <section>
+    <span class="kick">The Revolution</span>
+    <h2>Non-Euclidean Geometry: The Fifth Postulate Falls</h2>
+    <p>The discovery of non-Euclidean geometry in the early nineteenth century was one of the most significant intellectual events in the history of mathematics — perhaps the most significant since Euclid himself. It did not refute Euclid. But it demonstrated something that had been unimaginable for two thousand years: that the fifth postulate is not a truth about space. It is a choice.</p>
+    <p>For 2,000 years, mathematicians had tried to prove the parallel postulate from the other four. The repeated failures were accumulating evidence — though no one read them that way — that the postulate was genuinely independent. The insight that ended the quest came from three mathematicians working separately, in three different countries, arriving at the same conclusion within a few years of each other.</p>
+
+    <div class="geometry-comparison">
+      <!-- Euclidean -->
+      <div class="geom-panel">
+        <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="140" height="100" fill="#141509"/>
+          <!-- A point and a line, with exactly one parallel -->
+          <line x1="10" y1="70" x2="130" y2="70" stroke="#c9a227" stroke-width="1.2" opacity="0.8"/>
+          <line x1="10" y1="35" x2="130" y2="35" stroke="#c9a227" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+          <circle cx="70" cy="35" r="3" fill="#c9a227"/>
+          <text x="70" y="92" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.5">FLAT PLANE</text>
+        </svg>
+        <div class="geom-label">Euclidean</div>
+        <h4>Zero Curvature</h4>
+        <p>Exactly one line through a point parallel to a given line. Interior angles of triangles sum to exactly 180°. The Pythagorean theorem holds exactly. This is the geometry of a flat, infinite plane.</p>
+      </div>
+
+      <!-- Hyperbolic -->
+      <div class="geom-panel">
+        <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="140" height="100" fill="#141509"/>
+          <!-- Poincaré disk model suggestion -->
+          <circle cx="70" cy="50" r="42" fill="none" stroke="#c9a227" stroke-width="0.5" opacity="0.3"/>
+          <!-- Multiple parallel lines through a point -->
+          <path d="M 28,80 Q 70,30 112,80" fill="none" stroke="#c9a227" stroke-width="1.2" opacity="0.8"/>
+          <path d="M 28,75 Q 55,42 112,65" fill="none" stroke="#c9a227" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.5"/>
+          <path d="M 28,70 Q 45,48 112,55" fill="none" stroke="#c9a227" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.35"/>
+          <circle cx="70" cy="35" r="3" fill="#c9a227"/>
+          <text x="70" y="96" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.5">SADDLE SURFACE</text>
+        </svg>
+        <div class="geom-label">Hyperbolic</div>
+        <h4>Negative Curvature</h4>
+        <p>Infinitely many lines through a point parallel to a given line. Interior angles of triangles sum to less than 180°. The "plane" curves like a saddle. Discovered independently by Lobachevsky and Bolyai around 1830.</p>
+      </div>
+
+      <!-- Elliptic/Spherical -->
+      <div class="geom-panel">
+        <svg viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg">
+          <rect width="140" height="100" fill="#141509"/>
+          <!-- Sphere with great circles converging -->
+          <ellipse cx="70" cy="50" r="42" ry="30" fill="none" stroke="#c9a227" stroke-width="0.5" opacity="0.3"/>
+          <!-- Great circles that must meet -->
+          <path d="M 28,50 Q 70,20 112,50" fill="none" stroke="#c9a227" stroke-width="1.2" opacity="0.8"/>
+          <path d="M 28,50 Q 70,80 112,50" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.6"/>
+          <!-- Poles (intersection points) -->
+          <circle cx="28" cy="50" r="3.5" fill="#c9a227"/>
+          <circle cx="112" cy="50" r="3.5" fill="#c9a227"/>
+          <text x="70" y="96" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.5">SPHERE SURFACE</text>
+        </svg>
+        <div class="geom-label">Elliptic / Spherical</div>
+        <h4>Positive Curvature</h4>
+        <p>No parallel lines exist — all "straight lines" (great circles) eventually meet. Interior angles of triangles sum to more than 180°. This is the geometry of a sphere. Developed by Riemann in 1854 as a generalization of all curved geometries.</p>
+      </div>
+    </div>
+
+    <h3>The Founders of Non-Euclidean Geometry</h3>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">1830 — RUSSIA</span>
+        <h4>Nikolai Lobachevsky</h4>
+        <p>Nikolai Ivanovich Lobachevsky (1792–1856), professor at Kazan University, published his "imaginary geometry" — what we now call hyperbolic geometry — in 1830. He assumed the parallel postulate was false (multiple parallels exist through a point) and derived a consistent system. He was ridiculed in Russia; his work was ignored or mocked during his lifetime. He published in Russian, limiting his reach. Only after his death was he recognized as one of the founders of the field.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1832 — HUNGARY</span>
+        <h4>János Bolyai</h4>
+        <p>János Bolyai (1802–1860), a Hungarian army officer and mathematician, independently developed the same hyperbolic geometry and published it in 1832 as an appendix to his father's mathematical text. His father Farkas Bolyai had spent decades trying to prove the parallel postulate; his son instead abandoned the attempt and built a new geometry. When he sent his work to Gauss, Gauss replied that he had discovered the same thing years earlier but never published it — a response that devastated Bolyai and from which he never fully recovered.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">c. 1820 — GERMANY</span>
+        <h4>Carl Friedrich Gauss</h4>
+        <p>Carl Friedrich Gauss (1777–1855), the greatest mathematician of the era, privately developed non-Euclidean geometry years before Lobachevsky or Bolyai published. He never published it — reportedly fearing the "howl of the Boeotians" (the outcry of the conventional). His correspondence confirms that he had reached the same conclusions independently. His silence was consequential: had Gauss published, the field would have developed decades earlier.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1854 — GERMANY</span>
+        <h4>Bernhard Riemann</h4>
+        <p>Georg Friedrich Bernhard Riemann (1826–1866), in his 1854 Habilitation lecture at Göttingen, gave the field its full generalization. His concept of a "manifold" of arbitrary curvature unified all possible geometries — Euclidean, hyperbolic, elliptic, and infinitely many others — in a single framework. Riemannian geometry is the mathematical language of Einstein's general relativity. Riemann died of tuberculosis at 39; his influence on mathematics rivals Euclid's own.</p>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>"Out of nothing I have created a strange new universe."</p>
+      <cite>— János Bolyai, letter to his father, 1823, describing his discovery of non-Euclidean geometry</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 5: EINSTEIN AND CURVED SPACE -->
+  <section>
+    <span class="kick">Physics Catches Up to Mathematics</span>
+    <h2>Einstein and the Geometry of Spacetime</h2>
+    <p>For decades after Lobachevsky, Bolyai, and Riemann, non-Euclidean geometry was a mathematical curiosity — logically consistent, philosophically interesting, but apparently with no connection to physical reality. The universe, most physicists assumed, was Euclidean. Light traveled in straight lines through flat space. Then came Einstein.</p>
+    <p>Albert Einstein's general theory of relativity (1915) used Riemannian geometry — non-Euclidean, curved geometry — as its mathematical foundation. In Einstein's theory, gravity is not a force in Newton's sense. It is the curvature of spacetime, caused by mass and energy. Matter tells spacetime how to curve; curvature tells matter how to move.</p>
+    <p>The geometry of the universe is not Euclidean. Space is curved. A "straight line" in the vicinity of a massive object is a curve — a geodesic on a curved surface. Light bends around the Sun not because a force acts on it, but because the spacetime through which it travels is curved. This was confirmed experimentally in 1919, when Arthur Eddington measured the deflection of starlight during a solar eclipse, finding exactly the amount predicted by general relativity.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">1905</span>
+        <h4>Special Relativity</h4>
+        <p>Einstein's special relativity replaced Newton's absolute space and time with a unified four-dimensional spacetime. Space and time intervals are relative to the observer's motion. The geometry of this spacetime is flat (Minkowski geometry) — still not Euclidean, but not yet curved.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1907–1915</span>
+        <h4>The Search for Curved Geometry</h4>
+        <p>Einstein worked for eight years after special relativity to incorporate gravity. His key insight: gravity and acceleration are locally indistinguishable. A person in a closed elevator cannot tell if they are in a gravitational field or accelerating uniformly. This "equivalence principle" forced him toward curved geometry — and toward Riemann's mathematics.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1915</span>
+        <h4>General Relativity</h4>
+        <p>Einstein's field equations describe how mass-energy curves the Riemannian manifold of spacetime. Planets orbit the Sun not because gravity pulls them, but because they follow geodesics (straight lines in curved space) through a spacetime curved by the Sun's mass. Newton's gravity is an approximation valid in weak fields; Euclid's geometry is an approximation valid in flat regions of spacetime.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1919</span>
+        <h4>Confirmed by Eclipse</h4>
+        <p>Eddington's measurement of starlight deflection during the 1919 solar eclipse confirmed general relativity. Light from a distant star, passing near the Sun, appeared displaced from its actual position by exactly 1.75 arcseconds — the value predicted by Einstein, not by Newton. Non-Euclidean geometry was confirmed as the geometry of physical space.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">2015–PRESENT</span>
+        <h4>Gravitational Waves</h4>
+        <p>LIGO's detection of gravitational waves in 2015 — ripples in the curvature of spacetime produced by merging black holes — confirmed the most dramatic prediction of general relativity. These waves are, literally, waves in the non-Euclidean fabric of spacetime. They travel at the speed of light, warping space and time as they pass.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE IRONY</span>
+        <h4>Einstein Began with Euclid</h4>
+        <p>The physicist whose greatest achievement required non-Euclidean geometry began his mathematical education, as he wrote, with a "holy little geometry book" — Euclidean geometry. The path from Euclid's flat plane to Einstein's curved spacetime took 2,100 years and required the specific intellectual crisis of the parallel postulate. Without Euclid, there is no Einstein.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: HILBERT AND FORMAL AXIOMATICS -->
+  <section>
+    <span class="kick">The Formalization of the Method</span>
+    <h2>Hilbert and the Modern Axiomatic Program</h2>
+    <p>The non-Euclidean revolution also forced a reckoning with Euclid's original axioms. If denying the fifth postulate produces valid geometry, mathematicians needed to be more careful about what "valid" means — and more rigorous about whether Euclid's other axioms were truly complete and consistent.</p>
+    <p>David Hilbert (1862–1943), in his 1899 <em>Grundlagen der Geometrie</em> (Foundations of Geometry), provided the definitive modern analysis. Hilbert found that Euclid's original axioms were incomplete: Euclid had made arguments that relied on facts he had not stated as axioms — most notably, assumptions about "betweenness" (when one point is between two others) and about continuity. Hilbert provided a complete, independent, consistent set of axioms for Euclidean geometry, replacing Euclid's 5 postulates with 20 axioms organized in six groups.</p>
+
+    <blockquote>
+      <p>"One must be able to say at all times — instead of points, lines, and planes — tables, chairs, and beer mugs."</p>
+      <cite>— David Hilbert, on the purely formal character of axiomatic geometry (reported by Blumenthal, 1935)</cite>
+    </blockquote>
+
+    <p>Hilbert's point — stated with characteristic bluntness — is that in a truly rigorous axiomatic system, the truth of the theorems does not depend on the meaning of the primitive terms. "Point," "line," and "plane" are just labels; any objects satisfying the axioms will do. This radical formalism is the endpoint of the process Euclid began: the liberation of mathematics from the physical world into pure logical structure.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">EUCLID'S GAPS</span>
+        <h4>What Euclid Didn't State</h4>
+        <p>Euclid implicitly assumes: (1) that lines have a "betweenness" relation (points can be between others); (2) that two circles that "appear" to intersect actually do; (3) continuity assumptions used in "sliding" proofs. None of these are stated as postulates. Hilbert made them explicit.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1900</span>
+        <h4>Hilbert's 23 Problems</h4>
+        <p>At the 1900 International Congress of Mathematicians, Hilbert presented 23 problems to drive 20th-century mathematics. The second problem — prove the consistency of arithmetic — was partially answered by Gödel's incompleteness theorems (1931), showing that no sufficiently powerful system can prove its own consistency. This is the final echo of Euclid's axiomatic project.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1931</span>
+        <h4>Gödel's Incompleteness</h4>
+        <p>Kurt Gödel proved that any consistent formal system strong enough to express arithmetic contains true statements it cannot prove. This shattered Hilbert's "formalist" program — the hope of capturing all mathematical truth in axioms. But it also demonstrated the absolute centrality of the axiomatic method, which Euclid invented, to 20th-century mathematics.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: FORMAL PROOF SYSTEMS -->
+  <section>
+    <span class="kick">The Computational Legacy</span>
+    <h2>Formal Proof Systems and Computer Verification</h2>
+    <p>In the twenty-first century, mathematicians are building computer systems capable of verifying proofs with absolute certainty — and tracing every inference back to its axiomatic foundations. These systems are direct descendants of Euclid's method: the insistence that every step be justified by previously established results, all traceable back to a small set of axioms.</p>
+
+    <table class="system-table">
+      <thead>
+        <tr>
+          <th>System</th>
+          <th>Era</th>
+          <th>Connection to Euclid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--ivory)">Principia Mathematica</strong><br><span style="font-style:italic;font-size:0.85rem;">Russell &amp; Whitehead, 1910–1913</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:0.72rem;">1910s</span></td>
+          <td>Attempted to derive all mathematics from logical axioms. The explicit heir to the Euclidean axiomatic program, applied to all of mathematics rather than geometry alone. Three volumes; 379 pages to prove 1+1=2.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--ivory)">Coq Proof Assistant</strong><br><span style="font-style:italic;font-size:0.85rem;">INRIA, 1984–present</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:0.72rem;">1984+</span></td>
+          <td>A computer system for writing and checking formal proofs. Used to verify the four color theorem (1996) and the Feit-Thompson theorem (2012). Every step is traced back to foundations in the same way every Euclidean proposition traces back to postulates.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--ivory)">Lean / Mathlib</strong><br><span style="font-style:italic;font-size:0.85rem;">Microsoft Research / Community, 2013–present</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:0.72rem;">2013+</span></td>
+          <td>A modern proof assistant with a vast library of formally verified mathematics. The Elements' propositions have been formalized in Lean — Euclid's geometry proven by computer. Active research on formalizing the entire mathematical canon.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--ivory)">GeoCoq</strong><br><span style="font-style:italic;font-size:0.85rem;">Various authors, 2013–present</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:0.72rem;">2013+</span></td>
+          <td>A formal development of Euclidean and non-Euclidean geometry in the Coq proof assistant. Directly formalizes and extends the propositions of the Elements, making computer-verifiable what Euclid proved by hand 2,300 years ago.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--ivory)">RSA Algorithm</strong><br><span style="font-style:italic;font-size:0.85rem;">Rivest, Shamir, Adleman, 1977</span></td>
+          <td><span style="font-family:'Space Mono',monospace;font-size:0.72rem;">1977+</span></td>
+          <td>The dominant public-key cryptosystem. Uses the Euclidean algorithm (Book VII) to compute modular inverses, and relies on the distribution of prime numbers whose study Euclid began in Book IX. The internet's security infrastructure runs on Euclid.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION 8: WHAT EUCLID MEANS NOW -->
+  <section>
+    <span class="kick">The Enduring Question</span>
+    <h2>What Euclid Means in the Twenty-First Century</h2>
+    <p>Euclid's geometry is no longer the geometry of space. Einstein's general relativity tells us that spacetime is curved — locally Euclidean in small regions (which is why Euclid works so well for everyday engineering), but globally non-Euclidean. GPS systems must account for relativistic effects on spacetime; they would fail if they used only Euclidean calculations. The universe is bigger and stranger than the flat plane of the Elements.</p>
+    <p>And yet Euclid matters more than ever. Not because his geometry describes space, but because his method — the axiomatic method — is the foundation of all rigorous modern mathematics. Every theorem proven in every branch of mathematics today follows Euclid's template: state your assumptions, define your terms, prove everything else by logical steps from those foundations. The 465 propositions of the Elements were a demonstration that this could be done — that knowledge could be organized into a system where certainty was achievable. That demonstration has never been surpassed in influence.</p>
+
+    <blockquote>
+      <p>"The laws of nature are but the mathematical thoughts of God."</p>
+      <cite>— Attributed to Euclid (almost certainly not authentic, but perennially attached to his name — illustrating how his mathematical authority became a cultural institution)</cite>
+    </blockquote>
+
+    <p>The final irony is perhaps the most elegant. Euclid built his system on five postulates, the fifth of which he may have been uncertain about, which he avoided using for as long as possible, and which he perhaps half-suspected was different in kind from the other four. His instinct was right. The fifth postulate is different: it describes not a logical necessity but a choice of universe. And the choice of a different universe — hyperbolic, elliptic, Riemannian — led to general relativity, to the true geometry of the cosmos.</p>
+    <p>Euclid did not know the shape of space. But his doubt about the fifth postulate — preserved in his restraint, his delay, his unusually verbose formulation — was the crack in the wall through which non-Euclidean geometry, and ultimately modern physics, entered the world. His uncertainty was more productive than most certainties.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">THE METHOD</span>
+        <h4>Axiomatic Reasoning</h4>
+        <p>The axiomatic method Euclid demonstrated is the foundation of all modern mathematics, logic, and formal verification. It did not become obsolete when non-Euclidean geometry appeared — it became the universal tool for investigating any geometry, any formal system, any domain of precise reasoning.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE ALGORITHM</span>
+        <h4>Euclidean Algorithm, Still Running</h4>
+        <p>The algorithm of Book VII runs today in every browser, every smartphone, every encrypted email. It is the oldest algorithm still in widespread computational use — a direct line from 300 BCE Alexandria to twenty-first century cryptography.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE PRIME PROOF</span>
+        <h4>Infinitely Many Primes, Still True</h4>
+        <p>Book IX Proposition 20 — there are infinitely many primes — has been generalized, deepened, and extended by Dirichlet, Riemann, and eventually Andrew Wiles (Fermat's Last Theorem, 1995). The original proof is still cited, still taught, still beautiful. It has not needed improvement for 2,300 years.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE QUESTION</span>
+        <h4>The Riemann Hypothesis</h4>
+        <p>The deepest unsolved problem in mathematics — the Riemann Hypothesis about the distribution of prime numbers — is a direct descendant of Euclid's work in Book IX. Euclid proved there are infinitely many primes. Riemann asked how they are distributed. The question is still open. The Clay Mathematics Institute offers $1,000,000 for its proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section>
+    <span class="kick">In Conclusion</span>
+    <h2>The Geometer's Monument</h2>
+    <p>We do not know his face. We do not know his birthdate. We do not know where he died or whether he had children. We have two apocryphal anecdotes and a name attached to thirteen books of mathematics that changed the world.</p>
+    <p>For the first 2,000 years of its influence, the Elements was a textbook. For the last 200 years, it has been a monument — the proof that one book, written with sufficient rigor and imagination, can outlast every empire, every war, every destruction of libraries, every revolution in knowledge. The axioms of the Elements have been superseded. The geometry it describes is not the geometry of our universe. The textbook is no longer in classrooms.</p>
+    <p>And yet: the Euclidean algorithm runs in your pocket. The prime numbers that Euclid proved are infinite secure every message you encrypt. The axiomatic method he demonstrated underlies every theorem proven in every branch of mathematics. The curiosity he embedded in the fifth postulate cracked open the geometry of curved spacetime. And the method of proof — state your assumptions, derive your conclusions, accept nothing that cannot be traced back to agreed foundations — is the method of rigorous thought itself, in every field that aspires to certainty.</p>
+    <p>There is no royal road to geometry. There was never a more useful statement.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Euclid of Alexandria — A Library in Four Volumes &nbsp;|&nbsp; Vol. 3: His Long Afterlife<br>
+    Sources: Roberto Bonola, Non-Euclidean Geometry (1912); Jeremy Gray, Worlds Out of Nothing (2007); David Hilbert, Foundations of Geometry (1899); John Stillwell, Mathematics and Its History (2010); Marcia Ascher, Mathematics Elsewhere (2002)
+  </div>
+</footer>
+
+</body>
+</html>

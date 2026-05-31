@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Euclid — Vol. 2: His World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0f1108;
+      --gold: #c9a227;
+      --ivory: #e8d8a0;
+      --dim: #6b6540;
+      --mid: #2a2910;
+      --card-bg: #141509;
+      --border: rgba(201,162,39,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ivory);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(15,17,8,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--ivory);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(232,216,160,0.8);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--ivory);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.1rem; color: rgba(232,216,160,0.88); }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--gold);
+      color: #0f1108;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.6rem;
+    }
+
+    .card p { font-size: 0.9rem; color: rgba(232,216,160,0.72); line-height: 1.65; }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(201,162,39,0.05);
+    }
+
+    blockquote p { font-size: 1.15rem; font-style: italic; color: var(--ivory); margin: 0; }
+
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* PROFILE CARDS for contemporaries */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .profile-header {
+      background: rgba(201,162,39,0.08);
+      border-bottom: 1px solid var(--border);
+      padding: 1.2rem 1.6rem;
+    }
+
+    .profile-header .dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    .profile-header h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      color: var(--ivory);
+      font-weight: 700;
+    }
+
+    .profile-header .role {
+      font-size: 0.85rem;
+      color: var(--dim);
+      font-style: italic;
+      margin-top: 0.15rem;
+    }
+
+    .profile-body { padding: 1.4rem 1.6rem; }
+    .profile-body p { font-size: 0.9rem; color: rgba(232,216,160,0.78); margin: 0; }
+
+    /* SCROLLS SECTION */
+    .scroll-diagram {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .scroll-diagram svg { width: 100%; height: auto; }
+
+    .scroll-info h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.6rem;
+    }
+
+    .scroll-info p { font-size: 0.9rem; }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-item p { font-size: 0.92rem; }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .vol-nav a:hover { color: var(--gold); border-color: var(--gold); }
+    .vol-nav a.current { color: var(--gold); border-color: var(--gold); background: rgba(201,162,39,0.08); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      .scroll-diagram { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Euclid — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-elements.html">Vol. 1 — Elements</a>
+  <a href="2-world.html" class="active">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 2 of 4 &nbsp;·&nbsp; Euclid of Alexandria</span>
+    <h1>His World</h1>
+    <div class="subtitle">Ptolemaic Egypt and the Empire of Knowledge</div>
+    <p class="lede">Euclid did not work in a vacuum. He worked in one of the most extraordinary cities the world had ever seen, in an institution unprecedented in human history, in an era when Greek culture had become the international language of science. To understand the Elements, you must understand Alexandria.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Nile delta / city map abstraction with grid and circles -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1b09"/>
+          <stop offset="100%" stop-color="#0f1108"/>
+        </radialGradient>
+      </defs>
+      <circle cx="180" cy="180" r="178" fill="url(#bg2)" stroke="#c9a227" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Grid pattern (city streets) -->
+      <g opacity="0.18" stroke="#c9a227" stroke-width="0.5">
+        <line x1="80" y1="60" x2="80" y2="300"/>
+        <line x1="120" y1="60" x2="120" y2="300"/>
+        <line x1="160" y1="60" x2="160" y2="300"/>
+        <line x1="200" y1="60" x2="200" y2="300"/>
+        <line x1="240" y1="60" x2="240" y2="300"/>
+        <line x1="280" y1="60" x2="280" y2="300"/>
+        <line x1="60" y1="100" x2="300" y2="100"/>
+        <line x1="60" y1="140" x2="300" y2="140"/>
+        <line x1="60" y1="180" x2="300" y2="180"/>
+        <line x1="60" y1="220" x2="300" y2="220"/>
+        <line x1="60" y1="260" x2="300" y2="260"/>
+      </g>
+
+      <!-- Lighthouse of Alexandria — stylized beacon -->
+      <g transform="translate(260,80)">
+        <rect x="-8" y="0" width="16" height="30" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.6"/>
+        <rect x="-5" y="-15" width="10" height="15" fill="none" stroke="#c9a227" stroke-width="0.8" opacity="0.6"/>
+        <circle cx="0" cy="-20" r="4" fill="rgba(201,162,39,0.5)" stroke="#c9a227" stroke-width="0.8">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;6;4" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <!-- Beacon ray -->
+        <line x1="0" y1="-20" x2="-50" y2="-60" stroke="#c9a227" stroke-width="0.6" opacity="0">
+          <animate attributeName="opacity" values="0;0.4;0" dur="2.5s" repeatCount="indefinite"/>
+        </line>
+        <text x="0" y="50" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#c9a227" opacity="0.5">PHAROS</text>
+      </g>
+
+      <!-- Library building -->
+      <g transform="translate(140,160)">
+        <rect x="-30" y="-20" width="60" height="40" fill="rgba(201,162,39,0.05)" stroke="#c9a227" stroke-width="0.8" opacity="0.7"/>
+        <line x1="-20" y1="-20" x2="-20" y2="-30" stroke="#c9a227" stroke-width="0.8" opacity="0.5"/>
+        <line x1="0" y1="-20" x2="0" y2="-30" stroke="#c9a227" stroke-width="0.8" opacity="0.5"/>
+        <line x1="20" y1="-20" x2="20" y2="-30" stroke="#c9a227" stroke-width="0.8" opacity="0.5"/>
+        <line x1="-30" y1="-30" x2="30" y2="-30" stroke="#c9a227" stroke-width="1" opacity="0.5"/>
+        <text x="0" y="28" text-anchor="middle" font-family="Space Mono,monospace" font-size="5.5" fill="#c9a227" opacity="0.6">LIBRARY</text>
+      </g>
+
+      <!-- Nile river — flowing line -->
+      <path d="M 50,300 Q 100,280 130,250 Q 160,220 180,240 Q 200,260 230,230 Q 260,200 310,180" fill="none" stroke="#4a7eb5" stroke-width="2" opacity="0.3">
+        <animate attributeName="stroke-dashoffset" values="200;0" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="stroke-dasharray" values="200" dur="8s" repeatCount="indefinite"/>
+      </path>
+      <text x="120" y="295" font-family="Space Mono,monospace" font-size="6" fill="#4a7eb5" opacity="0.4" letter-spacing="1">NILE</text>
+
+      <!-- Rotating outer circle -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="100s" repeatCount="indefinite" additive="sum"/>
+        <circle cx="0" cy="0" r="150" fill="none" stroke="#c9a227" stroke-width="0.5" stroke-dasharray="3 9" opacity="0.25"/>
+      </g>
+
+      <text x="180" y="340" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.4" letter-spacing="2">ALEXANDRIA · c.300 BCE</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-elements.html">Vol. 1 — The Elements</a>
+    <a href="2-world.html" class="current">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: PTOLEMAIC EGYPT -->
+  <section>
+    <span class="kick">The Political World</span>
+    <h2>Ptolemaic Egypt</h2>
+    <p>Euclid worked in a world recently remade by conquest. In 332 BCE, Alexander the Great took Egypt from the Persians and founded the city of Alexandria on the Mediterranean coast. After Alexander's death in 323 BCE, his general Ptolemy seized Egypt and eventually declared himself king — Ptolemy I Soter — in 305 BCE. He ruled until 283 BCE.</p>
+    <p>This is the period of Euclid's known activity: the first Ptolemaic reign. Ptolemy I was, by ancient standards, an unusually cultivated ruler. He had been a companion of Alexander, had served as a general, and had written a history of Alexander's campaigns (now lost). He understood that cultural prestige was a form of political power. He founded the Museum and Library of Alexandria as deliberate instruments of Hellenistic kingship: they would make Alexandria the intellectual capital of the Greek-speaking world.</p>
+    <p>For Euclid, this meant royal patronage, institutional support, access to an unparalleled library, and a community of scholars working across disciplines. The Elements could not have been written without this infrastructure.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">305–283 BCE</span>
+        <h4>Ptolemy I Soter</h4>
+        <p>Euclid's patron. Founded the Museum and Library. A former general of Alexander who understood that cultural institutions were instruments of political legitimacy. Said to have asked Euclid for a shortcut to geometry.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">283–246 BCE</span>
+        <h4>Ptolemy II Philadelphus</h4>
+        <p>Expanded the Library aggressively. Reportedly sent agents to buy or copy every book in the Mediterranean world. Ordered ships docking at Alexandria to surrender their books for copying. Under his reign the Library reached its greatest extent.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">332 BCE</span>
+        <h4>Foundation of Alexandria</h4>
+        <p>Alexander the Great personally laid out the city's grid plan. Located on a narrow strip between the Mediterranean and Lake Mareotis, with a natural harbor. The Pharos lighthouse, one of the Seven Wonders of the Ancient World, was completed around 280 BCE.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">POPULATION</span>
+        <h4>A Cosmopolitan Metropolis</h4>
+        <p>At its height, Alexandria had 300,000–500,000 inhabitants — one of the largest cities in the ancient world. Greek ruling class, Egyptian majority, a substantial Jewish quarter (the Septuagint translation of the Hebrew Bible was made here), Persians, Syrians, Romans.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE LIBRARY -->
+  <section>
+    <span class="kick">The Repository of Knowledge</span>
+    <h2>The Great Library of Alexandria</h2>
+    <p>The Library of Alexandria was not a library in the modern sense — a public reading room. It was the world's first research library: a royal institution dedicated to collecting all written knowledge and making it available to scholars. Its holdings were, for centuries, the largest in the world.</p>
+
+    <blockquote>
+      <p>"He gathered together books from everywhere, and from those who sailed into the city, he would require the books, have them copied, give the copies to the owners, and keep the originals in the Library."</p>
+      <cite>— Pseudo-Aristeas, Letter of Aristeas, describing the Library's acquisition policy (date uncertain)</cite>
+    </blockquote>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">SCALE</span>
+        <h4>Estimated Holdings</h4>
+        <p>Ancient sources give wildly varying numbers: 200,000 to 700,000 scrolls. Modern scholars estimate 400,000–500,000 at the height. Each "book" was one papyrus roll; a long work like Homer's Iliad occupied 24 rolls. The Library held, in effect, the entire written heritage of the ancient Mediterranean.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">ACQUISITION</span>
+        <h4>Ptolemy III's Ship Policy</h4>
+        <p>Ptolemy III Euergetes (r. 246–222 BCE) reportedly required every ship docking at Alexandria to surrender any books on board. The originals were kept; copies were returned. He also borrowed official Athenian copies of the plays of Sophocles, Euclid, and Aeschylus, forfeiting a huge deposit and keeping the originals.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">ORGANIZATION</span>
+        <h4>Callimachus's Pinakes</h4>
+        <p>The scholar-poet Callimachus of Cyrene (c. 310–240 BCE) compiled the Pinakes — a 120-volume catalog of Greek literature, organized by genre and author. It was the world's first library catalog, and possibly the first systematic bibliography. Lost, but influential in antiquity.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">DESTRUCTION</span>
+        <h4>The Library Did Not Burn Once</h4>
+        <p>The Library declined gradually over centuries, not in a single catastrophic fire. Caesar's fire (48 BCE) may have burned a warehouse of books near the harbor, not the main Library. The institution deteriorated under later Roman rule, Christian-era political disruptions, and finally the Arab conquest of 641 CE.</p>
+      </div>
+    </div>
+
+    <p>For Euclid, the Library meant access to the entire prior history of Greek mathematics: the works of Hippocrates of Chios, Eudoxus, Theaetetus, Archytas, the Pythagoreans, and all the mathematical learning that had accumulated over the previous two centuries. The Elements is, in part, a great synthesis — and syntheses require libraries.</p>
+  </section>
+
+  <!-- SECTION 3: THE MUSEUM -->
+  <section>
+    <span class="kick">The Research Institution</span>
+    <h2>The Mouseion — Ancient University</h2>
+    <p>Adjacent to the Library was the Mouseion — the Museum. The word comes from the Greek Μουσεῖον (<em>Mouseion</em>), sacred to the nine Muses. It was not a museum in the modern sense — not a place for displaying objects — but a research institute, a place where scholars worked. Founded by Ptolemy I around 295 BCE, the Museum was the world's first research university.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">STRUCTURE</span>
+        <h4>What the Museum Provided</h4>
+        <p>Scholars received royal stipends — essentially salaries — and were exempt from taxation. The institution provided communal dining, lecture halls, covered walkways for discussion (a peripatetic tradition), gardens, and direct access to the Library. It was funded by the Ptolemaic state for three centuries.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">DISCIPLINES</span>
+        <h4>Interdisciplinary in Practice</h4>
+        <p>The Museum housed mathematicians, astronomers, physicians, poets, grammarians, and philosophers simultaneously. Euclid would have worked alongside the poet-scholar Callimachus, the astronomer Aristarchus (who proposed heliocentrism), and later Eratosthenes, who calculated the Earth's circumference with remarkable accuracy.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">GOVERNANCE</span>
+        <h4>The Head of the Museum</h4>
+        <p>The Museum was headed by a priest — initially a religious appointment — chosen by the Ptolemaic king. This made it simultaneously a royal institution and a sacred one. The priests of the Muses were also the directors of ancient Alexandria's research program.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">LEGACY</span>
+        <h4>The Model That Endures</h4>
+        <p>The Museum's model — scholars funded by a patron, free to pursue knowledge, working in proximity across disciplines — is recognizable as the university model that would emerge in medieval Europe and persist to the present. The Ptolemies invented the research university.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CONTEMPORARIES -->
+  <section>
+    <span class="kick">The Intellectual Community</span>
+    <h2>Euclid's Contemporaries and Successors</h2>
+    <p>Euclid was not alone. The Hellenistic world — the Greek-speaking Mediterranean empire created by Alexander's conquests — was an era of extraordinary intellectual productivity. Euclid worked among, or in the immediate tradition of, some of the greatest scientific minds of antiquity.</p>
+
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 408–355 BCE</span>
+          <h4>Eudoxus of Cnidus</h4>
+          <div class="role">Mathematician &amp; Astronomer — Predecessor</div>
+        </div>
+        <div class="profile-body">
+          <p>Eudoxus's theory of proportions (preserved in Book V of the Elements) and his method of exhaustion (used in Book XII) are among Euclid's most important inherited tools. Eudoxus also built the first mathematical model of planetary motion. Without Eudoxus, the Elements as we have it could not exist. He may have studied at Plato's Academy.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 417–369 BCE</span>
+          <h4>Theaetetus of Athens</h4>
+          <div class="role">Mathematician — Predecessor</div>
+        </div>
+        <div class="profile-body">
+          <p>Theaetetus developed the theory of irrational magnitudes (reflected in Book X of the Elements) and first systematically studied the five regular (Platonic) solids (Book XIII). He died young — possibly of wounds from battle — but his mathematical legacy is everywhere in the Elements. Plato named a dialogue after him.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 287–212 BCE</span>
+          <h4>Archimedes of Syracuse</h4>
+          <div class="role">Mathematician &amp; Engineer — Successor</div>
+        </div>
+        <div class="profile-body">
+          <p>The greatest mathematician of antiquity postdates Euclid by perhaps a generation. Archimedes cites the Elements freely and builds upon it. He calculated pi to unprecedented accuracy, found areas and volumes of curved figures, and anticipated integral calculus. He also designed war machines. He was killed by a Roman soldier when Syracuse fell in 212 BCE.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 276–194 BCE</span>
+          <h4>Eratosthenes of Cyrene</h4>
+          <div class="role">Scholar, Geographer, Mathematician — Successor</div>
+        </div>
+        <div class="profile-body">
+          <p>Head of the Library of Alexandria around 240 BCE. Calculated the circumference of the Earth using the angle of sunlight at Alexandria and Syene on the summer solstice — his answer was within about 2% of the correct value. Also invented the "Sieve of Eratosthenes" for finding prime numbers, building directly on the number theory of Euclid's Elements.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 262–190 BCE</span>
+          <h4>Apollonius of Perga</h4>
+          <div class="role">Mathematician — Successor</div>
+        </div>
+        <div class="profile-body">
+          <p>The "Great Geometer," known for his eight-book work on conic sections — ellipses, parabolas, and hyperbolas. Apollonius studied in Alexandria in Euclid's school. His Conics superseded Euclid's earlier (lost) work on the same subject. The terms "ellipse," "parabola," and "hyperbola" are his. Kepler used conic sections to describe planetary orbits seventeen centuries later.</p>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <span class="dates">c. 310–230 BCE</span>
+          <h4>Aristarchus of Samos</h4>
+          <div class="role">Astronomer — Contemporary</div>
+        </div>
+        <div class="profile-body">
+          <p>A contemporary of Euclid working in Alexandria, Aristarchus proposed the heliocentric model of the solar system — that the Earth orbits the Sun — seventeen centuries before Copernicus. He also estimated the relative distances of the Sun and Moon using geometric methods. His heliocentric proposal was not accepted in antiquity; Ptolemy's geocentric model prevailed until 1543.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: PAPYRUS AND WRITING -->
+  <section>
+    <span class="kick">The Medium of Knowledge</span>
+    <h2>Papyrus, Scrolls, and the Material Text</h2>
+    <p>The Elements was written on papyrus — a writing material made from the pith of the papyrus plant, which grew in abundance in the Nile Delta. Papyrus was the dominant writing medium of the ancient Mediterranean for over three thousand years. It was light, flexible, and could be rolled into scrolls. It was also fragile: susceptible to moisture, insects, and fire. The survival of any ancient text is a small miracle of preservation.</p>
+
+    <div class="scroll-diagram">
+      <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg" aria-label="Papyrus scroll diagram">
+        <rect width="220" height="280" fill="#141509"/>
+        <!-- Scroll body -->
+        <rect x="30" y="60" width="160" height="180" rx="4" fill="#2a2510" stroke="#c9a227" stroke-width="0.8" opacity="0.8"/>
+        <!-- Scroll rollers -->
+        <ellipse cx="30" cy="150" rx="14" ry="90" fill="#1a1808" stroke="#c9a227" stroke-width="0.8"/>
+        <ellipse cx="190" cy="150" rx="14" ry="90" fill="#1a1808" stroke="#c9a227" stroke-width="0.8"/>
+        <!-- Text lines on scroll -->
+        <g opacity="0.4" stroke="#c9a227" stroke-width="0.5">
+          <line x1="55" y1="90" x2="165" y2="90"/>
+          <line x1="55" y1="105" x2="165" y2="105"/>
+          <line x1="55" y1="120" x2="140" y2="120"/>
+          <line x1="55" y1="135" x2="165" y2="135"/>
+          <line x1="55" y1="150" x2="150" y2="150"/>
+          <line x1="55" y1="165" x2="165" y2="165"/>
+          <line x1="55" y1="180" x2="165" y2="180"/>
+          <line x1="55" y1="195" x2="130" y2="195"/>
+          <line x1="55" y1="210" x2="165" y2="210"/>
+        </g>
+        <!-- Geometric figure on scroll -->
+        <polygon points="100,95 130,145 70,145" fill="none" stroke="#c9a227" stroke-width="1" opacity="0.6"/>
+        <line x1="100" y1="145" x2="100" y2="120" stroke="#c9a227" stroke-width="0.6" stroke-dasharray="2 2" opacity="0.4"/>
+        <!-- Label -->
+        <text x="110" y="260" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.6" letter-spacing="1">PAPYRUS SCROLL</text>
+        <text x="110" y="272" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#c9a227" opacity="0.4" letter-spacing="1">ΒΙΒΛΊΟΝ</text>
+      </svg>
+
+      <div class="scroll-info">
+        <h4>The Material Life of the Elements</h4>
+        <p>Each of the 13 books of the Elements was, originally, one papyrus scroll. A complete set of the Elements would have required 13 scrolls — a significant and expensive possession. Scrolls were read by unrolling with the right hand while rolling up the read portion with the left.</p>
+        <p>Papyrus was produced mainly in Egypt, which gave Alexandria an additional advantage: it was the primary supplier of the ancient world's dominant writing material. The word "paper" derives from "papyrus."</p>
+        <p>The oldest surviving manuscripts of the Elements are not on papyrus — they are parchment codices (bound books) from the medieval period. The transition from scroll to codex happened in late antiquity. The oldest complete manuscript of the Elements, the Bodleian manuscript (MS D'Orville 301), dates to 888 CE — over a thousand years after Euclid wrote.</p>
+        <p>Papyrus fragments of the Elements do survive: the Oxyrhynchus Papyrus collection includes a second-century CE fragment of Book II and others. These fragments, close in time to Euclid's era, show a text substantially consistent with the medieval manuscripts — evidence that the transmission was remarkably faithful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: THE GREEK MATHEMATICAL TRADITION -->
+  <section>
+    <span class="kick">The Inherited Tradition</span>
+    <h2>Three Centuries of Greek Mathematics Before Euclid</h2>
+    <p>The Elements was not written from nothing. It was the culmination of three centuries of Greek mathematical activity, beginning with Thales of Miletus around 600 BCE. Euclid's contribution was to organize, systematize, and complete this tradition — to show it was one thing, not many.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">c. 624–546 BCE</div>
+        <h4>Thales of Miletus</h4>
+        <p>Traditionally the first Greek mathematician. Credited (by later tradition) with the first proofs of geometric propositions: that a circle is bisected by its diameter; that base angles of an isosceles triangle are equal; that the angle in a semicircle is a right angle (Thales' theorem). The proofs are lost; only the results and the tradition of proof remain.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 570–495 BCE</div>
+        <h4>Pythagoras of Samos</h4>
+        <p>Founded a mathematical-religious school (the Pythagorean brotherhood) in Croton, southern Italy. The Pythagoreans studied number theory, music, and geometry. They discovered (or proved) the theorem bearing Pythagoras's name, though Babylonian mathematicians knew the result 1,000 years earlier. They also discovered the devastating fact that √2 is irrational.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 470–410 BCE</div>
+        <h4>Hippocrates of Chios</h4>
+        <p>The first mathematician known to have written a systematic "Elements" (Στοιχεῖα) — a precursor to Euclid's. Hippocrates organized previously known geometric results into a deductive sequence. His Elements is lost, but it was clearly one of Euclid's primary sources. He also proved that the areas of similar segments of circles are to each other as the squares on their bases.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 427–347 BCE</div>
+        <h4>Plato</h4>
+        <p>Not a mathematician himself, but an ardent champion of mathematics as the highest form of knowledge. Founded the Academy in Athens (c. 387 BCE), which became the primary training ground for Greek mathematicians. The motto above the Academy's door was reportedly: "Let no one ignorant of geometry enter." Theaetetus, Eudoxus, and possibly Euclid studied here.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 408–355 BCE</div>
+        <h4>Eudoxus of Cnidus</h4>
+        <p>Studied at the Academy, then traveled to Egypt (possibly to Alexandria's predecessor institutions). Developed the rigorous theory of proportion and the method of exhaustion. His work appears in Books V, VI, and XII of the Elements. Some historians rank him the greatest mathematician before Archimedes.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 417–369 BCE</div>
+        <h4>Theaetetus of Athens</h4>
+        <p>Studied at the Academy. Systematically studied irrational magnitudes (Book X) and proved the completeness of the five regular solids (Book XIII). Plato's dialogue Theaetetus is set on the day of his death from wounds received in battle. His mathematical work was largely transmitted to us only through Euclid.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">c. 300 BCE</div>
+        <h4>Euclid of Alexandria</h4>
+        <p>Arrived in Alexandria — possibly from Athens — during the reign of Ptolemy I. Synthesized the entire Greek mathematical tradition into the Elements. Founded a mathematical school that produced Apollonius of Perga. Wrote at least seven other mathematical works. And then, as far as biography is concerned, disappeared.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: TRANSMISSION -->
+  <section>
+    <span class="kick">From Alexandria to Baghdad to Europe</span>
+    <h2>How the Elements Survived</h2>
+    <p>The survival of the Elements across 2,300 years was not automatic. It required a chain of copying, translation, and scholarly care stretching from Alexandria through Byzantium, through the Islamic Golden Age, and into medieval Europe. At each link in the chain, the work might have been lost. That it was not is one of the great contingencies of intellectual history.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">c. 450 CE</span>
+        <h4>Proclus's Commentary</h4>
+        <p>The Neoplatonist philosopher Proclus wrote an extensive commentary on Book I of the Elements. His work is our primary source on the history of Greek geometry before Euclid. Proclus was writing 750 years after Euclid — but he had access to sources now lost. His commentary preserves biographical and historical data available nowhere else.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">c. 550 CE</span>
+        <h4>Isidore of Miletus</h4>
+        <p>One of the architects of Hagia Sophia in Constantinople. Also involved in editing a critical edition of the Elements. Byzantine scholars kept the Greek text alive through the early medieval period when Western Europe had lost access to most Greek scientific literature.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">c. 800–830 CE</span>
+        <h4>Arabic Translation</h4>
+        <p>The Elements was translated into Arabic during the reign of Caliph Harun al-Rashid and his successors, as part of the Bayt al-Hikma (House of Wisdom) translation project in Baghdad. Multiple translations were made; the most important was by Hajjaj ibn Yusuf ibn Matar (c. 786–833 CE). Arabic mathematicians engaged deeply with the text, writing commentaries and attempting — and failing — to prove the parallel postulate.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1120 CE</span>
+        <h4>Latin Translation from Arabic</h4>
+        <p>Adelard of Bath translated the Elements from Arabic into Latin — the first Latin translation since late antiquity. Within decades, several competing Latin translations appeared. Euclid's Elements re-entered European intellectual life through Arabic intermediaries, one of the great examples of Islamic preservation of classical knowledge.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1482 CE</span>
+        <h4>First Printed Edition</h4>
+        <p>The first printed edition of the Elements was published in Venice by Erhard Ratdolt — one of the first illustrated scientific books ever printed. The woodcut geometric figures were an innovation. Within decades of Gutenberg's press, Euclid was in print across Europe, cementing his dominance of the mathematics curriculum.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1908 CE</span>
+        <h4>T.L. Heath's Critical Edition</h4>
+        <p>Sir Thomas Little Heath published his three-volume translation and commentary, still the standard English scholarly edition. Heath's introduction and notes synthesize 2,000 years of commentary. His edition made rigorous engagement with the Elements accessible to modern English readers and remains indispensable.</p>
+      </div>
+    </div>
+
+    <blockquote>
+      <p>"In the century before printing, the Elements was Europe's most copied secular text. After printing, it went through over a thousand editions in a dozen languages. No mathematical text has approached its reach."</p>
+      <cite>— Historian of mathematics Ivor Grattan-Guinness, paraphrased</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 8: AL-HAYTHAM AND ARABIC GEOMETRY -->
+  <section>
+    <span class="kick">The Arabic Chapter</span>
+    <h2>Ibn al-Haytham and the Islamic Engagement</h2>
+    <p>The Arabic scholars who received the Elements did not merely copy it. They engaged with it critically, extended it, and in some respects surpassed it. The Islamic mathematical tradition of the 9th through 13th centuries represents one of the most creative periods of engagement with Euclid's work.</p>
+    <p>Ibn al-Haytham (Latinized as Alhazen, c. 965–1040 CE) worked in Cairo under the Fatimid caliphate and wrote the most important optical treatise since Euclid — the Kitab al-Manazir (Book of Optics), which corrected Euclid's emission theory of vision (Euclid thought the eye sent out rays; al-Haytham showed correctly that light enters the eye) and provided a mathematical theory of lenses and mirrors that influenced Roger Bacon, Kepler, and Newton. Al-Haytham also attempted — unsuccessfully — to prove Euclid's parallel postulate, coming closer than any predecessor.</p>
+    <p>Nasir al-Din al-Tusi (1201–1274 CE) produced a critical Arabic edition of the Elements, wrote extensive commentaries, and made the most sophisticated attempt to prove the parallel postulate before the 19th century. His near-proof was translated into Latin and directly influenced European geometers — including the work of Saccheri (1733) that nearly discovered non-Euclidean geometry.</p>
+    <p>The Arabic engagement with Euclid was not mere transmission. It was 500 years of active mathematical research, conducted on the foundation of the Elements, that set the conditions for the European Renaissance in science.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Euclid of Alexandria — A Library in Four Volumes &nbsp;|&nbsp; Vol. 2: His World<br>
+    Sources: Peter Fraser, Ptolemaic Alexandria (1972); Lionel Casson, Libraries in the Ancient World (2001); George Sarton, Introduction to the History of Science (1927–1948); Roshdi Rashed, Encyclopedia of the History of Arabic Science (1996)
+  </div>
+</footer>
+
+</body>
+</html>

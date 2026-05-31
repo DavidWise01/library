@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Khwarizmi — Vol. 3: His Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0f0e09;
+    --amber: #c07818;
+    --amber-dim: #7a4c10;
+    --amber-glow: rgba(192,120,24,0.18);
+    --teal: #0d9488;
+    --teal-dim: #0a6b61;
+    --teal-glow: rgba(13,148,136,0.15);
+    --text: #e8e0cc;
+    --text-dim: #9e9580;
+    --border: rgba(192,120,24,0.22);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-hover-bg: rgba(192,120,24,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,14,9,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(6px);
+  }
+  .nav-series {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .vol-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+  .masthead-lede {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+    max-width: 55ch;
+    line-height: 1.8;
+  }
+  .masthead-art { display: flex; align-items: center; justify-content: center; }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+  .section { margin-bottom: 4rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+  .section-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--teal);
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+    max-width: 72ch;
+  }
+
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-variant: small-caps;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .band {
+    display: inline-block;
+    background: var(--amber);
+    color: #0f0e09;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.4rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(192,120,24,0.18);
+    background: var(--card-hover-bg);
+  }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+  .card-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-family: 'Newsreader', serif;
+  }
+
+  /* LEGACY TIMELINE */
+  .legacy-timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 1.5rem;
+    position: relative;
+  }
+  .legacy-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .legacy-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 0.35rem;
+    width: 12px;
+    height: 12px;
+    background: var(--amber);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--amber);
+    transform: rotate(45deg);
+  }
+  .legacy-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+  .legacy-who {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--amber);
+    margin-bottom: 0.2rem;
+  }
+  .legacy-title {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .legacy-desc {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+    max-width: 65ch;
+  }
+
+  /* WORD BREAKDOWN */
+  .word-box {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin: 1.5rem 0;
+    background: var(--card-bg);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .word-box:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 28px rgba(192,120,24,0.15);
+  }
+  .word-main {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.5rem;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+  .word-arabic {
+    font-size: 1.5rem;
+    color: var(--teal);
+    font-family: serif;
+    margin-bottom: 0.8rem;
+    direction: rtl;
+    text-align: left;
+  }
+  .word-etymology {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    line-height: 1.8;
+  }
+  .word-meaning {
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* INFLUENCE TABLE */
+  .influence-table {
+    border-top: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+  .influence-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 0;
+  }
+  .influence-key {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    padding-top: 0.1rem;
+  }
+  .influence-val {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .influence-val em { color: var(--amber); }
+
+  /* FIBONACCI FEATURE */
+  .feature-block {
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    padding: 1.8rem;
+    margin: 2rem 0;
+    background: var(--card-bg);
+    max-width: 75ch;
+  }
+  .feature-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .feature-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .feature-body {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+  .feature-body p { max-width: none; color: var(--text-dim); }
+
+  .pull-quote {
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--amber-glow);
+    max-width: 65ch;
+  }
+  .pull-quote p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+    max-width: none;
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* CODE SNIPPET */
+  .code-block {
+    background: rgba(13,148,136,0.06);
+    border: 1px solid rgba(13,148,136,0.25);
+    border-left: 3px solid var(--teal);
+    padding: 1.2rem 1.4rem;
+    margin: 1.2rem 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    max-width: 65ch;
+  }
+  .code-comment { color: var(--text-dim); }
+  .code-key { color: var(--amber); }
+  .code-str { color: var(--teal); }
+
+  strong { color: var(--amber); font-weight: 500; }
+  em { color: var(--text); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .colophon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .colophon-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-series">AL-KHWARIZMI — A FOUR-VOLUME STUDY</span>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol. 0 — Who</a></li>
+    <li><a href="1-algebra.html">Vol. 1 — The Work</a></li>
+    <li><a href="2-world.html">Vol. 2 — His World</a></li>
+    <li><a href="3-legacy.html" class="active">Vol. 3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-label">Volume 3 &mdash; The Long Afterlife</span>
+    <h1>Algorithm.<br>Algebra.<br>Every Calculation<br>Ever Made.</h1>
+    <p class="subtitle">From Baghdad, 830 CE, to every computer on Earth</p>
+    <p class="masthead-lede">He has been dead for eleven centuries. His name is in your phone. His method runs the financial system, the internet, every search engine, every encrypted message. The words he gave mathematics are now so embedded in civilization that most people who use them daily have never heard of Muhammad ibn Musa al-Khwarizmi.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Transmission tree — Baghdad node radiating outward through time -->
+    <svg width="380" height="380" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg4" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a180c"/>
+          <stop offset="100%" stop-color="#0f0e09"/>
+        </radialGradient>
+        <filter id="glow4">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow4sm">
+          <feGaussianBlur stdDeviation="1.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="185" fill="url(#bg4)" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.2"/>
+
+      <!-- Time rings — concentric, labeled by century -->
+      <circle cx="190" cy="190" r="40" fill="none" stroke="#c07818" stroke-width="0.8" stroke-opacity="0.5" stroke-dasharray="3,4"/>
+      <circle cx="190" cy="190" r="80" fill="none" stroke="#c07818" stroke-width="0.7" stroke-opacity="0.35" stroke-dasharray="4,5"/>
+      <circle cx="190" cy="190" r="120" fill="none" stroke="#c07818" stroke-width="0.6" stroke-opacity="0.25" stroke-dasharray="5,6"/>
+      <circle cx="190" cy="190" r="160" fill="none" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.18" stroke-dasharray="6,7"/>
+
+      <!-- Ring labels -->
+      <text x="194" y="154" font-family="Space Mono,monospace" font-size="7" fill="#9e9580" opacity="0.7">850</text>
+      <text x="194" y="115" font-family="Space Mono,monospace" font-size="7" fill="#9e9580" opacity="0.6">1100</text>
+      <text x="194" y="75" font-family="Space Mono,monospace" font-size="7" fill="#9e9580" opacity="0.5">1400</text>
+      <text x="194" y="35" font-family="Space Mono,monospace" font-size="7" fill="#9e9580" opacity="0.4">2000</text>
+
+      <!-- Baghdad origin — center -->
+      <circle cx="190" cy="190" r="18" fill="rgba(192,120,24,0.25)" stroke="#c07818" stroke-width="2" filter="url(#glow4)">
+        <animate attributeName="r" values="16;20;16" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <text x="190" y="193" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818" font-weight="700">BGD</text>
+
+      <!-- Transmission lines — animated dashes traveling outward -->
+      <!-- Line to Robert of Chester (NW) -->
+      <line x1="190" y1="190" x2="110" y2="120" stroke="#c07818" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="4,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.5s" repeatCount="indefinite"/>
+      </line>
+      <circle cx="110" cy="120" r="9" fill="#0f0e09" stroke="#c07818" stroke-width="1.2" filter="url(#glow4sm)"/>
+      <text x="110" y="123" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#c07818">ROC</text>
+      <text x="95" y="108" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">1145</text>
+
+      <!-- Line to Fibonacci (SW) -->
+      <line x1="190" y1="190" x2="120" y2="260" stroke="#c07818" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="4,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.8s" repeatCount="indefinite"/>
+      </line>
+      <circle cx="120" cy="260" r="9" fill="#0f0e09" stroke="#0d9488" stroke-width="1.2" filter="url(#glow4sm)"/>
+      <text x="120" y="263" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#0d9488">FIB</text>
+      <text x="106" y="275" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">1202</text>
+
+      <!-- Line to European universities (N) -->
+      <line x1="190" y1="190" x2="190" y2="90" stroke="#c07818" stroke-width="1" stroke-opacity="0.4" stroke-dasharray="4,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+      </line>
+      <circle cx="190" cy="90" r="9" fill="#0f0e09" stroke="#c07818" stroke-width="1.2"/>
+      <text x="190" y="93" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#c07818">EUR</text>
+      <text x="190" y="77" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">1250s</text>
+
+      <!-- Line to Printing press era (E) -->
+      <line x1="190" y1="190" x2="280" y2="160" stroke="#c07818" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="4,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="2.3s" repeatCount="indefinite"/>
+      </line>
+      <circle cx="280" cy="160" r="9" fill="#0f0e09" stroke="#c07818" stroke-width="1.2"/>
+      <text x="280" y="163" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#c07818">PRT</text>
+      <text x="293" y="153" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">1500s</text>
+
+      <!-- Line to computing (SE) -->
+      <line x1="190" y1="190" x2="290" y2="270" stroke="#0d9488" stroke-width="1.2" stroke-opacity="0.5" stroke-dasharray="4,4">
+        <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.3s" repeatCount="indefinite"/>
+      </line>
+      <circle cx="290" cy="270" r="12" fill="#0f0e09" stroke="#0d9488" stroke-width="2" filter="url(#glow4)">
+        <animate attributeName="r" values="10;14;10" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="290" y="273" text-anchor="middle" font-family="Space Mono,monospace" font-size="6.5" fill="#0d9488">CPU</text>
+      <text x="305" y="288" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#0d9488">2000s</text>
+
+      <!-- Floating word labels -->
+      <text x="55" y="140" font-family="Cinzel,serif" font-size="10" fill="#c07818" opacity="0.6">Algorithm</text>
+      <text x="45" y="295" font-family="Cinzel,serif" font-size="10" fill="#0d9488" opacity="0.6">Algebra</text>
+      <text x="145" y="350" font-family="Cinzel,serif" font-size="9" fill="#c07818" opacity="0.5">Numerals</text>
+      <text x="255" y="350" font-family="Cinzel,serif" font-size="9" fill="#0d9488" opacity="0.5">Computing</text>
+
+      <!-- Outer ring -->
+      <text x="190" y="370" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c07818" opacity="0.4" letter-spacing="2">830 CE → PRESENT · THE UNBROKEN CHAIN</text>
+    </svg>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Section: Overview -->
+  <section class="section">
+    <span class="kick">The Scope of Influence</span>
+    <h2>A Legacy That Compounds</h2>
+    <div class="section-rule"></div>
+
+    <p>Most historical figures leave a legacy that fades — their specific works studied by specialists, their names recognized by historians, their influence diffuse and difficult to trace. Al-Khwarizmi's legacy is the opposite: it becomes <em>more</em> concentrated and more universal with each passing century. By the 21st century, his two primary contributions — the concept of the algorithm and the framework of algebra — are so foundational to human civilization that they are effectively invisible, like the grammar of a language no one thinks about consciously.</p>
+
+    <p>The compounding is measurable. In 830 CE, his algebra book could solve quadratic equations for merchants in Baghdad. By 1145, Latin translations opened it to European mathematicians. By 1600, algebra was the foundation of all higher mathematics. By 1800, it was the language of physics and engineering. By 1900, it was the basis of abstract algebra and topology. By 2000, algebraic structures were running inside every processor, every network protocol, every cryptographic system. And all of this traces — through a chain of specific transmissions and transformations — back to one book written beside the Tigris River.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">830</div>
+        <div class="card-label">CE — The Book Written</div>
+        <div class="card-body">Al-Kitab al-mukhtasar fi hisab al-jabr wal-muqabala is dedicated to Caliph al-Ma'mun. It will sit largely in Arabic manuscript libraries for three centuries.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1145</div>
+        <div class="card-label">CE — Latin Breakthrough</div>
+        <div class="card-body">Robert of Chester translates the algebra. The word "algebra" enters Latin mathematical vocabulary. European scholars can now access the complete system.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1202</div>
+        <div class="card-label">CE — Fibonacci Amplifies</div>
+        <div class="card-body">Fibonacci's Liber Abaci spreads Hindu-Arabic numerals through European commercial mathematics, citing Arabic sources. Al-Khwarizmi's influence reaches Italian merchants.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1820s</div>
+        <div class="card-label">CE — Abstract Algebra</div>
+        <div class="card-body">Abel and Galois develop abstract algebra — groups, rings, fields — building on the symbolic framework that began with al-Khwarizmi's classified equation types.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1936</div>
+        <div class="card-label">CE — Algorithm Formalized</div>
+        <div class="card-body">Alan Turing's "On Computable Numbers" formalizes the algorithm concept. The word "algorithm" derives from al-Khwarizmi's Latinized name. The connection is direct.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">Today</div>
+        <div class="card-label">Every Device, Every Calculation</div>
+        <div class="card-body">Every smartphone, every server, every financial transaction, every GPS navigation, every search result executes algorithms built on algebraic structures. All of it downstream of 830 CE.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: The two words -->
+  <section class="section">
+    <span class="kick">Etymology</span>
+    <h2>Two Words, Precisely Traced</h2>
+    <div class="section-rule"></div>
+
+    <div class="word-box">
+      <div>
+        <div class="word-main">Algorithm</div>
+        <div class="word-arabic">الخوارزمي</div>
+        <div class="word-etymology">
+          AL-KHWARIZMI<br>
+          → LATIN: ALGORITMI<br>
+          → MEDIEVAL: ALGORISMUS<br>
+          → ENGLISH: ALGORISM → ALGORITHM<br>
+          FIRST ATTESTED: c. 12TH CENTURY
+        </div>
+      </div>
+      <div class="word-meaning">
+        <p>When his arithmetic text was translated into Latin, the translator rendered his name as <em>Algoritmi</em>. The opening phrase "Dixit Algoritmi" — "Thus spake Algoritmi" — was the first thing European readers encountered. The name became attached to the method.</p>
+        <p>By the 13th century, <em>algorismus</em> meant calculation using Hindu-Arabic numerals. By the 17th century, the word referred more generally to any systematic computational method. Alan Turing gave it its modern precise definition in 1936: a finite, deterministic procedure that halts with a correct output.</p>
+      </div>
+    </div>
+
+    <div class="word-box">
+      <div>
+        <div class="word-main">Algebra</div>
+        <div class="word-arabic">الجبر</div>
+        <div class="word-etymology">
+          AL-JABR (RESTORATION)<br>
+          → LATIN: ALGEBRA<br>
+          → MEDIEVAL EUROPEAN: ALGEBRA<br>
+          → ENGLISH: ALGEBRA<br>
+          FIRST ATTESTED IN LATIN: 1145
+        </div>
+      </div>
+      <div class="word-meaning">
+        <p>From the Arabic title of his book: <em>al-jabr wa'l-muqabala</em> — completion and balancing. Robert of Chester translated the title and kept the key term: <em>algebra et almucabola</em> in his Latin version. The word entered European mathematical vocabulary immediately.</p>
+        <p>The same word traveled to Spain as a medical term for bone-setting — <em>algebrista</em> — because "jabr" means restoration. Medieval Spanish bone-setters advertised themselves as algebristas. The mathematical and surgical operations shared a name: both were about restoring something displaced to its proper state.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Transmission chain -->
+  <section class="section">
+    <span class="kick">The Transmission Chain</span>
+    <h2>From Baghdad to Every Classroom on Earth</h2>
+    <div class="section-rule"></div>
+
+    <p>The transmission of al-Khwarizmi's work to Europe was not a single event but a multi-century chain of translations, adaptations, and elaborations. Each link in the chain added something — and each link was necessary.</p>
+
+    <div class="legacy-timeline">
+
+      <div class="legacy-item">
+        <div class="legacy-year">c. 850–1000 CE</div>
+        <div class="legacy-who">Islamic Mathematicians — Extension and Elaboration</div>
+        <div class="legacy-title">Within the Islamic world</div>
+        <div class="legacy-desc">Within a century of al-Khwarizmi's death, his algebra had been extended by his successors. Abu Kamil Shuja ibn Aslam (c. 850–930 CE) wrote an algebra text that explicitly built on al-Khwarizmi's six types, adding higher-degree equations, irrational coefficients, and systems of equations. Al-Karaji (c. 953–1029 CE) extended algebra to polynomials of arbitrarily high degree. The tradition grew continuously within the Islamic world for four centuries before reaching Europe.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">c. 1000 CE</div>
+        <div class="legacy-who">Al-Biruni and Ibn Sina — Synthesis</div>
+        <div class="legacy-title">The great encyclopedists</div>
+        <div class="legacy-desc">Abu Rayhan al-Biruni (973–1048 CE) and Ibn Sina / Avicenna (980–1037 CE) both drew on al-Khwarizmi's work — al-Biruni directly in mathematical and astronomical contexts, Ibn Sina in his philosophical treatment of mathematics. Both were read by later European scholars, and both served as transmission nodes for al-Khwarizmi's legacy even beyond the algebra book itself.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">c. 1085–1140 CE</div>
+        <div class="legacy-who">The Toledo Translation School</div>
+        <div class="legacy-title">al-Andalus as intellectual bridge</div>
+        <div class="legacy-desc">After the Christian reconquest of Toledo in 1085 CE, the city became a center for Latin translation of Arabic texts. European scholars — English, French, Italian, German — traveled to Toledo to access Arabic libraries and commission translations. This is the proximate source for the 12th-century Latin translations of al-Khwarizmi's works. The political event (Toledo's conquest) enabled the intellectual transmission.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1126 CE</div>
+        <div class="legacy-who">Adelard of Bath</div>
+        <div class="legacy-title">Translates the astronomical tables</div>
+        <div class="legacy-desc">Adelard of Bath, an English scholar who traveled extensively in the Islamic world and al-Andalus, translated al-Khwarizmi's Zij al-Sindhind (astronomical tables) into Latin. This was among the first of al-Khwarizmi's works to reach European astronomers and established his authority as an astronomical source in European universities.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1145 CE</div>
+        <div class="legacy-who">Robert of Chester</div>
+        <div class="legacy-title">Liber algebrae et almucabola — The Algebra in Latin</div>
+        <div class="legacy-desc">Robert of Chester, another English scholar working in al-Andalus, translated the algebra in 1145. This is the critical translation — the one that put "algebra" into Latin as a mathematical term and gave European scholars access to the six canonical equation types and their geometric proofs. The same year, Gerard of Cremona began his own translation program in Toledo, producing a second Latin version of the algebra and translations of many other Arabic mathematical texts.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1202 CE</div>
+        <div class="legacy-who">Leonardo of Pisa — Fibonacci</div>
+        <div class="legacy-title">Liber Abaci — The Book of Calculation</div>
+        <div class="legacy-desc">Leonardo Fibonacci's <em>Liber Abaci</em> was not a translation of al-Khwarizmi but a synthesis of everything he had learned from Arabic mathematical texts — including al-Khwarizmi's arithmetic and algebra — during his travels in North Africa and his education under Arab teachers. The book opened with the Hindu-Arabic numeral system and worked through arithmetic, algebra, and applications to trade and commerce. It is the primary vehicle through which Hindu-Arabic numerals entered mainstream European commercial practice. Fibonacci cites Arabic sources throughout.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">13th–15th CE</div>
+        <div class="legacy-who">European University Curriculum</div>
+        <div class="legacy-title">Algorismus enters the quadrivium</div>
+        <div class="legacy-desc">By the 13th century, "algorismus" texts — textbooks on Hindu-Arabic arithmetic derived from al-Khwarizmi's arithmetic book — were standard in European university curricula. The most widely used was Sacrobosco's <em>Algorismus vulgaris</em> (c. 1230), which circulated in hundreds of manuscript copies and was still being printed in the 16th century. Algebra, meanwhile, was taught as a specialized subject at more advanced levels, still under the name that derived from al-Khwarizmi's book title.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1494 CE</div>
+        <div class="legacy-who">Luca Pacioli</div>
+        <div class="legacy-title">Summa de arithmetica — The Algebra Systematized for Print</div>
+        <div class="legacy-desc">Luca Pacioli's <em>Summa de arithmetica, geometria, proportioni e proportionalità</em> was the first major printed mathematical textbook, published the year after Columbus reached the Americas. It systematized algebra (including al-Khwarizmi's six types) and arithmetic for the printing press era. It also included the first published description of double-entry bookkeeping — a reminder that algebra was always, from al-Khwarizmi's time, entangled with commerce.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">16th–17th CE</div>
+        <div class="legacy-who">Cardano, Viète, Descartes</div>
+        <div class="legacy-title">Algebra goes symbolic and cubic</div>
+        <div class="legacy-desc">Gerolamo Cardano's <em>Ars Magna</em> (1545) solved the cubic equation — going beyond al-Khwarizmi's quadratic limit. François Viète introduced letter notation for variables (1591), moving algebra from rhetorical form ("a square plus ten roots") to symbolic form (x² + 10x = c). René Descartes unified algebra and geometry in the <em>Géométrie</em> (1637), creating coordinate geometry. Each step built on and extended the algebraic framework that al-Khwarizmi had established.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1820s CE</div>
+        <div class="legacy-who">Abel, Galois, and Abstract Algebra</div>
+        <div class="legacy-title">The structure behind the equations</div>
+        <div class="legacy-desc">Niels Henrik Abel (1802–1829) proved that quintic equations have no general algebraic solution. Évariste Galois (1811–1832) explained why — through the theory of groups. This work created abstract algebra: the study of the structures (groups, rings, fields, vector spaces) that underlie algebraic operations. The connection to al-Khwarizmi's six equation types is not superficial — the classification of equation types according to their solvability by radicals is precisely what Galois theory addresses, now understood at a much deeper structural level.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1936 CE</div>
+        <div class="legacy-who">Alan Turing</div>
+        <div class="legacy-title">"On Computable Numbers" — The Algorithm Formalized</div>
+        <div class="legacy-desc">Alan Turing's 1936 paper defined the Turing machine — an abstract model of computation that formalized the concept of an algorithm as a finite, deterministic procedure for computation. The word "algorithm" that Turing used — the same word that derived from al-Khwarizmi's name — now had its modern precise definition. Every algorithm in computer science is, formally, a Turing-computable function. Every Turing-computable function is, historically, a descendant of the systematic step-by-step procedures that al-Khwarizmi called the method of al-Khwarizmi.</div>
+      </div>
+
+      <div class="legacy-item">
+        <div class="legacy-year">1948–Present</div>
+        <div class="legacy-who">Computer Science</div>
+        <div class="legacy-title">The algorithm becomes physical reality</div>
+        <div class="legacy-desc">The first stored-program computers (ENIAC, EDSAC, Manchester Mark 1) implement algorithms in hardware. By the 1970s, algorithm analysis is a formal discipline. By 2000, billions of devices execute algorithms billions of times per second. The word "algorithm" — derived from the name of a 9th-century mathematician from Khwarezm — is among the most consequential technical terms in human history.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Fibonacci closer look -->
+  <section class="section">
+    <span class="kick">Key Transmission Node</span>
+    <h2>Fibonacci and the Arabic Sources</h2>
+    <div class="section-rule"></div>
+
+    <p>Leonardo of Pisa (c. 1170–1250 CE), known as Fibonacci, is often cited as the man who brought Hindu-Arabic numerals to Europe. This is partially true — but the deeper truth is that Fibonacci was a translator and synthesizer of Arabic mathematical knowledge, including al-Khwarizmi's. Understanding Fibonacci's relationship to the Arabic tradition clarifies both his greatness and its limits.</p>
+
+    <div class="feature-block">
+      <div class="feature-label">FIBONACCI'S EDUCATION</div>
+      <div class="feature-name">Learned under Arab teachers in Bugia (modern Algeria)</div>
+      <div class="feature-body">
+        <p>Fibonacci's father was a Pisan merchant stationed in Bugia (Béjaïa, modern Algeria) as a customs official. The young Leonardo received his mathematical education there — from Arab teachers, using Arabic textbooks. He explicitly credits this in the Liber Abaci: "When my father... had established me in the custom house of Bugia for the Pisan merchants who frequented it, he had me in my youth brought to him, looking to find for me a useful and comfortable future; there accordingly I was taught for some days the art of the Indians' nine symbols."</p>
+        <p>The "art of the Indians' nine symbols" is the Hindu-Arabic numeral system, transmitted to Fibonacci via Arabic education — which itself had received it via al-Khwarizmi's arithmetic text.</p>
+      </div>
+    </div>
+
+    <p>Fibonacci's <em>Liber Abaci</em> (1202) is a long and demanding book — 459 pages in modern edition — covering arithmetic, algebra, and applications to trade. Its algebra section explicitly uses the six equation types from al-Khwarizmi's classification, now expressed in the new symbolic notation that was developing in the Italian mathematical tradition. Fibonacci did not cite al-Khwarizmi by name in every instance, but his debt to the Arabic algebraic tradition is unmistakable to any historian who reads both texts side by side.</p>
+
+    <p>The famous Fibonacci sequence (1, 1, 2, 3, 5, 8, 13...) appears as a single problem in the Liber Abaci — a problem about rabbit population growth that was almost certainly not original to Fibonacci (related sequences appear in Indian poetry-meter theory, a tradition al-Khwarizmi would not have known). The sequence is the least important thing in the book. The most important is the systematic exposition of Hindu-Arabic arithmetic and algebra for a European commercial audience.</p>
+  </section>
+
+  <!-- Section: What algebra became -->
+  <section class="section">
+    <span class="kick">The Long Downstream</span>
+    <h2>What Al-Jabr Became</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi's algebra had six equation types and geometric proofs. Here is what that seed grew into, step by measurable step.</p>
+
+    <div class="influence-table">
+      <div class="influence-row">
+        <span class="influence-key">830 CE</span>
+        <span class="influence-val">Six canonical forms of linear/quadratic equations. Geometric proofs. Practical applications to trade and inheritance.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">850–1100 CE</span>
+        <span class="influence-val">Abu Kamil extends to higher-degree equations and irrational coefficients. Al-Karaji extends to polynomial arithmetic. Al-Khayyam (Omar Khayyam) solves cubic equations using conic sections.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1100–1300 CE</span>
+        <span class="influence-val">Latin translations reach European universities. Algebra taught as a distinct discipline. The symbolic framework begins developing with Jordanus de Nemore and others.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1545 CE</span>
+        <span class="influence-val">Cardano's Ars Magna solves cubic and quartic equations using radicals. Algebra now handles degree 4. The methods are still essentially al-Khwarizmi's completing-the-square technique, extended.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1591 CE</span>
+        <span class="influence-val">Viète introduces letter notation — <em>a</em>, <em>b</em>, <em>c</em> for constants; <em>x</em>, <em>y</em>, <em>z</em> for unknowns. Algebra becomes truly symbolic rather than rhetorical. The modern notation emerges.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1637 CE</span>
+        <span class="influence-val">Descartes' Géométrie unifies algebra and geometry via coordinate systems. Al-Khwarizmi's geometric proofs are now expressible algebraically, and vice versa. Analytic geometry is born.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1687 CE</span>
+        <span class="influence-val">Newton's Principia uses algebra and calculus (which is algebraic at its core) to describe universal gravitation. Physics becomes mathematical in a fully modern sense.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1830s CE</span>
+        <span class="influence-val">Galois theory proves which equations are solvable by radicals and which are not. The six types of al-Khwarizmi are now understood as a tiny special case of a vast algebraic landscape.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1850–1900 CE</span>
+        <span class="influence-val">Boolean algebra (Boole, 1854) applies algebraic methods to logic. Linear algebra systematized. Abstract algebra develops as the study of algebraic structures. The reach of algebra extends beyond number.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1920s–1940s CE</span>
+        <span class="influence-val">Emmy Noether founds modern abstract algebra. Ring theory, module theory, algebraic topology. The structures underlying al-Khwarizmi's equation types are now understood at their deepest level.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1950–1980 CE</span>
+        <span class="influence-val">Linear algebra becomes the mathematical language of computer graphics, machine learning foundations, and scientific computing. Every matrix operation, every neural network weight update, every principal component analysis is linear algebra — downstream of al-Khwarizmi's classification of equations.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">1970–Present</span>
+        <span class="influence-val">Public-key cryptography (RSA, 1977) uses modular algebra — the arithmetic of remainders — to secure every internet transaction. Elliptic curve cryptography (1985 onward) uses algebraic geometry. Every encrypted message in the world relies on algebra that traces back to the Islamic Golden Age.</span>
+      </div>
+      <div class="influence-row">
+        <span class="influence-key">Present</span>
+        <span class="influence-val">Machine learning, deep neural networks, quantum computing — all expressed in algebraic structures (tensors, Hilbert spaces, group representations). The word <em>algorithm</em> — the name of the man from Khwarezm — is the most-used technical term in computing.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: What algorithm became -->
+  <section class="section">
+    <span class="kick">Algorithm — The Name That Runs the World</span>
+    <h2>From Dixit Algoritmi to Every Machine</h2>
+    <div class="section-rule"></div>
+
+    <p>An algorithm, in al-Khwarizmi's conception, was a finite series of precise steps that, applied to any instance of a problem of the correct type, would reliably produce the correct answer. He did not use this word — he had no word for it. He simply wrote down the steps. But the concept is clear in his text: for each of the six equation types, he gives a procedure. The procedure always terminates. The procedure always gives the correct answer. The procedure requires no creativity to apply — only careful execution.</p>
+
+    <p>This is exactly the modern definition of an algorithm. Turing formalized it. Von Neumann implemented it in hardware. Knuth analyzed its complexity. But the concept — a finite, deterministic, step-by-step procedure that solves all instances of a problem class — was articulated in practical form by al-Khwarizmi in 830 CE.</p>
+
+    <div class="code-block"><span class="code-comment"># Al-Khwarizmi's Type IV algorithm in modern pseudocode
+# Solve: x² + bx = c  (b, c positive)</span>
+
+<span class="code-key">def</span> al_jabr_type4(b, c):
+    half_b = b / <span class="code-str">2</span>                        <span class="code-comment"># "take half the roots"</span>
+    half_b_squared = half_b ** <span class="code-str">2</span>            <span class="code-comment"># "multiply by itself"</span>
+    sum_with_c = half_b_squared + c        <span class="code-comment"># "add to the number"</span>
+    root = sum_with_c ** <span class="code-str">0.5</span>              <span class="code-comment"># "take the root"</span>
+    x = root - half_b                      <span class="code-comment"># "subtract the half"</span>
+    <span class="code-key">return</span> x
+
+<span class="code-comment"># Al-Khwarizmi's own example: x² + 10x = 39</span>
+print(al_jabr_type4(<span class="code-str">10</span>, <span class="code-str">39</span>))  <span class="code-comment"># → 3.0</span></div>
+
+    <p>The code above is not a translation — it is a transliteration. Al-Khwarizmi's procedure maps directly to modern function form. Every step he described in Arabic prose in 830 CE is exactly the step that runs in the code. The structure is the same because it is the same algorithm.</p>
+
+    <div class="pull-quote">
+      <p>"The word 'algorithm' comes from the name of the 9th-century Persian mathematician Muḥammad ibn Mūsā al-Khwārizmī, whose name was Latinised as Algoritmi."</p>
+      <cite>— Oxford English Dictionary, etymology for "algorithm"</cite>
+    </div>
+  </section>
+
+  <!-- Section: What he would recognize -->
+  <section class="section">
+    <span class="kick">The Measure of a Legacy</span>
+    <h2>What He Would Recognize Today</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi died around 850 CE. He could not have imagined most of what his work eventually produced. But some of it he would recognize immediately.</p>
+
+    <p>He would recognize the equation <em>x² + 10x = 39</em> in any algebra textbook — it is his own example, unchanged. He would recognize the completing-the-square procedure, still taught in high school mathematics worldwide in exactly the form he described. He would recognize the Hindu-Arabic numerals on every clock, price tag, and phone screen — they are the same symbols he wrote about in 825 CE, now encoding the measurement of everything.</p>
+
+    <p>He would not recognize a computer, a smartphone, or the internet. But if someone sat with him and explained — patiently, in Arabic — what a processor does (executes a finite sequence of deterministic steps on inputs to produce outputs), he would nod. He described exactly that kind of thing. He called the steps the "method." We call them an algorithm, using his name.</p>
+
+    <p>The greatest tribute to al-Khwarizmi is not a statue or a named award (though a crater on the Moon and an asteroid in the asteroid belt both bear his name). The greatest tribute is that his ideas are too universal to be credited — too woven into the fabric of how humans think about calculation, method, and problem-solving to be attributed to any single person. He succeeded so thoroughly that he disappeared into the infrastructure of civilization.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num" style="font-size:1rem;">Crater</div>
+        <div class="card-label">Al-Khwarizmi on the Moon</div>
+        <div class="card-body">A lunar impact crater (6.7°N, 107.4°E) is named for him — on the far side, facing away from Earth. A fitting location for a man whose influence is everywhere but whose name is often invisible.</div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="font-size:1rem;">Asteroid</div>
+        <div class="card-label">2273 Khwarizmi</div>
+        <div class="card-body">Asteroid 2273 in the asteroid belt is named Khwarizmi, discovered in 1979 by Nikolai Chernykh at the Crimean Astrophysical Observatory.</div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="font-size:1rem;">Prize</div>
+        <div class="card-label">al-Khawarizmi International Award</div>
+        <div class="card-body">Iran's annual prize for scientific achievement, awarded since 1987, is named in his honor. It recognizes contributions in fields where his own work was most influential: mathematics, astronomy, and computing.</div>
+      </div>
+      <div class="card">
+        <div class="card-num" style="font-size:1rem;">Language</div>
+        <div class="card-label">Algorithm &amp; Algebra</div>
+        <div class="card-body">His name and his book's title appear in every language on Earth that has a word for mathematical method and a word for the study of equations — which is to say, every language with a mathematical tradition.</div>
+      </div>
+    </div>
+
+    <div class="pull-quote">
+      <p>"He wrote works on mathematics, astronomy, and geography that remained standard references for centuries. His name, Latinized as Algoritmi, gave the Western world the word 'algorithm.' His book title gave it 'algebra.' These two words alone are enough to ensure his place in the first rank of scientists in history."</p>
+      <cite>— J.J. O'Connor &amp; E.F. Robertson, MacTutor History of Mathematics Archive, University of St Andrews</cite>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <div class="colophon-text">
+      ROOT0-ATTRIBUTION-v1.0<br>
+      David Lee Wise / ROOT0 / TriPod LLC<br>
+      CC-BY-ND-4.0 &nbsp;·&nbsp; All rights reserved as noted
+    </div>
+    <div class="colophon-vol">
+      AL-KHWARIZMI LIBRARY &nbsp;·&nbsp; VOL. 3 OF 3 &nbsp;·&nbsp; THE LONG AFTERLIFE
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

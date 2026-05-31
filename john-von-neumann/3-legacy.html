@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John von Neumann — Vol. 3: The Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#060a14;
+    --card:#0d1426;
+    --card2:#111827;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(29,78,216,0.18);
+    --lineo:rgba(234,88,12,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(29,78,216,0.028) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--blue);color:#fff;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--blue);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.orange{background:var(--orange);}
+
+  .mast{border-bottom:3px solid var(--blue);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,76px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;}
+  .mast h1 em{font-style:normal;color:var(--blue);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* tree/lineage animation */
+  @keyframes branchGrow{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes leafPop{0%,100%{opacity:0.4;transform:scale(0.8)}50%{opacity:1;transform:scale(1)}}
+  @keyframes rootPulse{0%,100%{fill:var(--blue);opacity:0.9}50%{fill:#3b6ff8;opacity:1}}
+  .branch{stroke-dasharray:200;stroke-dashoffset:200;animation:branchGrow 2.5s cubic-bezier(.4,0,.2,1) forwards;}
+  .leaf{animation:leafPop 3s ease-in-out infinite;}
+  .root-node{animation:rootPulse 2.5s ease-in-out infinite;}
+  @media(prefers-reduced-motion:reduce){.branch{animation:none;stroke-dashoffset:0}.leaf,.root-node{animation:none;opacity:0.9}}
+
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* legacy stream blocks */
+  .stream{border:1px solid var(--line);background:var(--card);padding:22px 24px;margin-bottom:16px;}
+  .stream.orange{border-color:var(--lineo);}
+  .stream-head{display:flex;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+  .stream h3{font-family:"Cinzel";font-weight:700;font-size:20px;color:var(--ink);margin:0;}
+  .stream .stream-yr{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;color:var(--orange);}
+  .stream p{font-size:clamp(14.5px,1.6vw,16.5px);color:#a8b4cc;line-height:1.65;margin:0 0 10px;}
+  .stream p:last-child{margin-bottom:0;}
+  .stream em{font-style:italic;color:#c8cce0;}
+
+  /* lineage tree display */
+  .lineage-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;color:#a0adc4;}
+  .lineage-row:last-child{border-bottom:none;}
+  .lineage-row .l-year{font-family:"Space Mono",monospace;font-size:11px;color:var(--blue);min-width:48px;letter-spacing:0.06em;padding-top:2px;}
+  .lineage-row .l-arrow{color:var(--orange);opacity:0.7;font-size:16px;padding-top:0;}
+  .lineage-row .l-text{flex:1;}
+  .lineage-row .l-text b{color:var(--ink);font-weight:500;}
+  .lineage-row .l-field{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);margin-left:8px;opacity:0.8;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.orange-h:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--blue);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--lineo);padding:2px 7px;margin-top:6px;}
+  .card .tag.blue{color:var(--blue);border-color:var(--line);}
+
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.orange{border-color:var(--lineo);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  /* stat display */
+  .stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin:6px 0;}
+  .stat{border:1px solid var(--line);background:var(--card);padding:16px 18px;text-align:center;}
+  .stat .stat-num{font-family:"Cinzel";font-weight:800;font-size:clamp(28px,4vw,44px);color:var(--blue);display:block;line-height:1;}
+  .stat .stat-num.orange{color:var(--orange);}
+  .stat .stat-label{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.10em;text-transform:uppercase;color:var(--dim);display:block;margin-top:6px;}
+
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--blue);color:#fff;}
+  .vol-nav a.current{background:var(--blue);color:#fff;}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.stream,.stat{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">von neumann series · volume 3 · the long afterlife</span>
+    <div class="masthead">
+      <div>
+        <h1>The Long<br><em>Afterlife</em></h1>
+        <p class="dek">
+          He died in 1957. Every computer built since follows his 1945 architecture. Game theory became the grammar of economics, evolutionary biology, and AI. Cellular automata generated an entire science of artificial life. <b>He has been dead for sixty-eight years. He is still everywhere.</b>
+        </p>
+      </div>
+      <!-- Legacy tree SVG: root node sprouting into multiple branches -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Branching legacy tree showing von Neumann's influence spreading into computing, economics, physics, and biology">
+        <rect width="210" height="210" fill="#0d1426" rx="4"/>
+        <!-- root node -->
+        <circle cx="105" cy="175" r="14" class="root-node"/>
+        <text x="105" y="171" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#fff" font-weight="700">JvN</text>
+        <text x="105" y="181" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(255,255,255,0.7)">1957</text>
+        <!-- trunk -->
+        <line x1="105" y1="161" x2="105" y2="130" stroke="rgba(29,78,216,0.7)" stroke-width="2.5" class="branch" style="animation-delay:0.1s"/>
+        <!-- main branches -->
+        <line x1="105" y1="130" x2="35" y2="90" stroke="rgba(29,78,216,0.6)" stroke-width="2" class="branch" style="animation-delay:0.4s"/>
+        <line x1="105" y1="130" x2="175" y2="90" stroke="rgba(29,78,216,0.6)" stroke-width="2" class="branch" style="animation-delay:0.4s"/>
+        <line x1="105" y1="130" x2="105" y2="80" stroke="rgba(234,88,12,0.7)" stroke-width="2" class="branch" style="animation-delay:0.7s"/>
+        <line x1="105" y1="130" x2="65" y2="105" stroke="rgba(29,78,216,0.4)" stroke-width="1.5" class="branch" style="animation-delay:0.6s"/>
+        <line x1="105" y1="130" x2="145" y2="105" stroke="rgba(29,78,216,0.4)" stroke-width="1.5" class="branch" style="animation-delay:0.6s"/>
+        <!-- sub-branches -->
+        <line x1="35" y1="90" x2="15" y2="60" stroke="rgba(29,78,216,0.5)" stroke-width="1.5" class="branch" style="animation-delay:0.9s"/>
+        <line x1="35" y1="90" x2="45" y2="55" stroke="rgba(29,78,216,0.4)" stroke-width="1.2" class="branch" style="animation-delay:1.0s"/>
+        <line x1="175" y1="90" x2="195" y2="60" stroke="rgba(29,78,216,0.5)" stroke-width="1.5" class="branch" style="animation-delay:0.9s"/>
+        <line x1="175" y1="90" x2="165" y2="55" stroke="rgba(29,78,216,0.4)" stroke-width="1.2" class="branch" style="animation-delay:1.0s"/>
+        <line x1="105" y1="80" x2="90" y2="45" stroke="rgba(234,88,12,0.6)" stroke-width="1.5" class="branch" style="animation-delay:1.1s"/>
+        <line x1="105" y1="80" x2="120" y2="45" stroke="rgba(234,88,12,0.6)" stroke-width="1.5" class="branch" style="animation-delay:1.1s"/>
+        <!-- leaf nodes -->
+        <circle cx="15" cy="56" r="5" fill="var(--blue)" class="leaf" style="animation-delay:0.2s"/>
+        <text x="15" y="44" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.9)">CPU</text>
+        <circle cx="47" cy="51" r="4" fill="var(--blue)" class="leaf" style="animation-delay:0.6s"/>
+        <text x="47" y="40" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.8)">CLOUD</text>
+        <circle cx="195" cy="56" r="5" fill="var(--orange)" class="leaf" style="animation-delay:1.0s"/>
+        <text x="195" y="44" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">ECON</text>
+        <circle cx="163" cy="51" r="4" fill="var(--orange)" class="leaf" style="animation-delay:0.4s"/>
+        <text x="163" y="40" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.8)">AI</text>
+        <circle cx="88" cy="41" r="5" fill="#f87340" class="leaf" style="animation-delay:0.8s"/>
+        <text x="70" y="30" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">GAME</text>
+        <text x="70" y="39" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">THEORY</text>
+        <circle cx="122" cy="41" r="5" fill="#7baaf7" class="leaf" style="animation-delay:1.4s"/>
+        <text x="143" y="30" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.9)">CELLULAR</text>
+        <text x="143" y="39" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.9)">AUTOMATA</text>
+        <circle cx="65" cy="103" r="4" fill="#5a8af7" class="leaf" style="animation-delay:1.2s"/>
+        <text x="40" y="102" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">MONTE</text>
+        <text x="40" y="111" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">CARLO</text>
+        <circle cx="145" cy="103" r="4" fill="#5a8af7" class="leaf" style="animation-delay:1.8s"/>
+        <text x="170" y="102" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">QUANTUM</text>
+        <text x="170" y="111" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">INFO</text>
+        <!-- label -->
+        <text x="105" y="207" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(29,78,216,0.4)" letter-spacing="0.06em">LEGACY TREE · 1957–PRESENT</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-architecture.html">1 · Architecture</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html" class="current">3 · Legacy</a>
+  </nav>
+
+  <!-- SCALE OF IMPACT -->
+  <div class="band reveal" style="animation-delay:.05s">Scale</div>
+  <div class="stat-row reveal" style="animation-delay:.08s">
+    <div class="stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Computers using his 1945 architecture</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num orange">68+</span>
+      <span class="stat-label">Years since his death · still foundational</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Separate fields he founded or formalized</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num orange">53</span>
+      <span class="stat-label">Years of life · everything before sixty</span>
+    </div>
+  </div>
+
+  <!-- COMPUTING LEGACY -->
+  <div class="band reveal" style="animation-delay:.10s">I. Every Computer Ever Built</div>
+  <p class="body-text reveal" style="animation-delay:.12s">
+    The Von Neumann architecture is not a historical artifact. It is the present. Every smartphone, every laptop, every server in every data center, every embedded controller in every car and appliance and satellite — all von Neumann machines. CPU fetches instruction from memory. Decodes. Executes. Writes result back. Repeats. This cycle, described in a 1945 draft memo written for internal Army Ordnance distribution, is the heartbeat of the information age.
+  </p>
+  <div class="stream reveal" style="animation-delay:.14s">
+    <div class="stream-head">
+      <h3>The Computing Lineage</h3>
+      <span class="stream-yr">1945 → present</span>
+    </div>
+    <p>The EDVAC (1949) and IAS machine (1952) were the first hardware implementations. From the IAS machine, engineers around the world built copies: ILLIAC at Illinois, MANIAC at Los Alamos, JOHNNIAC at RAND, ORACLE at Oak Ridge. Each spread the architecture further.</p>
+    <p>IBM adopted the stored-program concept for its commercial machines in the 1950s. By 1960, the architecture was universal. By 1970, it was being miniaturized into integrated circuits. By 1980, it was on a single chip — the microprocessor. Intel's 8086 (1978), the ancestor of every x86 processor in every PC, is a von Neumann machine. Apple's M4 is a von Neumann machine. The GPU that trains large language models is — underneath the parallel execution units — organized on von Neumann principles.</p>
+    <p>The "Von Neumann bottleneck" — the bandwidth limit between CPU and memory — is the central engineering challenge of modern computer architecture. Caches, branch predictors, out-of-order execution, non-uniform memory access (NUMA), near-memory computing — every architectural innovation of the past fifty years is an attempt to work around or stretch the limits of the original 1945 design. We haven't escaped it. We just run it faster.</p>
+  </div>
+
+  <div class="pull reveal" style="animation-delay:.16s">
+    The stored-program concept ended the era of single-purpose machines. Before von Neumann: one machine, one task. After: one machine, every task. The computer became a universal instrument.
+  </div>
+
+  <!-- GAME THEORY LEGACY -->
+  <div class="band orange reveal" style="animation-delay:.18s">II. The Grammar of Strategic Thought</div>
+  <div class="stream orange reveal" style="animation-delay:.20s">
+    <div class="stream-head">
+      <h3>Game Theory's Long Reach</h3>
+      <span class="stream-yr">1944 → present</span>
+    </div>
+    <p>Von Neumann's minimax theorem and the 1944 book with Morgenstern created the mathematical language of strategic interaction. John Nash built Nash equilibrium on this foundation in 1950 (Nobel Economics 1994). The entire edifice of modern microeconomics — mechanism design, auction theory, contract theory, industrial organization — rests on game-theoretic foundations.</p>
+    <p>In evolutionary biology, John Maynard Smith applied game theory to natural selection in the 1970s, showing that animal behavior could be modeled as strategic equilibria reached through evolution rather than rational choice. Evolutionarily stable strategies (ESS) became a fundamental concept in behavioral ecology.</p>
+    <p>In computer science, game theory underlies algorithm design for competitive environments — routing protocols, spectrum auctions, ad bidding systems. Every time Google auctions search ad placements, every time a wireless carrier bids for spectrum, every time a logistics company routes competing trucks: all applications of von Neumann's minimax.</p>
+    <p>In artificial intelligence, multi-agent reinforcement learning, adversarial training (GANs), and AlphaGo/AlphaZero's self-play all apply game-theoretic principles. The GPT family's RLHF (reinforcement learning from human feedback) training process is a form of game-theoretic optimization.</p>
+  </div>
+
+  <!-- CELLULAR AUTOMATA LEGACY -->
+  <div class="band reveal" style="animation-delay:.22s">III. Artificial Life and Complex Systems</div>
+  <div class="stream reveal" style="animation-delay:.24s">
+    <div class="stream-head">
+      <h3>From Self-Reproducing Automata to Conway to AI</h3>
+      <span class="stream-yr">1948 → present</span>
+    </div>
+    <p>Von Neumann's 29-state self-reproducing cellular automaton was too complex to simulate in his lifetime — the first working implementation wasn't demonstrated until 1995, on modern hardware. But the <em>idea</em> propagated immediately.</p>
+    <p>John Conway's Game of Life (1970) was a radical simplification: two states (alive/dead), three simple rules, and the same emergent complexity. It captured the public imagination as no mathematical object had since the Mandelbrot set. It also raised the serious scientific question: could computation emerge spontaneously from simple rules? Yes. Conway's Life is Turing-complete.</p>
+    <p>Stephen Wolfram spent decades exploring cellular automata (his 2002 book <em>A New Kind of Science</em> built entirely on this foundation) and proposed that the universe itself might be a cellular automaton. Whether right or wrong, the proposal reflects the genuine depth of von Neumann's original question: can a finite set of simple rules generate arbitrary complexity?</p>
+    <p>In modern AI, the concept of emergent behavior from local rules appears in neural networks (neurons with simple activation functions producing complex intelligence), attention mechanisms (local token interactions producing global reasoning), and the debate about whether large language models are "merely" pattern-matching or genuinely computing. Von Neumann's automata theory frames these debates precisely.</p>
+  </div>
+
+  <!-- QUANTUM LEGACY -->
+  <div class="band reveal" style="animation-delay:.26s">IV. Quantum Computing's Foundation</div>
+  <div class="stream reveal" style="animation-delay:.28s">
+    <div class="stream-head">
+      <h3>Mathematical Foundations of Quantum Mechanics → Quantum Computing</h3>
+      <span class="stream-yr">1932 → present</span>
+    </div>
+    <p>Von Neumann's Hilbert-space axiomatization of quantum mechanics is the language in which quantum computing is formulated. Qubits are state vectors in a Hilbert space. Quantum gates are unitary operators on that space. Measurement is the projection postulate von Neumann defined in 1932.</p>
+    <p>IBM's quantum processors, Google's Sycamore, IonQ's trapped-ion systems — all are physical implementations of the mathematical framework von Neumann built at age twenty-five. The researchers who design quantum algorithms work in a mathematical language he invented before transistors existed.</p>
+    <p>He also originated the "Von Neumann measurement problem" — the question of why quantum superposition collapses to a definite state upon measurement, and where exactly in the measurement chain this happens. This question remains unresolved. The measurement problem is one of the deepest open questions in physics. He identified it in 1932.</p>
+  </div>
+
+  <!-- MONTE CARLO LEGACY -->
+  <div class="band orange reveal" style="animation-delay:.30s">V. Monte Carlo: Randomness as Computation</div>
+  <div class="stream orange reveal" style="animation-delay:.32s">
+    <div class="stream-head">
+      <h3>From Nuclear Physics to Language Models</h3>
+      <span class="stream-yr">1946 → present</span>
+    </div>
+    <p>The Monte Carlo method has become one of the most widely used computational techniques in science and engineering. Climate models use it to propagate uncertainty through complex atmospheric simulations. Financial institutions use it to price derivatives and model portfolio risk. Drug researchers use it to simulate protein folding and molecular dynamics. Physicists use it to integrate path integrals in quantum field theory.</p>
+    <p>In machine learning, Monte Carlo methods appear everywhere. Dropout regularization (randomly zeroing activations during training) is a Monte Carlo technique. Data augmentation is Monte Carlo sampling of the transformation space. Markov Chain Monte Carlo (MCMC) underlies Bayesian inference and generative modeling. When a language model samples its next token from a probability distribution, it is performing the basic Monte Carlo operation von Neumann programmed on the ENIAC in 1946.</p>
+    <p>The MCMC revolution in Bayesian statistics (Gelfand and Smith, 1990) would not have been possible without von Neumann's foundational work on random number generation and sampling — including his "middle-square method" for generating pseudorandom numbers, and his early theoretical work on what properties such generators needed to have.</p>
+  </div>
+
+  <!-- LINEAGE TIMELINE -->
+  <div class="band reveal" style="animation-delay:.34s">The Descent from 1945</div>
+  <div class="block reveal" style="animation-delay:.36s">
+    <div class="lineage-row">
+      <span class="l-year">1945</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>EDVAC First Draft.</b> Stored-program concept in writing. The document that changed everything. <span class="l-field">Computing</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1949</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>EDVAC, Manchester Baby, EDSAC</b> — first stored-program computers operational. Von Neumann architecture becomes hardware. <span class="l-field">Computing</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1950</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Nash equilibrium</b> (Nash's PhD thesis, Princeton). Builds on von Neumann's minimax; extends to non-zero-sum games. <span class="l-field">Economics</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1952</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>IAS machine completed.</b> Copied by universities worldwide as ILLIAC, MANIAC, JOHNNIAC. Architecture goes global. <span class="l-field">Computing</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1957</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Von Neumann dies.</b> Age 53. The computing age he founded is only twelve years old. <span class="l-field">History</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1970</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Conway's Game of Life</b> published in Scientific American. Von Neumann's automata simplified to two states; immediately Turing-complete. <span class="l-field">Complexity</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1973</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Maynard Smith's Evolutionarily Stable Strategies.</b> Game theory applied to natural selection. Behavioral ecology transformed. <span class="l-field">Biology</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1978</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Intel 8086.</b> Von Neumann architecture on a single chip. The personal computer revolution begins. <span class="l-field">Computing</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1990</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>MCMC revolution</b> (Gelfand & Smith). Bayesian inference becomes practical. Monte Carlo methods at the heart of modern statistics. <span class="l-field">Statistics</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">1994</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Nash wins Nobel Economics.</b> Built on von Neumann. The Nobel committee's citation cites the minimax theorem directly. <span class="l-field">Economics</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">2012</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>Deep learning revolution</b> (AlexNet). Neural networks trained by stochastic gradient descent — a Monte Carlo optimization method — on von Neumann machines. <span class="l-field">AI</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">2016</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>AlphaGo</b> defeats Lee Sedol using Monte Carlo tree search + deep learning. Von Neumann's methods at the world Go championship. <span class="l-field">AI</span></span>
+    </div>
+    <div class="lineage-row">
+      <span class="l-year">2023</span>
+      <span class="l-arrow">→</span>
+      <span class="l-text"><b>GPT-4, Claude, Gemini.</b> Large language models — Monte Carlo training, game-theoretic RLHF alignment, von Neumann architecture hardware. His ideas run it all. <span class="l-field">AI</span></span>
+    </div>
+  </div>
+
+  <!-- LEGACY CARDS -->
+  <div class="band reveal" style="animation-delay:.38s">What He Left Behind</div>
+  <div class="grid reveal" style="animation-delay:.40s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>The Universal Machine</h3>
+      <p class="what">The stored-program architecture abolished single-purpose computing. One machine runs every program. This is the fundamental enabling technology of the information age.</p>
+      <span class="tag blue">Computing</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>Strategic Rationality</h3>
+      <p class="what">Game theory gave economics, political science, biology, and AI a rigorous language for modeling rational interaction. Every auction, every arms race, every evolutionary strategy.</p>
+      <span class="tag">Economics</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>Quantum Language</h3>
+      <p class="what">The Hilbert-space formalism. Every quantum computing textbook, every quantum algorithm, every qubit manipulation — all in his notation, his axioms.</p>
+      <span class="tag blue">Physics</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>Self-Reproducing Systems</h3>
+      <p class="what">The mathematical proof that machines can reproduce. Before DNA was understood. The same logical architecture nature independently invented for biology.</p>
+      <span class="tag">Life</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">05</span>
+      <h3>Stochastic Computation</h3>
+      <p class="what">Monte Carlo methods made intractable problems tractable. Physics, finance, statistics, AI training — all use random sampling as computation.</p>
+      <span class="tag">Simulation</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">06</span>
+      <h3>The Bottleneck We Live In</h3>
+      <p class="what">The Von Neumann bottleneck (slow memory relative to CPU) still defines chip architecture sixty years later. Every cache hierarchy is his shadow.</p>
+      <span class="tag">Constraint</span>
+    </div>
+  </div>
+
+  <!-- THE DEATHBED -->
+  <div class="band reveal" style="animation-delay:.42s">The Conversion</div>
+  <p class="body-text reveal" style="animation-delay:.44s">
+    In the winter of 1956, confined to a wheelchair at Walter Reed Army Medical Center with bone cancer advancing through his body, John von Neumann received a Benedictine priest and converted to Catholicism. He received baptism and last rites. His daughter Marina later wrote that the conversion brought him no real peace — that he was simply terrified of dying, and that even the consolation of religion could not quiet the fear in a mind that had spent fifty years calculating probabilities.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.46s">
+    Some colleagues attributed it to Pascal's Wager — von Neumann had always appreciated a rational argument, and the argument that the expected value of faith is positive (even under very low probability of afterlife) was the kind of calculation he could appreciate. Others thought it reflected genuine spiritual crisis: a man who had helped build weapons of mass destruction, who had advocated preventive nuclear war, suddenly facing his own mortality and the question of what that life had meant.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.48s">
+    <blockquote>
+      "It is just barely possible for a man to be smart enough that he can figure out most things from first principles."
+      <cite>— John A. Wheeler, physicist</cite>
+    </blockquote>
+  </div>
+  <div class="block reveal" style="animation-delay:.50s">
+    <blockquote>
+      "I have sometimes wondered whether a brain like von Neumann's does not indicate a species superior to that of man."
+      <cite>— Hans Bethe, physicist and Nobel laureate</cite>
+    </blockquote>
+  </div>
+
+  <!-- UNANSWERED QUESTIONS -->
+  <div class="band orange reveal" style="animation-delay:.52s">What He Left Unanswered</div>
+  <p class="body-text reveal" style="animation-delay:.54s">
+    Von Neumann died before his theory of self-reproducing automata was complete — Arthur Burks finished and published it posthumously in 1966. He never finished his book on the computer and the brain — it was published posthumously in 1958 from incomplete notes and remains startling reading: he was already asking whether the brain's "language" was fundamentally different from the computer's, whether neurons encoded information in pulse rates rather than binary digits, whether the principles of reliability-from-unreliable-components that biological evolution had discovered could be engineered into machines.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.56s">
+    He was asking, in 1957, essentially the questions that modern computational neuroscience, neuromorphic computing, and AI alignment research are still asking. He would have found much of the last twenty years of AI development either obvious or insufficient — "obvious" in the sense that the broad outlines he expected; "insufficient" in the sense that we still cannot build systems with the reliability, flexibility, and self-correction of biological brains.
+  </p>
+  <div class="pull reveal" style="animation-delay:.58s">
+    The Von Neumann bottleneck, the measurement problem in quantum mechanics, the gap between cellular automata and biological intelligence — he identified all three before he died. None are solved. He has been dead longer than he lived, and his open questions are still open.
+  </div>
+
+  <!-- EPITAPH -->
+  <div class="band reveal" style="animation-delay:.60s">Epitaph</div>
+  <div class="block orange reveal" style="animation-delay:.62s">
+    <blockquote>
+      "Most mathematicians prove what they can. Von Neumann could prove what he wanted."
+      <cite>— Paul Halmos, mathematician</cite>
+    </blockquote>
+  </div>
+  <p class="body-text reveal" style="animation-delay:.64s">
+    He is buried at Princeton Cemetery. The gravestone is simple. It gives his name, his dates, and nothing else. The nature of his contribution is too large to summarize in stone. The machine you are reading this on is summarizing it well enough.
+  </p>
+
+  <!-- COLOPHON -->
+  <div class="colophon reveal" style="animation-delay:.66s">
+    ROOT0-ATTRIBUTION-v1.0<br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    John von Neumann Series · Volume 3: The Long Afterlife<br>
+    CC-BY-ND-4.0 · 2025
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>

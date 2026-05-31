@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Khwarizmi — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0f0e09;
+    --amber: #c07818;
+    --amber-dim: #7a4c10;
+    --amber-glow: rgba(192,120,24,0.18);
+    --teal: #0d9488;
+    --teal-dim: #0a6b61;
+    --teal-glow: rgba(13,148,136,0.15);
+    --text: #e8e0cc;
+    --text-dim: #9e9580;
+    --border: rgba(192,120,24,0.22);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-hover-bg: rgba(192,120,24,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,14,9,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(6px);
+  }
+  .nav-series {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+
+  /* MASTHEAD */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .vol-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+  .masthead-lede {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+    max-width: 55ch;
+    line-height: 1.8;
+  }
+  .masthead-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+  .section { margin-bottom: 4rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+  .section-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--teal);
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+    max-width: 72ch;
+  }
+
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-variant: small-caps;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .band {
+    display: inline-block;
+    background: var(--amber);
+    color: #0f0e09;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+  }
+  .band-teal {
+    display: inline-block;
+    background: var(--teal);
+    color: #0f0e09;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+  }
+
+  /* EQUATION CARDS */
+  .eq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .eq-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.8rem 1.6rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .eq-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+  }
+  .eq-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(192,120,24,0.18);
+    background: var(--card-hover-bg);
+  }
+  .eq-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .eq-arabic {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.03em;
+  }
+  .eq-formula {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--text);
+    padding: 0.6rem 0.8rem;
+    background: rgba(192,120,24,0.08);
+    border-left: 2px solid var(--amber);
+    margin: 0.8rem 0;
+    letter-spacing: 0.05em;
+  }
+  .eq-example {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-top: 0.6rem;
+  }
+  .eq-example strong { color: var(--text); font-weight: 400; }
+
+  /* GEOMETRIC PROOF CARDS */
+  .proof-card {
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: var(--card-bg);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+  .proof-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(192,120,24,0.14);
+  }
+  .proof-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(192,120,24,0.04);
+    padding: 1rem;
+    min-height: 160px;
+  }
+  .proof-text h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .proof-text p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    max-width: none;
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+  .proof-text .formula {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    padding: 0.4rem 0.7rem;
+    background: rgba(192,120,24,0.08);
+    border-left: 2px solid var(--amber);
+    display: inline-block;
+    margin: 0.4rem 0;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.4rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(192,120,24,0.18);
+    background: var(--card-hover-bg);
+  }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+  .card-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-family: 'Newsreader', serif;
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--amber-glow);
+    max-width: 65ch;
+  }
+  .pull-quote p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+    max-width: none;
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  strong { color: var(--amber); font-weight: 500; }
+  em { color: var(--text); }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .colophon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .colophon-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  /* Wider paragraphs for this page */
+  .wide p { max-width: 82ch; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-series">AL-KHWARIZMI — A FOUR-VOLUME STUDY</span>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol. 0 — Who</a></li>
+    <li><a href="1-algebra.html" class="active">Vol. 1 — The Work</a></li>
+    <li><a href="2-world.html">Vol. 2 — His World</a></li>
+    <li><a href="3-legacy.html">Vol. 3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-label">Volume 1 &mdash; The Work</span>
+    <h1>Kitab al-Mukhtasar<br>fi Hisab al-Jabr<br>wal-Muqabala</h1>
+    <p class="subtitle">The Compendious Book on Calculation by Completion and Balancing</p>
+    <p class="masthead-lede">Written in Baghdad around 830 CE and dedicated to Caliph al-Ma'mun, this book invented a new branch of mathematics. "Al-jabr" — completion — gave the world algebra. Its six canonical equation forms gave the world a framework for solving every polynomial problem up to degree two.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Geometric proof of completing the square -->
+    <svg width="380" height="380" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1a1710"/>
+          <stop offset="100%" stop-color="#0f0e09"/>
+        </radialGradient>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle cx="190" cy="190" r="185" fill="url(#bg2)" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.3"/>
+
+      <!-- COMPLETING THE SQUARE — animated geometric proof -->
+      <!-- Main square x^2 -->
+      <rect x="90" y="90" width="120" height="120" fill="rgba(192,120,24,0.12)" stroke="#c07818" stroke-width="1.5">
+        <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Label x^2 -->
+      <text x="150" y="155" text-anchor="middle" font-family="Space Mono,monospace" font-size="14" fill="#c07818" opacity="0.8">x²</text>
+
+      <!-- Rectangle bx/2 right -->
+      <rect x="210" y="90" width="50" height="120" fill="rgba(13,148,136,0.12)" stroke="#0d9488" stroke-width="1.2">
+        <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="235" y="155" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#0d9488" opacity="0.7">bx/2</text>
+
+      <!-- Rectangle bx/2 bottom -->
+      <rect x="90" y="210" width="120" height="50" fill="rgba(13,148,136,0.12)" stroke="#0d9488" stroke-width="1.2">
+        <animate attributeName="stroke-opacity" values="0.5;0.9;0.5" dur="3s" begin="1s" repeatCount="indefinite"/>
+      </rect>
+      <text x="150" y="240" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#0d9488" opacity="0.7">bx/2</text>
+
+      <!-- Corner square (b/2)^2 — completing the square -->
+      <rect x="210" y="210" width="50" height="50" fill="rgba(192,120,24,0.25)" stroke="#c07818" stroke-width="1.5">
+        <animate attributeName="fill-opacity" values="0.15;0.4;0.15" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <text x="235" y="240" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c07818" opacity="0.85">(b/2)²</text>
+
+      <!-- Dimension labels -->
+      <text x="150" y="80" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#9e9580">x</text>
+      <text x="235" y="80" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#9e9580">b/2</text>
+      <text x="75" y="155" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#9e9580">x</text>
+      <text x="75" y="238" text-anchor="middle" font-family="Space Mono,monospace" font-size="10" fill="#9e9580">b/2</text>
+
+      <!-- "= c" annotation -->
+      <text x="190" y="310" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#c07818" opacity="0.7">x² + bx + (b/2)² = c + (b/2)²</text>
+      <text x="190" y="325" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#0d9488" opacity="0.7">(x + b/2)² = c + (b/2)²</text>
+
+      <!-- Outer annotation -->
+      <text x="190" y="365" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c07818" opacity="0.4" letter-spacing="2">COMPLETING THE SQUARE · c. 830 CE</text>
+
+      <!-- Rotating outer ring -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="80s" repeatCount="indefinite"/>
+        <circle cx="190" cy="20" r="3" fill="none" stroke="#c07818" stroke-width="1" stroke-opacity="0.3"/>
+        <circle cx="360" cy="190" r="3" fill="none" stroke="#c07818" stroke-width="1" stroke-opacity="0.3"/>
+        <circle cx="190" cy="360" r="3" fill="none" stroke="#c07818" stroke-width="1" stroke-opacity="0.3"/>
+        <circle cx="20" cy="190" r="3" fill="none" stroke="#c07818" stroke-width="1" stroke-opacity="0.3"/>
+        <path d="M190,20 Q340,20 360,190 Q380,360 190,360 Q20,360 20,190 Q20,20 190,20" fill="none" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.12"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Section: The Book -->
+  <section class="section">
+    <span class="kick">The Source Text</span>
+    <h2>What the Book Is</h2>
+    <div class="section-rule"></div>
+
+    <p>The full title — <em>al-Kitab al-mukhtasar fi hisab al-jabr wal-muqabala</em> — translates most directly as <strong>"The Compendious Book on Calculation by Completion and Balancing."</strong> Al-Khwarizmi wrote it in Arabic in Baghdad, probably around 830 CE, and dedicated it to Caliph al-Ma'mun, who had explicitly commissioned the work as a practical aid for legal and commercial calculation.</p>
+
+    <p>The book is divided into three major sections. The first is the theoretical core: a classification of six canonical equation forms and a method for solving each. The second section applies algebra to commercial problems — buying, selling, inheritance, partnerships. The third section applies algebra to problems of inheritance law under Islamic jurisprudence (fara'id), which required precise fractional division of estates.</p>
+
+    <p>It is not abstract mathematics in the Greek sense. There are no proofs from first principles in Euclidean style, no deductions from axioms. Instead, al-Khwarizmi works through types: here are all the forms a linear or quadratic equation can take, here is a rule for solving each, here are geometric demonstrations to convince you the rule is correct, here are worked examples. This pedagogical structure — classification, rule, demonstration, application — is what made the book enormously influential as a teaching tool.</p>
+
+    <p>The book was translated into Latin twice in the 12th century: by Robert of Chester in 1145 and by Gerard of Cremona shortly after. These translations launched algebra into European mathematics.</p>
+
+    <div class="pull-quote">
+      <p>"That fondness for science, by which God has distinguished the Imam al-Ma'mun, the Commander of the Faithful... has encouraged me to compose a short work on calculating by al-jabr and al-muqabala, confining it to what is easiest and most useful in arithmetic."</p>
+      <cite>— Al-Khwarizmi, Preface to the Algebra, c. 830 CE</cite>
+    </div>
+  </section>
+
+  <!-- Section: Two operations -->
+  <section class="section">
+    <span class="kick">Core Operations</span>
+    <h2>Al-Jabr and Al-Muqabala</h2>
+    <div class="section-rule"></div>
+
+    <p>The two words in the title are the two fundamental operations of his algebra.</p>
+
+    <h3>Al-Jabr (الجبر) — Completion / Restoration</h3>
+    <p>Literally: "the setting of broken bones." In algebraic terms: the operation of <strong>adding a subtracted quantity to both sides</strong> of an equation to eliminate negative terms. If you have <em>x² = 40 − 4x</em>, al-jabr moves the subtracted term: <em>x² + 4x = 40</em>. You "restore" the equation to a form with no subtracted terms. This is the fundamental operation of what we would now call "moving terms across the equals sign."</p>
+
+    <h3>Al-Muqabala (المقابلة) — Balancing / Confronting</h3>
+    <p>Literally: "the placing in opposition." The operation of <strong>reducing equal terms on both sides</strong>. If you have <em>x² + 10x + 4 = 4 + 2x</em>, al-muqabala reduces the equal constant (4): <em>x² + 10x = 2x</em>, and further reduces equal x-terms: <em>x² + 8x = 0</em>. Together, al-jabr and al-muqabala transform any equation into one of six canonical forms.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Al-Jabr</div>
+        <div class="card-body">Move subtracted quantities to the other side. "Restore" the equation.<br><br>
+        <span style="font-family:'Space Mono',monospace;font-size:0.78rem;color:#c07818;">x² = 40 - 4x<br>→ x² + 4x = 40</span></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Al-Muqabala</div>
+        <div class="card-body">Cancel equal terms on both sides. "Balance" the equation.<br><br>
+        <span style="font-family:'Space Mono',monospace;font-size:0.78rem;color:#c07818;">x² + 10 + 4 = 4 + 2x<br>→ x² + 10 = 2x</span></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Together</div>
+        <div class="card-body">Applied repeatedly, these two operations reduce any linear or quadratic equation to one of the six canonical forms — then a rule gives the solution directly.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: 6 equation types -->
+  <section class="section">
+    <span class="kick">The Classification</span>
+    <h2>The Six Canonical Forms</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi had no symbol for zero as a coefficient, and he worked only with positive numbers (negative numbers were not yet accepted as legitimate). Because of this, <strong>he needed six separate equation types</strong> where we would recognize only one general form (ax² + bx + c = 0). He called the unknowns: <em>mal</em> (property, our x²), <em>jidr</em> (root, our x), and <em>adad</em> (number, our constant).</p>
+
+    <div class="eq-grid">
+
+      <div class="eq-card">
+        <div class="eq-num">Type I &mdash; Squares equal roots</div>
+        <div class="eq-arabic">Amwal taSilu a Juzur</div>
+        <div class="eq-formula">ax² = bx</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "A square equals five roots" → x² = 5x → x = 5<br>
+          <strong>Method:</strong> Divide both sides by x (al-Khwarizmi: "divide the property by the root") → x = b/a<br>
+          <strong>Modern solution:</strong> x = b/a (trivial case: x = 0 or x = b/a)
+        </div>
+      </div>
+
+      <div class="eq-card">
+        <div class="eq-num">Type II &mdash; Squares equal numbers</div>
+        <div class="eq-arabic">Amwal taSilu a Adad</div>
+        <div class="eq-formula">ax² = c</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "A square equals nine" → x² = 9 → x = 3<br>
+          <strong>Method:</strong> "Divide the number by the coefficient of squares, then take the root"<br>
+          <strong>Modern solution:</strong> x = √(c/a)
+        </div>
+      </div>
+
+      <div class="eq-card">
+        <div class="eq-num">Type III &mdash; Roots equal numbers</div>
+        <div class="eq-arabic">Juzur taSilu a Adad</div>
+        <div class="eq-formula">bx = c</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "Four roots equal twenty" → 4x = 20 → x = 5<br>
+          <strong>Method:</strong> "Divide the number by the number of roots"<br>
+          <strong>Modern solution:</strong> x = c/b (pure linear equation)
+        </div>
+      </div>
+
+      <div class="eq-card">
+        <div class="eq-num">Type IV &mdash; Squares and roots equal numbers</div>
+        <div class="eq-arabic">Amwal wa-Juzur taSilu a Adad</div>
+        <div class="eq-formula">ax² + bx = c</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "A square plus ten roots equals thirty-nine"<br>
+          x² + 10x = 39 → <strong>the famous example!</strong><br>
+          <strong>Method:</strong> Halve the roots (5), square (25), add to number (64), take root (8), subtract half-roots (3) → x = 3<br>
+          <strong>Modern solution:</strong> x = -b/2 + √((b/2)² + c) — completing the square
+        </div>
+      </div>
+
+      <div class="eq-card">
+        <div class="eq-num">Type V &mdash; Squares and numbers equal roots</div>
+        <div class="eq-arabic">Amwal wa-Adad taSilu a Juzur</div>
+        <div class="eq-formula">ax² + c = bx</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "A square plus twenty-one equals ten roots"<br>
+          x² + 21 = 10x → x = 3 or x = 7<br>
+          <strong>Method:</strong> Halve the roots (5), square (25), subtract number (4), take root (2), result is 5±2<br>
+          <strong>Note:</strong> Al-Khwarizmi gives BOTH roots — a remarkably advanced recognition
+        </div>
+      </div>
+
+      <div class="eq-card">
+        <div class="eq-num">Type VI &mdash; Roots and numbers equal squares</div>
+        <div class="eq-arabic">Juzur wa-Adad taSilu a Amwal</div>
+        <div class="eq-formula">bx + c = ax²</div>
+        <div class="eq-example">
+          <strong>Example:</strong> "Three roots plus four equals a square"<br>
+          3x + 4 = x² → x = 4<br>
+          <strong>Method:</strong> Same completing-the-square procedure, applied to rearranged form<br>
+          <strong>Modern solution:</strong> x = b/2 + √((b/2)² + c) for this form
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section: Geometric proofs -->
+  <section class="section">
+    <span class="kick">Geometric Demonstration</span>
+    <h2>Proofs by Completion of the Square</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi knew that a rule without justification would not convince scholars trained in Greek geometry. For the three compound types (IV, V, VI), he supplied geometric proofs — visual demonstrations that the algebraic procedure is correct. These proofs are <strong>not trivial</strong>: they represent a genuine synthesis of Greek geometric method with the new symbolic algebra.</p>
+
+    <div class="proof-card">
+      <div class="proof-art">
+        <!-- SVG proof diagram: x^2 + 10x = 39 -->
+        <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- x^2 large square -->
+          <rect x="20" y="20" width="90" height="90" fill="rgba(192,120,24,0.15)" stroke="#c07818" stroke-width="1.5"/>
+          <text x="65" y="70" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" fill="#c07818">x²</text>
+          <!-- bx/2 strip right -->
+          <rect x="110" y="20" width="30" height="90" fill="rgba(13,148,136,0.2)" stroke="#0d9488" stroke-width="1.2"/>
+          <text x="125" y="68" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#0d9488">5x</text>
+          <!-- bx/2 strip bottom -->
+          <rect x="20" y="110" width="90" height="30" fill="rgba(13,148,136,0.2)" stroke="#0d9488" stroke-width="1.2"/>
+          <text x="65" y="130" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#0d9488">5x</text>
+          <!-- corner (b/2)^2 -->
+          <rect x="110" y="110" width="30" height="30" fill="rgba(192,120,24,0.35)" stroke="#c07818" stroke-width="1.5">
+            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+          </rect>
+          <text x="125" y="129" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c07818">25</text>
+          <!-- Brace annotation -->
+          <text x="90" y="170" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#9e9580">39 + 25 = 64 = 8²</text>
+        </svg>
+      </div>
+      <div class="proof-text">
+        <h4>Type IV: x² + 10x = 39</h4>
+        <p>Al-Khwarizmi's most famous example. He draws a square of side x, then attaches four rectangles (each of width 2.5 and length x) to its four sides. The total area is x² + 10x = 39. To complete the large square, he fills in the four small corner squares, each of area 2.5² = 6.25, giving 4 × 6.25 = 25 to add to both sides.</p>
+        <div class="formula">39 + 25 = 64 = 8²</div>
+        <p>The large square has side 8. Subtracting the corner extensions (each 2.5): x = 8 − 5 = 3. The geometric figure <em>is</em> the proof — the algebra is visible as area.</p>
+        <p>He actually uses a slightly different arrangement (four half-strips instead of four quarter-strips) but the principle is identical. The point is: <strong>the geometric diagram justifies the algebraic rule</strong>.</p>
+      </div>
+    </div>
+
+    <div class="proof-card">
+      <div class="proof-art">
+        <!-- Type V proof: x^2 + 21 = 10x -->
+        <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Full square side 10 -->
+          <rect x="15" y="30" width="100" height="100" fill="none" stroke="#c07818" stroke-width="1" stroke-dasharray="3,3" stroke-opacity="0.5"/>
+          <text x="65" y="20" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#9e9580">side = 10/2 = 5</text>
+          <!-- x^2 region -->
+          <rect x="15" y="30" width="60" height="60" fill="rgba(192,120,24,0.15)" stroke="#c07818" stroke-width="1.5"/>
+          <text x="45" y="63" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#c07818">x²</text>
+          <!-- 21 region -->
+          <rect x="75" y="30" width="40" height="100" fill="rgba(13,148,136,0.15)" stroke="#0d9488" stroke-width="1.2"/>
+          <text x="95" y="83" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#0d9488">21</text>
+          <!-- Remainder -->
+          <rect x="15" y="90" width="60" height="40" fill="rgba(255,255,255,0.03)" stroke="#9e9580" stroke-width="0.8"/>
+          <!-- 5^2 - 21 = 4 label -->
+          <text x="90" y="150" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#9e9580">25 - 21 = 4 = 2²</text>
+          <text x="90" y="163" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c07818">x = 5 ± 2</text>
+        </svg>
+      </div>
+      <div class="proof-text">
+        <h4>Type V: x² + 21 = 10x — Two Solutions</h4>
+        <p>This case is remarkable because it yields <em>two</em> valid positive solutions: x = 3 and x = 7. Al-Khwarizmi recognizes this explicitly — "the problem has two solutions" — which was an advanced insight for his era.</p>
+        <div class="formula">Halve roots: 5 · Square: 25 · Subtract constant: 25 - 21 = 4 · Root: 2</div>
+        <p>The geometric proof shows a rectangle of area 10x (the full strip) with x² removed from one end, leaving an area of 21. By completing the square with a (5)² square, the discrepancy resolves to 4, whose root is 2. Both x = 5+2 = 7 and x = 5−2 = 3 satisfy the original equation.</p>
+      </div>
+    </div>
+
+    <div class="proof-card">
+      <div class="proof-art">
+        <!-- Type VI: bx + c = ax^2 -->
+        <svg width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="50" width="100" height="80" fill="rgba(192,120,24,0.12)" stroke="#c07818" stroke-width="1.5"/>
+          <text x="70" y="95" text-anchor="middle" font-family="Space Mono,monospace" font-size="12" fill="#c07818">x²</text>
+          <rect x="120" y="50" width="30" height="80" fill="rgba(13,148,136,0.15)" stroke="#0d9488" stroke-width="1.2"/>
+          <text x="135" y="95" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#0d9488">bx</text>
+          <!-- c annotation -->
+          <path d="M20,130 L120,130 L120,90 L20,90" fill="rgba(255,255,255,0.04)" stroke="#9e9580" stroke-width="0.8" stroke-dasharray="4,2"/>
+          <text x="70" y="155" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#9e9580">x² = bx + c</text>
+          <text x="70" y="170" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c07818">→ complete square</text>
+        </svg>
+      </div>
+      <div class="proof-text">
+        <h4>Type VI: bx + c = ax² — "Roots and Numbers Equal Squares"</h4>
+        <p>The third compound type. Here the unknown squared is isolated on one side with both a linear and a constant term on the other.</p>
+        <div class="formula">3x + 4 = x² → rearrange → x² - 3x = 4</div>
+        <p>Al-Khwarizmi applies the same completing-the-square procedure: halve the coefficient of roots (3/2 = 1.5), square (2.25), add to both sides (6.25), take root (2.5), add half-roots (2.5 + 1.5 = 4).</p>
+        <p>The geometric proof draws the square x² minus the strip 3x on one side, showing geometrically that adding (3/2)² completes the shape into a perfect square.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Numeral system -->
+  <section class="section">
+    <span class="kick">Hindu-Arabic Numerals</span>
+    <h2>The Number System That Changed Everything</h2>
+    <div class="section-rule"></div>
+
+    <p>Alongside the algebra book, al-Khwarizmi wrote a separate treatise on the Hindu numeral system: the positional decimal notation with nine digits and zero that we use today. The original Arabic text is lost. It survives only in a 12th-century Latin translation, which begins:</p>
+
+    <div class="pull-quote">
+      <p>"Dixit Algoritmi: laudes deo rectori nostro atque defensori dicamus dignas..."<br>"Thus spake Algoritmi: let us speak praises worthy of God, our guide and defender..."</p>
+      <cite>— Opening of the Latin translation, 12th century CE. The word "Algoritmi" became "algorism" → "algorithm."</cite>
+    </div>
+
+    <p>The book explained the Indian system of nine digits plus zero — a place-value system where the position of a digit determines its value, rather than requiring different symbols for tens, hundreds, and thousands. This was a <strong>revolutionary simplification</strong> over Roman numerals, Greek alphabetic numerals, and Babylonian cuneiform. You could now do arithmetic with a finite set of symbols, and the procedures (addition, subtraction, multiplication, division, roots) were systematic enough to be described as rules — as algorithms.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">0</div>
+        <div class="card-label">Zero</div>
+        <div class="card-body">The positional zero — a placeholder indicating an empty position — was the key innovation from India. Al-Khwarizmi transmitted this concept to the Islamic mathematical tradition and thence to Europe.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">9</div>
+        <div class="card-label">Digits</div>
+        <div class="card-body">Nine Hindu digits plus zero — the complete system. Al-Khwarizmi described the shapes, values, and positional rules of each, giving Europeans their first systematic account of the decimal system.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">10</div>
+        <div class="card-label">Base of Counting</div>
+        <div class="card-body">Base-10 positional arithmetic. Each position is ten times the value of the position to its right. The principle behind every modern calculator, computer, and accounting system.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">1145</div>
+        <div class="card-label">Latin Translation Year</div>
+        <div class="card-body">Both the arithmetic book and the algebra were translated in the 1140s, launching them into European universities. The arithmetic book entered via its translator as "the method of Algoritmi."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Other works -->
+  <section class="section">
+    <span class="kick">Beyond Algebra</span>
+    <h2>His Other Achievements</h2>
+    <div class="section-rule"></div>
+
+    <h3>Zij al-Sindhind — Astronomical Tables</h3>
+    <p>His first major work (c. 820 CE) was a set of astronomical tables synthesizing Indian astronomical tradition (Sindhind = Sanskrit <em>Siddhanta</em>, meaning "established doctrine") with Ptolemaic Greek astronomy. It included 37 chapters covering solar, lunar, and planetary motion; eclipse calculation; the calculation of time; and trigonometric functions including sine, cosine, and tangent tables.</p>
+    <p>Adelard of Bath translated the Zij into Latin around 1126 CE, making it one of the first Arabic astronomical texts to reach European astronomers. The tables influenced the Toledan Tables, which in turn influenced European astronomy until the time of Copernicus.</p>
+
+    <h3>Kitab Surat al-Ard — Book of the Image of the Earth</h3>
+    <p>Under Caliph al-Ma'mun's commission, al-Khwarizmi coordinated a team of 70 geographers to produce an updated world map and accompanying gazetteer. The project corrected and extended Ptolemy's <em>Geography</em>, updating coordinates for 2,402 named localities including cities, seas, mountains, and rivers. His coordinates were better for the eastern world (which Ptolemy knew poorly) than for the western world (which the Islamic geographers knew less well).</p>
+    <p>The only surviving manuscript of <em>Kitab Surat al-Ard</em> was discovered in Strasbourg in 1878 — nearly a millennium after it was written. It remains a primary source for 9th-century Islamic geographic knowledge.</p>
+
+    <h3>Kitab al-Tarikh — The Chronicle</h3>
+    <p>A historical text that is largely lost. Known primarily through quotation in later Islamic historical works. It dealt with the history of the early Islamic period and demonstrates that al-Khwarizmi was not only a mathematician but a scholar of history and chronology.</p>
+
+    <h3>Risala fi Istikhraj Tarikh al-Yahud — Jewish Calendar Treatise</h3>
+    <p>A technical treatment of the Jewish calendar system — its structure, the calculation of intercalary months, and the rules for determining the dates of festivals. This work reflects the multiconfessional intellectual environment of the House of Wisdom, where scholars of different religions collaborated on technical problems.</p>
+
+    <h3>Kitab al-Rukhama and Kitab al-'Amal bil-Asturlab</h3>
+    <p>Two texts on astronomical instruments: one on sundials (<em>rukhama</em>) and one on the astrolabe. These are among the earliest Arabic texts on instrument design and practical astronomy. They demonstrate al-Khwarizmi's engagement not only with mathematical astronomy but with its physical tools.</p>
+  </section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <div class="colophon-text">
+      ROOT0-ATTRIBUTION-v1.0<br>
+      David Lee Wise / ROOT0 / TriPod LLC<br>
+      CC-BY-ND-4.0 &nbsp;·&nbsp; All rights reserved as noted
+    </div>
+    <div class="colophon-vol">
+      AL-KHWARIZMI LIBRARY &nbsp;·&nbsp; VOL. 1 OF 3 &nbsp;·&nbsp; THE WORK
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

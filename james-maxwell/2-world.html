@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James Clerk Maxwell — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0814;
+    --violet: #7c3aed;
+    --violet-dim: #5b21b6;
+    --violet-glow: rgba(124,58,237,0.18);
+    --cyan: #06b6d4;
+    --cyan-dim: #0891b2;
+    --cyan-glow: rgba(6,182,212,0.15);
+    --text: #e8e3f0;
+    --text-dim: #a89fc0;
+    --border: rgba(124,58,237,0.25);
+    --card-bg: rgba(124,58,237,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,8,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 2rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; color: var(--cyan);
+    letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap;
+  }
+  nav .vol-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.08em; transition: color 0.2s;
+  }
+  nav a:hover { color: var(--cyan); }
+  nav a.active { color: var(--violet); }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem; align-items: center;
+    padding: 5rem 4rem 4rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+  }
+  .masthead-text .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--violet);
+    display: block; margin-bottom: 1rem;
+  }
+  .masthead-text h1 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1; color: var(--text); margin-bottom: 0.4rem;
+  }
+  .masthead-text h1 span { color: var(--violet); }
+  .masthead-text .subtitle {
+    font-family: 'Cinzel', serif; font-weight: 400;
+    font-size: 1rem; color: var(--cyan); margin-bottom: 1.5rem; letter-spacing: 0.05em;
+  }
+  .masthead-text .lede {
+    font-style: italic; color: var(--text-dim);
+    font-size: 1.05rem; max-width: 540px; margin-bottom: 1.5rem;
+  }
+
+  /* ── EM WAVE SVG ── */
+  .masthead-art { display: flex; justify-content: center; align-items: center; }
+  .em-wave-container { width: 100%; max-width: 420px; }
+  .em-wave-svg { width: 100%; height: 220px; overflow: visible; }
+
+  @keyframes wave-march {
+    from { stroke-dashoffset: 120; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes city-pulse {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+  }
+
+  .e-wave {
+    stroke: var(--violet); stroke-width: 2.5; fill: none;
+    stroke-dasharray: 12 5; animation: wave-march 1.1s linear infinite;
+  }
+  .b-wave {
+    stroke: var(--cyan); stroke-width: 2.5; fill: none;
+    stroke-dasharray: 12 5; animation: wave-march 1.1s linear infinite;
+  }
+  .axis-line { stroke: rgba(232,227,240,0.12); stroke-width: 1; }
+  .wave-label { font-family: 'Space Mono', monospace; font-size: 9px; fill: var(--text-dim); }
+  .wave-label-e { fill: var(--violet); font-size: 12px; font-weight: 700; }
+  .wave-label-b { fill: var(--cyan); font-size: 12px; font-weight: 700; }
+
+  /* ── BAND / KICK ── */
+  .band {
+    display: inline-block; background: var(--violet); color: #fff;
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.18em 0.7em; border-radius: 2px; vertical-align: middle;
+  }
+  .band-cyan { background: var(--cyan-dim); }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--violet);
+  }
+
+  /* ── CONTENT ── */
+  .content { max-width: 1200px; margin: 0 auto; padding: 0 4rem 6rem; }
+  @media (max-width: 900px) { .content { padding: 0 1.5rem 4rem; } }
+  section { margin-bottom: 4.5rem; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.55rem; color: var(--text);
+  }
+
+  p { margin-bottom: 1.2em; }
+  p:last-child { margin-bottom: 0; }
+  em { font-style: italic; }
+  strong { color: var(--cyan); font-weight: 500; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem; margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.4rem 1.5rem;
+    transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    opacity: 0; transition: opacity 0.22s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--violet-glow), 0 2px 8px rgba(0,0,0,0.4);
+    border-color: rgba(124,58,237,0.5);
+  }
+  .card:hover::before { opacity: 1; }
+  .card .card-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 0.5rem;
+  }
+  .card h3 {
+    font-family: 'Cinzel', serif; font-weight: 600;
+    font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;
+  }
+  .card p { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; margin: 0; }
+
+  /* ── PERSON PROFILE ── */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem; margin: 2rem 0;
+  }
+  .person-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.5rem;
+    transition: transform 0.22s, box-shadow 0.22s;
+    position: relative; overflow: hidden;
+  }
+  .person-card::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(to bottom, var(--violet), var(--cyan));
+    opacity: 0; transition: opacity 0.22s;
+  }
+  .person-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--violet-glow);
+    border-color: rgba(124,58,237,0.4);
+  }
+  .person-card:hover::after { opacity: 1; }
+  .person-card .person-relation {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--violet); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .person-card .person-name {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: 1.1rem; color: var(--text); margin-bottom: 0.3rem;
+  }
+  .person-card .person-dates {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--text-dim); margin-bottom: 0.8rem;
+  }
+  .person-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin: 0; }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--violet); margin: 2.5rem 0;
+    padding: 1rem 2rem; background: var(--card-bg); border-radius: 0 6px 6px 0;
+  }
+  blockquote p { font-style: italic; font-size: 1.1rem; color: var(--text); margin-bottom: 0.5em; }
+  blockquote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--text-dim); letter-spacing: 0.1em;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05));
+    border: 1px solid rgba(124,58,237,0.35); border-radius: 8px;
+    padding: 1.8rem 2rem; margin: 2.5rem 0;
+  }
+  .highlight-box .hb-label {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 0.8rem; display: block;
+  }
+  .highlight-box p { margin: 0; font-size: 1rem; }
+
+  /* ── PLACE GRID ── */
+  .place-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem; margin: 2rem 0;
+  }
+  .place-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.6rem 1.8rem;
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .place-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--violet-glow);
+    border-color: rgba(6,182,212,0.4);
+  }
+  .place-card .place-type {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--cyan); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem;
+  }
+  .place-card .place-name {
+    font-family: 'Cinzel', serif; font-weight: 600;
+    font-size: 1.1rem; color: var(--text); margin-bottom: 0.6rem;
+  }
+  .place-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; margin: 0; }
+
+  /* ── TRIPOS BOX ── */
+  .tripos-box {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(124,58,237,0.4);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 700px) { .tripos-box { grid-template-columns: 1fr; } }
+  .tripos-side .tripos-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--violet); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .tripos-side ul {
+    list-style: none; padding: 0;
+  }
+  .tripos-side ul li {
+    font-size: 0.92rem; color: var(--text-dim);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(124,58,237,0.08);
+    display: flex; align-items: flex-start; gap: 0.6rem;
+  }
+  .tripos-side ul li:last-child { border-bottom: none; }
+  .tripos-side ul li::before {
+    content: '→';
+    color: var(--violet);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ── SERIES NAV ── */
+  .series-nav {
+    display: flex; justify-content: space-between; gap: 1rem;
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .series-nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.1em; border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem; border-radius: 4px; transition: all 0.2s;
+  }
+  .series-nav a:hover { color: var(--violet); border-color: var(--violet); background: var(--violet-glow); }
+  .series-nav a.next { background: var(--violet-glow); color: var(--text); border-color: var(--violet); }
+  .series-nav a.next:hover { background: rgba(124,58,237,0.3); }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    margin-top: 5rem; padding: 2rem 4rem;
+    border-top: 1px solid var(--border); background: rgba(10,8,20,0.6);
+  }
+  @media (max-width: 900px) { .colophon { padding: 2rem 1.5rem; } }
+  .colophon-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    align-items: center; justify-content: space-between;
+  }
+  .colophon p {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--text-dim); letter-spacing: 0.1em; margin: 0; line-height: 1.8;
+  }
+  .colophon .cc { color: var(--violet); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── STAT ROW ── */
+  .stat-row { display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0; }
+  .stat-box {
+    flex: 1; min-width: 140px;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.2rem 1.4rem; text-align: center;
+  }
+  .stat-box .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: 1.8rem; color: var(--violet); display: block;
+  }
+  .stat-box .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--text-dim); letter-spacing: 0.14em; text-transform: uppercase;
+    display: block; margin-top: 0.2rem;
+  }
+
+  /* ── TWO COL ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Maxwell // Four Volumes</span>
+  <div class="vol-links">
+    <a href="0-who.html">Vol 0 — Who He Was</a>
+    <a href="1-equations.html">Vol 1 — The Four Equations</a>
+    <a href="2-world.html" class="active">Vol 2 — His World</a>
+    <a href="3-legacy.html">Vol 3 — His Long Afterlife</a>
+  </div>
+</nav>
+
+<!-- ── MASTHEAD ── -->
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="kick">Volume 2 &nbsp;·&nbsp; His World</span>
+    <h1>Victorian <span>Scotland</span> and the Scientific Stage</h1>
+    <div class="subtitle">Edinburgh · Aberdeen · London · Cambridge · 1830s–1879</div>
+    <p class="lede">Maxwell did not emerge in a vacuum. His world was Victorian Britain at the height of its scientific confidence — a world of great universities, fierce intellectual competition, transforming cities, and a small network of brilliant minds who built modern physics together. To understand Maxwell, you must understand where he stood.</p>
+    <span class="band">Edinburgh 1831</span>&nbsp;
+    <span class="band band-cyan">Cavendish 1871</span>
+  </div>
+
+  <div class="masthead-art">
+    <div class="em-wave-container">
+      <svg class="em-wave-svg" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" aria-label="Animated electromagnetic wave">
+        <line x1="20" y1="110" x2="400" y2="110" class="axis-line"/>
+        <line x1="20" y1="50" x2="20" y2="170" class="axis-line"/>
+        <path class="e-wave" d="M 20,110 C 35,110 38,50 55,50 C 72,50 75,170 92,170 C 109,170 112,50 129,50 C 146,50 149,170 166,170 C 183,170 186,50 203,50 C 220,50 223,170 240,170 C 257,170 260,50 277,50 C 294,50 297,170 314,170 C 331,170 334,50 351,50 C 368,50 371,170 388,170" stroke-dasharray="12 5"/>
+        <path class="b-wave" d="M 20,110 C 35,110 38,75 55,75 C 72,75 75,145 92,145 C 109,145 112,75 129,75 C 146,75 149,145 166,145 C 183,145 186,75 203,75 C 220,75 223,145 240,145 C 257,145 260,75 277,75 C 294,75 297,145 314,145 C 331,145 334,75 351,75 C 368,75 371,145 388,145" stroke-dasharray="12 5" opacity="0.8"/>
+        <text x="24" y="45" class="wave-label wave-label-e">E</text>
+        <text x="24" y="72" class="wave-label wave-label-b">B</text>
+        <text x="22" y="207" class="wave-label">MAXWELL FIELD EQUATIONS — 1865</text>
+        <polygon points="400,106 412,110 400,114" fill="rgba(232,227,240,0.4)"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── CONTENT ── -->
+<main class="content">
+
+  <!-- EDINBURGH -->
+  <section id="edinburgh">
+    <div class="section-header">
+      <span class="kick">I.</span>
+      <h2>Edinburgh: The City That Made Him</h2>
+    </div>
+
+    <p>Edinburgh in the 1830s and 1840s was not a provincial city. It was one of the intellectual capitals of Europe. The Scottish Enlightenment — Hume, Smith, Ferguson — had made it so a generation earlier, and the institutions that emerged from that period were still producing extraordinary work. The University of Edinburgh, the Royal Society of Edinburgh, and the network of scientific societies made the city an unusual place for a curious child to grow up adjacent to.</p>
+
+    <p>Maxwell did not grow up in Edinburgh itself — his family's primary home was Glenlair in rural Galloway. But Edinburgh was where he went to school and then to university, and the Edinburgh intellectual atmosphere shaped him. The Edinburgh of his youth contained the intellectual descendants of James Hutton (geology), Dugald Stewart (philosophy), and Thomas Young (optics and medicine). The tradition was broad: a Scottish intellectual was expected to move freely between science, philosophy, literature, and theology. Maxwell fit this mold precisely.</p>
+
+    <div class="place-grid">
+      <div class="place-card">
+        <div class="place-type">Estate / Birthplace</div>
+        <div class="place-name">Glenlair, Galloway</div>
+        <p>The Maxwell family estate in rural southwest Scotland. Maxwell was born in Edinburgh but spent childhood summers and later life at Glenlair. He loved it. When he left King's College London in 1865, he retreated to Glenlair for six years to write his <em>Treatise on Electricity and Magnetism</em>. It was home in the deepest sense — the place where he thought best.</p>
+      </div>
+      <div class="place-card">
+        <div class="place-type">Birthplace</div>
+        <div class="place-name">14 India Street, Edinburgh</div>
+        <p>Maxwell was born here on 13 June 1831. The Georgian townhouse in Edinburgh's New Town still stands; it is now the James Clerk Maxwell Foundation's headquarters and can be visited. The neighborhood was prosperous professional Edinburgh — lawyers, physicians, academics. His father was a lawyer.</p>
+      </div>
+      <div class="place-card">
+        <div class="place-type">School</div>
+        <div class="place-name">Edinburgh Academy</div>
+        <p>Where Maxwell was enrolled at age ten, arrived from the country in unusual clothes, was nicknamed "Dafty," and proceeded to distinguish himself first in mathematics and then in everything else. By his final years there he had won the mathematics medal and the English verse prize — a combination that tells you something about the range of his mind.</p>
+      </div>
+      <div class="place-card">
+        <div class="place-type">University</div>
+        <div class="place-name">University of Edinburgh</div>
+        <p>Maxwell studied here from 1847 to 1850, ages 15–19. He attended lectures in natural philosophy under James Forbes and in logic and metaphysics under William Hamilton. Both left lasting marks. He published two papers while an undergraduate here, one on oval curves and one on the theory of rolling curves — both presented to the Royal Society of Edinburgh.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMBRIDGE -->
+  <section id="cambridge">
+    <div class="section-header">
+      <span class="kick">II.</span>
+      <h2>Cambridge and the Mathematical Tripos</h2>
+    </div>
+
+    <p>Maxwell arrived at Cambridge in October 1850, initially at Peterhouse and then, by his own transfer, at Trinity College — Newton's college. Cambridge in 1850 was dominated by a single institution: the Mathematical Tripos, the examination that ranked every student from first (Senior Wrangler) downward and determined reputation, fellowship prospects, and career trajectories. The Tripos was grueling, competitive, and famous.</p>
+
+    <p>To prepare for it, students hired private tutors called "coaches" who were often as good as or better than the official lecturers. Maxwell's coach was William Hopkins, the most celebrated of the Cambridge coaches, who had trained more Senior Wranglers than any other man in Cambridge. Hopkins later said that Maxwell was "the most extraordinary man he had ever met within the walls of a university."</p>
+
+    <div class="tripos-box">
+      <div class="tripos-side">
+        <div class="tripos-label">The Mathematical Tripos — What It Was</div>
+        <ul>
+          <li>A brutal multi-day examination regime held in January</li>
+          <li>Tested speed and precision in mathematics, not creativity</li>
+          <li>Required years of drilling with private coaches</li>
+          <li>Results published publicly — ranked 1st (Senior Wrangler) downward</li>
+          <li>Determined fellowship and career prospects at Cambridge</li>
+          <li>The most prestigious academic competition in Victorian England</li>
+          <li>Famously attracted the best mathematical minds of every generation</li>
+        </ul>
+      </div>
+      <div class="tripos-side">
+        <div class="tripos-label">Maxwell's Results — 1854</div>
+        <ul>
+          <li>Placed Second Wrangler (behind Edward Routh)</li>
+          <li>Also sat the Smith's Prize — placed first equal with Routh</li>
+          <li>Smith's Prize considered the deeper test of mathematical understanding</li>
+          <li>Elected Fellow of Trinity College immediately after</li>
+          <li>Began reading Faraday's Experimental Researches that same year</li>
+          <li>First electromagnetic paper published 1855–56</li>
+          <li>The Tripos was not his world — Faraday's fields were</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>The interesting thing about Maxwell and the Tripos is not that he excelled — of course he did — but that the Tripos's way of doing mathematics was not his way. The Tripos rewarded rapid computation; Maxwell thought in physical pictures, in analogies, in structural relationships. He was slower than Routh at computation and faster than Routh at everything else. The Smith's Prize — which gave more latitude for original thinking — showed the difference clearly.</p>
+
+    <blockquote>
+      <p>"He is unquestionably the most gifted of the undergraduates here, and were he to confine himself to the work of the place, I think he would be Senior Wrangler next year."</p>
+      <cite>William Hopkins, Maxwell's tutor at Cambridge — quoted in Lewis Campbell and William Garnett, <em>The Life of James Clerk Maxwell</em>, 1882</cite>
+    </blockquote>
+
+    <p>He did not confine himself. He never did. While other students drilled for the Tripos, Maxwell was reading Faraday, conducting optical experiments, writing poetry, and corresponding with his father about the family farm. He was genuinely incapable of narrowing.</p>
+  </section>
+
+  <!-- MENTORS -->
+  <section id="mentors">
+    <div class="section-header">
+      <span class="kick">III.</span>
+      <h2>The Mentors: Forbes, Hamilton, Faraday</h2>
+    </div>
+
+    <p>Maxwell's intellectual formation passed through three major mentors — one philosopher, one physicist, and one experimenter he never closely collaborated with but whose work he spent his career elaborating. Each contributed something essential.</p>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-relation">Mentor — Edinburgh</div>
+        <div class="person-name">James David Forbes</div>
+        <div class="person-dates">1809–1868</div>
+        <p>Professor of Natural Philosophy at Edinburgh when Maxwell was a student. Forbes was a serious experimental physicist — his work on glaciers and heat radiation was internationally known. He recognized Maxwell's gift immediately and gave him access to the laboratory and his own time. Forbes presented Maxwell's oval curves paper to the Royal Society of Edinburgh when Maxwell was fourteen. He was the first scientist to take Maxwell seriously as a scientist.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-relation">Mentor — Edinburgh</div>
+        <div class="person-name">William Hamilton</div>
+        <div class="person-dates">1788–1856</div>
+        <p>Philosopher and logician, not to be confused with the Irish mathematician William Rowan Hamilton. Edinburgh's Hamilton was a major figure in Scottish philosophy, heir to Reid's common sense tradition and a powerful lecturer on perception, logic, and the limits of knowledge. Maxwell absorbed from Hamilton a lifelong concern with the epistemology of science — how we know what we think we know, and what the boundary looks like between knowledge and hypothesis.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-relation">Intellectual Predecessor</div>
+        <div class="person-name">Michael Faraday</div>
+        <div class="person-dates">1791–1867</div>
+        <p>Already in this library. Faraday and Maxwell met once, when Maxwell visited the Royal Institution. Faraday was 65, Maxwell was 24. Faraday showed him the laboratory. Maxwell had already written his first electromagnetic paper. They corresponded. Faraday's intuitive concept of field lines was the raw material Maxwell mathematized. Without Faraday's pictures, Maxwell would have had less to work from. Without Maxwell's equations, Faraday's pictures would have remained brilliant intuitions rather than physical law.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-relation">Cambridge Colleague</div>
+        <div class="person-name">William Thomson (Lord Kelvin)</div>
+        <div class="person-dates">1824–1907</div>
+        <p>The closest thing Maxwell had to a peer and rival. Thomson (later Lord Kelvin) had already published on electromagnetic theory before Maxwell arrived at Cambridge, and had himself tried to translate Faraday into mathematics. Maxwell read Thomson's work carefully. Their relationship was collegial, respectful, and occasionally competitive. Thomson never fully accepted Maxwell's field theory — he held to the older mechanistic tradition and remained skeptical of the displacement current. History sided with Maxwell.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-relation">Correspondent & Predecessor</div>
+        <div class="person-name">George Gabriel Stokes</div>
+        <div class="person-dates">1819–1903</div>
+        <p>Lucasian Professor at Cambridge, one of the great mathematical physicists of the era. Stokes and Maxwell corresponded extensively. Stokes had done fundamental work in fluid mechanics and optics. Maxwell's early electromagnetic papers used fluid mechanical analogies (treating field lines as tubes of incompressible fluid flow) that owed something to Stokes's framework. Stokes was one of the first senior Cambridge figures to recognize the significance of Maxwell's 1865 equations.</p>
+      </div>
+      <div class="person-card">
+        <div class="person-relation">Wife and Lab Partner</div>
+        <div class="person-name">Katherine Mary Dewar Maxwell</div>
+        <div class="person-dates">1824–1886</div>
+        <p>Maxwell married Katherine Dewar in 1858. She was the daughter of the Principal of Marischal College, Aberdeen, where Maxwell was then Chair. Katherine ran experiments alongside her husband for the rest of his life — particularly the viscosity-of-gases experiments at Glenlair, which required precise timing and observation. Maxwell's letters to her are warm, funny, and intellectually engaged. She outlived him by seven years. The standard biography of Maxwell mentions her briefly; the actual collaboration was more substantial than the historical record shows.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE GLASGOW-EDINBURGH AXIS -->
+  <section id="scotlandscience">
+    <div class="section-header">
+      <span class="kick">IV.</span>
+      <h2>The Glasgow-Edinburgh Scientific Scene</h2>
+    </div>
+
+    <p>Victorian British science had a geography. London held the Royal Society and the Royal Institution — the prestige institutions, Faraday's stage. Cambridge held the Tripos and produced the mathematical talent. But Scotland — particularly the Glasgow-Edinburgh axis — was doing something distinct: a tradition of natural philosophy that combined rigorous mathematics with physical intuition and a genuine interest in how theories connected to experiments.</p>
+
+    <p>Glasgow had William Thomson, who would become Lord Kelvin, who was doing the thermodynamics and telegraph engineering that made Britain's submarine cables possible. Edinburgh had Forbes, and the Royal Society of Edinburgh, and a general culture of scientific seriousness that extended into the law and medicine. Aberdeen had its own university culture and the Marischal College where Maxwell held his first chair.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">The Scottish Difference</span>
+      <p>The Scottish university tradition in the 1840s and 1850s was broader than the English. Scottish students entered university younger (Maxwell at 15) and moved across disciplines more freely. The Medical Faculty at Edinburgh was one of the best in Europe; the Philosophy faculty was engaged with the natural sciences; the Natural Philosophy faculty read philosophy. This cross-pollination produced Maxwell's characteristic move of treating physical concepts as objects of epistemological scrutiny — asking not just what the field equations said but what it meant to say them.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Aberdeen · 1856–1860</div>
+        <h3>Marischal College</h3>
+        <p>Maxwell's first academic post, at 24. He was one of the youngest full professors in Britain. Here he completed his prize-winning essay on Saturn's rings and began serious work on the kinetic theory of gases. He married Katherine Dewar here. When the two Aberdeen colleges merged in 1860 and his chair was eliminated, it was one of British academia's great institutional failures.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">London · 1860–1865</div>
+        <h3>King's College</h3>
+        <p>Maxwell's most productive period. He produced the complete electromagnetic field theory, the first color photograph (demonstrated at the Royal Institution, 1861), and his major work on the viscosity and transport properties of gases. London gave him access to the Royal Institution and its network. He resigned in 1865 — officially for health reasons — and retreated to Glenlair.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Cambridge · 1871–1879</div>
+        <h3>The Cavendish Laboratory</h3>
+        <p>The greatest project of Maxwell's later life: designing and building the Cavendish Laboratory from nothing. The laboratory opened in 1874. Maxwell chose its equipment, wrote its operating procedures, and trained its first generation of researchers. Every Nobel Prize won at the Cavendish (and there have been many) traces a lineage back to the space Maxwell built.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Family Estate</div>
+        <h3>Glenlair, Galloway</h3>
+        <p>Maxwell's true home throughout his life. He conducted the gas viscosity experiments here with Katherine's assistance. He wrote much of the <em>Treatise</em> here. He died knowing he would not live to return for another summer. He asked to be buried in the churchyard at Parton, the village near Glenlair — a simple grave in rural Scotland for the man who unified electromagnetic theory.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 1860s REVOLUTION -->
+  <section id="revolution">
+    <div class="section-header">
+      <span class="kick">V.</span>
+      <h2>The 1860s–1870s: The Electromagnetic Revolution</h2>
+    </div>
+
+    <p>The period from 1860 to 1880 in British physics was one of the most productive in history. Maxwell's electromagnetic theory was published into a world that already had the telegraph (Morse, 1844), the transatlantic cable (Thomson, 1858), and a growing electrical industry. Faraday's electromagnetic induction was not merely a laboratory curiosity — it was powering things.</p>
+
+    <p>But the theoretical picture was incomplete. How did electric action propagate through space? How were electricity and light related? What was the connection between the electric constant ε₀ and the magnetic constant μ₀ and the observed speed of light? Maxwell's 1865 paper answered all three questions in one mathematical structure.</p>
+
+    <div class="two-col">
+      <div>
+        <p><strong>What existed before Maxwell:</strong> Coulomb's law for electric force. Biot-Savart law for magnetic force from currents. Faraday's law of induction (experimental, 1831). Ampère's law for magnetic force. Ohm's law. No connection between the electric and magnetic constants and the speed of light. No explanation of what light was.</p>
+        <p>The theoretical picture was a collection of empirical laws. There was no unifying framework, no prediction of new phenomena, no derivation of the speed of light. Faraday suspected a connection between electricity, magnetism, and light. Thomson suspected it. No one had the mathematics to prove it.</p>
+      </div>
+      <div>
+        <p><strong>What Maxwell provided (1865):</strong> A single mathematical structure from which all of the above followed as special cases. Prediction of electromagnetic waves traveling at c = 1/√(ε₀μ₀). Identification of light as an electromagnetic wave. The displacement current — a new physical phenomenon not yet observed. A framework that would predict radio waves, X-rays, microwaves, and every other part of the electromagnetic spectrum.</p>
+        <p>The 1865 paper was not immediately celebrated. The equations were unfamiliar. The displacement current was unobserved and seemed speculative. It took Hertz's experimental confirmation in 1887 — eight years after Maxwell died — to shift the consensus. But within the community of mathematical physicists, the significance was recognized within a few years.</p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-num">1865</span>
+        <span class="stat-label">Equations Published</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">1873</span>
+        <span class="stat-label">Treatise Published</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">1874</span>
+        <span class="stat-label">Cavendish Opens</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">1879</span>
+        <span class="stat-label">Maxwell Dies</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE CAVENDISH -->
+  <section id="cavendish">
+    <div class="section-header">
+      <span class="kick">VI.</span>
+      <h2>The Cavendish Laboratory: His Greatest Monument</h2>
+    </div>
+
+    <p>In 1871, Cambridge University decided to build a physics laboratory — for the first time in its history. It had been a mathematics university, not an experimental one. The push for a laboratory came partly from the recognition that experimental physics was increasingly important and partly from a substantial gift from the Duke of Devonshire, William Cavendish, who was the Chancellor and a descendant of Henry Cavendish the physicist.</p>
+
+    <p>Maxwell was appointed to design and build it. He was offered the first Cavendish Professorship — the chair that came with the laboratory — and he accepted. He designed the buildings, selected the apparatus, organized the research program, and supervised construction. The laboratory opened in 1874.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">What Maxwell Built — and What Grew There</span>
+      <p>The Cavendish Laboratory, as Maxwell designed it, was a place for precision measurement and experimental physics. He insisted on good instruments and careful methodology. He also undertook the massive project of editing and publishing Henry Cavendish's unpublished manuscripts — electrical experiments done decades before anyone else, lying unknown in private papers. Maxwell spent years on this work, recognizing Cavendish's priority in several important discoveries. The edited <em>Electrical Researches of the Honourable Henry Cavendish</em> was published in 1879, the year Maxwell died. After Maxwell, the Cavendish produced: J.J. Thomson's discovery of the electron (1897), Rutherford's nuclear model of the atom (1911), the discovery of the neutron by Chadwick (1932), and Watson and Crick's DNA structure (1953).</p>
+    </div>
+
+    <p>Maxwell ran the Cavendish for five years, from 1874 to 1879. They were years of building and teaching and administration — not his most scientifically productive period, but perhaps his most institutionally important. He shaped what Cambridge physics would be for the next century. He died before the laboratory had reached its full power. He did not see Thomson, or Rutherford, or Crick. But they all worked in the building he made.</p>
+
+    <blockquote>
+      <p>"I am quite satisfied that I have no talent for organizing, but I have a talent for working with those who do."</p>
+      <cite>Maxwell — characteristically modest, and characteristically wrong. He organized extraordinarily well when he chose to.</cite>
+    </blockquote>
+  </section>
+
+  <div class="series-nav">
+    <a href="1-equations.html">← Vol 1: The Four Equations</a>
+    <a href="3-legacy.html" class="next">Vol 3: His Long Afterlife →</a>
+  </div>
+
+</main>
+
+<footer class="colophon">
+  <div class="colophon-inner">
+    <p>
+      ROOT0-ATTRIBUTION-v1.0<br>
+      James Clerk Maxwell — Volume 2: His World<br>
+      <span class="cc">CC-BY-ND-4.0</span> &nbsp;·&nbsp; David Lee Wise / ROOT0 / TriPod LLC
+    </p>
+    <p>
+      Vol 0: Who He Was &nbsp;|&nbsp; Vol 1: The Four Equations<br>
+      Vol 2: His World &nbsp;|&nbsp; Vol 3: His Long Afterlife<br>
+      Library Series &nbsp;·&nbsp; 2024
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Khwarizmi — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0f0e09;
+    --amber: #c07818;
+    --amber-dim: #7a4c10;
+    --amber-glow: rgba(192,120,24,0.18);
+    --teal: #0d9488;
+    --teal-dim: #0a6b61;
+    --teal-glow: rgba(13,148,136,0.15);
+    --text: #e8e0cc;
+    --text-dim: #9e9580;
+    --border: rgba(192,120,24,0.22);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-hover-bg: rgba(192,120,24,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,14,9,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(6px);
+  }
+  .nav-series {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber);
+    opacity: 0.8;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber); }
+
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: center;
+    padding: 4rem 2.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .vol-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--amber);
+    margin-bottom: 0.5rem;
+  }
+  .subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+  .masthead-lede {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+    max-width: 55ch;
+    line-height: 1.8;
+  }
+  .masthead-art { display: flex; align-items: center; justify-content: center; }
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2.5rem 5rem;
+  }
+  .section { margin-bottom: 4rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.02em;
+  }
+  .section-rule {
+    width: 3rem;
+    height: 2px;
+    background: var(--teal);
+    margin-bottom: 1.5rem;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    margin-top: 1.8rem;
+  }
+  p {
+    margin-bottom: 1.2rem;
+    color: var(--text);
+    max-width: 72ch;
+  }
+
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-variant: small-caps;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .band {
+    display: inline-block;
+    background: var(--amber);
+    color: #0f0e09;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15em 0.6em;
+    margin-right: 0.4em;
+    margin-bottom: 0.3em;
+    vertical-align: middle;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem 1.4rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(192,120,24,0.18);
+    background: var(--card-hover-bg);
+  }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+  .card-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.04em;
+  }
+  .card-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-family: 'Newsreader', serif;
+  }
+
+  /* PERSON CARDS */
+  .person-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .person-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.6rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    border-top: 2px solid var(--teal);
+  }
+  .person-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(13,148,136,0.14);
+  }
+  .person-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--amber);
+    margin-bottom: 0.2rem;
+  }
+  .person-dates {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--teal);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+  }
+  .person-body {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  /* ROUTE */
+  .route-table {
+    border-top: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+  .route-row {
+    display: grid;
+    grid-template-columns: 160px 80px 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0;
+    align-items: center;
+  }
+  .route-place {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .route-arrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--amber);
+    text-align: center;
+  }
+  .route-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--amber);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--amber-glow);
+    max-width: 65ch;
+  }
+  .pull-quote p {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0;
+    max-width: none;
+  }
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--teal);
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    border-left: 2px solid var(--border);
+    padding-left: 2rem;
+    margin-top: 1.5rem;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--amber);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-desc {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 65ch;
+  }
+
+  strong { color: var(--amber); font-weight: 500; }
+  em { color: var(--text); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  .colophon {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .colophon-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+  .colophon-vol {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+
+  /* Map-like schematic */
+  .route-diagram {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    overflow-x: auto;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-series">AL-KHWARIZMI — A FOUR-VOLUME STUDY</span>
+  <ul class="nav-links">
+    <li><a href="0-who.html">Vol. 0 — Who</a></li>
+    <li><a href="1-algebra.html">Vol. 1 — The Work</a></li>
+    <li><a href="2-world.html" class="active">Vol. 2 — His World</a></li>
+    <li><a href="3-legacy.html">Vol. 3 — Legacy</a></li>
+  </ul>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-label">Volume 2 &mdash; His World</span>
+    <h1>The Islamic<br>Golden Age</h1>
+    <p class="subtitle">Baghdad, 813–833 CE &mdash; The World's Intellectual Capital</p>
+    <p class="masthead-lede">Al-Khwarizmi did not work in isolation. He worked at the center of the greatest concentration of scholarship in the medieval world — the House of Wisdom in Baghdad, under a caliph who believed that all human knowledge was worth preserving, translating, and extending. The age made the man, and the man helped make the age.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Baghdad / House of Wisdom — city plan-like radiating structure -->
+    <svg width="380" height="380" viewBox="0 0 380 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e1a0e"/>
+          <stop offset="100%" stop-color="#0f0e09"/>
+        </radialGradient>
+        <filter id="glow3">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="185" fill="url(#bg3)" stroke="#c07818" stroke-width="0.5" stroke-opacity="0.25"/>
+
+      <!-- Round City of Baghdad — concentric circles -->
+      <circle cx="190" cy="190" r="155" fill="none" stroke="#c07818" stroke-width="0.8" stroke-opacity="0.2"/>
+      <circle cx="190" cy="190" r="120" fill="none" stroke="#c07818" stroke-width="0.8" stroke-opacity="0.25"/>
+      <circle cx="190" cy="190" r="85" fill="none" stroke="#c07818" stroke-width="1.2" stroke-opacity="0.35"/>
+      <circle cx="190" cy="190" r="55" fill="none" stroke="#0d9488" stroke-width="1" stroke-opacity="0.4"/>
+      <circle cx="190" cy="190" r="28" fill="rgba(192,120,24,0.12)" stroke="#c07818" stroke-width="1.5" stroke-opacity="0.6"/>
+
+      <!-- 4 main gates at cardinal points — animated pulse -->
+      <g filter="url(#glow3)">
+        <!-- North gate -->
+        <rect x="183" y="62" width="14" height="22" fill="#c07818" opacity="0.4">
+          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite"/>
+        </rect>
+        <!-- South gate -->
+        <rect x="183" y="296" width="14" height="22" fill="#c07818" opacity="0.4">
+          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="0.75s" repeatCount="indefinite"/>
+        </rect>
+        <!-- East gate -->
+        <rect x="296" y="183" width="22" height="14" fill="#c07818" opacity="0.4">
+          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+        </rect>
+        <!-- West gate -->
+        <rect x="62" y="183" width="22" height="14" fill="#c07818" opacity="0.4">
+          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+
+      <!-- Radiating roads from center -->
+      <g stroke="#c07818" stroke-width="0.7" stroke-opacity="0.2">
+        <line x1="190" y1="35" x2="190" y2="190"/>
+        <line x1="190" y1="345" x2="190" y2="190"/>
+        <line x1="35" y1="190" x2="190" y2="190"/>
+        <line x1="345" y1="190" x2="190" y2="190"/>
+        <line x1="80" y1="80" x2="190" y2="190"/>
+        <line x1="300" y1="80" x2="190" y2="190"/>
+        <line x1="80" y1="300" x2="190" y2="190"/>
+        <line x1="300" y1="300" x2="190" y2="190"/>
+      </g>
+
+      <!-- House of Wisdom marker — center -->
+      <circle cx="190" cy="190" r="12" fill="#c07818" opacity="0.85" filter="url(#glow3)">
+        <animate attributeName="r" values="10;15;10" dur="5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="5s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Outer city label ring, rotating slowly -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="120s" repeatCount="indefinite"/>
+        <text font-family="Space Mono,monospace" font-size="7.5" fill="#c07818" opacity="0.3" letter-spacing="4">
+          <textPath href="#ring-path">BAYT AL-HIKMA · HOUSE OF WISDOM · BAGHDAD · 762 CE · ABBASID CALIPHATE ·</textPath>
+        </text>
+        <defs>
+          <path id="ring-path" d="M190,190 m-168,0 a168,168 0 1,1 336,0 a168,168 0 1,1 -336,0"/>
+        </defs>
+      </g>
+
+      <!-- Tigris river — wavy line through right side -->
+      <path d="M340,50 Q350,120 330,190 Q310,260 340,330" fill="none" stroke="#0d9488" stroke-width="2.5" stroke-opacity="0.35" stroke-dasharray="6,4">
+        <animate attributeName="stroke-opacity" values="0.25;0.5;0.25" dur="4s" repeatCount="indefinite"/>
+      </path>
+      <text x="354" y="195" font-family="Space Mono,monospace" font-size="7" fill="#0d9488" opacity="0.5" transform="rotate(90 354 195)">TIGRIS</text>
+
+      <!-- Small dots = scholars -->
+      <g fill="#c07818">
+        <circle cx="150" cy="155" r="2.5" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.2s" repeatCount="indefinite"/></circle>
+        <circle cx="220" cy="160" r="2.5" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.8s" repeatCount="indefinite"/></circle>
+        <circle cx="165" cy="220" r="2.5" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3.1s" repeatCount="indefinite"/></circle>
+        <circle cx="215" cy="215" r="2.5" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="1.9s" repeatCount="indefinite"/></circle>
+      </g>
+
+      <text x="190" y="370" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c07818" opacity="0.4" letter-spacing="2">THE ROUND CITY OF BAGHDAD · 813 CE</text>
+    </svg>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- Section: Baghdad -->
+  <section class="section">
+    <span class="kick">The City</span>
+    <h2>Baghdad — City of Peace</h2>
+    <div class="section-rule"></div>
+
+    <p>When al-Khwarizmi arrived in Baghdad, it was the largest city in the world. Founded in 762 CE by Caliph al-Mansur as a planned capital on a circular plan — the <em>Madinat al-Salam</em> (City of Peace) — it had grown by 800 CE to a population estimated between 500,000 and one million people. It sat at the junction of the Tigris River and the empire's canal system, making it simultaneously a trade hub, a religious center, and an administrative capital spanning an empire that stretched from Spain to Central Asia.</p>
+
+    <p>The city was famously round in plan — a design inspired by Persian Sasanid royal capitals, with four gates facing the cardinal directions, concentric rings of administrative buildings, and the caliph's green-domed palace at the center. By al-Khwarizmi's time, the city had overflowed its original walls and expanded across the Tigris into the East Bank, with residential and commercial districts stretching for miles in every direction.</p>
+
+    <p>This was the world he worked in: not a quiet scholar's retreat but a roaring commercial and political metropolis, where the languages heard in a single marketplace might include Arabic, Persian, Greek, Syriac, Aramaic, Hebrew, and Turkic. The intellectual output of the House of Wisdom was one product of this cosmopolitan environment — it required precisely this kind of cultural mixing to function.</p>
+
+    <div class="pull-quote">
+      <p>"Baghdad is the city of the world. In it there is no peer, no equal, no rival, no counterpart."</p>
+      <cite>— al-Khatib al-Baghdadi, 11th-century historian</cite>
+    </div>
+  </section>
+
+  <!-- Section: House of Wisdom -->
+  <section class="section">
+    <span class="kick">The Institution</span>
+    <h2>Bayt al-Hikma — The House of Wisdom</h2>
+    <div class="section-rule"></div>
+
+    <p>The House of Wisdom (<em>Bayt al-Hikma</em>) had roots in the Sassanid Persian administrative tradition of maintaining royal libraries and translation bureaus. The early Abbasid caliphs — following the Persian court model — established a similar institution in Baghdad, initially as a royal library and translation workshop. Under Caliph Harun al-Rashid (786–809 CE), it expanded significantly. Under his son al-Ma'mun (813–833 CE), it became the preeminent intellectual institution in the world.</p>
+
+    <p>Al-Ma'mun's program was explicit and ambitious: collect every significant text that existed in Greek, Persian, Sanskrit, Syriac, and Coptic, translate it into Arabic, and have scholars correct, extend, and improve upon it. The Caliph allegedly sent emissaries to Byzantine emperors demanding manuscripts. He paid translators by the weight of gold equivalent to the weight of the manuscripts they translated. He hired astronomers, mathematicians, geographers, physicians, and philosophers — and he paid them enough to attract the best from across the known world.</p>
+
+    <h3>What It Was</h3>
+    <p>The House of Wisdom was simultaneously a library, a translation bureau, an observatory (with an affiliated rooftop observation platform), and a research institute. It was not a university in the modern sense — there were no formal degrees, no curriculum. It was more like a funded research program where scholars were given stipends, access to texts, and patronage to pursue their work.</p>
+
+    <p>Scholars at the House of Wisdom had access to texts that no single scholar could have assembled privately. Greek: Aristotle, Plato, Euclid, Archimedes, Ptolemy, Galen, Hippocrates. Persian: Sassanid astronomical tables, administrative texts, literary works. Sanskrit: Indian mathematical and astronomical texts (the <em>Siddhanta</em> tradition). Syriac: Christian theological and philosophical commentaries on Greek texts. All of these were available in the same building, at the same time, to the same scholars.</p>
+
+    <h3>The Translation Movement</h3>
+    <p>The <em>Bayt al-Hikma</em> is most famous as the engine of the translation movement — the project, lasting roughly 750–900 CE, that transferred the bulk of classical Greek scientific and philosophical writing into Arabic. Key translators included Hunayn ibn Ishaq (809–873 CE), who translated over 100 Galenic medical texts, and Thabit ibn Qurra (836–901 CE), who translated mathematical works by Euclid, Archimedes, and Apollonius. The translations were not simple word-for-word renderings; they included corrections, extensions, and commentaries that often went beyond the originals.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-num">750</div>
+        <div class="card-label">Start of Translation Era</div>
+        <div class="card-body">The great translation movement of Greek texts into Arabic begins under the early Abbasids. By 900 CE, virtually all Greek scientific writing would be available in Arabic.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">800</div>
+        <div class="card-label">Harun al-Rashid</div>
+        <div class="card-body">Expands the House of Wisdom and dispatches diplomatic missions to Byzantine territories specifically to acquire Greek manuscripts. The institution grows to include an active research program.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">813</div>
+        <div class="card-label">Al-Ma'mun's Accession</div>
+        <div class="card-body">The Golden Age intensifies. Al-Ma'mun reportedly dreams of Aristotle and takes it as a mandate to pursue all knowledge. Stipends for scholars increase; translation quotas are set.</div>
+      </div>
+      <div class="card">
+        <div class="card-num">830</div>
+        <div class="card-label">Peak Productivity</div>
+        <div class="card-body">The decade when al-Khwarizmi completes his algebra, his arithmetic, and his geography. Simultaneously: al-Kindi is writing on philosophy; Hunayn ibn Ishaq is translating Galen; astronomers are refining Ptolemy.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Caliphs -->
+  <section class="section">
+    <span class="kick">Patronage</span>
+    <h2>The Caliphs Who Made It Possible</h2>
+    <div class="section-rule"></div>
+
+    <h3>Harun al-Rashid (r. 763–809 CE)</h3>
+    <p>The caliph of the <em>Thousand and One Nights</em>, Harun al-Rashid presided over the empire at its greatest geographical extent. He was the patron who established the physical House of Wisdom and began the systematic acquisition of Greek texts. He sent embassies to Charlemagne in Europe and to the King of the Franks. His court at Baghdad was already the most splendid in the world. He was al-Ma'mun's father — and his political decision to attempt a succession plan dividing the empire between two sons would precipitate the civil war that brought al-Ma'mun to power.</p>
+
+    <h3>Al-Ma'mun (r. 813–833 CE)</h3>
+    <p>Al-Khwarizmi's patron. He is arguably the most intellectually engaged ruler in Islamic history. He personally participated in philosophical and theological debates, corresponded with scholars, and set the ideological direction for the House of Wisdom's research program. He was a <strong>Mu'tazilite</strong> — a rationalist theological school that emphasized reason as a tool for understanding divine will, which gave theological legitimacy to Greek-derived rational inquiry.</p>
+
+    <p>Al-Ma'mun commissioned al-Khwarizmi's algebra explicitly as a practical tool. He wanted mathematics that would help people: calculating inheritance, measuring land, resolving commercial disputes. This utilitarian framing — algebra as a practical discipline, not an abstract one — shaped how al-Khwarizmi wrote his book. The <em>Kitab al-mukhtasar</em> is a teaching manual, not a theoretical treatise.</p>
+
+    <p>Al-Ma'mun also commissioned the re-measurement of the Earth's circumference — organizing two teams of surveyors who measured a degree of latitude in the Syrian desert by walking measured distances and comparing star altitudes. Their results (roughly 111 km per degree) were more accurate than Ptolemy's estimate.</p>
+
+    <div class="pull-quote">
+      <p>"Knowledge is better than wealth. Wealth diminishes as you spend it, but knowledge grows as you spend it."</p>
+      <cite>— attributed to Caliph al-Ma'mun, 813–833 CE</cite>
+    </div>
+  </section>
+
+  <!-- Section: Contemporaries -->
+  <section class="section">
+    <span class="kick">Contemporaries</span>
+    <h2>The Scholars Around Him</h2>
+    <div class="section-rule"></div>
+
+    <p>Al-Khwarizmi worked alongside — and in some cases in direct collaboration with — several of the most important scholars of the Islamic Golden Age.</p>
+
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Al-Kindi</div>
+        <div class="person-dates">c. 801 – c. 873 CE</div>
+        <div class="person-body">Abu Yusuf Ya'qub ibn Ishaq al-Kindi — "Philosopher of the Arabs," the first major Islamic philosopher. He worked at the House of Wisdom overlapping with al-Khwarizmi and wrote on mathematics, optics, music theory, cryptanalysis (the first systematic code-breaking text), meteorology, and philosophy. He edited Greek translations and wrote original works on Aristotelian philosophy adapted to Islamic thought.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Al-Farghani</div>
+        <div class="person-dates">c. 800 – c. 870 CE</div>
+        <div class="person-body">Ahmad ibn Muhammad ibn Kathir al-Farghani (Alfraganus in Latin) was an astronomer who, like al-Khwarizmi, worked under al-Ma'mun's patronage. He wrote a comprehensive compendium of Ptolemy's Almagest. His work was translated into Latin in the 12th century and was a primary source for European medieval astronomy — including Dante Alighieri's astronomical references in the Divine Comedy.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Hunayn ibn Ishaq</div>
+        <div class="person-dates">809 – 873 CE</div>
+        <div class="person-body">The greatest translator of the Abbasid period. A Nestorian Christian, he translated over 100 of Galen's medical texts from Greek and Syriac into Arabic, and numerous philosophical texts. He established standards for translation methodology — verifying manuscripts, correcting errors, providing multiple versions — that set the benchmark for Islamic scholarship. His translations of Greek medicine shaped Islamic and then European medicine for five centuries.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Thabit ibn Qurra</div>
+        <div class="person-dates">826 – 901 CE</div>
+        <div class="person-body">Mathematician, astronomer, and translator. A Sabian from Harran, he translated Euclid, Archimedes, Apollonius, and Ptolemy into Arabic. He also made original contributions in mathematics: generalization of the Pythagorean theorem, amicable numbers, and astronomical models. He slightly post-dates al-Khwarizmi but is characteristic of the continuing scholarly tradition of the House of Wisdom.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Al-Jahiz</div>
+        <div class="person-dates">776 – 868 CE</div>
+        <div class="person-body">Prolific prose writer and polymath — the literary counterpart to the mathematicians. His <em>Kitab al-Hayawan</em> (Book of Animals) is a nine-volume encyclopedia of zoology that anticipates evolutionary ideas. His <em>Kitab al-Bayan</em> is a foundational text of Arabic rhetoric. He was part of the same Mu'tazilite rationalist circle that al-Ma'mun favored — a colleague, at least in ideological orientation, of al-Khwarizmi's generation.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Al-Khwarizmi himself</div>
+        <div class="person-dates">c. 780 – c. 850 CE</div>
+        <div class="person-body">The mathematician at the center of this volume. Working alongside these figures, al-Khwarizmi was one node in a network of scholarship that was simultaneously advancing mathematics, astronomy, philosophy, medicine, linguistics, and geography — all under a single institutional roof beside the Tigris River.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Section: Hindu numerals route -->
+  <section class="section">
+    <span class="kick">Knowledge Transmission</span>
+    <h2>How Hindu Numerals Traveled West</h2>
+    <div class="section-rule"></div>
+
+    <p>The story of how the decimal place-value numeral system — including zero — traveled from India to Europe is a story of several centuries and multiple transmission chains. Al-Khwarizmi was the crucial middle link.</p>
+
+    <div class="route-diagram">
+      <svg width="100%" height="90" viewBox="0 0 900 90" xmlns="http://www.w3.org/2000/svg">
+        <!-- Route line -->
+        <line x1="60" y1="45" x2="840" y2="45" stroke="#c07818" stroke-width="1.5" stroke-opacity="0.4" stroke-dasharray="8,4"/>
+
+        <!-- Nodes -->
+        <circle cx="60" cy="45" r="18" fill="#0f0e09" stroke="#c07818" stroke-width="1.5"/>
+        <text x="60" y="49" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#c07818">INDIA</text>
+        <text x="60" y="70" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#9e9580">c. 500 CE</text>
+        <text x="60" y="80" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">Brahmi &amp; Gupta</text>
+
+        <!-- Arrow 1 -->
+        <polygon points="195,41 185,37 185,49" fill="#c07818" opacity="0.5"/>
+
+        <circle cx="230" cy="45" r="22" fill="#0f0e09" stroke="#c07818" stroke-width="1.5"/>
+        <text x="230" y="43" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">PERSIA</text>
+        <text x="230" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">/ IRAQ</text>
+        <text x="230" y="75" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#9e9580">c. 700 CE</text>
+        <text x="230" y="85" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">via Sindhind</text>
+
+        <!-- Arrow 2 -->
+        <polygon points="375,41 365,37 365,49" fill="#c07818" opacity="0.5"/>
+
+        <circle cx="410" cy="45" r="22" fill="#0f0e09" stroke="#0d9488" stroke-width="2"/>
+        <text x="410" y="43" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#0d9488">BAGHDAD</text>
+        <text x="410" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#0d9488">c. 825 CE</text>
+        <text x="410" y="75" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#9e9580">Al-Khwarizmi</text>
+        <text x="410" y="85" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#c07818">★ KEY NODE</text>
+
+        <!-- Arrow 3 -->
+        <polygon points="555,41 545,37 545,49" fill="#c07818" opacity="0.5"/>
+
+        <circle cx="590" cy="45" r="22" fill="#0f0e09" stroke="#c07818" stroke-width="1.5"/>
+        <text x="590" y="43" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">SPAIN</text>
+        <text x="590" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">/ TOLEDO</text>
+        <text x="590" y="75" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#9e9580">c. 1000 CE</text>
+        <text x="590" y="85" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">via al-Andalus</text>
+
+        <!-- Arrow 4 -->
+        <polygon points="735,41 725,37 725,49" fill="#c07818" opacity="0.5"/>
+
+        <circle cx="770" cy="45" r="22" fill="#0f0e09" stroke="#c07818" stroke-width="1.5"/>
+        <text x="770" y="43" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">EUROPE</text>
+        <text x="770" y="53" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c07818">1145 CE</text>
+        <text x="770" y="75" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#9e9580">Robert of Chester</text>
+        <text x="770" y="85" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="#9e9580">Latin translation</text>
+      </svg>
+    </div>
+
+    <h3>Origin: India, c. 500 CE</h3>
+    <p>The decimal place-value system with nine distinct digit symbols evolved in India through the Gupta period (320–550 CE). The Brahmi numerals of earlier centuries evolved into the Gupta numeral forms, which are the direct ancestors of modern Hindu-Arabic digits. Zero as a placeholder — represented by a small circle or dot — appears definitively in Indian texts by the 7th century (notably in Brahmagupta's <em>Brahmasphutasiddhanta</em>, 628 CE).</p>
+
+    <h3>First Transmission: India to Persia/Iraq, c. 700 CE</h3>
+    <p>Indian astronomical texts — the <em>Siddhanta</em> tradition — were transmitted to the Persian-speaking Sassanid court and then to the early Islamic caliphate. The translation of the <em>Brahmasphutasiddhanta</em> into Arabic as the <em>Sindhind</em> during the reign of Caliph al-Mansur (c. 773 CE) is an early documented step. The numerals came with the astronomy.</p>
+
+    <h3>The Baghdad Node: Al-Khwarizmi, c. 825 CE</h3>
+    <p>Al-Khwarizmi wrote the book that systematized the Hindu numeral system for an Arabic-speaking audience. He described the nine digits, the positional value system, the zero placeholder, and the algorithms for arithmetic operations: addition, subtraction, multiplication, division, square roots, and fractions. This book — whose Arabic original is lost but whose Latin translation survives — was the primary vehicle for transmitting the complete system to the western world.</p>
+
+    <h3>West via al-Andalus and Sicily</h3>
+    <p>The Islamic presence in Spain (al-Andalus, 711–1492 CE) and Sicily (827–1091 CE) created zones of contact between Arabic-language scholarship and Latin-literate Christian Europe. By the 10th century, certain European scholars — notably Gerbert of Aurillac (later Pope Sylvester II) — were already encountering the Hindu-Arabic numerals through contact with al-Andalus. But systematic use in Europe came later.</p>
+
+    <h3>The Latin Translation, 1145 CE</h3>
+    <p>Robert of Chester translated al-Khwarizmi's arithmetic into Latin in 1145. The text entered European mathematics as "algorism" — a corruption of "Algoritmi," the Latin rendering of al-Khwarizmi's name. The numerals themselves spread gradually through the 12th–14th centuries, meeting resistance from those who preferred the familiar Roman numeral system, until the commercial advantages of positional arithmetic became impossible to ignore.</p>
+  </section>
+
+  <!-- Section: The Golden Age Context -->
+  <section class="section">
+    <span class="kick">Historical Context</span>
+    <h2>The Islamic Golden Age</h2>
+    <div class="section-rule"></div>
+
+    <p>The Islamic Golden Age (roughly 750–1258 CE) is not a myth of retrospective glorification. It is a measurable, documented period of intellectual productivity that advanced mathematics, astronomy, medicine, philosophy, geography, optics, chemistry, and literature — often beyond the level achieved by Greek, Persian, or Indian predecessors — and transmitted that knowledge, enriched, to medieval Europe and the modern world.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">622 CE</div>
+        <div class="timeline-title">The Hijra — Islam's Calendar Zero</div>
+        <div class="timeline-desc">Muhammad's migration from Mecca to Medina. Islamic civilization will grow from this moment to span an empire larger than Rome within a century.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">750 CE</div>
+        <div class="timeline-title">Abbasid Revolution</div>
+        <div class="timeline-desc">The Abbasid dynasty overthrows the Umayyads, moves the capital from Damascus to Baghdad, and begins the active patronage of learning that will define the Golden Age. Persian administrative culture heavily influences the new court.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">762 CE</div>
+        <div class="timeline-title">Baghdad Founded</div>
+        <div class="timeline-desc">Caliph al-Mansur founds Madinat al-Salam on the Tigris as a planned round city. Within 50 years it will be the largest city in the world.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">813–833 CE</div>
+        <div class="timeline-title">Al-Ma'mun's Golden Decade</div>
+        <div class="timeline-desc">The peak of Abbasid intellectual patronage. The House of Wisdom operates at maximum capacity. Al-Khwarizmi, al-Kindi, and contemporaries produce their most important works. Earth's circumference is re-measured.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 850–1000 CE</div>
+        <div class="timeline-title">Continued Expansion</div>
+        <div class="timeline-desc">Al-Razi (Rhazes) advances medicine. Al-Battani refines astronomical observations. Al-Masudi maps the known world. The Golden Age continues through regional courts even as Abbasid central power weakens.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">c. 1000–1100 CE</div>
+        <div class="timeline-title">The Great Names</div>
+        <div class="timeline-desc">Ibn Sina (Avicenna) produces his medical canon and philosophical encyclopedias. Al-Biruni makes systematic observations of world cultures and geographies. Ibn al-Haytham founds the science of optics.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1258 CE</div>
+        <div class="timeline-title">Mongol Sack of Baghdad</div>
+        <div class="timeline-desc">The Ilkhanate Mongols under Hulagu Khan destroy Baghdad, kill the last Abbasid caliph, and reportedly throw the House of Wisdom's library into the Tigris. The city does not fully recover for centuries.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <div class="colophon-text">
+      ROOT0-ATTRIBUTION-v1.0<br>
+      David Lee Wise / ROOT0 / TriPod LLC<br>
+      CC-BY-ND-4.0 &nbsp;·&nbsp; All rights reserved as noted
+    </div>
+    <div class="colophon-vol">
+      AL-KHWARIZMI LIBRARY &nbsp;·&nbsp; VOL. 2 OF 3 &nbsp;·&nbsp; HIS WORLD
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

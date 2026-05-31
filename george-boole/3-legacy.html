@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>George Boole — Vol. 3: The Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#090f09;--card:#0f1a0f;--cardsolid:#0f1a0f;--ink:#d6e8d6;--dim:#6b8f6b;
+    --emerald:#059669;--amber:#d97706;--line:rgba(5,150,105,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 50% 0%,#0d1f0d 0%,#060c06 70%);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--emerald);color:#090f09;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:10px;}
+  .band{display:inline-block;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;background:var(--emerald);color:#090f09;padding:5px 14px;margin:32px 0 14px;}
+  .band.amber{background:var(--amber);}
+  .band.dim{background:#1a2e1a;color:var(--ink);}
+
+  .mast{border-bottom:4px solid var(--emerald);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(34px,7vw,70px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--emerald);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#a8c4a8;}
+  .dek b{font-weight:500;color:var(--emerald);}
+
+  /* Cascade animation — the lineage diagram */
+  @keyframes cascade{0%{stroke-dashoffset:400}100%{stroke-dashoffset:0}}
+  @keyframes glow{0%,100%{opacity:0.35}50%{opacity:1}}
+  @keyframes rise-pulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  .cas-a{stroke-dasharray:400;animation:cascade 3s linear infinite;}
+  .cas-b{stroke-dasharray:400;animation:cascade 3.5s linear infinite 0.5s;}
+  .cas-c{stroke-dasharray:400;animation:cascade 4s linear infinite 1s;}
+  .node-pulse{animation:glow 2s ease-in-out infinite;}
+  .node-pulse-2{animation:glow 2.6s ease-in-out infinite 0.4s;}
+  .node-pulse-3{animation:glow 3s ease-in-out infinite 0.8s;}
+  @media(prefers-reduced-motion:reduce){
+    .cas-a,.cas-b,.cas-c{animation:none;stroke-dashoffset:0;}
+    .node-pulse,.node-pulse-2,.node-pulse-3{animation:none;opacity:1;}
+  }
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--emerald);}
+  .card.a:hover{box-shadow:5px 5px 0 var(--amber);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--amber);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#9ab89a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#6b8f6b;}
+  .card .plus b{color:var(--emerald);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.a .plus b{color:var(--amber);}
+
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"▸";position:absolute;left:2px;top:8px;font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);font-weight:700;}
+  .block.amber .rules li::before{color:var(--amber);}
+  .rules b{font-weight:500;color:var(--emerald);}
+  .block.amber .rules b{color:var(--amber);}
+
+  /* Legacy timeline — the big one */
+  .legacy-timeline{list-style:none;padding:0;margin:0;}
+  .legacy-timeline li{
+    display:flex;gap:0;padding:0;
+    border-left:2px solid rgba(5,150,105,0.3);
+    margin-left:24px;position:relative;
+  }
+  .legacy-timeline li::before{
+    content:"";position:absolute;left:-6px;top:16px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--emerald);border:2px solid var(--paper);
+  }
+  .legacy-timeline li.amber-node::before{background:var(--amber);}
+  .legacy-timeline .lt-inner{padding:12px 0 20px 20px;width:100%;}
+  .legacy-timeline .lt-year{
+    font-family:"Space Mono",monospace;font-size:13px;font-weight:700;
+    color:var(--emerald);margin-bottom:4px;
+  }
+  .legacy-timeline li.amber-node .lt-year{color:var(--amber);}
+  .legacy-timeline .lt-title{font-family:"Cinzel";font-weight:700;font-size:17px;color:var(--ink);margin-bottom:6px;}
+  .legacy-timeline .lt-body{font-size:14px;color:#9ab89a;line-height:1.6;max-width:700px;}
+  .legacy-timeline .lt-body b{color:var(--ink);font-weight:500;}
+
+  /* Chain diagram */
+  .chain{display:flex;flex-direction:column;gap:0;margin:10px 0 24px;}
+  .chain-node{
+    display:flex;align-items:flex-start;gap:16px;
+    background:var(--cardsolid);border:1px solid var(--line);
+    padding:14px 18px;position:relative;
+  }
+  .chain-node + .chain-node{border-top:none;}
+  .chain-node + .chain-node::before{
+    content:"↓";position:absolute;left:26px;top:-16px;
+    font-family:"Space Mono",monospace;font-size:14px;color:var(--emerald);
+    background:var(--paper);padding:0 4px;
+  }
+  .chain-year{
+    font-family:"Space Mono",monospace;font-size:13px;font-weight:700;
+    color:var(--emerald);min-width:48px;flex-shrink:0;padding-top:2px;
+  }
+  .chain-node.amber .chain-year{color:var(--amber);}
+  .chain-content h4{font-family:"Cinzel";font-weight:700;font-size:16px;color:var(--ink);margin:0 0 4px;}
+  .chain-content p{font-size:13px;color:#9ab89a;margin:0;line-height:1.5;}
+  .chain-content p b{color:var(--ink);}
+
+  /* Stats row */
+  .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin:10px 0;}
+  .stat{border:1px solid var(--line);background:var(--cardsolid);padding:16px;text-align:center;}
+  .stat-num{font-family:"Space Mono",monospace;font-size:26px;font-weight:700;color:var(--emerald);display:block;margin-bottom:4px;}
+  .stat-num.amber{color:var(--amber);}
+  .stat-label{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);}
+
+  .pull{border-left:3px solid var(--emerald);padding:14px 18px;margin:22px 0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:18px;color:#b8d4b8;background:var(--cardsolid);}
+  .pull cite{display:block;margin-top:8px;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--dim);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:44px;padding-top:16px;border-top:1px solid var(--line);line-height:2;}
+  .reveal{opacity:0;transform:translateY(10px);animation:riseup .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes riseup{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.stat,.chain-node{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">george boole series · volume 3 · the long afterlife</span>
+    <div class="masthead">
+      <div>
+        <h1>The <em>Digital</em> Afterlife</h1>
+        <p class="dek">
+          George Boole died in 1864. His algebra sat largely ignored for
+          <b>73 years</b>. Then one graduate student at MIT read it, and recognized
+          that it was the <b>language of electrical circuits</b>. From that moment,
+          every transistor, every chip, every CPU ran on Boole's logic.
+          He is the theoretical foundation of the entire digital world.
+        </p>
+      </div>
+      <!-- Animated cascade: Boole → Shannon → transistor → CPU -->
+      <svg width="190" height="170" viewBox="0 0 190 170" role="img" aria-label="Cascade diagram: Boole 1854 to Shannon 1937 to transistor 1947 to CPU now">
+        <!-- Boole node -->
+        <rect x="60" y="5" width="70" height="28" fill="none" stroke="#059669" stroke-width="1.5" rx="2"/>
+        <text x="95" y="14" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">BOOLE</text>
+        <text x="95" y="25" font-family="Space Mono,monospace" font-size="7" fill="#6b8f6b" text-anchor="middle">1854 · algebra</text>
+        <!-- Line to Shannon -->
+        <line class="cas-a" x1="95" y1="33" x2="95" y2="53" stroke="#059669" stroke-width="1.5" stroke-dasharray="400"/>
+        <!-- Gap label -->
+        <text x="100" y="46" font-family="Space Mono,monospace" font-size="7" fill="#3d5c3d">73 yrs</text>
+        <!-- Shannon node -->
+        <rect class="node-pulse" x="55" y="53" width="80" height="28" fill="rgba(5,150,105,0.08)" stroke="#059669" stroke-width="1.5" rx="2"/>
+        <text x="95" y="62" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">SHANNON</text>
+        <text x="95" y="73" font-family="Space Mono,monospace" font-size="7" fill="#6b8f6b" text-anchor="middle">1937 · circuits</text>
+        <!-- Line to transistor -->
+        <line class="cas-b" x1="95" y1="81" x2="95" y2="99" stroke="#d97706" stroke-width="1.5" stroke-dasharray="400"/>
+        <!-- Transistor node -->
+        <rect class="node-pulse-2" x="50" y="99" width="90" height="28" fill="rgba(217,119,6,0.08)" stroke="#d97706" stroke-width="1.5" rx="2"/>
+        <text x="95" y="108" font-family="Space Mono,monospace" font-size="8" fill="#d97706" text-anchor="middle">TRANSISTOR</text>
+        <text x="95" y="119" font-family="Space Mono,monospace" font-size="7" fill="#8a6020" text-anchor="middle">1947 · boolean switch</text>
+        <!-- Line to CPU -->
+        <line class="cas-c" x1="95" y1="127" x2="95" y2="145" stroke="#059669" stroke-width="1.5" stroke-dasharray="400"/>
+        <!-- CPU node -->
+        <rect class="node-pulse-3" x="40" y="145" width="110" height="20" fill="rgba(5,150,105,0.15)" stroke="#059669" stroke-width="2" rx="2"/>
+        <text x="95" y="158" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle" font-weight="bold">EVERY CPU EVER MADE</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- The numbers -->
+  <span class="band">The scale of what he built — unknowingly</span>
+  <div class="stats">
+    <div class="stat"><span class="stat-num">73</span><span class="stat-label">years ignored · 1864–1937</span></div>
+    <div class="stat"><span class="stat-num amber">1854</span><span class="stat-label">year of the book</span></div>
+    <div class="stat"><span class="stat-num">1937</span><span class="stat-label">shannon rediscovers it</span></div>
+    <div class="stat"><span class="stat-num amber">1947</span><span class="stat-label">first transistor · bell labs</span></div>
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">values · 0 and 1 · still</span></div>
+    <div class="stat"><span class="stat-num amber">∞</span><span class="stat-label">gates running today</span></div>
+  </div>
+
+  <!-- The chain -->
+  <span class="band">The chain — one book to every device</span>
+  <div class="chain">
+    <div class="chain-node">
+      <div class="chain-year">1854</div>
+      <div class="chain-content">
+        <h4>An Investigation of the Laws of Thought</h4>
+        <p>George Boole publishes his algebra of logic in Cork, Ireland. Variables can only be 0 or 1. AND is multiplication, OR is addition, NOT is 1−x. He believes he has found the mathematical structure of rational thought. He is <b>wrong about the mind</b>, completely right about the mathematics. The book sells modestly. Mathematicians notice. Engineers do not exist yet in the relevant sense.</p>
+      </div>
+    </div>
+    <div class="chain-node">
+      <div class="chain-year">1864</div>
+      <div class="chain-content">
+        <h4>Boole dies — the long silence begins</h4>
+        <p>Boole dies at 49. His wife Mary continues to advocate for his work. Mathematicians like De Morgan, Venn (who introduces Venn diagrams in 1880), and later Peirce and Schröder extend the algebra. But it remains a branch of <b>mathematical logic</b> — studied by philosophers and mathematicians, entirely invisible to engineers. The silence lasts 73 years.</p>
+      </div>
+    </div>
+    <div class="chain-node amber">
+      <div class="chain-year">1937</div>
+      <div class="chain-content">
+        <h4>Claude Shannon — the moment everything connects</h4>
+        <p>A 21-year-old MIT graduate student named Claude Shannon writes a master's thesis titled <em>A Symbolic Analysis of Relay and Switching Circuits</em>. He has read Boole. He proves that Boolean algebra — the algebra where everything is 0 or 1 — maps <b>exactly</b> to the behavior of electrical relay circuits: a closed switch is 1 (TRUE), an open switch is 0 (FALSE). AND, OR, NOT become circuit topologies. Logic becomes electricity. This is, arguably, the most important master's thesis ever written.</p>
+      </div>
+    </div>
+    <div class="chain-node">
+      <div class="chain-year">1947</div>
+      <div class="chain-content">
+        <h4>The transistor — Boole's switch in solid state</h4>
+        <p>Shockley, Bardeen, and Brattain at Bell Labs invent the transistor — a semiconductor device that acts as an electrical switch. It is smaller, faster, and more reliable than a relay. And because of Shannon's 1937 result, its behavior is already described by Boolean algebra. A transistor is a <b>Boolean switch in solid state</b>: two states, on and off, 1 and 0. Boole's algebra, now 93 years old, is the design language for a technology that will change the world.</p>
+      </div>
+    </div>
+    <div class="chain-node">
+      <div class="chain-year">1958</div>
+      <div class="chain-content">
+        <h4>The integrated circuit — gates by the thousand</h4>
+        <p>Jack Kilby at Texas Instruments (and Robert Noyce at Fairchild, independently) invents the integrated circuit — multiple transistors on a single piece of semiconductor. Now thousands, then millions, then billions of Boolean gates can fit on a chip the size of a fingernail. Each gate implements Boole's operations: AND, OR, NOT, NAND, NOR, XOR. Each gate has two input states and one output state. Every one was designed using <b>Boolean algebra</b>.</p>
+      </div>
+    </div>
+    <div class="chain-node amber">
+      <div class="chain-year">1971</div>
+      <div class="chain-content">
+        <h4>The microprocessor — a complete CPU from Boolean gates</h4>
+        <p>Intel releases the 4004 — the first commercial microprocessor, a complete CPU on a single chip. It contains 2,300 transistors. Each one is a Boolean switch. The CPU's arithmetic logic unit (ALU) — the part that does addition, subtraction, comparison — is built entirely from Boolean gates. Every branch statement in every program (IF, WHILE, AND, OR, NOT) is evaluated in hardware using Boole's algebra. The cobbler's son's 1854 book is now running in real time, billions of times per second.</p>
+      </div>
+    </div>
+    <div class="chain-node">
+      <div class="chain-year">now</div>
+      <div class="chain-content">
+        <h4>Every digital device — still Boolean</h4>
+        <p>A modern CPU contains tens of billions of transistors — each a Boolean switch. Every operation your computer performs is ultimately decomposed into <b>AND, OR, NOT</b> at the hardware level. Every conditional in every program, every pixel on every screen, every bit in every storage device, every packet in every network — all implemented in circuits whose behavior is described by the algebra George Boole published in Cork in 1854. His two values — TRUE and FALSE — are the alphabet of the digital world.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shannon connection deep dive -->
+  <span class="band">Claude Shannon — the bridge</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>The 1937 thesis</h3>
+      <p class="what">Shannon's master's thesis at MIT explicitly cites Boole. He proves a formal equivalence: Boolean algebra's two values correspond to two states of a relay circuit.</p>
+      <p class="need"><b>insight</b> closed relay = 1, open relay = 0; series = AND, parallel = OR</p>
+      <p class="do"><b>so</b> you could now design circuits by doing Boolean algebra — calculate on paper, then wire exactly what the algebra specifies.</p>
+      <p class="plus"><b>+</b> before Shannon, circuit design was largely empirical. After him, it was engineering science. The change was immediate and total.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Series = AND</h3>
+      <p class="what">Two switches in series: current flows only if both are closed. This is Boolean AND — output is 1 only when both inputs are 1.</p>
+      <p class="need"><b>circuit</b> A —[SW1]—[SW2]— B</p>
+      <p class="do"><b>algebra</b> output = input1 AND input2</p>
+      <p class="plus"><b>+</b> the truth table for a series circuit and the truth table for AND are identical. This is not coincidence — it's the isomorphism Shannon proved.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>Parallel = OR</h3>
+      <p class="what">Two switches in parallel: current flows if either is closed. This is Boolean OR — output is 1 when at least one input is 1.</p>
+      <p class="need"><b>circuit</b> A —[SW1]|[SW2]— B</p>
+      <p class="do"><b>algebra</b> output = input1 OR input2</p>
+      <p class="plus"><b>+</b> De Morgan's laws — which Boole used heavily — translate directly into circuit simplifications. Less wire, fewer switches, same logic.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">04</span>
+      <h3>NAND — the universal gate</h3>
+      <p class="what">The NAND gate (NOT AND) is called "universal" because you can build any other Boolean function from NAND gates alone — AND, OR, NOT, XOR, everything.</p>
+      <p class="need"><b>consequence</b> a chip factory needs only one gate design</p>
+      <p class="do"><b>so</b> real CPUs are often built predominantly from NAND gates — the entire architecture emerges from Boole's one operation, repeatedly composed.</p>
+      <p class="plus"><b>+</b> NOR is also universal. These universal gate results follow directly from Boole's axioms — though he didn't frame them that way. Post and others formalized this in the 1920s–30s.</p>
+    </article>
+  </div>
+
+  <!-- The transistor section -->
+  <span class="band amber">The transistor — Boole made physical</span>
+  <div class="block amber">
+    <ul class="rules">
+      <li>A transistor has two primary states in digital use: <b>fully on</b> (saturated — the switch is closed, current flows = logical 1) and <b>fully off</b> (cut-off — the switch is open, no current = logical 0). These are Boole's two values, implemented in silicon.</li>
+      <li>A <b>NOT gate</b> from a single transistor: if the input (base) is high, the transistor conducts, pulling the output low. If input is low, transistor is off, output is high. One transistor, one Boolean operation.</li>
+      <li>A <b>NAND gate</b> from two transistors in series: both must be on (both inputs = 1) for output to go low. Otherwise output stays high. Two transistors, one gate.</li>
+      <li>A modern <b>CPU arithmetic logic unit (ALU)</b> is built from hundreds of thousands of these gates, arranged in layers: half-adders, full adders, comparators, multiplexers — all built from AND, OR, NOT at the bottom level. All running Boole's algebra.</li>
+      <li>The <b>connection is not metaphorical</b>. The equations printed in Boole's book in 1854 are the equations engineers use to design transistor circuits today. The notation has evolved; the algebra is identical.</li>
+    </ul>
+  </div>
+
+  <!-- Legacy timeline -->
+  <span class="band">The full lineage — 1854 to now</span>
+  <ul class="legacy-timeline">
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1854</div>
+        <div class="lt-title">The Laws of Thought published</div>
+        <div class="lt-body">Boole's complete Boolean algebra. Cork, Ireland. The book that starts everything. Audience: mathematicians and philosophers. Impact on engineering: zero — the required technology doesn't yet exist.</div>
+      </div>
+    </li>
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1880</div>
+        <div class="lt-title">Venn diagrams</div>
+        <div class="lt-body">John Venn publishes his diagrammatic representation of Boolean operations. Venn explicitly credits Boole. The diagrams become the standard pedagogical tool for Boolean logic — and remain so in every introductory logic course today.</div>
+      </div>
+    </li>
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1898–1910</div>
+        <div class="lt-title">Formalization — Whitehead and Russell</div>
+        <div class="lt-body">Whitehead and Russell's <em>Principia Mathematica</em> builds on Boole's work to construct a formal logical foundation for mathematics. Boole's algebra is now recognized as foundational — but still purely abstract. The engineering applications are invisible.</div>
+      </div>
+    </li>
+    <li class="amber-node">
+      <div class="lt-inner">
+        <div class="lt-year">1937</div>
+        <div class="lt-title">Shannon — the thesis that built computing</div>
+        <div class="lt-body"><b>Claude Shannon</b>, 21 years old, proves Boolean algebra maps to electrical circuits. "A Symbolic Analysis of Relay and Switching Circuits," MIT master's thesis. Immediate practical impact: engineers now have a mathematical framework for circuit design. The 73-year sleep ends.</div>
+      </div>
+    </li>
+    <li class="amber-node">
+      <div class="lt-inner">
+        <div class="lt-year">1947</div>
+        <div class="lt-title">The transistor</div>
+        <div class="lt-body"><b>Bardeen, Brattain, and Shockley</b> at Bell Labs invent the point-contact transistor. It is smaller, faster, and more reliable than a relay. It is a Boolean switch. Because Shannon proved relay algebra is Boolean algebra, transistors inherit the entire mathematical framework instantly. Nobel Prize, 1956.</div>
+      </div>
+    </li>
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1949–1952</div>
+        <div class="lt-title">First stored-program computers</div>
+        <div class="lt-body">ENIAC, Manchester Baby, EDVAC, UNIVAC — the first general-purpose computers are built from vacuum tubes and later transistors. Their logic is entirely Boolean. Boole's three operations — AND, OR, NOT — are implemented at the hardware level in every one of these machines.</div>
+      </div>
+    </li>
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1958</div>
+        <div class="lt-title">Integrated circuit</div>
+        <div class="lt-body"><b>Jack Kilby</b> (Texas Instruments) and <b>Robert Noyce</b> (Fairchild) independently invent the integrated circuit. Thousands of Boolean gates on a single silicon chip. Boole's algebra scales. The density doubles roughly every two years — Moore's Law — but the underlying algebra is unchanged since 1854.</div>
+      </div>
+    </li>
+    <li class="amber-node">
+      <div class="lt-inner">
+        <div class="lt-year">1971</div>
+        <div class="lt-title">Intel 4004 — the first microprocessor</div>
+        <div class="lt-body">2,300 transistors on a chip smaller than a thumbnail. A complete CPU. Every arithmetic operation is Boolean algebra in hardware. Every conditional branch evaluates a Boolean expression. The cobbler's son's algebra runs in real time, billions of operations per second. The world has no idea who George Boole was.</div>
+      </div>
+    </li>
+    <li>
+      <div class="lt-inner">
+        <div class="lt-year">1984–2005</div>
+        <div class="lt-title">Personal computing — Boole reaches everyone</div>
+        <div class="lt-body">The Macintosh (1984), Windows, the internet, the mobile phone — consumer electronics built on layers of abstraction, but at the bottom: transistors in Boolean configurations, running Boole's algebra. Every search query (AND, OR, NOT in database logic), every spreadsheet conditional (IF), every email filter is applied Boolean algebra.</div>
+      </div>
+    </li>
+    <li class="amber-node">
+      <div class="lt-inner">
+        <div class="lt-year">now</div>
+        <div class="lt-title">Tens of billions of transistors — per chip</div>
+        <div class="lt-body">A modern CPU contains 10–100 billion transistors. Each is a Boolean switch. The instructions your CPU executes — ADD, COMPARE, BRANCH — are implemented in Boolean gate networks. The AI models generating text, the compression algorithms shrinking your photos, the cryptography protecting your messages — all run on hardware whose fundamental unit of operation is the Boolean gate. George Boole's two values, his three operations, his 1854 algebra: still the alphabet.</div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Pull quote -->
+  <blockquote class="pull">
+    "Boolean algebra is not a curiosity from the history of philosophy. It is the operating system of reality as we have built it."
+    <cite>— editorial characterization, george boole series vol. 3</cite>
+  </blockquote>
+
+  <!-- Why it took 73 years -->
+  <span class="band">Why 73 years? — the delay explained</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Boole's algebra was <b>published in a philosophical context</b> — he framed it as a theory of mind. Engineers in 1854 didn't read philosophical mathematics, and mathematical logicians didn't design circuits. The communities were completely separate.</li>
+      <li>The technology didn't exist yet. In 1854, there were no <b>switching circuits</b> in the modern sense. The telegraph used relays, but systematic relay network design wasn't a recognized engineering problem. The reason to care about Boolean circuit algebra didn't exist until circuits were complex enough to need systematic design.</li>
+      <li>Shannon's genius wasn't the mathematics (that was Boole's) — it was <b>recognizing the connection</b> between a philosophical algebra and an engineering problem. This kind of cross-domain recognition is exceptionally rare. It requires reading outside your immediate field — which most engineers don't do, and most mathematicians didn't think of applying this way.</li>
+      <li>The interim period was not wasted: <b>Peirce, Schröder, Venn, Whitehead, Russell, Huntington</b> all extended and formalized Boolean algebra between 1864 and 1937. Shannon inherited a mature, rigorously formalized system — not the slightly rough original. The 73 years of "ignoring" it in engineering was also 73 years of <b>refining it</b> in logic.</li>
+      <li>The lesson: <b>timing in science is everything</b>. A result published before the technology that will need it exists can wait decades — or forever — for its application. Boole was lucky. Shannon was paying attention.</li>
+    </ul>
+  </div>
+
+  <!-- The full legacy summary -->
+  <span class="band amber">What every computer owes George Boole</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>Every conditional statement</h3>
+      <p class="what">Every IF statement in every programming language evaluates a Boolean expression — a direct implementation of Boole's 0/1 algebra.</p>
+      <p class="need"><b>example</b> IF (a AND b) THEN ... is Boolean algebra executed in hardware</p>
+      <p class="do"><b>so</b> every branching decision in software, from a mobile app to a nuclear reactor controller, is George Boole's algebra running in silicon.</p>
+      <p class="plus"><b>+</b> Python, Java, C, Rust, JavaScript — every language has AND, OR, NOT as primitive operators. They come directly from Boole's 1854 system.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Every search query</h3>
+      <p class="what">Database queries using WHERE clauses, search engines using AND/OR/NOT between terms — all Boolean algebra applied to information retrieval.</p>
+      <p class="need"><b>example</b> "boole AND logic NOT philosophy" — three Boolean operations</p>
+      <p class="do"><b>so</b> Google, every database, every file system search is a live application of Boole's class interpretation of his algebra.</p>
+      <p class="plus"><b>+</b> Boole's class version (AND=intersection, OR=union, NOT=complement) is exactly what a database query optimizer computes on sets of records.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>Every bit of storage</h3>
+      <p class="what">All digital storage — RAM, SSD, hard drive, tape — stores Boole's two values. 0 and 1. Every byte is eight Boolean variables.</p>
+      <p class="need"><b>scale</b> exabytes of storage worldwide = exabytes of Boolean values</p>
+      <p class="do"><b>so</b> every book ever digitized, every photo ever taken, every message ever sent is stored as sequences of Boole's fundamental 0s and 1s.</p>
+      <p class="plus"><b>+</b> there is no alternative representation at the physical level. The transistor's two states are not an engineering choice — they are the implementation of Boole's axiom that x² = x.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">04</span>
+      <h3>The AI you're reading</h3>
+      <p class="what">Large language models like the AI systems of today run on GPUs — billions of Boolean gates performing matrix multiplications at enormous scale.</p>
+      <p class="need"><b>hardware level</b> every multiply-accumulate is Boolean gates in silicon</p>
+      <p class="do"><b>so</b> the AI generating text, answering questions, writing code is running on hardware whose fundamental operation is Boolean algebra. Boole's two values are underneath everything.</p>
+      <p class="plus"><b>+</b> the series you're reading was assembled with AI assistance running on chips that wouldn't exist without Boole. The cobbler's son from Lincoln is in this sentence, structurally.</p>
+    </article>
+  </div>
+
+  <span class="band dim">Honest limits — what Boole didn't do</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Boole did <b>not</b> invent the transistor. He did not invent the computer. He did not make the connection to circuits — Shannon did. His contribution was the abstract algebra, which became essential 73 years after he died.</li>
+      <li>Boole's original algebra had some <b>inconsistencies and inelegancies</b> that later mathematicians cleaned up. Huntington's 1904 axiomatization is cleaner than Boole's original. The system we call Boolean algebra today is partly Boole and partly his successors.</li>
+      <li>The claim that his algebra is "the language of thought" — his own claim — is <b>not supported</b> by cognitive science. Human reasoning is not Boolean. The brain does not operate in strict 0/1 logic. Boole was wrong about the motivation; the mathematics still works.</li>
+      <li>The 73-year delay is real history, but it's important not to romanticize it as <b>"ignored genius."</b> Boole was recognized and respected in his lifetime — Gold Medal from the Royal Society, prestigious professorship. He was not a tragic unknown. He was a working mathematician whose work later found an unexpected application.</li>
+      <li>Shannon is sometimes under-credited in the Boole narrative. The connection between Boolean algebra and circuits was <b>not obvious</b>. Shannon's contribution was genuinely creative — not merely transcription. Both deserve their place in the lineage.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    george boole series · volume 3 · the long afterlife · 1854 → 1937 → transistor → every cpu ever made
+  </p>
+</div>
+</body>
+</html>

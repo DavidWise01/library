@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isaac Newton — Vol. 2: His World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0d0a05;
+      --paper-mid: #14100a;
+      --paper-light: #1e1810;
+      --crimson: #991b1b;
+      --crimson-dim: #7a1515;
+      --crimson-glow: rgba(153,27,27,0.18);
+      --gold: #c49a2a;
+      --gold-dim: #a07d1e;
+      --gold-glow: rgba(196,154,42,0.15);
+      --text: #e8dfc8;
+      --text-dim: #a89880;
+      --text-faint: #5a4f40;
+      --border: rgba(196,154,42,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--text);
+      font-family: 'Newsreader', Georgia, serif; font-size: 18px;
+      line-height: 1.75; min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,5,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem; display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid; grid-template-columns: 1fr 400px; gap: 3rem;
+      align-items: center; padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 55%, #0a0d0a 100%);
+      border-bottom: 1px solid var(--border); min-height: 480px;
+      position: relative; overflow: hidden;
+    }
+    .masthead::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(196,154,42,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+
+    .volume-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Cinzel', serif; font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--text); margin-bottom: 0.5rem;
+    }
+    h1 .subtitle {
+      display: block; font-weight: 500; font-size: 0.5em;
+      color: var(--crimson); letter-spacing: 0.12em; margin-top: 0.4rem;
+    }
+    .masthead-lede {
+      font-size: 1.15rem; font-style: italic; color: var(--text-dim); margin-top: 1.5rem;
+      max-width: 55ch; border-left: 3px solid var(--gold); padding-left: 1.2rem; line-height: 1.6;
+    }
+    .masthead-art { position: relative; display: flex; align-items: center; justify-content: center; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.7rem;
+      color: var(--gold); margin: 3.5rem 0 1.2rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.1rem; color: var(--text); margin: 2rem 0 0.6rem; }
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 0.3rem;
+    }
+    .band {
+      display: inline-block; background: var(--crimson); color: #f5e8d0;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.2em 0.7em; border-radius: 2px;
+      margin-right: 0.5rem; margin-bottom: 0.3rem; vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #0d0a05; }
+    .band-dark { background: #2a2018; color: var(--text-dim); border: 1px solid var(--border); }
+
+    /* ── PERSON PROFILES ── */
+    .person-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem; margin: 2rem 0 3rem;
+    }
+    .person-card {
+      background: var(--paper-mid); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem; position: relative; overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .person-card:hover {
+      transform: translateY(-4px); border-color: var(--gold);
+      box-shadow: 0 10px 36px var(--gold-glow);
+    }
+    .person-initial {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 3rem;
+      color: rgba(196,154,42,0.12); position: absolute; top: 0.5rem; right: 1rem;
+      line-height: 1; pointer-events: none;
+    }
+    .person-relation {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .relation-ally { color: var(--gold); }
+    .relation-rival { color: var(--crimson); }
+    .person-name {
+      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.2rem;
+    }
+    .person-dates {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      color: var(--text-faint); margin-bottom: 1rem;
+    }
+    .person-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+
+    /* ── PLACE PANELS ── */
+    .place-panel {
+      background: var(--paper-mid); border: 1px solid var(--border); border-radius: 8px;
+      margin: 1.5rem 0; padding: 2rem; display: grid;
+      grid-template-columns: 120px 1fr; gap: 1.8rem; align-items: start;
+      transition: border-color 0.25s;
+    }
+    .place-panel:hover { border-color: var(--crimson); }
+    .place-year-block {
+      text-align: center; background: var(--paper-light); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1rem;
+    }
+    .place-year {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.5rem;
+      color: var(--gold); display: block; line-height: 1;
+    }
+    .place-label {
+      font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-faint); margin-top: 0.4rem; display: block;
+    }
+    .place-content h3 { font-size: 1.05rem; margin: 0 0 0.6rem; }
+    .place-content p { font-size: 0.93rem; color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+
+    /* ── ALCHEMY BOX ── */
+    .alchemy-box {
+      background: linear-gradient(135deg, #0e0c06, #12100a);
+      border: 1px solid rgba(196,154,42,0.3); border-radius: 8px;
+      padding: 2.5rem; margin: 2.5rem 0; position: relative; overflow: hidden;
+    }
+    .alchemy-box::before {
+      content: '☿'; position: absolute; right: 1.5rem; top: 1rem;
+      font-size: 6rem; color: rgba(196,154,42,0.06); line-height: 1; pointer-events: none;
+    }
+    .alchemy-box h3 { font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 1rem; }
+    .alchemy-box p { font-size: 0.95rem; color: var(--text-dim); max-width: none; }
+
+    blockquote {
+      margin: 2.5rem 0; padding: 1.8rem 2rem;
+      background: var(--paper-light); border-left: 4px solid var(--crimson);
+      border-radius: 0 6px 6px 0; font-style: italic; font-size: 1.1rem; color: var(--text);
+    }
+    blockquote cite {
+      display: block; font-style: normal; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-dim);
+      margin-top: 0.8rem; text-transform: uppercase;
+    }
+
+    /* ── CONTEXT TABLE ── */
+    .context-table {
+      width: 100%; border-collapse: collapse; margin: 1.5rem 0 2.5rem;
+      font-size: 0.92rem;
+    }
+    .context-table th {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-dim); padding: 0.7rem 1rem;
+      border-bottom: 2px solid var(--border); text-align: left; background: var(--paper-mid);
+    }
+    .context-table td {
+      padding: 0.9rem 1rem; border-bottom: 1px solid rgba(196,154,42,0.07);
+      vertical-align: top; color: var(--text-dim); line-height: 1.5;
+    }
+    .context-table td:first-child {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--gold);
+      white-space: nowrap; width: 80px;
+    }
+    .context-table tr:hover td { background: rgba(196,154,42,0.03); }
+
+    /* ── MINT SECTION ── */
+    .mint-stats {
+      display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 1.5rem 0;
+    }
+    .mint-stat {
+      flex: 1 1 150px; background: var(--paper-mid); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.2rem; text-align: center;
+    }
+    .mint-stat .num {
+      font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 800;
+      color: var(--gold); display: block; line-height: 1;
+    }
+    .mint-stat .lbl {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-faint); margin-top: 0.4rem; display: block;
+    }
+
+    .vol-nav {
+      display: flex; gap: 1rem; justify-content: space-between; margin-top: 4rem; flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    .colophon {
+      margin-top: 6rem; padding: 2rem; border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--text-faint); text-align: center; line-height: 2;
+    }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+      .place-panel { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Isaac Newton · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-principia.html">Vol. 1 — Work</a>
+  <a href="2-world.html" class="active">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 2 of 4 · Context &amp; Contemporaries</span>
+    <h1>
+      His World
+      <span class="subtitle">Restoration England · The Royal Society · The Rivals</span>
+    </h1>
+    <p class="masthead-lede">
+      Newton did not emerge from a void. He inhabited a specific, turbulent, extraordinary
+      century — plague, civil war, the Restoration, and the birth of organized science.
+      The men around him shaped him, and he shaped the century.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Prism splitting white light into spectrum -->
+    <svg viewBox="0 0 380 380" width="380" height="380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="darkBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#0e0c10"/>
+          <stop offset="100%" stop-color="#0d0a05"/>
+        </radialGradient>
+        <linearGradient id="whiteBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0.85)"/>
+        </linearGradient>
+        <filter id="specGlow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <!-- Animated opacity for beam shimmer -->
+        <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="white" stop-opacity="0">
+            <animate attributeName="stop-opacity" values="0;0.7;0;0.7;0" dur="4s" repeatCount="indefinite"/>
+          </stop>
+          <stop offset="100%" stop-color="white" stop-opacity="0.6">
+            <animate attributeName="stop-opacity" values="0.6;1;0.6;1;0.6" dur="4s" repeatCount="indefinite"/>
+          </stop>
+        </linearGradient>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#darkBg)"/>
+
+      <!-- White light beam entering prism from left -->
+      <g filter="url(#specGlow)">
+        <polygon points="60,180 155,174 155,186" fill="url(#whiteBeam)" opacity="0.7"/>
+        <!-- shimmer overlay -->
+        <polygon points="60,180 155,174 155,186" fill="url(#shimmer)"/>
+      </g>
+
+      <!-- Prism shape (triangle) -->
+      <polygon points="155,130 230,250 80,250"
+        fill="#1a1828" stroke="#c49a2a" stroke-width="1.5" opacity="0.9"/>
+      <!-- prism glass effect -->
+      <polygon points="155,130 230,250 80,250"
+        fill="url(#prismFill)" opacity="0.15"/>
+      <defs>
+        <linearGradient id="prismFill" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8899cc"/>
+          <stop offset="100%" stop-color="#334466"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Spectrum rays emerging from prism right face, fanning out -->
+      <!-- Red -->
+      <line x1="200" y1="192" x2="355" y2="145" stroke="#ff3333" stroke-width="2.5" opacity="0.9" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="3s" repeatCount="indefinite"/>
+      </line>
+      <!-- Orange -->
+      <line x1="200" y1="196" x2="355" y2="172" stroke="#ff8800" stroke-width="2.5" opacity="0.9" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.85;1;0.85" dur="3.2s" repeatCount="indefinite"/>
+      </line>
+      <!-- Yellow -->
+      <line x1="200" y1="200" x2="355" y2="198" stroke="#ffee00" stroke-width="2.5" opacity="0.9" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2.8s" repeatCount="indefinite"/>
+      </line>
+      <!-- Green -->
+      <line x1="200" y1="204" x2="355" y2="224" stroke="#44cc44" stroke-width="2.5" opacity="0.9" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.85;1;0.85" dur="3.5s" repeatCount="indefinite"/>
+      </line>
+      <!-- Blue -->
+      <line x1="200" y1="208" x2="355" y2="250" stroke="#3399ff" stroke-width="2.5" opacity="0.9" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="3.1s" repeatCount="indefinite"/>
+      </line>
+      <!-- Indigo -->
+      <line x1="200" y1="212" x2="345" y2="276" stroke="#5522cc" stroke-width="2.5" opacity="0.85" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.8;0.95;0.8" dur="2.9s" repeatCount="indefinite"/>
+      </line>
+      <!-- Violet -->
+      <line x1="200" y1="216" x2="325" y2="300" stroke="#bb44ff" stroke-width="2.5" opacity="0.85" filter="url(#specGlow)">
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="3.3s" repeatCount="indefinite"/>
+      </line>
+
+      <!-- Color labels on right -->
+      <g font-family="'Space Mono', monospace" font-size="9" letter-spacing="0.05em" text-anchor="start">
+        <text x="312" y="140" fill="#ff6666" opacity="0.8">RED</text>
+        <text x="318" y="168" fill="#ffaa44" opacity="0.8">ORANGE</text>
+        <text x="320" y="195" fill="#ffee44" opacity="0.8">YELLOW</text>
+        <text x="318" y="222" fill="#66dd66" opacity="0.8">GREEN</text>
+        <text x="314" y="249" fill="#66aaff" opacity="0.8">BLUE</text>
+        <text x="302" y="275" fill="#8855ee" opacity="0.8">INDIGO</text>
+        <text x="282" y="300" fill="#cc66ff" opacity="0.8">VIOLET</text>
+      </g>
+
+      <!-- "White light" label on input beam -->
+      <text x="60" y="168" font-family="'Space Mono', monospace" font-size="9.5"
+        fill="white" opacity="0.6" letter-spacing="0.05em">WHITE</text>
+      <text x="60" y="180" font-family="'Space Mono', monospace" font-size="9.5"
+        fill="white" opacity="0.6" letter-spacing="0.05em">LIGHT</text>
+
+      <!-- Opticks 1704 label -->
+      <text x="190" y="340" text-anchor="middle" font-family="'Space Mono', monospace"
+        font-size="10.5" fill="#c49a2a" letter-spacing="1" opacity="0.8">
+        Opticks · MDCCIV · Experimentum Crucis
+      </text>
+
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#c49a2a" stroke-width="0.8" opacity="0.2"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <section id="england">
+    <h2>Restoration England — The World Newton Inherited</h2>
+
+    <p>
+      Newton was born into a country that had just executed its King. The English Civil War
+      (1642–1651) had convulsed England throughout his infancy. By the time he reached
+      Cambridge, Charles II had been restored to the throne (1660) and the cultural life of
+      the nation was experiencing a peculiar, energetic renaissance — theaters reopened,
+      scientific societies formed, and the old certainties of Aristotelianism began crumbling.
+    </p>
+
+    <p>
+      The Restoration was both libertine and intellectually explosive. The same decade that
+      produced Nell Gwyn and Samuel Pepys's diaries also produced the Royal Society, the
+      first serious English scientific journal, and the atmosphere in which the <em>Principia</em>
+      would eventually be possible.
+    </p>
+
+    <table class="context-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Event in England</th>
+          <th>Newton's Life</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1642</td>
+          <td>English Civil War begins. Galileo dies in Italy.</td>
+          <td>Newton born at Woolsthorpe, Christmas Day.</td>
+        </tr>
+        <tr>
+          <td>1649</td>
+          <td>Execution of King Charles I.</td>
+          <td>Age 6. Living with grandmother at Woolsthorpe.</td>
+        </tr>
+        <tr>
+          <td>1660</td>
+          <td>Restoration of Charles II. Royal Society founded.</td>
+          <td>Age 17. Preparing for Cambridge.</td>
+        </tr>
+        <tr>
+          <td>1661</td>
+          <td>First meetings of the Royal Society formalized.</td>
+          <td>Enters Trinity College, Cambridge, as sizar.</td>
+        </tr>
+        <tr>
+          <td>1665</td>
+          <td>Great Plague of London. 100,000 dead in the city.</td>
+          <td>Cambridge closes. Returns to Woolsthorpe.</td>
+        </tr>
+        <tr>
+          <td>1666</td>
+          <td>Great Fire of London destroys 13,000 houses.</td>
+          <td>The annus mirabilis — calculus, gravity, light.</td>
+        </tr>
+        <tr>
+          <td>1687</td>
+          <td>Glorious Revolution (1688) approaching. James II.</td>
+          <td>Principia Mathematica published.</td>
+        </tr>
+        <tr>
+          <td>1696</td>
+          <td>Great Recoinage crisis — debased coin threatens trade.</td>
+          <td>Appointed Warden of the Royal Mint.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="royal-society">
+    <h2>The Royal Society — Founded 1660</h2>
+
+    <p>
+      The Royal Society of London for Improving Natural Knowledge was founded in 1660 by
+      a group of philosophers and gentlemen who had been meeting informally since the 1640s.
+      Its motto — <em>Nullius in verba</em> ("Take nobody's word for it") — was a deliberate
+      rejection of scholastic authority in favor of experiment and observation.
+    </p>
+
+    <p>
+      Newton was elected Fellow in 1672, when he presented his reflecting telescope. He was
+      not an enthusiastic participant — he found the Society's meetings provincial and its
+      members meddlesome — but he dominated it utterly from 1703, when he became President,
+      until his death in 1727.
+    </p>
+
+    <div class="place-panel">
+      <div class="place-year-block">
+        <span class="place-year">1660</span>
+        <span class="place-label">Founded</span>
+      </div>
+      <div class="place-content">
+        <h3>Gresham College &amp; then Crane Court</h3>
+        <p>The Royal Society met first at Gresham College in London. Its early Fellows included Christopher Wren (architect of St Paul's Cathedral), Robert Boyle (Boyle's Law), John Evelyn, and Samuel Pepys. The Society commissioned, debated, and sometimes suppressed the great scientific papers of the era. Its <em>Philosophical Transactions</em> — first published 1665 — is the world's oldest continuously published scientific journal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="places">
+    <h2>The Places That Shaped Him</h2>
+
+    <div class="place-panel">
+      <div class="place-year-block">
+        <span class="place-year">1643</span>
+        <span class="place-label">Birthplace</span>
+      </div>
+      <div class="place-content">
+        <h3>Woolsthorpe Manor, Lincolnshire</h3>
+        <p>A modest limestone manor house in the village of Woolsthorpe-by-Colsterworth. The apple orchard where Newton reportedly observed the famous apple still exists. The house is now owned by the National Trust and preserved as a museum. Newton returned here in 1665–1666 during the plague closure of Cambridge and performed the most productive thinking of his life in its rooms and gardens.</p>
+      </div>
+    </div>
+
+    <div class="place-panel">
+      <div class="place-year-block">
+        <span class="place-year">1661</span>
+        <span class="place-label">University</span>
+      </div>
+      <div class="place-content">
+        <h3>Trinity College, Cambridge</h3>
+        <p>The largest of Cambridge's colleges, founded by Henry VIII. Newton entered as a sizar, doing menial work for richer students. He studied in his rooms for years at a time with almost no human contact. He was elected to a Fellowship in 1667 and succeeded Isaac Barrow as Lucasian Professor in 1669. He occupied the same set of rooms for decades. The Wren Library at Trinity holds his annotated copy of Euclid's <em>Elements</em>.</p>
+      </div>
+    </div>
+
+    <div class="place-panel">
+      <div class="place-year-block">
+        <span class="place-year">1696</span>
+        <span class="place-label">London</span>
+      </div>
+      <div class="place-content">
+        <h3>The Royal Mint — Tower of London</h3>
+        <p>Newton moved to London in 1696 as Warden (later Master) of the Royal Mint, housed within the Tower of London. He oversaw the Great Recoinage of 1696–1699, replacing England's badly degraded silver coinage. He applied his analytical mind to the task of detecting counterfeiters and prosecuted them with relentless energy. He personally attended interrogations and provided evidence at trials.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="people">
+    <h2>The People Around Him</h2>
+    <span class="kick">Allies · Rivals · Contemporaries</span>
+
+    <div class="person-grid">
+
+      <div class="person-card">
+        <div class="person-initial">H</div>
+        <div class="person-relation relation-ally">Ally · Patron</div>
+        <div class="person-name">Edmond Halley</div>
+        <div class="person-dates">1656 – 1742</div>
+        <p>
+          Astronomer, mathematician, and the essential catalyst for the <em>Principia.</em>
+          Halley visited Newton in Cambridge in 1684 to ask whether an inverse-square gravity
+          would produce elliptical orbits. Newton said yes — he had already proved it.
+          Halley recognized what he was holding and immediately pushed Newton to write it up.
+          When the Royal Society declined to fund publication, Halley paid for it himself.
+          He computed the orbit of the comet that now bears his name using Newtonian mechanics,
+          predicting its return. It did return, in 1758.
+        </p>
+      </div>
+
+      <div class="person-card">
+        <div class="person-initial">H</div>
+        <div class="person-relation relation-rival">Rival · Antagonist</div>
+        <div class="person-name">Robert Hooke</div>
+        <div class="person-dates">1635 – 1703</div>
+        <p>
+          Curator of Experiments at the Royal Society and one of the era's great scientists —
+          Hooke's Law (elasticity), the compound microscope, coining the word "cell."
+          Hooke and Newton clashed first over optics (1672) when Hooke dismissed Newton's
+          theory of light as derivative of his own work. Later Hooke claimed credit for the
+          inverse-square law of gravity. Newton, who loathed any suggestion of having borrowed
+          an idea, never forgave him. After Hooke died in 1703, Newton became President of
+          the Royal Society and Hooke's portrait — the only known image of him — disappeared.
+        </p>
+      </div>
+
+      <div class="person-card">
+        <div class="person-initial">L</div>
+        <div class="person-relation relation-rival">Rival · Parallel Inventor</div>
+        <div class="person-name">Gottfried Wilhelm Leibniz</div>
+        <div class="person-dates">1646 – 1716</div>
+        <p>
+          German polymath who independently invented calculus in the 1670s and published in
+          1684 — eight years before Newton. Leibniz's notation (dy/dx, ∫) is what we use
+          today. Newton had priority by a decade but told almost no one. The dispute over
+          credit became one of the most bitter in the history of science. The Royal Society
+          investigated in 1712 and found in Newton's favor — but Newton had engineered the
+          investigation himself. Modern historians credit both men independently. Leibniz
+          died in 1716, largely ostracized; Newton eulogized him to his face then proceeded
+          to poison his reputation.
+        </p>
+      </div>
+
+      <div class="person-card">
+        <div class="person-initial">B</div>
+        <div class="person-relation relation-ally">Teacher · Predecessor</div>
+        <div class="person-name">Isaac Barrow</div>
+        <div class="person-dates">1630 – 1677</div>
+        <p>
+          First Lucasian Professor of Mathematics at Cambridge and Newton's teacher and patron.
+          Barrow recognized Newton's extraordinary ability and, in 1669, resigned the Lucasian
+          chair so that Newton — then only 26 — could be appointed in his place. He then
+          became chaplain to Charles II. Without Barrow's extraordinary generosity, Newton
+          might not have had the institutional security to produce the <em>Principia.</em>
+        </p>
+      </div>
+
+      <div class="person-card">
+        <div class="person-initial">F</div>
+        <div class="person-relation relation-rival">Priority Dispute</div>
+        <div class="person-name">John Flamsteed</div>
+        <div class="person-dates">1646 – 1719</div>
+        <p>
+          England's first Astronomer Royal, stationed at the Royal Observatory at Greenwich.
+          Newton needed Flamsteed's observational data to test his lunar theory but Flamsteed
+          was protective of his unpublished observations. Newton eventually obtained and
+          published Flamsteed's star catalog without permission. Flamsteed spent years
+          buying up copies and burning them. Their relationship was one of sustained mutual
+          contempt.
+        </p>
+      </div>
+
+      <div class="person-card">
+        <div class="person-initial">L</div>
+        <div class="person-relation relation-ally">Friend · Philosopher</div>
+        <div class="person-name">John Locke</div>
+        <div class="person-dates">1632 – 1704</div>
+        <p>
+          The political philosopher and one of Newton's closest friends — one of very few
+          people Newton trusted. They shared heterodox views on Christianity (both rejected
+          the Trinity, a deeply dangerous position). Newton sent Locke a disturbing letter
+          during his 1693 breakdown, accusing him of trying to "embroil" him with women.
+          Newton later wrote a contrite apology. Locke understood him and forgave him.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="alchemy">
+    <h2>The Secret Newton — Alchemy and Theology</h2>
+
+    <div class="alchemy-box">
+      <h3>Newton the Alchemist</h3>
+      <p>
+        Newton spent more time on alchemy than on physics. His surviving manuscripts
+        include over a million words on alchemical and theological subjects — roughly
+        ten times the length of the <em>Principia.</em> He maintained a laboratory in
+        his Cambridge rooms where he worked through the night conducting alchemical
+        experiments, often emerging at dawn red-eyed and exhausted.
+      </p>
+      <br/>
+      <p>
+        He studied the <em>Emerald Tablet,</em> corresponded with alchemists across
+        Europe, and collected every alchemical text he could find. He was searching
+        for the <em>prisca sapientia</em> — the ancient wisdom — believing that the
+        ancients had encoded the structure of nature in symbolic language.
+        He referred to this search, in his notebooks, as the "quest for the vegetable spirit"
+        that was the root of all matter.
+      </p>
+      <br/>
+      <p>
+        The economic historian John Maynard Keynes, who purchased Newton's alchemical papers
+        at auction in 1936, called him "the last of the magicians." Newton's 1693 nervous
+        breakdown is sometimes attributed to mercury poisoning from years of alchemical
+        experiments. Analysis of his surviving hair confirms elevated mercury levels.
+      </p>
+    </div>
+
+    <h3>Newton the Theologian</h3>
+
+    <p>
+      Newton was privately, profoundly heterodox. He rejected the doctrine of the Trinity —
+      a position that was not merely eccentric but illegal in England under the Blasphemy
+      Act. Had he been known as an Arian (as he was), he would have been stripped of his
+      positions and possibly prosecuted.
+    </p>
+
+    <p>
+      He wrote extensively on biblical chronology, attempting to reconstruct the exact
+      dates of ancient history using astronomical observations recorded in the Bible.
+      He believed Daniel and the Book of Revelation were literal prophecies of historical
+      events, and he spent decades trying to decode them. He believed the prophecies pointed
+      to a final conflagration around the year 2060.
+    </p>
+
+    <blockquote>
+      "Gravity explains the motions of the planets, but it cannot explain who sets the planets
+      in motion. I see no reason to explain the wonderful order of the universe by anything
+      but the wisdom and skill of an intelligent Being."
+      <cite>— Newton, letter to Richard Bentley, 1692</cite>
+    </blockquote>
+  </section>
+
+  <section id="mint">
+    <h2>Master of the Mint — The Great Recoinage</h2>
+
+    <p>
+      By 1696, England's silver coinage was in crisis. Clipping — shaving silver from coin
+      edges — had become so pervasive that the official coins of the realm often contained
+      less than half their face value in silver. Trade was collapsing. The government decided
+      on a complete recall and recoinage.
+    </p>
+
+    <p>
+      Newton, appointed Warden in 1696 and Master of the Mint in 1699, applied his
+      analytical mind to the problem with the same intensity he had brought to the motions
+      of the planets. He oversaw the introduction of milled edges on coins (making clipping
+      obvious), streamlined the minting process, and personally hunted counterfeiters.
+    </p>
+
+    <div class="mint-stats">
+      <div class="mint-stat">
+        <span class="num">£6.8M</span>
+        <span class="lbl">Recoined 1696–1699</span>
+      </div>
+      <div class="mint-stat">
+        <span class="num">20+</span>
+        <span class="lbl">Counterfeiters Executed</span>
+      </div>
+      <div class="mint-stat">
+        <span class="num">1699</span>
+        <span class="lbl">Appointed Master of Mint</span>
+      </div>
+      <div class="mint-stat">
+        <span class="num">28</span>
+        <span class="lbl">Years at the Mint</span>
+      </div>
+    </div>
+
+    <p>
+      Newton was particularly aggressive in pursuing William Chaloner, a notorious
+      counterfeiter and informer who had embarrassed the Mint before Parliament.
+      Newton personally gathered testimony and built the case that sent Chaloner
+      to the gallows at Tyburn in 1699. He did not hesitate.
+    </p>
+  </section>
+
+  <div class="vol-nav">
+    <a href="1-principia.html">&larr; Vol. 1 — The Work</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy &rarr;</a>
+  </div>
+
+  <footer class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp;
+    David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    CC-BY-ND-4.0 &nbsp;|&nbsp;
+    Isaac Newton Library Series &nbsp;|&nbsp;
+    Volume 2: His World
+  </footer>
+
+</main>
+</body>
+</html>

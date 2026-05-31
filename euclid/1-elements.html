@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Euclid — Vol. 1: The Elements</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0f1108;
+      --gold: #c9a227;
+      --ivory: #e8d8a0;
+      --dim: #6b6540;
+      --mid: #2a2910;
+      --card-bg: #141509;
+      --border: rgba(201,162,39,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ivory);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    nav {
+      background: rgba(15,17,8,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--ivory);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(232,216,160,0.8);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--ivory);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    p { margin-bottom: 1.1rem; color: rgba(232,216,160,0.88); }
+
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .band {
+      display: inline-block;
+      background: var(--gold);
+      color: #0f1108;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.6rem;
+    }
+
+    .card p { font-size: 0.9rem; color: rgba(232,216,160,0.72); line-height: 1.65; }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(201,162,39,0.05);
+    }
+
+    blockquote p { font-size: 1.15rem; font-style: italic; color: var(--ivory); margin: 0; }
+
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* PROPOSITION DISPLAY */
+    .proposition {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      padding: 1.4rem 1.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .prop-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .proposition p {
+      font-style: italic;
+      color: var(--ivory);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    /* POSTULATES BOX */
+    .postulates {
+      background: var(--card-bg);
+      border: 1px solid var(--gold);
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .postulates h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      color: var(--gold);
+      margin-top: 0;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .postulate-item {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      align-items: start;
+    }
+
+    .postulate-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 700;
+      padding-top: 0.15rem;
+    }
+
+    .postulate-text {
+      font-style: italic;
+      color: rgba(232,216,160,0.88);
+      font-size: 0.98rem;
+    }
+
+    /* BOOK TABLE */
+    .book-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .book-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+
+    .book-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(201,162,39,0.1);
+      color: rgba(232,216,160,0.82);
+      vertical-align: top;
+    }
+
+    .book-table tr:last-child td { border-bottom: none; }
+    .book-table tr:hover td { background: rgba(201,162,39,0.04); }
+
+    .book-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .prop-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+
+    /* SVG PROOF AREA */
+    .proof-figure {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .proof-figure svg { width: 100%; height: auto; }
+
+    .proof-steps { font-size: 0.92rem; }
+    .proof-steps ol { padding-left: 1.4rem; }
+    .proof-steps li { margin-bottom: 0.7rem; color: rgba(232,216,160,0.82); }
+    .proof-steps li strong { color: var(--ivory); font-family: 'Cinzel', serif; font-size: 0.88rem; }
+
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .vol-nav a:hover { color: var(--gold); border-color: var(--gold); }
+    .vol-nav a.current { color: var(--gold); border-color: var(--gold); background: rgba(201,162,39,0.08); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+      .proof-figure { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Euclid — A Library in Four Volumes</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-elements.html" class="active">Vol. 1 — Elements</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 1 of 4 &nbsp;·&nbsp; Euclid of Alexandria</span>
+    <h1>The Elements</h1>
+    <div class="subtitle">Thirteen Books. 465 Propositions. One Unbroken Chain.</div>
+    <p class="lede">Written around 300 BCE, the <em>Stoicheia</em> — the Elements — is the most successful mathematics textbook ever written. It established the axiomatic method, organized all of Greek geometry into a single deductive system, and remained the standard text for the teaching of mathematics for more than two thousand years.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: Pythagorean theorem squares -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e1f0a"/>
+          <stop offset="100%" stop-color="#0f1108"/>
+        </radialGradient>
+      </defs>
+      <circle cx="180" cy="180" r="178" fill="url(#bg1)" stroke="#c9a227" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Central right triangle: vertices at (180,230), (230,230), (180,170) -->
+      <g opacity="0.9">
+        <polygon points="160,240 220,240 160,170" fill="none" stroke="#c9a227" stroke-width="1.5"/>
+        <!-- Right angle mark -->
+        <polyline points="160,230 170,230 170,240" fill="none" stroke="#c9a227" stroke-width="1"/>
+      </g>
+
+      <!-- Square on hypotenuse — rotates slowly -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="120s" repeatCount="indefinite" additive="sum"/>
+        <!-- Square on hypotenuse of (−20,60) to (40,60) to (40,−10) style, approximate -->
+        <polygon points="-30,55 30,55 30,-5 -30,-5" fill="rgba(201,162,39,0.04)" stroke="#c9a227" stroke-width="0.6" stroke-dasharray="3 5" opacity="0.5"/>
+      </g>
+
+      <!-- Square A (leg a) with pulsing fill -->
+      <rect x="100" y="170" width="60" height="70" fill="rgba(201,162,39,0.06)" stroke="#c9a227" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.7">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Square B (leg b) -->
+      <rect x="160" y="240" width="60" height="60" fill="rgba(201,162,39,0.06)" stroke="#c9a227" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.7">
+        <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
+      </rect>
+
+      <!-- Rotating outer geometry -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="90s" repeatCount="indefinite" additive="sum"/>
+        <circle cx="0" cy="0" r="148" fill="none" stroke="#c9a227" stroke-width="0.4" stroke-dasharray="2 8" opacity="0.3"/>
+        <line x1="-148" y1="0" x2="148" y2="0" stroke="#c9a227" stroke-width="0.3" opacity="0.2"/>
+        <line x1="0" y1="-148" x2="0" y2="148" stroke="#c9a227" stroke-width="0.3" opacity="0.2"/>
+      </g>
+
+      <!-- a² + b² = c² label -->
+      <text x="180" y="320" text-anchor="middle" font-family="Space Mono, monospace" font-size="11" fill="#c9a227" opacity="0.7" letter-spacing="2">a² + b² = c²</text>
+      <text x="180" y="340" text-anchor="middle" font-family="Space Mono, monospace" font-size="7" fill="#c9a227" opacity="0.4" letter-spacing="2">BOOK I — PROP. 47</text>
+
+      <!-- Center dot -->
+      <circle cx="180" cy="180" r="2" fill="#c9a227" opacity="0.6"/>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html">Vol. 0 — Who He Was</a>
+    <a href="1-elements.html" class="current">Vol. 1 — The Elements</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: OVERVIEW -->
+  <section>
+    <span class="kick">The Work Itself</span>
+    <h2>Thirteen Books, One System</h2>
+    <p>The <em>Elements</em> (Greek: Στοιχεῖα, <em>Stoicheia</em>) was compiled around 300 BCE. It contains 465 propositions across 13 books, covering plane geometry, the theory of proportions, number theory, and solid geometry. It is not a book of puzzles or a collection of tricks. It is a logical architecture: every proposition follows from definitions, postulates, common notions, and previously proven propositions. Nothing is asserted that cannot be derived.</p>
+    <p>This was Euclid's revolution. Greek mathematicians before him had proved individual results. Euclid showed that all of them — triangles, circles, prime numbers, irrational magnitudes, the five Platonic solids — could be connected in a single unbroken logical chain, traceable back to five postulates simple enough to state in a sentence each.</p>
+
+    <blockquote>
+      <p>"The <em>Elements</em> is not a collection of isolated theorems — it is a system, and each proposition is intelligible only within the whole."</p>
+      <cite>— T.L. Heath, Introduction to <em>The Thirteen Books of Euclid's Elements</em>, 1908</cite>
+    </blockquote>
+  </section>
+
+  <!-- SECTION 2: THE FIVE POSTULATES -->
+  <section>
+    <span class="kick">The Foundation</span>
+    <h2>Five Postulates</h2>
+    <p>Euclid begins with definitions, then five "postulates" — statements assumed without proof because they appear self-evidently true. All 465 propositions ultimately rest on these five statements. Four are simple and uncontroversial. The fifth — the parallel postulate — generated 2,000 years of mathematical controversy and eventually led to the discovery of entirely new geometries.</p>
+
+    <div class="postulates">
+      <h3>The Five Postulates of Euclid</h3>
+
+      <div class="postulate-item">
+        <div class="postulate-num">I</div>
+        <div class="postulate-text">A straight line segment can be drawn joining any two points.</div>
+      </div>
+
+      <div class="postulate-item">
+        <div class="postulate-num">II</div>
+        <div class="postulate-text">Any straight line segment can be extended indefinitely in a straight line.</div>
+      </div>
+
+      <div class="postulate-item">
+        <div class="postulate-num">III</div>
+        <div class="postulate-text">Given any straight line segment, a circle can be drawn having the segment as radius and one endpoint as center.</div>
+      </div>
+
+      <div class="postulate-item">
+        <div class="postulate-num">IV</div>
+        <div class="postulate-text">All right angles are equal to one another.</div>
+      </div>
+
+      <div class="postulate-item">
+        <div class="postulate-num" style="color:#e8a227;">V</div>
+        <div class="postulate-text" style="color:rgba(232,216,160,1);">If a straight line falling on two straight lines makes the interior angles on the same side less than two right angles, the two straight lines, if produced indefinitely, meet on that side on which the angles are less than two right angles.</div>
+      </div>
+    </div>
+
+    <p>The fifth postulate is conspicuously more complex than the other four — Euclid himself seems to have sensed something unusual about it, since he postpones any use of it until Proposition 29 of Book I (having proved the first 28 propositions without it). Mathematicians for twenty centuries would attempt to prove the fifth postulate from the other four — to show it was not truly an independent assumption. All attempts failed. In the nineteenth century, Lobachevsky, Bolyai, and Riemann showed why: the fifth postulate is independent. Deny it, and you get a different, equally consistent geometry. The attempt to eliminate the fifth postulate gave birth to non-Euclidean geometry.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">ALSO KNOWN AS</span>
+        <h4>The Parallel Postulate</h4>
+        <p>The fifth postulate is equivalent to saying: given a line and a point not on it, there is exactly one line through that point parallel to the given line. This simpler equivalent form (due to John Playfair, 1795) is more intuitive, but no easier to prove from the other four postulates.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE CONTROVERSY</span>
+        <h4>2,000 Years of Attempts</h4>
+        <p>Ptolemy (2nd century CE), Proclus (5th century CE), al-Haytham (11th century), Nasir al-Din al-Tusi (13th century), Saccheri (18th century) — all tried to derive the fifth postulate from the other four. All failed, though some near-misses were brilliant. The postulate is genuinely independent.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE RESOLUTION</span>
+        <h4>Non-Euclidean Geometries</h4>
+        <p>Gauss (privately, c. 1820), Bolyai (1832), and Lobachevsky (1830) independently showed that denying the parallel postulate yields a consistent hyperbolic geometry. Riemann (1854) showed elliptic geometry. All three systems are mathematically valid. Euclid's fifth postulate describes only one of them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: THE 13 BOOKS -->
+  <section>
+    <span class="kick">Contents</span>
+    <h2>The Thirteen Books</h2>
+    <p>The <em>Elements</em> is organized across 13 books, which we would today call chapters. The word "book" (Greek: βιβλίον, <em>biblion</em>) referred to a papyrus scroll — each book was literally one scroll. Together they move from basic plane geometry through ratio and proportion, number theory, the geometry of irrational quantities, and finally to three-dimensional solid geometry culminating in the five Platonic solids.</p>
+
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Props.</th>
+          <th>Subject</th>
+          <th>Key Results</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="book-num">Book I</span></td>
+          <td><span class="prop-count">48</span></td>
+          <td>Plane geometry: triangles, parallels, parallelograms</td>
+          <td>Pythagorean theorem (Prop. 47); sum of angles in triangle = 2 right angles (Prop. 32)</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book II</span></td>
+          <td><span class="prop-count">14</span></td>
+          <td>Geometric algebra; areas of rectangles and squares</td>
+          <td>Geometric equivalents of algebraic identities; gnomon constructions</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book III</span></td>
+          <td><span class="prop-count">37</span></td>
+          <td>Circles: chords, tangents, inscribed angles</td>
+          <td>Inscribed angle theorem; tangent-chord angle; power of a point</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book IV</span></td>
+          <td><span class="prop-count">16</span></td>
+          <td>Polygons inscribed in and circumscribed about circles</td>
+          <td>Construction of regular 3-, 4-, 5-, 6-, 15-sided polygons</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book V</span></td>
+          <td><span class="prop-count">25</span></td>
+          <td>Eudoxus's theory of proportions (ratios in general)</td>
+          <td>Magnitudes in ratio; alternation, composition, separation — applies to incommensurables</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book VI</span></td>
+          <td><span class="prop-count">33</span></td>
+          <td>Similar figures; proportionality applied to geometry</td>
+          <td>Similar triangles; areas of similar figures; golden ratio construction</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book VII</span></td>
+          <td><span class="prop-count">39</span></td>
+          <td>Number theory: integers, divisibility, GCDs</td>
+          <td>Euclidean algorithm (Prop. 2–3); definition of prime; definitions of perfect number</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book VIII</span></td>
+          <td><span class="prop-count">27</span></td>
+          <td>Continued proportions; geometric sequences; perfect numbers</td>
+          <td>Sequences of numbers in continuous proportion; cubes and squares in proportion</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book IX</span></td>
+          <td><span class="prop-count">36</span></td>
+          <td>Further number theory; even and odd numbers</td>
+          <td>Infinitely many primes (Prop. 20); formula for perfect numbers (Prop. 36)</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book X</span></td>
+          <td><span class="prop-count">115</span></td>
+          <td>Irrational magnitudes (incommensurable lines)</td>
+          <td>Classification of irrationals; proof √2 is irrational; the longest book by far</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book XI</span></td>
+          <td><span class="prop-count">39</span></td>
+          <td>Solid geometry: lines, planes, parallelepipeds in 3D</td>
+          <td>Angles between lines and planes; volumes of parallelepipeds</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book XII</span></td>
+          <td><span class="prop-count">18</span></td>
+          <td>Method of exhaustion applied to circles, pyramids, cones</td>
+          <td>Areas of circles proportional to squares on diameters; volumes of pyramids and cones</td>
+        </tr>
+        <tr>
+          <td><span class="book-num">Book XIII</span></td>
+          <td><span class="prop-count">18</span></td>
+          <td>Construction of the five regular (Platonic) solids</td>
+          <td>Tetrahedron, octahedron, cube, icosahedron, dodecahedron — proved there are exactly five</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><span class="band">Total</span> 465 propositions. Book X alone accounts for nearly a quarter of the entire work — a measure of how seriously Euclid treated the theory of irrational magnitudes, a topic that had deeply troubled Greek mathematics since the discovery that √2 could not be expressed as a ratio of whole numbers.</p>
+  </section>
+
+  <!-- SECTION 4: PYTHAGOREAN THEOREM PROOF -->
+  <section>
+    <span class="kick">Book I, Proposition 47</span>
+    <h2>Euclid's Proof of the Pythagorean Theorem</h2>
+    <p>The most famous proposition in the <em>Elements</em> is Proposition 47 of Book I: in a right-angled triangle, the square on the hypotenuse equals the sum of the squares on the other two sides. What makes Euclid's proof remarkable is that it uses only the tools available at the end of Book I — no trigonometry, no algebra, no coordinate geometry. Pure geometric reasoning with compass and straightedge.</p>
+
+    <div class="proof-figure">
+      <!-- Animated SVG of the proof -->
+      <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-label="Euclid's proof of the Pythagorean theorem">
+        <defs>
+          <radialGradient id="proof-bg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a1b09"/>
+            <stop offset="100%" stop-color="#0f1108"/>
+          </radialGradient>
+        </defs>
+        <rect width="300" height="300" fill="url(#proof-bg)"/>
+
+        <!-- Right triangle ABC: A=(90,200), B=(210,200), C=(90,100) -->
+        <!-- Right angle at A -->
+        <polygon points="90,200 210,200 90,100" fill="rgba(201,162,39,0.08)" stroke="#c9a227" stroke-width="1.5"/>
+
+        <!-- Right angle mark at A -->
+        <polyline points="90,190 100,190 100,200" fill="none" stroke="#c9a227" stroke-width="1"/>
+
+        <!-- Square on AB (base, horizontal): side = 120 -->
+        <rect x="90" y="200" width="120" height="70" fill="rgba(201,162,39,0.05)" stroke="#c9a227" stroke-width="0.8">
+          <animate attributeName="fill-opacity" values="0.05;0.12;0.05" dur="4s" repeatCount="indefinite"/>
+        </rect>
+        <text x="150" y="248" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c9a227" opacity="0.7">b²</text>
+
+        <!-- Square on AC (vertical leg): side = 100 -->
+        <rect x="20" y="100" width="70" height="100" fill="rgba(201,162,39,0.05)" stroke="#c9a227" stroke-width="0.8">
+          <animate attributeName="fill-opacity" values="0.12;0.05;0.12" dur="4s" repeatCount="indefinite"/>
+        </rect>
+        <text x="55" y="155" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c9a227" opacity="0.7">a²</text>
+
+        <!-- Square on hypotenuse BC: B=(210,200), C=(90,100) -->
+        <!-- hypotenuse vector: (−120,−100), perp = (−100, 120) normalized, len=156.2 -->
+        <!-- Square: B(210,200), C(90,100), C+(−100,120)=(−10,220)... approx -->
+        <polygon points="210,200 90,100 26,164 146,264" fill="rgba(201,162,39,0.05)" stroke="#c9a227" stroke-width="0.8">
+          <animate attributeName="fill-opacity" values="0.05;0.12;0.05" dur="6s" repeatCount="indefinite"/>
+        </polygon>
+        <text x="118" y="190" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#c9a227" opacity="0.7">c²</text>
+
+        <!-- Vertex labels -->
+        <text x="90" y="215" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#e8d8a0" opacity="0.8">A</text>
+        <text x="220" y="215" text-anchor="middle" font-family="Cinzel,serif" font-size="11" fill="#e8d8a0" opacity="0.8">B</text>
+        <text x="80" y="96" text-anchor="end" font-family="Cinzel,serif" font-size="11" fill="#e8d8a0" opacity="0.8">C</text>
+
+        <!-- Pulsing altitude line from A to BC (the key auxiliary line) -->
+        <line x1="90" y1="200" x2="168" y2="148" stroke="#c9a227" stroke-width="1" stroke-dasharray="4 3" opacity="0">
+          <animate attributeName="opacity" values="0;0.6;0;0.6;0" dur="8s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- Title -->
+        <text x="150" y="290" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#c9a227" opacity="0.5" letter-spacing="1">BOOK I · PROPOSITION 47</text>
+      </svg>
+
+      <div class="proof-steps">
+        <span class="kick">The Proof — Outline</span>
+        <p style="font-size:0.88rem; margin-bottom:1rem;">Euclid does not use algebra. He proves the squares literally equal each other in area through geometric argument.</p>
+        <ol>
+          <li><strong>Setup:</strong> On each side of the right triangle ABC (right angle at A), construct a square outward.</li>
+          <li><strong>Key auxiliary line:</strong> Draw AL parallel to BD (altitude from A through the hypotenuse's square). This divides the large square on BC into two rectangles.</li>
+          <li><strong>First area equality:</strong> Triangle ABD ≅ Triangle FBC (two sides and included angle). The parallelogram BL = 2 × Triangle ABD. The square ABFG = 2 × Triangle FBC. Therefore square ABFG = parallelogram BL.</li>
+          <li><strong>Second area equality:</strong> By symmetric reasoning (Triangle ACE ≅ Triangle ACK), square ACKH = parallelogram CL.</li>
+          <li><strong>Conclusion:</strong> Square on BC = parallelogram BL + parallelogram CL = square ABFG + square ACKH = square on AB + square on AC. Q.E.D.</li>
+        </ol>
+        <p style="font-size:0.85rem; margin-top:1rem; font-style:italic; color:rgba(232,216,160,0.6);">The proof uses only: congruence of triangles (Props. 4, 14, 31), and that a parallelogram is twice a triangle on the same base and between the same parallels (Props. 35, 41). All tools from earlier in Book I.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: THE EUCLIDEAN ALGORITHM -->
+  <section>
+    <span class="kick">Book VII, Propositions 1–3</span>
+    <h2>The Euclidean Algorithm</h2>
+    <p>The algorithm for finding the greatest common divisor of two numbers — still bearing Euclid's name, still used in modern computing — appears in Book VII, Propositions 1 through 3. It is one of the oldest algorithms in existence, and certainly one of the most durable: the Euclidean algorithm is used in cryptography, computer science, and abstract algebra today.</p>
+
+    <div class="proposition">
+      <span class="prop-label">Book VII, Proposition 1</span>
+      <p>Two unequal numbers being set out, and the lesser being continually subtracted in turn from the greater, if the number which is left never measures the one before it until a unit is left, the original numbers are prime to one another.</p>
+    </div>
+
+    <p>The algorithm works by repeated subtraction (or equivalently, division with remainder): to find GCD(a,b), divide a by b, take the remainder r, then find GCD(b,r). Repeat until the remainder is zero. The last non-zero remainder is the GCD. Euclid stated this in terms of geometric magnitudes and repeated subtraction, not in the modern algebraic form — but the process is identical.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">EXAMPLE</span>
+        <h4>GCD(252, 105)</h4>
+        <p>252 = 2×105 + 42<br>105 = 2×42 + 21<br>42 = 2×21 + 0<br>GCD = <strong style="color:var(--gold)">21</strong>. The algorithm terminates. Euclid proved it always does.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">MODERN USE</span>
+        <h4>RSA Cryptography</h4>
+        <p>The Euclidean algorithm is central to RSA public-key encryption (1977). Every secure web connection today depends, in part, on an algorithm described in the Elements around 300 BCE.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">EFFICIENCY</span>
+        <h4>Exponential Speed</h4>
+        <p>The number of steps in the Euclidean algorithm is at most 5 times the number of digits in the smaller number (Lamé's theorem, 1844). For a 2,048-bit RSA key, it runs in microseconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: INFINITE PRIMES -->
+  <section>
+    <span class="kick">Book IX, Proposition 20</span>
+    <h2>There Are Infinitely Many Primes</h2>
+    <p>One of the most elegant proofs in all of mathematics appears as Proposition 20 of Book IX. Euclid proves that the prime numbers do not run out — there is no largest prime. His proof does not construct an infinite list of primes. Instead, it assumes the opposite and derives a contradiction — an early example of what we now call <em>reductio ad absurdum</em> or proof by contradiction.</p>
+
+    <div class="proposition">
+      <span class="prop-label">Book IX, Proposition 20 — Statement</span>
+      <p>Prime numbers are more than any assigned multitude of prime numbers.</p>
+    </div>
+
+    <blockquote>
+      <p>Suppose there are only finitely many primes: p₁, p₂, …, pₙ. Consider the number N = (p₁ × p₂ × … × pₙ) + 1. Either N is prime (and we have found a prime not in our list), or N is composite — but then it has a prime factor, and that factor cannot be any of p₁ through pₙ, since dividing N by any of them leaves remainder 1. In either case, we have a prime not in the list. Contradiction. Therefore there are infinitely many primes.</p>
+      <cite>— Euclid, Book IX Prop. 20 — modernized paraphrase</cite>
+    </blockquote>
+
+    <p>The proof is still taught in its original form. It has not been improved upon in 2,300 years, because it cannot be: it is perfect. The only change modern mathematics makes is to state it more concisely and to name the method of contradiction explicitly. The logical structure is Euclid's.</p>
+  </section>
+
+  <!-- SECTION 7: BOOK V AND EUDOXUS -->
+  <section>
+    <span class="kick">Book V — The Theory of Proportion</span>
+    <h2>Eudoxus and the Incommensurable</h2>
+    <p>Book V is, according to many historians of mathematics, the most intellectually sophisticated part of the entire Elements. It presents the general theory of proportion — ratios between magnitudes — developed by Eudoxus of Cnidus (c. 408–355 BCE), and it is sophisticated enough to handle <em>irrational</em> magnitudes: lengths like √2 that cannot be expressed as a ratio of whole numbers.</p>
+    <p>The discovery that √2 is irrational — that the diagonal of a unit square is incommensurable with its side — had deeply troubled the Pythagorean school. Their entire mathematical worldview rested on the idea that all quantities were ratios of integers. The Eudoxan theory of proportion, preserved by Euclid in Book V, elegantly sidesteps the problem: it defines ratios and proportions in terms of inequalities between multiples, without ever needing to name the ratio as a fraction.</p>
+
+    <div class="proposition">
+      <span class="prop-label">Book V, Definition 5 — Eudoxus's Definition of Same Ratio</span>
+      <p>Magnitudes are said to be in the same ratio, the first to the second and the third to the fourth, when, if any equimultiples whatever are taken of the first and third, and any equimultiples whatever of the second and fourth, the former equimultiples alike exceed, are alike equal to, or alike fall short of the latter equimultiples respectively taken in corresponding order.</p>
+    </div>
+
+    <p>This is, in modern terms, essentially Dedekind's definition of real numbers (1872) — twenty-two centuries before Dedekind. The Eudoxan definition handles irrational magnitudes by comparison rather than by naming them. It is one of the most advanced pieces of pre-modern mathematical thought.</p>
+  </section>
+
+  <!-- SECTION 8: BOOK XIII — PLATONIC SOLIDS -->
+  <section>
+    <span class="kick">Book XIII — The Grand Finale</span>
+    <h2>The Five Platonic Solids</h2>
+    <p>The Elements ends with its most visually striking results: the construction and proof of the five regular convex polyhedra — the Platonic solids. Euclid proves not only how to construct each one inside a given sphere, but also — in a final theorem that reads almost like a philosophical declaration — that these five are the only regular solids that can exist.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">4 FACES</span>
+        <h4>Tetrahedron</h4>
+        <p>Four equilateral triangles. Each vertex surrounded by 3 triangles. Interior angle sum at vertex = 180°, less than 360°. Plato associated it with fire.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">6 FACES</span>
+        <h4>Cube (Hexahedron)</h4>
+        <p>Six squares. Each vertex surrounded by 3 squares. Interior angle sum at vertex = 270°, less than 360°. Associated by Plato with earth.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">8 FACES</span>
+        <h4>Octahedron</h4>
+        <p>Eight equilateral triangles. Each vertex surrounded by 4 triangles. Interior angle sum at vertex = 240°, less than 360°. Plato: air.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">12 FACES</span>
+        <h4>Dodecahedron</h4>
+        <p>Twelve regular pentagons. Each vertex surrounded by 3 pentagons. Plato associated it with the cosmos — the shape of the universe itself.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">20 FACES</span>
+        <h4>Icosahedron</h4>
+        <p>Twenty equilateral triangles. Each vertex surrounded by 5 triangles. Interior angle sum at vertex = 300°, less than 360°. Plato: water.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THEOREM XIII.18</span>
+        <h4>There Are Exactly Five</h4>
+        <p>Euclid proves that no other regular solid is possible. The proof uses the fact that the sum of face angles at each vertex must be less than 360°. Only the five combinations of regular polygons satisfy this, exhausting all possibilities.</p>
+      </div>
+    </div>
+
+    <p>The Platonic solids were of deep cosmological significance to ancient Greek philosophy. By ending the Elements with their rigorous construction and enumeration, Euclid connected his mathematical system to the grandest questions of his era: the structure of matter and the shape of the cosmos. It is a fitting end for a book that began with the humble instruction to draw a line between two points.</p>
+  </section>
+
+  <!-- SECTION 9: THE AXIOMATIC METHOD -->
+  <section>
+    <span class="kick">The Lasting Method</span>
+    <h2>The Axiomatic Method as Euclid's True Legacy</h2>
+    <p>The specific propositions of the Elements — the theorems about triangles and circles and prime numbers — are important. But Euclid's deeper achievement was methodological. He demonstrated that an entire field of knowledge could be organized as an axiomatic system: start with a small number of primitive assumptions, state rules of inference, and derive everything else.</p>
+    <p>This method — definitions, axioms, theorems proven from them — became the template for rigorous knowledge in Western culture. It influenced not only mathematics but philosophy (Spinoza's <em>Ethics</em> is written "in the manner of geometers"), physics (Newton's <em>Principia</em> uses the geometric proof structure), and logic. When twentieth-century mathematicians like Hilbert, Russell, and Gödel asked the deepest questions about the foundations of mathematics, they were grappling with questions that Euclid's method had raised and left open.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">1687</span>
+        <h4>Newton's Principia</h4>
+        <p>Written in the geometric style of the Elements — definitions, axioms (Newton's three laws), then theorems derived from them. Newton chose this form deliberately, for its certainty and authority. The choice itself is a tribute to Euclid.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1677</span>
+        <h4>Spinoza's Ethics</h4>
+        <p>The Dutch philosopher Baruch Spinoza wrote his Ethics "demonstrated in geometrical order" — complete with definitions, axioms, and propositions, modeled explicitly on Euclid. Philosophy as rigorous as geometry was the ambition.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">1899</span>
+        <h4>Hilbert's Foundations of Geometry</h4>
+        <p>David Hilbert reworked Euclid's foundations, identifying gaps in the original proofs (places where Euclid assumed things he had not stated) and providing a complete modern axiom system. Hilbert's work is the culmination of 2,200 years of engagement with Euclid's method.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Euclid of Alexandria — A Library in Four Volumes &nbsp;|&nbsp; Vol. 1: The Elements<br>
+    Sources: T.L. Heath, The Thirteen Books of Euclid's Elements (1908); Ivor Thomas, Greek Mathematical Works (1939); Robin Hartshorne, Geometry: Euclid and Beyond (2000); John Stillwell, Mathematics and Its History (2010)
+  </div>
+</footer>
+
+</body>
+</html>

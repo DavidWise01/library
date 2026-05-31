@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John von Neumann — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#060a14;
+    --card:#0d1426;
+    --card2:#111827;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(29,78,216,0.18);
+    --lineo:rgba(234,88,12,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(29,78,216,0.028) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--blue);color:#fff;}
+
+  /* typography */
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--blue);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.orange{background:var(--orange);}
+  .band.ghost{background:transparent;color:var(--blue);border:1px solid var(--blue);padding:4px 13px;}
+
+  /* masthead */
+  .mast{border-bottom:3px solid var(--blue);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;}
+  .mast h1 em{font-style:normal;color:var(--blue);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* cellular automaton animation */
+  @keyframes cellFlash{0%,100%{opacity:1}50%{opacity:0.15}}
+  @keyframes gliderMove{0%{transform:translate(0,0)}25%{transform:translate(16px,0)}50%{transform:translate(16px,16px)}75%{transform:translate(32px,16px)}100%{transform:translate(32px,32px)}}
+  @keyframes pulseRing{0%{r:4;opacity:0.8}100%{r:14;opacity:0}}
+  .cell-alive{animation:cellFlash var(--d,2.4s) ease-in-out infinite;}
+  .glider{animation:gliderMove 4s steps(4,end) infinite;}
+  @media(prefers-reduced-motion:reduce){.cell-alive,.glider{animation:none;opacity:1}}
+
+  /* layout blocks */
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.orange-hover:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--blue);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--lineo);padding:2px 7px;margin-top:5px;}
+
+  /* fact table */
+  .fact-table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14px;}
+  .fact-table tr{border-bottom:1px solid var(--line);}
+  .fact-table tr:last-child{border-bottom:none;}
+  .fact-table td:first-child{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.08em;color:var(--blue);text-transform:uppercase;padding:9px 16px 9px 0;width:160px;white-space:nowrap;}
+  .fact-table td:last-child{color:#c0cad8;padding:9px 0;}
+
+  /* block quote style */
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.orange{border-color:var(--lineo);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  /* timeline */
+  .timeline{list-style:none;padding:0;margin:0;}
+  .timeline li{position:relative;padding:10px 0 10px 52px;border-bottom:1px solid var(--line);font-size:14.5px;color:#b0bcd4;line-height:1.5;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline li .yr{position:absolute;left:0;top:11px;font-family:"Space Mono",monospace;font-size:11px;font-weight:700;color:var(--orange);letter-spacing:0.04em;}
+  .timeline li b{color:var(--ink);font-weight:500;}
+
+  /* colophon */
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  /* nav */
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--blue);color:#fff;}
+  .vol-nav a.current{background:var(--blue);color:#fff;}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">von neumann series · volume 0 · who he was</span>
+    <div class="masthead">
+      <div>
+        <h1>John von<br><em>Neumann</em></h1>
+        <p class="dek">
+          Born in Budapest, 1903. Died in Washington, 1957.
+          In fifty-three years he <b>rewrote mathematics, invented the computer, formalized quantum mechanics, founded game theory,</b> and left every field he touched permanently altered.
+        </p>
+      </div>
+      <!-- Cellular automaton SVG -->
+      <svg class="art" width="200" height="200" viewBox="0 0 200 200" role="img" aria-label="animated cellular automaton grid inspired by von Neumann's self-reproducing automata">
+        <rect width="200" height="200" fill="#0d1426" rx="4"/>
+        <!-- grid lines -->
+        <g stroke="rgba(29,78,216,0.18)" stroke-width="0.5">
+          <line x1="0" y1="16" x2="200" y2="16"/><line x1="0" y1="32" x2="200" y2="32"/>
+          <line x1="0" y1="48" x2="200" y2="48"/><line x1="0" y1="64" x2="200" y2="64"/>
+          <line x1="0" y1="80" x2="200" y2="80"/><line x1="0" y1="96" x2="200" y2="96"/>
+          <line x1="0" y1="112" x2="200" y2="112"/><line x1="0" y1="128" x2="200" y2="128"/>
+          <line x1="0" y1="144" x2="200" y2="144"/><line x1="0" y1="160" x2="200" y2="160"/>
+          <line x1="0" y1="176" x2="200" y2="176"/>
+          <line x1="16" y1="0" x2="16" y2="200"/><line x1="32" y1="0" x2="32" y2="200"/>
+          <line x1="48" y1="0" x2="48" y2="200"/><line x1="64" y1="0" x2="64" y2="200"/>
+          <line x1="80" y1="0" x2="80" y2="200"/><line x1="96" y1="0" x2="96" y2="200"/>
+          <line x1="112" y1="0" x2="112" y2="200"/><line x1="128" y1="0" x2="128" y2="200"/>
+          <line x1="144" y1="0" x2="144" y2="200"/><line x1="160" y1="0" x2="160" y2="200"/>
+          <line x1="176" y1="0" x2="176" y2="200"/>
+        </g>
+        <!-- static background cells (blue) -->
+        <rect x="33" y="49" width="14" height="14" fill="rgba(29,78,216,0.35)" rx="1"/>
+        <rect x="65" y="33" width="14" height="14" fill="rgba(29,78,216,0.25)" rx="1"/>
+        <rect x="97" y="65" width="14" height="14" fill="rgba(29,78,216,0.30)" rx="1"/>
+        <rect x="145" y="49" width="14" height="14" fill="rgba(29,78,216,0.22)" rx="1"/>
+        <rect x="113" y="129" width="14" height="14" fill="rgba(29,78,216,0.28)" rx="1"/>
+        <rect x="49" y="145" width="14" height="14" fill="rgba(29,78,216,0.20)" rx="1"/>
+        <rect x="161" y="113" width="14" height="14" fill="rgba(29,78,216,0.25)" rx="1"/>
+        <rect x="81" y="161" width="14" height="14" fill="rgba(29,78,216,0.22)" rx="1"/>
+        <!-- animated alive cells (orange) — the glider pattern -->
+        <rect class="cell-alive" style="--d:1.8s" x="81" y="65" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.9"/>
+        <rect class="cell-alive" style="--d:2.1s;animation-delay:0.3s" x="97" y="81" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.9"/>
+        <rect class="cell-alive" style="--d:1.9s;animation-delay:0.6s" x="113" y="65" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.9"/>
+        <rect class="cell-alive" style="--d:2.3s;animation-delay:0.9s" x="113" y="81" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.9"/>
+        <rect class="cell-alive" style="--d:2.0s;animation-delay:1.2s" x="97" y="97" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.9"/>
+        <!-- second cluster (blue alive) -->
+        <rect class="cell-alive" style="--d:2.6s;animation-delay:0.4s" x="49" y="97" width="14" height="14" fill="var(--blue)" rx="1" opacity="0.85"/>
+        <rect class="cell-alive" style="--d:2.2s;animation-delay:0.8s" x="65" y="113" width="14" height="14" fill="var(--blue)" rx="1" opacity="0.85"/>
+        <rect class="cell-alive" style="--d:2.5s;animation-delay:1.6s" x="49" y="113" width="14" height="14" fill="var(--blue)" rx="1" opacity="0.85"/>
+        <rect class="cell-alive" style="--d:1.7s;animation-delay:0.2s" x="129" y="97" width="14" height="14" fill="#7ba7f7" rx="1" opacity="0.7"/>
+        <rect class="cell-alive" style="--d:2.8s;animation-delay:1.0s" x="145" y="113" width="14" height="14" fill="#7ba7f7" rx="1" opacity="0.7"/>
+        <rect class="cell-alive" style="--d:2.1s;animation-delay:1.4s" x="161" y="145" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.75"/>
+        <rect class="cell-alive" style="--d:1.9s;animation-delay:0.7s" x="33" y="161" width="14" height="14" fill="var(--orange)" rx="1" opacity="0.75"/>
+        <!-- label -->
+        <text x="4" y="196" font-family="Space Mono,monospace" font-size="8" fill="rgba(29,78,216,0.5)" letter-spacing="0.1em">AUTOMATON · 1948</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html" class="current">0 · Who</a>
+    <a href="1-architecture.html">1 · Architecture</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <!-- SECTION: THE MAN -->
+  <div class="band reveal" style="animation-delay:.05s">Origins</div>
+  <p class="body-text reveal" style="animation-delay:.1s">
+    János Lajos Margittai Neumann was born on 28 December 1903 in Budapest, Hungary, the eldest son of Max Neumann, a prosperous Jewish banker who had recently purchased a hereditary title from the Habsburg crown. The "von" was his. The family occupied the upper tier of Budapest's remarkable Jewish intellectual class — a milieu that would produce, within a single generation, an extraordinary cluster of world-changing scientists: Eugene Wigner, Edward Teller, Leo Szilárd, Dennis Gabor. Something in the water, Wigner joked, though Teller suspected it was the excellent secondary schools.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.13s">
+    The child prodigy legends are all documented. By age <em>six</em> he could exchange jokes with his father in Classical Greek. By six he had memorized the Budapest telephone directory and could recite it. A visitor who pointed at any page would hear the name, address, and number spoken back perfectly. He never forgot anything he had read, a capacity that persisted throughout his life: decades later he could recite verbatim passages from books he had glanced at in childhood.
+  </p>
+
+  <div class="pull reveal" style="animation-delay:.15s">
+    "You don't have to be responsible for the world that you're in." — von Neumann, to a colleague overwhelmed by the bomb project. He was not burdened by guilt in the way others were.
+  </div>
+
+  <!-- QUICK FACTS -->
+  <div class="band reveal" style="animation-delay:.18s">At a Glance</div>
+  <div class="block reveal" style="animation-delay:.20s">
+    <table class="fact-table">
+      <tr><td>Born</td><td>28 December 1903, Budapest, Austria-Hungary</td></tr>
+      <tr><td>Died</td><td>8 February 1957, Washington D.C., age 53</td></tr>
+      <tr><td>Cause</td><td>Bone cancer (likely from radiation exposure at Los Alamos)</td></tr>
+      <tr><td>Degrees</td><td>PhD Mathematics, Budapest (1926); simultaneously Chemical Engineering diploma, ETH Zürich</td></tr>
+      <tr><td>Languages</td><td>Hungarian, German, French, English, Latin, Ancient Greek — all fluent</td></tr>
+      <tr><td>Memory</td><td>Eidetic recall of text, numbers, music; could recite books read decades prior</td></tr>
+      <tr><td>Calculation</td><td>Fastest mental arithmetician of his era; outperformed early computers on simple operations</td></tr>
+      <tr><td>Positions</td><td>Princeton IAS (1933–1957); Los Alamos (1943–1955); RAND Corp; AEC; multiple federal advisory boards</td></tr>
+      <tr><td>Marriages</td><td>Mariette Kövesi (1930, div. 1937); Klára Dán (1938, whom he adored)</td></tr>
+      <tr><td>Religion</td><td>Jewish by birth; deathbed conversion to Catholicism, 1956</td></tr>
+    </table>
+  </div>
+
+  <!-- EDUCATION AND ASCENT -->
+  <div class="band reveal" style="animation-delay:.22s">The Education of a Prodigy</div>
+  <p class="body-text reveal" style="animation-delay:.24s">
+    Budapest's Fasori Gymnasium was perhaps the finest secondary school in the world at the time, and even there von Neumann was singular. By age eight his tutor, the mathematician Gábor Szegő, wept the first time the child solved a problem he had set — out of what Szegő later described as sheer joy at witnessing something unprecedented. His father, recognizing the son's gifts, arranged for him to study with university professors while still in gymnasium.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.26s">
+    In a characteristic display of the family's practical intelligence, Max Neumann persuaded his son to pursue <em>chemical engineering</em> as a hedge against the uncertain career prospects of pure mathematics. Von Neumann agreed — and proceeded to simultaneously complete the ETH Zürich chemical engineering diploma and a Budapest PhD in mathematics. Both in 1926. He was twenty-two. His thesis was on the axiomatization of set theory.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.28s">
+    He worked under David Hilbert in Göttingen, at the precise moment when Hilbert's formalist program — the dream of placing all mathematics on an unshakeable axiomatic foundation — was reaching its apex. Von Neumann absorbed everything Hilbert had to teach, helped advance the program, and was still there when Gödel's incompleteness theorems (1931) destroyed the dream. He grasped Gödel's result immediately. "It's all over," he told colleagues. Then he moved on.
+  </p>
+
+  <!-- TIMELINE -->
+  <div class="band reveal" style="animation-delay:.30s">Life in Time</div>
+  <div class="block reveal" style="animation-delay:.32s">
+    <ul class="timeline">
+      <li><span class="yr">1903</span><b>Born in Budapest.</b> Eldest son of Max Neumann, Jewish banker with Habsburg title.</li>
+      <li><span class="yr">1911</span><b>Enters Fasori Gymnasium.</b> Tutor Gábor Szegő weeps at his problem solutions.</li>
+      <li><span class="yr">1921</span><b>Publishes first mathematical paper</b> (set theory) while still in secondary school, co-authored with Fejér.</li>
+      <li><span class="yr">1926</span><b>Double degree:</b> PhD in mathematics, Budapest; Chemical Engineering, ETH Zürich. Simultaneously.</li>
+      <li><span class="yr">1927</span><b>Privatdozent at Berlin.</b> Formalization of quantum mechanics; operator theory.</li>
+      <li><span class="yr">1929</span><b>Göttingen and Hamburg.</b> Proof of the minimax theorem; ergodic theory.</li>
+      <li><span class="yr">1930</span><b>Emigrates to Princeton.</b> Visiting lecturer, then permanent appointment at the new Institute for Advanced Study.</li>
+      <li><span class="yr">1932</span><b><em>Mathematical Foundations of Quantum Mechanics</em></b> published. Defines the Hilbert-space formalism used to this day.</li>
+      <li><span class="yr">1933</span><b>IAS inaugural faculty</b> alongside Einstein and Veblen. Never leaves.</li>
+      <li><span class="yr">1944</span><b><em>Theory of Games and Economic Behavior</em></b> (with Morgenstern). Founds modern game theory.</li>
+      <li><span class="yr">1945</span><b>First Draft of a Report on the EDVAC.</b> The stored-program computer architecture is born.</li>
+      <li><span class="yr">1946</span><b>Monte Carlo method</b> formalized with Ulam at Los Alamos.</li>
+      <li><span class="yr">1948</span><b>Cellular automata theory</b> presented; self-reproducing automata paper begun.</li>
+      <li><span class="yr">1955</span><b>Cancer diagnosis.</b> Likely from Los Alamos radiation exposure.</li>
+      <li><span class="yr">1956</span><b>Deathbed conversion to Catholicism.</b> "Terribly afraid," his daughter recalled.</li>
+      <li><span class="yr">1957</span><b>Dies 8 February, Walter Reed Hospital,</b> Washington D.C. Age 53. A military guard was posted at his bedside in his final weeks — he knew too many secrets.</li>
+    </ul>
+  </div>
+
+  <!-- THE MAN'S CHARACTER -->
+  <div class="band orange reveal" style="animation-delay:.34s">Character</div>
+  <p class="body-text reveal" style="animation-delay:.36s">
+    Von Neumann loved fast cars, loud parties, bawdy limericks, and fine clothes. He drove recklessly and had multiple accidents; colleagues joked that a certain Princeton intersection should be renamed "von Neumann corner." He was famous for arriving at the office in a three-piece suit, immaculately dressed, then doing mathematics at a pace that left everyone else struggling to follow the board. He did not seem to sleep much. He worked on airplanes, at dinner parties, while apparently listening to something else entirely.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.38s">
+    His mental arithmetic was famous. Hans Bethe, himself a formidable calculator, said von Neumann could outpace the early ENIAC on problems he had done before — the difference being von Neumann worked from insight while the machine worked from instruction. He routinely solved complex differential equations in his head during conversations, scribbling only the final result.
+  </p>
+
+  <!-- CHARACTER CARDS -->
+  <div class="grid reveal" style="animation-delay:.40s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>Photographic Memory</h3>
+      <p class="what">Could recite books, papers, and conversations from decades prior, word for word. Memorized the Budapest telephone directory at age six.</p>
+      <span class="tag">Recall</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>Mental Calculation</h3>
+      <p class="what">The fastest mental arithmetician of his era. Outperformed early computers on problems he had seen before. Bethe estimated him the only mathematician who could truly see four steps ahead simultaneously.</p>
+      <span class="tag">Speed</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>Social Brilliance</h3>
+      <p class="what">Loved parties, told sharp jokes in six languages, cultivated powerful friends in government and industry. Equally at home at the faculty club and in the Pentagon.</p>
+      <span class="tag">Character</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>Breadth Without Parallel</h3>
+      <p class="what">Published foundational work in set theory, quantum mechanics, operator theory, game theory, computer architecture, cellular automata, fluid dynamics, and numerical analysis — not popularizations. Original contributions.</p>
+      <span class="tag">Scope</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">05</span>
+      <h3>Cold Realism</h3>
+      <p class="what">Advocated preventive nuclear war against the Soviet Union in the early 1950s — "If you say why not bomb them tomorrow, I say why not today?" A logic of pure strategic calculation unclouded by sentiment.</p>
+      <span class="tag">Strategy</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">06</span>
+      <h3>Deathbed Fear</h3>
+      <p class="what">He converted to Catholicism weeks before dying, reportedly terrified. His daughter Marina said he was not at peace. "He was afraid of dying." Wheeler: "He was smart enough to know he might be wrong about everything."</p>
+      <span class="tag">End</span>
+    </div>
+  </div>
+
+  <!-- FLIGHT FROM EUROPE -->
+  <div class="band reveal" style="animation-delay:.42s">Flight from Europe</div>
+  <p class="body-text reveal" style="animation-delay:.44s">
+    Von Neumann saw what was coming before most. His family converted formally to Christianity during the Horthy period but the racial laws would follow regardless. He had already taken up a visiting lectureship at Princeton in 1930; when the Nazis came to power in 1933, he declined to return to Germany and accepted a permanent position at the newly founded Institute for Advanced Study, becoming one of its six original professors alongside Einstein.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.46s">
+    The IAS was an extraordinary institution: no students, no teaching duties, full salaries, and total freedom. Von Neumann thrived. He kept his office in Fuld Hall, drove to Washington regularly for government consultations, and hosted legendary parties at his house on Westcott Road. He was, by all accounts, the social center of Princeton's scientific life — as well as its intellectual center. Even Einstein, who occupied the office next door, deferred to him on mathematical questions.
+  </p>
+
+  <!-- MANHATTAN PROJECT -->
+  <div class="band reveal" style="animation-delay:.48s">Los Alamos</div>
+  <p class="body-text reveal" style="animation-delay:.50s">
+    His contribution to the Manhattan Project was theoretical but decisive. He developed the mathematics of <em>implosion lenses</em> — the precisely shaped explosive charges that compress a subcritical mass to supercriticality. Without his calculations the Fat Man plutonium bomb would not have worked. He also pioneered the use of numerical simulation to model shockwave propagation, laying groundwork for what would become the Monte Carlo method.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.52s">
+    <blockquote>
+      "It is just barely possible for a man to be smart enough that he can figure out most things from first principles."
+      <cite>— John A. Wheeler, physicist, on von Neumann</cite>
+    </blockquote>
+  </div>
+  <p class="body-text reveal" style="animation-delay:.54s">
+    Whether the radiation exposure at Los Alamos caused his cancer is not certain. He was at the Nevada test sites. He handled classified materials. His colleague Enrico Fermi died of cancer at fifty-three. Oppenheimer developed throat cancer. The correlation is suggestive, though bone cancer has many causes. What is certain is that he died at the same age, doing the same work, in the same era.
+  </p>
+
+  <!-- DEATH AND CONVERSION -->
+  <div class="band reveal" style="animation-delay:.56s">The End</div>
+  <p class="body-text reveal" style="animation-delay:.58s">
+    In his final months, confined first to a wheelchair and then to Walter Reed Army Medical Center, von Neumann was visited by a Catholic priest. He received baptism and last rites. The conversion puzzled his friends. Some attributed it to Pascal's Wager logic — a man who could calculate odds would not ignore even small probabilities of an afterlife. Others thought it was simply fear. His daughter Marina wrote that he was "terribly afraid of dying" and that religion gave him "no real comfort."
+  </p>
+  <p class="body-text reveal" style="animation-delay:.60s">
+    A military guard was posted outside his hospital room around the clock. He still held top-secret clearances, and there were classified things in his head that could not be allowed to be overheard. He died on 8 February 1957, with the guard still at the door. He was fifty-three years old.
+  </p>
+  <div class="block reveal" style="animation-delay:.62s">
+    <blockquote>
+      "Most of us, when we work in a domain, leave behind a few theorems or a few techniques. He left behind entire fields."
+      <cite>— Peter Lax, mathematician</cite>
+    </blockquote>
+  </div>
+
+  <!-- WRITING AND WORKING STYLE -->
+  <div class="band reveal" style="animation-delay:.63s">The Style of the Work</div>
+  <p class="body-text reveal" style="animation-delay:.635s">
+    Von Neumann's published papers are notable for their unusual combination of extreme technical precision and conceptual clarity. He never obscured difficulty with jargon. He could write for physicists, mathematicians, economists, and engineers — each audience got the version calibrated to their vocabulary, without condescension to any. His game theory book with Morgenstern is a masterpiece of exposition: beginning from first principles of utility and rationality, building carefully to the minimax theorem, never assuming more than necessary.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.640s">
+    He wrote fast. His productivity — measured in papers per year, fields entered, problems solved — was extraordinary even by the standards of the era's most productive mathematicians. He reportedly dictated to a secretary directly, without notes, producing finished mathematical prose at speaking speed. The secretary would type while he paced, occasionally pausing to verify a formula at the board.
+  </p>
+  <div class="grid reveal" style="animation-delay:.645s">
+    <div class="card">
+      <span class="num">A</span>
+      <h3>Set Theory</h3>
+      <p class="what">Axiomatization of set theory (ZFC formulation), published while still in gymnasium. His first paper, co-authored with Fejér, appeared in 1921 when he was seventeen.</p>
+      <span class="tag blue">1921</span>
+    </div>
+    <div class="card">
+      <span class="num">B</span>
+      <h3>Operator Theory</h3>
+      <p class="what">Von Neumann algebras (now named after him) — the mathematical objects underlying both quantum mechanics and quantum information theory.</p>
+      <span class="tag blue">1929</span>
+    </div>
+    <div class="card">
+      <span class="num">C</span>
+      <h3>Ergodic Theory</h3>
+      <p class="what">Mean ergodic theorem — foundational for statistical mechanics. Proved using spectral theory of operators, one of the first applications of functional analysis to physics.</p>
+      <span class="tag blue">1932</span>
+    </div>
+    <div class="card">
+      <span class="num">D</span>
+      <h3>Continuous Geometry</h3>
+      <p class="what">Generalization of projective geometry beyond integer dimensions. A mathematical structure with no physical application discovered for decades — then central to quantum logic.</p>
+      <span class="tag">1936</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">E</span>
+      <h3>Numerical Analysis</h3>
+      <p class="what">Error analysis of floating-point computation; stability of numerical methods for differential equations. The theoretical foundation of scientific computing.</p>
+      <span class="tag">1947</span>
+    </div>
+    <div class="card orange-hover">
+      <span class="num">F</span>
+      <h3>Fluid Dynamics</h3>
+      <p class="what">Theory of shockwaves and detonation. The mathematics of implosion, directly applicable to nuclear weapon design. Among the most classified of his contributions.</p>
+      <span class="tag">1943</span>
+    </div>
+  </div>
+
+  <!-- THE MIND ITSELF -->
+  <div class="band reveal" style="animation-delay:.64s">How He Thought</div>
+  <p class="body-text reveal" style="animation-delay:.66s">
+    The accounts of von Neumann's thinking style are consistent across dozens of memoir sources, and they describe something qualitatively different from ordinary high intelligence. He did not work harder than other mathematicians — he simply saw further. He could hold a complex problem in his head while carrying on a conversation about something else entirely, then produce the answer when asked. He sometimes arrived at results before he could produce proofs — the mathematical vision preceding the machinery of justification.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.68s">
+    Herman Goldstine, who worked with him on the ENIAC project, described watching von Neumann solve a partial differential equation by hand on the blackboard — not a standard one, but a novel problem arising in the computation — at a speed Goldstine could barely follow even knowing the answer was coming. The calculation that would have taken Goldstine a day took von Neumann twenty minutes. "And he was talking about something else at the same time," Goldstine recalled.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.70s">
+    He had what we might now call <em>extreme working memory</em> — the ability to hold enormous amounts of intermediate computation in mind simultaneously. This combined with his eidetic long-term memory and his ability to recognize deep structural patterns across different fields created something unprecedented. He could look at a problem in fluid dynamics and immediately see that its mathematical structure was identical to something he had solved in quantum mechanics, then transfer the solution wholesale.
+  </p>
+
+  <!-- WHAT HE MISSED -->
+  <div class="band orange reveal" style="animation-delay:.72s">What Even He Missed</div>
+  <p class="body-text reveal" style="animation-delay:.74s">
+    Von Neumann was not infallible. He initially dismissed the significance of Gödel's results — "What Gödel has done has nothing to do with the consistency of mathematics" — before reversing himself within hours. He was skeptical of information theory as Shannon developed it, thinking it mathematically trivial. He was wrong. He underestimated the practical difficulty of building reliable software for his architecture — the notion that programming would become a major discipline and profession would have surprised him.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.76s">
+    He also, to his discredit, testified against Oppenheimer during the 1954 security hearing — not actively maliciously, but not helpfully either. He was a man of his Cold War moment in ways that were sometimes admirable (the clarity of his strategic analysis) and sometimes not (the willingness to sacrifice colleagues to political pressure). He was human in the full sense: extraordinary gifts alongside ordinary moral limitations.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.78s">
+    <blockquote>
+      "He had a mind so fast that the rest of us were always trying to catch up with where he already was."
+      <cite>— Eugene Wigner, physicist and Nobel laureate, on his childhood friend</cite>
+    </blockquote>
+  </div>
+
+  <!-- FINAL ASSESSMENT -->
+  <div class="band reveal" style="animation-delay:.80s">The Measure</div>
+  <p class="body-text reveal" style="animation-delay:.82s">
+    History has produced a small number of people who did not merely advance a field but created new ones, changed how we think about mind and matter, and left institutions and instruments that outlasted them by centuries. Newton. Euler. Gauss. Maxwell. In the twentieth century: Einstein, Turing, Shannon — and von Neumann. The company is right. The comparison holds.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.84s">
+    The difference is breadth. Newton changed physics and mathematics. Einstein changed physics. Turing changed computing and logic. Von Neumann changed computing, logic, physics, economics, and biology — and did so not through broad strokes but through deep, original, technically formidable work in each domain. He was not a polymath in the popularizing sense, spreading thin insights across many fields. He was a specialist in each field he entered. He just entered many.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.86s">
+    The machine you are reading this on would not exist in the form it takes without him. The economic theory used to price the ad that may have shown alongside this page would not exist. The quantum mechanical formalism in which physicists describe the transistors in that machine would not exist. He is not famous enough, given this. That is perhaps because his contributions are so deeply embedded in the infrastructure of modern life that they have become invisible — the way air is invisible, and water, and mathematics.
+  </p>
+
+  <!-- COLOPHON -->
+  <div class="colophon reveal" style="animation-delay:.88s">
+    ROOT0-ATTRIBUTION-v1.0<br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    John von Neumann Series · Volume 0: Who He Was<br>
+    CC-BY-ND-4.0 · 2025
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>

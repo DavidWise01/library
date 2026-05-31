@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Euclid — Vol. 0: Who He Was</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #0f1108;
+      --gold: #c9a227;
+      --ivory: #e8d8a0;
+      --dim: #6b6540;
+      --mid: #2a2910;
+      --card-bg: #141509;
+      --border: rgba(201,162,39,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ivory);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* NAV */
+    nav {
+      background: rgba(15,17,8,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    nav .series-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav a.active { color: var(--gold); }
+
+    /* MASTHEAD */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      align-items: center;
+      padding: 5rem 4rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .masthead-text .vol-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .masthead-text h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      color: var(--ivory);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .masthead-text .subtitle {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    .masthead-text .lede {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: rgba(232,216,160,0.8);
+      max-width: 56ch;
+      line-height: 1.85;
+    }
+
+    /* ANIMATED SVG — concentric circles geometry */
+    .masthead-art svg {
+      width: 100%;
+      height: auto;
+    }
+
+    /* MAIN CONTENT */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 4rem 6rem;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.7rem;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+
+    h3 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--ivory);
+      margin: 1.8rem 0 0.7rem;
+      letter-spacing: 0.03em;
+    }
+
+    p {
+      margin-bottom: 1.1rem;
+      color: rgba(232,216,160,0.88);
+    }
+
+    /* KICK — small caps label */
+    .kick {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* BAND — inline label */
+    .band {
+      display: inline-block;
+      background: var(--gold);
+      color: #0f1108;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.18em 0.7em;
+      margin-right: 0.5rem;
+      font-weight: 700;
+    }
+
+    /* CARD GRID */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.15);
+    }
+
+    .card .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .card h4 {
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.6rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: rgba(232,216,160,0.72);
+      line-height: 1.65;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      border-left: 2px solid var(--border);
+      padding-left: 2rem;
+      margin: 2rem 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.45rem;
+      top: 0.45rem;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .timeline-item .year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--ivory);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-item p {
+      font-size: 0.92rem;
+    }
+
+    /* PULL QUOTE */
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: rgba(201,162,39,0.05);
+    }
+
+    blockquote p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--ivory);
+      margin: 0;
+    }
+
+    blockquote cite {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--dim);
+      letter-spacing: 0.15em;
+      margin-top: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    /* UNCERTAINTY TABLE */
+    .fact-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.93rem;
+    }
+
+    .fact-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+
+    .fact-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(201,162,39,0.1);
+      color: rgba(232,216,160,0.82);
+      vertical-align: top;
+    }
+
+    .fact-table tr:last-child td { border-bottom: none; }
+
+    .status-known {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #7ec87e;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-unknown {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #c87e7e;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .status-inferred {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: #c9a227;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* NAV STRIP (between volumes) */
+    .vol-nav {
+      display: flex;
+      gap: 1rem;
+      margin: 3rem 0;
+      flex-wrap: wrap;
+    }
+
+    .vol-nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.5rem 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .vol-nav a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .vol-nav a.current {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(201,162,39,0.08);
+    }
+
+    /* COLOPHON */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .colophon {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    .colophon a { color: var(--dim); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+      .masthead-art { display: none; }
+      main { padding: 1.5rem 1.5rem 4rem; }
+      footer { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Euclid — A Library in Four Volumes</span>
+  <a href="0-who.html" class="active">Vol. 0 — Who</a>
+  <a href="1-elements.html">Vol. 1 — Elements</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html">Vol. 3 — Legacy</a>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-text">
+    <span class="vol-tag">Volume 0 of 4 &nbsp;·&nbsp; Euclid of Alexandria</span>
+    <h1>Who He Was</h1>
+    <div class="subtitle">The Geometer Without a Face</div>
+    <p class="lede">He wrote the most durable mathematics textbook in human history. He founded a school that shaped every scientific mind for two millennia. And we cannot tell you what he looked like, when exactly he was born, or almost anything about his life. Euclid is a ghost who left a monument.</p>
+  </div>
+  <div class="masthead-art">
+    <!-- Animated SVG: concentric circles with inscribed triangle, rotating lines -->
+    <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg0" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1e1f0a"/>
+          <stop offset="100%" stop-color="#0f1108"/>
+        </radialGradient>
+      </defs>
+      <circle cx="180" cy="180" r="178" fill="url(#bg0)" stroke="#c9a227" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Outer rotating circle -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="80s" repeatCount="indefinite" additive="sum"/>
+        <circle cx="0" cy="0" r="150" fill="none" stroke="#c9a227" stroke-width="0.6" stroke-dasharray="4 8" opacity="0.4"/>
+      </g>
+
+      <!-- Middle circle static -->
+      <circle cx="180" cy="180" r="110" fill="none" stroke="#c9a227" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- Inner circle counter-rotating -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="-360 0 0" dur="55s" repeatCount="indefinite" additive="sum"/>
+        <circle cx="0" cy="0" r="70" fill="none" stroke="#c9a227" stroke-width="0.8" opacity="0.5"/>
+        <!-- Inscribed triangle in inner circle -->
+        <polygon points="0,-70 60.6,35 -60.6,35" fill="none" stroke="#c9a227" stroke-width="1.2" opacity="0.7"/>
+      </g>
+
+      <!-- Rotating diameter lines -->
+      <g transform="translate(180,180)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="45s" repeatCount="indefinite" additive="sum"/>
+        <line x1="-150" y1="0" x2="150" y2="0" stroke="#c9a227" stroke-width="0.5" opacity="0.25"/>
+        <line x1="0" y1="-150" x2="0" y2="150" stroke="#c9a227" stroke-width="0.5" opacity="0.25"/>
+        <line x1="-106" y1="-106" x2="106" y2="106" stroke="#c9a227" stroke-width="0.5" opacity="0.2"/>
+        <line x1="106" y1="-106" x2="-106" y2="106" stroke="#c9a227" stroke-width="0.5" opacity="0.2"/>
+      </g>
+
+      <!-- Center dot -->
+      <circle cx="180" cy="180" r="3" fill="#c9a227" opacity="0.9"/>
+
+      <!-- Pulsing outer ring -->
+      <circle cx="180" cy="180" r="155" fill="none" stroke="#c9a227" stroke-width="1" opacity="0">
+        <animate attributeName="opacity" values="0;0.3;0" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="155;162;155" dur="4s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Corner label -->
+      <text x="18" y="340" font-family="Space Mono, monospace" font-size="8" fill="#c9a227" opacity="0.5" letter-spacing="2">ALEXANDRIA · c.300 BCE</text>
+    </svg>
+  </div>
+</div>
+
+<main>
+
+  <div class="vol-nav">
+    <a href="0-who.html" class="current">Vol. 0 — Who He Was</a>
+    <a href="1-elements.html">Vol. 1 — The Elements</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — Long Afterlife</a>
+  </div>
+
+  <!-- SECTION 1: THE PROBLEM OF EUCLID -->
+  <section>
+    <span class="kick">The Historical Problem</span>
+    <h2>A Man Made of Mathematics</h2>
+    <p>Euclid presents one of history's great paradoxes: the more enduring the intellectual achievement, the less we know about the person behind it. His work, the <em>Elements</em>, shaped human reasoning for 2,300 years. It was the second-most printed book in the Western world after the Bible. Generations of students — from Ptolemaic Alexandria to Victorian England to twentieth-century America — learned to think rigorously through his propositions. And yet we have no reliable portrait of Euclid, no confirmed dates of birth or death, no personal letters, no contemporary biography.</p>
+    <p>What survives is inference, tradition, and the mathematical texts themselves. The man dissolved into his method.</p>
+
+    <blockquote>
+      <p>"There is no royal road to geometry."</p>
+      <cite>— Attributed to Euclid, when King Ptolemy I asked if there were a shorter path to learning geometry than through the Elements. Reported by Proclus, c. 450 CE — roughly 750 years after Euclid lived.</cite>
+    </blockquote>
+
+    <p>The story may be apocryphal. It surfaces only in Proclus's fifth-century commentary on the <em>Elements</em> — our single most important secondary source on Euclid's life. Proclus is writing seven and a half centuries after the fact, drawing on sources now lost. We should hold the anecdote lightly. But it has the ring of character: a terse, principled mathematician unbothered by royal impatience.</p>
+  </section>
+
+  <!-- SECTION 2: WHAT WE KNOW / DON'T KNOW -->
+  <section>
+    <span class="kick">The Evidence</span>
+    <h2>What We Know, What We Don't</h2>
+    <p>Scholars have sorted the claims about Euclid into three bins: confirmed, inferred from context, and tradition-only. The confirmed list is startlingly short.</p>
+
+    <table class="fact-table">
+      <thead>
+        <tr>
+          <th>Fact</th>
+          <th>Status</th>
+          <th>Source / Basis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Worked in Alexandria during the reign of Ptolemy I (r. 305–283 BCE)</td>
+          <td><span class="status-inferred">Inferred</span></td>
+          <td>Proclus, Commentary on Book I; consistent with dating of the Elements</td>
+        </tr>
+        <tr>
+          <td>Authored the <em>Elements</em> (Greek: Στοιχεῖα)</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Manuscript tradition, ancient citations, internal consistency</td>
+        </tr>
+        <tr>
+          <td>Founded or led a mathematical school in Alexandria</td>
+          <td><span class="status-inferred">Inferred</span></td>
+          <td>Proclus; Pappus of Alexandria refers to "Euclid's students"</td>
+        </tr>
+        <tr>
+          <td>Born in Alexandria</td>
+          <td><span class="status-unknown">Uncertain</span></td>
+          <td>Some traditions say Tyre or Megara; no primary source confirms birthplace</td>
+        </tr>
+        <tr>
+          <td>Born c. 330 BCE; died c. 270 BCE</td>
+          <td><span class="status-inferred">Inferred</span></td>
+          <td>Consistent with Ptolemy I timeframe; conventional scholarly range</td>
+        </tr>
+        <tr>
+          <td>Studied at Plato's Academy in Athens</td>
+          <td><span class="status-unknown">Uncertain</span></td>
+          <td>Tradition only; no primary source; plausible given his knowledge of Eudoxus</td>
+        </tr>
+        <tr>
+          <td>Euclid of Alexandria is a different person from Euclid of Megara</td>
+          <td><span class="status-known">Confirmed</span></td>
+          <td>Medieval scribes confused the two; modern scholarship separates them clearly</td>
+        </tr>
+        <tr>
+          <td>His personal appearance</td>
+          <td><span class="status-unknown">Unknown</span></td>
+          <td>No authentic portrait exists; all images are Renaissance or later inventions</td>
+        </tr>
+        <tr>
+          <td>Whether "Euclid" was one person or a collaborative school</td>
+          <td><span class="status-unknown">Debated</span></td>
+          <td>Some scholars argue the Elements may be a sophisticated compilation; minority view</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The dates c. 330–270 BCE are conventional scholarly estimates, not documentary record. They derive primarily from the fact that Euclid was active during the reign of Ptolemy I Soter, who ruled Egypt from 305 to 283 BCE. Proclus tells us this, and Archimedes (c. 287–212 BCE) — who definitely postdates Euclid — cites results from the <em>Elements</em> without naming Euclid, suggesting the work was already established and well-known by Archimedes's time.</p>
+  </section>
+
+  <!-- SECTION 3: THE EUCLID OF MEGARA CONFUSION -->
+  <section>
+    <span class="kick">A Case of Mistaken Identity</span>
+    <h2>Two Euclids, One Name</h2>
+    <p>Medieval Europe inherited a confused picture of Euclid partly because of a scribal error of breathtaking persistence. Euclid of Megara was a philosopher, a student of Socrates, who founded the Megarian school of logic around 400 BCE — over a century before the mathematician. Medieval copyists, encountering the name "Euclid," sometimes merged the two men into one figure: a Socratic philosopher who also wrote geometry.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">PERSON A</span>
+        <h4>Euclid of Megara</h4>
+        <p>Philosopher. Follower of Socrates, c. 435–365 BCE. Founded the Megarian school. Interested in logic and paradoxes. Has nothing to do with geometry. Was confused with our Euclid by medieval scholars.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">PERSON B</span>
+        <h4>Euclid of Alexandria</h4>
+        <p>Mathematician. Active c. 300 BCE. Worked in Alexandria under Ptolemy I. Author of the <em>Elements</em> and several other mathematical and optical texts. The subject of this volume.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">THE ERROR</span>
+        <h4>The Medieval Conflation</h4>
+        <p>The confusion appears as early as Valerius Maximus (1st century CE). Medieval manuscripts sometimes depict Euclid the geometer as a student of Socrates, placing him a century earlier in Athens — an error that distorted European understanding for hundreds of years.</p>
+      </div>
+    </div>
+
+    <p>Modern scholarship has fully separated the two figures. The geometer Euclid cannot have been a student of Socrates — the timelines are impossible. But the confusion underlines how thin the biographical record truly is: if medieval scholars with access to more ancient sources could make such a basic error, the original biographical data must have been sparse indeed.</p>
+  </section>
+
+  <!-- SECTION 4: ALEXANDRIA AND THE MUSEUM -->
+  <section>
+    <span class="kick">The Place That Made Him</span>
+    <h2>Alexandria and the Museum</h2>
+    <p>If we know little about Euclid the man, we know a great deal about the institution that shaped his work: the Mouseion, the Museum of Alexandria. Not a museum in the modern sense — not a repository of objects — but a research institution, a kind of ancient university, attached to the great Library of Alexandria. Ptolemy I established it around 295 BCE, and it became the intellectual center of the Hellenistic world.</p>
+    <p>The Museum housed scholars across disciplines: astronomers, poets, physicians, grammarians, mathematicians. They received royal stipends. They had access to what was, for centuries, the largest collection of written texts in the world. Euclid almost certainly worked within this environment — the <em>Elements</em> bears the hallmarks of an institution with access to prior mathematical work by Eudoxus, Theaetetus, Hippocrates of Chios, and the Pythagoreans.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">INSTITUTION</span>
+        <h4>The Mouseion (Museum)</h4>
+        <p>Royal research institute founded by Ptolemy I, c. 295 BCE. Named for the Muses. Scholars received royal patronage, free meals, and no taxes. Included scholars in mathematics, astronomy, medicine, and poetry simultaneously.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">RESOURCE</span>
+        <h4>The Great Library</h4>
+        <p>At its height estimated to hold 400,000–700,000 papyrus scrolls — the largest collection in the ancient world. Ptolemy III reportedly required all ships docking at Alexandria to surrender their books for copying. Euclid would have had access to all prior Greek mathematical texts.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">CONTEXT</span>
+        <h4>Ptolemaic Alexandria</h4>
+        <p>A cosmopolitan city of 300,000–500,000 at its peak. Greek rulers, Egyptian population, Jewish quarter, Persian traders. The dominant language was Greek. Alexandria was, briefly, the greatest city in the world and the world capital of systematic knowledge.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">TRADITION</span>
+        <h4>The Greek Mathematical Legacy</h4>
+        <p>Euclid inherited centuries of Greek mathematical work: Thales' geometric propositions (c. 600 BCE), Pythagoras's school, Hippocrates of Chios's first systematic geometry (c. 440 BCE), Eudoxus's theory of proportions (c. 370 BCE), and Theaetetus's study of irrationals and the Platonic solids.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: HIS OTHER WORKS -->
+  <section>
+    <span class="kick">Beyond the Elements</span>
+    <h2>Other Attributed Works</h2>
+    <p>Euclid did not only write the <em>Elements</em>. Ancient sources attribute to him a substantial body of additional mathematical and scientific texts, though several have been lost and others survive only in fragments or Arabic translation.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="year">SURVIVING — GREEK TEXT</div>
+        <h4>Data (Δεδομένα)</h4>
+        <p>A companion to Book I of the Elements. Explores what can be deduced when certain geometric elements are "given." Ninety-four propositions. Still extant in Greek.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">SURVIVING — GREEK TEXT</div>
+        <h4>Optics (Ὀπτική)</h4>
+        <p>A mathematical treatment of vision and perspective. Establishes that light travels in straight lines. First systematic treatment of perspective in antiquity. Treated vision geometrically, not physiologically.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">SURVIVING — ARABIC TRANSLATION</div>
+        <h4>On Divisions of Figures</h4>
+        <p>Deals with dividing geometric figures into parts with given ratios. Survives only in an Arabic translation (and a partial Latin translation from the Arabic). The Greek original is lost.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">LOST</div>
+        <h4>Pseudaria (Fallacies)</h4>
+        <p>A work on logical fallacies in geometry. Described by Proclus as a training text to sharpen students' critical thinking. Completely lost; known only from ancient descriptions.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">LOST</div>
+        <h4>Conics</h4>
+        <p>An earlier work on conic sections, later superseded and eclipsed by Apollonius of Perga's eight-book <em>Conics</em>. Known from references by Pappus and Apollonius himself.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">LOST</div>
+        <h4>Porisms</h4>
+        <p>Three books on "porisms" — a type of proposition intermediate between theorems and problems. Described in detail by Pappus of Alexandria but entirely lost. Modern scholars disagree about what a "porism" even was.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">LOST</div>
+        <h4>Surface Loci</h4>
+        <p>Two books dealing with loci on surfaces. Completely lost. Known only from Pappus's brief description.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="year">DOUBTFUL</div>
+        <h4>Catoptrics (Mirrors)</h4>
+        <p>Attributed to Euclid in some traditions, but most modern scholars consider it a later compilation. The authentic Euclidean Optics already treats reflection; this text may be a confused descendant.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: THE TEACHER -->
+  <section>
+    <span class="kick">The Pedagogue</span>
+    <h2>Euclid as Teacher</h2>
+    <p>The second anecdote preserved by Proclus concerns a student who, after learning the first proposition of the <em>Elements</em>, asked Euclid: "What do I gain from learning this?" Euclid reportedly called a slave and said: "Give him a coin, since he must profit from what he learns." The story — probably apocryphal — reveals something about how antiquity understood Euclid: not as a pure theorist remote from students, but as a teacher with opinions about learning for its own sake.</p>
+
+    <blockquote>
+      <p>"Give him a coin, since he must profit from what he learns."</p>
+      <cite>— Attributed to Euclid, when a student asked what practical gain he would get from geometry. Reported by Proclus, Commentary on Euclid's Elements, c. 450 CE.</cite>
+    </blockquote>
+
+    <p>Pappus of Alexandria, writing in the fourth century CE, refers to Euclid as gentle and kind to anyone who could advance the mathematical sciences. This is not much to go on. But the <em>Elements</em> itself, as a pedagogical artifact, tells us something: it is organized with extraordinary care for logical sequence. Nothing is assumed that has not been proven. Every step is explicit. Whatever Euclid's personality, his book is the work of someone who thought deeply about how knowledge should be transmitted.</p>
+    <p>He is, in that sense, humanity's first great mathematics teacher — even if we cannot see his face.</p>
+  </section>
+
+  <!-- SECTION 7: THE QUESTION OF ORIGINALITY -->
+  <section>
+    <span class="kick">Compiler or Creator?</span>
+    <h2>What Did Euclid Actually Invent?</h2>
+    <p>Scholars have long debated the extent of Euclid's originality. The <em>Elements</em> is not a book of new discoveries — much of the material was known before Euclid wrote it. He assembled, organized, and systematized the results of a century and a half of Greek mathematics. His genius, historians now generally agree, was architectural and logical, not primarily inventive.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-num">INHERITED FROM EUDOXUS</span>
+        <h4>Theory of Proportions</h4>
+        <p>Book V of the Elements presents the general theory of ratio and proportion developed by Eudoxus of Cnidus (c. 408–355 BCE). Euclid preserved and formalized it into one of the most rigorous treatments in ancient mathematics.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">INHERITED FROM THEAETETUS</span>
+        <h4>Incommensurables & Solids</h4>
+        <p>Book X (irrational magnitudes) and Book XIII (Platonic solids) draw heavily on the work of Theaetetus (c. 417–369 BCE). Theaetetus proved the existence and classification of the five regular solids; Euclid provided the rigorous framework.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">INHERITED FROM PYTHAGORAS</span>
+        <h4>Number Theory Foundations</h4>
+        <p>Books VII–IX on number theory draw on Pythagorean mathematics. The proof that there are infinitely many primes (Book IX, Prop. 20) may be Euclid's own — or may be his elegant reformulation of an earlier result.</p>
+      </div>
+      <div class="card">
+        <span class="card-num">POSSIBLY EUCLID'S OWN</span>
+        <h4>The Logical Architecture</h4>
+        <p>The axiomatic structure — definitions, postulates, common notions, then propositions — is Euclid's organizational achievement. The seamless logical chain connecting 465 propositions across 13 books is his enduring contribution to the form of mathematics.</p>
+      </div>
+    </div>
+
+    <p>The classical scholar Wilbur Knorr argued that Euclid's contribution was the unification: the achievement of showing that geometry, number theory, and the theory of irrationals could all be derived from the same logical foundations. If he invented little, he discovered everything about how mathematics should be organized — and that discovery proved to be the more durable one.</p>
+  </section>
+
+  <!-- SECTION 8: PORTRAITS AND REPRESENTATION -->
+  <section>
+    <span class="kick">The Absent Image</span>
+    <h2>A Face We Invented</h2>
+    <p>Every image you have ever seen labeled "Euclid" is a fiction. The bearded sage with a compass — familiar from medieval manuscripts, Renaissance paintings, and twentieth-century textbooks — is a convention, not a portrait. No authentic image of Euclid survives. None ever existed in the record that has come down to us.</p>
+    <p>The most famous "portrait" of Euclid in art is probably the figure in Raphael's <em>School of Athens</em> (1509–1511), painted in the Vatican's Stanza della Segnatura. The figure traditionally identified as Euclid — bent over a slate, compass in hand, demonstrating to students — was almost certainly modeled on Bramante, the architect. It tells us everything about Renaissance idealization of ancient learning and nothing about Euclid's appearance.</p>
+    <p>Medieval manuscripts sometimes illustrated the opening of the <em>Elements</em> with a figure at a desk or with students gathered around. These images multiply across the centuries, each generation inheriting and elaborating the previous one's invention. By the time printed editions appeared in the fifteenth century, "Euclid" had a stable iconographic identity: bearded, sage-like, often with a compass — an identity built entirely from aesthetic convention and cultural expectation.</p>
+    <p>We know what he thought. We do not know what he looked like. For a mathematician who spent his career proving things from first principles, there is something almost appropriate about that.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp; David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp; CC-BY-ND-4.0<br>
+    Series: Euclid of Alexandria — A Library in Four Volumes &nbsp;|&nbsp; Vol. 0: Who He Was<br>
+    Sources: Proclus, Commentary on the First Book of Euclid's Elements (c. 450 CE); T.L. Heath, The Thirteen Books of Euclid's Elements (1908); Wilbur Knorr, The Evolution of the Euclidean Elements (1975); Reviel Netz, The Shaping of Deduction in Greek Mathematics (1999)
+  </div>
+</footer>
+
+</body>
+</html>

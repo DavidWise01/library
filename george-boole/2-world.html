@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>George Boole — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#090f09;--card:#0f1a0f;--cardsolid:#0f1a0f;--ink:#d6e8d6;--dim:#6b8f6b;
+    --emerald:#059669;--amber:#d97706;--line:rgba(5,150,105,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 50% 0%,#0d1f0d 0%,#060c06 70%);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--emerald);color:#090f09;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:10px;}
+  .band{display:inline-block;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;background:var(--emerald);color:#090f09;padding:5px 14px;margin:32px 0 14px;}
+  .band.amber{background:var(--amber);}
+  .band.dim{background:#1a2e1a;color:var(--ink);}
+
+  .mast{border-bottom:4px solid var(--emerald);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,72px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--emerald);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#a8c4a8;}
+  .dek b{font-weight:500;color:var(--emerald);}
+
+  /* Victorian map animation */
+  @keyframes draw{0%{stroke-dashoffset:800}100%{stroke-dashoffset:0}}
+  @keyframes glow{0%,100%{opacity:0.4}50%{opacity:1}}
+  .draw-line{stroke-dasharray:800;animation:draw 5s linear infinite;}
+  .pulse{animation:glow 2s ease-in-out infinite;}
+  @media(prefers-reduced-motion:reduce){.draw-line,.pulse{animation:none;stroke-dashoffset:0;opacity:1}}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--emerald);}
+  .card.a:hover{box-shadow:5px 5px 0 var(--amber);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--amber);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#9ab89a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#6b8f6b;}
+  .card .plus b{color:var(--emerald);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.a .plus b{color:var(--amber);}
+
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"▸";position:absolute;left:2px;top:8px;font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);font-weight:700;}
+  .block.amber .rules li::before{color:var(--amber);}
+  .rules b{font-weight:500;color:var(--emerald);}
+  .block.amber .rules b{color:var(--amber);}
+
+  /* Context tiles */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:11px;margin-bottom:4px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--emerald);}
+  .type p{font-size:13px;margin:0;color:#8aaa8a;line-height:1.45;}
+  .type .tg{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.05em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:1px 6px;margin-top:7px;}
+
+  /* Profile cards for people */
+  .people{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:10px 0;}
+  .person{border:2px solid var(--line);background:var(--cardsolid);padding:18px 20px;transition:transform .14s ease,box-shadow .14s ease;}
+  .person:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--emerald);}
+  .person-name{font-family:"Cinzel";font-weight:700;font-size:19px;color:var(--ink);margin:0 0 3px;}
+  .person-dates{font-family:"Space Mono",monospace;font-size:11px;color:var(--amber);margin-bottom:10px;letter-spacing:0.08em;}
+  .person-bio{font-size:14px;color:#9ab89a;line-height:1.6;margin:0 0 10px;}
+  .person-link{font-family:"Space Mono",monospace;font-size:11px;color:var(--dim);letter-spacing:0.06em;}
+
+  /* Timeline */
+  .timeline{list-style:none;padding:0;margin:0;}
+  .timeline li{display:flex;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline .yr{font-family:"Space Mono",monospace;font-size:12px;font-weight:700;color:var(--emerald);min-width:46px;padding-top:1px;flex-shrink:0;}
+  .timeline .ev{color:#a8c4a8;line-height:1.5;}
+  .timeline .ev b{color:var(--ink);font-weight:500;}
+
+  /* Map visualization */
+  .map-box{border:1px solid var(--line);background:var(--cardsolid);padding:20px;margin:10px 0;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+  .map-text{flex:1;min-width:260px;}
+  .map-text h3{font-family:"Cinzel";font-weight:700;font-size:18px;color:var(--emerald);margin:0 0 10px;}
+  .map-text p{font-size:14px;color:#9ab89a;margin:0 0 10px;line-height:1.55;}
+
+  .pull{border-left:3px solid var(--emerald);padding:14px 18px;margin:22px 0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:18px;color:#b8d4b8;background:var(--cardsolid);}
+  .pull cite{display:block;margin-top:8px;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--dim);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:44px;padding-top:16px;border-top:1px solid var(--line);line-height:2;}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.type,.person{background:#fff}.card:hover,.person:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">george boole series · volume 2 · his world</span>
+    <div class="masthead">
+      <div>
+        <h1>Victorian <em>England</em> &amp; Ireland</h1>
+        <p class="dek">
+          Boole was born into an England of poverty and Mechanics' Institutes,
+          matured in the intellectual ferment of the <b>mathematical reform movement</b>,
+          and died in an Ireland still under British colonial rule.
+          The world he moved through shaped him — and he changed the world that didn't notice.
+        </p>
+      </div>
+      <!-- Animated SVG: a Victorian-era route map Lincoln → Cork -->
+      <svg width="190" height="160" viewBox="0 0 190 160" role="img" aria-label="Map showing Lincoln England to Cork Ireland — Boole's life journey">
+        <!-- Sea background suggestion -->
+        <rect x="0" y="0" width="190" height="160" fill="#090f09"/>
+        <!-- British Isles outline (simplified) -->
+        <!-- England coast -->
+        <path d="M120,20 Q130,15 138,25 Q142,35 135,50 Q138,65 130,80 Q125,95 115,105 Q105,110 95,108" fill="none" stroke="rgba(5,150,105,0.25)" stroke-width="1.5"/>
+        <!-- Wales -->
+        <path d="M95,108 Q88,112 82,108 Q78,100 80,92" fill="none" stroke="rgba(5,150,105,0.25)" stroke-width="1.5"/>
+        <!-- Ireland outline -->
+        <path d="M40,70 Q32,62 28,72 Q22,85 28,100 Q34,114 44,118 Q58,122 68,112 Q74,100 68,88 Q62,76 50,70 Q46,68 40,70" fill="none" stroke="rgba(5,150,105,0.3)" stroke-width="1.5"/>
+        <!-- Scotland suggestion -->
+        <path d="M120,20 Q110,10 102,14 Q96,20 100,30 Q108,28 120,20" fill="none" stroke="rgba(5,150,105,0.2)" stroke-width="1"/>
+
+        <!-- Lincoln dot -->
+        <circle cx="128" cy="52" r="4" fill="none" stroke="#059669" stroke-width="1.5"/>
+        <circle cx="128" cy="52" r="2" fill="#059669"/>
+        <text x="138" y="56" font-family="Space Mono,monospace" font-size="8" fill="#059669">Lincoln</text>
+
+        <!-- Cork dot -->
+        <circle cx="42" cy="108" r="4" fill="none" stroke="#d97706" stroke-width="1.5"/>
+        <circle cx="42" cy="108" r="2" fill="#d97706"/>
+        <text x="14" y="122" font-family="Space Mono,monospace" font-size="8" fill="#d97706">Cork</text>
+
+        <!-- Animated route: Lincoln → London → sea → Cork -->
+        <path class="draw-line"
+          d="M128,52 Q118,70 108,84 Q100,100 85,108 Q72,112 60,112 Q52,112 42,108"
+          fill="none" stroke="#059669" stroke-width="1.5" stroke-dasharray="800" opacity="0.8"/>
+
+        <!-- London dot -->
+        <circle cx="108" cy="84" r="2.5" fill="#6b8f6b"/>
+        <text x="110" y="94" font-family="Space Mono,monospace" font-size="7" fill="#6b8f6b">London</text>
+
+        <!-- Labels -->
+        <text x="95" y="148" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b8f6b">1815 lincoln → 1849 cork</text>
+        <text x="95" y="160" text-anchor="middle" font-family="Space Mono,monospace" font-size="8" fill="#3d5c3d">the journey of a life</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Context tiles -->
+  <span class="band">The world he was born into</span>
+  <div class="types">
+    <div class="type reveal">
+      <h4>Regency England</h4>
+      <p>Boole was born in 1815 — the year of Waterloo. Britain was the world's dominant industrial power, but wealth was brutally unequal. Cobbler families lived close to destitution.</p>
+      <span class="tg">1815</span>
+    </div>
+    <div class="type reveal">
+      <h4>No universal education</h4>
+      <p>Public schooling did not exist in England until the 1870 Education Act — after Boole was already dead. Everything outside church charity schools required fees or self-teaching.</p>
+      <span class="tg">private / church</span>
+    </div>
+    <div class="type reveal">
+      <h4>The Mechanics' Institutes</h4>
+      <p>Founded from the 1820s to give working-class men access to scientific literature and lectures. Lincoln's Mechanics' Institute gave Boole his first library — the place where he found mathematical journals he couldn't otherwise afford.</p>
+      <span class="tg">working class access</span>
+    </div>
+    <div class="type reveal">
+      <h4>Mathematical reform</h4>
+      <p>British mathematics had stagnated behind Newton's notation. The Analytical Society at Cambridge (Babbage, Herschel, Peacock) was fighting to modernize it. Boole arrived into this ferment as an outsider who'd already surpassed it.</p>
+      <span class="tg">cambridge reform</span>
+    </div>
+    <div class="type reveal">
+      <h4>Ireland under Britain</h4>
+      <p>When Boole moved to Cork in 1849, he entered Ireland — subjugated under British rule, still reeling from the Great Famine (1845–52). Queen's College Cork was a British institution placed on Irish soil, deliberate and contested.</p>
+      <span class="tg">colonial context</span>
+    </div>
+    <div class="type reveal">
+      <h4>Victorian science</h4>
+      <p>The 1850s were a decade of Victorian intellectual confidence — Darwin's <em>On the Origin of Species</em> arrived in 1859. Boole's book appeared five years earlier into an era hungry for systematic natural law.</p>
+      <span class="tg">1850s science</span>
+    </div>
+  </div>
+
+  <!-- Lincoln — the place -->
+  <span class="band">Lincoln — where it started</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>A cathedral city in the Midlands</h3>
+      <p class="what">Lincoln was — and is — dominated by its magnificent medieval cathedral, visible for miles across the flat Lincolnshire landscape. But the city's lower districts, where the Booles lived, were working-class and poor.</p>
+      <p class="need"><b>economy</b> market town, some manufacturing, river trade</p>
+      <p class="do"><b>so</b> it was culturally respectable but economically stratified — a cobbler's family lived near the bottom of that hierarchy.</p>
+      <p class="plus"><b>+</b> Lincoln had a functioning mechanics' institute and access to mathematical journals by the 1830s — a narrow but real window into the intellectual world above his station.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>John Boole — the father</h3>
+      <p class="what">George's father was a cobbler — a tradesman, not a laborer, but perpetually struggling. What distinguished him was intellectual curiosity: he built telescopes, studied optics, and read widely.</p>
+      <p class="need"><b>lesson</b> learning doesn't require wealth — only determination</p>
+      <p class="do"><b>so</b> George grew up in a house where ideas were valued despite poverty. The cobbler's shop was also, in some sense, a workshop of the mind.</p>
+      <p class="plus"><b>+</b> John Boole was a founding member of Lincoln's Mechanics' Institute — which gave George access to the institution's library from childhood.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>Self-teaching as survival</h3>
+      <p class="what">Boole learned Latin from a local clergyman, Greek by correspondence, then French and German independently — to read mathematical texts unavailable in translation.</p>
+      <p class="need"><b>method</b> language as a tool for mathematics, not an end in itself</p>
+      <p class="do"><b>so</b> by 14 he was reading Lacroix's calculus text in French, which hadn't yet been translated. He was years ahead of university students with tutors and resources.</p>
+      <p class="plus"><b>+</b> when he published a translation of Lacroix excerpts in 1830, it drew attention from the mathematical community for the first time — his name began to circulate.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">04</span>
+      <h3>Teaching to survive</h3>
+      <p class="what">From age 16, Boole worked as an assistant teacher, then opened his own school in Lincoln by 1835. This wasn't a choice — it was economic necessity. His family depended on his income.</p>
+      <p class="need"><b>constraint</b> every hour of mathematics was stolen from sleep and evenings</p>
+      <p class="do"><b>so</b> he did original mathematical research while running a school, entirely without colleagues or feedback, for more than a decade.</p>
+      <p class="plus"><b>+</b> he described this period as profoundly lonely — producing work he had no one to share with, in a town where no one could evaluate it. The isolation made him self-reliant and rigorous.</p>
+    </article>
+  </div>
+
+  <!-- The mathematical community -->
+  <span class="band">The people around him — a world of correspondents</span>
+  <div class="people">
+    <div class="person reveal">
+      <div class="person-name">Augustus De Morgan</div>
+      <div class="person-dates">1806–1871</div>
+      <p class="person-bio">Professor of mathematics at University College London, De Morgan was Boole's closest intellectual companion — they corresponded for decades. De Morgan independently developed a system of formal logic (De Morgan's laws bear his name), and he was Boole's greatest champion in the London mathematical establishment. He wrote the first significant review of Boole's Laws of Thought and ensured it received serious attention.</p>
+      <div class="person-link">relation · friend, correspondent, champion</div>
+    </div>
+    <div class="person reveal">
+      <div class="person-name">Arthur Cayley</div>
+      <div class="person-dates">1821–1895</div>
+      <p class="person-bio">One of the most prolific mathematicians of the Victorian era, Cayley was among the first to notice Boole's papers in the Cambridge Mathematical Journal and to recognize their quality. His early encouragement was crucial — a letter from Cayley saying your work is good, in the 1840s, carried enormous weight. Cayley's own work on invariant theory intersected with Boole's early research.</p>
+      <div class="person-link">relation · early encourager, mathematical peer</div>
+    </div>
+    <div class="person reveal">
+      <div class="person-name">Mary Everest Boole</div>
+      <div class="person-dates">1832–1916</div>
+      <p class="person-bio">Niece of Colonel Sir George Everest (the mountain's namesake), Mary was a mathematician in her own right. She married Boole in 1855, raised their five daughters alone after his death in 1864, and spent the rest of her long life advocating for his ideas. She wrote on mathematical psychology, logic in education, and pedagogy — arguing that Boole's algebra was a tool for teaching children to think. She lived 52 years past him and never stopped working.</p>
+      <div class="person-link">relation · wife, mathematician, posthumous advocate</div>
+    </div>
+    <div class="person reveal">
+      <div class="person-name">William Thomson (Lord Kelvin)</div>
+      <div class="person-dates">1824–1907</div>
+      <p class="person-bio">The great Victorian physicist (of absolute temperature fame) was part of the same Cork intellectual world — Thomson had connections with Queen's College Cork and the broader Irish scientific community. He represents the kind of scientific authority Boole moved among in his later years in Ireland, even if their research trajectories were entirely different.</p>
+      <div class="person-link">relation · contemporary, Cork network</div>
+    </div>
+  </div>
+
+  <!-- Queen's College Cork -->
+  <span class="band amber">Queen's College Cork — the Irish years (1849–1864)</span>
+  <div class="map-box">
+    <div class="map-text">
+      <h3>Ireland under British rule</h3>
+      <p>When Boole arrived in Cork in 1849, Ireland was four years into the Great Famine — the catastrophic potato blight that killed one million people and drove another million to emigrate. The famine was not yet over. Cork was a city of devastation and flight.</p>
+      <p>Queen's College Cork was one of three "Queen's Colleges" established in 1845 as non-denominational institutions — part of Britain's project of reforming Irish higher education. The Catholic Church largely opposed them as dangerously secular. They were called "the godless colleges" by their critics.</p>
+      <p>Into this political minefield came Boole, a Protestant Englishman, appointed to a prestigious chair in a contested institution. He navigated it with characteristic quiet principle — committed to his students regardless of religion, respected across the religious divide.</p>
+    </div>
+    <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Cork city and Queen's College Cork visualization">
+      <!-- River Lee suggestion -->
+      <path d="M10,90 Q40,82 80,85 Q120,88 150,80" fill="none" stroke="rgba(5,150,105,0.3)" stroke-width="3"/>
+      <text x="80" y="78" font-family="Space Mono,monospace" font-size="8" fill="#3d5c3d" text-anchor="middle">River Lee</text>
+      <!-- QCC building outline -->
+      <rect x="50" y="40" width="60" height="35" fill="none" stroke="#059669" stroke-width="1.5"/>
+      <line x1="50" y1="55" x2="110" y2="55" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+      <!-- Towers -->
+      <rect x="48" y="28" width="10" height="14" fill="none" stroke="#059669" stroke-width="1.5"/>
+      <rect x="102" y="28" width="10" height="14" fill="none" stroke="#059669" stroke-width="1.5"/>
+      <polygon points="53,28 58,20 63,28" fill="none" stroke="#059669" stroke-width="1"/>
+      <polygon points="107,28 112,20 117,28" fill="none" stroke="#059669" stroke-width="1"/>
+      <text x="80" y="50" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">QCC</text>
+      <text x="80" y="60" font-family="Space Mono,monospace" font-size="7" fill="#6b8f6b" text-anchor="middle">est. 1845</text>
+      <!-- Boole label -->
+      <circle class="pulse" cx="80" cy="100" r="4" fill="none" stroke="#d97706" stroke-width="1.5"/>
+      <text x="80" y="115" font-family="Space Mono,monospace" font-size="7" fill="#d97706" text-anchor="middle">boole · 1849–1864</text>
+      <text x="80" y="145" font-family="Space Mono,monospace" font-size="8" fill="#6b8f6b" text-anchor="middle">cork, ireland</text>
+    </svg>
+  </div>
+
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>A beloved professor</h3>
+      <p class="what">By all accounts, Boole was an exceptional teacher — patient, rigorous, genuinely interested in his students' progress. His lectures on mathematical analysis attracted students from across Ireland.</p>
+      <p class="need"><b>approach</b> rigorous but accessible; committed to clarity</p>
+      <p class="do"><b>so</b> he built a real academic reputation in Cork — not just as a researcher but as the kind of professor students return to thank decades later.</p>
+      <p class="plus"><b>+</b> his students remembered him not as a distant genius but as a teacher who took time — even when he was working on the most abstract mathematical problems.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>The walking lectures</h3>
+      <p class="what">Boole was known for continuing to teach even when ill — walking to lectures in bad weather, committed to the schedule and to his students to a fault.</p>
+      <p class="need"><b>habit</b> duty above comfort; dedication bordering on self-destruction</p>
+      <p class="do"><b>so</b> when he walked miles in heavy rain in November 1864 to deliver a lecture he could have cancelled, it was entirely in character. The pneumonia that followed killed him.</p>
+      <p class="plus"><b>+</b> the story may have accrued some legend in the retelling, but the core is consistent across all sources: the death was caused by his refusal to miss his obligations.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>The Mechanics' Institute legacy</h3>
+      <p class="what">The Mechanics' Institutes — founded from the 1820s to give working-class men access to science and literature — were where Boole first found advanced mathematical texts.</p>
+      <p class="need"><b>role</b> public intellectual infrastructure for the self-taught</p>
+      <p class="do"><b>so</b> Boole is, in a sense, the product of the Mechanics' Institute movement — a working-class man given a window into knowledge through publicly accessible libraries.</p>
+      <p class="plus"><b>+</b> these institutes were a Victorian experiment in democratizing knowledge. They produced extraordinary results in isolated cases — Boole being the most spectacular.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">08</span>
+      <h3>The Daughters</h3>
+      <p class="what">Boole and Mary had five daughters in nine years: Mary Ellen, Margaret, Alicia, Lucy, and Ethel Lilian. Three became extraordinary in their own right.</p>
+      <p class="need"><b>alicia</b> Alicia Boole Stott — pioneering four-dimensional geometer</p>
+      <p class="do"><b>lucy</b> first woman to become professor of chemistry in Britain. Ethel Lilian Voynich: author of <em>The Gadfly</em>, a Victorian-era novel that sold millions of copies.</p>
+      <p class="plus"><b>+</b> the Boole daughters were raised in poverty after their father's death — but they were raised on ideas. Mary Everest Boole made sure of that.</p>
+    </article>
+  </div>
+
+  <!-- Victorian mathematical journals -->
+  <span class="band">The mathematical world — journals and societies</span>
+  <div class="block">
+    <ul class="rules">
+      <li>The <b>Cambridge Mathematical Journal</b> (founded 1839) was where Boole published his first serious papers. It was the primary outlet for British mathematical research in his era — the peer-reviewed journal that established reputations.</li>
+      <li>The <b>Royal Society of London</b> awarded Boole a Gold Medal in 1844 — the highest British scientific honor, and the clearest possible signal that the mathematical establishment had accepted this self-taught outsider. He was 29.</li>
+      <li>The <b>London Mathematical Society</b> was founded in 1865 — the year after Boole died. He would have been a founding fellow. The timing is one of the small cruelties of history.</li>
+      <li>The <b>Cambridge Analytical Society</b> had pushed British mathematics to adopt Leibniz notation over Newton's (a decade-long internal battle that Babbage, Herschel, and Peacock fought and won by the 1820s). Boole benefited from this reform — he learned mathematics in the continental tradition, which was far more powerful.</li>
+      <li>Mathematical communication in this era happened primarily through <b>journals and letters</b> — no conferences to speak of, no rapid exchange. A paper published today might be read and responded to six months later. Boole's network was epistolary: De Morgan, Cayley, and others corresponded by post.</li>
+    </ul>
+  </div>
+
+  <!-- Mary Everest Boole -->
+  <span class="band">Mary Everest Boole — the partner and the continuation</span>
+  <blockquote class="pull">
+    "What Boole did was not merely to make a notation. He discovered a truth — that the fundamental operations of the mind in reasoning are the same as the fundamental operations of algebra."
+    <cite>— Mary Everest Boole, reflecting on her husband's work</cite>
+  </blockquote>
+  <div class="block amber">
+    <ul class="rules">
+      <li>Mary Everest was 17 years younger than Boole. They met when her father brought her to Cork to see a specialist physician — and she met the professor of mathematics at a dinner. They married in 1855, nine years after their first meeting.</li>
+      <li>She was already mathematical before she met him — her uncle George Everest had introduced her to trigonometry and calculation. After marriage, Boole taught her his algebraic methods and she engaged with them seriously as a thinker.</li>
+      <li>After his death, she wrote: <em>The Mathematical Psychology of Gratry and Boole</em> (1897), <em>Philosophy and Fun of Algebra</em> (1909), and multiple works on pedagogy — arguing that children could be taught to think logically through the methods Boole had discovered.</li>
+      <li>She lived until 1916 — 52 years after Boole's death — and never stopped advocating for his ideas. It was partly through her persistence that his reputation stayed alive long enough for Shannon to find him.</li>
+    </ul>
+  </div>
+
+  <!-- Victorian context timeline -->
+  <span class="band dim">A Victorian life in context</span>
+  <div class="block">
+    <ul class="timeline">
+      <li><span class="yr">1815</span><span class="ev"><b>Year of Waterloo.</b> Boole born. Napoleon defeated. Britain emerges as undisputed European hegemon. The Industrial Revolution is accelerating. A cobbler's son enters a world of enormous possibility — for others.</span></li>
+      <li><span class="yr">1820s</span><span class="ev">The <b>Mechanics' Institutes movement</b> begins — working-class libraries and lecture halls appear in British cities. Lincoln gets one. Boole's father joins it. This is the crack through which the light gets in.</span></li>
+      <li><span class="yr">1832</span><span class="ev">The <b>Reform Act</b> expands voting rights slightly. Britain is changing — slowly, incompletely — toward a broader meritocracy. Boole is 17, already teaching, already doing mathematics.</span></li>
+      <li><span class="yr">1840s</span><span class="ev">Boole gains recognition. The <b>Royal Society Gold Medal</b> arrives 1844. Meanwhile: Ireland convulses through the Great Famine (1845–52), killing a million, driving more to flee. The world Boole is about to enter is already broken.</span></li>
+      <li><span class="yr">1854</span><span class="ev"><b>Laws of Thought</b> published. The same year: the Crimean War begins. Florence Nightingale begins her nursing reforms. Dickens publishes Hard Times. Britain is a world of contradictions — empire and poverty, progress and brutality.</span></li>
+      <li><span class="yr">1859</span><span class="ev">Darwin publishes <b>On the Origin of Species</b>. The Victorian confidence in systematic natural law is at its peak. Boole's system fits the mood — a mathematical law of thought — but it arrives too abstract, too early.</span></li>
+      <li><span class="yr">1864</span><span class="ev">Boole dies. Lincoln, in America (no relation), is about to be re-elected. The American Civil War is ending. The world is changing at speed. A cobbler's son from Lincoln, England, has quietly written the grammar of a future no one can see yet.</span></li>
+    </ul>
+  </div>
+
+  <!-- Legacy in Cork today -->
+  <span class="band">Cork today — the Boole library</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">09</span>
+      <h3>The Boole Library</h3>
+      <p class="what">University College Cork (formerly Queen's College Cork) named its main library the <strong>Boole Library</strong> in 1984 — one of the more fitting memorials in the history of science: a library named after a man who taught himself everything from library books.</p>
+      <p class="need"><b>location</b> UCC campus, Cork, Ireland</p>
+      <p class="do"><b>so</b> the institution that gave Boole his first and only academic position eventually placed his name on its most important building.</p>
+      <p class="plus"><b>+</b> UCC holds Boole's surviving manuscripts, correspondence, and personal papers — the primary documentary record of his life and thought.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">10</span>
+      <h3>Lincoln — the birthplace</h3>
+      <p class="what">Lincoln commemorates Boole with a statue near his birthplace and a pub named "Reckoner" — after his algebraic work. The city that gave him nothing now claims him proudly.</p>
+      <p class="need"><b>irony</b> he left Lincoln for Cork; Lincoln now celebrates him</p>
+      <p class="do"><b>so</b> the cobbler's son from a poor district of Lincoln is now one of the city's most distinguished historical figures, installed in stone.</p>
+      <p class="plus"><b>+</b> Lincoln also hosts regular events marking Boole's contributions to mathematics and computing — typically timed around his November 2 birthday.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">11</span>
+      <h3>The 2015 bicentennial</h3>
+      <p class="what">In 2015, the 200th anniversary of Boole's birth was marked by major events in Cork, Lincoln, and internationally. Google Ireland featured Boole in a Doodle. UCC held a year-long celebration.</p>
+      <p class="need"><b>theme</b> the man who invented the digital world</p>
+      <p class="do"><b>so</b> two centuries after his birth, the scale of his contribution was finally being communicated to general audiences — not just to mathematicians and engineers.</p>
+      <p class="plus"><b>+</b> the bicentennial coincided with a surge of popular interest in the history of computing — helping Boole reach the audience he never had in his own lifetime.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">12</span>
+      <h3>Ireland and the founding myth</h3>
+      <p class="what">Ireland has increasingly claimed Boole as part of its scientific heritage — the English mathematician who spent his most productive years on Irish soil and shaped Irish academic culture at Queen's College Cork.</p>
+      <p class="need"><b>tension</b> he was English, not Irish; but Cork made his best work possible</p>
+      <p class="do"><b>so</b> the legacy is genuinely shared — Lincoln gave him his origin, Cork gave him his platform, and the world got the algebra.</p>
+      <p class="plus"><b>+</b> the colonial context of his Cork appointment makes this complex: he was a beneficiary of British institutional expansion into Ireland, however personally sympathetic he was to his Irish students.</p>
+    </article>
+  </div>
+
+  <blockquote class="pull">
+    "He was a man of great personal modesty, great warmth, and absolute intellectual integrity. He gave Cork fifteen years of the best work of his life."
+    <cite>— Des MacHale, George Boole: His Life and Work (1985)</cite>
+  </blockquote>
+
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    george boole series · volume 2 · his world · victorian england and ireland · 1815–1864
+  </p>
+</div>
+</body>
+</html>

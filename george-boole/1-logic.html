@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>George Boole — Vol. 1: The Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#090f09;--card:#0f1a0f;--cardsolid:#0f1a0f;--ink:#d6e8d6;--dim:#6b8f6b;
+    --emerald:#059669;--amber:#d97706;--line:rgba(5,150,105,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 50% 0%,#0d1f0d 0%,#060c06 70%);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--emerald);color:#090f09;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:10px;}
+  .band{display:inline-block;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;background:var(--emerald);color:#090f09;padding:5px 14px;margin:32px 0 14px;}
+  .band.amber{background:var(--amber);}
+  .band.dim{background:#1a2e1a;color:var(--ink);}
+
+  .mast{border-bottom:4px solid var(--emerald);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(36px,7.5vw,72px);line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;margin:0;max-width:10em;overflow-wrap:break-word;}
+  .mast h1 em{font-style:normal;color:var(--emerald);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#a8c4a8;}
+  .dek b{font-weight:500;color:var(--emerald);}
+
+  /* Gate animations */
+  @keyframes flow{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+  @keyframes glow{0%,100%{opacity:0.4}50%{opacity:1}}
+  @keyframes flip{0%,45%{opacity:1}55%,100%{opacity:0}}
+  .flow-a{stroke-dasharray:200;animation:flow 2s linear infinite;}
+  .flow-b{stroke-dasharray:200;animation:flow 2.4s linear infinite;}
+  .glow-dot{animation:glow 1.5s ease-in-out infinite;}
+  .glow-dot-slow{animation:glow 2.5s ease-in-out infinite;}
+  @media(prefers-reduced-motion:reduce){.flow-a,.flow-b,.glow-dot,.glow-dot-slow{animation:none;stroke-dashoffset:0;opacity:1}}
+
+  /* Truth table grid */
+  .tt-wrap{overflow-x:auto;margin:10px 0 24px;}
+  .tt{border-collapse:collapse;font-family:"Space Mono",monospace;font-size:13px;min-width:100%;}
+  .tt th{
+    padding:8px 18px;border:1px solid rgba(5,150,105,0.3);
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    background:#111f11;color:var(--emerald);font-weight:700;text-align:center;
+  }
+  .tt td{
+    padding:7px 18px;border:1px solid rgba(5,150,105,0.14);
+    text-align:center;color:#8aaa8a;
+  }
+  .tt tr:hover td{background:rgba(5,150,105,0.06);}
+  .tt td.hi{color:var(--emerald);font-weight:700;}
+  .tt td.lo{color:#3d5c3d;}
+  .tt td.out-hi{color:var(--amber);font-weight:700;background:rgba(217,119,6,0.08);}
+  .tt td.out-lo{color:#5c4020;background:rgba(217,119,6,0.04);}
+  .tt caption{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--emerald);padding:8px 0;
+    caption-side:top;text-align:left;
+  }
+
+  /* Operation cards */
+  .ops{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:4px;}
+  .op{border:1px solid var(--line);background:var(--cardsolid);padding:16px 18px;}
+  .op-name{font-family:"Cinzel";font-weight:700;font-size:19px;color:var(--emerald);margin:0 0 4px;}
+  .op-sym{font-family:"Space Mono",monospace;font-size:22px;color:var(--amber);display:block;margin-bottom:8px;}
+  .op-rule{font-size:14px;color:#a8c4a8;margin:0 0 10px;line-height:1.5;}
+  .op-math{font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);background:#111f11;padding:8px 10px;margin-top:8px;}
+  .op-cases{font-family:"Space Mono",monospace;font-size:12px;color:#6b8f6b;margin-top:6px;line-height:1.8;}
+  .op-cases .t{color:var(--emerald);}
+  .op-cases .f{color:#4d6e4d;}
+
+  /* Card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--cardsolid);padding:15px 16px 16px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--emerald);}
+  .card.a:hover{box-shadow:5px 5px 0 var(--amber);}
+  .card .num{position:absolute;top:11px;right:13px;font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--amber);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#9ab89a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#6b8f6b;}
+  .card .plus b{color:var(--emerald);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.a .plus b{color:var(--amber);}
+
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"▸";position:absolute;left:2px;top:8px;font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);font-weight:700;}
+  .block.amber .rules li::before{color:var(--amber);}
+  .rules b{font-weight:500;color:var(--emerald);}
+  .block.amber .rules b{color:var(--amber);}
+
+  /* De Morgan laws */
+  .demorgan{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0;}
+  .dm{border:2px solid var(--emerald);padding:18px 20px;background:var(--cardsolid);}
+  .dm-label{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+  .dm-eq{font-family:"Space Mono",monospace;font-size:16px;color:var(--emerald);margin:0 0 6px;}
+  .dm-plain{font-size:14px;color:#9ab89a;font-style:italic;}
+  @media(max-width:600px){.demorgan{grid-template-columns:1fr;}}
+
+  .pull{border-left:3px solid var(--emerald);padding:14px 18px;margin:22px 0;font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:18px;color:#b8d4b8;background:var(--cardsolid);}
+  .pull cite{display:block;margin-top:8px;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--dim);}
+
+  /* Axioms list */
+  .axioms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:10px 0;}
+  .ax{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .ax-eq{font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);margin-bottom:5px;}
+  .ax-name{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--dim);}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:44px;padding-top:16px;border-top:1px solid var(--line);line-height:2;}
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.op,.ax,.dm{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">george boole series · volume 1 · the work</span>
+    <div class="masthead">
+      <div>
+        <h1>The <em>Laws</em> of Thought</h1>
+        <p class="dek">
+          In 1854, Boole published a book that turned 2,000 years of Aristotelian logic into
+          <b>algebra</b>. Variables could only be 0 or 1.
+          AND was multiplication. OR was addition mod 2. NOT was <b>1 minus x</b>.
+          The foundation of every processor ever made, hiding in plain sight for 73 years.
+        </p>
+      </div>
+      <!-- Animated gate diagram -->
+      <svg width="210" height="170" viewBox="0 0 210 170" role="img" aria-label="AND OR NOT gate circuit diagram animation">
+        <!-- AND gate -->
+        <g transform="translate(10,20)">
+          <path d="M8,0 L32,0 Q52,0 52,22 Q52,44 32,44 L8,44 Z" fill="none" stroke="#059669" stroke-width="1.5"/>
+          <line class="flow-a" x1="0" y1="11" x2="8" y2="11" stroke="#059669" stroke-width="1.5" stroke-dasharray="20"/>
+          <line class="flow-b" x1="0" y1="33" x2="8" y2="33" stroke="#059669" stroke-width="1.5" stroke-dasharray="20"/>
+          <line x1="52" y1="22" x2="70" y2="22" stroke="#d97706" stroke-width="1.5"/>
+          <text x="30" y="25" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">AND</text>
+          <circle class="glow-dot" cx="70" cy="22" r="3" fill="#d97706"/>
+        </g>
+        <!-- OR gate -->
+        <g transform="translate(10,85)">
+          <path d="M8,0 Q18,-4 52,22 Q18,48 8,44 Q18,22 8,0 Z" fill="none" stroke="#059669" stroke-width="1.5"/>
+          <line class="flow-a" x1="0" y1="11" x2="12" y2="11" stroke="#059669" stroke-width="1.5" stroke-dasharray="20"/>
+          <line class="flow-b" x1="0" y1="33" x2="12" y2="33" stroke="#059669" stroke-width="1.5" stroke-dasharray="20"/>
+          <line x1="52" y1="22" x2="70" y2="22" stroke="#d97706" stroke-width="1.5"/>
+          <text x="30" y="26" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">OR</text>
+          <circle class="glow-dot-slow" cx="70" cy="22" r="3" fill="#d97706"/>
+        </g>
+        <!-- NOT gate -->
+        <g transform="translate(100,52)">
+          <polygon points="0,0 36,18 0,36" fill="none" stroke="#059669" stroke-width="1.5"/>
+          <circle cx="39" cy="18" r="3" fill="none" stroke="#059669" stroke-width="1.5"/>
+          <line class="flow-a" x1="-12" y1="18" x2="0" y2="18" stroke="#059669" stroke-width="1.5" stroke-dasharray="20"/>
+          <line x1="42" y1="18" x2="58" y2="18" stroke="#d97706" stroke-width="1.5"/>
+          <text x="18" y="22" font-family="Space Mono,monospace" font-size="8" fill="#059669" text-anchor="middle">NOT</text>
+          <circle class="glow-dot" cx="58" cy="18" r="3" fill="#d97706"/>
+        </g>
+        <!-- Output labels -->
+        <text x="105" y="160" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b8f6b">boolean gates · 1854</text>
+        <!-- Truth indicator: 0 and 1 pulsing -->
+        <text x="175" y="55" font-family="Space Mono,monospace" font-size="22" fill="#059669" text-anchor="middle" class="glow-dot">1</text>
+        <text x="175" y="100" font-family="Space Mono,monospace" font-size="22" fill="#4d6e4d" text-anchor="middle" class="glow-dot-slow">0</text>
+        <text x="175" y="135" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">TRUE / FALSE</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- The central idea -->
+  <span class="band">The central idea — variables that can only be 0 or 1</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Before Boole: logic was a branch of <b>philosophy</b> — Aristotle's syllogisms, patterns to memorize. It had no computational procedure.</li>
+      <li>Boole's move: treat logical propositions as <b>variables</b>, and logical connectives as <b>arithmetic operators</b> — but the only values allowed are <b>0 (FALSE)</b> and <b>1 (TRUE)</b>.</li>
+      <li>This means: <b>x² = x</b> for any Boolean variable — squaring TRUE gives TRUE, squaring FALSE gives FALSE. That single identity is what makes the whole system consistent.</li>
+      <li>He called this the <b>law of duality</b>: the key rule that separates Boolean algebra from ordinary algebra and makes it logic rather than arithmetic.</li>
+      <li>Result: you can now use <b>algebraic manipulation</b> to test whether a logical argument is valid — without needing intuition, rhetoric, or philosophical training.</li>
+    </ul>
+  </div>
+
+  <!-- The three operations -->
+  <span class="band">The three primitive operations</span>
+  <div class="ops">
+    <div class="op">
+      <div class="op-name">AND</div>
+      <span class="op-sym">A · B</span>
+      <p class="op-rule">Both inputs must be TRUE for output to be TRUE. Boole wrote this as multiplication — because in Boolean arithmetic, 1×1=1 and anything times 0 is 0.</p>
+      <div class="op-math">x AND y = x · y</div>
+      <div class="op-cases">
+        <span class="f">0 · 0 = 0 </span>&nbsp;
+        <span class="f">0 · 1 = 0 </span><br>
+        <span class="f">1 · 0 = 0 </span>&nbsp;
+        <span class="t">1 · 1 = 1 ←</span>
+      </div>
+    </div>
+    <div class="op">
+      <div class="op-name">OR</div>
+      <span class="op-sym">A + B</span>
+      <p class="op-rule">At least one input must be TRUE for output to be TRUE. Written as addition — but capped at 1: 1+1=1, not 2. (This is addition modulo 2 with saturation.)</p>
+      <div class="op-math">x OR y = x + y (capped at 1)</div>
+      <div class="op-cases">
+        <span class="f">0 + 0 = 0 </span>&nbsp;
+        <span class="t">0 + 1 = 1 ←</span><br>
+        <span class="t">1 + 0 = 1 ← </span>&nbsp;
+        <span class="t">1 + 1 = 1 ←</span>
+      </div>
+    </div>
+    <div class="op">
+      <div class="op-name">NOT</div>
+      <span class="op-sym">¬A = 1 − A</span>
+      <p class="op-rule">Inverts the input. TRUE becomes FALSE, FALSE becomes TRUE. Boole wrote this as (1 − x), which works perfectly in 0/1 arithmetic: 1−1=0, 1−0=1.</p>
+      <div class="op-math">NOT x = 1 − x</div>
+      <div class="op-cases">
+        <span class="t">NOT 0 = 1 ←</span><br>
+        <span class="f">NOT 1 = 0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Complete truth tables -->
+  <span class="band amber">Complete truth tables — all seven operations</span>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>AND — both must be true</caption>
+      <thead><tr><th>A</th><th>B</th><th>A AND B</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-lo">0</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-lo">0</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-lo">0</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-hi">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>OR — at least one must be true</caption>
+      <thead><tr><th>A</th><th>B</th><th>A OR B</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-lo">0</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-hi">1</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-hi">1</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-hi">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>NOT — inversion</caption>
+      <thead><tr><th>A</th><th>NOT A</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="out-hi">1</td></tr>
+        <tr><td class="hi">1</td><td class="out-lo">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>NAND — NOT AND · universal gate</caption>
+      <thead><tr><th>A</th><th>B</th><th>A NAND B</th><th>equivalent to</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-hi">1</td><td class="lo">NOT (0 AND 0)</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-hi">1</td><td class="lo">NOT (0 AND 1)</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-hi">1</td><td class="lo">NOT (1 AND 0)</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-lo">0</td><td class="hi">NOT (1 AND 1)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>NOR — NOT OR · universal gate</caption>
+      <thead><tr><th>A</th><th>B</th><th>A NOR B</th><th>equivalent to</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-hi">1</td><td class="lo">NOT (0 OR 0)</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-lo">0</td><td class="hi">NOT (0 OR 1)</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-lo">0</td><td class="hi">NOT (1 OR 0)</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-lo">0</td><td class="hi">NOT (1 OR 1)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>XOR — exclusive or · inputs differ</caption>
+      <thead><tr><th>A</th><th>B</th><th>A XOR B</th><th>meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-lo">0</td><td class="lo">same</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-hi">1</td><td class="hi">different</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-hi">1</td><td class="hi">different</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-lo">0</td><td class="lo">same</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt-wrap">
+    <table class="tt">
+      <caption>XNOR — exclusive nor · inputs match</caption>
+      <thead><tr><th>A</th><th>B</th><th>A XNOR B</th><th>meaning</th></tr></thead>
+      <tbody>
+        <tr><td class="lo">0</td><td class="lo">0</td><td class="out-hi">1</td><td class="hi">same</td></tr>
+        <tr><td class="lo">0</td><td class="hi">1</td><td class="out-lo">0</td><td class="lo">different</td></tr>
+        <tr><td class="hi">1</td><td class="lo">0</td><td class="out-lo">0</td><td class="lo">different</td></tr>
+        <tr><td class="hi">1</td><td class="hi">1</td><td class="out-hi">1</td><td class="hi">same</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- De Morgan's Laws -->
+  <span class="band">De Morgan's Laws</span>
+  <p style="color:#a8c4a8;font-size:15px;margin:0 0 14px;">
+    Augustus De Morgan, Boole's friend and correspondent, formulated these two fundamental
+    identities that let you distribute NOT across AND and OR — essential for circuit simplification
+    and for proving that NAND and NOR are universal gates.
+  </p>
+  <div class="demorgan">
+    <div class="dm">
+      <div class="dm-label">First law</div>
+      <div class="dm-eq">NOT (A AND B) = (NOT A) OR (NOT B)</div>
+      <div class="dm-plain">The negation of a conjunction is the disjunction of the negations.</div>
+    </div>
+    <div class="dm">
+      <div class="dm-label">Second law</div>
+      <div class="dm-eq">NOT (A OR B) = (NOT A) AND (NOT B)</div>
+      <div class="dm-plain">The negation of a disjunction is the conjunction of the negations.</div>
+    </div>
+  </div>
+
+  <blockquote class="pull">
+    "The algebra of logic… presents itself as a branch of mathematics: there are definitions, axioms, and theorems — and the theorems follow from the axioms by purely symbolic manipulation."
+    <cite>— paraphrase of Boole's method in An Investigation of the Laws of Thought, 1854</cite>
+  </blockquote>
+
+  <!-- The axioms -->
+  <span class="band">The axioms of Boolean algebra</span>
+  <div class="axioms">
+    <div class="ax"><div class="ax-eq">a AND 0 = 0</div><div class="ax-name">null · and</div></div>
+    <div class="ax"><div class="ax-eq">a AND 1 = a</div><div class="ax-name">identity · and</div></div>
+    <div class="ax"><div class="ax-eq">a OR 0 = a</div><div class="ax-name">identity · or</div></div>
+    <div class="ax"><div class="ax-eq">a OR 1 = 1</div><div class="ax-name">null · or</div></div>
+    <div class="ax"><div class="ax-eq">a AND a = a</div><div class="ax-name">idempotent · and</div></div>
+    <div class="ax"><div class="ax-eq">a OR a = a</div><div class="ax-name">idempotent · or</div></div>
+    <div class="ax"><div class="ax-eq">NOT (NOT a) = a</div><div class="ax-name">double negation</div></div>
+    <div class="ax"><div class="ax-eq">a AND (NOT a) = 0</div><div class="ax-name">complement · and</div></div>
+    <div class="ax"><div class="ax-eq">a OR (NOT a) = 1</div><div class="ax-name">complement · or</div></div>
+    <div class="ax"><div class="ax-eq">a AND b = b AND a</div><div class="ax-name">commutative · and</div></div>
+    <div class="ax"><div class="ax-eq">a OR b = b OR a</div><div class="ax-name">commutative · or</div></div>
+    <div class="ax"><div class="ax-eq">a·(b+c) = a·b + a·c</div><div class="ax-name">distributive · and over or</div></div>
+  </div>
+
+  <!-- What makes it work as logic -->
+  <span class="band">Why it works — the key insight</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>x² = x — the master identity</h3>
+      <p class="what">In ordinary algebra, x² = x only if x is 0 or 1. Boole made this an axiom — it forces variables to only take those two values.</p>
+      <p class="need"><b>consequence</b> all higher powers collapse: x³ = x, x⁴ = x, etc.</p>
+      <p class="do"><b>so</b> you can't accidentally represent a third state. The two-value constraint is enforced mathematically.</p>
+      <p class="plus"><b>+</b> this is called the "law of idempotency" in modern Boolean algebra — squaring (AND-ing with itself) changes nothing.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>Logic becomes decidable</h3>
+      <p class="what">Before Boole, checking if a logical argument was valid required philosophical judgment. After Boole, you could just do algebra.</p>
+      <p class="need"><b>method</b> substitute 0s and 1s; compute; check if result is always 1</p>
+      <p class="do"><b>so</b> logical validity becomes a calculation, not an art.</p>
+      <p class="plus"><b>+</b> this is the first step toward automated reasoning — which is what computers do when they evaluate conditional branches in code.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>Classes and propositions</h3>
+      <p class="what">Boole's algebra handles two things at once: sets (classes of objects) and propositions (true/false statements). Both obey the same rules.</p>
+      <p class="need"><b>class version</b> AND = intersection, OR = union, NOT = complement</p>
+      <p class="do"><b>so</b> the same algebra underlies set theory, logic, and circuit design — three branches, one structure.</p>
+      <p class="plus"><b>+</b> modern database queries (WHERE A AND B, WHERE A OR B, WHERE NOT A) are direct applications of Boole's class interpretation.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">04</span>
+      <h3>Shannon's connection — 1937</h3>
+      <p class="what">Claude Shannon's MIT master's thesis proved that Boolean algebra maps exactly onto the behavior of electrical relay circuits.</p>
+      <p class="need"><b>switch closed</b> = 1 (TRUE) · <b>switch open</b> = 0 (FALSE)</p>
+      <p class="do"><b>so</b> Boole's abstract algebra became the design language for all digital electronics.</p>
+      <p class="plus"><b>+</b> Shannon had read Boole. His thesis citation is direct. One book, 1854 → one thesis, 1937 → every CPU ever made.</p>
+    </article>
+  </div>
+
+  <!-- The book itself -->
+  <span class="band">The Laws of Thought — the book</span>
+  <div class="block amber">
+    <ul class="rules">
+      <li><b>Full title:</b> An Investigation of the Laws of Thought on Which Are Founded the Mathematical Theories of Logic and Probabilities (1854, Macmillan, London)</li>
+      <li><b>Structure:</b> 424 pages. Part I (Ch. 1–15): the logic system — algebra of classes and propositions. Part II (Ch. 16–21): probability theory, expressed using the same algebraic framework.</li>
+      <li><b>The opening claim:</b> Boole believed he was discovering how the human mind actually works — that logical thought obeys mathematical laws as strict as Newton's laws govern motion. He was wrong about this, but the mathematics he built is correct regardless of that motivation.</li>
+      <li><b>Probability:</b> The book's second half extended the algebra to probability — a less-celebrated but still important contribution to the foundations of statistical reasoning.</li>
+      <li><b>Audience on publication:</b> Mathematicians and philosophers. Engineers: none. The practical application was completely invisible until Shannon in 1937.</li>
+    </ul>
+  </div>
+
+  <span class="band dim">What the book actually says vs. what it became</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Boole framed his work as a <b>theory of mind</b> — his algebra was meant to capture how rational thought operates. Modern cognitive science does not support this claim; minds don't work like Boolean circuits.</li>
+      <li>What's completely right: the <b>algebra itself</b> — the axioms, operations, and identities are mathematically sound and have been formalized rigorously in the century since.</li>
+      <li>The link to <b>electrical engineering</b> was invisible until 1937 because relay switching circuits hadn't been systematically studied in 1854. Boole had no way to see that connection.</li>
+      <li>The link to <b>set theory</b> was made explicit by later mathematicians (particularly through Venn, who introduced Venn diagrams in 1880 as a pedagogical tool for Boole's algebra).</li>
+      <li>The <b>universal gate</b> concept (NAND and NOR can reproduce every other gate) emerged from later work by Post and others — not from Boole's own text. But it follows directly from his axioms.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    george boole series · volume 1 · the work · an investigation of the laws of thought · 1854
+  </p>
+</div>
+</body>
+</html>

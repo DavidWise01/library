@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James Clerk Maxwell — Vol. 3: His Long Afterlife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0a0814;
+    --violet: #7c3aed;
+    --violet-dim: #5b21b6;
+    --violet-glow: rgba(124,58,237,0.18);
+    --cyan: #06b6d4;
+    --cyan-dim: #0891b2;
+    --cyan-glow: rgba(6,182,212,0.15);
+    --text: #e8e3f0;
+    --text-dim: #a89fc0;
+    --border: rgba(124,58,237,0.25);
+    --card-bg: rgba(124,58,237,0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,8,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 2rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  nav .series-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--cyan); letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap;
+  }
+  nav .vol-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.08em; transition: color 0.2s;
+  }
+  nav a:hover { color: var(--cyan); }
+  nav a.active { color: var(--violet); }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem; align-items: center;
+    padding: 5rem 4rem 4rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem 2rem; }
+  }
+  .masthead-text .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--violet);
+    display: block; margin-bottom: 1rem;
+  }
+  .masthead-text h1 {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1; color: var(--text); margin-bottom: 0.4rem;
+  }
+  .masthead-text h1 span { color: var(--violet); }
+  .masthead-text .subtitle {
+    font-family: 'Cinzel', serif; font-weight: 400;
+    font-size: 1rem; color: var(--cyan); margin-bottom: 1.5rem; letter-spacing: 0.05em;
+  }
+  .masthead-text .lede {
+    font-style: italic; color: var(--text-dim);
+    font-size: 1.05rem; max-width: 540px; margin-bottom: 1.5rem;
+  }
+
+  /* ── EM WAVE SVG ── */
+  .masthead-art { display: flex; justify-content: center; align-items: center; }
+  .em-wave-container { width: 100%; max-width: 420px; }
+  .em-wave-svg { width: 100%; height: 220px; overflow: visible; }
+
+  @keyframes wave-march {
+    from { stroke-dashoffset: 120; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes spectrum-shift {
+    0%   { stroke: #7c3aed; }
+    16%  { stroke: #4f46e5; }
+    33%  { stroke: #06b6d4; }
+    50%  { stroke: #10b981; }
+    66%  { stroke: #f59e0b; }
+    83%  { stroke: #ef4444; }
+    100% { stroke: #7c3aed; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 3px rgba(124,58,237,0.4)); }
+    50% { filter: drop-shadow(0 0 8px rgba(6,182,212,0.6)); }
+  }
+
+  .e-wave {
+    stroke: var(--violet); stroke-width: 2.5; fill: none;
+    stroke-dasharray: 12 5; animation: wave-march 1.0s linear infinite;
+  }
+  .b-wave {
+    stroke: var(--cyan); stroke-width: 2.5; fill: none;
+    stroke-dasharray: 12 5; animation: wave-march 1.0s linear infinite;
+  }
+  .spectrum-wave {
+    stroke-width: 2; fill: none;
+    stroke-dasharray: 8 3;
+    animation: wave-march 0.7s linear infinite, spectrum-shift 4s linear infinite;
+  }
+  .axis-line { stroke: rgba(232,227,240,0.12); stroke-width: 1; }
+  .wave-label { font-family: 'Space Mono', monospace; font-size: 9px; fill: var(--text-dim); }
+  .wave-label-e { fill: var(--violet); font-size: 12px; font-weight: 700; }
+  .wave-label-b { fill: var(--cyan); font-size: 12px; font-weight: 700; }
+
+  /* ── BAND / KICK ── */
+  .band {
+    display: inline-block; background: var(--violet); color: #fff;
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.18em 0.7em; border-radius: 2px; vertical-align: middle;
+  }
+  .band-cyan { background: var(--cyan-dim); }
+  .kick {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--violet);
+  }
+
+  /* ── CONTENT ── */
+  .content { max-width: 1200px; margin: 0 auto; padding: 0 4rem 6rem; }
+  @media (max-width: 900px) { .content { padding: 0 1.5rem 4rem; } }
+  section { margin-bottom: 4.5rem; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.55rem; color: var(--text);
+  }
+
+  p { margin-bottom: 1.2em; }
+  p:last-child { margin-bottom: 0; }
+  em { font-style: italic; }
+  strong { color: var(--cyan); font-weight: 500; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem; margin: 2rem 0;
+  }
+  .card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.4rem 1.5rem;
+    transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    opacity: 0; transition: opacity 0.22s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--violet-glow), 0 2px 8px rgba(0,0,0,0.4);
+    border-color: rgba(124,58,237,0.5);
+  }
+  .card:hover::before { opacity: 1; }
+  .card .card-year {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 0.5rem;
+  }
+  .card h3 {
+    font-family: 'Cinzel', serif; font-weight: 600;
+    font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;
+  }
+  .card p { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; margin: 0; }
+
+  /* ── BLOCKQUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--violet); margin: 2.5rem 0;
+    padding: 1rem 2rem; background: var(--card-bg); border-radius: 0 6px 6px 0;
+  }
+  blockquote p { font-style: italic; font-size: 1.15rem; color: var(--text); margin-bottom: 0.5em; }
+  blockquote cite {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--text-dim); letter-spacing: 0.1em;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(6,182,212,0.05));
+    border: 1px solid rgba(124,58,237,0.35); border-radius: 8px;
+    padding: 1.8rem 2rem; margin: 2.5rem 0;
+  }
+  .highlight-box .hb-label {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 0.8rem; display: block;
+  }
+  .highlight-box p { margin: 0; font-size: 1rem; }
+
+  /* ── SPECTRUM BAR ── */
+  .spectrum-bar {
+    width: 100%;
+    height: 36px;
+    border-radius: 4px;
+    background: linear-gradient(
+      to right,
+      #9b59b6 0%,
+      #7c3aed 8%,
+      #4f46e5 15%,
+      #06b6d4 25%,
+      #10b981 40%,
+      #f59e0b 60%,
+      #f97316 75%,
+      #ef4444 85%,
+      #dc2626 100%
+    );
+    margin: 1rem 0 0.5rem;
+    position: relative;
+    overflow: visible;
+  }
+  .spectrum-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── EM SPECTRUM TABLE ── */
+  .spectrum-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+  .spectrum-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .spectrum-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(124,58,237,0.08);
+    vertical-align: top;
+  }
+  .spectrum-table tr:last-child td { border-bottom: none; }
+  .spectrum-table tr:hover td { background: rgba(124,58,237,0.04); }
+  .spectrum-table .band-name {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .spectrum-table .band-freq {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--violet);
+  }
+  .spectrum-table .band-app { color: var(--text-dim); font-size: 0.88rem; }
+  .spectrum-table .band-disc {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--cyan);
+  }
+  .spectrum-table .predicted {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--violet);
+    background: rgba(124,58,237,0.1);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+  }
+
+  /* ── PHYSICIST WALL ── */
+  .physicist-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .physicist-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.3rem 1.4rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .physicist-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px var(--violet-glow);
+    border-color: rgba(6,182,212,0.35);
+  }
+  .physicist-card .phys-relation {
+    font-family: 'Space Mono', monospace; font-size: 0.58rem;
+    color: var(--violet); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem;
+  }
+  .physicist-card .phys-name {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: 1rem; color: var(--text); margin-bottom: 0.15rem;
+  }
+  .physicist-card .phys-dates {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    color: var(--text-dim); margin-bottom: 0.7rem;
+  }
+  .physicist-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; margin: 0; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative; padding-left: 2.5rem;
+  }
+  .timeline::before {
+    content: ''; position: absolute; left: 0.5rem; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--violet), transparent);
+  }
+  .timeline-item { position: relative; margin-bottom: 2.2rem; }
+  .timeline-item::before {
+    content: ''; position: absolute;
+    left: -2rem; top: 0.45rem;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--violet); box-shadow: 0 0 8px var(--violet);
+  }
+  .timeline-item .tl-year {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    color: var(--violet); letter-spacing: 0.15em; margin-bottom: 0.25rem;
+  }
+  .timeline-item h3 {
+    font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.4rem;
+  }
+  .timeline-item p { font-size: 0.95rem; color: var(--text-dim); margin: 0; }
+
+  /* ── IMPACT STAT ROW ── */
+  .stat-row { display: flex; gap: 2rem; flex-wrap: wrap; margin: 2rem 0; }
+  .stat-box {
+    flex: 1; min-width: 140px;
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1.2rem 1.4rem; text-align: center;
+  }
+  .stat-box .stat-num {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: 1.8rem; color: var(--violet); display: block;
+  }
+  .stat-box .stat-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--text-dim); letter-spacing: 0.14em; text-transform: uppercase;
+    display: block; margin-top: 0.2rem;
+  }
+
+  /* ── THE PORTRAIT WALL ── */
+  .portrait-box {
+    background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.06));
+    border: 1px solid rgba(124,58,237,0.5);
+    border-radius: 10px;
+    padding: 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-box::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--violet));
+  }
+  .portrait-box .pb-label {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: block;
+  }
+  .portrait-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .portrait-figure { text-align: center; }
+  .portrait-figure .portrait-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--violet);
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--violet);
+    background: rgba(124,58,237,0.1);
+  }
+  .portrait-figure .fig-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.15rem;
+  }
+  .portrait-figure .fig-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem; color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .portrait-box > p {
+    font-size: 0.97rem; color: var(--text-dim); max-width: 600px; margin: 0 auto;
+  }
+
+  /* ── HERTZ BOX ── */
+  .hertz-box {
+    background: rgba(0,0,0,0.5);
+    border: 2px solid var(--cyan);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    box-shadow: 0 0 30px var(--cyan-glow);
+  }
+  .hertz-box .hb-top {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .hertz-box .hz-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 2.5rem; font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+  }
+  .hertz-box .hz-label {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--text);
+  }
+  .hertz-box p { color: var(--text-dim); font-size: 0.97rem; margin: 0; }
+
+  /* ── SERIES NAV ── */
+  .series-nav {
+    display: flex; justify-content: flex-start; gap: 1rem;
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .series-nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.1em; border: 1px solid var(--border);
+    padding: 0.5rem 1.2rem; border-radius: 4px; transition: all 0.2s;
+  }
+  .series-nav a:hover { color: var(--violet); border-color: var(--violet); background: var(--violet-glow); }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    margin-top: 5rem; padding: 2rem 4rem;
+    border-top: 1px solid var(--border); background: rgba(10,8,20,0.6);
+  }
+  @media (max-width: 900px) { .colophon { padding: 2rem 1.5rem; } }
+  .colophon-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    align-items: center; justify-content: space-between;
+  }
+  .colophon p {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    color: var(--text-dim); letter-spacing: 0.1em; margin: 0; line-height: 1.8;
+  }
+  .colophon .cc { color: var(--violet); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
+
+  /* ── FINAL STATEMENT ── */
+  .final-statement {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.08));
+    border: 1px solid rgba(124,58,237,0.6);
+    border-radius: 12px;
+    padding: 3rem 3rem;
+    margin: 3rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .final-statement::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--violet));
+  }
+  .final-statement .fs-label {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    color: var(--cyan); letter-spacing: 0.22em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: block;
+  }
+  .final-statement p {
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text);
+    max-width: 720px; margin: 0 auto;
+    line-height: 1.8;
+  }
+  .final-statement p strong { color: var(--violet); font-style: normal; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Maxwell // Four Volumes</span>
+  <div class="vol-links">
+    <a href="0-who.html">Vol 0 — Who He Was</a>
+    <a href="1-equations.html">Vol 1 — The Four Equations</a>
+    <a href="2-world.html">Vol 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol 3 — His Long Afterlife</a>
+  </div>
+</nav>
+
+<!-- ── MASTHEAD ── -->
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="kick">Volume 3 &nbsp;·&nbsp; His Long Afterlife</span>
+    <h1>The <span>Signal</span> Carries On</h1>
+    <div class="subtitle">1879 – Present · Hertz to Feynman to You</div>
+    <p class="lede">Maxwell died in 1879. Everything transmitted wirelessly since then — every radio broadcast, every telephone call, every WiFi packet, every photon from every screen — travels by his equations. His afterlife is larger than his life, and it is still happening right now.</p>
+    <span class="band">Died 1879</span>&nbsp;
+    <span class="band band-cyan">Still propagating</span>
+  </div>
+
+  <div class="masthead-art">
+    <div class="em-wave-container">
+      <svg class="em-wave-svg" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" aria-label="Animated electromagnetic wave — the signal that still propagates">
+        <line x1="20" y1="110" x2="400" y2="110" class="axis-line"/>
+        <!-- Main EM wave — violet E -->
+        <path class="e-wave" d="M 20,110 C 35,110 38,50 55,50 C 72,50 75,170 92,170 C 109,170 112,50 129,50 C 146,50 149,170 166,170 C 183,170 186,50 203,50 C 220,50 223,170 240,170 C 257,170 260,50 277,50 C 294,50 297,170 314,170 C 331,170 334,50 351,50 C 368,50 371,170 388,170" stroke-dasharray="12 5"/>
+        <!-- Cyan B wave -->
+        <path class="b-wave" d="M 20,110 C 35,110 38,75 55,75 C 72,75 75,145 92,145 C 109,145 112,75 129,75 C 146,75 149,145 166,145 C 183,145 186,75 203,75 C 220,75 223,145 240,145 C 257,145 260,75 277,75 C 294,75 297,145 314,145 C 331,145 334,75 351,75 C 368,75 371,145 388,145" stroke-dasharray="12 5" opacity="0.8"/>
+        <!-- Spectrum-shifting second wave (legacy / continuation) -->
+        <path class="spectrum-wave" d="M 20,110 C 30,110 33,90 46,90 C 59,90 62,130 75,130 C 88,130 91,90 104,90 C 117,90 120,130 133,130 C 146,130 149,90 162,90 C 175,90 178,130 191,130 C 204,130 207,90 220,90 C 233,90 236,130 249,130 C 262,130 265,90 278,90 C 291,90 294,130 307,130 C 320,130 323,90 336,90 C 349,90 352,130 365,130 C 378,130 381,90 394,90" opacity="0.5"/>
+        <text x="24" y="45" class="wave-label wave-label-e">E</text>
+        <text x="24" y="72" class="wave-label wave-label-b">B</text>
+        <text x="22" y="200" class="wave-label" fill="var(--violet)">1865 — THE EQUATIONS</text>
+        <text x="22" y="212" class="wave-label" fill="var(--cyan)">1887 → ∞ — CONFIRMED &amp; PROPAGATING</text>
+        <polygon points="400,106 412,110 400,114" fill="rgba(6,182,212,0.6)"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ── CONTENT ── -->
+<main class="content">
+
+  <!-- THE EIGHT-YEAR GAP -->
+  <section id="gap">
+    <div class="section-header">
+      <span class="kick">I.</span>
+      <h2>The Eight-Year Gap: Maxwell to Hertz</h2>
+    </div>
+
+    <p>Maxwell died on 5 November 1879. His equations had been published in 1865. For fourteen years they were accepted by a growing number of mathematical physicists and resisted by an equal number who wanted mechanisms, not fields. The key prediction — that electromagnetic waves should exist and should travel at the speed of light — had not been experimentally verified.</p>
+
+    <p>In 1879, the year Maxwell died, a prize was announced by the Berlin Academy of Sciences for the experimental detection of electromagnetic waves. A young German physicist named Heinrich Hertz was in the audience when the prize was announced. He was 22 years old. He would not succeed for another eight years — but when he did, he would confirm everything Maxwell had predicted.</p>
+
+    <div class="hertz-box">
+      <div class="hb-top">
+        <div class="hz-year">1887</div>
+        <div class="hz-label">Heinrich Hertz Detects Electromagnetic Waves<br>Karlsruhe, Germany</div>
+      </div>
+      <p>Hertz built a spark-gap transmitter — essentially a high-voltage device that produced a rapidly oscillating electric current — and detected the resulting electromagnetic waves across his laboratory with a loop of wire. He measured the wavelength. He calculated the frequency. He multiplied them: the product was 3 × 10⁸ m/s. The speed of light. Maxwell's prediction was confirmed, eight years after Maxwell's death. Hertz then showed that the waves could be reflected, refracted, and polarized — exactly like light. They were the same thing. Maxwell was right.</p>
+    </div>
+
+    <blockquote>
+      <p>"I feel that these sparks have to do with Maxwell's theory."</p>
+      <cite>Heinrich Hertz, 1887 — in a letter describing his first successful electromagnetic wave experiments</cite>
+    </blockquote>
+
+    <p>Hertz also did something Maxwell had left undone: he provided physical intuition for the mechanism of radiation. Maxwell had shown mathematically that accelerating charges must radiate electromagnetic waves. Hertz showed it experimentally. The spark gap was a device that accelerated charges — electrons oscillating in the antenna — and the result was a wave propagating outward at c. Every radio transmitter in history is a more sophisticated version of Hertz's spark gap. The unit of frequency — the Hertz — is named for him. Every Hertz of frequency is a tribute to a man who was himself verifying Maxwell.</p>
+  </section>
+
+  <!-- WHAT GREW FROM IT -->
+  <section id="grows">
+    <div class="section-header">
+      <span class="kick">II.</span>
+      <h2>What Grew From Maxwell's Equations: The Electromagnetic Spectrum</h2>
+    </div>
+
+    <p>Maxwell's equations describe all electromagnetic radiation. When Hertz verified radio waves in 1887, he had opened a door. Beyond the visible spectrum — the narrow sliver of electromagnetic radiation that human eyes detect — lay a vast territory that Maxwell had predicted but no one had explored. The exploration of that territory is the technological history of the twentieth century.</p>
+
+    <div class="spectrum-bar"></div>
+    <div class="spectrum-labels">
+      <span>Radio</span>
+      <span>Micro</span>
+      <span>IR</span>
+      <span>Visible</span>
+      <span>UV</span>
+      <span>X-ray</span>
+      <span>γ-ray</span>
+    </div>
+
+    <table class="spectrum-table">
+      <thead>
+        <tr>
+          <th>Band</th>
+          <th>Frequency Range</th>
+          <th>Key Applications</th>
+          <th>First Demonstrated</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="band-name">Radio waves</td>
+          <td class="band-freq">3 Hz – 300 GHz</td>
+          <td class="band-app">Broadcasting, AM/FM radio, mobile phones, WiFi, GPS, radar, television, satellite communication</td>
+          <td class="band-disc">Hertz 1887; Marconi 1895 (wireless telegraphy)</td>
+        </tr>
+        <tr>
+          <td class="band-name">Microwaves</td>
+          <td class="band-freq">300 MHz – 300 GHz</td>
+          <td class="band-app">WiFi (2.4 GHz, 5 GHz), Bluetooth, microwave ovens, radar, 4G/5G cellular, satellite TV</td>
+          <td class="band-disc">Hertz 1888; commercially used 1940s</td>
+        </tr>
+        <tr>
+          <td class="band-name">Infrared</td>
+          <td class="band-freq">300 GHz – 430 THz</td>
+          <td class="band-app">Heat radiation, night vision, remote controls, fiber optic communications, thermal imaging</td>
+          <td class="band-disc">Herschel 1800 (heat beyond red); linked to Maxwell by 1870s</td>
+        </tr>
+        <tr>
+          <td class="band-name">Visible light</td>
+          <td class="band-freq">430 – 770 THz</td>
+          <td class="band-app">Vision, photography, lasers, LED displays, optical fiber, solar cells</td>
+          <td class="band-disc"><span class="predicted">Predicted by Maxwell 1865</span> — light IS the wave</td>
+        </tr>
+        <tr>
+          <td class="band-name">Ultraviolet</td>
+          <td class="band-freq">770 THz – 30 PHz</td>
+          <td class="band-app">Sterilization, tanning, fluorescence, semiconductor lithography, vitamin D synthesis</td>
+          <td class="band-disc">Ritter 1801; EM identity confirmed post-Maxwell</td>
+        </tr>
+        <tr>
+          <td class="band-name">X-rays</td>
+          <td class="band-freq">30 PHz – 30 EHz</td>
+          <td class="band-app">Medical imaging, crystallography (DNA structure!), security scanning, astronomy</td>
+          <td class="band-disc">Röntgen 1895; EM nature confirmed Bragg 1913</td>
+        </tr>
+        <tr>
+          <td class="band-name">Gamma rays</td>
+          <td class="band-freq">&gt; 30 EHz</td>
+          <td class="band-app">Cancer treatment (radiotherapy), nuclear imaging (PET scans), astrophysics</td>
+          <td class="band-disc">Villard 1900; nuclear physics origin understood 1910s</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Every band in this table is described by Maxwell's equations. Every application in that middle column is an application of laws written by a man who died in 1879, three years before the first commercial telephone exchange opened, fifteen years before Marconi sent his first radio signal, seventeen years before Röntgen discovered X-rays. Maxwell did not live to see any of it. But it all runs on his equations.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <span class="stat-num">~5B</span>
+        <span class="stat-label">WiFi Devices Active Now</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">~8B</span>
+        <span class="stat-label">Mobile Phones — Maxwell's Waves</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Wireless Signals — All Maxwell</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">c</span>
+        <span class="stat-label">Speed — He Derived It First</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EINSTEIN AND RELATIVITY -->
+  <section id="einstein">
+    <div class="section-header">
+      <span class="kick">III.</span>
+      <h2>Einstein: The Photograph on the Wall</h2>
+    </div>
+
+    <p>Albert Einstein kept three portraits on the wall of his study: Isaac Newton, Michael Faraday, and James Clerk Maxwell. This was not decoration. It was a statement of intellectual lineage. Einstein understood, with unusual clarity, that his own work grew directly from Maxwell's.</p>
+
+    <div class="portrait-box">
+      <span class="pb-label">Einstein's Study Wall — Princeton</span>
+      <div class="portrait-row">
+        <div class="portrait-figure">
+          <div class="portrait-icon">N</div>
+          <div class="fig-name">Isaac Newton</div>
+          <div class="fig-note">1643–1727</div>
+        </div>
+        <div class="portrait-figure">
+          <div class="portrait-icon">F</div>
+          <div class="fig-name">Michael Faraday</div>
+          <div class="fig-note">1791–1867</div>
+        </div>
+        <div class="portrait-figure">
+          <div class="portrait-icon">M</div>
+          <div class="fig-name">James C. Maxwell</div>
+          <div class="fig-note">1831–1879</div>
+        </div>
+      </div>
+      <p>Einstein wrote that Maxwell's work was "the most profound and fruitful that physics has experienced since the time of Newton." Three men on a wall. The arc from Newton to Maxwell to Einstein is the arc of classical physics.</p>
+    </div>
+
+    <p>The connection between Maxwell and special relativity is direct and technical. Maxwell's equations have a remarkable mathematical property: they are invariant under the Lorentz transformation — they take the same form for all inertial observers. But Newtonian mechanics is invariant under the Galilean transformation, not the Lorentz. The two were inconsistent.</p>
+
+    <p>Einstein's special relativity (1905) resolved the inconsistency by keeping Maxwell's equations and revising Newtonian mechanics. Newtonian mechanics was the approximation; Maxwell's equations were the deeper truth. Every consequence of special relativity — time dilation, length contraction, E = mc² — follows from taking Maxwell's equations seriously and asking what mechanics has to look like for them to hold in all inertial frames.</p>
+
+    <blockquote>
+      <p>"The special theory of relativity owes its origin to Maxwell's equations of the electromagnetic field. Since Maxwell's time, physical reality has been thought of as represented by continuous fields, governed by partial differential equations, and not capable of any mechanical interpretation. This change in the conception of reality is the most profound and fruitful that physics has experienced since the time of Newton."</p>
+      <cite>Albert Einstein, 1931 — centenary tribute to Maxwell</cite>
+    </blockquote>
+
+    <p>The "field concept" Einstein refers to — the idea that space itself contains physical quantities (field values) that vary continuously from point to point and obey differential equations — was Faraday's intuition and Maxwell's formalization. It became the template for all of twentieth-century physics. General relativity is a field theory. Quantum mechanics is reformulated as a field theory. The Standard Model is a collection of field theories. Every one of them inherits its conceptual structure from Maxwell's electromagnetic field.</p>
+  </section>
+
+  <!-- QUANTUM ELECTRODYNAMICS -->
+  <section id="qed">
+    <div class="section-header">
+      <span class="kick">IV.</span>
+      <h2>Quantum Electrodynamics: Maxwell at Quantum Scale</h2>
+    </div>
+
+    <p>Maxwell's theory is classical — it describes fields as continuous entities, not made of discrete particles. Quantum mechanics, developed in the 1920s, showed that at small scales, energy comes in discrete packets: quanta. This raised a problem: how do you make Maxwell's electromagnetic field theory consistent with quantum mechanics?</p>
+
+    <p>The answer is quantum electrodynamics (QED), developed by Paul Dirac (1927), and then completed by Richard Feynman, Julian Schwinger, and Sin-Itiro Tomonaga in the late 1940s. QED is the quantum version of Maxwell's theory. The electromagnetic field, in QED, is made of photons — the quanta of light. Every interaction between charged particles happens via the exchange of virtual photons. Every photon that has ever touched your retina was a quantum of Maxwell's electromagnetic field.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">QED — The Most Precisely Tested Theory in Physics</span>
+      <p>QED predicts the magnetic moment of the electron — a quantity called g/2 — to be approximately 1.00115965218128. The measured value is 1.00115965218059. These numbers agree to eleven decimal places. This is the most precise agreement between theory and experiment ever achieved in physics. It is a precision equivalent to measuring the distance from New York to Los Angeles to within a hair's width. Maxwell's equations, promoted to the quantum level, describe reality with extraordinary precision.</p>
+    </div>
+
+    <div class="physicist-wall">
+      <div class="physicist-card">
+        <div class="phys-relation">QED Pioneer</div>
+        <div class="phys-name">Paul A.M. Dirac</div>
+        <div class="phys-dates">1902–1984</div>
+        <p>Combined Maxwell's electromagnetism with quantum mechanics and special relativity (1927). His equation for the electron predicted antimatter. Dirac called Maxwell's equations the most profound achievement in physics prior to his own era.</p>
+      </div>
+      <div class="physicist-card">
+        <div class="phys-relation">QED Completion</div>
+        <div class="phys-name">Richard Feynman</div>
+        <div class="phys-dates">1918–1988</div>
+        <p>Co-developed the complete form of QED, Nobel Prize 1965. Feynman's path integral formulation of quantum mechanics generalizes Maxwell's field concept to the quantum level. He described QED as the jewel of physics. The jewel is Maxwell's gem, cut quantum-sharp.</p>
+      </div>
+      <div class="physicist-card">
+        <div class="phys-relation">QED Completion</div>
+        <div class="phys-name">Julian Schwinger</div>
+        <div class="phys-dates">1918–1994</div>
+        <p>Independently developed a rigorous formulation of QED, Nobel Prize 1965 shared with Feynman and Tomonaga. Schwinger explicitly described his work as extending Maxwell's program into the quantum domain.</p>
+      </div>
+      <div class="physicist-card">
+        <div class="phys-relation">Standard Model</div>
+        <div class="phys-name">Yang, Mills, et al.</div>
+        <div class="phys-dates">1954–present</div>
+        <p>The Yang-Mills theory (1954) generalized Maxwell's gauge structure to non-abelian symmetry groups, producing the mathematical framework for the weak and strong nuclear forces. The entire Standard Model is a generalization of Maxwell's mathematical structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FULL TIMELINE -->
+  <section id="timeline">
+    <div class="section-header">
+      <span class="kick">V.</span>
+      <h2>The Long Afterlife: A Timeline</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="tl-year">1879</div>
+        <h3>Maxwell Dies</h3>
+        <p>Cambridge, 5 November. His equations are 14 years old. Hertz has not yet confirmed them. Einstein is not yet born. The telephone is three years old. The light bulb has just been invented by Edison. The electromagnetic world Maxwell described is about to begin arriving.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1887</div>
+        <h3>Hertz Confirms Electromagnetic Waves</h3>
+        <p>Karlsruhe, Germany. Hertz detects radio waves with a spark-gap transmitter and loop antenna. Measures wavelength and speed. Product = c. Maxwell was right. The unit of frequency (Hz) is named for Hertz. Every FM radio station broadcasts at frequencies measured in hertz.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1895</div>
+        <h3>Marconi Sends Radio Signals</h3>
+        <p>Guglielmo Marconi uses Maxwell-Hertz waves to send signals over increasing distances. By 1901 he transmits across the Atlantic. Wireless telegraphy — and ultimately all wireless communication — is born. Maxwell's equations are doing practical work.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1895</div>
+        <h3>Röntgen Discovers X-rays</h3>
+        <p>Wilhelm Röntgen observes penetrating radiation from his cathode ray tube. X-rays are electromagnetic radiation at very high frequency — described by Maxwell's equations, unknown to Maxwell himself. Medical imaging transforms within years. The EM spectrum, whose existence Maxwell predicted, starts being explored.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1905</div>
+        <h3>Einstein's Special Relativity</h3>
+        <p>Built directly on Maxwell. Einstein asks: what does mechanics look like if Maxwell's equations hold for all inertial observers? The answer is special relativity: time dilation, length contraction, E = mc². Maxwell's equations were right; Newtonian mechanics needed revision.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1927</div>
+        <h3>Dirac Equation — Quantum Electromagnetism Begins</h3>
+        <p>Paul Dirac combines Maxwell's electromagnetism with quantum mechanics and special relativity. The result predicts antimatter and becomes the foundation of quantum electrodynamics — the quantum version of Maxwell's theory.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1948</div>
+        <h3>Feynman, Schwinger, Tomonaga Complete QED</h3>
+        <p>Quantum electrodynamics reaches its final form — the most precisely tested theory in physics. Every photon, every electromagnetic interaction, described by Maxwell's field promoted to quantum status. Nobel Prize 1965.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1954–1970s</div>
+        <h3>Yang-Mills and the Standard Model</h3>
+        <p>Maxwell's mathematical gauge structure — the mathematical symmetry underlying his equations — is generalized to non-abelian groups. The result is the Yang-Mills framework, the mathematical backbone of the entire Standard Model of particle physics. Maxwell's insight into gauge invariance describes not just light but the weak and strong nuclear forces.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">1973</div>
+        <h3>WiFi's Mathematical Ancestor — ARPANET and Wireless</h3>
+        <p>ARPANET, the internet's ancestor, goes live. The eventual wireless internet — WiFi, 4G, 5G, Bluetooth — are all applications of Maxwell's equations. The standard governing WiFi (IEEE 802.11) encodes Maxwell's physics in silicon.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">2015</div>
+        <h3>LIGO Detects Gravitational Waves</h3>
+        <p>The LIGO detector — mirrors separated by 4 km, detecting displacements smaller than a proton's width — uses laser interferometry. The lasers are governed by Maxwell's equations. The detection method relies on Maxwell's optics. The theoretical framework of gravitational waves is modeled on Maxwell's electromagnetic waves: Einstein's field equations for gravity were written in explicit analogy to Maxwell's field equations for electromagnetism.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-year">Today</div>
+        <h3>Every Signal Is Maxwell</h3>
+        <p>The device you are reading this on communicates wirelessly via radio waves. Its processor synchronizes via clock signals that propagate electromagnetically. Its screen emits visible light — electromagnetic radiation at 430–770 THz. The GPS signal locating it travels at c, described by Maxwell. The X-ray that imaged your last broken bone, the MRI that scanned your brain, the microwave that heated your food — all Maxwell. He is the most ubiquitous dead physicist in the world.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT HE IS NOT KNOWN FOR -->
+  <section id="obscurity">
+    <div class="section-header">
+      <span class="kick">VI.</span>
+      <h2>The Problem of His Obscurity</h2>
+    </div>
+
+    <p>Maxwell is virtually unknown to the general public. Ask a non-scientist to name a great physicist. Newton. Einstein. Hawking. Feynman. Ask them to name five. You might get Bohr, Heisenberg, Curie. Maxwell rarely appears before the tenth name, if he appears at all.</p>
+
+    <p>This is a historical accident with a specific cause. Maxwell's equations, unlike the falling apple or the mushroom cloud or the famous equation E = mc², do not have an accessible visual or narrative hook. They are four equations in vector calculus. They reward the person who studies them but resist the person who wants a quick summary. Moreover, Maxwell lived between the age of the great natural philosophers (Newton, Faraday) and the age of mass communication (Einstein's fame was amplified by the 1919 eclipse observations and intensive press coverage). Maxwell had neither: no memorable celebrity experiments to observe and no press corps to amplify him.</p>
+
+    <blockquote>
+      <p>"From a long view of the history of mankind — seen from, say, ten thousand years from now — there can be little doubt that the most significant event of the 19th century will be judged as Maxwell's discovery of the laws of electrodynamics."</p>
+      <cite>Richard Feynman — <em>The Feynman Lectures on Physics</em>, Vol. 2</cite>
+    </blockquote>
+
+    <p>Feynman says this seriously. He is ranking Maxwell above Darwin, above Marx, above Lincoln, above the entire industrial revolution. His argument: the electromagnetic equations are still exactly right, still exactly used, still the operating framework for a technology that did not exist in Maxwell's lifetime and now constitutes a third of the global economy. No other discovery from the 19th century can claim that status.</p>
+
+    <div class="highlight-box">
+      <span class="hb-label">Why He Is Not Famous — And Why It Matters</span>
+      <p>The people who know Maxwell's equations best — working physicists and engineers — tend not to write popular books about him. The people who write popular science books tend not to know the equations well enough to explain what Maxwell actually did rather than just asserting it was important. The result is a strange void: a physicist of the first rank, universally recognized within his field as Newton's peer and Einstein's inspiration, essentially unknown to the culture that runs on his work. Every time you connect to WiFi, you are connecting to something Maxwell predicted. He deserves to be remembered.</p>
+    </div>
+  </section>
+
+  <!-- FINAL STATEMENT -->
+  <section id="final">
+    <div class="section-header">
+      <span class="kick">VII.</span>
+      <h2>The Accounting</h2>
+    </div>
+
+    <p>Maxwell was 48 when he died. He had been doing serious mathematical physics for about 25 years — from his first paper on oval curves at fourteen to his death in Cambridge. In that span he:</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-year">The Unified Theory</div>
+        <h3>Unified Electricity, Magnetism, and Light</h3>
+        <p>Three domains of physics revealed as one. The governing equations of wireless communication, optics, and radiation all follow from four equations written by one man in 1865.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">The First</div>
+        <h3>Founded Statistical Mechanics</h3>
+        <p>The Maxwell-Boltzmann distribution was the first statistical law in physics. It opened the door to Boltzmann's entropy, Gibbs's ensemble theory, and the entire thermal physics of the 20th century.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">The Prediction</div>
+        <h3>Solved Saturn's Rings from Mathematics</h3>
+        <p>No telescope could see ring particles in 1859. Maxwell proved they had to be there from the equations of mechanics. The Cassini probe confirmed it 145 years later.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">The First Image</div>
+        <h3>Created the First Color Photograph</h3>
+        <p>1861. Three filter images, three projectors, one superimposed color image. The ancestor of every color photograph, color film, color screen, and color sensor in the world.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">The Institution</div>
+        <h3>Built the Cavendish Laboratory</h3>
+        <p>Designed from nothing. Opened 1874. Site of the discovery of the electron, the neutron, and the structure of DNA. The greatest physics laboratory of the 20th century was Maxwell's project.</p>
+      </div>
+      <div class="card">
+        <div class="card-year">The Question</div>
+        <h3>Founded Information Thermodynamics</h3>
+        <p>Maxwell's Demon — an 1867 thought experiment — became the founding question of the thermodynamics of information. Landauer's principle, Shannon entropy, and the physics of computation trace back to a question Maxwell posed as a casual aside.</p>
+      </div>
+    </div>
+
+    <div class="final-statement">
+      <span class="fs-label">The Signal That Did Not Stop</span>
+      <p>He was forty-eight years old. He died before Hertz confirmed his waves, before Marconi sent his signals, before Einstein built relativity on his foundations, before Feynman made his fields quantum. Every photon you have ever seen has obeyed his equations. Every radio wave, every WiFi packet, every X-ray, every microwave. Every color on this screen. <strong>The electromagnetic field Maxwell described is still propagating. It has never stopped. It never will.</strong></p>
+    </div>
+  </section>
+
+  <div class="series-nav">
+    <a href="2-world.html">← Vol 2: His World</a>
+    <a href="0-who.html">← Vol 0: Who He Was</a>
+    <a href="1-equations.html">← Vol 1: The Four Equations</a>
+  </div>
+
+</main>
+
+<footer class="colophon">
+  <div class="colophon-inner">
+    <p>
+      ROOT0-ATTRIBUTION-v1.0<br>
+      James Clerk Maxwell — Volume 3: His Long Afterlife<br>
+      <span class="cc">CC-BY-ND-4.0</span> &nbsp;·&nbsp; David Lee Wise / ROOT0 / TriPod LLC
+    </p>
+    <p>
+      Vol 0: Who He Was &nbsp;|&nbsp; Vol 1: The Four Equations<br>
+      Vol 2: His World &nbsp;|&nbsp; Vol 3: His Long Afterlife<br>
+      Library Series &nbsp;·&nbsp; 2024
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

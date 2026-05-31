@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John von Neumann — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#060a14;
+    --card:#0d1426;
+    --card2:#111827;
+    --ink:#e8e4d8;
+    --dim:#7a8099;
+    --blue:#1d4ed8;
+    --orange:#ea580c;
+    --bluetint:rgba(29,78,216,0.12);
+    --orangetint:rgba(234,88,12,0.10);
+    --line:rgba(29,78,216,0.18);
+    --lineo:rgba(234,88,12,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0 31px,rgba(29,78,216,0.028) 31px 32px);
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1080px;margin:0 auto;padding:32px 22px 80px;}
+  ::selection{background:var(--blue);color:#fff;}
+
+  .kick{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.30em;text-transform:uppercase;color:var(--orange);}
+  .band{display:inline-block;font-family:"Cinzel";font-weight:700;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;background:var(--blue);color:#fff;padding:5px 14px;margin:36px 0 15px;}
+  .band.orange{background:var(--orange);}
+
+  .mast{border-bottom:3px solid var(--blue);padding-bottom:22px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:12px;}
+  .mast h1{font-family:"Cinzel";font-weight:800;font-size:clamp(38px,8vw,80px);line-height:0.90;letter-spacing:0.01em;text-transform:uppercase;margin:0;}
+  .mast h1 em{font-style:normal;color:var(--blue);}
+  .dek{font-size:clamp(15px,1.9vw,18px);max-width:620px;margin:20px 0 0;color:#b8c0d0;line-height:1.6;}
+  .dek b{font-weight:500;color:var(--orange);}
+  .art{flex:0 0 auto;margin-top:6px;}
+
+  /* map/network SVG animations */
+  @keyframes nodeGlow{0%,100%{opacity:0.6;r:5}50%{opacity:1;r:7}}
+  @keyframes edgePulse{0%,100%{opacity:0.2}50%{opacity:0.8}}
+  @keyframes dash{to{stroke-dashoffset:-24}}
+  .node-glow{animation:nodeGlow 2.5s ease-in-out infinite;}
+  .edge-pulse{animation:edgePulse 3s ease-in-out infinite;}
+  .dash-anim{stroke-dasharray:6 6;animation:dash 1.2s linear infinite;}
+  @media(prefers-reduced-motion:reduce){.node-glow,.edge-pulse,.dash-anim{animation:none;opacity:0.7}}
+
+  .body-text{max-width:740px;font-size:clamp(15.5px,1.7vw,17.5px);line-height:1.72;margin:0 0 14px;}
+  .body-text em{font-style:italic;color:var(--orange);}
+  .body-text b{font-weight:500;color:#d0d8f0;}
+  .pull{font-family:"Newsreader",serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;max-width:640px;margin:28px 0;padding:0 0 0 22px;border-left:3px solid var(--orange);color:#c0cce6;}
+
+  /* world cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+  .card{position:relative;border:1px solid var(--line);background:var(--card);padding:17px 18px 18px;transition:transform .14s ease,box-shadow .14s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--blue);}
+  .card.orange-h:hover{box-shadow:5px 5px 0 var(--orange);}
+  .card .num{position:absolute;top:12px;right:14px;font-family:"Space Mono",monospace;font-weight:700;font-size:11px;color:var(--blue);}
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:16px;line-height:1.15;margin:0 28px 8px 0;letter-spacing:0.02em;color:var(--ink);}
+  .card .what{font-size:13.5px;margin:0 0 10px;color:#a8b4cc;line-height:1.5;}
+  .card .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);border:1px solid var(--lineo);padding:2px 7px;margin-top:6px;}
+  .card .tag.blue{color:var(--blue);border-color:var(--line);}
+  .card .sub{font-family:"Space Mono",monospace;font-size:11px;color:var(--dim);margin:4px 0 0;line-height:1.4;}
+
+  /* portrait/person blocks */
+  .person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+  .person{border:1px solid var(--line);background:var(--card);padding:14px 16px;}
+  .person:hover{border-color:rgba(29,78,216,0.5);}
+  .person h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 4px;color:var(--ink);letter-spacing:0.02em;}
+  .person .role{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+  .person p{font-size:13px;color:#a0adc4;line-height:1.45;margin:0;}
+
+  /* place sections */
+  .place{border-left:3px solid var(--blue);padding:0 0 0 20px;margin:0 0 22px;}
+  .place.orange{border-color:var(--orange);}
+  .place h3{font-family:"Cinzel";font-weight:700;font-size:19px;margin:0 0 6px;color:var(--ink);}
+  .place .place-year{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;color:var(--orange);margin-bottom:10px;}
+  .place p{font-size:clamp(14.5px,1.6vw,16.5px);color:#a8b4cc;line-height:1.65;margin:0 0 10px;}
+  .place p:last-child{margin-bottom:0;}
+  .place em{font-style:italic;color:#c8cce0;}
+
+  .block{border:1px solid var(--line);padding:20px 22px;margin-top:6px;background:var(--card2);}
+  .block.orange{border-color:var(--lineo);}
+  blockquote{margin:0;font-style:italic;font-size:clamp(15px,1.7vw,17px);color:#b0bcd4;line-height:1.65;}
+  blockquote cite{display:block;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;margin-top:10px;color:var(--dim);}
+
+  .vol-nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;}
+  .vol-nav a{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.10em;text-transform:uppercase;color:var(--blue);border:1px solid var(--line);padding:6px 14px;text-decoration:none;transition:background .12s,color .12s;}
+  .vol-nav a:hover{background:var(--blue);color:#fff;}
+  .vol-nav a.current{background:var(--blue);color:#fff;}
+
+  .colophon{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:0.07em;color:var(--dim);text-align:center;margin-top:50px;padding-top:18px;border-top:1px solid var(--line);line-height:2;}
+
+  .reveal{opacity:0;transform:translateY(12px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+  @media print{body{background:#fff;color:#000}.card,.block,.person,.place{background:#fff}.card:hover{transform:none;box-shadow:none}.reveal{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="kick">von neumann series · volume 2 · his world</span>
+    <div class="masthead">
+      <div>
+        <h1>His <em>World</em></h1>
+        <p class="dek">
+          Budapest's gilded Jewish salon. Weimar Göttingen at its peak. Princeton under the shadow of fascism. Los Alamos in the desert. The Cold War's nuclear chess. <b>He was at the center of every world that mattered from 1920 to 1957.</b>
+        </p>
+      </div>
+      <!-- Network map SVG: von Neumann at center, connections to colleagues and places -->
+      <svg class="art" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Network map showing von Neumann's connections to colleagues and institutions">
+        <rect width="210" height="210" fill="#0d1426" rx="4"/>
+        <!-- edges -->
+        <line x1="105" y1="105" x2="105" y2="30" stroke="rgba(29,78,216,0.4)" stroke-width="1.2" class="edge-pulse"/>
+        <line x1="105" y1="105" x2="40" y2="60" stroke="rgba(29,78,216,0.4)" stroke-width="1.2" class="edge-pulse" style="animation-delay:0.4s"/>
+        <line x1="105" y1="105" x2="170" y2="60" stroke="rgba(29,78,216,0.4)" stroke-width="1.2" class="edge-pulse" style="animation-delay:0.8s"/>
+        <line x1="105" y1="105" x2="30" y2="130" stroke="rgba(234,88,12,0.4)" stroke-width="1.2" class="edge-pulse" style="animation-delay:1.2s"/>
+        <line x1="105" y1="105" x2="180" y2="130" stroke="rgba(234,88,12,0.4)" stroke-width="1.2" class="edge-pulse" style="animation-delay:0.6s"/>
+        <line x1="105" y1="105" x2="55" y2="180" stroke="rgba(29,78,216,0.3)" stroke-width="1.2" class="edge-pulse" style="animation-delay:1.6s"/>
+        <line x1="105" y1="105" x2="155" y2="180" stroke="rgba(29,78,216,0.3)" stroke-width="1.2" class="edge-pulse" style="animation-delay:2.0s"/>
+        <!-- animated dash lines -->
+        <line x1="105" y1="105" x2="105" y2="30" stroke="var(--blue)" stroke-width="1" opacity="0.5" class="dash-anim"/>
+        <line x1="105" y1="105" x2="40" y2="60" stroke="var(--orange)" stroke-width="1" opacity="0.4" class="dash-anim" style="animation-delay:0.5s"/>
+        <!-- center node: JvN -->
+        <circle cx="105" cy="105" r="16" fill="var(--blue)" opacity="0.9"/>
+        <text x="105" y="102" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="#fff" font-weight="700">JvN</text>
+        <text x="105" y="112" text-anchor="middle" font-family="Space Mono,monospace" font-size="6" fill="rgba(255,255,255,0.7)">1903–57</text>
+        <!-- satellite nodes -->
+        <circle cx="105" cy="30" r="6" fill="var(--orange)" class="node-glow" style="--r:5"/>
+        <text x="105" y="18" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">EINSTEIN</text>
+        <circle cx="40" cy="60" r="5" fill="var(--blue)" class="node-glow" style="animation-delay:0.5s"/>
+        <text x="20" y="50" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.9)">GÖDEL</text>
+        <circle cx="170" cy="60" r="5" fill="var(--blue)" class="node-glow" style="animation-delay:1.0s"/>
+        <text x="188" y="50" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(123,170,247,0.9)">TURING</text>
+        <circle cx="30" cy="130" r="5" fill="var(--orange)" class="node-glow" style="animation-delay:1.5s"/>
+        <text x="12" y="122" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">OPPNHM</text>
+        <circle cx="180" cy="130" r="5" fill="var(--orange)" class="node-glow" style="animation-delay:2.0s"/>
+        <text x="200" y="122" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(248,115,64,0.9)">ULAM</text>
+        <circle cx="55" cy="180" r="4" fill="#5a8af7" class="node-glow" style="animation-delay:0.8s"/>
+        <text x="32" y="197" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">HILBERT</text>
+        <circle cx="155" cy="180" r="4" fill="#5a8af7" class="node-glow" style="animation-delay:1.3s"/>
+        <text x="178" y="197" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(90,138,247,0.8)">WIENER</text>
+        <text x="105" y="207" text-anchor="middle" font-family="Space Mono,monospace" font-size="7" fill="rgba(29,78,216,0.4)" letter-spacing="0.06em">NETWORK · 1903–1957</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- VOL NAV -->
+  <nav class="vol-nav" aria-label="Volume navigation">
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-architecture.html">1 · Architecture</a>
+    <a href="2-world.html" class="current">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </nav>
+
+  <!-- BUDAPEST -->
+  <div class="band reveal" style="animation-delay:.05s">Budapest: The Cradle of Genius</div>
+  <div class="place reveal" style="animation-delay:.08s">
+    <div class="place-year">1903 – 1921</div>
+    <p>Turn-of-the-century Budapest was experiencing a cultural explosion unique in European history. The Austro-Hungarian compromise of 1867 had freed Hungary's Jews from legal restrictions, and within a generation they had entered the professions with extraordinary force. By 1910 they constituted roughly 5% of Hungary's population but 50% of its lawyers, 60% of its doctors, and a disproportionate share of its engineers, bankers, and scientists.</p>
+    <p>The result was a hothouse. Budapest's <em>Fasori Lutheran Gymnasium</em> and other elite schools held intense mathematics competitions — the Eötvös Competition — that identified and cultivated prodigies. Von Neumann's generation from these schools included Eugene Wigner (Nobel Physics 1963), Edward Teller (father of the hydrogen bomb), Leo Szilárd (who conceived the nuclear chain reaction), Dennis Gabor (Nobel Physics 1971, inventor of holography), and George Pólya (mathematician). All from roughly the same milieu, the same decade, the same few city blocks.</p>
+    <p>Von Neumann's father Max understood his son's gifts from an early age and hired private tutors — including the mathematician Gábor Szegő — to supplement the gymnasium curriculum. Young Jancsi (his Hungarian nickname) would arrive at dinner parties and entertain guests by memorizing the page of any book he was handed and reciting it back. It was not a trick. He simply remembered everything.</p>
+  </div>
+
+  <!-- GÖTTINGEN -->
+  <div class="band reveal" style="animation-delay:.10s">Göttingen: The Mathematics Capital of the World</div>
+  <div class="place reveal" style="animation-delay:.12s">
+    <div class="place-year">1926 – 1929</div>
+    <p>In the 1920s, Göttingen was the undisputed center of world mathematics. David Hilbert had made it so — his seminar attracted the best mathematical minds of Europe, and the town's small lanes were full of people solving the hardest problems in existence while walking between coffee shops and lecture halls. Emmy Noether was there, working on abstract algebra. Hermann Weyl was there. Richard Courant was there.</p>
+    <p>Von Neumann arrived as a privatdozent in 1927, having already established his reputation with papers on set theory and game theory. He worked in Hilbert's program to formalize all of mathematics — and he was among the first to understand, completely and immediately, that Gödel's incompleteness theorems (1931) made the program impossible. Where others needed months to absorb the shock, von Neumann saw it in an afternoon.</p>
+    <p>"He was the only student I was ever afraid of," Hilbert reportedly said — meaning afraid in the sense of intellectual awe. Von Neumann could find the flaw in a proof faster than anyone else in the room. He was also, by all accounts, pleasant, collaborative, and without the usual mathematician's competitive jealousy.</p>
+  </div>
+  <div class="block reveal" style="animation-delay:.13s">
+    <blockquote>
+      "In mathematics you don't understand things. You just get used to them."
+      <cite>— von Neumann to a frustrated graduate student at Göttingen</cite>
+    </blockquote>
+  </div>
+
+  <!-- PRINCETON IAS -->
+  <div class="band reveal" style="animation-delay:.15s">Princeton: The Institute for Advanced Study</div>
+  <div class="place orange reveal" style="animation-delay:.17s">
+    <div class="place-year">1930 – 1957</div>
+    <p>The Institute for Advanced Study was founded in 1930 with a simple mission: hire the best minds in the world and leave them completely alone. No students, no teaching, no committees. Just salaries and time. Von Neumann was appointed to the inaugural faculty in 1933, alongside Einstein, Oswald Veblen, and James Alexander. He was thirty years old.</p>
+    <p>Princeton in the 1930s and 40s was saturated with refugee intellectuals from Europe. Einstein had left Germany for good in 1933. Gödel fled Austria in 1940. The IAS became a temporary city of the dispossessed great — refugees who had the advantage of being the most remarkable collection of scientists ever gathered in one place. Von Neumann moved among them as an equal. He and Gödel, improbably, became close friends, taking daily walks through the IAS grounds despite being opposite personalities: Gödel paranoid, reclusive, certain of conspiracy; von Neumann gregarious, optimistic, delighted by the world.</p>
+    <p>His house on Westcott Road became the social center of Princeton's intellectual life. He hosted legendary parties — loud, alcoholic, full of dirty jokes in multiple languages. The mathematician Paul Halmos recalled arriving at a faculty party and finding three conversations happening simultaneously at the level of Fields Medal quality. Von Neumann was at the center of all three.</p>
+  </div>
+
+  <!-- LOS ALAMOS -->
+  <div class="band orange reveal" style="animation-delay:.19s">Los Alamos: The Bomb</div>
+  <div class="place orange reveal" style="animation-delay:.21s">
+    <div class="place-year">1943 – 1955</div>
+    <p>Von Neumann joined the Manhattan Project in 1943, initially as a consultant on explosive lenses for the plutonium implosion device. The problem was geometrically complex: how do you shape explosive charges so that the detonation wave converges uniformly on a subcritical plutonium sphere, compressing it to supercriticality in microseconds? Conventional explosives produce irregular waves. You need precisely shaped lenses.</p>
+    <p>Von Neumann solved the mathematics. His calculations, combined with George Kistiakowsky's engineering, made the Fat Man bomb work. Without implosion lenses, the only option was the more wasteful gun-type design used in Little Boy — which required so much enriched uranium that only one could be built in time.</p>
+    <p>At Los Alamos he also encountered the limit of hand calculation. To model shockwave propagation in nuclear explosions, you needed to solve partial differential equations over millions of grid points. He began thinking seriously about computing machines — not as curiosities but as <em>scientific instruments</em>, as necessary to physics as the cyclotron or the spectrometer. This was the seed of the EDVAC report.</p>
+    <p>He was not tortured by the bomb the way Oppenheimer was. He did not publicly recant or agonize. When asked about it in later years, he said that the bomb would have been built regardless, and that it was better for America to have it than for the Soviets to have it first. He was, by the 1950s, recommending preventive nuclear war against the USSR — "better to bomb them today than wait for them to bomb us tomorrow" — a position that even many hawks found alarming.</p>
+  </div>
+
+  <!-- ENIAC / EDVAC -->
+  <div class="band reveal" style="animation-delay:.23s">ENIAC and the Computing Revolution</div>
+  <div class="place reveal" style="animation-delay:.25s">
+    <div class="place-year">1944 – 1952</div>
+    <p>Von Neumann learned of the ENIAC project — then classified — through his Army Ordnance connections in 1944. He met Eckert and Mauchly at the University of Pennsylvania and was immediately seized by the possibilities. ENIAC was a capable but inflexible machine: to change its program you had to rewire it, a process taking days. Von Neumann proposed the solution: store the program in memory, in the same format as data.</p>
+    <p>He wrote up this idea in the EDVAC draft of 1945, which circulated widely among researchers and became the foundational document of computer architecture — despite being formally unpublished. Eckert and Mauchly were furious: his name alone appeared on the draft, giving the impression the ideas were his alone. The dispute was never fully resolved. Modern historians generally attribute the stored-program concept to the collaborative work of von Neumann, Eckert, Mauchly, and J. Presper Eckert's team, with von Neumann providing the mathematical formalization.</p>
+    <p>He then built his own computer at the IAS — the IAS machine (1952) — which became the template for a generation of computers worldwide: the ILLIAC, MANIAC, JOHNNIAC, and others were all built from his published design.</p>
+  </div>
+
+  <!-- RAND AND COLD WAR -->
+  <div class="band orange reveal" style="animation-delay:.27s">RAND and the Cold War Architecture</div>
+  <div class="place orange reveal" style="animation-delay:.29s">
+    <div class="place-year">1948 – 1957</div>
+    <p>The RAND Corporation, founded in 1948 as an Air Force think tank, became the intellectual engine of American Cold War strategy. Von Neumann was one of its key advisors, and he brought game theory to bear on nuclear strategy with the same rigor he brought to everything else.</p>
+    <p>The doctrine of Mutually Assured Destruction — MAD — emerged partly from game-theoretic analysis of nuclear confrontation: if both sides can absorb a first strike and still retaliate devastatingly, neither side will strike first. The acronym was deliberate irony. Von Neumann helped develop the mathematics behind it, though his own view was more hawkish than the doctrine suggests: he thought waiting was strategically dangerous and favored preventive action while America still held a decisive advantage.</p>
+    <p>He served on the Atomic Energy Commission, the Air Force Scientific Advisory Board, and multiple classified advisory panels. In his last year he was appointed to the AEC itself. He was, in effect, one of the architects of the nuclear age — not just as a bomb-maker but as a strategic thinker who helped define how nuclear weapons would be integrated into national policy.</p>
+  </div>
+
+  <!-- COLLEAGUES -->
+  <div class="band reveal" style="animation-delay:.31s">The Colleagues</div>
+  <p class="body-text reveal" style="animation-delay:.33s">
+    No man is an island of intellect. Von Neumann's world was populated by the greatest scientific minds of the twentieth century. He worked with, argued with, admired, and was admired by each of them.
+  </p>
+  <div class="person-grid reveal" style="animation-delay:.35s">
+    <div class="person">
+      <h4>Albert Einstein</h4>
+      <div class="role">Physicist · IAS · 1933–1955</div>
+      <p>Office neighbors at the IAS. Einstein thought von Neumann the most formidable mind he had encountered. They disagreed on quantum mechanics — Einstein never accepted the Copenhagen interpretation; von Neumann's mathematical formalization supported it.</p>
+    </div>
+    <div class="person">
+      <h4>Kurt Gödel</h4>
+      <div class="role">Logician · IAS · 1940–1978</div>
+      <p>Unlikely close friends. Daily walks at the IAS. Von Neumann grasped Gödel's incompleteness results immediately and told him so — one of the few people Gödel trusted. Opposite temperaments: Gödel paranoid, von Neumann optimistic.</p>
+    </div>
+    <div class="person">
+      <h4>J. Robert Oppenheimer</h4>
+      <div class="role">Physicist · Los Alamos Director</div>
+      <p>Director of the Manhattan Project; von Neumann was one of his key consultants. Oppenheimer was tormented by the bomb; von Neumann was not. Their relationship was respectful but not close. Oppenheimer later said von Neumann had "a steel-trap mind and no moral qualms."</p>
+    </div>
+    <div class="person">
+      <h4>Alan Turing</h4>
+      <div class="role">Mathematician · Princeton · 1936–38</div>
+      <p>Turing was a graduate student at Princeton when von Neumann was on faculty. Von Neumann offered him a research assistantship in 1938; Turing declined and returned to England. They corresponded on computability theory. Two greatest minds of the computing revolution, in the same building, briefly.</p>
+    </div>
+    <div class="person">
+      <h4>Stanislaw Ulam</h4>
+      <div class="role">Mathematician · Los Alamos</div>
+      <p>Von Neumann's closest intellectual collaborator at Los Alamos. Together they invented the Monte Carlo method. Ulam later said von Neumann had "a phenomenological approach — he could see what a mathematical result should be before he could prove it."</p>
+    </div>
+    <div class="person">
+      <h4>David Hilbert</h4>
+      <div class="role">Mathematician · Göttingen</div>
+      <p>Von Neumann worked in Hilbert's program to formalize mathematics. Hilbert reportedly called him the only student he feared. When the program collapsed under Gödel's theorems, both men had to acknowledge defeat — von Neumann did so faster and more cleanly.</p>
+    </div>
+    <div class="person">
+      <h4>Norbert Wiener</h4>
+      <div class="role">Mathematician · MIT</div>
+      <p>Rival and occasional collaborator. Wiener founded cybernetics; von Neumann founded computer science. Both were interested in the mathematical theory of communication and control. They respected each other's work but competed for credit in overlapping areas.</p>
+    </div>
+    <div class="person">
+      <h4>Edward Teller</h4>
+      <div class="role">Physicist · Los Alamos</div>
+      <p>Fellow Hungarian émigré, fellow hawk on the Soviet question. Teller pursued the hydrogen bomb with a fervor that troubled many colleagues; von Neumann provided mathematical support for thermonuclear calculations. Both were products of the same Budapest milieu.</p>
+    </div>
+  </div>
+
+  <!-- WORLD CONTEXT CARDS -->
+  <div class="band reveal" style="animation-delay:.37s">The Forces of His Era</div>
+  <div class="grid reveal" style="animation-delay:.39s">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>Budapest's Jewish Intelligentsia</h3>
+      <p class="what">Five percent of Hungary's population. Fifty percent of its lawyers. Propelled by discrimination turned into competitive excellence. Produced von Neumann, Wigner, Teller, Szilárd, Gabor.</p>
+      <span class="tag blue">Origins</span>
+    </div>
+    <div class="card">
+      <span class="num">02</span>
+      <h3>Weimar Mathematics</h3>
+      <p class="what">Göttingen in the 1920s: the freest, most productive mathematical community in history. Ended by the Nazis in 1933. Its diaspora seeded every major American university.</p>
+      <span class="tag">Exile</span>
+    </div>
+    <div class="card">
+      <span class="num">03</span>
+      <h3>The IAS Model</h3>
+      <p class="what">No teaching, no students, full salaries, complete freedom. Princeton's Fuld Hall in the 1930s held Einstein, Gödel, von Neumann simultaneously. A density of genius without precedent.</p>
+      <span class="tag blue">Institution</span>
+    </div>
+    <div class="card">
+      <span class="num">04</span>
+      <h3>Manhattan Project</h3>
+      <p class="what">75,000 workers. Three secret cities. $2 billion (1945). The largest scientific mobilization in history. Von Neumann's implosion mathematics made Fat Man possible.</p>
+      <span class="tag">Power</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">05</span>
+      <h3>Cold War Strategic Logic</h3>
+      <p class="what">Nuclear deterrence as a game-theoretic equilibrium. MAD doctrine. The arms race as repeated prisoner's dilemma. Von Neumann helped invent the math behind the terror.</p>
+      <span class="tag">Strategy</span>
+    </div>
+    <div class="card orange-h">
+      <span class="num">06</span>
+      <h3>The RAND Think Tank</h3>
+      <p class="what">Game theory applied to nuclear strategy. Systems analysis. Civilian strategists with physics PhDs telling generals how to think about nuclear war. Von Neumann as architect-advisor.</p>
+      <span class="tag">Power</span>
+    </div>
+  </div>
+
+  <!-- THE INTELLECTUAL ATMOSPHERE OF LOS ALAMOS -->
+  <div class="band reveal" style="animation-delay:.41s">The Atmosphere at Los Alamos</div>
+  <p class="body-text reveal" style="animation-delay:.42s">
+    Los Alamos in 1943–1945 was perhaps the strangest intellectual environment in the history of science. Roughly six thousand people — physicists, mathematicians, chemists, engineers, their families — were living in a secret city on a mesa in the New Mexico desert, surrounded by fences, addressed by P.O. Box numbers, forbidden to reveal their location or work. The streets were classified. The babies were born without birth certificates listing a real address.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.43s">
+    And yet the intellectual life was extraordinary. Oppenheimer ran Tuesday colloquia where the entire scientific staff heard lectures on the latest work. Bethe's theoretical division met daily. Feynman picked locks and sent letters in code to confuse the censors. Fermi built scale models of implosion geometries in the kitchen of his apartment to test intuitions. Von Neumann arrived periodically as a consultant — he was not resident but was present for critical periods — and his visits transformed the computational approach of the project.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.44s">
+    He introduced the physicists to the concept of treating complex physical processes as numerical calculations that could be run step-by-step — what we now call numerical simulation. He saw that the ENIAC, then under construction in Philadelphia, could perform these calculations automatically. He convinced Oppenheimer that computing machines were not merely convenient but <em>necessary</em> — that the nuclear age would require computational tools that did not yet exist, and that creating them was as much a part of the scientific mission as building the bomb itself.
+  </p>
+  <div class="block reveal" style="animation-delay:.445s">
+    <blockquote>
+      "He was the most remarkable man I have ever known. Not the most admirable — but the most remarkable."
+      <cite>— J. Robert Oppenheimer, director, Manhattan Project, on von Neumann</cite>
+    </blockquote>
+  </div>
+
+  <!-- THE GREAT EMIGRATION -->
+  <div class="band reveal" style="animation-delay:.43s">The Hungarian Miracle</div>
+  <p class="body-text reveal" style="animation-delay:.45s">
+    The concentration of Hungarian-born scientific talent in twentieth-century physics and mathematics is one of history's most puzzling cultural phenomena. In addition to von Neumann, the Budapest schools produced Eugene Wigner (Nobel Physics, 1963), Edward Teller (hydrogen bomb), Leo Szilárd (conceived the nuclear chain reaction and drafted the Einstein-Szilárd letter that initiated the Manhattan Project), Dennis Gabor (Nobel Physics, 1971, holography), George Pólya (mathematician, problem-solving), Cornelius Lanczos (mathematician), and Theodore von Kármán (aeronautics). They were all born within roughly twenty years, within fifty miles of each other.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.47s">
+    Wigner was asked repeatedly to explain this. His best answer was always the same: the gymnasium system, the Eötvös Competitions, the intense concentration of intellectual ambition in a community that had been blocked from social mobility for centuries and suddenly, after 1867, was not. When a culture that has been excluded from aristocratic status for generations suddenly gains access to education and the professions, the competitive energy can be extraordinary. The Jewish intellectual aristocracy of Budapest was, in part, the product of deferred ambition finally released.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.49s">
+    Nearly all of them eventually landed at American universities and national laboratories. Teller is credited with a remark — perhaps apocryphal — that the flying saucers visiting Earth were actually Hungarians who had never bothered to disguise their origin. The joke circulated at Los Alamos and captured something true: this small cohort of men from one city had in some respects altered the twentieth century more than any other comparable group.
+  </p>
+
+  <!-- THE IAS AS ECOSYSTEM -->
+  <div class="band orange reveal" style="animation-delay:.51s">The IAS Ecosystem</div>
+  <p class="body-text reveal" style="animation-delay:.53s">
+    The Institute for Advanced Study in the 1930s and 40s was not just a collection of brilliant individuals; it was an <em>ecosystem</em> — a set of conditions that allowed exceptional intellects to operate at their ceiling without the usual friction of academic life. No departmental politics, no undergraduate teaching, no grant-writing, no committees. Full salaries, permanent appointments, total freedom to follow the work wherever it led.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.55s">
+    Von Neumann served informally as a connector within this ecosystem. He was the person who knew what everyone was working on, who could suggest the connection between Gödel's result and Shannon's work, between quantum field theory and operator algebras, between game theory and military strategy. He consulted widely, collaborated freely, and retained a photographic memory of everything he had learned from every conversation. In an era before electronic communication, he was himself a kind of human internet — a distributed memory and pattern-matching system that linked otherwise isolated intellectual communities.
+  </p>
+  <div class="block orange reveal" style="animation-delay:.57s">
+    <blockquote>
+      "Johnny was the only person I was ever afraid of as an intellectual — not in the sense of fear, but in the sense of awe. You always felt he could see around corners you couldn't even find."
+      <cite>— Herman Goldstine, mathematician and ENIAC collaborator</cite>
+    </blockquote>
+  </div>
+
+  <!-- PRINCETON'S PECULIAR CULTURE -->
+  <div class="band reveal" style="animation-delay:.57s">Princeton's Peculiar Culture</div>
+  <p class="body-text reveal" style="animation-delay:.575s">
+    Princeton in the late 1930s and 1940s held a tension that von Neumann navigated with characteristic ease: the university was old-line WASP Anglo-American, deeply traditional, slow to admit women or minorities; the IAS was cosmopolitan, European, Jewish-friendly (by necessity — many of its greatest scientists were Jewish refugees). The two institutions sat a mile apart and represented different civilizations. Von Neumann moved between them, attending faculty dinners at the university, hosting IAS parties, consulting with Army Ordnance in Washington — all without apparent friction.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.580s">
+    He was also navigating the particular position of the Hungarian-Jewish émigré: deeply European in formation, rapidly becoming American in habits and outlook, always slightly foreign in accent if not in manner. He adopted American enthusiasms — the fast car, the casual sociality, the delight in pop culture and bawdy humor — with what seems like genuine pleasure rather than assimilation anxiety. He liked America. He thought it would win the Cold War. He devoted the last decade of his life to ensuring it did.
+  </p>
+
+  <!-- KLARA AND THE HUMAN SIDE -->
+  <div class="band reveal" style="animation-delay:.59s">Klára: The Person Behind the Mind</div>
+  <p class="body-text reveal" style="animation-delay:.61s">
+    His second wife, Klára Dán von Neumann — Klári — was remarkable in her own right. A Hungarian émigrée from Budapest's Jewish intelligentsia, she was one of the first programmers of the ENIAC and MANIAC computers, learning the craft directly from her husband's theoretical framework and turning it into practical code for nuclear calculations. She wrote, edited, and organized the posthumous publication of his work on the computer and the brain.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.63s">
+    Von Neumann adored her. His first marriage (to Mariette Kövesi) ended in divorce in 1937, reportedly because he was absent and distracted — the occupational hazard of being the most intellectually active person in any room. With Klári the relationship was different: she could keep up, contribute, and occasionally correct him. She was the social architect of the Princeton household; he was its intellectual engine; together they made Westcott Road the center of gravity for IAS social life through the late 1940s and early 50s.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.65s">
+    After his death in 1957, Klári was devastated. She never fully recovered. She died in 1963, apparently by drowning, in circumstances that were ruled accidental but that her friends and family believed were intentional. She was fifty years old. The story of John von Neumann does not end with the guard outside his hospital room — it ends with the woman who understood him best, gone six years later, her own story still mostly untold.
+  </p>
+
+  <!-- THE WORLD HE MADE -->
+  <div class="band reveal" style="animation-delay:.69s">The World He Left Behind</div>
+  <p class="body-text reveal" style="animation-delay:.71s">
+    By the time John von Neumann died in February 1957, the world he had helped create was already unrecognizable from the world of his childhood. Budapest in 1903 had no aircraft, no electronic computers, no atomic weapons, no television, no quantum mechanics, no game theory. The Princeton he left in 1957 had all of these things — and he had been instrumental in creating or formalizing several of them. He did not live to see integrated circuits, or the internet, or the smartphone, or the large language model. But each of those things is, in its way, a chapter in the long book he began writing in 1920.
+  </p>
+  <p class="body-text reveal" style="animation-delay:.72s">
+    His world was the crucible of the information age. He was not the only person in it — Einstein, Turing, Shannon, Oppenheimer, Ulam, Gödel were all there — but he was the one who moved most freely between its different theaters, who understood most of it simultaneously, who could translate between physics and mathematics and engineering and economics without losing precision in any of them. The world he inhabited was extraordinary. He was more extraordinary still.
+  </p>
+
+  <!-- COLOPHON -->
+  <div class="colophon reveal" style="animation-delay:.73s">
+    ROOT0-ATTRIBUTION-v1.0<br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    John von Neumann Series · Volume 2: His World<br>
+    CC-BY-ND-4.0 · 2025
+  </div>
+
+</div><!-- /zine -->
+</body>
+</html>

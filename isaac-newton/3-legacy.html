@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isaac Newton — Vol. 3: The Legacy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #0d0a05;
+      --paper-mid: #14100a;
+      --paper-light: #1e1810;
+      --crimson: #991b1b;
+      --crimson-dim: #7a1515;
+      --crimson-glow: rgba(153,27,27,0.18);
+      --gold: #c49a2a;
+      --gold-dim: #a07d1e;
+      --gold-glow: rgba(196,154,42,0.15);
+      --text: #e8dfc8;
+      --text-dim: #a89880;
+      --text-faint: #5a4f40;
+      --border: rgba(196,154,42,0.18);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper); color: var(--text);
+      font-family: 'Newsreader', Georgia, serif; font-size: 18px;
+      line-height: 1.75; min-height: 100vh;
+    }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,5,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem; display: flex; gap: 2rem; align-items: center;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em;
+    }
+    nav a { color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav .series-label { color: var(--text-faint); margin-right: auto; }
+
+    .masthead {
+      display: grid; grid-template-columns: 1fr 400px; gap: 3rem;
+      align-items: center; padding: 5rem 4rem 4rem;
+      background: linear-gradient(135deg, var(--paper) 50%, #050a0d 100%);
+      border-bottom: 1px solid var(--border); min-height: 480px;
+      position: relative; overflow: hidden;
+    }
+    .masthead::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(153,27,27,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .masthead-text { position: relative; z-index: 1; }
+    .volume-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em;
+      color: var(--crimson); text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    h1 {
+      font-family: 'Cinzel', serif; font-weight: 800;
+      font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; color: var(--text);
+    }
+    h1 .subtitle {
+      display: block; font-weight: 500; font-size: 0.5em;
+      color: var(--gold); letter-spacing: 0.12em; margin-top: 0.4rem;
+    }
+    .masthead-lede {
+      font-size: 1.15rem; font-style: italic; color: var(--text-dim); margin-top: 1.5rem;
+      max-width: 55ch; border-left: 3px solid var(--crimson); padding-left: 1.2rem; line-height: 1.6;
+    }
+    .masthead-art { display: flex; align-items: center; justify-content: center; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    h2 {
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.7rem;
+      color: var(--gold); margin: 3.5rem 0 1.2rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    h3 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.15rem; color: var(--text); margin: 2rem 0 0.6rem; }
+    p { margin-bottom: 1.2rem; max-width: 72ch; }
+
+    .kick {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 0.3rem;
+    }
+    .band {
+      display: inline-block; background: var(--crimson); color: #f5e8d0;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.2em 0.7em; border-radius: 2px;
+      margin-right: 0.5rem; margin-bottom: 0.3rem; vertical-align: middle;
+    }
+    .band-gold { background: var(--gold-dim); color: #0d0a05; }
+    .band-blue { background: #1a2a4a; color: #88aadd; border: 1px solid #334466; }
+
+    /* ── TIMELINE OF LEGACY ── */
+    .era-timeline {
+      position: relative; margin: 2.5rem 0 3rem; padding-left: 0;
+    }
+    .era {
+      display: grid; grid-template-columns: 160px 1fr; gap: 1.5rem;
+      margin-bottom: 0; border-bottom: 1px solid rgba(196,154,42,0.08);
+    }
+    .era:last-child { border-bottom: none; }
+    .era-label {
+      padding: 2rem 1.5rem; background: var(--paper-mid);
+      border-right: 3px solid var(--border);
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+      text-align: right;
+    }
+    .era-dates {
+      font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.1rem;
+      color: var(--gold); line-height: 1.2; display: block;
+    }
+    .era-name {
+      font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-faint); margin-top: 0.4rem; display: block;
+    }
+    .era-content {
+      padding: 2rem 1.5rem 2rem 0;
+    }
+    .era-content h3 { margin-top: 0; color: var(--gold); font-size: 1.05rem; }
+    .era-content p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.6; max-width: none; }
+
+    /* ── EQUATION DISPLAY ── */
+    .equation-block {
+      margin: 2.5rem 0; padding: 2.2rem 2rem;
+      background: var(--paper-mid); border: 1px solid var(--gold); border-radius: 8px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .equation-block::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, var(--gold-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .equation-label {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--text-dim); margin-bottom: 1rem; display: block;
+    }
+    .equation {
+      font-family: 'Space Mono', monospace; font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      color: var(--gold); letter-spacing: 0.06em; line-height: 1.5;
+      text-shadow: 0 0 30px rgba(196,154,42,0.3); position: relative; z-index: 1;
+    }
+    .equation-desc {
+      margin-top: 1.2rem; font-size: 0.92rem; color: var(--text-dim);
+      font-style: italic; max-width: 50ch; margin-left: auto; margin-right: auto;
+      position: relative; z-index: 1;
+    }
+
+    /* ── ACHIEVEMENT CARDS ── */
+    .ach-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.3rem; margin: 2rem 0 3rem;
+    }
+    .ach-card {
+      background: var(--paper-mid); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.8rem 1.6rem;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .ach-card:hover {
+      transform: translateY(-5px); border-color: var(--crimson);
+      box-shadow: 0 10px 40px var(--crimson-glow);
+    }
+    .ach-card::after {
+      content: attr(data-glyph);
+      position: absolute; bottom: -0.5rem; right: 0.8rem;
+      font-size: 5rem; opacity: 0.05; line-height: 1; pointer-events: none;
+    }
+    .ach-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--crimson); margin-bottom: 0.6rem; display: block;
+    }
+    .ach-card h4 {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.6rem;
+    }
+    .ach-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.55; margin: 0; max-width: none; }
+
+    /* ── COMPARISON PANEL ── */
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+      background: var(--border); border: 1px solid var(--border); border-radius: 8px;
+      overflow: hidden; margin: 2rem 0 3rem;
+    }
+    .compare-col {
+      background: var(--paper-mid); padding: 2rem 1.5rem;
+    }
+    .compare-col.center-col { background: var(--paper-light); border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .compare-head {
+      font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .compare-period {
+      font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em;
+      color: var(--text-faint); text-transform: uppercase; margin-bottom: 1rem; display: block;
+    }
+    .compare-col p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.55; max-width: none; margin-bottom: 0.8rem; }
+    .compare-eq {
+      font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--gold);
+      background: var(--paper); display: inline-block; padding: 0.3em 0.7em;
+      border-radius: 3px; border: 1px solid var(--border); margin-top: 0.5rem;
+    }
+    .compare-limit {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--text-faint);
+      border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 0.8rem;
+      line-height: 1.4;
+    }
+
+    blockquote {
+      margin: 2.5rem 0; padding: 1.8rem 2rem;
+      background: var(--paper-light); border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0; font-style: italic; font-size: 1.15rem; color: var(--text);
+    }
+    blockquote cite {
+      display: block; font-style: normal; font-family: 'Space Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-dim);
+      margin-top: 0.8rem; text-transform: uppercase;
+    }
+
+    /* ── MISSIONS PANEL ── */
+    .mission-list {
+      list-style: none; margin: 1.5rem 0 2.5rem;
+    }
+    .mission-list li {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.2rem; background: var(--paper-mid); border: 1px solid var(--border);
+      border-radius: 6px; margin-bottom: 0.8rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .mission-list li:hover { border-color: var(--gold); transform: translateX(3px); }
+    .mission-icon {
+      font-size: 1.6rem; flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .mission-text { font-size: 0.93rem; color: var(--text-dim); line-height: 1.55; }
+    .mission-text strong { color: var(--text); display: block; margin-bottom: 0.2rem; font-style: normal; font-family: 'Cinzel', serif; font-weight: 600; font-size: 0.95rem; }
+
+    /* ── QUOTE HIGHLIGHT ── */
+    .pullquote {
+      margin: 3rem 0; padding: 2.5rem 3rem;
+      background: var(--paper-mid);
+      border: 1px solid var(--gold); border-radius: 8px;
+      text-align: center; position: relative;
+    }
+    .pullquote::before {
+      content: '\201C';
+      font-family: 'Cinzel', serif; font-size: 8rem; color: rgba(196,154,42,0.1);
+      position: absolute; top: -1rem; left: 1.5rem; line-height: 1; pointer-events: none;
+    }
+    .pullquote p {
+      font-family: 'Newsreader', serif; font-size: 1.5rem; font-style: italic;
+      color: var(--text); line-height: 1.5; max-width: 60ch; margin: 0 auto 1rem;
+      position: relative; z-index: 1;
+    }
+    .pullquote cite {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gold); display: block;
+    }
+
+    .vol-nav {
+      display: flex; gap: 1rem; justify-content: space-between; margin-top: 4rem; flex-wrap: wrap;
+    }
+    .vol-nav a {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .vol-nav a:hover { border-color: var(--gold); color: var(--gold); }
+
+    .series-complete {
+      text-align: center; margin-top: 4rem; padding: 2rem;
+      background: var(--paper-mid); border: 1px solid var(--border); border-radius: 8px;
+    }
+    .series-complete h3 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); margin-bottom: 1rem; }
+    .series-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+    .series-links a {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-dim); text-decoration: none;
+      border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .series-links a:hover { border-color: var(--crimson); color: var(--text); }
+
+    .colophon {
+      margin-top: 6rem; padding: 2rem; border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--text-faint); text-align: center; line-height: 2;
+    }
+
+    @media (max-width: 720px) {
+      .masthead { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+      .masthead-art { display: none; }
+      main { padding: 2rem 1.2rem 4rem; }
+      nav { padding: 0.6rem 1rem; gap: 1rem; }
+      .era { grid-template-columns: 1fr; }
+      .era-label { border-right: none; border-bottom: 3px solid var(--border); text-align: left; align-items: flex-start; padding: 1rem 1.5rem; }
+      .era-content { padding: 1.5rem; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-col.center-col { border: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Isaac Newton · Library Series</span>
+  <a href="0-who.html">Vol. 0 — Who</a>
+  <a href="1-principia.html">Vol. 1 — Work</a>
+  <a href="2-world.html">Vol. 2 — World</a>
+  <a href="3-legacy.html" class="active">Vol. 3 — Legacy</a>
+</nav>
+
+<header class="masthead">
+  <div class="masthead-text">
+    <span class="volume-label">Volume 3 of 4 · Long Afterlife</span>
+    <h1>
+      The Long Afterlife
+      <span class="subtitle">200 Years of Newtonian Dominion · Then Einstein · Then Quantum</span>
+    </h1>
+    <p class="masthead-lede">
+      For two centuries Newton's equations were the complete description of reality.
+      Then came Einstein — who refined them at extreme velocities. Then quantum mechanics —
+      which governs the extremely small. For everything in between, Newton still rules.
+      Every bridge, every rocket, every satellite: Newton's equations.
+    </p>
+  </div>
+
+  <div class="masthead-art">
+    <!-- Animated orbit of a satellite (moon/GPS) around Earth -->
+    <svg viewBox="0 0 380 380" width="380" height="380" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="cosmicBg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#050810"/>
+          <stop offset="100%" stop-color="#0d0a05"/>
+        </radialGradient>
+        <radialGradient id="earthGrad" cx="35%" cy="30%" r="65%">
+          <stop offset="0%" stop-color="#2255aa"/>
+          <stop offset="45%" stop-color="#1a4488"/>
+          <stop offset="100%" stop-color="#0d2244"/>
+        </radialGradient>
+        <radialGradient id="satGrad" cx="35%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#dddddd"/>
+          <stop offset="100%" stop-color="#888888"/>
+        </radialGradient>
+        <filter id="earthGlow">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="satGlow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <circle cx="190" cy="190" r="180" fill="url(#cosmicBg)"/>
+
+      <!-- Stars -->
+      <g fill="white">
+        <circle cx="40" cy="50" r="0.9" opacity="0.6"/>
+        <circle cx="110" cy="25" r="0.6" opacity="0.5"/>
+        <circle cx="275" cy="35" r="1.1" opacity="0.7"/>
+        <circle cx="345" cy="85" r="0.7" opacity="0.5"/>
+        <circle cx="360" cy="155" r="0.6" opacity="0.4"/>
+        <circle cx="355" cy="275" r="0.9" opacity="0.6"/>
+        <circle cx="295" cy="350" r="0.6" opacity="0.5"/>
+        <circle cx="75" cy="340" r="1" opacity="0.6"/>
+        <circle cx="25" cy="255" r="0.7" opacity="0.5"/>
+        <circle cx="50" cy="175" r="0.6" opacity="0.4"/>
+        <circle cx="160" cy="18" r="0.5" opacity="0.5"/>
+        <circle cx="235" cy="15" r="0.7" opacity="0.6"/>
+        <circle cx="22" cy="130" r="0.8" opacity="0.5"/>
+        <circle cx="312" cy="310" r="0.6" opacity="0.4"/>
+        <circle cx="142" cy="358" r="0.7" opacity="0.5"/>
+      </g>
+
+      <!-- Orbit path 1 (satellite) -->
+      <ellipse cx="190" cy="190" rx="130" ry="80"
+        fill="none" stroke="#c49a2a" stroke-width="0.8"
+        stroke-dasharray="5 5" opacity="0.3"/>
+
+      <!-- Orbit path 2 (moon, larger) -->
+      <ellipse cx="190" cy="190" rx="155" ry="50"
+        fill="none" stroke="#888" stroke-width="0.5"
+        stroke-dasharray="3 8" opacity="0.2"
+        transform="rotate(30 190 190)"/>
+
+      <!-- Earth (center) -->
+      <circle cx="190" cy="190" r="50" fill="url(#earthGrad)" filter="url(#earthGlow)"/>
+      <!-- continent shapes (very rough) -->
+      <g fill="#2a6633" opacity="0.6">
+        <ellipse cx="178" cy="180" rx="14" ry="20" transform="rotate(-20 178 180)"/>
+        <ellipse cx="205" cy="192" rx="10" ry="14" transform="rotate(15 205 192)"/>
+        <ellipse cx="165" cy="200" rx="7" ry="9"/>
+        <ellipse cx="210" cy="175" rx="6" ry="5" transform="rotate(-10 210 175)"/>
+      </g>
+      <!-- atmosphere glow -->
+      <circle cx="190" cy="190" r="55" fill="none" stroke="#4488ff" stroke-width="3" opacity="0.15"/>
+
+      <!-- Gravity equation near Earth -->
+      <text x="190" y="260" text-anchor="middle" font-family="'Space Mono', monospace"
+        font-size="10.5" fill="#c49a2a" letter-spacing="0.5" opacity="0.75">F = Gm₁m₂/r²</text>
+
+      <!-- Satellite (animated along orbit 1) -->
+      <g filter="url(#satGlow)">
+        <rect x="-7" y="-3" width="14" height="6" rx="1.5" fill="url(#satGrad)">
+          <animateMotion
+            path="M 320,190 A 130,80 0 1,1 319.9,190"
+            dur="5s"
+            repeatCount="indefinite"
+            rotate="auto"
+          />
+        </rect>
+        <!-- solar panels -->
+        <rect x="-18" y="-1.5" width="9" height="3" rx="0.5" fill="#3366aa" opacity="0.9">
+          <animateMotion
+            path="M 320,190 A 130,80 0 1,1 319.9,190"
+            dur="5s"
+            repeatCount="indefinite"
+            rotate="auto"
+          />
+        </rect>
+        <rect x="9" y="-1.5" width="9" height="3" rx="0.5" fill="#3366aa" opacity="0.9">
+          <animateMotion
+            path="M 320,190 A 130,80 0 1,1 319.9,190"
+            dur="5s"
+            repeatCount="indefinite"
+            rotate="auto"
+          />
+        </rect>
+      </g>
+
+      <!-- Moon (slower orbit) -->
+      <circle r="9" fill="#aaaaaa" opacity="0.85">
+        <animateMotion
+          path="M 345,190 A 155,50 0 1,1 344.9,190"
+          dur="12s"
+          repeatCount="indefinite"
+          rotate="auto"
+        />
+        <animateMotion
+          path="M 345,190 A 155,50 0 1,1 344.9,190"
+          dur="12s"
+          repeatCount="indefinite"
+          attributeName="transform"
+          type="rotate"
+          from="30 0 0" to="30 0 0"
+        />
+      </circle>
+
+      <!-- Labels -->
+      <text x="190" y="355" text-anchor="middle" font-family="'Space Mono', monospace"
+        font-size="10" fill="#c49a2a" letter-spacing="0.5" opacity="0.7">
+        Newton · Apollo · GPS · Every Orbit
+      </text>
+
+      <circle cx="190" cy="190" r="178" fill="none" stroke="#c49a2a" stroke-width="0.8" opacity="0.2"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <!-- OPENING -->
+  <section id="dominion">
+    <h2>Two Hundred Years of Newtonian Dominion</h2>
+
+    <p>
+      From the publication of the <em>Principia</em> in 1687 until Einstein's papers
+      in 1905–1915, Newton's mechanics and gravitation theory were not merely useful —
+      they were the complete description of physical reality. There was nothing, it seemed,
+      that lay beyond their reach.
+    </p>
+
+    <p>
+      Astronomers used Newton's equations to predict the positions of planets to
+      extraordinary precision. Engineers used them to design bridges, machines, and
+      steam engines. Naval officers used them to calculate trajectories. Mathematicians
+      used them as the foundation for a century of analysis. The Newtonian worldview —
+      a deterministic, clockwork universe governed by exact mathematical laws — defined
+      the intellectual outlook of the Enlightenment and the Industrial Revolution alike.
+    </p>
+
+    <blockquote>
+      "If I have seen further, it is by standing on the shoulders of giants."
+      <cite>— Newton, letter to Robert Hooke, 5 February 1675/6 — (now read as humility; likely a barb at the short-statured Hooke)</cite>
+    </blockquote>
+
+    <p>
+      The irony is characteristic. Newton both meant the line and didn't. He acknowledged
+      the tradition — Galileo, Kepler, Descartes, Euclid — while making clear that he had
+      gone further than all of them combined. He had.
+    </p>
+  </section>
+
+  <!-- ERA TIMELINE -->
+  <section id="eras">
+    <h2>The Unfolding of the Legacy</h2>
+
+    <div class="era-timeline">
+
+      <div class="era">
+        <div class="era-label">
+          <span class="era-dates">1687–1800</span>
+          <span class="era-name">Newtonian Revolution</span>
+        </div>
+        <div class="era-content">
+          <h3>The World Re-ordered</h3>
+          <p>
+            <span class="band">Enlightenment</span> The <em>Principia</em> immediately changed
+            the intellectual climate of Europe. Voltaire promoted it in France; Kant built his
+            philosophy of nature around it; the French Academy of Sciences spent decades testing,
+            confirming, and extending it. The great mathematicians of the 18th century —
+            Euler, Lagrange, Laplace — took Newton's calculus and mechanics and extended them
+            into analytical mechanics, celestial mechanics, and fluid dynamics. Laplace's
+            <em>Mécanique Céleste</em> (1799–1825) was Newton completed to extraordinary precision.
+          </p>
+          <p>
+            Halley's Comet returned in 1758 — on schedule, exactly as Halley had predicted
+            using Newton's methods. It was the most dramatic public confirmation of the theory.
+          </p>
+        </div>
+      </div>
+
+      <div class="era">
+        <div class="era-label">
+          <span class="era-dates">1800–1905</span>
+          <span class="era-name">Classical Peak</span>
+        </div>
+        <div class="era-content">
+          <h3>The Perfect Machine</h3>
+          <p>
+            <span class="band band-gold">Victorian</span> By the mid-19th century, Newtonian
+            mechanics seemed essentially complete. James Clerk Maxwell added electromagnetism
+            (1865), thermodynamics was developed, and physics appeared to be mopping up details.
+            Lord Kelvin famously remarked in 1900 that physics was nearly complete —
+            only two "small clouds" on the horizon troubled him.
+          </p>
+          <p>
+            Those clouds were the ultraviolet catastrophe (which led to quantum theory) and
+            the problem of the ether and the speed of light (which led to relativity).
+            Both demolished the Newtonian picture at its limits. But for a century, the picture
+            had been perfect.
+          </p>
+          <p>
+            Neptune was discovered in 1846 not by observation but by calculation —
+            Le Verrier predicted its position based on perturbations in Uranus's orbit,
+            and astronomers found it within one degree of his prediction.
+            Newtonian mechanics had predicted a planet's existence from its gravitational shadow.
+          </p>
+        </div>
+      </div>
+
+      <div class="era">
+        <div class="era-label">
+          <span class="era-dates">1905–1927</span>
+          <span class="era-name">The Revolution</span>
+        </div>
+        <div class="era-content">
+          <h3>Einstein and Quantum: The Revision</h3>
+          <p>
+            <span class="band">Relativity</span> In 1905, Albert Einstein published the Special
+            Theory of Relativity. In 1915, the General Theory. General Relativity replaced
+            Newton's law of universal gravitation: gravity is not a force but a curvature of
+            spacetime caused by mass and energy. At low velocities and weak gravitational fields,
+            General Relativity reduces exactly to Newton's equations — Newton was a limit case,
+            not wrong.
+          </p>
+          <p>
+            <span class="band band-blue">Quantum</span> Quantum mechanics, developed 1900–1927
+            (Planck, Bohr, Heisenberg, Schrödinger), revealed that at atomic and subatomic scales,
+            Newton's deterministic picture breaks down entirely. Particles do not have definite
+            positions and momenta simultaneously. The universe at the smallest scale is probabilistic.
+          </p>
+        </div>
+      </div>
+
+      <div class="era">
+        <div class="era-label">
+          <span class="era-dates">1927–Now</span>
+          <span class="era-name">Post-Classical</span>
+        </div>
+        <div class="era-content">
+          <h3>The Domain That Remains Newton's</h3>
+          <p>
+            <span class="band band-gold">Engineering</span> For everything between quantum
+            and relativistic extremes — which is everything at human scales, planetary scales,
+            and most engineering scales — Newton's equations are exact to any precision
+            that matters. Every bridge, every building, every car, every aircraft, every
+            ship, every bullet uses Newtonian mechanics. The equations have not changed.
+          </p>
+          <p>
+            GPS satellites require tiny relativistic corrections (both special and general
+            relativity), but their orbital mechanics are pure Newton. The Apollo missions
+            to the Moon navigated entirely by Newtonian mechanics. The Voyager probes,
+            now in interstellar space, were steered by Newtonian calculations made on
+            1970s computers.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON: NEWTON vs EINSTEIN vs QUANTUM -->
+  <section id="comparison">
+    <h2>Three Regimes — One Continuum</h2>
+    <span class="kick">Where each theory governs</span>
+
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-head">Newtonian Mechanics</div>
+        <span class="compare-period">1687 – present (engineering domain)</span>
+        <p>Governs all motion at velocities much less than the speed of light and at scales much larger than the atom. Exact to parts per million for engineering purposes. Deterministic, reversible, absolute time and space.</p>
+        <div class="compare-eq">F = ma</div><br/>
+        <div class="compare-eq">F = Gm₁m₂/r²</div>
+        <div class="compare-limit">Breaks down near: v ≈ c (speed of light) or at quantum scales (ℏ regime)</div>
+      </div>
+      <div class="compare-col center-col">
+        <div class="compare-head">General Relativity</div>
+        <span class="compare-period">Einstein · 1915 – present</span>
+        <p>Governs gravity at all scales and all velocities. Replaces Newton's force of gravity with spacetime curvature. Reduces to Newton in the weak-field, low-velocity limit. Required for: GPS accuracy, black holes, cosmology, gravitational waves.</p>
+        <div class="compare-eq">Gμν = 8πTμν</div>
+        <div class="compare-limit">Contains Newtonian gravity as a special case. As v ≪ c and fields weak: reproduces Newton exactly.</div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-head">Quantum Mechanics</div>
+        <span class="compare-period">Planck · Bohr · Heisenberg · 1900–1927</span>
+        <p>Governs matter at atomic and subatomic scales. Deterministic in wavefunction evolution but probabilistic in measurement. Replaces exact trajectories with probability amplitudes. Required for: chemistry, materials, semiconductors, lasers.</p>
+        <div class="compare-eq">iℏ ∂ψ/∂t = Ĥψ</div>
+        <div class="compare-limit">At large scales (many particles), quantum predictions converge to classical Newtonian behavior (correspondence principle).</div>
+      </div>
+    </div>
+
+    <div class="equation-block">
+      <span class="equation-label">The Equation That Still Runs the World</span>
+      <div class="equation">F = Gm₁m₂ / r²</div>
+      <p class="equation-desc">
+        After three centuries, for every rocket, satellite, and planetary mission,
+        this equation is still the one engineers solve. It is exact for all practical purposes
+        at human and planetary scales.
+      </p>
+    </div>
+  </section>
+
+  <!-- MISSIONS POWERED BY NEWTON -->
+  <section id="missions">
+    <h2>What Newton's Equations Made Possible</h2>
+
+    <ul class="mission-list">
+      <li>
+        <span class="mission-icon">&#127769;</span>
+        <div class="mission-text">
+          <strong>Apollo Moon Landings (1969–1972)</strong>
+          Every maneuver — translunar injection, lunar orbit insertion, landing, ascent,
+          and return — was calculated using Newtonian mechanics and F = Gm₁m₂/r².
+          The computers on board had kilobytes of RAM; the equations were Newton's.
+          Six successful landings, twelve men on the Moon. Not a single relativistic correction required.
+        </div>
+      </li>
+      <li>
+        <span class="mission-icon">&#127758;</span>
+        <div class="mission-text">
+          <strong>GPS Satellite Constellation</strong>
+          Orbital mechanics of 24+ satellites are governed by Newtonian gravity.
+          The small relativistic corrections (clocks run faster in weaker gravity, slower
+          when moving fast) are added on top. Remove the Newton part and the satellite
+          falls. Remove the relativistic correction and GPS drifts by several kilometers per day.
+          Newton does the heavy lifting; Einstein adds the trimming.
+        </div>
+      </li>
+      <li>
+        <span class="mission-icon">&#128752;</span>
+        <div class="mission-text">
+          <strong>Voyager 1 &amp; 2 — Interstellar Space</strong>
+          Launched in 1977, now in interstellar space. Every course correction, every
+          gravitational slingshot around Jupiter and Saturn, every antenna pointing:
+          Newtonian mechanics. Voyager 1 is now over 23 billion kilometers from Earth.
+          Engineers can still predict its position with high accuracy using Newton's equations
+          and a 1970s trajectory program.
+        </div>
+      </li>
+      <li>
+        <span class="mission-icon">&#128301;</span>
+        <div class="mission-text">
+          <strong>Hubble Space Telescope and James Webb</strong>
+          Placed in specific orbits calculated by Newtonian mechanics. Webb orbits
+          the L2 Lagrange point — a gravitational balance point predicted by Euler
+          and Lagrange extending Newton's theory — 1.5 million kilometers from Earth.
+        </div>
+      </li>
+      <li>
+        <span class="mission-icon">&#127760;</span>
+        <div class="mission-text">
+          <strong>Every Bridge, Building, and Machine</strong>
+          Civil engineering, structural engineering, mechanical engineering: all governed
+          by F = ma and the derived equations of statics and dynamics. The Golden Gate Bridge,
+          the Burj Khalifa, every jet engine, every wind turbine. Three centuries later,
+          Newton's Second Law remains the master equation of the built world.
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- THE PRINCIPIA AS THE GREATEST BOOK -->
+  <section id="principia-legacy">
+    <h2>The Most Influential Scientific Book Ever Written</h2>
+
+    <p>
+      Historians of science are remarkably consistent on one point: the <em>Philosophiæ
+      Naturalis Principia Mathematica</em> is the single most influential book in the history
+      of science. It is not merely a great achievement. It is the book that demonstrated
+      what science could do — that the universe is governed by mathematical laws that human
+      minds can discover, test, and use.
+    </p>
+
+    <p>
+      Before the <em>Principia,</em> science was a collection of observations, hypotheses,
+      and competing philosophies. After it, science was a method: you write down the equations,
+      you solve them, you test the predictions against observation. If they match, you have
+      discovered something true about the universe. This method — which Newton did not name
+      but demonstrated with absolute mastery — remains the method of science today.
+    </p>
+
+    <div class="ach-grid">
+      <div class="ach-card" data-glyph="&#8734;">
+        <span class="ach-tag">Consequence · 200 years</span>
+        <h4>Discovery of Neptune</h4>
+        <p>In 1846, Le Verrier calculated that a planet must exist beyond Uranus based on orbital perturbations — using Newton's equations. Astronomers found it within hours of looking where he said. A planet was predicted mathematically before it was ever observed.</p>
+      </div>
+      <div class="ach-card" data-glyph="&#127755;">
+        <span class="ach-tag">Consequence · Halley's Comet</span>
+        <h4>The Return of the Comet</h4>
+        <p>Halley predicted the comet of 1682 would return in 1758 — 16 years after his own death. It returned on schedule. Nothing shook the public understanding of Newton's triumph more than a comet arriving on time, exactly as calculated.</p>
+      </div>
+      <div class="ach-card" data-glyph="E">
+        <span class="ach-tag">Refinement · 1915</span>
+        <h4>Einstein as Correction, Not Replacement</h4>
+        <p>General Relativity did not prove Newton wrong. It showed he was an approximation — an extraordinarily good one, valid for everything except extreme velocities and strong gravitational fields. The mathematics of GR collapses into Newton's equations in the correct limit.</p>
+      </div>
+      <div class="ach-card" data-glyph="&#8463;">
+        <span class="ach-tag">Boundary · 1927</span>
+        <h4>The Quantum Limit</h4>
+        <p>Quantum mechanics revealed the subatomic world is probabilistic, not deterministic. But even here, the "classical limit" of quantum mechanics reproduces Newtonian behavior for large systems. The correspondence principle: at large scales, quantum becomes Newton.</p>
+      </div>
+      <div class="ach-card" data-glyph="&#128218;">
+        <span class="ach-tag">Cultural Legacy</span>
+        <h4>The Enlightenment Blueprint</h4>
+        <p>The <em>Principia</em> showed that reason, mathematics, and observation — not authority, tradition, or scripture — could reveal universal truth. This idea powered the Enlightenment, the American and French Revolutions, and the entire modern scientific project.</p>
+      </div>
+      <div class="ach-card" data-glyph="&#127775;">
+        <span class="ach-tag">Unification</span>
+        <h4>The Same Force, Everywhere</h4>
+        <p>Newton's greatest insight was not the formula but the universality: the same gravity that pulls an apple in Lincolnshire holds the Moon in orbit, keeps the planets on their courses, and governs the structure of galaxies. One law, everywhere, forever.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GREAT QUOTE -->
+  <div class="pullquote">
+    <p>
+      "Nature and Nature's laws lay hid in night:<br/>
+      God said, Let Newton be! and all was light."
+    </p>
+    <cite>— Alexander Pope · Epitaph proposed for Newton's tomb in Westminster Abbey</cite>
+  </div>
+
+  <section id="close">
+    <h2>What He Left Us</h2>
+
+    <p>
+      Isaac Newton left the world a specific, extraordinary, durable gift: the proof that the
+      cosmos is not capricious. The universe behaves according to laws that do not change,
+      cannot be bribed, apply everywhere from a kitchen table to the edge of the observable
+      universe, and can be written down in a few lines of mathematics.
+    </p>
+
+    <p>
+      Three laws of motion. One equation for gravity. And the calculus to solve them.
+    </p>
+
+    <p>
+      Einstein refined the gravity part. Quantum mechanics redrew the small-scale picture.
+      But Newton's domain — the world you can see, touch, build, fly through, sail across,
+      and drive on — remains exactly as he described it in 1687.
+    </p>
+
+    <p>
+      He was born premature, in a farmhouse, on Christmas Day, in the middle of a civil war.
+      His father was dead before he drew his first breath. He grew into a solitary, difficult,
+      obsessive man who spent eighteen plague months alone in Lincolnshire and overturned
+      everything humanity thought it knew about the physical world.
+    </p>
+
+    <p>
+      Every time a satellite completes its orbit, every time a rocket reaches its target,
+      every time an engineer calculates a load on a beam — the ghost of a young man in
+      a Woolsthorpe farmhouse, watching an apple fall, gets the answer right.
+    </p>
+
+    <div class="equation-block">
+      <span class="equation-label">The Three Laws — Still Exact — Still Running the World</span>
+      <div class="equation" style="font-size: clamp(1rem, 2.5vw, 1.6rem); text-align: left; max-width: 500px; margin: 0 auto; line-height: 2.5;">
+        <div><span style="color:var(--text-dim); font-size:0.7em;">Lex I &nbsp;&nbsp;</span> v = const &nbsp; when F<sub>net</sub> = 0</div>
+        <div><span style="color:var(--text-dim); font-size:0.7em;">Lex II &nbsp;</span> F = ma</div>
+        <div><span style="color:var(--text-dim); font-size:0.7em;">Lex III </span> F₁₂ = −F₂₁</div>
+        <div style="margin-top:0.5rem;"><span style="color:var(--text-dim); font-size:0.7em;">Gravity </span> F = Gm₁m₂/r²</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="vol-nav">
+    <a href="2-world.html">&larr; Vol. 2 — His World</a>
+    <a href="0-who.html">Return to Vol. 0 — Who He Was &rarr;</a>
+  </div>
+
+  <div class="series-complete">
+    <h3>Isaac Newton Library Series — Complete</h3>
+    <div class="series-links">
+      <a href="0-who.html">Vol. 0 · Who He Was</a>
+      <a href="1-principia.html">Vol. 1 · The Work</a>
+      <a href="2-world.html">Vol. 2 · His World</a>
+      <a href="3-legacy.html">Vol. 3 · The Legacy</a>
+    </div>
+  </div>
+
+  <footer class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 &nbsp;|&nbsp;
+    David Lee Wise / ROOT0 / TriPod LLC &nbsp;|&nbsp;
+    CC-BY-ND-4.0 &nbsp;|&nbsp;
+    Isaac Newton Library Series &nbsp;|&nbsp;
+    Volume 3: The Long Afterlife
+  </footer>
+
+</main>
+</body>
+</html>

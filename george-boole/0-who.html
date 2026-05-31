@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>George Boole — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#090f09;
+    --card:#0f1a0f;
+    --cardsolid:#0f1a0f;
+    --ink:#d6e8d6;
+    --dim:#6b8f6b;
+    --emerald:#059669;
+    --amber:#d97706;
+    --line:rgba(5,150,105,0.18);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 50% 0%, #0d1f0d 0%, #060c06 70%);
+    background-attachment:fixed;
+    font-family:"Newsreader",Georgia,serif;line-height:1.65;
+  }
+  .zine{max-width:1060px;margin:0 auto;padding:30px 22px 70px;}
+  ::selection{background:var(--emerald);color:#090f09;}
+
+  /* — typography primitives — */
+  .kick{
+    font-family:"Space Mono",monospace;font-size:11px;
+    letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);
+    display:block;margin-bottom:10px;
+  }
+  .band{
+    display:inline-block;font-family:"Space Mono",monospace;font-weight:700;
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+    background:var(--emerald);color:#090f09;
+    padding:5px 14px;margin:32px 0 14px;
+  }
+  .band.amber{background:var(--amber);}
+  .band.dim{background:#1a2e1a;color:var(--ink);}
+
+  /* — masthead — */
+  .mast{border-bottom:4px solid var(--emerald);padding-bottom:20px;margin-bottom:6px;}
+  .masthead{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:10px;}
+  .mast h1{
+    font-family:"Cinzel";font-weight:800;
+    font-size:clamp(38px,8vw,78px);
+    line-height:0.92;letter-spacing:0.01em;text-transform:uppercase;
+    margin:0;max-width:9em;overflow-wrap:break-word;
+  }
+  .mast h1 em{font-style:normal;color:var(--emerald);}
+  .dek{font-size:clamp(15px,2vw,18px);max-width:640px;margin:18px 0 0;color:#a8c4a8;}
+  .dek b{font-weight:500;color:var(--emerald);}
+  .art{flex:0 0 auto;}
+
+  /* — animated SVG — */
+  @keyframes trace{0%{stroke-dashoffset:600}100%{stroke-dashoffset:0}}
+  @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:1}}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  .sig{stroke-dasharray:600;animation:trace 4s linear infinite;}
+  .blink-on{animation:blink 2s step-end infinite;}
+  .blink-off{animation:blink 2s step-end infinite reverse;}
+  @media(prefers-reduced-motion:reduce){.sig,.blink-on,.blink-off{animation:none;stroke-dashoffset:0;opacity:1}}
+
+  /* — type tiles — */
+  .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:11px;margin-bottom:4px;}
+  .type{border:1px solid var(--line);background:var(--cardsolid);padding:12px 14px;}
+  .type h4{font-family:"Cinzel";font-weight:700;font-size:15px;margin:0 0 5px;letter-spacing:0.02em;color:var(--emerald);}
+  .type p{font-size:13px;margin:0;color:#8aaa8a;line-height:1.45;}
+  .type .tg{
+    display:inline-block;font-family:"Space Mono",monospace;font-size:10px;
+    letter-spacing:0.05em;text-transform:uppercase;color:var(--amber);
+    border:1px solid var(--amber);padding:1px 6px;margin-top:7px;
+  }
+
+  /* — card grid — */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;}
+  .card{
+    position:relative;border:1px solid var(--line);background:var(--cardsolid);
+    padding:15px 16px 16px;
+    transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--emerald);}
+  .card.a:hover{box-shadow:5px 5px 0 var(--amber);}
+  .card .num{
+    position:absolute;top:11px;right:13px;
+    font-family:"Space Mono",monospace;font-weight:700;font-size:12px;color:var(--amber);
+  }
+  .card h3{font-family:"Cinzel";font-weight:700;font-size:17px;line-height:1.1;margin:0 5px 7px 0;max-width:12em;letter-spacing:0.01em;color:var(--ink);}
+  .card .what{font-size:14px;margin:0 0 10px;color:#9ab89a;}
+  .card .need,.card .do{font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;margin:5px 0 0;color:var(--dim);}
+  .card .need b,.card .do b{color:var(--ink);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card .plus{
+    font-family:"Space Mono",monospace;font-size:11px;line-height:1.5;
+    margin:8px 0 0;padding-top:8px;border-top:1px dashed var(--line);color:#6b8f6b;
+  }
+  .card .plus b{color:var(--emerald);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-right:5px;}
+  .card.a .plus b{color:var(--amber);}
+
+  /* — block/rules — */
+  .block{border:1px solid var(--line);padding:18px 20px;margin-top:6px;background:var(--cardsolid);}
+  .rules{list-style:none;padding:0;margin:0;}
+  .rules li{position:relative;padding:8px 0 8px 26px;font-size:14.5px;border-bottom:1px solid var(--line);}
+  .rules li:last-child{border-bottom:none;}
+  .rules li::before{content:"▸";position:absolute;left:2px;top:8px;font-family:"Space Mono",monospace;font-size:13px;color:var(--emerald);font-weight:700;}
+  .block.amber .rules li::before{color:var(--amber);}
+  .rules b{font-weight:500;color:var(--emerald);}
+  .block.amber .rules b{color:var(--amber);}
+
+  /* — timeline — */
+  .timeline{list-style:none;padding:0;margin:0;}
+  .timeline li{display:flex;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
+  .timeline li:last-child{border-bottom:none;}
+  .timeline .yr{
+    font-family:"Space Mono",monospace;font-size:12px;font-weight:700;
+    color:var(--emerald);min-width:46px;padding-top:1px;flex-shrink:0;
+  }
+  .timeline .ev{color:#a8c4a8;line-height:1.5;}
+  .timeline .ev b{color:var(--ink);font-weight:500;}
+
+  /* — quote — */
+  .pull{
+    border-left:3px solid var(--emerald);padding:14px 18px;margin:22px 0;
+    font-family:"Newsreader",Georgia,serif;font-style:italic;font-size:18px;
+    color:#b8d4b8;background:var(--cardsolid);
+  }
+  .pull cite{display:block;margin-top:8px;font-style:normal;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.1em;color:var(--dim);}
+
+  /* — colophon — */
+  .colophon{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:0.06em;color:var(--dim);text-align:center;margin-top:44px;padding-top:16px;border-top:1px solid var(--line);line-height:2;}
+
+  /* — reveal — */
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.reveal{animation:none;opacity:1;transform:none}}
+
+  @media print{
+    body{background:#fff;color:#000}
+    .card,.block,.type{background:#fff}
+    .card:hover{transform:none;box-shadow:none}
+    .reveal{animation:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="zine">
+
+  <header class="mast">
+    <span class="kick">george boole series · volume 0 · who he was</span>
+    <div class="masthead">
+      <div>
+        <h1>George <em>Boole</em></h1>
+        <p class="dek">
+          A cobbler's son from Lincoln who taught himself mathematics, invented
+          <b>a new kind of algebra</b> where the only answers are TRUE and FALSE,
+          and wrote the theoretical foundation for <b>every computer ever built</b> —
+          ninety years before anyone knew that's what he'd done.
+        </p>
+      </div>
+      <!-- Animated AND gate / truth table masthead art -->
+      <svg class="art" width="200" height="160" viewBox="0 0 200 160" role="img" aria-label="Boolean AND gate with animated signal">
+        <!-- Truth table background grid -->
+        <rect x="2" y="2" width="196" height="156" fill="none" stroke="rgba(5,150,105,0.12)" stroke-width="1"/>
+        <!-- Column headers -->
+        <text x="22" y="20" font-family="Space Mono,monospace" font-size="9" fill="#059669" text-anchor="middle">A</text>
+        <text x="52" y="20" font-family="Space Mono,monospace" font-size="9" fill="#059669" text-anchor="middle">B</text>
+        <text x="82" y="20" font-family="Space Mono,monospace" font-size="9" fill="#d97706" text-anchor="middle">AND</text>
+        <!-- Rows -->
+        <line x1="8" y1="26" x2="100" y2="26" stroke="rgba(5,150,105,0.2)" stroke-width="1"/>
+        <!-- Row 1: 0,0 → 0 -->
+        <text x="22" y="40" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <text x="52" y="40" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <text x="82" y="40" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <!-- Row 2: 0,1 → 0 -->
+        <text x="22" y="57" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <text x="52" y="57" font-family="Space Mono,monospace" font-size="10" fill="#d4f4dd" text-anchor="middle">1</text>
+        <text x="82" y="57" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <!-- Row 3: 1,0 → 0 -->
+        <text x="22" y="74" font-family="Space Mono,monospace" font-size="10" fill="#d4f4dd" text-anchor="middle">1</text>
+        <text x="52" y="74" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <text x="82" y="74" font-family="Space Mono,monospace" font-size="10" fill="#6b8f6b" text-anchor="middle">0</text>
+        <!-- Row 4: 1,1 → 1 (highlighted) -->
+        <rect x="6" y="79" width="96" height="16" fill="rgba(5,150,105,0.12)"/>
+        <text x="22" y="91" font-family="Space Mono,monospace" font-size="10" fill="#059669" text-anchor="middle">1</text>
+        <text x="52" y="91" font-family="Space Mono,monospace" font-size="10" fill="#059669" text-anchor="middle">1</text>
+        <text x="82" y="91" font-family="Space Mono,monospace" font-size="10" fill="#059669" font-weight="bold" text-anchor="middle">1</text>
+
+        <!-- AND gate shape on right side -->
+        <g transform="translate(110,45)">
+          <!-- Gate body -->
+          <path d="M10,0 L40,0 Q65,0 65,30 Q65,60 40,60 L10,60 Z" fill="none" stroke="#059669" stroke-width="1.5"/>
+          <!-- Input wires -->
+          <line x1="0" y1="15" x2="10" y2="15" stroke="#059669" stroke-width="1.5"/>
+          <line x1="0" y1="45" x2="10" y2="45" stroke="#059669" stroke-width="1.5"/>
+          <!-- Output wire -->
+          <line x1="65" y1="30" x2="80" y2="30" stroke="#d97706" stroke-width="1.5"/>
+          <!-- Label -->
+          <text x="32" y="34" font-family="Space Mono,monospace" font-size="9" fill="#059669" text-anchor="middle">AND</text>
+          <!-- Animated signal dots -->
+          <circle class="blink-on" cx="0" cy="15" r="3" fill="#059669"/>
+          <circle class="blink-on" cx="0" cy="45" r="3" fill="#059669"/>
+          <circle class="blink-on" cx="80" cy="30" r="3" fill="#d97706"/>
+        </g>
+
+        <!-- Animated trace line -->
+        <path class="sig" d="M8,120 H40 V108 H70 V120 H100 V108 H130 V120 H160 V108 H192"
+          fill="none" stroke="#059669" stroke-width="1.5" stroke-linejoin="round"/>
+        <text x="100" y="145" text-anchor="middle" font-family="Space Mono,monospace" font-size="9" fill="#6b8f6b">boolean signal · true / false</text>
+      </svg>
+    </div>
+  </header>
+
+  <span class="band">The shape of his life</span>
+  <div class="types">
+    <div class="type reveal">
+      <h4>The origin</h4>
+      <p>Born in Lincoln, England, 1815. Son of a cobbler. No money for university. Taught himself Greek, Latin, French, and higher mathematics from books.</p>
+      <span class="tg">self-taught</span>
+    </div>
+    <div class="type reveal">
+      <h4>The teacher</h4>
+      <p>Opened his own school at 16 to support his family. Taught mathematics while discovering it, reading the masters in their original languages.</p>
+      <span class="tg">lincoln schools</span>
+    </div>
+    <div class="type reveal">
+      <h4>The professor</h4>
+      <p>Despite having no degree, appointed first professor of mathematics at Queen's College Cork, Ireland, in 1849. The work was already too good to ignore.</p>
+      <span class="tg">QCC · 1849</span>
+    </div>
+    <div class="type reveal">
+      <h4>The theorist</h4>
+      <p>Published <em>The Laws of Thought</em> in 1854 — turning Aristotle's logic into algebra and planting the seed of the entire digital age.</p>
+      <span class="tg">1854</span>
+    </div>
+    <div class="type reveal">
+      <h4>The husband</h4>
+      <p>Married Mary Everest in 1855. She was niece of Sir George Everest, the surveyor. She became a notable mathematician and educator in her own right.</p>
+      <span class="tg">mary everest</span>
+    </div>
+    <div class="type reveal">
+      <h4>The end</h4>
+      <p>Died November 8, 1864, age 49, of pneumonia — contracted after walking miles in rain to a lecture he refused to miss.</p>
+      <span class="tg">cork · 1864</span>
+    </div>
+  </div>
+
+  <span class="band">Early life — Lincoln</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">01</span>
+      <h3>Born into the working poor</h3>
+      <p class="what">George Boole was born November 2, 1815, in Lincoln, a cathedral city in the English Midlands, to John Boole, a cobbler, and Mary Ann Joyce.</p>
+      <p class="need"><b>status</b> working-class, no inherited wealth or connections</p>
+      <p class="do"><b>so</b> university was financially impossible — everything he learned, he found himself.</p>
+      <p class="plus"><b>+</b> his father was himself a self-improver, deeply interested in optics and the construction of telescopes — the love of learning was already in the house.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">02</span>
+      <h3>A language prodigy first</h3>
+      <p class="what">By his teens Boole had taught himself Latin, Greek, French, and German — partly to read mathematical texts that hadn't been translated into English.</p>
+      <p class="need"><b>method</b> self-study, local mechanics' institute library, borrowed books</p>
+      <p class="do"><b>so</b> he could read Lacroix's <em>Differential and Integral Calculus</em> in French — at 14.</p>
+      <p class="plus"><b>+</b> a local school rector helped him with Latin, but the rest was entirely self-directed. Lincoln's Mechanics' Institute gave him access to scientific journals.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">03</span>
+      <h3>School teacher at 16</h3>
+      <p class="what">When his father's business collapsed, George became an assistant teacher to support the family. He opened his own school in Lincoln by 1835.</p>
+      <p class="need"><b>role</b> sole financial support of his parents and siblings</p>
+      <p class="do"><b>so</b> he taught all day and did research at night — for more than a decade.</p>
+      <p class="plus"><b>+</b> he described this period as one of isolation: he had no mathematical community, no colleagues, no feedback. He worked entirely alone.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">04</span>
+      <h3>First publications — the Royal Society notices</h3>
+      <p class="what">Despite his isolation, Boole began publishing research papers in the <em>Cambridge Mathematical Journal</em> from 1840, gaining attention from the leading mathematicians of the day.</p>
+      <p class="need"><b>year</b> first major paper on invariants, 1841</p>
+      <p class="do"><b>so</b> Arthur Cayley and Augustus De Morgan — giants of the field — began corresponding with him.</p>
+      <p class="plus"><b>+</b> De Morgan became a close friend and intellectual collaborator. Their correspondence spans decades and touches the deepest questions of logic.</p>
+    </article>
+  </div>
+
+  <span class="band">The professor — Cork</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">05</span>
+      <h3>Queen's College Cork</h3>
+      <p class="what">In 1849, the newly founded Queen's College Cork (now University College Cork) appointed Boole as its first Professor of Mathematics — without a degree.</p>
+      <p class="need"><b>basis</b> his published research alone, plus recommendations from De Morgan and others</p>
+      <p class="do"><b>so</b> the work spoke for itself — one of the first examples of pure research merit overriding credentialist gatekeeping.</p>
+      <p class="plus"><b>+</b> Cork was part of Ireland under British rule — a politically charged institution. Boole navigated this carefully, committed to the education of Irish students regardless of religion.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">06</span>
+      <h3>Mary Everest Boole</h3>
+      <p class="what">In 1855, Boole married Mary Everest, then 23 (he was 40). She was the niece of Colonel Sir George Everest, after whom the mountain was named.</p>
+      <p class="need"><b>she</b> an accomplished mathematician and educational reformer in her own right</p>
+      <p class="do"><b>so</b> she became a major advocate of his ideas after his death, writing extensively on logic, mathematics education, and pedagogy.</p>
+      <p class="plus"><b>+</b> They had five daughters in nine years. After Boole's death, Mary raised them alone while writing books on mathematical psychology and teaching method.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">07</span>
+      <h3>The Laws of Thought — 1854</h3>
+      <p class="what">Five years into his Cork professorship, Boole published <em>An Investigation of the Laws of Thought</em> — the book that contains everything.</p>
+      <p class="need"><b>full title</b> An Investigation of the Laws of Thought on Which Are Founded the Mathematical Theories of Logic and Probabilities</p>
+      <p class="do"><b>so</b> logic became a branch of mathematics. Variables could only be 0 or 1. AND, OR, NOT were algebraic operations.</p>
+      <p class="plus"><b>+</b> Boole believed this was a mathematical model of how the mind actually worked — a theory of thought, not just notation. He was wrong about that, but magnificently right about everything else.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">08</span>
+      <h3>Death at 49</h3>
+      <p class="what">On a wet November day in 1864, Boole walked two miles in heavy rain to deliver a lecture on time, arrived soaking, and taught anyway. He developed pneumonia and died within weeks.</p>
+      <p class="need"><b>date</b> November 8, 1864 — aged 49</p>
+      <p class="do"><b>so</b> he left behind a wife, five young daughters, and a body of work that would not be understood for 73 years.</p>
+      <p class="plus"><b>+</b> One of his daughters, Alicia Boole Stott, became a pioneering geometer who discovered properties of four-dimensional polytopes — genius ran in the family.</p>
+    </article>
+  </div>
+
+  <!-- Timeline -->
+  <span class="band amber">A life in dates</span>
+  <div class="block amber">
+    <ul class="timeline">
+      <li><span class="yr">1815</span><span class="ev">Born November 2 in <b>Lincoln, England</b>. Father: cobbler. Family: working poor.</span></li>
+      <li><span class="yr">1831</span><span class="ev">Opens first teaching position. Begins serious self-study of mathematics — reads Laplace and Lagrange from originals.</span></li>
+      <li><span class="yr">1835</span><span class="ev">Opens his own school in Lincoln. Supports family entirely on teaching income while doing mathematics at night.</span></li>
+      <li><span class="yr">1840</span><span class="ev">First paper published in <em>Cambridge Mathematical Journal</em>. Begins correspondence with <b>Augustus De Morgan</b>.</span></li>
+      <li><span class="yr">1844</span><span class="ev">Royal Society awards him a Gold Medal for his work on differential equations. Recognition arrives.</span></li>
+      <li><span class="yr">1847</span><span class="ev">Publishes <em>The Mathematical Analysis of Logic</em> — a short, radical pamphlet. Logic becomes algebra for the first time.</span></li>
+      <li><span class="yr">1849</span><span class="ev">Appointed <b>Professor of Mathematics</b> at Queen's College Cork. No degree. Pure merit.</span></li>
+      <li><span class="yr">1854</span><span class="ev">Publishes <em>An Investigation of the Laws of Thought</em>. Variables: 0 or 1. Operations: AND, OR, NOT. The digital age begins — unnamed.</span></li>
+      <li><span class="yr">1855</span><span class="ev">Marries <b>Mary Everest</b>, 23, in Cork. She will become a major educator and his posthumous advocate.</span></li>
+      <li><span class="yr">1864</span><span class="ev">Dies November 8 in Cork of pneumonia, aged 49. Leaves a wife, five daughters, and an unfinished revolution.</span></li>
+    </ul>
+  </div>
+
+  <!-- Pull quote -->
+  <blockquote class="pull">
+    "It is not of the essence of mathematics to be conversant with the ideas of number and quantity."
+    <cite>— George Boole, An Investigation of the Laws of Thought, 1854</cite>
+  </blockquote>
+
+  <!-- Core summary -->
+  <span class="band">Who he was — the core of it</span>
+  <div class="block">
+    <ul class="rules">
+      <li><b>George Boole (1815–1864)</b> — English mathematician, self-educated, son of a cobbler, who became the first Professor of Mathematics at Queen's College Cork and the inventor of <b>Boolean algebra</b>.</li>
+      <li>He had <b>no university degree</b>. Everything he knew, he taught himself from books — in a working-class household in Lincoln, England, while supporting his family as a schoolteacher from age 16.</li>
+      <li>He published <b><em>The Laws of Thought</em></b> (1854) — turning Aristotelian logic into algebra where every variable is 0 or 1, and AND, OR, NOT are mathematical operations.</li>
+      <li>He married <b>Mary Everest</b> (1855), niece of the surveyor after whom the mountain is named. She was a mathematician who extended and popularized his ideas after his death.</li>
+      <li>He died in <b>1864</b>, age 49, of pneumonia — 73 years before Claude Shannon proved his algebra was the language of electrical circuits, and 90+ years before every CPU in the world began running on his logic gates.</li>
+    </ul>
+  </div>
+
+  <!-- What distinguished him -->
+  <span class="band">What made him different — character and method</span>
+  <div class="grid">
+    <article class="card reveal">
+      <span class="num">09</span>
+      <h3>A rigorous self-critic</h3>
+      <p class="what">Boole was unusually critical of his own work. He revised obsessively, delayed publication until he was satisfied, and openly acknowledged weaknesses in his system — rare virtues in any era.</p>
+      <p class="need"><b>example</b> his 1847 pamphlet was explicitly superseded by the fuller 1854 book</p>
+      <p class="do"><b>so</b> the Laws of Thought is a mature, finished work — not a rough draft promoted beyond its station.</p>
+      <p class="plus"><b>+</b> De Morgan admired this quality especially: the willingness to say "this part isn't right yet" and keep working.</p>
+    </article>
+    <article class="card reveal">
+      <span class="num">10</span>
+      <h3>Mathematics as philosophy</h3>
+      <p class="what">Boole genuinely believed his algebra was a discovery about the nature of mind — that he had found the mathematical laws governing rational thought. This was his deepest motivation.</p>
+      <p class="need"><b>wrong</b> cognitive science doesn't support this claim</p>
+      <p class="do"><b>so</b> he was mistaken about his own work's meaning — but the mathematics he built while chasing that mistaken idea is perfectly correct and extraordinarily powerful.</p>
+      <p class="plus"><b>+</b> this is one of the most beautiful ironies in the history of science: right result, wrong explanation. The algebra works; the theory of mind does not.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">11</span>
+      <h3>The Royal Society Gold Medal</h3>
+      <p class="what">In 1844, the Royal Society awarded Boole a Gold Medal — the highest scientific honor in Britain — for his work on differential equations. He was 29, self-educated, running a school in Lincoln.</p>
+      <p class="need"><b>significance</b> the mathematical establishment completely accepted him</p>
+      <p class="do"><b>so</b> by the time he got his Cork professorship in 1849, it was not an upset — it was a recognition already due.</p>
+      <p class="plus"><b>+</b> the medal was for work that came before his logical algebra — which suggests his genius extended well beyond the Boolean work that made him famous.</p>
+    </article>
+    <article class="card a reveal">
+      <span class="num">12</span>
+      <h3>Alicia Boole Stott — the daughter</h3>
+      <p class="what">Boole's third daughter, Alicia Boole Stott (1860–1940), became a pioneering geometer — she discovered methods to construct four-dimensional polytopes and was awarded an honorary degree by the University of Groningen.</p>
+      <p class="need"><b>remarkable</b> she had no formal mathematical training either</p>
+      <p class="do"><b>so</b> the Boole family produced, in two generations, two world-class mathematical minds from the same self-taught, working-class background.</p>
+      <p class="plus"><b>+</b> Alicia was largely raised by Mary Everest Boole, who made sure all five daughters had access to ideas even in poverty. The cobbler's legacy ran deeper than one book.</p>
+    </article>
+  </div>
+
+  <span class="band dim">Honest limits of what we know</span>
+  <div class="block">
+    <ul class="rules">
+      <li>Boole's life is <b>well-documented</b> in broad outline — Des MacHale's biography <em>George Boole: His Life and Work</em> (1985) is the standard reference, comprehensive and scholarly.</li>
+      <li>The <b>intimate details</b> of his inner life are harder to recover — his surviving correspondence is substantial but uneven. He was private about feelings and wrote mostly about ideas.</li>
+      <li>The <b>pneumonia story</b> (walking in rain to a lecture) appears consistently in sources and is treated as historical, though some modern biographers flag it as possibly embellished in the retelling.</li>
+      <li>Volume 1 covers his ideas in depth. Volume 2 covers the Victorian world he inhabited. Volume 3 covers the long shadow he cast over computing — the part he never lived to see.</li>
+    </ul>
+  </div>
+
+  <p class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    george boole series · volume 0 · who he was · born lincoln 1815 · died cork 1864
+  </p>
+</div>
+</body>
+</html>
