@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heinrich Hertz — Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#040810;--cyan:#0891b2;--gold:#ca8a04;--text:#cdd5e0;--muted:#6b7280;--card-bg:#080e18;--card-border:#162030;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(4,8,16,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--cyan);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--cyan);border-bottom-color:var(--cyan);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.18;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--cyan);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.2rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--cyan);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--cyan);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cyan);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cee0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  .stat-row{display:flex;gap:2rem;flex-wrap:wrap;margin:2rem 0;}
+  .stat{flex:1;min-width:140px;text-align:center;padding:1.4rem 1rem;background:var(--card-bg);border:1px solid var(--card-border);}
+  .stat-num{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold);line-height:1;}
+  .stat-label{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
+  .legacy-block{background:var(--card-bg);border:1px solid var(--card-border);border-left:4px solid var(--cyan);padding:1.8rem;margin-bottom:1.6rem;transition:transform 0.22s,box-shadow 0.22s;}
+  .legacy-block:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cyan);}
+  .legacy-block h3{margin-top:0;color:#fff;font-size:1.1rem;}
+  .legacy-block .domain{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .legacy-block p{font-size:0.95rem;color:var(--muted);margin-bottom:0.8rem;}
+  .legacy-block p:last-child{margin-bottom:0;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}.stat-row{gap:1rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Hertz — Vol 4 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-waves.html">Waves</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html" class="active">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><filter id="hg4"><feGaussianBlur stdDeviation="3" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g transform="translate(450,240)" filter="url(#hg4)">
+      <line x1="0" y1="-55" x2="0" y2="55" stroke="#0891b2" stroke-width="3" stroke-linecap="round"/>
+      <line x1="-4" y1="0" x2="4" y2="0" stroke="#ca8a04" stroke-width="2.5"/>
+      <ellipse rx="12" ry="6" stroke="#0891b2" stroke-width="1.5" fill="none" opacity="0.9"><animate attributeName="rx" values="12;220" dur="2.5s" repeatCount="indefinite"/><animate attributeName="ry" values="6;110" dur="2.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.9;0" dur="2.5s" repeatCount="indefinite"/></ellipse>
+      <ellipse rx="12" ry="6" stroke="#0891b2" stroke-width="1.2" fill="none"><animate attributeName="rx" values="12;220" dur="2.5s" begin="0.83s" repeatCount="indefinite"/><animate attributeName="ry" values="6;110" dur="2.5s" begin="0.83s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0" dur="2.5s" begin="0.83s" repeatCount="indefinite"/></ellipse>
+      <ellipse rx="12" ry="6" stroke="#0891b2" stroke-width="0.9" fill="none"><animate attributeName="rx" values="12;220" dur="2.5s" begin="1.66s" repeatCount="indefinite"/><animate attributeName="ry" values="6;110" dur="2.5s" begin="1.66s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="2.5s" begin="1.66s" repeatCount="indefinite"/></ellipse>
+    </g>
+  </svg>
+
+  <div class="kick">Heinrich Hertz · The Legacy</div>
+  <div class="band">Volume IV — What He Left Behind</div>
+  <h1>Every Signal, Every <span>Cycle</span></h1>
+  <p class="hero-sub">Radio, television, radar, WiFi, cellular, GPS, quantum mechanics, solar cells — and a unit on every electronic device made in the last century.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>The Scale of What He Started</h2>
+    <p>Hertz died certain that his radio waves had no practical applications. Within seven years, Guglielmo Marconi had used them to transmit the first transatlantic wireless signal. Within twenty years, radio broadcasting had begun. Within fifty years, television, radar, and microwave communications were transforming global civilization. Today, the entire electronic communications infrastructure of the planet — every radio station, every television broadcast, every WiFi router, every cellular tower, every GPS satellite, every Bluetooth device — operates on electromagnetic waves of the type Hertz first produced and detected in his Karlsruhe laboratory in 1887.</p>
+
+    <p>The unit he lent his name to — the hertz (Hz), meaning one cycle per second — appears on every electronic device specification ever printed. A WiFi router operating at 2.4 GHz is cycling 2,400,000,000 times per second. A modern CPU at 3 GHz performs operations at 3,000,000,000 cycles per second. A radio station at 100 MHz broadcasts at 100,000,000 cycles per second. Every one of these numbers is expressed in hertz — in units of Heinrich Hertz's discovery.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">1895</div><div class="stat-label">Marconi's first wireless signal — 1 yr after Hertz died</div></div>
+      <div class="stat"><div class="stat-num">2.4GHz</div><div class="stat-label">WiFi frequency — 2.4 billion Hz</div></div>
+      <div class="stat"><div class="stat-num">1921</div><div class="stat-label">Einstein's Nobel: for the effect Hertz first observed</div></div>
+      <div class="stat"><div class="stat-num">1930</div><div class="stat-label">Hz unit officially named for him</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Electromagnetic Revolution</h2>
+
+    <div class="legacy-block">
+      <div class="domain">Communications</div>
+      <h3>Radio — Marconi and the Wireless World</h3>
+      <p>Guglielmo Marconi began experimenting with radio transmissions in 1895, the year after Hertz died. By 1901 he had transmitted across the Atlantic. By 1906 the first radio broadcasts were being made. By the 1920s, broadcasting was a mass medium. By the 1940s, radar — a defense application of radio waves — had changed the outcome of the Second World War. By the 1960s, television was the dominant medium of mass culture.</p>
+      <p>All of this descends directly from Hertz's 1887 experiment. Marconi did not discover radio waves — Hertz had done that. Marconi discovered that they could be used for practical long-distance communication, and built the commercial infrastructure that followed. But the waves themselves, their properties, their speed, their relationship to light — all of that was Hertz's work.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Modern Communications</div>
+      <h3>WiFi, Cellular, GPS, Bluetooth</h3>
+      <p>Every wireless communication technology in use today is a radio wave technology, and is therefore measured in hertz. WiFi operates at 2.4 GHz and 5 GHz (and now 6 GHz for WiFi 6E). Cellular networks use frequencies from 700 MHz (LTE low-band) through millimeter-wave bands above 24 GHz (5G). GPS satellites transmit at 1.176 GHz and 1.575 GHz. Bluetooth operates at 2.4 GHz. Satellite TV broadcasts at 10–12 GHz (Ku-band) or 3.7–4.2 GHz (C-band).</p>
+      <p>The global wireless spectrum is a resource — managed, allocated, auctioned, and regulated by governments — precisely because it is finite and valuable. Spectrum auctions generate billions of dollars. The reason any of this exists, the reason electromagnetic frequencies can carry information at all, is that Hertz proved electromagnetic waves could be generated, controlled, and detected.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Defense and Navigation</div>
+      <h3>Radar — Radio Detection and Ranging</h3>
+      <p>Radar is the application of radio waves to detect objects by reflecting them. A radio pulse is transmitted; its echo, returning from an aircraft or ship or storm cell, reveals that object's distance (from the travel time) and direction. The technology was developed independently in the UK, Germany, France, and the US in the 1930s. British radar — the Chain Home system — was operational by 1937 and is credited with being decisive in the Battle of Britain (1940), allowing the Royal Air Force to detect incoming German aircraft before they reached the coast.</p>
+      <p>Modern radar applications include: air traffic control (every commercial flight is tracked continuously by radar), weather forecasting (Doppler radar maps precipitation and wind speed), maritime navigation, automotive collision avoidance (now standard in most new cars), military targeting systems, and radio astronomy (radar pulses bounced off planets to map their surfaces). All radar is Hertz's experiment at higher power and with sophisticated signal processing.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Quantum Physics</div>
+      <h3>The Photoelectric Effect → Quantum Mechanics → Everything</h3>
+      <p>The chain from Hertz's 1887 observation of the photoelectric effect to modern quantum technology is direct and well-documented. Hertz observed → Hallwachs and Lenard characterized the phenomenon → Einstein explained it with photons (1905) → Bohr applied the photon concept to atomic structure (1913) → de Broglie proposed wave-particle duality (1924) → Heisenberg and Schrödinger formulated quantum mechanics (1925–26) → Dirac unified quantum mechanics and special relativity (1928) → quantum field theory → the Standard Model of particle physics.</p>
+      <p>The practical consequences of quantum mechanics are equally vast. The transistor (invented 1947) works by quantum tunneling and band theory — pure quantum mechanics. Every silicon chip, every CPU, every memory cell depends on quantum physics. The laser (1960) is a quantum device. MRI machines use quantum nuclear magnetic resonance. Superconductors, the basis of many medical and scientific instruments, are quantum phenomena. Solar cells and digital cameras exploit the photoelectric effect directly — converting photons into electrical current, exactly as Hertz first observed, exactly as Einstein explained.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Maxwell Proved, Hertz Experimental</h2>
+    <p>The intellectual relationship between Maxwell and Hertz is one of the most beautiful in the history of physics: theory predicts, experiment confirms, and the confirmation transforms the world. Maxwell died not knowing whether his theory was correct in its most dramatic prediction — that electromagnetic waves should propagate through free space at the speed of light. He had proven it mathematically. He had no experimental evidence for it. He worked it out from the equations and trusted the mathematics.</p>
+
+    <p>Eight years after Maxwell's death, Hertz provided the experimental confirmation. He didn't merely confirm that EM waves exist — he showed that they have exactly the right speed, exactly the right behavior, exactly the right properties. The agreement was complete. Maxwell's theory was vindicated at every point.</p>
+
+    <blockquote>
+      "The connection between light and electricity is now established. In every flame, in every luminous particle, we see an electrical process. Thus, the domain of electricity extends over the whole of nature."
+      <cite>— Heinrich Hertz, 1889 lecture to the Heidelberg meeting of German naturalists</cite>
+    </blockquote>
+
+    <p>This remark — "the domain of electricity extends over the whole of nature" — captures the magnitude of what Hertz had proved. Light is electromagnetic. Chemistry is electromagnetic (at the level of electron interactions). All optical phenomena — color, reflection, refraction, polarization — are electromagnetic. The unification that Maxwell achieved on paper, Hertz proved in the laboratory. Without Hertz's experiments, the electromagnetic revolution might have taken another generation — other experimenters, other apparatus, other approaches. With them, it was immediate.</p>
+  </section>
+
+  <section>
+    <h2>The Hz Unit — Ubiquity</h2>
+    <p>The International Electrotechnical Commission named the unit of frequency after Hertz in 1930 — thirty-six years after his death. Before that, frequency was measured in "cycles per second." The change was more than honorific: it was a recognition that Hertz's work was the foundation on which all of frequency-domain engineering stood.</p>
+
+    <p>The hertz is now one of the most commonly used units in engineering and consumer electronics. Every CPU specification lists a clock frequency in GHz. Every radio dial shows megahertz or kilohertz. Every WiFi specification mentions GHz. Every audio specification lists a frequency response in hertz. Every monitor has a refresh rate in hertz. Every musical instrument can be described by the frequencies — in hertz — of its notes: A4 = 440 Hz, the tuning standard for modern orchestras.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Consumer Electronics</div>
+        <h4>CPU Clock Speed</h4>
+        <p>Modern processors run at 3–5 GHz. The "GHz" is hertz × 10⁹. Each cycle represents one clock pulse; most modern operations complete in one cycle.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Audio</div>
+        <h4>Human Hearing: 20–20,000 Hz</h4>
+        <p>The human auditory range. A concert A is 440 Hz. Bass guitar fundamentals: 40–300 Hz. Audio equipment is specified in hertz response ranges.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Video</div>
+        <h4>Refresh Rate: 60–360 Hz</h4>
+        <p>Monitor refresh rates specify how many frames per second are displayed. Gaming monitors at 144 Hz or 360 Hz. Film at 24 Hz. Broadcast at 50 or 60 Hz.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Medical</div>
+        <h4>MRI: 64–300 MHz</h4>
+        <p>MRI machines use radio frequencies to excite hydrogen nuclei. The frequency is matched to the nuclear magnetic resonance of hydrogen in a specific field strength.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Power Grid</div>
+        <h4>AC Power: 50 or 60 Hz</h4>
+        <p>Alternating current power grids operate at 50 Hz (Europe, Asia) or 60 Hz (Americas). The frequency determines motor speeds and transformer design worldwide.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Science</div>
+        <h4>LIGO: ~100 Hz</h4>
+        <p>Gravitational wave detections by LIGO are of signals in the 10–1000 Hz range — the audio frequency range. The universe's most violent events measured in hertz.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Man Who Said "No Use"</h2>
+    <p>It is worth returning, at the end, to Hertz's prediction that radio waves would have no practical applications. This is now famous as one of the great wrong predictions in scientific history — comparable to Kelvin's remark (probably apocryphal) that heavier-than-air flying machines were impossible, or to IBM's alleged internal memo saying the world market for computers was five units.</p>
+
+    <p>But Hertz's prediction was not stupid. It was the prediction of a man who was thinking like a pure scientist — asking not "what can this do?" but "what is this?" He wanted to know whether Maxwell was right. He proved Maxwell was right. That was enough. The question of what you could do with electromagnetic waves, once you knew they existed and how to generate them, was an engineering question, and Hertz was a physicist. He had solved his problem. He left the engineering to others.</p>
+
+    <p>That the others would arrive — and would build a world-transforming technology within a decade — is a lesson about the relationship between basic science and practical application. The application cannot be predicted from the discovery. Maxwell could not have predicted radio. Hertz could not have predicted WiFi. Einstein could not have predicted the laser when he derived the equations of stimulated emission in 1917. Faraday, demonstrating electromagnetic induction in 1831, could not have predicted the electric power grid. You prove the thing is true. Others find the uses.</p>
+
+    <p>Hertz proved the thing was true. The world found the uses. His name is on the unit of frequency that measures those uses, billions of times a day, on every electronic device ever made. He thought it was useless. It is, on any objective measure, one of the most consequential discoveries in the history of human civilization.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Heinrich Hertz Series — Volume IV: Legacy<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-waves.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

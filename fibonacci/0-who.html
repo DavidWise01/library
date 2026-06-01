@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leonardo of Pisa — Who Was Fibonacci?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #080608;
+    --gold: #ca8a04;
+    --green: #166534;
+    --text: #e8e0d0;
+    --muted: #9a8f80;
+    --card-bg: #100e10;
+    --card-border: #2a2228;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,6,8,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 2rem;
+    height: 52px;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 1.1rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #1e1a1e;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  nav a:first-child { border-left: 1px solid #1e1a1e; }
+  nav a:hover { color: var(--gold); background: rgba(202,138,4,0.07); }
+  nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+  nav .series-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-right: 1.5rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .hero-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.07;
+    width: 500px;
+    height: 500px;
+    pointer-events: none;
+  }
+
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+
+  h1 em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .subtitle {
+    font-family: 'Newsreader', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .band {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+    background: var(--gold);
+    padding: 0.3rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--green);
+    margin: 2rem 0 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 1.2rem; }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--gold);
+  }
+
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── QUOTE BLOCK ── */
+  blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  blockquote cite {
+    display: block;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 0.7rem;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    margin: 2rem 0;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--gold), var(--green), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.8rem;
+    padding-left: 1rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid var(--paper);
+  }
+
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-event {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-detail {
+    font-size: 0.9rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--green);
+    color: #d1fae5;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    border-left: 4px solid #22c55e;
+  }
+
+  .highlight .kick { color: #86efac; margin-bottom: 0.4rem; }
+
+  /* ── COLOPHON ── */
+  .colophon {
+    margin-top: 5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .colophon strong { color: var(--gold); }
+
+  /* ── ANIMATED FIBONACCI SPIRAL SVG ── */
+  @keyframes drawSquare {
+    from { stroke-dashoffset: 2000; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .fib-sq {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+  }
+
+  .fib-arc {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+  }
+
+  .sq1 { animation: drawSquare 0.4s 0.2s ease forwards; }
+  .sq2 { animation: drawSquare 0.4s 0.6s ease forwards; }
+  .sq3 { animation: drawSquare 0.5s 1.0s ease forwards; }
+  .sq4 { animation: drawSquare 0.5s 1.5s ease forwards; }
+  .sq5 { animation: drawSquare 0.6s 2.0s ease forwards; }
+  .sq6 { animation: drawSquare 0.7s 2.6s ease forwards; }
+  .sq7 { animation: drawSquare 0.8s 3.3s ease forwards; }
+  .arc1 { animation: drawSquare 0.4s 0.4s ease forwards; }
+  .arc2 { animation: drawSquare 0.4s 0.8s ease forwards; }
+  .arc3 { animation: drawSquare 0.5s 1.2s ease forwards; }
+  .arc4 { animation: drawSquare 0.5s 1.7s ease forwards; }
+  .arc5 { animation: drawSquare 0.6s 2.2s ease forwards; }
+  .arc6 { animation: drawSquare 0.7s 2.8s ease forwards; }
+  .arc7 { animation: drawSquare 0.8s 3.5s ease forwards; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .hero-svg { width: 280px; height: 280px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Fibonacci</span>
+  <a href="0-who.html" class="active">0 · Who</a>
+  <a href="1-numbers.html">1 · Numbers</a>
+  <a href="2-world.html">2 · World</a>
+  <a href="3-legacy.html">3 · Legacy</a>
+</nav>
+
+<div class="hero">
+  <!-- Animated Fibonacci Spiral SVG -->
+  <svg class="hero-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Grid of Fibonacci squares growing from center, scale 1:13 -->
+    <!-- 1×1, 1×1, 2×2, 3×3, 5×5, 8×8, 13×13 squares -->
+    <!-- Centered around 250,250, unit = 18px -->
+    <g transform="translate(130,180)">
+      <!-- sq n=1, size 1u -->
+      <rect class="fib-sq sq1" x="18" y="0" width="18" height="18"/>
+      <!-- sq n=2, size 1u -->
+      <rect class="fib-sq sq2" x="18" y="18" width="18" height="18"/>
+      <!-- sq n=3, size 2u -->
+      <rect class="fib-sq sq3" x="0" y="0" width="36" height="36"/>
+      <!-- sq n=4, size 3u -->
+      <rect class="fib-sq sq4" x="36" y="-18" width="54" height="54"/>
+      <!-- sq n=5, size 5u -->
+      <rect class="fib-sq sq5" x="-54" y="-18" width="90" height="90"/>
+      <!-- sq n=6, size 8u -->
+      <rect class="fib-sq sq6" x="-54" y="72" width="144" height="144"/>
+      <!-- sq n=7, size 13u -->
+      <rect class="fib-sq sq7" x="90" y="-90" width="234" height="234"/>
+    </g>
+    <!-- Quarter-circle arcs approximating the Fibonacci spiral -->
+    <g transform="translate(130,180)">
+      <path class="fib-arc arc1" d="M 36,0 A 18,18 0 0 0 18,18"/>
+      <path class="fib-arc arc2" d="M 18,18 A 18,18 0 0 1 36,36"/>
+      <path class="fib-arc arc3" d="M 36,36 A 36,36 0 0 0 0,0"/>
+      <path class="fib-arc arc4" d="M 0,0 A 54,54 0 0 1 90,36"/>
+      <path class="fib-arc arc5" d="M 90,36 A 90,90 0 0 0 0,126"/>
+      <path class="fib-arc arc6" d="M 0,126 A 144,144 0 0 1 90,-18"/>
+      <path class="fib-arc arc7" d="M 90,-18 A 234,234 0 0 0 -54,216"/>
+    </g>
+  </svg>
+
+  <span class="kick">Fibonacci Series · Volume 0</span>
+  <h1>Leonardo of Pisa<br><em>Who Was Fibonacci?</em></h1>
+  <p class="subtitle">Born ~1170 · Pisa · Died ~1250</p>
+  <span class="band">The Man Who Changed How the World Counts</span>
+</div>
+
+<main>
+
+  <p>He is one of the most consequential mathematicians in Western history. His work planted Hindu-Arabic numerals into European soil, and from that seeding grew all of modern arithmetic, commerce, science, and engineering. Yet for most of the six centuries after his death, no one remembered his name. The label "Fibonacci" was invented by a historian in the 1800s. The man himself probably never used it.</p>
+
+  <p>His real name was Leonardo of Pisa — Leonardo Pisano in Italian — and he was the son of a Pisan customs official posted overseas. He grew up not in a university but in a trading port, not among Latin scholars but among Arab and Berber merchants who used a number system of breathtaking elegance. He brought it home. Europe was never the same.</p>
+
+  <h2>Origins: Pisa and the Mediterranean World</h2>
+
+  <p>Leonardo was born around 1170 in the city of Pisa, in what is now northwest Italy. At that time, Pisa was one of the great maritime republics of the Mediterranean — a city-state whose wealth derived from trade, whose ships moved between Italy, North Africa, the Levant, and Byzantium. The Pisans were pragmatic, commercial, and extraordinarily well-connected across the Islamic world.</p>
+
+  <p>His father, Guglielmo Bonacci, was a public official — a representative of Pisan merchants stationed in Bugia, a thriving North African port city now known as Béjaïa, in modern Algeria. Bugia sat at the intersection of Berber, Arab, and Mediterranean cultures. It was a center of trade and, crucially for young Leonardo, of mathematical knowledge flowing from the Islamic world.</p>
+
+  <p>When Leonardo's father was posted to Bugia — probably around 1185, when Leonardo was in his mid-teens — he brought his son with him. What followed shaped the entire direction of Leonardo's intellectual life. He came into contact with Arab and Berber merchants who performed their calculations using Hindu-Arabic numerals: the digits 0 through 9, positional notation, and the decimal system that had been developed in India and transmitted through the Islamic world. Leonardo recognized immediately that this system was vastly superior to anything he had learned in Europe.</p>
+
+  <h2>Education Among Merchants</h2>
+
+  <p>Leonardo's education was not a university education. It was a merchant's education, conducted in counting houses and ports, watching practical men solve practical problems with practical tools. The contrast with European mathematics was stark. In Europe, everyone used Roman numerals — I, V, X, L, C, D, M — a system in which adding two three-digit numbers requires genuine mental effort and multiplication approaches the heroic. The Arab merchants he observed could calculate circles around any European scholar.</p>
+
+  <p>He traveled extensively over the following years — Egypt, Syria, Greece, Sicily, southern France, Provence — studying under the best mathematicians he could find in each region. In his own words, from the preface to <em>Liber Abaci</em>, he traveled to "many places for the sake of study." He absorbed the breadth of Islamic mathematics: algebra from the tradition of Al-Khwarizmi, geometry from Euclid as transmitted through Arabic translations, and the elegant calculation methods of Hindu-Arabic numerals.</p>
+
+  <p>He returned to Pisa having become, without any formal academic appointment, one of the most mathematically sophisticated men in Europe.</p>
+
+  <h2>Liber Abaci: The Book That Changed Arithmetic</h2>
+
+  <p>In 1202, Leonardo published <em>Liber Abaci</em> — "The Book of Calculation." The title is slightly ironic: <em>abaci</em> refers to calculation in general, not to the abacus device, and Leonardo's whole point was to teach a better method than abacus calculation. The book ran to 459 pages in its modern editions. It was comprehensive, practical, and revolutionary.</p>
+
+  <p><em>Liber Abaci</em> introduced Hindu-Arabic numerals to European learned audiences with systematic rigor. It opened with an explanation of the nine numerals (1–9) and zero, demonstrated positional notation, and then worked through the full scope of commercial mathematics: addition, subtraction, multiplication, division, fractions, proportions, monetary exchange, weights and measures, interest calculations, and a range of algebraic problems.</p>
+
+  <p>The rabbit problem — which generates the Fibonacci sequence — appears in Chapter 12, almost as an aside, a recreational puzzle among dozens of others. Leonardo had no idea it would be the thing he was remembered for eight centuries later.</p>
+
+  <p>He revised <em>Liber Abaci</em> in 1228, expanding and refining it. This second edition is the one that survives in medieval manuscripts.</p>
+
+  <h3>Other Major Works</h3>
+
+  <p>Leonardo did not stop at <em>Liber Abaci</em>. He wrote <em>Practica Geometriae</em> (1220), a comprehensive geometry text drawing on Euclid and Arab sources. He wrote <em>Flos</em> (1225), a collection of solutions to competition problems posed at the court of Holy Roman Emperor Frederick II — problems that required mathematical techniques well beyond what any contemporary European mathematician could manage. He also wrote <em>Liber Quadratorum</em> (1225), "The Book of Squares," which addressed problems in number theory with remarkable sophistication.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">Work</span>
+      <h4>Liber Abaci (1202, rev. 1228)</h4>
+      <p>The founding text of European arithmetic. Hindu-Arabic numerals, commercial mathematics, the rabbit sequence.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Work</span>
+      <h4>Practica Geometriae (1220)</h4>
+      <p>Comprehensive geometry, integrating Euclidean and Arabic traditions for practical application.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Work</span>
+      <h4>Flos (1225)</h4>
+      <p>Solutions to competition problems from Frederick II's court — demonstrations of advanced technique.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Work</span>
+      <h4>Liber Quadratorum (1225)</h4>
+      <p>"The Book of Squares" — number theory problems that historians rank among the most brilliant medieval mathematics.</p>
+    </div>
+  </div>
+
+  <h2>The Imperial Connection: Frederick II</h2>
+
+  <p>Around 1225, Leonardo came to the attention of Holy Roman Emperor Frederick II — or rather, Frederick came to Pisa and Leonardo came to his attention. Frederick II was one of the most extraordinary rulers of the Middle Ages: multilingual, intellectually omnivorous, fascinated by science and mathematics, and willing to patronize talent wherever he found it. He kept a court of scholars, artists, and natural philosophers that had no parallel in Europe.</p>
+
+  <p>At Frederick's court, Leonardo participated in a mathematical tournament. The Emperor's court philosopher, Johannes of Palermo, posed three problems designed to challenge the finest mathematical minds in Europe. Leonardo solved all three, publicly and in writing. The solutions are preserved in <em>Flos</em>. This performance established Leonardo's reputation definitively. He was recognized by the city of Pisa, which granted him a formal salary — unusual recognition for a private scholar — around 1240.</p>
+
+  <blockquote>
+    "There I met Egyptian, Syrian, Greek, Sicilian, and Provençal men, and men from these various places, expert in this art of numbers; and there I learned what was studied in these places."
+    <cite>— Leonardo of Pisa, Liber Abaci, Preface (c. 1202)</cite>
+  </blockquote>
+
+  <h2>The Name "Fibonacci": A 19th-Century Invention</h2>
+
+  <p>Leonardo died around 1250. He left no school, no direct disciples recorded by name, no institution bearing his mark. His books circulated in manuscript form among scholars and merchants over the following centuries, influencing practical arithmetic enormously, but his name faded.</p>
+
+  <p>For roughly six centuries, he was simply "Leonardo of Pisa" in the few scholarly references that mentioned him at all.</p>
+
+  <p>Then, in the 1800s, the French-Italian mathematician Guillaume Libri used the name "Fibonacci" — a shorthand for <em>filius Bonacci</em>, "son of Bonacci," referring to his father's name — to refer to Leonardo in historical writings. The name caught on. By the time the Fibonacci sequence became famous in popular mathematics, the name was fixed permanently.</p>
+
+  <p>The sequence, too, was not called "Fibonacci numbers" until 1877, when the French mathematician Édouard Lucas gave it that name. Lucas was the one who was truly fascinated by the sequence, who studied its properties intensively, and who ensured that Leonardo of Pisa would be associated with it forever — 627 years after Leonardo's death.</p>
+
+  <div class="highlight">
+    <span class="kick">Key Fact</span>
+    <p style="margin:0; color: #d1fae5; font-size: 1rem;">"Fibonacci" is a nickname invented in the 19th century. "Fibonacci numbers" were named in 1877 — 627 years after Leonardo's death. The man himself signed his works "Leonardo Pisano" or simply "Leonardo, son of Bonacci of Pisa."</p>
+  </div>
+
+  <h2>A Life in Chronology</h2>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1170</div>
+      <div class="timeline-event">Born in Pisa, Republic of Pisa (now northwest Italy)</div>
+      <div class="timeline-detail">Son of Guglielmo Bonacci, a Pisan customs official and merchant representative</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1185</div>
+      <div class="timeline-event">Joins his father in Bugia, North Africa (modern Béjaïa, Algeria)</div>
+      <div class="timeline-detail">First encounters Hindu-Arabic numerals through Arab and Berber merchants</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1185–1200</div>
+      <div class="timeline-event">Travels the Mediterranean — Egypt, Syria, Greece, Sicily, Provence</div>
+      <div class="timeline-detail">Studies under Arab and Greek mathematicians, absorbs the full breadth of Islamic mathematical tradition</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1202</div>
+      <div class="timeline-event">Publishes Liber Abaci</div>
+      <div class="timeline-detail">The foundational text introducing Hindu-Arabic numerals to European scholarship</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1220</div>
+      <div class="timeline-event">Publishes Practica Geometriae</div>
+      <div class="timeline-detail">Comprehensive geometry integrating Euclidean and Arabic traditions</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1225</div>
+      <div class="timeline-event">Mathematical tournament at the court of Frederick II</div>
+      <div class="timeline-detail">Solves all three competition problems; publishes solutions in Flos. Also completes Liber Quadratorum.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1228</div>
+      <div class="timeline-event">Revised edition of Liber Abaci</div>
+      <div class="timeline-detail">Expanded and corrected; this is the version preserved in surviving manuscripts</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1240</div>
+      <div class="timeline-event">City of Pisa grants Leonardo a public salary</div>
+      <div class="timeline-detail">Formal recognition of his service "by his skillful and useful teaching" — contemporary document survives</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">c. 1250</div>
+      <div class="timeline-event">Death, place and date unknown</div>
+      <div class="timeline-detail">No contemporary account of his death survives</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1800s</div>
+      <div class="timeline-event">Guillaume Libri coins the name "Fibonacci"</div>
+      <div class="timeline-detail">Shorthand for filius Bonacci — "son of Bonacci." The name sticks.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">1877</div>
+      <div class="timeline-event">Édouard Lucas names the "Fibonacci numbers"</div>
+      <div class="timeline-detail">627 years after Leonardo's death, he finally gets his most famous association</div>
+    </div>
+  </div>
+
+  <h2>Character and Method</h2>
+
+  <p>What kind of man was Leonardo of Pisa? The historical record is thin — no letters survive, no diary, no portrait. What we have are his books and two documentary mentions: the record of his salary from Pisa (c. 1240) and his own preface to <em>Liber Abaci</em>.</p>
+
+  <p>From the preface, he emerges as genuinely enthusiastic about mathematics — a man who traveled enormous distances "for the sake of study" and who saw in Hindu-Arabic numerals not just a tool but a revelation. His mathematical writing is precise and methodical. He does not speculate wildly; he demonstrates carefully. He has a merchant's pragmatism — he is always interested in applications, in problems that actual people need to solve — but he also ventures into pure number theory of a kind that has no practical commercial application. He did it because he found it beautiful.</p>
+
+  <p>He appears to have been well-connected in Pisan civic life — well enough that the city paid him. He corresponded with other scholars. He competed publicly and confidently at the Emperor's court. He is not a tragic figure, not a rebel, not a martyr. He was a man who understood something important about numbers, who had the energy to write it down with great care, and who had the luck to live in a city connected enough to the wider world that the knowledge reached him.</p>
+
+  <h2>Why He Was Forgotten</h2>
+
+  <p>The forgetting of Leonardo is not as mysterious as it might seem. In the medieval and Renaissance world, scholars absorbed and transmitted ideas without our modern concern for attribution. If a book was useful, it was copied and used; the author's name might or might not survive. Hindu-Arabic numerals spread into Europe through Liber Abaci and through other channels simultaneously — merchants who had learned the system independently, later textbooks that drew on Liber Abaci without crediting it explicitly.</p>
+
+  <p>By the time Hindu-Arabic numerals were thoroughly established in European commerce and scholarship — roughly by the 15th century — they had become simply "how numbers work," not something associated with any particular source. Leonardo's specific contribution had dissolved into the common practice of civilization.</p>
+
+  <p>That is, in a certain sense, the measure of his success. When an innovation becomes so universal that no one remembers where it came from, it has truly changed the world.</p>
+
+  <blockquote>
+    "The nine Indian figures are: 9 8 7 6 5 4 3 2 1. With these nine figures, and with the sign 0 which the Arabs call zephyr, any number whatsoever is written."
+    <cite>— Leonardo of Pisa, Liber Abaci, Chapter 1 (1202) — the first sentence of the book</cite>
+  </blockquote>
+
+  <h2>The Merchant's Mathematician</h2>
+
+  <p>Leonardo of Pisa is sometimes cast as a pure theorist, a visionary who peered into mathematical abstractions. He was not. He was trained in commercial practice, and <em>Liber Abaci</em> is largely a textbook of commercial arithmetic — currency exchange, profit calculation, weight conversions, partnership accounting. He understood that mathematics was useful. He wanted to make it available to people who needed to use it.</p>
+
+  <p>But he was also capable of the other thing — the thing that characterizes the best mathematicians of every era — the ability to be fascinated by patterns that have no application, to pursue a question because the question itself is interesting. The sequence 1, 1, 2, 3, 5, 8, 13, 21... appears in <em>Liber Abaci</em> as a rabbit-population puzzle. It appears in nature in a hundred forms. It generates the golden ratio. It runs through algorithms and financial models and botanical arrangements. Leonardo noted it, wrote it down, and moved on to the next problem. He did not know what he had found.</p>
+
+  <p>That is perhaps the most accurate portrait of the man: a thoroughly competent, genuinely curious, practically minded mathematical talent who happened to be in the right place at the right moment — a young Pisan in a North African trading port, watching Arab merchants calculate with a system of supernatural elegance — and who had the skill and the industry to bring that system home and explain it to the world.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">His Origin</span>
+      <h4>Pisa → Bugia → the Mediterranean</h4>
+      <p>A Pisan son posted to North Africa, educated among merchants, traveled to study mathematics across the Islamic world.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">His Method</span>
+      <h4>Observation + Synthesis</h4>
+      <p>Absorbed the full breadth of Islamic mathematics and translated it into Latin for European audiences — not merely copied, but comprehended and organized.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">His Legacy Problem</span>
+      <h4>Success Made Him Invisible</h4>
+      <p>Hindu-Arabic numerals spread so thoroughly that their source was forgotten. A 19th-century historian had to recover his name from obscurity.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">His Accident of Fame</span>
+      <h4>The Rabbit Puzzle</h4>
+      <p>The sequence 1,1,2,3,5,8,13... was a minor exercise in Liber Abaci. It became, centuries later, his most famous contribution.</p>
+    </div>
+  </div>
+
+  <p>Volume 1 of this series covers the mathematics: the Hindu-Arabic numerals, the rabbit sequence, the golden ratio, and how Fibonacci numbers appear throughout nature. Volume 2 covers the world in which he lived. Volume 3 covers what that world became because of his work.</p>
+
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Author: David Lee Wise / ROOT0 / TriPod LLC<br>
+    License: CC-BY-ND-4.0<br>
+    Series: Fibonacci · Volume 0 of 3<br>
+    Filed: C:/repos/library/fibonacci/0-who.html
+  </div>
+
+</main>
+</body>
+</html>

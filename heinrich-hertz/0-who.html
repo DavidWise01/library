@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heinrich Hertz — Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#040810;--cyan:#0891b2;--gold:#ca8a04;--text:#cdd5e0;--muted:#6b7280;--card-bg:#080e18;--card-border:#162030;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(4,8,16,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--cyan);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--cyan);border-bottom-color:var(--cyan);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.22;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--cyan);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2.4rem,6vw,4.2rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.25rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--cyan);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--cyan);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cyan);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  .timeline{margin-top:2rem;}
+  .tl-item{display:flex;gap:1.5rem;margin-bottom:2rem;position:relative;}
+  .tl-item::before{content:'';position:absolute;left:2.7rem;top:2.2rem;bottom:-2rem;width:1px;background:var(--card-border);}
+  .tl-item:last-child::before{display:none;}
+  .tl-year{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--gold);min-width:3.5rem;padding-top:0.3rem;text-align:right;flex-shrink:0;}
+  .tl-dot{width:10px;height:10px;background:var(--cyan);border-radius:50%;margin-top:0.55rem;flex-shrink:0;}
+  .tl-body{flex:1;}
+  .tl-body strong{font-family:'Cinzel',serif;font-size:0.95rem;color:#fff;display:block;margin-bottom:0.3rem;}
+  .tl-body p{font-size:0.9rem;color:var(--muted);margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cee0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  .stat-row{display:flex;gap:2rem;flex-wrap:wrap;margin:2rem 0;}
+  .stat{flex:1;min-width:140px;text-align:center;padding:1.4rem 1rem;background:var(--card-bg);border:1px solid var(--card-border);}
+  .stat-num{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold);line-height:1;}
+  .stat-label{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}.stat-row{gap:1rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Hertz — Vol 1 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Who He Was</a>
+    <a href="1-waves.html">Waves</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <!-- Animated radio wave — oscillating dipole emitting expanding EM waves -->
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="hglow"><feGaussianBlur stdDeviation="2.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <!-- Dipole antenna at center -->
+    <g transform="translate(450,260)" filter="url(#hglow)">
+      <!-- Antenna rod -->
+      <line x1="0" y1="-60" x2="0" y2="60" stroke="#0891b2" stroke-width="3" stroke-linecap="round"/>
+      <line x1="-4" y1="0" x2="4" y2="0" stroke="#ca8a04" stroke-width="2"/>
+      <!-- Expanding EM wave rings -->
+      <ellipse rx="80" ry="40" stroke="#0891b2" stroke-width="1.2" fill="none" opacity="0.7"><animate attributeName="rx" values="10;180" dur="3s" repeatCount="indefinite"/><animate attributeName="ry" values="5;90" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0" dur="3s" repeatCount="indefinite"/></ellipse>
+      <ellipse rx="80" ry="40" stroke="#0891b2" stroke-width="1" fill="none"><animate attributeName="rx" values="10;180" dur="3s" begin="1s" repeatCount="indefinite"/><animate attributeName="ry" values="5;90" dur="3s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="3s" begin="1s" repeatCount="indefinite"/></ellipse>
+      <ellipse rx="80" ry="40" stroke="#0891b2" stroke-width="0.8" fill="none"><animate attributeName="rx" values="10;180" dur="3s" begin="2s" repeatCount="indefinite"/><animate attributeName="ry" values="5;90" dur="3s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0" dur="3s" begin="2s" repeatCount="indefinite"/></ellipse>
+      <!-- E-field oscillation wavy line -->
+      <path d="M-200,0 C-170,-40 -150,40 -120,0 C-90,-40 -70,40 -40,0 C-10,-40 10,40 40,0 C70,-40 90,40 120,0 C150,-40 170,40 200,0" stroke="#ca8a04" stroke-width="1.2" fill="none" opacity="0.6">
+        <animateTransform attributeName="transform" type="translate" values="0,0;-40,0;0,0" dur="1.5s" repeatCount="indefinite"/>
+      </path>
+    </g>
+  </svg>
+
+  <div class="kick">Heinrich Hertz · 1857 – 1894</div>
+  <div class="band">Volume I — Who He Was</div>
+  <h1>The Man Who Proved <span>Maxwell Right</span></h1>
+  <p class="hero-sub">He spent five years in a laboratory, built a spark-gap transmitter, and changed the world — then died at 36, certain it was useless.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>The Man</h2>
+    <p>Heinrich Rudolf Hertz was born on February 22, 1857, in Hamburg — then an independent city-state, one of the most prosperous and commercially sophisticated cities in the German-speaking world. His father was Gustav Ferdinand Hertz, a lawyer and later a senator of Hamburg. His mother was Anna Elisabeth Pfefferkorn. The family was of Jewish origin, converted to Lutheranism, and thoroughly assimilated into Hamburg's commercial and professional upper class. Religion was not a significant part of Hertz's upbringing, and he does not appear to have thought of himself primarily in religious terms.</p>
+
+    <p>He was a gifted and unusual student from the beginning — competent in mathematics and science, but also interested in languages (he studied Arabic) and craftwork. He was, unusually for a theoretical physicist, exceptionally skilled with his hands. He could design and build experimental apparatus himself, with a precision and cleanliness that impressed even his mentors. This combination — theoretical depth and experimental manual skill — would be crucial to his great achievement, which required both the mathematical understanding of Maxwell's equations and the physical ingenuity to build apparatus capable of generating and detecting electromagnetic waves.</p>
+
+    <p>He studied at the Technische Hochschule in Dresden, then in Munich, before moving to Berlin in 1878 to study under two of the greatest physicists of the nineteenth century: Hermann von Helmholtz and Gustav Kirchhoff. Helmholtz in particular became his intellectual father figure — the most important mentor in his life. It was Helmholtz who directed Hertz's attention to the questions of electromagnetic theory that would define his career.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">36</div><div class="stat-label">Age at death (1894)</div></div>
+      <div class="stat"><div class="stat-num">1887</div><div class="stat-label">Radio waves produced</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Key discoveries: EM waves + photoelectric effect</div></div>
+      <div class="stat"><div class="stat-num">Hz</div><div class="stat-label">SI unit of frequency named for him</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education and Mentors</h2>
+    <p>Berlin in the 1870s and 1880s was one of the great centers of physics in Europe. The new German Empire — formed in 1871 after the defeat of France — poured resources into its universities, and Berlin was the crown jewel. Helmholtz held the chair of physics and ran a laboratory that attracted the best young physicists in Europe. Kirchhoff held the chair of mathematical physics. Between them, they represented the full range of nineteenth-century physics: Helmholtz's broad natural philosophy, energy conservation, acoustics, optics, and electrodynamics; Kirchhoff's precise mathematical formulation of circuit theory and spectroscopy.</p>
+
+    <p>Hertz excelled under both. He won the Berlin University prize for an experimental investigation of inertia in 1879 — his first year as a student — and completed his doctorate in 1880 with a thesis on electromagnetic induction. He was recognized immediately as a talent of the first order. Helmholtz tried to retain him in Berlin, but Hertz could not get a position there. He served as Helmholtz's assistant for two years, then in 1883 was appointed lecturer at the University of Kiel.</p>
+
+    <p>Kiel was not Berlin — it was a quiet posting without much experimental equipment. But it allowed Hertz to think carefully about the theoretical landscape. He spent two years at Kiel working on the theory of Maxwell's equations, trying to understand what they actually predicted about the behavior of electromagnetic fields in matter. This theoretical groundwork was essential preparation for the experimental work that followed.</p>
+
+    <p>In 1885 he was appointed professor of physics at the Technische Hochschule in Karlsruhe — a better position, with a proper laboratory. It was there, in 1887–1888, that he performed the experiments that proved Maxwell right.</p>
+  </section>
+
+  <section>
+    <h2>Life in Time</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1857</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Born in Hamburg</strong>
+          <p>February 22. Son of a Hamburg lawyer and senator. Jewish family, converted to Lutheranism, fully assimilated. The most commercially sophisticated city in the German-speaking world.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1875</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Engineering studies begin</strong>
+          <p>Studies at the Technische Hochschule Frankfurt, then Dresden and Munich. An unusual mix of theoretical acuity and hands-on experimental craft.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1878</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Moves to Berlin — Studies under Helmholtz</strong>
+          <p>Joins the laboratory of Hermann von Helmholtz, the greatest German physicist of his generation. Also studies under Kirchhoff. Berlin is the apex of European physics.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1880</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Doctorate in Physics</strong>
+          <p>PhD from Berlin on electromagnetic induction. Stays as Helmholtz's assistant for two years. Recognized immediately as exceptional.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1883</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Lecturer at Kiel</strong>
+          <p>Modest posting. Little experimental apparatus. But he uses the time to work through Maxwell's theory mathematically, preparing for what comes next.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1885</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Professor at Karlsruhe</strong>
+          <p>Appointed professor of physics at the Technische Hochschule, Karlsruhe. A proper laboratory, equipment, and students. The stage is set.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1887</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Electromagnetic Waves — Produced and Detected</strong>
+          <p>Spark gap transmitter generates oscillating currents. A wire loop receiver detects them across the room. Maxwell's prediction confirmed. Also notices the photoelectric effect — UV light enhancing spark discharge — but does not pursue its explanation.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1888</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Wave Properties Confirmed</strong>
+          <p>Demonstrates that EM waves reflect, refract, and polarize — exactly like light. They ARE light, just at lower frequency. Publication in Annalen der Physik. Europe's physics community is electrified.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1889</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Moves to Bonn</strong>
+          <p>Appointed professor of physics at the University of Bonn — a prestigious move to a full research university. Begins to suffer from mysterious illness: severe fatigue, pain, recurrent infections.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1890</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Mechanics — Final Work</strong>
+          <p>Turns from experiment to theory. Works on the foundations of mechanics — an attempt to reformulate classical mechanics without the concept of force. Posthumously published as Principles of Mechanics.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1892</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Illness Worsens</strong>
+          <p>Diagnosed eventually with Wegener's granulomatosis — an autoimmune disease affecting blood vessels. Repeated surgeries to his jaw and sinuses. He continues working despite severe pain.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1894</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Death — Bonn, January 1</strong>
+          <p>Dies at 36 of septicemia following his illness. Maxwell's electromagnetic theory he proved correct in 1887; Maxwell had died in 1879. Hertz himself died before seeing any practical application of his discovery.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Character and the Wrong Prediction</h2>
+    <p>Hertz was, by the accounts of all who knew him, a man of exceptional intellectual honesty, modesty, and personal charm. He was not ambitious in the social or political sense — he did not maneuver for better positions or prestigious awards, though they came to him. He was genuinely committed to understanding nature, and he communicated that commitment with a clarity and directness that made his papers among the most readable experimental physics of the nineteenth century.</p>
+
+    <p>He was also, famously, wrong about the practical significance of his discovery. When asked by a student whether radio waves might have practical applications, he reportedly replied: "I don't think so. These are just experiments that prove Maestro Maxwell was right — we just have these mysterious electromagnetic waves that we cannot see with the naked eye. But they are there." When pressed further, he said radio waves would have no use.</p>
+
+    <blockquote>
+      "It's of no use whatsoever. This is just an experiment that proves Maestro Maxwell was right — we just have these mysterious electromagnetic waves that we cannot see with the naked eye. But they are there."
+      <cite>— Heinrich Hertz, c. 1888, to a student asking about practical applications</cite>
+    </blockquote>
+
+    <p>He died January 1, 1894, at thirty-six. Guglielmo Marconi transmitted the first transatlantic radio signal in 1901 — seven years later. The wireless telegraph, broadcasting, radar, television — all of these followed from what Hertz proved in his Karlsruhe laboratory. Every radio station, every WiFi router, every cellular network, every radar system is a practical application of what Hertz declared to have no practical applications. The irony is not a mark against him — it is a measure of how completely he was thinking as a pure scientist: he cared about truth, not utility.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Intellectual Heritage</div>
+        <h4>Helmholtz's Student</h4>
+        <p>Helmholtz directed Hertz to Maxwell's theory and encouraged him to test it experimentally. Without Helmholtz's guidance, the experiment might have waited another decade or more.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Proof</div>
+        <h4>Maxwell Confirmed</h4>
+        <p>Maxwell died in 1879, eight years before Hertz's experiment. He never knew his theory was experimentally confirmed. Hertz gave Maxwell's equations their empirical foundation.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Unexplained Discovery</div>
+        <h4>Photoelectric Effect</h4>
+        <p>Hertz observed in 1887 that UV light makes spark gaps fire more easily. He reported it accurately and moved on. Einstein explained it in 1905. It was the first observation of quantum mechanics.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Wrong Prediction</div>
+        <h4>No Practical Use</h4>
+        <p>Hertz believed radio waves had no practical applications. He died before Marconi, before radio, before any of the technology that now uses his name a billion times a day.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">His Name</div>
+        <h4>The Hertz Unit</h4>
+        <p>1 Hz = 1 cycle per second. Named by the International Electrotechnical Commission in 1930, 36 years after his death. Used for every frequency specification in every electronic device.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Final Work</div>
+        <h4>Principles of Mechanics</h4>
+        <p>His posthumous book reformulated classical mechanics without the concept of force — an unusual foundational project. Influenced Wittgenstein and early analytic philosophy.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Heinrich Hertz Series — Volume I: Who He Was<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-waves.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

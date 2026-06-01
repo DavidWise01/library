@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernest Rutherford — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --gold: #ca8a04;
+    --text: #d4e8dc;
+    --muted: #5a7a66;
+    --border: #0d1f14;
+    --card-bg: #081209;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,10,8,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-right: 2rem;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--green); }
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 50% 60%, #041408 0%, var(--paper) 70%);
+    padding: 4rem 2rem 3rem;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.75; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 780px; }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 0 60px rgba(21,128,61,0.5);
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-lead {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.85;
+  }
+  .band {
+    background: var(--green);
+    color: #e8f5ee;
+    padding: 0.6rem 2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+  }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    margin-top: 2rem;
+  }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .timeline { border-left: 2px solid var(--border); padding-left: 2rem; margin-top: 2rem; }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 0.45rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 8px rgba(202,138,4,0.5);
+  }
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.3rem;
+  }
+  .timeline-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-body { font-size: 0.97rem; color: var(--text); opacity: 0.88; }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--green); }
+  .card-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+  .card h4 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem; }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    padding: 1.5rem 2rem;
+    margin: 3rem 0;
+    background: var(--card-bg);
+  }
+  .pull-quote blockquote {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+  .pull-quote cite {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.63rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon a { color: var(--green); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Ernest Rutherford</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-nucleus.html">Vol. 1 — The Nucleus</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="nucGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#ca8a04" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="bgGlow" cx="50%" cy="55%" r="40%">
+        <stop offset="0%" stop-color="#15803d" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#bgGlow)"/>
+    <!-- Gold foil plane -->
+    <rect x="420" y="60" width="12" height="400" fill="#ca8a04" opacity="0.15"/>
+    <rect x="421" y="60" width="10" height="400" fill="none" stroke="#ca8a04" stroke-width="0.5" opacity="0.3"/>
+    <!-- Gold atoms in foil -->
+    <circle cx="426" cy="130" r="8" fill="#ca8a04" opacity="0.35"/>
+    <circle cx="426" cy="200" r="8" fill="#ca8a04" opacity="0.4"/>
+    <circle cx="426" cy="270" r="8" fill="#ca8a04" opacity="0.45"/>
+    <circle cx="426" cy="340" r="8" fill="#ca8a04" opacity="0.35"/>
+    <!-- Alpha source -->
+    <circle cx="120" cy="260" r="18" fill="#15803d" opacity="0.7" filter="url(#glow)"/>
+    <circle cx="120" cy="260" r="10" fill="#4ade80" opacity="0.9"/>
+    <!-- Alpha particles streaming through (most go straight) -->
+    <g opacity="0.6">
+      <!-- Particle 1: straight through -->
+      <circle r="4" fill="#86efac" filter="url(#glow)">
+        <animateMotion dur="3s" repeatCount="indefinite" begin="0s">
+          <mpath href="#straight1"/>
+        </animateMotion>
+      </circle>
+      <!-- Particle 2: straight through offset -->
+      <circle r="4" fill="#86efac" filter="url(#glow)">
+        <animateMotion dur="3s" repeatCount="indefinite" begin="0.6s">
+          <mpath href="#straight2"/>
+        </animateMotion>
+      </circle>
+      <!-- Particle 3: slight deflection -->
+      <circle r="4" fill="#86efac" filter="url(#glow)">
+        <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.2s">
+          <mpath href="#slight"/>
+        </animateMotion>
+      </circle>
+      <!-- Particle 4: large deflection upward -->
+      <circle r="5" fill="#fde047" filter="url(#glow)">
+        <animateMotion dur="4s" repeatCount="indefinite" begin="0.4s">
+          <mpath href="#large-up"/>
+        </animateMotion>
+      </circle>
+      <!-- Particle 5: backscatter -->
+      <circle r="5.5" fill="#fbbf24" filter="url(#glow)">
+        <animateMotion dur="5s" repeatCount="indefinite" begin="1s">
+          <mpath href="#backscatter"/>
+        </animateMotion>
+      </circle>
+    </g>
+    <!-- Paths for particles -->
+    <path id="straight1" d="M140,260 L750,260" fill="none"/>
+    <path id="straight2" d="M140,220 L750,220" fill="none"/>
+    <path id="slight" d="M140,290 L426,295 L750,330" fill="none"/>
+    <path id="large-up" d="M140,270 L426,268 L600,100 L750,60" fill="none"/>
+    <path id="backscatter" d="M140,262 L420,262 L200,240 L100,200" fill="none"/>
+    <!-- Nucleus glow at gold atom position -->
+    <circle cx="426" cy="270" r="30" fill="url(#nucGlow)" opacity="0.4">
+      <animate attributeName="r" values="28;36;28" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Labels -->
+    <text x="95" y="300" font-family="monospace" font-size="11" fill="#4ade80" opacity="0.7">α source</text>
+    <text x="440" y="50" font-family="monospace" font-size="11" fill="#ca8a04" opacity="0.7">gold foil</text>
+    <text x="620" y="90" font-family="monospace" font-size="10" fill="#fde047" opacity="0.8">large deflection</text>
+    <text x="720" y="255" font-family="monospace" font-size="10" fill="#86efac" opacity="0.7">straight through</text>
+    <text x="80" y="185" font-family="monospace" font-size="10" fill="#fbbf24" opacity="0.8">backscatter</text>
+  </svg>
+
+  <div class="hero-content">
+    <span class="kick">The Great Experimenter · 1871–1937</span>
+    <h1 class="hero-title">Ernest<br>Rutherford</h1>
+    <p class="hero-subtitle">Father of Nuclear Physics</p>
+    <p class="hero-lead">"It was as if you fired artillery shells at tissue paper and they came back and hit you." — The gold foil experiment that revealed the atomic nucleus.</p>
+  </div>
+</div>
+
+<div class="band">Nobel Prize Chemistry 1908 · Discoverer of Alpha &amp; Beta Radiation · Founder of Nuclear Physics · Westminster Abbey</div>
+
+<main>
+
+  <section id="origins">
+    <span class="section-label">Origins</span>
+    <h2>From the Farms of New Zealand to the Frontiers of Physics</h2>
+    <p>Ernest Rutherford was born on <strong>30 August 1871</strong> in Brightwater, near Nelson, in the South Island of New Zealand — then a British colony barely three decades old, far from the established centres of European science. He was the fourth of twelve children born to James Rutherford, a Scottish immigrant farmer and wheelwright, and Martha Thompson, a schoolteacher from England. The family moved frequently through the rural Nelson region; Ernest attended the Nelson Collegiate School, where his extraordinary aptitude for mathematics and science became apparent early.</p>
+    <p>New Zealand in the 1870s and 1880s was not exactly a nursery of physics. Yet something in the colonial environment — its directness, its lack of aristocratic deference, its habit of taking problems as they came — shaped a man who would prove to be the greatest experimental physicist since Faraday. Rutherford's genius was not abstract or theoretical. He had an uncanny ability to design experiments that forced nature to reveal its secrets, and an even rarer ability to read what those experiments were actually saying.</p>
+    <p>In 1889 Rutherford won a scholarship to Canterbury College in Christchurch, where he studied mathematics and physics, graduating with a double First in 1893. He then won an exhibition scholarship — one awarded to colonial students for study at Cambridge's Cavendish Laboratory — and in 1895 he arrived in England. He was twenty-three years old, the son of a flax-miller from New Zealand, walking into the most productive physics laboratory in the world.</p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">12</span><span class="stat-label">Children in his family</span></div>
+      <div class="stat"><span class="stat-num">1871</span><span class="stat-label">Birth year, Nelson, NZ</span></div>
+      <div class="stat"><span class="stat-num">1895</span><span class="stat-label">Arrived at Cambridge</span></div>
+      <div class="stat"><span class="stat-num">1908</span><span class="stat-label">Nobel Prize in Chemistry</span></div>
+    </div>
+  </section>
+
+  <section id="cambridge">
+    <span class="section-label">Cambridge, 1895–1898</span>
+    <h2>The Cavendish Laboratory Under J.J. Thomson</h2>
+    <p>The Cavendish Laboratory at Cambridge was, in 1895, the greatest experimental physics facility in the world. It had been founded in 1874 under James Clerk Maxwell, and its director when Rutherford arrived was <strong>J.J. Thomson</strong> — a physicist who would, just two years later, discover the electron. Thomson immediately recognised Rutherford's ability and assigned him to radio-wave research. Rutherford quickly achieved the most sensitive radio wave receiver yet built, detecting signals at half a mile — a remarkable practical accomplishment. But his attention was drawn to a more mysterious phenomenon: the radiation being emitted by uranium, discovered by Becquerel in 1896.</p>
+    <p>Thomson's laboratory was the right place at the right time. X-rays had been discovered by Röntgen in 1895. Radioactivity had been discovered by Becquerel in 1896. The atom, long thought to be indivisible, was beginning to reveal inner structure. Rutherford threw himself into radiation research and immediately made a discovery that would prove fundamental to all subsequent atomic physics.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I have to keep going, as there are always people on my track. I have to publish my present work as rapidly as possible in order to keep in the race."</blockquote>
+      <cite>— Ernest Rutherford, letter to his fiancée Mary Newton, 1900</cite>
+    </div>
+
+    <h3>Alpha and Beta: Naming the Invisible</h3>
+    <p>In 1898, Rutherford discovered that uranium's radiation was not homogeneous — it consisted of at least two distinct components with very different penetrating powers. He named them <strong>alpha (α)</strong> and <strong>beta (β)</strong>. Alpha radiation was easily stopped by thin material; beta radiation penetrated further. A third type, gamma (γ), was identified later. This nomenclature — Rutherford's invention — persists throughout nuclear physics to this day. More importantly, the discovery established that "radioactivity" (Marie Curie's term) was not a simple phenomenon but a family of distinct processes, each requiring its own explanation.</p>
+    <p>Rutherford determined, working with Frederick Soddy at McGill University in Montreal (where he was appointed professor in 1898), that radioactivity involved the <em>transmutation of elements</em> — one element spontaneously converting into another. This was a revolutionary idea that initially met with skepticism. The alchemists had dreamed of transmutation; respectable science had dismissed it as fantasy. Yet here was experimental evidence that nature performed transmutation spontaneously. The Rutherford-Soddy transformation theory, published in 1902–1903, won Rutherford the Nobel Prize in Chemistry in 1908.</p>
+  </section>
+
+  <section id="mcgill">
+    <span class="section-label">Montreal, 1898–1907</span>
+    <h2>McGill University: Radioactivity Decoded</h2>
+    <p>Rutherford spent nine extraordinarily productive years at McGill University in Montreal, appointed as Macdonald Professor of Physics. Here, working in excellent laboratory conditions with access to talented collaborators — especially the chemist Frederick Soddy — he laid the foundations of the science of radioactivity. The achievements of this period included the transmutation theory, the concept of radioactive half-life, identification of radon gas, and the first measurement of the charge-to-mass ratio of alpha particles (which strongly suggested they were helium nuclei — confirmed in 1908).</p>
+    <p>Rutherford's method was always the same: design the decisive experiment, build the apparatus with his own hands, take the measurement, publish quickly. He was not a man who theorised in the abstract. His style was physical, mechanical, intuitive. He had an almost tactile sense of what atoms were doing, even though he had never seen one and never could. He built intuitions from apparatus and data that would serve him well for the rest of his career.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Discovery · 1898</span>
+        <h4>Alpha &amp; Beta Named</h4>
+        <p>First differentiation of radiation types by penetrating power. The nomenclature (α, β, γ) has been used ever since.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Discovery · 1902</span>
+        <h4>Transmutation Theory</h4>
+        <p>With Soddy: radioactivity = spontaneous transmutation of one element into another, with emission of radiation and energy.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Concept · 1903</span>
+        <h4>Half-Life</h4>
+        <p>First precise formulation of radioactive decay as an exponential process characterised by the half-life — time for half the atoms to decay.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Measurement · 1906</span>
+        <h4>Alpha Particles = Helium</h4>
+        <p>Charge-to-mass ratio strongly suggested alpha particles are doubly-ionised helium. Confirmed spectroscopically in 1908.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="manchester">
+    <span class="section-label">Manchester, 1907–1919</span>
+    <h2>The Gold Foil Experiment: Discovering the Nucleus</h2>
+    <p>In 1907, Rutherford accepted the chair of physics at the University of Manchester. It was the right decision at exactly the right moment. At Manchester he assembled a brilliant team — including Hans Geiger (who would later invent the Geiger counter) and, later, a young Danish student named Niels Bohr — and set in motion the experiment that would change humanity's understanding of the atom forever.</p>
+    <p>The prevailing model of the atom in 1908 was J.J. Thomson's <strong>"plum pudding model"</strong>: electrons embedded in a diffuse, positively charged medium, like raisins in a Christmas pudding. Rutherford decided to test it by shooting alpha particles at a thin target. Since alpha particles were known to be fairly heavy and fast-moving, and since the plum pudding atom was thought to be a diffuse distribution of charge, the expectation was that alpha particles would pass through with only very small deflections.</p>
+    <p>Geiger and Marsden set up the experiment in 1909. They fired alpha particles at extremely thin gold foil and surrounded it with a zinc sulphide screen that would flash when hit by an alpha particle. Most alphas did indeed pass straight through. But a small fraction — roughly 1 in 8,000 — bounced back at large angles, including some that came back almost the way they had come.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It was quite the most incredible event that has ever happened to me in my life. It was almost as incredible as if you fired 15-inch shells at tissue paper and they came back and hit you."</blockquote>
+      <cite>— Ernest Rutherford, 1936, describing his reaction to the backscattering results</cite>
+    </div>
+
+    <p>Rutherford spent eighteen months working out the mathematics of what the result implied. He published his answer in 1911: the atom has a <strong>tiny, dense, positively charged nucleus</strong> at its centre, containing nearly all the atom's mass, surrounded by electrons orbiting at relatively vast distances. The atom was, in an almost literal sense, mostly empty space. The backscattering of alpha particles was caused by the rare direct approach toward the nucleus, which repelled them by its intense electric charge.</p>
+    <p>This was one of the most profound experimental discoveries in the history of physics. It demolished Thomson's model and replaced it with the nuclear atom — the atom that everyone still pictures today.</p>
+  </section>
+
+  <section id="cambridge-director">
+    <span class="section-label">Cambridge, 1919–1937</span>
+    <h2>Cavendish Director: Splitting the Atom</h2>
+    <p>In 1919, Rutherford returned to Cambridge to succeed J.J. Thomson as director of the Cavendish Laboratory, a position he would hold until his death. Before leaving Manchester, however, he achieved another landmark: the first <strong>artificial nuclear reaction</strong>. By bombarding nitrogen gas with alpha particles, he detected hydrogen nuclei being produced. He had transmuted nitrogen into oxygen, producing a hydrogen nucleus as a by-product. He named that hydrogen nucleus the <strong>proton</strong> — a name that has stuck permanently.</p>
+    <p>As Cavendish director, Rutherford ran the world's most productive physics laboratory with remarkable informality. He was known for wandering through the lab singing "Onward, Christian Soldiers" at full volume — reputedly because he believed vigorous singing, by stimulating circulation, sharpened his thinking. He encouraged his staff with enormous enthusiasm, demanding experiments rather than theory, results rather than speculation. His students included an extraordinary roster of people who would go on to win Nobel Prizes of their own: James Chadwick (who discovered the neutron in 1932, confirming a prediction Rutherford had made), John Cockcroft and Ernest Walton (who built the first particle accelerator), Cecil Powell, and Patrick Blackett.</p>
+    <p>Rutherford himself received the ultimate scientific honour: <strong>elevation to the peerage as Baron Rutherford of Nelson</strong> in 1931 — the first Nobel laureate to receive a peerage. He was deeply proud of his New Zealand origins and chose Nelson specifically to honour his birthplace.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Experiment · 1911</span>
+        <h4>Nuclear Model of Atom</h4>
+        <p>The Geiger-Marsden gold foil experiment. Alpha backscattering proves a tiny, dense, positive nucleus. The modern atomic model is born.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Discovery · 1917</span>
+        <h4>First Artificial Transmutation</h4>
+        <p>¹⁴N + ⁴He → ¹⁷O + ¹H. First man-made nuclear reaction. Discovery of the proton.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Prediction · 1920</span>
+        <h4>The Neutron Predicted</h4>
+        <p>Rutherford predicted a neutral particle of nuclear mass. Chadwick confirmed it experimentally in 1932 — winning his own Nobel.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Leadership · 1919–1937</span>
+        <h4>Cavendish Director</h4>
+        <p>Ran the world's most productive physics lab informally but brilliantly. His students produced more Nobel Prizes than most countries.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="death-and-burial">
+    <span class="section-label">Death, 1937</span>
+    <h2>Westminster Abbey: Next to Newton</h2>
+    <p>Ernest Rutherford died on <strong>19 October 1937</strong> in Cambridge, aged sixty-six, from a strangulated hernia. The cause of death was unexpected — he had seemed in robust health. He was operated on but the operation was unsuccessful. He died four days later, leaving physics a transformed discipline.</p>
+    <p>The honours accorded at his death were commensurate with his stature. His ashes were interred in <strong>Westminster Abbey</strong>, in the nave near the graves of Isaac Newton, Lord Kelvin, and Charles Darwin — a physical embedding in the geological strata of British science. Of the scientists buried in or memorialised in Westminster Abbey, Rutherford occupies a position as a peer of the first rank: the man who found what atoms are made of, who showed that one element can become another, who discovered the proton and predicted the neutron, who first split the nucleus.</p>
+    <p>His last scientific paper was submitted just weeks before his death. He never stopped working. He never became a theorist. To the end, he was a man with his hands on apparatus, thinking physically about what matter was made of and what could be learned by firing things at it.</p>
+
+    <div class="pull-quote">
+      <blockquote>"All science is either physics or stamp collecting."</blockquote>
+      <cite>— Ernest Rutherford (attributed)</cite>
+    </div>
+  </section>
+
+  <section id="timeline-full">
+    <span class="section-label">Life in Full</span>
+    <h2>A Chronological Record</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">30 August 1871</div>
+        <div class="timeline-title">Born in Brightwater, Nelson, New Zealand</div>
+        <div class="timeline-body">Fourth of twelve children of James Rutherford (farmer) and Martha Thompson (teacher). Colonial New Zealand — remote from European scientific culture.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1889–1893</div>
+        <div class="timeline-title">Canterbury College, Christchurch</div>
+        <div class="timeline-body">Double First in mathematics and physics. Builds his first electromagnetic induction device — a radio wave detector, before Marconi's famous demonstrations.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1895</div>
+        <div class="timeline-title">Exhibition Scholarship: Cambridge's Cavendish Laboratory</div>
+        <div class="timeline-body">Works under J.J. Thomson. Designs the most sensitive radio receiver yet built. Then turns to uranium radiation, recently discovered by Becquerel.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1898</div>
+        <div class="timeline-title">Alpha and Beta Radiation Named</div>
+        <div class="timeline-body">Identifies two distinct types of uranium radiation with different penetrating powers. Names them alpha and beta. The nomenclature endures.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1898</div>
+        <div class="timeline-title">Appointed Macdonald Professor, McGill University, Montreal</div>
+        <div class="timeline-body">Nine years of extraordinary productivity. Working with Soddy, proposes the transmutation theory of radioactivity.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1902–1903</div>
+        <div class="timeline-title">Transmutation Theory with Frederick Soddy</div>
+        <div class="timeline-body">Radioactivity is spontaneous transmutation: one element becomes another by emitting radiation. Revolutionary — initially controversial. Proved correct.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1903</div>
+        <div class="timeline-title">Half-Life Concept</div>
+        <div class="timeline-body">Formulates radioactive decay as an exponential law characterised by the half-life. Fundamental to nuclear physics, geology, archaeology (carbon dating), and medicine.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1908</div>
+        <div class="timeline-title">Nobel Prize in Chemistry</div>
+        <div class="timeline-body">"For his investigations into the disintegration of the elements, and the chemistry of radioactive substances." He joked that this was the "fastest transmutation of all" — physicist into chemist.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1907</div>
+        <div class="timeline-title">Chair of Physics, University of Manchester</div>
+        <div class="timeline-body">Assembles a brilliant team including Geiger. Prepares the ground for the gold foil experiment.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1909–1911</div>
+        <div class="timeline-title">The Geiger-Marsden Experiment (Gold Foil)</div>
+        <div class="timeline-body">Alpha particles fired at gold foil. Most go straight through; ~1 in 8,000 bounce back. Rutherford's analysis (1911): the nuclear model of the atom.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1917</div>
+        <div class="timeline-title">First Artificial Nuclear Reaction</div>
+        <div class="timeline-body">¹⁴N + ⁴He → ¹⁷O + ¹H. Nitrogen bombarded with alpha particles produces oxygen and a hydrogen nucleus. Names the hydrogen nucleus: the proton.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1919</div>
+        <div class="timeline-title">Cavendish Director, Cambridge</div>
+        <div class="timeline-body">Succeeds J.J. Thomson. Runs the world's most productive physics laboratory until his death in 1937.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1920</div>
+        <div class="timeline-title">Predicts the Neutron</div>
+        <div class="timeline-body">Proposes a neutral nuclear particle to explain atomic masses. Chadwick discovers it experimentally in 1932, winning the Nobel Prize.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1931</div>
+        <div class="timeline-title">Baron Rutherford of Nelson</div>
+        <div class="timeline-body">Elevated to the peerage — first Nobel laureate to become a peer. Chose Nelson to honour his New Zealand birthplace.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">19 October 1937</div>
+        <div class="timeline-title">Died in Cambridge, Aged 66</div>
+        <div class="timeline-body">From a strangulated hernia. Ashes interred in Westminster Abbey, near Newton, Kelvin, and Darwin.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="character">
+    <span class="section-label">The Man</span>
+    <h2>Personality and Character</h2>
+    <p>Rutherford was a large, energetic man — physically imposing, loud, enthusiastic, and utterly self-confident in his scientific judgment. He possessed none of the nervous self-doubt that characterised many of his contemporaries. He was not given to elaborate theory; he thought in physical terms, in apparatus and observation. His personal warmth and directness were legendary. He was equally at ease with a Nobel laureate and a laboratory technician, and he inspired fierce loyalty in his students.</p>
+    <p>He had a volcanic temper but it passed quickly. He was capable of extraordinary generosity — he was the first to acknowledge the contributions of his collaborators, and the Nobel Prizes later won by Chadwick, Cockcroft, Walton, and others were in no small part the fruit of directions Rutherford had set. He had an almost complete lack of interest in personal wealth and a complete lack of pomposity. He was knighted in 1914 and made a baron in 1931, but he remained the straightforward New Zealander who had arrived at Cambridge with a scholarship and a determination to understand the atom.</p>
+    <p>His famous dictum — <em>"All science is either physics or stamp collecting"</em> — was in part a joke, in part a provocation, and in part a genuine expression of his hierarchy of knowledge. He believed that the deepest questions in science were questions about the fundamental structure of matter, and that everything else, however valuable, was ultimately description rather than explanation. History has been kind to this view: nuclear physics proved to be the key that unlocked not just chemistry but biology, medicine, geology, and cosmology.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Ernest Rutherford Series — Vol. 0: The Person<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

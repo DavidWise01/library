@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World — Kepler Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050810;
+    --blue: #1d4ed8;
+    --gold: #ca8a04;
+    --text: #dde4f0;
+    --muted: #8090b0;
+    --card-bg: #080c18;
+    --card-border: #1a2040;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,8,16,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    display: flex; align-items: center; padding: 0 2rem; height: 52px; overflow-x: auto;
+  }
+  nav a {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--muted); text-decoration: none;
+    padding: 0 1.1rem; height: 52px; display: flex; align-items: center;
+    border-right: 1px solid #101830; white-space: nowrap; transition: color 0.2s, background 0.2s;
+  }
+  nav a:first-child { border-left: 1px solid #101830; }
+  nav a:hover { color: var(--gold); background: rgba(202,138,4,0.07); }
+  nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+  nav .series-label { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); margin-right: 1.5rem; letter-spacing: 0.08em; white-space: nowrap; flex-shrink: 0; }
+
+  .hero { position: relative; padding: 5rem 2rem 4rem; text-align: center; overflow: hidden; border-bottom: 1px solid var(--card-border); }
+  .hero-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.09; width: 480px; height: 480px; pointer-events: none; }
+  .orbit-ellipse { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: drawOrbit 2s 0.3s ease forwards; }
+  @keyframes drawOrbit { to { stroke-dashoffset: 0; } }
+
+  .kick { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 1rem; }
+  h1 { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 0.6rem; position: relative; }
+  h1 em { color: var(--gold); font-style: normal; }
+  .subtitle { font-family: 'Newsreader', serif; font-size: 1.2rem; font-style: italic; color: var(--muted); margin-bottom: 2rem; }
+  .band { display: inline-flex; align-items: center; font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--paper); background: var(--gold); padding: 0.3rem 1rem; margin-bottom: 2rem; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  h2 { font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 600; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--card-border); }
+  h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600; color: var(--blue); margin: 2rem 0 0.6rem; letter-spacing: 0.04em; }
+  p { margin-bottom: 1.2rem; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+  .card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--gold); }
+  .card .card-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+  .card h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.5rem; }
+  .card p { font-size: 0.95rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  blockquote { border-left: 3px solid var(--gold); margin: 2rem 0; padding: 1rem 1.5rem; background: var(--card-bg); font-style: italic; font-size: 1.1rem; color: var(--text); }
+  blockquote cite { display: block; font-style: normal; font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.7rem; }
+
+  .highlight { background: var(--blue); color: #dbeafe; padding: 1.25rem 1.5rem; margin: 2rem 0; border-left: 4px solid #60a5fa; }
+  .highlight .kick { color: #93c5fd; margin-bottom: 0.4rem; }
+
+  .person-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.4rem;
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .person-card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--gold); }
+  .person-initial { width: 50px; height: 50px; background: var(--blue); color: #fff; font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .person-name { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
+  .person-date { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 0.4rem; }
+  .person-card p { font-size: 0.9rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  .colophon { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--card-border); font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); line-height: 1.8; }
+  .colophon strong { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .person-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Kepler</span>
+  <a href="0-who.html">0 · Who</a>
+  <a href="1-laws.html">1 · Laws</a>
+  <a href="2-world.html" class="active">2 · World</a>
+  <a href="3-legacy.html">3 · Legacy</a>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse class="orbit-ellipse" cx="250" cy="240" rx="180" ry="130"/>
+    <circle fill="var(--gold)" cx="126" cy="240" r="10"/>
+    <circle fill="var(--blue)" cx="430" cy="240" r="6">
+      <animateMotion dur="5s" repeatCount="indefinite" path="M 180,0 A 180,130 0 1 1 180,-0.001 Z" additive="sum"/>
+    </circle>
+  </svg>
+  <span class="kick">Kepler Series · Volume 2</span>
+  <h1>The <em>World</em></h1>
+  <p class="subtitle">Prague · Uraniborg · The Thirty Years' War · A Mother's Witch Trial</p>
+  <span class="band">Science in the Age of Religious War</span>
+</div>
+
+<main>
+
+  <p>Kepler did his greatest work during one of the most catastrophically violent periods in European history. The Thirty Years' War (1618–1648) — a conflict that killed perhaps a third of the population of the German lands through combat, famine, and plague — began the year before he published his Third Law. He spent the last decade of his life moving between cities as the war swept through the empire, defending his mother against witchcraft charges, and trying to collect a salary that was perpetually in arrears. The laws of planetary motion emerged from this chaos.</p>
+
+  <h2>Prague Under Rudolf II: A Strange Sanctuary</h2>
+
+  <p>When Kepler arrived in Prague in 1600, he entered one of the most unusual courts in Europe. Holy Roman Emperor Rudolf II (r. 1576–1612) was a deeply eccentric ruler. He largely withdrew from active governance, transferring much of his political responsibility to his brother, and devoted himself to collecting: art, curiosities, scientific instruments, and scholars.</p>
+
+  <p>Rudolf's Kunstkammer — his "cabinet of wonders" — was one of the most extraordinary collections in the world: paintings by Dürer and Arcimboldo (whose portraits used arrangements of fruit, vegetables, and books to form human faces), clocks and scientific instruments of all kinds, exotic animals, and shelves of natural curiosities. Rudolf was also deeply interested in alchemy and astrology — he patronized alchemists (many of them frauds) and kept court astrologers. John Dee and Edward Kelley, the English occultists, spent time at his court.</p>
+
+  <p>This mixture of genuine scientific interest and mystical credulity created an environment that was, paradoxically, hospitable to unconventional thinkers. Rudolf didn't care whether you were a Copernican or a Ptolemaist; he cared whether you were interesting and competent. Kepler, whose scientific work was intertwined with genuine mystical belief about the mathematical harmony of the cosmos, fit this court surprisingly well.</p>
+
+  <p>Prague under Rudolf was also religiously tolerant by the standards of the era. The city had a large Jewish community (Rudolf employed the Jewish astronomer David Gans as an assistant to Tycho Brahe), Protestants of various confessions, Catholics, and heterodox thinkers of many kinds. The Counter-Reformation had not yet fully gripped Bohemia. For Kepler, a Lutheran in what would become an increasingly hostile Catholic environment, this tolerance was essential to his survival as a scholar.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">The Patron</span>
+      <h4>Emperor Rudolf II</h4>
+      <p>Eccentric collector of art, science, and occult knowledge. Withdrew from politics, patronized scholars. Created an unusually tolerant intellectual environment in Prague. Deposed in 1611.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">The City</span>
+      <h4>Prague, 1600–1612</h4>
+      <p>Capital of the Holy Roman Empire under Rudolf. Multi-confessional, intellectually active, home to Kepler, Brahe, and dozens of other scholars from across Europe.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">The Collection</span>
+      <h4>Rudolf's Kunstkammer</h4>
+      <p>One of Europe's greatest cabinets of curiosity — art, scientific instruments, natural wonders, clocks, astronomical devices. A physical expression of Renaissance universalism.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">The Atmosphere</span>
+      <h4>Science and Mysticism Together</h4>
+      <p>Rudolf patronized alchemists and court astrologers alongside genuine astronomers. Kepler, whose science was inseparable from his mysticism, navigated this environment successfully.</p>
+    </div>
+  </div>
+
+  <h2>Tycho Brahe's Island: Uraniborg</h2>
+
+  <p>To understand Tycho Brahe and why his data was so critical to Kepler, you need to understand what he had built on the island of Hven. In 1576, King Frederick II of Denmark granted Tycho the island of Hven in the Danish Sound (between modern Denmark and Sweden) and the funds to construct an observatory. What Tycho built there — Uraniborg, "Castle of the Heavens" — was the most sophisticated astronomical observatory in the pre-telescopic world.</p>
+
+  <p>Uraniborg was not merely a building with telescopes; the telescope had not yet been invented. It was a precision instrument platform — a castle-sized structure designed around mechanical measuring instruments: large quadrants (for measuring the altitude of objects above the horizon), sextants (for measuring angular separations), and armillary spheres (for tracking positions against the celestial sphere). Tycho had these instruments built to the highest standards of the era, calibrated with extraordinary care, and used them night after night in systematic observational programs.</p>
+
+  <p>The result, after twenty years: the most complete and precise record of planetary positions ever accumulated. Tycho could measure positions to within about one arcminute — roughly sixty times more precise than the naked-eye estimates of his predecessors. It was this precision that made the difference. Earlier astronomical data was imprecise enough that small errors in orbital models could be hidden in the measurement uncertainty. Tycho's data was precise enough to expose them. When Kepler found his circular models off by eight arcminutes, he knew it was the model, not the measurement, that was wrong.</p>
+
+  <p>Uraniborg was also a surprisingly self-contained world: it had a paper mill, a printing press (to publish Tycho's results), laboratories, and accommodations for a staff of assistants. Tycho ran it like a feudal lord, which in a sense he was — as island overlord he had legal authority over the peasants of Hven. Relations with the peasants were reportedly not good. He was also, by contemporary accounts, an extraordinarily demanding employer of his astronomical assistants.</p>
+
+  <div class="person-card">
+    <div class="person-initial">T</div>
+    <div>
+      <div class="person-name">Tycho Brahe</div>
+      <div class="person-date">1546–1601 · Denmark / Prague</div>
+      <p>Danish nobleman, greatest observational astronomer of the pre-telescopic era. Built Uraniborg on Hven. Lost part of his nose in a duel over a mathematical argument and wore a copper prosthetic. His 20 years of precise data gave Kepler what he needed. Died in Prague, 1601 — bladder rupture or arsenic poisoning, debated. Kepler inherited the data and the position of Imperial Mathematician.</p>
+    </div>
+  </div>
+
+  <h2>The Copernican Context</h2>
+
+  <p>Kepler worked in the shadow of the Copernican revolution — or, more precisely, in its early stages, when the heliocentric system was known to scholars but controversial and not universally accepted. Nicolaus Copernicus had published <em>De Revolutionibus Orbium Coelestium</em> in 1543, the year of his death. The book proposed that the Earth and planets orbit the Sun, but it was mathematically very similar to the Ptolemaic system (both used circles and epicycles) and made no clear observational predictions that would distinguish it from Ptolemy.</p>
+
+  <p>By Kepler's time, educated astronomers were aware of Copernicus, and many found the heliocentric model attractive on mathematical grounds (it was somewhat simpler). But it remained deeply controversial, both scientifically (the predictions were not obviously better) and theologically (it appeared to conflict with Biblical passages describing the Earth as fixed and the Sun as moving).</p>
+
+  <p>Kepler was a committed Copernican from his student days at Tübingen, where Michael Mästlin had introduced him to the system. He believed heliocentrism not just as a mathematical convenience (as some contemporaries did) but as physical truth — the Sun really was at the center, and the planets really did orbit it. This physical commitment drove his search for physical laws: if the Sun was the center of the system, it must exert some force on the planets. Kepler actually proposed something like a magnetic emanation from the Sun that pushed the planets along their orbits — a wrong mechanism, but the right instinct that led him toward what we would now call gravitational physics.</p>
+
+  <h2>The Galileo Affair: A Warning Kepler Watched</h2>
+
+  <p>In 1633, the Inquisition tried Galileo Galilei for his advocacy of the Copernican system and forced him to recant. Kepler had died three years earlier, but he lived through the early stages of the conflict between Galileo and the Church. The two men corresponded; Kepler supported Galileo's telescopic observations (which Galileo published in 1610) enthusiastically, writing a treatise — the <em>Dissertatio cum Nuncio Sidereo</em> — endorsing Galileo's findings.</p>
+
+  <p>Galileo, for his part, was cooler toward Kepler. He never endorsed Kepler's elliptical orbit theory (preferring circular orbits himself, a strange conservatism given his general iconoclasm). Galileo also never fully engaged with the three laws. Their relationship was one of mutual acknowledgment without full mutual understanding.</p>
+
+  <p>The fate of Galileo — condemned, forced to recant, placed under house arrest — illustrates the intellectual environment Kepler navigated. Kepler was less directly exposed because he was Lutheran rather than Catholic, and the Protestant churches, while sometimes hostile to Copernicus (Luther reportedly called Copernicus a fool who wanted to overturn the art of astronomy), lacked the Inquisition's institutional enforcement mechanisms.</p>
+
+  <div class="highlight">
+    <span class="kick">The Religious Divide</span>
+    <p style="margin:0; color:#dbeafe; font-size:1rem;">Kepler was a devout Lutheran in a world being torn apart by Catholic-Protestant conflict. The Thirty Years' War forced him from Graz (1600, expelled by Counter-Reformation authorities), eventually from Prague (1612, Rudolf deposed), and from Linz (1626, war arrived). He moved six times in his career due to religious conflict — always trying to find a place where he could work.</p>
+  </div>
+
+  <h2>The Thirty Years' War</h2>
+
+  <p>The Thirty Years' War (1618–1648) was the most destructive conflict in European history before the 20th century. Beginning as a religious conflict between Protestant and Catholic states within the Holy Roman Empire, it eventually drew in most of the great European powers — France, Spain, Sweden, Denmark — and transformed into a complex struggle for territory and power that overlay and consumed the religious dimension.</p>
+
+  <p>The human cost was catastrophic. The population of the German lands fell by perhaps 25–40% during the war through combat, famine, displacement, and plague. Entire regions were depopulated. Cities were sacked and burned. The war created a generation of Europeans for whom violence and displacement were normal conditions of life.</p>
+
+  <p>Kepler lived through the first twelve years of this war. It destroyed his stable working environment in Linz when the city was besieged in 1626. It impoverished the Imperial Treasury to the point where his salary went unpaid for years. His books were placed on the Index of Forbidden Books during the Catholic phase of the war's religious enforcement. He died in 1630 riding to collect the money he was owed, in a city (Regensburg) where an Imperial Diet was meeting — a journey he took because he had no other way to access funds.</p>
+
+  <h2>The Witch Trial of Katharina Kepler</h2>
+
+  <p>The most personal dimension of Kepler's world was the six-year ordeal of his mother's witch trial. Katharina Kepler (née Guldenmann) was tried for witchcraft in Leonberg, Württemberg, between 1615 and 1621. The charge originated in a neighborhood dispute with a woman named Katherine Reinbold, who accused Katharina of offering her a drink that made her ill. Additional accusations accumulated: she had allegedly caused other illnesses, made a man lame, requested that a local master craftsman make a silver goblet from her dead father's skull (denied).</p>
+
+  <p>The accusation of witchcraft was not unusual in this period. Witch trials were epidemic in the Holy Roman Empire, particularly in the southwest German territories, between roughly 1560 and 1630. The religious turmoil of the Reformation and Counter-Reformation, combined with economic stress and local social conflicts, created conditions in which accusations proliferated and trials were taken seriously by authorities.</p>
+
+  <p>Katharina was not an easy woman to defend. She was sharp-tongued, involved in ongoing disputes with neighbors, and had a lifelong interest in folk medicine and herbal remedies that could be interpreted as evidence of magical practice. She reportedly did not help herself by returning repeatedly to the magistrates to demand that proceedings be concluded, which kept the case alive when it might have died quietly.</p>
+
+  <p>Kepler's defense strategy was essentially legal and rhetorical: a 128-page document refuting each accusation methodically, with testimony and counter-argument. He could not appear in person easily (he was working in Linz, and his own position was politically sensitive). He directed the defense from a distance, making occasional trips to Württemberg for critical hearings.</p>
+
+  <p>In 1620, Katharina was arrested and imprisoned. She was kept in chains in the jail of the local bailiff — not in a dungeon, but in a cell — for fourteen months. She was subjected to <em>territio verbalis</em>: she was brought to the torture chamber, shown the instruments, and had the tortures described to her in detail, with a final demand that she confess. She was seventy-three years old, a year into imprisonment. She refused to confess. She asked to be allowed to kneel and pray instead.</p>
+
+  <p>She was released in September 1621. The charges were not fully dismissed — the proceedings simply lapsed — but she was free. She died in April 1622, six months after her release. Kepler wrote about her death with grief and evident relief, and with the guilt of a son who had not been able to protect her fully from what she endured.</p>
+
+  <blockquote>
+    "My mother is sixty-eight years old, and it is seventy-seven months since she has been at peace. I cannot simply close my eyes and ears to the cries of my mother. She is in a miserable plight."
+    <cite>— Kepler, in a letter during his mother's imprisonment, 1621</cite>
+  </blockquote>
+
+  <h2>Kepler's Mysticism: Harmonice Mundi</h2>
+
+  <p>Kepler was not a modern scientist in his self-conception. He was a deeply religious man who believed that the mathematical structure of the cosmos was a direct expression of God's mind. His 1619 book <em>Harmonice Mundi</em> — "The Harmony of the World" — expressed this belief at length. The book proposed that the planetary orbits were arranged according to musical harmonic ratios: the ratios between the maximum and minimum angular speeds of each planet, as seen from the Sun, corresponded to musical intervals.</p>
+
+  <p>This theory was elaborate, sophisticated, and wrong — the actual orbital data does not fit musical harmonies with any precision. But embedded in the middle of this mystical framework, almost as a parenthetical observation, was the Third Law of planetary motion: T² ∝ a³. Kepler had found it by searching for harmonic patterns in the data. The mystical search led to genuine science.</p>
+
+  <p>This is a pattern in Kepler: his motivations were often mystical, his methods were mathematical, and his results were physically real. He was searching for God's mathematical design in the heavens; he found Keplerian mechanics. The two things were not, for him, in contradiction.</p>
+
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Author: David Lee Wise / ROOT0 / TriPod LLC<br>
+    License: CC-BY-ND-4.0<br>
+    Series: Johannes Kepler · Volume 2 of 3<br>
+    Filed: C:/repos/library/johannes-kepler/2-world.html
+  </div>
+
+</main>
+</body>
+</html>

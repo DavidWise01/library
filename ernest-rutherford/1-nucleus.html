@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernest Rutherford — Vol. 1: The Nucleus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050a08;
+    --green: #15803d;
+    --gold: #ca8a04;
+    --text: #d4e8dc;
+    --muted: #5a7a66;
+    --border: #0d1f14;
+    --card-bg: #081209;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 1.1rem; line-height: 1.75; }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(5,10,8,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem; display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .nav-brand { font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.08em; margin-right: 2rem; text-decoration: none; }
+  .nav-links { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+  .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); text-decoration: none; padding: 0.35rem 0.85rem; border: 1px solid transparent; transition: all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); border-color: var(--green); }
+  .hero { position: relative; width: 100%; min-height: 520px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(ellipse at 50% 60%, #041408 0%, var(--paper) 70%); padding: 4rem 2rem 3rem; }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.75; }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 780px; }
+  .kick { font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.2rem; display: block; }
+  .hero-title { font-family: 'Cinzel', serif; font-weight: 800; font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.05; color: #fff; text-shadow: 0 0 60px rgba(21,128,61,0.5); margin-bottom: 0.5rem; }
+  .hero-subtitle { font-family: 'Cinzel', serif; font-weight: 500; font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--gold); letter-spacing: 0.06em; margin-bottom: 1.5rem; }
+  .hero-lead { font-family: 'Newsreader', serif; font-style: italic; font-size: 1.15rem; color: var(--text); max-width: 600px; margin: 0 auto; opacity: 0.85; }
+  .band { background: var(--green); color: #e8f5ee; padding: 0.6rem 2rem; text-align: center; font-family: 'Space Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; }
+  main { max-width: 1080px; margin: 0 auto; padding: 4rem 2rem; }
+  section { margin-bottom: 5rem; }
+  .section-label { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 0.75rem; display: block; }
+  h2 { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: #fff; margin-bottom: 1.5rem; line-height: 1.2; }
+  h3 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.75rem; margin-top: 2rem; }
+  p { margin-bottom: 1.2rem; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+  em { color: var(--gold); font-style: italic; }
+  .equation-box {
+    background: var(--card-bg);
+    border: 1px solid var(--green);
+    border-left: 4px solid var(--green);
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+  }
+  .equation-box .eq {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    color: #fff;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+  .equation-box .eq-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+  .card { background: var(--card-bg); border: 1px solid var(--border); padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+  .card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--green); }
+  .card-tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--green); margin-bottom: 0.6rem; display: block; }
+  .card h4 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.6rem; }
+  .card p { font-size: 0.9rem; opacity: 0.82; margin: 0; }
+  .pull-quote { border-left: 4px solid var(--green); padding: 1.5rem 2rem; margin: 3rem 0; background: var(--card-bg); }
+  .pull-quote blockquote { font-family: 'Newsreader', serif; font-style: italic; font-size: 1.4rem; line-height: 1.5; color: #fff; margin-bottom: 0.75rem; }
+  .pull-quote cite { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 2rem 0; }
+  .stat { background: var(--card-bg); padding: 1.5rem 1.25rem; text-align: center; }
+  .stat-num { font-family: 'Cinzel', serif; font-weight: 800; font-size: 2.4rem; color: var(--gold); display: block; line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-box { background: var(--card-bg); border: 1px solid var(--border); padding: 1.75rem; }
+  .compare-box h4 { font-family: 'Cinzel', serif; font-weight: 600; font-size: 1rem; margin-bottom: 1rem; }
+  .compare-box.old h4 { color: var(--muted); }
+  .compare-box.new h4 { color: var(--gold); }
+  .compare-box ul { list-style: none; padding: 0; }
+  .compare-box ul li { font-size: 0.92rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); color: var(--text); opacity: 0.85; }
+  .compare-box ul li:last-child { border-bottom: none; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 4rem 0; }
+  footer { border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; max-width: 1080px; margin: 0 auto; }
+  .colophon { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); line-height: 2; }
+  .colophon a { color: var(--green); text-decoration: none; }
+  .colophon a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Ernest Rutherford</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-nucleus.html" class="active">Vol. 1 — The Nucleus</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="nucGlow2" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#ca8a04" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow2">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Scattering diagram: nucleus centre, particles approaching, deflecting -->
+    <circle cx="450" cy="260" r="60" fill="url(#nucGlow2)" opacity="0.5">
+      <animate attributeName="r" values="55;70;55" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="260" r="20" fill="#ca8a04" opacity="0.9" filter="url(#glow2)"/>
+    <circle cx="450" cy="260" r="10" fill="#fde047"/>
+    <!-- Nucleus label -->
+    <text x="470" y="255" font-family="monospace" font-size="13" fill="#ca8a04" opacity="0.8">nucleus</text>
+    <!-- Alpha particle paths -->
+    <!-- Most go straight through (far from nucleus) -->
+    <line x1="80" y1="130" x2="820" y2="130" stroke="#86efac" stroke-width="2" opacity="0.5" stroke-dasharray="8,4"/>
+    <circle r="5" fill="#86efac" filter="url(#glow2)">
+      <animateMotion dur="3s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion>
+    </circle>
+    <path id="p1" d="M80,130 L820,130" fill="none"/>
+    <line x1="80" y1="170" x2="820" y2="170" stroke="#86efac" stroke-width="2" opacity="0.4" stroke-dasharray="8,4"/>
+    <circle r="5" fill="#86efac" filter="url(#glow2)">
+      <animateMotion dur="3s" repeatCount="indefinite" begin="0.5s"><mpath href="#p2"/></animateMotion>
+    </circle>
+    <path id="p2" d="M80,170 L820,170" fill="none"/>
+    <!-- Slight deflection -->
+    <circle r="5" fill="#a3e635" filter="url(#glow2)">
+      <animateMotion dur="3.5s" repeatCount="indefinite" begin="1s"><mpath href="#p3"/></animateMotion>
+    </circle>
+    <path id="p3" d="M80,300 L400,295 L820,340" fill="none"/>
+    <!-- Large deflection -->
+    <circle r="6" fill="#fde047" filter="url(#glow2)">
+      <animateMotion dur="4s" repeatCount="indefinite" begin="0.8s"><mpath href="#p4"/></animateMotion>
+    </circle>
+    <path id="p4" d="M80,280 L430,268 L550,100 L700,40" fill="none"/>
+    <!-- Backscatter -->
+    <circle r="6.5" fill="#fb923c" filter="url(#glow2)">
+      <animateMotion dur="5s" repeatCount="indefinite" begin="1.5s"><mpath href="#p5"/></animateMotion>
+    </circle>
+    <path id="p5" d="M80,262 L430,262 L200,250 L80,200" fill="none"/>
+    <!-- Annotation -->
+    <text x="840" y="130" font-family="monospace" font-size="11" fill="#86efac" opacity="0.7">straight (most)</text>
+    <text x="700" y="50" font-family="monospace" font-size="10" fill="#fde047" opacity="0.8">large deflection</text>
+    <text x="40" y="188" font-family="monospace" font-size="10" fill="#fb923c" opacity="0.8">back­scatter</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 1 — The Work · 1909–1920</span>
+    <h1 class="hero-title">The Nucleus</h1>
+    <p class="hero-subtitle">Gold Foil, the Proton, and Nuclear Transmutation</p>
+    <p class="hero-lead">Most alpha particles went straight through gold foil. One in eight thousand came back. From this, Rutherford deduced the entire structure of the atom.</p>
+  </div>
+</div>
+
+<div class="band">Geiger-Marsden Experiment · Nuclear Model · Proton · First Artificial Transmutation · Neutron Predicted</div>
+
+<main>
+
+  <section id="geiger-marsden">
+    <span class="section-label">The Experiment, 1909–1911</span>
+    <h2>The Geiger-Marsden Gold Foil Experiment</h2>
+    <p>In 1909, Rutherford asked his assistant <strong>Hans Geiger</strong> and undergraduate student <strong>Ernest Marsden</strong> to conduct what seemed like a straightforward experiment: fire alpha particles at a very thin sheet of gold foil and record how they scattered. The expectation, based on J.J. Thomson's "plum pudding" model, was that the diffuse positive charge of the atom would deflect alphas only slightly. The alpha particle, being relatively massive and fast, should push through without much trouble — like a cannonball through a field of soft snow.</p>
+    <p>The apparatus was arranged so that a zinc sulphide screen surrounded the foil, flashing with a tiny scintillation whenever an alpha particle struck it. Geiger and Marsden counted thousands of flashes, recording their positions relative to the original direction of the alpha beam.</p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">1/8000</span><span class="stat-label">Alpha particles backscattered</span></div>
+      <div class="stat"><span class="stat-num">10⁻¹⁵</span><span class="stat-label">Metres — nuclear diameter</span></div>
+      <div class="stat"><span class="stat-num">10⁻¹⁰</span><span class="stat-label">Metres — atomic diameter</span></div>
+      <div class="stat"><span class="stat-num">99.99%</span><span class="stat-label">Atom that is empty space</span></div>
+    </div>
+
+    <h3>What the Data Said</h3>
+    <p>Three observations emerged from the data, each of them astonishing:</p>
+    <p><strong>First:</strong> The vast majority of alpha particles passed through the gold foil with no deflection at all, or only tiny deflections. This meant that most of the atom was, in some sense, empty — that a fast, heavy, charged particle could pass through it as if it were not there.</p>
+    <p><strong>Second:</strong> A small but measurable fraction of alpha particles were deflected at large angles — 30°, 60°, even 90° or more. This was completely unexpected under the Thomson model. The diffuse positive charge of the plum pudding simply could not provide enough force to deflect a fast heavy particle through such large angles.</p>
+    <p><strong>Third:</strong> Approximately 1 in 8,000 alpha particles bounced almost straight back — deflected through angles greater than 90°, coming back toward the source. This was the observation that Rutherford described with the artillery-shell simile. It was, in every sense, incredible.</p>
+
+    <div class="pull-quote">
+      <blockquote>"On consideration, I realized that this scattering backward must be the result of a single collision, and when I made calculations I saw that it was impossible to get anything of that order of magnitude unless you took a system in which the greater part of the mass of the atom was concentrated in a minute nucleus."</blockquote>
+      <cite>— Ernest Rutherford, 1936</cite>
+    </div>
+
+    <h3>Rutherford's Analysis (1911)</h3>
+    <p>Rutherford spent roughly eighteen months analysing the data mathematically. The calculation was elegant: if backscattering events arose from single collisions with a charged target, then the statistics of the scattering pattern could be used to determine the size and charge of that target. The result was unambiguous. The target — the nucleus — was approximately <strong>10⁻¹⁵ metres</strong> in diameter, compared to the atom's roughly <strong>10⁻¹⁰ metres</strong>. The nucleus was 100,000 times smaller than the atom. It contained essentially all of the atom's mass and all of its positive charge, in a volume 10¹⁵ times smaller than the atom itself.</p>
+    <p>This is the nuclear model of the atom that remains in use today. The atom is mostly empty space. Its positive charge and mass are concentrated in an almost vanishingly small nucleus. Electrons orbit far away, held by the electric attraction to the nucleus. The distances involved are hard to grasp: if the nucleus of a hydrogen atom were expanded to the size of a grape, the electron would orbit at a distance of about 500 metres.</p>
+  </section>
+
+  <section id="plum-vs-nuclear">
+    <span class="section-label">The Conceptual Revolution</span>
+    <h2>Thomson's Plum Pudding vs. Rutherford's Nuclear Atom</h2>
+    <div class="compare-grid">
+      <div class="compare-box old">
+        <h4>Thomson's Plum Pudding Model (1904)</h4>
+        <ul>
+          <li>Positive charge spread uniformly through the atom</li>
+          <li>Electrons embedded in the positive "pudding"</li>
+          <li>Atom has uniform density throughout</li>
+          <li>Small deflections only expected</li>
+          <li>No concentrated region of mass or charge</li>
+          <li>Disproved by the gold foil experiment</li>
+        </ul>
+      </div>
+      <div class="compare-box new">
+        <h4>Rutherford's Nuclear Model (1911)</h4>
+        <ul>
+          <li>Positive charge concentrated in a tiny nucleus</li>
+          <li>Electrons orbit far away at large distances</li>
+          <li>Atom is mostly empty space</li>
+          <li>Large and backward deflections possible</li>
+          <li>Nucleus ~100,000× smaller than atom</li>
+          <li>Basis of all subsequent atomic physics</li>
+        </ul>
+      </div>
+    </div>
+    <p>Rutherford published his analysis in a 1911 paper: <em>"The Scattering of α and β Particles by Matter and the Structure of the Atom"</em> in the Philosophical Magazine. It is one of the most consequential papers in the history of physics. The nuclear model immediately raised a new problem: why didn't electrons, losing energy by radiation as they accelerated around the nucleus, spiral inward and collapse? This problem was solved by Niels Bohr in 1913, using quantum theory to confine electrons to discrete orbits.</p>
+  </section>
+
+  <section id="alpha-beta">
+    <span class="section-label">Earlier Work, 1898–1908</span>
+    <h2>Alpha, Beta, and the Transmutation Theory</h2>
+    <p>Before the gold foil experiment, Rutherford had already transformed the understanding of radioactivity. His 1898 discovery that uranium's radiation comprised two distinct types — alpha and beta, with very different penetrating powers — was the first demonstration that "radiation" was not one thing but several. The third type, gamma radiation, was identified by Paul Villard in 1900 and confirmed to be electromagnetic radiation (short-wavelength X-rays) by Rutherford himself in 1914.</p>
+    <h3>The Transmutation Theory (1902)</h3>
+    <p>Working with chemist Frederick Soddy at McGill, Rutherford reached a startling conclusion: radioactivity is not a simple emission from unchanged atoms. It is a transformation — one element becoming another. When thorium emitted radiation, it was because a thorium atom was disintegrating and becoming a different element. The radiation was a by-product of this spontaneous transformation.</p>
+    <p>This was the transmutation theory, published in 1902 and 1903. It was greeted with deep suspicion — transmutation was the fantasy of alchemists, not respectable science. But the experimental evidence was overwhelming. Rutherford and Soddy had discovered, and correctly interpreted, radioactive decay: the spontaneous conversion of one atomic nucleus into another by the emission of radiation.</p>
+
+    <div class="equation-box">
+      <span class="eq">²³⁸U → ²³⁴Th + ⁴He (+ energy)</span>
+      <span class="eq-label">Uranium-238 decays to Thorium-234, emitting an alpha particle (helium nucleus) — an example of the transmutation theory</span>
+    </div>
+
+    <h3>Alpha Particles Are Helium Nuclei</h3>
+    <p>Rutherford had long suspected that alpha particles were doubly-ionised helium atoms (helium nuclei). By 1903 the charge-to-mass ratio was consistent with this interpretation. In 1908, working with Thomas Royds, he devised a beautiful experiment to confirm it: he allowed alpha particles to accumulate in a thin-walled glass tube, then collected the gas that formed and showed spectroscopically that it was helium. Alpha particles were definitively identified as helium-4 nuclei: two protons, two neutrons.</p>
+  </section>
+
+  <section id="proton">
+    <span class="section-label">Discovery, 1917–1919</span>
+    <h2>The First Artificial Transmutation: Discovering the Proton</h2>
+    <p>In 1917, while working at Manchester (and conducting wartime research on underwater acoustics), Rutherford made another transformative discovery. He had been firing alpha particles at various gases. When he fired at nitrogen, he detected an unexpected result: among the products was a particle with properties consistent with a hydrogen nucleus — a particle Rutherford had been calling a "hydrogen ion" but which he now understood to be a fundamental nuclear constituent.</p>
+
+    <div class="equation-box">
+      <span class="eq">¹⁴N + ⁴He → ¹⁷O + ¹H</span>
+      <span class="eq-label">Nitrogen-14 + Alpha particle → Oxygen-17 + Proton — the first artificial nuclear transmutation (1917)</span>
+    </div>
+
+    <p>This was the first time a human being had deliberately caused one element to be transformed into another by an artificial process. Nature had been doing radioactive transmutation spontaneously for billions of years; Rutherford had done it on purpose, in a laboratory, with apparatus he had built. The conceptual leap this represented was enormous: nuclear reactions were not just natural phenomena but phenomena that could be controlled and directed.</p>
+    <p>Rutherford named the hydrogen nucleus the <strong>proton</strong> in a 1920 paper — from the Greek "protos," meaning "first." The proton is the fundamental unit of positive charge in the atomic nucleus, and it is the constituent whose number determines what element an atom is (hydrogen: 1, helium: 2, carbon: 6, and so on). The naming of the proton is one of Rutherford's permanent contributions to scientific vocabulary.</p>
+  </section>
+
+  <section id="neutron">
+    <span class="section-label">Prediction, 1920 — Confirmation, 1932</span>
+    <h2>The Predicted Neutron</h2>
+    <p>By 1920, Rutherford had identified a puzzle in the nuclear model. Atoms have roughly equal numbers of protons and electrons in the usual chemical sense, but nuclear masses were consistently about twice what could be accounted for by protons alone. The nucleus of helium, for instance, had a charge corresponding to two protons but a mass corresponding to four protons.</p>
+    <p>In his 1920 Bakerian Lecture to the Royal Society, Rutherford proposed an explanation: the nucleus contained a hitherto-undiscovered neutral particle, approximately equal in mass to the proton but carrying no electric charge. He called it the <strong>neutron</strong>. He could not yet detect it because it carried no charge and would therefore not ionise matter in the way that alpha, beta, and gamma radiation did — the standard detection methods of the time relied on ionisation.</p>
+    <p><strong>James Chadwick</strong>, Rutherford's colleague and later collaborator at the Cavendish, devoted twelve years to searching for the neutron. In 1932, using beryllium bombarded by alpha particles, he detected uncharged particles of nuclear mass — exactly what Rutherford had predicted. Chadwick received the Nobel Prize in Physics in 1935. Rutherford's prediction, made in 1920, had been confirmed to the letter.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Alpha radiation</span>
+        <h4>Helium Nuclei</h4>
+        <p>Two protons + two neutrons. Stopped by a sheet of paper or a few centimetres of air. High ionising power.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Beta radiation</span>
+        <h4>Fast Electrons</h4>
+        <p>Electrons (or positrons) emitted from the nucleus during decay. Stopped by a few millimetres of aluminium.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Gamma radiation</span>
+        <h4>High-Energy Photons</h4>
+        <p>Electromagnetic radiation of nuclear origin. Penetrating — requires centimetres of lead or metres of concrete to attenuate.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The proton</span>
+        <h4>Named by Rutherford</h4>
+        <p>Hydrogen nucleus. Fundamental unit of nuclear positive charge. Number of protons = atomic number = chemical identity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scattering-formula">
+    <span class="section-label">The Mathematics</span>
+    <h2>Rutherford Scattering Formula</h2>
+    <p>Rutherford's 1911 analysis produced a precise mathematical formula for the distribution of scattered alpha particles as a function of angle. For a point nucleus with charge Ze, the differential cross-section — the probability of scattering through a given angle — is:</p>
+
+    <div class="equation-box">
+      <span class="eq">dσ/dΩ = (Z₁Z₂e²/4E)² · 1/sin⁴(θ/2)</span>
+      <span class="eq-label">Rutherford scattering formula — predicts the angular distribution of alpha particle scattering. Z₁, Z₂ = nuclear charges; E = kinetic energy; θ = scattering angle.</span>
+    </div>
+
+    <p>This formula was derived classically — using Coulomb's law of electrostatic repulsion and Newtonian mechanics. Remarkably, it remains valid in quantum mechanics as well: the quantum mechanical calculation gives exactly the same formula. This coincidence (which is not really a coincidence but a consequence of the mathematical properties of the Coulomb potential) means that the Rutherford formula is one of those rare classical results that survived the quantum revolution unchanged.</p>
+    <p>The formula was experimentally confirmed by Geiger and Marsden in a series of precise measurements from 1910 to 1913. It could predict, from the measured scattering angles, exactly what the nuclear charge and radius were. The results were consistent across many different target materials. The nuclear model was not just qualitatively right but quantitatively right — the formula worked.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The nucleus was unexpected — and then it was obvious. That is the nature of a great experimental discovery."</blockquote>
+      <cite>— Paraphrased from subsequent nuclear physicists reflecting on Rutherford's 1911 paper</cite>
+    </div>
+  </section>
+
+  <section id="summary">
+    <span class="section-label">The Scientific Legacy</span>
+    <h2>What Rutherford Discovered About the Nucleus</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Finding 1</span>
+        <h4>Atom Is Mostly Empty Space</h4>
+        <p>The nucleus is ~10⁻¹⁵ m across; the atom is ~10⁻¹⁰ m. The ratio of diameters is 100,000:1. By volume, the nucleus is 10¹⁵ times smaller.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finding 2</span>
+        <h4>Tiny, Dense, Positive Nucleus</h4>
+        <p>Nearly all of the atom's mass is in the nucleus. The nucleus carries all of the positive charge. Electrons orbit far away.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finding 3</span>
+        <h4>Nuclear Transmutation Is Real</h4>
+        <p>One element can become another — naturally (radioactive decay) or artificially (nuclear reactions). Rutherford was first to do it artificially.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finding 4</span>
+        <h4>The Proton Named</h4>
+        <p>Hydrogen nucleus identified as a fundamental nuclear constituent. Named "proton" by Rutherford 1920. The unit of nuclear identity.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Finding 5</span>
+        <h4>Neutron Predicted</h4>
+        <p>A neutral nuclear particle of mass equal to the proton was predicted in 1920, confirmed by Chadwick in 1932.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Foundation</span>
+        <h4>Nuclear Physics Born</h4>
+        <p>All of nuclear physics — fission, fusion, radioactive dating, nuclear medicine, nuclear power, nuclear weapons — descends from Rutherford's model.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Ernest Rutherford Series — Vol. 1: The Nucleus<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

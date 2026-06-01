@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernest Rutherford — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#050a08; --green:#15803d; --gold:#ca8a04; --text:#d4e8dc; --muted:#5a7a66; --border:#0d1f14; --card-bg:#081209; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(5,10,8,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--gold); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); border-color:var(--green); }
+  .hero { position:relative; width:100%; min-height:480px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#041408 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.6; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--gold); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(21,128,61,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--gold); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:600px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--green); color:#e8f5ee; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--gold); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--gold); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--green); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--green); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--green); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--green); text-decoration:none; }
+  .colophon a:hover { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Ernest Rutherford</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-nucleus.html">Vol. 1 — The Nucleus</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="worldGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#15803d" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#050a08" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="480" fill="url(#worldGlow)"/>
+    <!-- Globe outline -->
+    <circle cx="450" cy="240" r="180" fill="none" stroke="#15803d" stroke-width="1" opacity="0.3"/>
+    <!-- Latitude lines -->
+    <ellipse cx="450" cy="240" rx="180" ry="60" fill="none" stroke="#15803d" stroke-width="0.5" opacity="0.2"/>
+    <ellipse cx="450" cy="240" rx="180" ry="120" fill="none" stroke="#15803d" stroke-width="0.5" opacity="0.2"/>
+    <!-- Meridian -->
+    <ellipse cx="450" cy="240" rx="60" ry="180" fill="none" stroke="#15803d" stroke-width="0.5" opacity="0.2"/>
+    <!-- Location dots -->
+    <circle cx="490" cy="335" r="8" fill="#ca8a04" opacity="0.9"/><!-- NZ -->
+    <text x="505" y="340" font-family="monospace" font-size="11" fill="#ca8a04" opacity="0.8">New Zealand</text>
+    <circle cx="390" cy="155" r="8" fill="#86efac" opacity="0.9"/><!-- Cambridge -->
+    <text x="405" y="150" font-family="monospace" font-size="11" fill="#86efac" opacity="0.8">Cambridge</text>
+    <circle cx="330" cy="175" r="7" fill="#4ade80" opacity="0.8"/><!-- Manchester -->
+    <text x="270" y="185" font-family="monospace" font-size="10" fill="#4ade80" opacity="0.7">Manchester</text>
+    <circle cx="310" cy="155" r="7" fill="#a3e635" opacity="0.7"/><!-- Montreal -->
+    <text x="250" y="150" font-family="monospace" font-size="10" fill="#a3e635" opacity="0.7">Montreal</text>
+    <!-- Lines connecting -->
+    <line x1="490" y1="335" x2="390" y2="155" stroke="#ca8a04" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+    <line x1="390" y1="155" x2="330" y2="175" stroke="#86efac" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+    <line x1="390" y1="155" x2="310" y2="155" stroke="#86efac" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 2 — His World · New Zealand to Westminster</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Colonies, Cavendish, and the Birth of Nuclear Science</p>
+    <p class="hero-lead">From the farms of Nelson to the greatest physics laboratory in the world — the contexts that shaped the father of nuclear physics.</p>
+  </div>
+</div>
+
+<div class="band">New Zealand · Cambridge · Montreal · Manchester · The Cavendish · Students &amp; Collaborators</div>
+
+<main>
+
+  <section id="new-zealand">
+    <span class="section-label">Origins</span>
+    <h2>New Zealand: The Colonial Background</h2>
+    <p>Rutherford was born into a New Zealand that was barely three decades old as a British colony. The South Island in 1871 was largely agricultural; European settlement had been going on for only thirty years. There were no universities of international distinction, no laboratories, and no scientific tradition comparable to those of Britain, Germany, or France. The colony was building itself from scratch, and science was a luxury it could barely afford.</p>
+    <p>Yet the colonial environment gave Rutherford something that the established centres of European learning did not always produce: a direct, pragmatic, egalitarian temperament. He was not trained in the elaborate deference structures of Oxford or the Kaiser's Germany. He called things as he saw them, expected results from himself and everyone around him, and had no patience for scientific pretension. The New Zealand directness that visitors to Rutherford always noted was not just personal character but cultural formation.</p>
+    <p>New Zealand's system of competitive scholarships — designed specifically to send gifted colonial students to British universities — gave Rutherford his route out. The Exhibition of 1851 scholarship he won in 1895 was one of only a handful awarded annually across the British Empire. It brought him to Cambridge with enough support to survive for two years, and was the decisive event in his scientific career.</p>
+
+    <div class="pull-quote">
+      <blockquote>"We haven't the money, so we've got to think."</blockquote>
+      <cite>— Ernest Rutherford, to his research students at the Cavendish</cite>
+    </div>
+  </section>
+
+  <section id="cavendish-jj">
+    <span class="section-label">Cambridge, 1895–1898</span>
+    <h2>The Cavendish Laboratory Under J.J. Thomson</h2>
+    <p>The Cavendish Laboratory at Cambridge, when Rutherford arrived in 1895, was the finest experimental physics laboratory in the world. Founded in 1874 and equipped with the proceeds of a bequest from the Duke of Devonshire, it had been built by James Clerk Maxwell and shaped by Lord Rayleigh. Its current director was <strong>Joseph John Thomson</strong> — "J.J." to everyone — a man of extraordinary theoretical intuition combined with, paradoxically, very poor practical laboratory skills (he was famously bad at building apparatus and tended to break things). Thomson compensated by attracting and supervising the best hands-on experimentalists he could find.</p>
+    <p>The Cavendish in 1895 was buzzing with the new phenomena of late-nineteenth-century physics: X-rays (discovered by Röntgen in 1895), cathode rays (the subject of Thomson's research that would lead to the electron's discovery in 1897), and the mysterious emissions from uranium (Becquerel, 1896). It was the right place and the right time. Thomson immediately recognised Rutherford's experimental genius and pointed him toward the most productive problems.</p>
+    <p>The relationship between Thomson and Rutherford was warm and genuinely collegial, despite the fact that Rutherford would eventually disprove his director's model of the atom. Thomson congratulated Rutherford warmly on the nuclear model in 1911. Rutherford, on succeeding Thomson as Cavendish director in 1919, kept his predecessor's portrait on the wall. The Nobel laureate who trained the Nobel laureate who trained the Nobel laureates who built the bomb — the Cavendish lineage is the most productive in the history of physics.</p>
+  </section>
+
+  <section id="mcgill-world">
+    <span class="section-label">Montreal, 1898–1907</span>
+    <h2>McGill: Where Transmutation Was Discovered</h2>
+    <p>McGill University in Montreal was, by 1898, one of the best-equipped physics departments in the world, thanks to the extraordinary philanthropy of Canadian industrialist William Macdonald. The Macdonald Physics Building had equipment that the Cavendish could not match, including radioactive sources of unprecedented purity. For Rutherford, freshly appointed as Macdonald Professor of Physics at the age of twenty-seven, it was the ideal situation: excellent resources, sufficient independence, and enough distance from European academic politics to pursue his own program.</p>
+    <p>It was at McGill that Rutherford met Frederick Soddy, then a lecturer in chemistry. Soddy had trained as a chemist, which made him exactly the right collaborator for the chemical aspects of radioactivity. The partnership was remarkably productive: between 1901 and 1903, Rutherford and Soddy published a series of papers establishing the transformation theory of radioactivity, which remains, in all essentials, the correct account of radioactive decay.</p>
+    <p>The transmutation theory was not initially welcomed by the chemical establishment. The idea that elements — which chemists had always defined as immutable pure substances — could spontaneously transform into other elements was profoundly alien to the conceptual framework of chemistry. Soddy spent much of his subsequent career fighting for the theory's acceptance and working out its chemical implications, including the concept of isotopes (atoms of the same element with different masses) for which he received the Nobel Prize in Chemistry in 1921.</p>
+
+    <h3>Frederick Soddy: The Chemical Partner</h3>
+    <p>Soddy's contribution to the Rutherford-Soddy work was as great as Rutherford's own, though Rutherford received the Nobel and Soddy had to wait. Their collaboration illustrates a pattern in Rutherford's career: he attracted collaborators of the highest calibre, worked with them productively, and then sent them off to their own Nobel-worthy careers. Soddy went on to conceive and name isotopes, develop the concept of radioactive series, and investigate the industrial applications of atomic energy. He became increasingly pessimistic about the latter, worried that nuclear energy would be misused by the powerful before society was ready — a concern that proved prescient.</p>
+  </section>
+
+  <section id="manchester-world">
+    <span class="section-label">Manchester, 1907–1919</span>
+    <h2>Manchester: The Gold Foil Years</h2>
+    <p>The University of Manchester's physics department, when Rutherford arrived in 1907, was good but not yet great. Rutherford made it great. Within five years he had assembled one of the most remarkable research groups in the history of physics, and within three years he had made the discovery of the nuclear atom.</p>
+
+    <h3>Hans Geiger: The Detector Builder</h3>
+    <p><strong>Hans Geiger</strong>, a young German physicist, arrived at Manchester in 1906 and immediately formed a close working relationship with Rutherford. Geiger had extraordinary patience for the tedious business of counting scintillation flashes on a zinc sulphide screen — a task that required sitting in a darkened room for hours counting tiny flashes of light. It was Geiger and the undergraduate Marsden who actually performed the gold foil measurements. Geiger later returned to Germany and developed the Geiger counter — the radiation detector that bears his name — based on techniques he had learned at Manchester.</p>
+
+    <h3>Niels Bohr: The Quantum Visitor</h3>
+    <p><strong>Niels Bohr</strong> arrived at Manchester in 1912, fresh from his PhD in Copenhagen, intending to work with Thomson at the Cavendish. But Thomson was uninterested in the young Dane, and Bohr transferred to Manchester, where Rutherford immediately recognised his quality. In four months of intense work, Bohr solved the problem that Rutherford's nuclear model had created: why didn't electrons spiral into the nucleus? Bohr's answer — that electrons occupy discrete quantum orbits and cannot radiate while in them — was the Bohr atomic model, published in 1913. It was the first successful application of quantum theory to atomic structure, and it won Bohr the Nobel Prize in 1922.</p>
+
+    <h3>Otto Hahn: The Future Fission Discoverer</h3>
+    <p><strong>Otto Hahn</strong>, a German radiochemist, worked with Rutherford at McGill and then again briefly at Manchester. Hahn went on to become one of the leading radiochemists in Germany and, in 1938 (with Fritz Strassmann and with key theoretical input from Lise Meitner), discovered nuclear fission. The discovery, made in Berlin in December 1938, was one of the most consequential events of the twentieth century. Rutherford, who died in October 1937, never knew of it. He had been somewhat sceptical that nuclear energy could be practically extracted, famously calling those who predicted it "moonshine." He was wrong about the timeline but right that the technical challenges were enormous.</p>
+  </section>
+
+  <section id="cavendish-director">
+    <span class="section-label">Cambridge, 1919–1937</span>
+    <h2>The Cavendish Under Rutherford: A Factory of Nobel Prizes</h2>
+    <p>As Cavendish director from 1919 to 1937, Rutherford ran the world's most productive physics laboratory with a combination of informality, enthusiasm, and sharp scientific judgment. The Cavendish was not a wealthy laboratory by the standards of the great German institutes or the American endowed universities. It operated on relatively modest budgets and expected its researchers to make their own apparatus. The resulting culture was practical, inventive, and deeply experimental.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Student · Nobel 1935</span>
+        <h4>James Chadwick</h4>
+        <p>Discovered the neutron in 1932, confirming Rutherford's 1920 prediction. Built and led British nuclear programme (Manhattan Project collaboration).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Students · Nobel 1951</span>
+        <h4>Cockcroft &amp; Walton</h4>
+        <p>Built the first particle accelerator at the Cavendish (1932), first to artificially split a nucleus using an accelerator. Confirmed Einstein's E=mc².</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Student · Nobel 1948</span>
+        <h4>Patrick Blackett</h4>
+        <p>Developed the cloud chamber, photographed pair production and nuclear reactions. Succeeded Rutherford as leading figure in British physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Collaborator · Nobel 1908</span>
+        <h4>Frederick Soddy</h4>
+        <p>Worked with Rutherford at McGill. Developed transmutation theory. Later named and systematised isotopes. Nobel Chemistry 1921.</p>
+      </div>
+    </div>
+
+    <p>The Cavendish under Rutherford produced, between 1919 and 1937, a stream of discoveries that would not be replicated anywhere until the great American physics laboratories of the postwar era. The discovery of the neutron (1932), the first artificial nuclear disintegration by accelerator (1932), the discovery of the positron (confirmed by Blackett with the Cavendish cloud chamber), the development of nuclear magnetic resonance techniques — all came from the Cavendish in the Rutherford years.</p>
+  </section>
+
+  <section id="fission">
+    <span class="section-label">What Came Next</span>
+    <h2>Fission: The Discovery Rutherford Didn't Live to See</h2>
+    <p>In December 1938, a few months after Rutherford's death, Otto Hahn, Fritz Strassmann, and Lise Meitner announced the discovery of nuclear fission: the splitting of a uranium nucleus by a neutron into two roughly equal fragments, with the release of an enormous amount of energy. The theoretical interpretation — that the nucleus had split — was supplied by Meitner and her nephew Otto Robert Frisch, working in exile in Stockholm after fleeing Nazi Germany.</p>
+    <p>Rutherford had been aware that artificial transmutation released energy, and in various speeches and writings he had discussed the theoretical possibility of releasing nuclear energy on a large scale. But he was consistently sceptical that it could be done practically. In a 1933 address, he called the idea of extracting energy from the atom "moonshine." He was speaking before the neutron had been shown to be capable of triggering fission — before the chain reaction concept was understood. His scepticism was based on good physical reasoning about the difficulty of the problem; it was the discovery of fission that changed everything.</p>
+    <p>Leo Szilard, who conceived the idea of a chain reaction (and patented it in 1934), and Enrico Fermi, who built the first nuclear reactor in Chicago in 1942, were both well aware of Rutherford's foundational work. The path from Rutherford's gold foil experiment to Fermi's pile in Chicago took only thirty-three years. It is one of the fastest translations of fundamental research into world-changing technology in human history.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Ernest Rutherford Series — Vol. 2: His World<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

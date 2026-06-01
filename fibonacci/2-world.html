@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World — Fibonacci Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #080608;
+    --gold: #ca8a04;
+    --green: #166534;
+    --text: #e8e0d0;
+    --muted: #9a8f80;
+    --card-bg: #100e10;
+    --card-border: #2a2228;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,6,8,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    height: 52px;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 1.1rem;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #1e1a1e;
+    white-space: nowrap;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  nav a:first-child { border-left: 1px solid #1e1a1e; }
+  nav a:hover { color: var(--gold); background: rgba(202,138,4,0.07); }
+  nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+  nav .series-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-right: 1.5rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .hero-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.07;
+    width: 500px;
+    height: 500px;
+    pointer-events: none;
+  }
+
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+
+  h1 em { color: var(--gold); font-style: normal; }
+
+  .subtitle {
+    font-family: 'Newsreader', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .band {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--paper);
+    background: var(--gold);
+    padding: 0.3rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  main { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin: 3rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--green);
+    margin: 2rem 0 0.6rem;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 1.2rem; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 6px 6px 0 var(--gold);
+  }
+
+  .card .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .card p { font-size: 0.95rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  blockquote cite {
+    display: block;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 0.7rem;
+  }
+
+  .highlight {
+    background: var(--green);
+    color: #d1fae5;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    border-left: 4px solid #22c55e;
+  }
+
+  .highlight .kick { color: #86efac; margin-bottom: 0.4rem; }
+
+  /* ── MAP LEGEND ── */
+  .map-legend {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .map-legend .legend-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.3rem;
+  }
+
+  .dot-gold { background: var(--gold); }
+  .dot-green { background: #22c55e; }
+  .dot-red { background: #ef4444; }
+  .dot-blue { background: #3b82f6; }
+
+  .legend-text { font-size: 0.95rem; color: var(--text); }
+  .legend-sub { font-size: 0.82rem; color: var(--muted); font-style: italic; }
+
+  /* ── SCHOLAR PROFILE ── */
+  .scholar {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+  }
+
+  .scholar .initial {
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--paper);
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .scholar-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .scholar-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .scholar p { font-size: 0.92rem; color: var(--muted); margin: 0; line-height: 1.5; }
+
+  .colophon {
+    margin-top: 5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--card-border);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .colophon strong { color: var(--gold); }
+
+  .fib-rect { fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+  .fib-arc { fill: none; stroke: var(--green); stroke-width: 2; stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+  .sq1 { animation: drawSq 0.4s 0.2s ease forwards; }
+  .sq2 { animation: drawSq 0.4s 0.6s ease forwards; }
+  .sq3 { animation: drawSq 0.5s 1.0s ease forwards; }
+  .sq4 { animation: drawSq 0.5s 1.5s ease forwards; }
+  .sq5 { animation: drawSq 0.6s 2.0s ease forwards; }
+  .arc1 { animation: drawSq 0.4s 0.4s ease forwards; }
+  .arc2 { animation: drawSq 0.4s 0.8s ease forwards; }
+  .arc3 { animation: drawSq 0.5s 1.2s ease forwards; }
+  .arc4 { animation: drawSq 0.5s 1.7s ease forwards; }
+  .arc5 { animation: drawSq 0.6s 2.2s ease forwards; }
+  @keyframes drawSq { from { stroke-dashoffset: 2000; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .scholar { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Fibonacci</span>
+  <a href="0-who.html">0 · Who</a>
+  <a href="1-numbers.html">1 · Numbers</a>
+  <a href="2-world.html" class="active">2 · World</a>
+  <a href="3-legacy.html">3 · Legacy</a>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g transform="translate(130,180)">
+      <rect class="fib-rect sq1" x="18" y="0" width="18" height="18"/>
+      <rect class="fib-rect sq2" x="18" y="18" width="18" height="18"/>
+      <rect class="fib-rect sq3" x="0" y="0" width="36" height="36"/>
+      <rect class="fib-rect sq4" x="36" y="-18" width="54" height="54"/>
+      <rect class="fib-rect sq5" x="-54" y="-18" width="90" height="90"/>
+      <path class="fib-arc arc1" d="M 36,0 A 18,18 0 0 0 18,18"/>
+      <path class="fib-arc arc2" d="M 18,18 A 18,18 0 0 1 36,36"/>
+      <path class="fib-arc arc3" d="M 36,36 A 36,36 0 0 0 0,0"/>
+      <path class="fib-arc arc4" d="M 0,0 A 54,54 0 0 1 90,36"/>
+      <path class="fib-arc arc5" d="M 90,36 A 90,90 0 0 0 0,126"/>
+    </g>
+  </svg>
+  <span class="kick">Fibonacci Series · Volume 2</span>
+  <h1>The <em>World</em></h1>
+  <p class="subtitle">Medieval Mediterranean · Islamic Mathematics · Pisa, Bugia, and Frederick II</p>
+  <span class="band">The Civilization That Made Fibonacci Possible</span>
+</div>
+
+<main>
+
+  <p>Leonardo of Pisa did not invent Hindu-Arabic numerals. He did not invent algebra or the algorithm or the concept of zero. What he did was exist in a particular place at a particular moment, with the education, the languages, and the intellectual breadth to recognize a superior system when he encountered it — and the skill to explain it to people who needed it. To understand that achievement, you need to understand his world.</p>
+
+  <h2>Pisa: A Maritime Republic</h2>
+
+  <p>In the 12th century, the Italian peninsula was not a unified country. It was a patchwork of city-states, papal territories, and local powers constantly shifting in alliance and conflict. Among the most powerful were the maritime republics — Genoa, Venice, Amalfi, and Pisa — city-states whose prosperity depended entirely on trade by sea.</p>
+
+  <p>Pisa sat near the mouth of the Arno River on the Ligurian coast. Its fleet ranged across the Mediterranean: to Sicily and Sardinia, to North Africa, to the Holy Land, to Byzantium and the Black Sea ports. The Pisans were not primarily scholars or artists at this moment in their history. They were merchants and sailors, and their culture reflected this: pragmatic, cosmopolitan, deeply enmeshed in the commercial networks of the wider Mediterranean world.</p>
+
+  <p>This cosmopolitanism was essential. A purely inland, insular European city could not have produced Fibonacci. Pisa could, because Pisa was in constant contact with the Islamic world — the world that had preserved, translated, and enormously extended the mathematical heritage of ancient Greece and India.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">Maritime Republic</span>
+      <h4>Pisa in the 12th Century</h4>
+      <p>One of four great Italian maritime republics. Fleet ranged from North Africa to Byzantium. Wealth from trade, not land. Culture: pragmatic, commercial, cosmopolitan.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Trade Partner</span>
+      <h4>The Islamic Mediterranean</h4>
+      <p>Pisan merchants traded extensively with Islamic ports in North Africa, Sicily (recently recovered from Arab rule), Egypt, and the Levant. Commercial exchange meant cultural exchange.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">The Posting</span>
+      <h4>Bugia (Modern Béjaïa, Algeria)</h4>
+      <p>A major North African port where Fibonacci's father served as Pisan customs representative. Center of Arab-Berber trade and, crucially, of the mathematical culture Leonardo encountered.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">The Context</span>
+      <h4>The Crusading Era</h4>
+      <p>Leonardo's lifetime overlapped with the Third, Fourth, and Fifth Crusades. The Crusades, paradoxically, intensified rather than disrupted the cultural and commercial exchange that made his work possible.</p>
+    </div>
+  </div>
+
+  <h2>The Islamic Mathematical Heritage</h2>
+
+  <p>When Leonardo arrived in Bugia and encountered Arab and Berber merchants calculating with Hindu-Arabic numerals, he was encountering the downstream product of one of history's great intellectual enterprises: the Islamic translation and synthesis movement.</p>
+
+  <p>Between roughly 750 CE and 1100 CE, the Islamic world had collected, translated, and systematically extended the mathematical and scientific knowledge of ancient Greece, Persia, and India. The great library of Baghdad — the Bayt al-Hikmah, or House of Wisdom — was a center of this effort under the Abbasid Caliphate. Scholars there translated Euclid, Archimedes, Ptolemy, and the Indian mathematical texts that contained the numeral system Leonardo would later transmit to Europe.</p>
+
+  <h3>Al-Khwarizmi: The Source</h3>
+
+  <p>The scholar whose shadow falls most directly on Leonardo's work is Muhammad ibn Musa al-Khwarizmi, a 9th-century Persian polymath working in Baghdad. Al-Khwarizmi wrote two books that changed mathematics forever.</p>
+
+  <p>The first was <em>Kitab al-mukhtasar fi hisab al-jabr wal-muqabala</em> — "The Compendious Book on Calculation by Completion and Balancing" — from which the word <em>algebra</em> derives (from <em>al-jabr</em>, "completion"). This book systematized the solution of linear and quadratic equations.</p>
+
+  <p>The second was a treatise on Hindu-Arabic numerals. When this book was translated into Latin in the 12th century, the translator titled it <em>Algoritmi de numero Indorum</em> — "Al-Khwarizmi on Indian Numerals." The author's name, garbled through transmission, gave us the word <em>algorithm</em>.</p>
+
+  <p>By the time Leonardo was writing, al-Khwarizmi's works had been in European libraries for roughly a generation, in Latin translation. Leonardo had access to them. But Latin translations of Arabic texts were not the same as living in a commercial culture where the methods were used every day. The practical fluency — the merchant's ease with calculation — came from Bugia, not from a library.</p>
+
+  <div class="scholar">
+    <div class="initial">K</div>
+    <div>
+      <div class="scholar-name">Muhammad ibn Musa al-Khwarizmi</div>
+      <div class="scholar-date">c. 780 – c. 850 CE · Baghdad</div>
+      <p>Gave algebra its name and its systematic foundation. His treatise on Hindu-Arabic numerals gave us the word "algorithm." The most direct mathematical ancestor of Fibonacci's Liber Abaci, transmitted through Arabic scholarship to Leonardo's mentors and books.</p>
+    </div>
+  </div>
+
+  <div class="scholar">
+    <div class="initial">B</div>
+    <div>
+      <div class="scholar-name">Muhammad ibn Ahmad al-Biruni</div>
+      <div class="scholar-date">973 – 1048 CE · Central Asia / India</div>
+      <p>Encyclopedic scholar who wrote on mathematics, astronomy, geography, and the Hindu numeral system with extraordinary depth. Part of the broader transmission chain that brought Indian mathematical knowledge into the Islamic world.</p>
+    </div>
+  </div>
+
+  <div class="scholar">
+    <div class="initial">U</div>
+    <div>
+      <div class="scholar-name">Omar Khayyam</div>
+      <div class="scholar-date">1048 – 1131 CE · Persia</div>
+      <p>Mathematician and poet who systematically classified and solved cubic equations geometrically. His algebraic work was part of the tradition Leonardo absorbed during his Mediterranean travels.</p>
+    </div>
+  </div>
+
+  <h2>The Translation Movement</h2>
+
+  <p>Between roughly 1050 and 1200 — roughly the century before Leonardo wrote Liber Abaci — European scholars made a systematic effort to translate Arabic texts into Latin. The primary centers of this work were in Spain (Toledo, under the patronage of Archbishop Raymond) and in Sicily (which had been under Arab rule until 1072 and retained large Arabic-speaking populations).</p>
+
+  <p>Scholars like Gerard of Cremona (who translated more than 80 works from Arabic, including Euclid's <em>Elements</em>, Ptolemy's <em>Almagest</em>, and al-Khwarizmi's algebra) and Adelard of Bath (who translated al-Khwarizmi's astronomical tables and Euclid) were transforming what European scholars had access to. By Leonardo's time, the great works of Islamic mathematics were available in Latin.</p>
+
+  <p>But availability is not understanding. Latin translations of Arabic mathematical texts were not easy to use for practical calculation. Leonardo's contribution was to synthesize this material, add his own practical experience, and present it in a form that working people — merchants, accountants, administrators — could actually use.</p>
+
+  <h2>Medieval European Mathematics Before Fibonacci</h2>
+
+  <p>To appreciate what Leonardo changed, it helps to understand what European mathematics looked like before Liber Abaci. The picture is not flattering.</p>
+
+  <p>Formal mathematics in the Latin West was organized around the <em>quadrivium</em> — arithmetic, geometry, music, and astronomy — the four mathematical disciplines of a university education. But the arithmetic being taught was primarily Boethian: derived from the late Roman philosopher Boethius's translations of Greek texts, focused on the properties of whole numbers, and almost entirely disconnected from practical calculation.</p>
+
+  <p>For practical calculation, educated Europeans used one of two methods: finger reckoning (a complex system of encoding numbers in finger positions) or the abacus. The abacus was used with Roman numerals — numbers were placed on the board using tokens, the calculation was performed by moving tokens, and the result was read off and written in Roman numerals. This worked, but it required the abacus always to be present and could not be recorded as a calculation — only the result could be written down.</p>
+
+  <div class="highlight">
+    <span class="kick">The State of European Arithmetic in 1200</span>
+    <p style="margin:0; color: #d1fae5; font-size: 1rem;">Roman numerals for recording. Abacus for calculation. No zero. No systematic algorithm for multiplication or division. Higher mathematics confined to a tiny elite, nearly useless for commerce. Leonardo changed all of this in a single book.</p>
+  </div>
+
+  <p>There were earlier European attempts to introduce Hindu-Arabic numerals — most notably by the scholar Gerbert of Aurillac (later Pope Sylvester II) around 975 CE, who encountered them in Spain and introduced a modified abacus using them. But Gerbert's work did not take root in computational practice. The numerals appeared without the place-value system fully understood, without zero properly integrated, and without the algorithms that made them transformative. Liber Abaci was the comprehensive, practical, fully worked-out presentation that made adoption possible.</p>
+
+  <h2>Frederick II and the Imperial Court</h2>
+
+  <p>Holy Roman Emperor Frederick II (1194–1250) was one of the most remarkable rulers of the Middle Ages. Contemporary chroniclers called him <em>Stupor Mundi</em> — "the wonder of the world." He spoke six languages (German, Italian, French, Latin, Greek, and Arabic), maintained a harem in the Arab style, kept a menagerie of exotic animals, and was simultaneously king of Sicily, Germany, Burgundy, Italy, and Jerusalem.</p>
+
+  <p>Frederick's court was a remarkable intellectual environment — one of the few places in 13th-century Europe where Islamic, Christian, and Jewish scholars worked in proximity. He corresponded with Islamic scholars, collected Arabic manuscripts, and was personally interested in mathematics, natural history, and philosophy. He wrote a treatise on falconry — <em>De Arte Venandi cum Avibus</em> — that is still considered a landmark of medieval natural history for its insistence on empirical observation over received authority.</p>
+
+  <p>In 1225, Frederick came to Pisa. His court philosopher Johannes of Palermo posed three competition problems to Leonardo, in what appears to have been a public mathematical tournament. The problems were carefully chosen: difficult enough to defeat most European mathematicians, but within the range of someone with Leonardo's background in Islamic mathematical methods. Leonardo solved all three, publicly and completely. The solutions survive in his book <em>Flos</em>.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">Problem 1</span>
+      <h4>The Cubic Equation</h4>
+      <p>Find x such that x³ + 2x² + 10x = 20. Leonardo showed (correctly) that the answer cannot be expressed as a simple fraction or a square root, and gave a decimal approximation accurate to nine decimal places — extraordinary for the era.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Problem 2</span>
+      <h4>The Perfect Square Problem</h4>
+      <p>Find a rational number such that adding or subtracting 5 from its square gives a rational square. Leonardo found: (41/12)² − 5 = (31/12)² and (41/12)² + 5 = (49/12)². His analysis in Liber Quadratorum is remarkably sophisticated.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Problem 3</span>
+      <h4>A Sequence Problem</h4>
+      <p>A problem involving three men finding a sum of money — a proportion puzzle. Leonardo solved it systematically using the algebraic methods he had absorbed from Arabic sources.</p>
+    </div>
+  </div>
+
+  <h2>The Mediterranean Trade Network</h2>
+
+  <p>The physical world that made Leonardo's education possible was the Mediterranean trading network of the 12th and 13th centuries. This was not a casual commercial system — it was a sophisticated, legally structured, multilingual commercial civilization that spanned from the Atlantic coast of Morocco to the Black Sea ports of the Crimea.</p>
+
+  <div class="map-legend">
+    <div class="legend-title">The Nodes of Leonardo's World</div>
+    <div class="legend-row">
+      <div class="legend-dot dot-gold"></div>
+      <div>
+        <div class="legend-text">Pisa — home base, a maritime republic whose wealth depended on Mediterranean trade</div>
+        <div class="legend-sub">Ships, merchants, customs officials, commercial law</div>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="legend-dot dot-green"></div>
+      <div>
+        <div class="legend-text">Bugia (Béjaïa, Algeria) — where Leonardo encountered Hindu-Arabic numerals</div>
+        <div class="legend-sub">Arab-Berber trading port; his father posted here as Pisan representative</div>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="legend-dot dot-red"></div>
+      <div>
+        <div class="legend-text">Egypt, Syria, Greece, Sicily, Provence — his travels for study</div>
+        <div class="legend-sub">He listed these explicitly in the Liber Abaci preface; each had mathematical traditions to absorb</div>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="legend-dot dot-blue"></div>
+      <div>
+        <div class="legend-text">Constantinople / Byzantium — Greek mathematical tradition still alive and accessible</div>
+        <div class="legend-sub">Euclid and Archimedes in Greek, accessible through Byzantine scholars</div>
+      </div>
+    </div>
+  </div>
+
+  <p>The commercial contracts, letters of credit, and accounting records from this period — preserved in archives in Genoa, Venice, and Pisa — show an increasingly sophisticated commercial mathematics: interest calculations, partnership shares, commodity price conversions across multiple currencies and weight systems. This is precisely the practical mathematics that Liber Abaci was written to enable. Leonardo did not write for academics; he wrote for merchants and administrators who needed to calculate reliably and quickly.</p>
+
+  <h2>Sicily: The Intellectual Crossroads</h2>
+
+  <p>Sicily deserves special mention as a context for understanding Leonardo's world. The island had been under Arab rule from 831 to 1072, when the Normans conquered it. Under Norman and then Hohenstaufen rule, Sicily retained substantial Arabic-speaking and Greek-speaking populations alongside its Latin Christian majority. This made it uniquely multicultural — and uniquely productive as an intellectual meeting ground.</p>
+
+  <p>Frederick II's court was primarily based in Sicily and southern Italy, and it reflected this multicultural heritage. Arabic scholars were welcome. Mathematical treatises circulated in multiple languages. The atmosphere was unusually tolerant of unconventional ideas — Frederick himself was periodically accused of heresy and excommunicated, though he survived these accusations.</p>
+
+  <p>When Leonardo appeared at Frederick's court in 1225, he was appearing in the most intellectually sophisticated environment available in Western Europe at the time. He was recognized. His problems were solved. His salary was granted. This is the world that appreciated what he had done.</p>
+
+  <blockquote>
+    "Frederick attracted to his court scholars, artists, and adventurers from all parts of the known world. He spoke Arabic with his Saracen subjects and Latin with his Church, Italian with his Neapolitans and German with his Swabian courtiers. He was a man of the Mediterranean world — and so, in a different but parallel way, was Leonardo of Pisa."
+    <cite>— from the historical context of 13th-century Sicilian scholarship</cite>
+  </blockquote>
+
+  <h2>The Abacist Tradition Before Fibonacci</h2>
+
+  <p>It would be misleading to suggest that Leonardo's work appeared in a complete vacuum. There was a pre-existing tradition of <em>abacists</em> — practical calculators and teachers of commercial arithmetic — who had been working with modified systems in European commercial centers for at least a century before Liber Abaci. Some of these practitioners had encountered Arabic numerals through Spain or Sicily and were experimenting with them.</p>
+
+  <p>What Leonardo provided was not the first European encounter with these numerals, but the definitive, comprehensive, authoritative treatment. Where earlier works were partial, local, or limited in scope, Liber Abaci was complete, rigorous, and universal in its ambition. It covered everything from basic digit arithmetic to complex algebraic problems. It was structured as a systematic textbook, not a collection of tricks. And it was written by someone who had genuinely mastered not just the numerals but the full breadth of mathematical knowledge available in the Islamic world.</p>
+
+  <h2>A World Ready for the Change</h2>
+
+  <p>Timing matters in intellectual history, and the timing of Liber Abaci was fortunate. European commerce was expanding rapidly in the 12th and 13th centuries. The growth of long-distance trade — the Champagne Fairs, the expansion of the Hanseatic League, the Venetian and Genoese commercial empires — was creating an urgent need for better commercial arithmetic. Merchants needed to calculate interest, exchange currencies across complex conversion rates, split profits among partners, and keep accounts across multiple transaction chains.</p>
+
+  <p>Roman numeral arithmetic, even with the abacus, was becoming a bottleneck. The economic pressure for better calculation tools was real and growing. Leonardo's book arrived at the moment when the need was greatest and the audience — educated merchants in Italian city-states — was ready to learn a new system if it genuinely worked better.</p>
+
+  <p>It did work better. Spectacularly so. Within a generation of Liber Abaci's publication, the abbacus schools of northern Italy — practical arithmetic schools for the sons of merchants, not to be confused with the medieval university — were teaching Hindu-Arabic calculation. Within two generations, the Italian banking system was using the new numerals in its accounts. Within four generations, it was spreading throughout Europe. The world was ready, and Leonardo had provided the key.</p>
+
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Author: David Lee Wise / ROOT0 / TriPod LLC<br>
+    License: CC-BY-ND-4.0<br>
+    Series: Fibonacci · Volume 2 of 3<br>
+    Filed: C:/repos/library/fibonacci/2-world.html
+  </div>
+
+</main>
+</body>
+</html>

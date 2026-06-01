@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heinrich Hertz — His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#040810;--cyan:#0891b2;--gold:#ca8a04;--text:#cdd5e0;--muted:#6b7280;--card-bg:#080e18;--card-border:#162030;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(4,8,16,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--cyan);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--cyan);border-bottom-color:var(--cyan);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.15;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--cyan);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.2rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--cyan);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--cyan);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cyan);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cee0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Hertz — Vol 3 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-waves.html">Waves</a>
+    <a href="2-world.html" class="active">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><filter id="hg3"><feGaussianBlur stdDeviation="2" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g filter="url(#hg3)" opacity="0.7">
+      <!-- German Empire map suggestion -->
+      <line x1="100" y1="50" x2="100" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="250" y1="50" x2="250" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="400" y1="50" x2="400" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="550" y1="50" x2="550" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="700" y1="50" x2="700" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="850" y1="50" x2="850" y2="430" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="50" y1="120" x2="870" y2="120" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="50" y1="240" x2="870" y2="240" stroke="#0891b2" stroke-width="0.4"/>
+      <line x1="50" y1="360" x2="870" y2="360" stroke="#0891b2" stroke-width="0.4"/>
+      <circle cx="340" cy="195" r="6" fill="#0891b2" opacity="0.8"/><text x="348" y="192" fill="#0891b2" font-size="10" font-family="Space Mono,monospace">KARLSRUHE</text>
+      <circle cx="320" cy="160" r="4" fill="#ca8a04" opacity="0.7"/><text x="328" y="157" fill="#ca8a04" font-size="9" font-family="Space Mono,monospace">HEIDELBERG</text>
+      <circle cx="450" cy="145" r="5" fill="#0891b2" opacity="0.7"/><text x="458" y="142" fill="#0891b2" font-size="9" font-family="Space Mono,monospace">BERLIN</text>
+      <circle cx="330" cy="180" r="4" fill="#ca8a04" opacity="0.6"/><text x="338" y="177" fill="#ca8a04" font-size="9" font-family="Space Mono,monospace">BONN</text>
+      <!-- Radio wave rings from Karlsruhe -->
+      <circle cx="340" cy="195" r="50" stroke="#0891b2" stroke-width="0.6" fill="none" opacity="0.4"/>
+      <circle cx="340" cy="195" r="100" stroke="#0891b2" stroke-width="0.4" fill="none" opacity="0.25"/>
+      <circle cx="340" cy="195" r="150" stroke="#0891b2" stroke-width="0.3" fill="none" opacity="0.15"/>
+    </g>
+  </svg>
+
+  <div class="kick">Heinrich Hertz · The World</div>
+  <div class="band">Volume III — Karlsruhe, Berlin, and the Physics of the Empire</div>
+  <h1>The <span>German Laboratory</span></h1>
+  <p class="hero-sub">Wilhelmine Germany, Helmholtz, Maxwell's arrival, and the brief and brilliant career of a man who transformed physics before turning thirty-seven.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>Wilhelmine Germany and the Physics Establishment</h2>
+    <p>Hertz lived and worked in the German Empire — the Kaiserreich established in 1871 after Prussia's crushing defeat of France. The new Germany was a state of extraordinary ambitions and extraordinary energies. Bismarck's statecraft, Krupp's steel, and the university system built by Wilhelm von Humboldt's reformers in the early nineteenth century all converged in the 1870s and 1880s to produce the world's most productive scientific enterprise. German universities — Berlin, Göttingen, Munich, Heidelberg — were the models that the rest of the world aspired to imitate.</p>
+
+    <p>Physics in Germany was organized around the great chairs — professorships at major universities that came with laboratories, assistants, and the authority to set research agendas. The chair-holders were mandarins: powerful intellectually and socially, with networks of former students spread across the German-speaking world. The system was hierarchical, competitive, and enormously productive. Helmholtz's Berlin laboratory was its apex.</p>
+
+    <p>Hertz entered this world as a student of two of its greatest figures. Hermann von Helmholtz had made fundamental contributions to thermodynamics, acoustics, optics, electrodynamics, and the physiology of perception. He was the most intellectually broad German scientist of his generation, and he was interested in Maxwell's electromagnetic theory because he believed testing it was the most important open question in physics. He posed this question as a prize problem for his students: could Maxwell's theory be experimentally distinguished from competing theories (particularly those of Weber and Neumann)? Hertz, as a student assistant, became aware of the question — though it took several years for the experimental approach to crystallize.</p>
+
+    <h3>Helmholtz as Father Figure</h3>
+    <p>The relationship between Helmholtz and Hertz was one of the great mentor-student pairings in scientific history. Helmholtz recognized Hertz's talent immediately — within the first year of his arrival in Berlin, when Hertz won the university prize for experimental investigation. He tried to keep Hertz in Berlin, but the available positions did not materialize. Instead, he stayed in contact through correspondence, supported Hertz's appointments elsewhere, and celebrated Hertz's triumph with genuine warmth when the electromagnetic wave experiments succeeded.</p>
+
+    <p>Hertz dedicated his collected papers on electromagnetic waves to Helmholtz: "To Hermann von Helmholtz, with gratitude and veneration." When Hertz died in 1894, Helmholtz — then in his early seventies — was devastated. He died himself later that same year, in September. The two deaths within the same year marked the end of a generation in German physics.</p>
+  </section>
+
+  <section>
+    <h2>Karlsruhe — Where the Experiment Was Done</h2>
+    <p>Hertz moved to Karlsruhe in 1885, appointed professor of physics at the Technische Hochschule. Karlsruhe was the capital of the Grand Duchy of Baden — a prosperous, liberal state within the German Empire, known for religious tolerance and a relatively progressive political culture. The Technische Hochschule was a technical university, not a classical research university like Berlin or Göttingen, but it had a proper physics laboratory and resources for experimental work.</p>
+
+    <p>The Technische Hochschule was also the kind of place where a young professor had independence. He was not overshadowed by a great Helmholtz-style chair-holder. He had his own laboratory, his own students, and the freedom to choose his research problems. He chose to revisit the question Helmholtz had posed: how to test Maxwell's electromagnetic theory experimentally.</p>
+
+    <p>The breakthrough came almost by accident. Hertz was using induction coils for an unrelated demonstration when he noticed that the secondary circuit was resonating in an unexpected way. He recognized the phenomenon: he was generating and detecting oscillating electromagnetic fields. The full experimental program followed from that initial observation over the next two years.</p>
+
+    <p>The Karlsruhe lecture hall where Hertz did his experiments was approximately thirteen meters long. His transmitter and receiver were placed at opposite ends. The standing waves he mapped filled the room. The experiment that proved Maxwell right and launched the electromagnetic revolution was done in a room smaller than a tennis court, by a man working largely alone, with apparatus he had built himself.</p>
+
+    <h3>Bonn — The Final Years</h3>
+    <p>In 1889, Hertz was appointed to the chair of physics at the University of Bonn — a prestigious move from a Technische Hochschule to a full classical research university, the kind of appointment that recognized his newly international reputation. But he arrived in Bonn already unwell. The mysterious symptoms — fatigue, recurrent infections, pain — that had begun in 1888 worsened progressively. He was eventually diagnosed with what would now be recognized as Wegener's granulomatosis, an autoimmune disease in which the immune system attacks blood vessels, causing inflammation in the nose, sinuses, throat, and lungs.</p>
+
+    <p>Treatment in the early 1890s was limited to repeated surgical interventions — removing infected or inflamed tissue from his jaw and sinuses. These surgeries, performed without modern anesthesia or antibiotics, were painful and ultimately futile. Hertz continued working through his illness with remarkable discipline: his final years at Bonn produced a theoretical reformulation of classical mechanics — the posthumous Principles of Mechanics — that while not as revolutionary as his wave work, reflected a sustained philosophical engagement with the foundations of physics.</p>
+  </section>
+
+  <section>
+    <h2>Maxwell's Equations Arrive in Germany</h2>
+    <p>The story of how Maxwell's electromagnetic theory became known and accepted in Germany is itself a fascinating episode in the history of science. Maxwell published his Treatise in 1873, in English. Germany's physics community in the 1870s was still largely working within the traditions of Weber, Neumann, and Riemann — action-at-a-distance theories of electromagnetism that differed fundamentally from Maxwell's field theory. The field theory approach — in which electromagnetic action is mediated by continuous fields filling space, not by instantaneous action at a distance — was largely a British development, and it was written in a mathematical idiom that Continental physicists found unfamiliar.</p>
+
+    <p>Hertz was one of the Germans who took Maxwell seriously early. His two years at Kiel (1883–85) were spent partly working through Maxwell's mathematics, trying to understand what the theory actually predicted in different physical situations. He showed that Maxwell's equations, properly interpreted, implied that electromagnetic energy was stored in the field itself — not in the charges and currents — a result he found clarifying and important.</p>
+
+    <p>After the Karlsruhe experiments, the situation reversed completely. Hertz's experimental proof of electromagnetic waves made Maxwell's theory unavoidable. Within a few years, German physicists who had been skeptical of field theory were working within it. The experiment converted the community. This was the normal pattern of nineteenth-century physics: mathematical theories awaited experimental confirmation before achieving consensus acceptance, and Hertz's experiments provided that confirmation for Maxwell's equations.</p>
+
+    <blockquote>
+      "I feel the importance of the moment, but I find it difficult to believe that the problem which has been attacked with the greatest minds and keenest investigation for more than twenty years has really been solved."
+      <cite>— Helmholtz, on learning of Hertz's results, c. 1888</cite>
+    </blockquote>
+  </section>
+
+  <section>
+    <h2>The Photoelectric Effect — Mystery Left Unsolved</h2>
+    <p>Hertz observed the photoelectric effect in 1887, reported it accurately, and set it aside. This was not negligence — it was a reasonable research prioritization. He was in the middle of the most important experimental program of the decade: proving Maxwell right. The UV-spark interaction was interesting, but it was peripheral to his main goal, and he had no framework for explaining it.</p>
+
+    <p>What makes this story remarkable is the chain of consequences. Hertz observes → Hallwachs (1888) shows it's negative charges being emitted → Lenard (1902, former Hertz assistant) shows electron energy depends on frequency not intensity → Planck (1900) introduces energy quanta for blackbody radiation → Einstein (1905) combines these to explain photoelectric effect → quantum mechanics (Bohr, 1913; Schrödinger, Heisenberg, 1925–26) → modern physics, solar cells, digital cameras, every photosensor ever made.</p>
+
+    <p>Hertz started a chain that remade physics. He started it with a casual observation in 1887 that he didn't know what to do with. This is one of the great examples of scientific serendipity: an experiment done for one purpose reveals a phenomenon that, pursued by others over two subsequent generations, produces results far more revolutionary than anything the original experimenter intended or imagined.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1887</div>
+        <h4>Hertz Observes</h4>
+        <p>UV light from spark transmitter makes spark receiver fire more easily. Reports it accurately. Does not explain it. Moves on.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1888</div>
+        <h4>Hallwachs Extends</h4>
+        <p>Shows that UV light incident on metal causes negative charge to be emitted. The phenomenon is real and general, not just about spark gaps.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1902</div>
+        <h4>Lenard Measures</h4>
+        <p>Former Hertz assistant. Shows electron energy depends on frequency of light, not intensity. Classical physics cannot explain this. Nobel Prize 1905.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1905</div>
+        <h4>Einstein Explains</h4>
+        <p>Light comes in quanta (photons), each with energy hν. Photoelectric effect is a photon-electron collision. Nobel Prize 1921 for this — not for relativity.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">1913+</div>
+        <h4>Quantum Mechanics</h4>
+        <p>Einstein's photon → Bohr's atom → wave mechanics. The quantum revolution, all traceable to Hertz's 1887 side-observation.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Today</div>
+        <h4>Solar Cells, Cameras</h4>
+        <p>Every photovoltaic cell, every CCD in every camera, every light sensor — all exploit the photoelectric effect Hertz first observed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Illness and the Mind That Kept Working</h2>
+    <p>Hertz's illness began in 1888 — the same year he was completing the most important work of his life. The timing was cruel. Just as his electromagnetic wave experiments were being published, celebrated, and transforming physics across Europe, his health was beginning its long decline. He complained of fatigue, recurring sinus infections, and pain. The dental and sinus surgeries he underwent in 1892 and 1893 brought temporary relief but no cure.</p>
+
+    <p>Through all of this, he continued to work. The Principles of Mechanics — his final and most philosophically ambitious book — was largely written during the years of his illness, between surgeries, in increasing pain. It proposed to reformulate classical mechanics without introducing the concept of force as a primitive — replacing it with constraints on particle motion. The approach was original, influential, and ahead of its time. Wittgenstein, who read it as a young student in Manchester, cited Hertz's way of thinking about theories — as pictures of reality that preserve structure without claiming to depict what reality "is" — as a significant influence on his early philosophy.</p>
+
+    <p>He died on January 1, 1894, of septicemia following his illness. He was thirty-six years old. His father, sister, and wife were with him. He had been working on revisions to the Mechanics until days before his death. His wife, Elisabeth Doll, outlived him by fifty-seven years, dying in 1941. They had two daughters; neither had children. The direct line ended with them.</p>
+
+    <p>Helmholtz died nine months later, in September 1894. The two deaths marked the end of the era — the years of the great experimental breakthroughs in classical electromagnetism, the years when Maxwell's theory was being proven, tested, refined, and extended. What came next — X-rays (Röntgen, 1895), radioactivity (Becquerel, 1896), the electron (Thomson, 1897), quantum theory (Planck, 1900) — was a different physics, stranger and more revolutionary. Hertz did not live to see it, but he started one of the chains that led there.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Heinrich Hertz Series — Volume III: His World<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-waves.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henri Poincaré — His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#060810; --indigo:#4338ca; --gold:#ca8a04; --text:#d1d5e8; --muted:#6b7280; --card-bg:#0d1117; --card-border:#1e2433; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(6,8,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--indigo);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--indigo);border-bottom-color:var(--indigo);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.13;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--indigo);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.2rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--indigo);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--indigo);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;position:relative;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--indigo);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cae0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2rem 0;}
+  @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+  .faction{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;}
+  .faction h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.6rem;}
+  .faction ul{list-style:none;padding:0;}
+  .faction li{font-size:0.9rem;color:var(--muted);padding:0.3rem 0;border-bottom:1px solid var(--card-border);}
+  .faction li:last-child{border-bottom:none;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Poincaré — Vol 3 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-topology.html">Work</a>
+    <a href="2-world.html" class="active">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><filter id="gw2"><feGaussianBlur stdDeviation="2" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <!-- Map-like grid representing France -->
+    <g filter="url(#gw2)" opacity="0.5">
+      <!-- Longitude lines -->
+      <line x1="150" y1="50" x2="150" y2="430" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="300" y1="50" x2="300" y2="430" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="450" y1="50" x2="450" y2="430" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="600" y1="50" x2="600" y2="430" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="750" y1="50" x2="750" y2="430" stroke="#4338ca" stroke-width="0.4"/>
+      <!-- Latitude lines -->
+      <line x1="50" y1="120" x2="850" y2="120" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="50" y1="240" x2="850" y2="240" stroke="#4338ca" stroke-width="0.4"/>
+      <line x1="50" y1="360" x2="850" y2="360" stroke="#4338ca" stroke-width="0.4"/>
+      <!-- City dots -->
+      <circle cx="370" cy="215" r="6" fill="#4338ca" opacity="0.8"/><!-- Paris -->
+      <circle cx="430" cy="165" r="4" fill="#ca8a04" opacity="0.7"/><!-- Nancy -->
+      <text x="375" y="208" fill="#4338ca" font-size="10" font-family="Space Mono,monospace">PARIS</text>
+      <text x="436" y="162" fill="#ca8a04" font-size="9" font-family="Space Mono,monospace">NANCY</text>
+      <!-- Rhine and border suggestion -->
+      <path d="M480,80 Q500,150 490,230 Q480,310 500,400" stroke="#ca8a04" stroke-width="1.2" fill="none" opacity="0.4" stroke-dasharray="4,4"/>
+    </g>
+    <!-- Attractor in top right -->
+    <polyline id="attrWrld" points="" stroke="#4338ca" stroke-width="0.9" fill="none" filter="url(#gw2)" opacity="0.6"/>
+  </svg>
+  <script>
+    (function(){
+      const pts=[];let x=0.1,y=0,z=0;const s=10,r=28,b=8/3,dt=0.009;
+      for(let i=0;i<1800;i++){const dx=s*(y-x),dy=x*(r-z)-y,dz=x*y-b*z;x+=dx*dt;y+=dy*dt;z+=dz*dt;if(i>60)pts.push((680+x*5.5).toFixed(1)+','+(120+(z-25)*4.5).toFixed(1));}
+      const el=document.getElementById('attrWrld');el.setAttribute('points',pts.join(' '));
+      const len=el.getTotalLength?el.getTotalLength():3500;
+      el.style.strokeDasharray=len;el.style.strokeDashoffset=len;el.style.transition='stroke-dashoffset 6s ease';
+      setTimeout(()=>{el.style.strokeDashoffset=0;},200);
+    })();
+  </script>
+
+  <div class="kick">Henri Poincaré · The World</div>
+  <div class="band">Volume III — France, Dreyfus, and the War for Mathematics</div>
+  <h1>The <span>Republic of Science</span></h1>
+  <p class="hero-sub">Third Republic France, the Sorbonne, the Dreyfus Affair, and the battle between Paris and Göttingen for the soul of mathematics.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>Third Republic France</h2>
+    <p>Poincaré was a man of the Third Republic — the French political regime that emerged from the wreckage of the Franco-Prussian War (1870–71) and the Paris Commune (1871), and that would last until the German invasion of 1940. The Third Republic was, by the standards of nineteenth-century Europe, a remarkable experiment in secular democratic government: noisy, contentious, intellectually serious, anti-clerical, and haunted by the trauma of military defeat.</p>
+
+    <p>That defeat — the loss of Alsace-Lorraine, the German siege of Paris, the humiliation of watching Prussian soldiers march through the Arc de Triomphe — shaped everything. French science and mathematics in the Third Republic were explicitly national projects. The grandes écoles — the École Polytechnique, the École Normale Supérieure — were not merely educational institutions but instruments of national reconstruction. To be the best mathematician in France was to contribute to France's standing among nations. The rivalry with Germany was omnipresent.</p>
+
+    <p>Poincaré came from Lorraine — the province whose western half France retained, while Alsace-Lorraine (including his birthplace's cultural orbit) was absorbed into the German Empire. He grew up in a France that was simultaneously mourning a lost province and attempting to rebuild its intellectual and scientific reputation from the ground up. This context is inseparable from his career. His appointment to the Sorbonne, his election to the Académie française, his role at the Paris ICM — all of these carry the weight of national purpose.</p>
+
+    <h3>The École Polytechnique</h3>
+    <p>The École Polytechnique was — and in modified form still is — the apex of French technical education. Founded in 1794 during the Revolution, it was reorganized by Napoleon as a military school with a scientific curriculum. Its graduates were the engineers, artillery officers, scientists, and administrators of the French state. To enter it first in the nation was a mark of distinction that carried permanent social status.</p>
+
+    <p>Poincaré entered Polytechnique in 1873 and graduated first in mathematics. The school's culture was intensely competitive — a culture of concours, of ranked examinations that sorted the nation's intellectual talent with ruthless precision. In this environment, Poincaré's speed and breadth were already legendary. He barely passed the drawing examination, but no one cared: his mathematics was so far beyond the others that the drawing was forgiven.</p>
+
+    <p>After Polytechnique, he transferred to the École des Mines, completed a mining engineering degree (which he never used), and then pursued a doctorate in mathematics. The dual training — engineering and pure mathematics — reflects the Third Republic ideal: a citizen scientist who could serve both the practical needs of the state and the abstract needs of the intellect.</p>
+  </section>
+
+  <section>
+    <h2>The Dreyfus Affair</h2>
+    <p>The Dreyfus Affair was the defining political crisis of Third Republic France. In 1894, Alfred Dreyfus — a Jewish captain in the French army — was convicted of passing military secrets to Germany, based on forged documents and virulent antisemitism within the military establishment. He was publicly degraded and sent to Devil's Island. As evidence of his innocence accumulated, France divided bitterly into two camps: the Dreyfusards, who believed him innocent and demanded retrial, and the anti-Dreyfusards, who believed that the honor of the army — and the security of France against its enemies — required sustaining the conviction regardless of the evidence.</p>
+
+    <p>The affair was not merely about Dreyfus. It was about what kind of country France was. The anti-Dreyfusard side drew heavily on the Catholic right, the military establishment, and an intense nationalism that shaded into antisemitism. The Dreyfusard side included the Radical Republicans, the secular left, and much of the scientific and literary intelligentsia. Emile Zola's open letter "J'Accuse" (January 1898) was the most famous intervention, but many scientists and academics signed the petition for retrial.</p>
+
+    <p>Poincaré was a moderate Dreyfusard. He was not a polemicist — he did not write open letters or speak at rallies. But his position was clear: Dreyfus was innocent, the conviction was a miscarriage of justice, and the republic's commitment to evidence and due process required a retrial. This was consistent with his broader intellectual identity as a man who believed that truth was determined by evidence and reason, not by institutional authority or national interest.</p>
+
+    <blockquote>
+      "The Dreyfus case showed that the republic's faith in reason — the same faith that underlies science — had not yet permeated all of its institutions."
+      <cite>— Context, Paris intellectual circles, c. 1898</cite>
+    </blockquote>
+
+    <p>Dreyfus was eventually exonerated in 1906, fully rehabilitated, and promoted to lieutenant colonel. By then, the affair had destroyed careers, split families, and permanently polarized French political life along axes that would persist for generations.</p>
+  </section>
+
+  <section>
+    <h2>Paris vs. Göttingen — The Mathematical War</h2>
+    <p>The most important intellectual rivalry of the late nineteenth century in mathematics was between Paris and Göttingen. Each city was the center of a national tradition, a style of doing mathematics, and a set of institutional ambitions.</p>
+
+    <div class="two-col">
+      <div class="faction">
+        <h4>Paris / Poincaré</h4>
+        <ul>
+          <li>Sorbonne and grandes écoles</li>
+          <li>Broad, synthetic, intuitive</li>
+          <li>Strong connection to physics and engineering</li>
+          <li>Poincaré as generalist: topology, mechanics, physics, philosophy</li>
+          <li>Style: qualitative, geometric, insight-driven</li>
+          <li>Comptes Rendus as publication venue</li>
+          <li>Tradition: Cauchy, Hermite, Hadamard, Picard</li>
+        </ul>
+      </div>
+      <div class="faction">
+        <h4>Göttingen / Hilbert</h4>
+        <ul>
+          <li>Georg-August University, founded by Gauss</li>
+          <li>Rigorous, axiomatic, comprehensive</li>
+          <li>Formalist program: all mathematics from axioms</li>
+          <li>Hilbert as systematizer: 23 problems, formal foundations</li>
+          <li>Style: algebraic, axiomatic, program-driven</li>
+          <li>Mathematische Annalen as publication venue</li>
+          <li>Tradition: Gauss, Riemann, Dirichlet, Klein</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>The rivalry was personal as well as intellectual. Poincaré and Hilbert admired each other, corresponded, and appeared at the same congresses — but they represented incompatible visions of what mathematics should be and how it should be done. Poincaré's intuitive, wide-ranging style produced extraordinary individual discoveries. Hilbert's systematic, axiomatic approach produced extraordinary frameworks. Both were necessary, and both were correct about the limitations of the other.</p>
+
+    <p>The 1900 Paris International Congress of Mathematicians brought both men to the same stage. Hilbert's address — the 23 problems — became the agenda for twentieth-century mathematics. But Poincaré also gave a famous address that year, on the role of intuition in mathematical discovery, arguing against the pure formalism that Hilbert championed. The two speeches, delivered at the same congress in the same year, represent the two souls of mathematics in tension.</p>
+
+    <h3>The 1900 Paris ICM</h3>
+    <p>The International Congress of Mathematicians, held in Paris in August 1900, was the most consequential single gathering in the history of mathematics. It took place at the dawn of a new century, in the intellectual capital of Europe, with the greatest mathematicians of the age in attendance. The question on everyone's mind was: what will the twentieth century look like for mathematics?</p>
+
+    <p>Hilbert provided the answer — or rather, provided a list of questions whose answers would define the century. His lecture, "Mathematical Problems," presented 23 problems that he believed were the most important unsolved questions in mathematics. The list was curated, synthetic, and deliberately chosen to span the major branches of the field. It was an act of intellectual curation as much as mathematical research: Hilbert was shaping the future by directing collective attention.</p>
+
+    <p>Poincaré's contribution at the same congress was different in character — a meditation on the relationship between logic, intuition, and mathematical discovery. He argued that pure formalism — the reduction of mathematics to logical symbols and rules — misses something essential: the role of mathematical intuition in finding new truths. This was a direct challenge to the program Hilbert was articulating, and the philosophical debate between the two positions — formalism versus intuitionism — would become one of the central controversies of twentieth-century philosophy of mathematics.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">1900 Congress</div>
+        <h4>Paris, August 1900</h4>
+        <p>First major ICM. Hilbert presents 23 problems. Poincaré presents on intuition vs. logic. Both are there; both give landmark addresses.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Competition</div>
+        <h4>France vs. Germany</h4>
+        <p>Mathematical rivalry mapped onto national rivalry post-1871. Both countries funded mathematics as a national project. Both produced extraordinary results.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Poincaré's Address</div>
+        <h4>On Intuition</h4>
+        <p>Argued that formal logic is insufficient for mathematical discovery. Intuition — pattern recognition below the threshold of consciousness — is the engine of mathematics.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Hilbert's Address</div>
+        <h4>The 23 Problems</h4>
+        <p>Defined the research agenda for the twentieth century. Eight of the 23 were on Poincaré's own active research frontiers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mathematics and National Identity</h2>
+    <p>In Third Republic France, as in Wilhelmine Germany, mathematics was not simply an academic pursuit — it was a form of national assertion. After the humiliation of 1870–71, France needed to prove that it remained a civilization of the first order. Science was one of the key instruments of this proof. The Sorbonne, the grandes écoles, the Académie des sciences, the Bureau des Longitudes — all of these institutions were invested with national significance that went well beyond their academic functions.</p>
+
+    <p>Poincaré was perfectly suited to this role. He was brilliant, productive, widely honored, and had the rare gift — shared with Gauss and Euler among only a few others — of being equally credible in pure mathematics, applied mathematics, and theoretical physics. He was also a gifted writer in French: his popular science books, written in elegant and precise prose, brought the ideas of frontier science to educated lay readers and established him as a public intellectual of the highest standing.</p>
+
+    <p>His election to the Académie française in 1908 was remarkable — the Académie is primarily literary, and admission of a scientist was highly unusual. It reflects the extent to which Poincaré was understood to be not merely a great scientist but a great mind in the fullest humanistic sense. He was also elected to the Académie des sciences (obviously), was a member of countless foreign academies, and received honorary degrees from universities across Europe. By the last decade of his life, he was arguably the most internationally honored intellectual in France.</p>
+
+    <h3>Popular Science and Philosophy</h3>
+    <p>Poincaré's popular philosophy-of-science books deserve special attention. <em>Science and Hypothesis</em> (1902), <em>The Value of Science</em> (1905), <em>Science and Method</em> (1908), and the posthumous <em>Last Thoughts</em> (1913) together form one of the most important bodies of philosophy-of-science writing of the twentieth century.</p>
+
+    <p>His central claim — conventionalism — is that the axioms of geometry and the basic principles of physics are human conventions chosen for their utility, not empirical truths forced on us by observation. The geometry of space is not Euclidean or hyperbolic or elliptic — it is whatever geometry is most convenient for describing physical phenomena, subject to revision as our knowledge grows. This view, while seemingly deflationary, actually opened enormous space for the development of new physical theories, and it directly influenced the logical positivists of the Vienna Circle and, through them, twentieth-century philosophy of science.</p>
+
+    <p>Einstein read <em>Science and Hypothesis</em> as a young patent examiner in Bern. He discussed it in his informal study group, the "Olympia Academy." Whether it directly influenced his development of special relativity is debated, but the intellectual environment it represents — the questioning of the a priori status of Euclidean geometry and absolute simultaneity — was certainly part of the air Einstein breathed in the years before 1905.</p>
+  </section>
+
+  <section>
+    <h2>The Scientific Community of His Time</h2>
+    <p>Poincaré worked in an era of extraordinary scientific production. The late nineteenth and early twentieth centuries saw the development of electromagnetic theory (Maxwell, 1865), thermodynamics (Boltzmann, Clausius), the discovery of the electron (Thomson, 1897), X-rays (Röntgen, 1895), radioactivity (Curie, Becquerel, 1896–98), quantum theory (Planck, 1900), and special relativity (Einstein, 1905) — all within roughly four decades. The acceleration of physical discovery in this period has rarely been equaled.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Contemporary</div>
+        <h4>David Hilbert (1862–1943)</h4>
+        <p>Göttingen. Near-contemporary. Rivals and admirers. Hilbert's 23 problems and Poincaré's topology defined different dimensions of mathematical ambition.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Contemporary</div>
+        <h4>Albert Einstein (1879–1955)</h4>
+        <p>26 years younger. Read Poincaré's philosophy. Published special relativity the same year as Poincaré's electrodynamics paper. Neither cited the other directly.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Predecessor</div>
+        <h4>James Clerk Maxwell (1831–1879)</h4>
+        <p>Maxwell died before Poincaré's major work. His electromagnetic equations were the landscape in which Poincaré worked the Lorentz group and the relativity near-miss.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Collaborator-Adjacent</div>
+        <h4>Felix Klein (1849–1925)</h4>
+        <p>Göttingen. Competed with Poincaré on automorphic functions in the 1880s — a fierce intellectual race in correspondence. Klein eventually acknowledged Poincaré's priority.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Predecessor</div>
+        <h4>Charles Hermite (1822–1901)</h4>
+        <p>Poincaré's teacher at the Sorbonne. French mathematical tradition's great figure of the generation before. Cautious, religious, skeptical of Cantorian set theory.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Political Context</div>
+        <h4>Raymond Poincaré (1860–1934)</h4>
+        <p>Cousin. Prime Minister 1912; President of France 1913–1920. The Poincaré name carried enormous weight in both the intellectual and political worlds of the Third Republic.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Henri Poincaré Series — Volume III: His World<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-topology.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

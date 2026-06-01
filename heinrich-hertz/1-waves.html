@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heinrich Hertz — The Experiment and the Waves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#040810;--cyan:#0891b2;--gold:#ca8a04;--text:#cdd5e0;--muted:#6b7280;--card-bg:#080e18;--card-border:#162030;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(4,8,16,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--cyan);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--cyan);border-bottom-color:var(--cyan);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.18;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--cyan);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.2rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--cyan);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--cyan);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--cyan);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cee0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  /* EM spectrum bar */
+  .spectrum{margin:2.5rem 0;}
+  .spectrum-title{font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+  .spec-row{display:flex;align-items:stretch;height:60px;width:100%;border:1px solid var(--card-border);overflow:hidden;margin-bottom:0.5rem;}
+  .spec-seg{flex:1;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:0.58rem;text-align:center;padding:0.2rem;transition:opacity 0.2s;cursor:default;}
+  .spec-seg:hover{opacity:0.8;}
+  .seg-radio{background:#0e2a35;color:#0891b2;}
+  .seg-micro{background:#0f2e1a;color:#22c55e;}
+  .seg-ir{background:#2a1f0a;color:#f97316;}
+  .seg-vis{background:linear-gradient(90deg,#3b0764,#1d4ed8,#15803d,#ca8a04,#b91c1c);color:#fff;}
+  .seg-uv{background:#1e0a3c;color:#a855f7;}
+  .seg-xray{background:#1a0a0a;color:#ef4444;}
+  .seg-gamma{background:#0a0a0a;color:#f43f5e;}
+  .hertz-highlight{border:2px solid var(--gold);position:relative;}
+  .hertz-highlight::after{content:'HERTZ';position:absolute;top:-1.2rem;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:0.55rem;color:var(--gold);white-space:nowrap;}
+  /* Experiment diagram */
+  .exp-diagram{background:var(--card-bg);border:1px solid var(--card-border);padding:2rem;margin:2rem 0;}
+  .exp-diagram svg{width:100%;max-width:700px;display:block;margin:0 auto;}
+  .exp-step{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px solid var(--card-border);}
+  .exp-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .step-num{font-family:'Cinzel',serif;font-size:2rem;color:var(--cyan);opacity:0.6;min-width:2rem;line-height:1;flex-shrink:0;}
+  .step-body h4{font-family:'Cinzel',serif;font-size:0.95rem;color:#fff;margin-bottom:0.3rem;}
+  .step-body p{font-size:0.9rem;color:var(--muted);margin:0;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Hertz — Vol 2 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-waves.html" class="active">Waves</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><filter id="hg2"><feGaussianBlur stdDeviation="2" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g filter="url(#hg2)">
+      <!-- Sine wave for E-field -->
+      <path d="M0,250 C45,180 90,180 135,250 C180,320 225,320 270,250 C315,180 360,180 405,250 C450,320 495,320 540,250 C585,180 630,180 675,250 C720,320 765,320 810,250 C855,180 900,180 900,250" stroke="#0891b2" stroke-width="2.2" fill="none" opacity="0.8"><animate attributeName="d" values="M0,250 C45,180 90,180 135,250 C180,320 225,320 270,250 C315,180 360,180 405,250 C450,320 495,320 540,250 C585,180 630,180 675,250 C720,320 765,320 810,250 C855,180 900,180 900,250;M0,250 C45,320 90,320 135,250 C180,180 225,180 270,250 C315,320 360,320 405,250 C450,180 495,180 540,250 C585,320 630,320 675,250 C720,180 765,180 810,250 C855,320 900,320 900,250;M0,250 C45,180 90,180 135,250 C180,320 225,320 270,250 C315,180 360,180 405,250 C450,320 495,320 540,250 C585,180 630,180 675,250 C720,320 765,320 810,250 C855,180 900,180 900,250" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <!-- B-field wave (vertical, phase shifted) at different vertical position -->
+      <path d="M0,300 C45,230 90,230 135,300 C180,370 225,370 270,300 C315,230 360,230 405,300 C450,370 495,370 540,300 C585,230 630,230 675,300 C720,370 765,370 810,300 C855,230 900,230 900,300" stroke="#ca8a04" stroke-width="1.2" fill="none" opacity="0.5">
+        <animate attributeName="d" values="M0,300 C45,230 90,230 135,300 C180,370 225,370 270,300 C315,230 360,230 405,300 C450,370 495,370 540,300 C585,230 630,230 675,300 C720,370 765,370 810,300 C855,230 900,230 900,300;M0,300 C45,370 90,370 135,300 C180,230 225,230 270,300 C315,370 360,370 405,300 C450,230 495,230 540,300 C585,370 630,370 675,300 C720,230 765,230 810,300 C855,370 900,370 900,300;M0,300 C45,230 90,230 135,300 C180,370 225,370 270,300 C315,230 360,230 405,300 C450,370 495,370 540,300 C585,230 630,230 675,300 C720,370 765,370 810,300 C855,230 900,230 900,300" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <!-- Propagation arrow -->
+      <line x1="50" y1="150" x2="850" y2="150" stroke="#0891b2" stroke-width="1" opacity="0.3" stroke-dasharray="8,4"/>
+      <polygon points="850,145 870,150 850,155" fill="#0891b2" opacity="0.5"/>
+    </g>
+  </svg>
+
+  <div class="kick">Heinrich Hertz · The Experiment</div>
+  <div class="band">Volume II — Waves, Sparks, and the Proof</div>
+  <h1>The <span>Experiment</span> of 1887</h1>
+  <p class="hero-sub">In a Karlsruhe laboratory, Hertz generated radio waves with a spark and detected them with a wire loop. Maxwell was proven right, eight years after his death.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>The Experiment in Detail</h2>
+    <p>James Clerk Maxwell died in Cambridge on November 5, 1879, at the age of forty-eight, of abdominal cancer. He had spent the last decade of his life working on the second edition of his Treatise on Electricity and Magnetism. He had derived from first principles that electromagnetic disturbances should propagate through space as waves, traveling at the speed of light. He had proposed that light itself was an electromagnetic wave. But he had never built an experiment to test this. He died before anyone had confirmed it.</p>
+
+    <p>Eight years later, in a lecture hall in Karlsruhe, Germany, Heinrich Hertz proved Maxwell right.</p>
+
+    <div class="exp-diagram">
+      <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+        <defs><filter id="eg"><feGaussianBlur stdDeviation="1.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <!-- Transmitter: spark gap with two spheres -->
+        <g transform="translate(120,100)" filter="url(#eg)">
+          <line x1="-60" y1="-10" x2="-5" y2="-10" stroke="#0891b2" stroke-width="3"/>
+          <line x1="-60" y1="10" x2="-5" y2="10" stroke="#0891b2" stroke-width="3"/>
+          <circle cx="-5" cy="-10" r="8" fill="#0891b2" opacity="0.8"/>
+          <circle cx="5" cy="10" r="8" fill="#0891b2" opacity="0.8"/>
+          <circle cx="5" cy="-10" r="8" fill="#0891b2" opacity="0.8"/>
+          <circle cx="-5" cy="10" r="8" fill="#0891b2" opacity="0.8"/>
+          <!-- Spark -->
+          <path d="M-3,-8 L0,0 L3,8" stroke="#fff" stroke-width="1.5" fill="none" opacity="0.9"><animate attributeName="opacity" values="0.9;0.1;0.9" dur="0.3s" repeatCount="indefinite"/></path>
+          <text y="35" text-anchor="middle" fill="#0891b2" font-family="Space Mono,monospace" font-size="10">TRANSMITTER</text>
+        </g>
+        <!-- Expanding waves -->
+        <g transform="translate(200,100)">
+          <ellipse rx="30" ry="50" stroke="#0891b2" stroke-width="1" fill="none" opacity="0.7"><animate attributeName="rx" values="5;160" dur="2s" repeatCount="indefinite"/><animate attributeName="ry" values="5;80" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;0" dur="2s" repeatCount="indefinite"/></ellipse>
+          <ellipse rx="30" ry="50" stroke="#0891b2" stroke-width="0.8" fill="none"><animate attributeName="rx" values="5;160" dur="2s" begin="0.7s" repeatCount="indefinite"/><animate attributeName="ry" values="5;80" dur="2s" begin="0.7s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0" dur="2s" begin="0.7s" repeatCount="indefinite"/></ellipse>
+        </g>
+        <!-- Receiver: wire loop -->
+        <g transform="translate(560,100)" filter="url(#eg)">
+          <rect x="-35" y="-40" width="70" height="80" rx="4" stroke="#ca8a04" stroke-width="2" fill="none"/>
+          <!-- Gap in loop (detecting spark) -->
+          <circle cx="35" cy="-5" r="5" fill="#ca8a04" opacity="0.7"/>
+          <circle cx="35" cy="5" r="5" fill="#ca8a04" opacity="0.7"/>
+          <path d="M33,-3 L36,0 L33,3" stroke="#fff" stroke-width="1" fill="none" opacity="0.8"><animate attributeName="opacity" values="0.8;0.1;0.8" dur="0.35s" begin="0.05s" repeatCount="indefinite"/></path>
+          <text y="55" text-anchor="middle" fill="#ca8a04" font-family="Space Mono,monospace" font-size="10">RECEIVER</text>
+        </g>
+        <!-- Distance label -->
+        <line x1="160" y1="170" x2="535" y2="170" stroke="#6b7280" stroke-width="0.5" stroke-dasharray="4,3"/>
+        <text x="347" y="185" text-anchor="middle" fill="#6b7280" font-family="Space Mono,monospace" font-size="9">~ several meters across the room</text>
+      </svg>
+    </div>
+
+    <div class="exp-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>The Transmitter — Induction Coil and Spark Gap</h4>
+        <p>Hertz used a Ruhmkorff induction coil to generate high-voltage pulses across a spark gap — two polished metal spheres separated by a small air gap. When the voltage was high enough, a spark jumped across the gap, creating a rapidly oscillating current. That oscillating current generated an oscillating electromagnetic field. Maxwell's equations predicted that this oscillating field would radiate outward as electromagnetic waves. The frequency depended on the geometry of the circuit.</p>
+      </div>
+    </div>
+    <div class="exp-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>The Receiver — Wire Loop with Gap</h4>
+        <p>Hertz's receiver was elegantly simple: a loop of wire with a small gap in it. When an electromagnetic wave passed through the loop, it induced an oscillating voltage. If the voltage was high enough, a tiny spark jumped the gap. This was the detection. Hertz could control the sensitivity by adjusting the gap size — a screw allowed micrometer-scale control. He could stand across the room from the transmitter and see sparks jumping in his receiver loop when the transmitter fired.</p>
+      </div>
+    </div>
+    <div class="exp-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Measuring the Wave Properties</h4>
+        <p>Hertz didn't just detect waves — he characterized them completely. He moved the receiver systematically around the lab, mapping the regions of strong and weak signal. He reflected the waves off a zinc sheet and found the interference pattern between incoming and reflected waves — a standing wave pattern. From the distance between nodes, he measured the wavelength. He measured the frequency from the electrical characteristics of the transmitter. Then he calculated the speed: wavelength × frequency = speed. It came out to approximately 3 × 10⁸ meters per second. The speed of light.</p>
+      </div>
+    </div>
+    <div class="exp-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Proving They Are Waves</h4>
+        <p>He then demonstrated that his EM waves shared all the properties of light waves. He reflected them (off metal sheets). He refracted them (through prisms made of hard pitch — an asphalt-like material that has a different refractive index for radio waves). He polarized them (by passing them through grids of parallel wires). He diffracted them (around obstacles). In every test, the waves behaved exactly as Maxwell's equations predicted electromagnetic waves should behave, and exactly as light behaves. This was the proof: these waves ARE light, just at much lower frequency.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Photoelectric Effect — Observed but Unexplained</h2>
+    <p>While running his main EM wave experiments in 1887, Hertz noticed something odd. When he shielded his receiver loop from the spark of the transmitter using a glass screen, the maximum spark length in the receiver decreased. He investigated and found that the critical factor was not the glass per se but the fact that the glass was blocking ultraviolet light from the transmitter spark. When the UV light fell directly on the receiver's gap, the sparks jumped more readily — the gap could be wider and still fire.</p>
+
+    <p>Hertz published this observation carefully and accurately: "UV light incident on the negative electrode of a spark gap facilitates the discharge." He did not explain it. He did not know what mechanism was responsible. He moved on to other work — the main EM wave experiments were more pressing, and the UV observation was a curiosity he filed away as unexplained.</p>
+
+    <blockquote>
+      "I have confined myself to communicating the facts, in the hope that some further investigation may be made of this remarkable phenomenon."
+      <cite>— Heinrich Hertz, on the photoelectric effect, Annalen der Physik, 1887</cite>
+    </blockquote>
+
+    <p>Philipp Lenard — who had been Hertz's assistant — continued the investigation after Hertz's death. Lenard showed (1902) that the energy of the electrons emitted depends on the frequency of the light, not its intensity. This was profoundly inexplicable by classical physics. Albert Einstein explained it in 1905 by proposing that light consists of discrete energy packets (photons), each carrying energy E = hν, where h is Planck's constant and ν is the frequency. When a photon strikes a metal surface, it can eject an electron — but only if its energy (hν) exceeds the binding energy of the electron. Higher frequency means more energy per photon, so higher-energy electrons. Higher intensity means more photons, so more electrons, but same energy each.</p>
+
+    <p>This was the beginning of quantum mechanics. Einstein received the Nobel Prize in Physics in 1921 — not for relativity, but for "the discovery of the law of the photoelectric effect." The observation that triggered the chain of reasoning that led to quantum mechanics was made by Hertz in 1887, in his Karlsruhe laboratory, as a side note to an experiment he was doing about something else entirely.</p>
+  </section>
+
+  <section>
+    <h2>The Electromagnetic Spectrum</h2>
+    <p>Hertz worked at the low-frequency end of the electromagnetic spectrum — what we now call radio waves. His spark-gap transmitter produced waves with frequencies on the order of 50–500 MHz (50–500 million cycles per second), with wavelengths of centimeters to meters. These are what we now classify as radio and microwave frequencies.</p>
+
+    <div class="spectrum">
+      <div class="spectrum-title">The Electromagnetic Spectrum — Hertz demonstrated the radio end</div>
+      <div class="spec-row">
+        <div class="spec-seg seg-radio hertz-highlight" style="flex:2.5">Radio<br/>3 Hz–300 GHz<br/>1 mm–100 km<br/><strong>← HERTZ</strong></div>
+        <div class="spec-seg seg-micro">Microwave<br/>300 MHz–300 GHz<br/>1 mm–1 m</div>
+        <div class="spec-seg seg-ir">Infrared<br/>300 GHz–430 THz<br/>700 nm–1 mm</div>
+        <div class="spec-seg seg-vis">Visible<br/>430–750 THz<br/>400–700 nm</div>
+        <div class="spec-seg seg-uv">Ultraviolet<br/>750 THz–30 PHz<br/>10–400 nm</div>
+        <div class="spec-seg seg-xray">X-Ray<br/>30 PHz–30 EHz<br/>0.01–10 nm</div>
+        <div class="spec-seg seg-gamma">Gamma<br/>&gt;30 EHz<br/>&lt;10 pm</div>
+      </div>
+    </div>
+
+    <p>The crucial insight from Hertz's work is that all of these are the same thing — electromagnetic waves, differing only in frequency. Hertz proved that the radio waves he generated in his laboratory travel at the speed of light, reflect, refract, and polarize exactly like light. The same equations — Maxwell's equations — govern all of them. The electromagnetic spectrum is not a collection of different physical phenomena; it is one phenomenon, one set of equations, across a vast range of frequencies.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Radio — Hertz's Range</div>
+        <h4>3 Hz to 300 GHz</h4>
+        <p>Hertz worked at ~50-500 MHz. Radio broadcasting: AM at 535-1605 kHz, FM at 87.5-108 MHz. WiFi at 2.4 GHz and 5 GHz. Cellular at 700 MHz – 100 GHz.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">The Hertz Unit</div>
+        <h4>1 Hz = 1 cycle/second</h4>
+        <p>WiFi: 2.4 GHz = 2,400,000,000 Hz. A CPU at 3 GHz performs ~3 billion operations per second. The unit appears in every electronic specification worldwide.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Photoelectric — UV Range</div>
+        <h4>Ultraviolet: 10–400 nm</h4>
+        <p>The UV light from Hertz's spark that enhanced discharge sits at ~250-400 nm. High enough frequency (energy) to eject electrons from metal — the photoelectric effect.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Visible Light</div>
+        <h4>400–700 nm</h4>
+        <p>The band Maxwell identified as EM waves before Hertz proved it for radio. Hertz showed radio and light are the same phenomenon — just different frequencies of the same wave.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Maxwell's Equations — What Hertz Proved</h2>
+    <p>James Clerk Maxwell published his Treatise on Electricity and Magnetism in 1873. The equations it contained — four partial differential equations relating electric and magnetic fields — are among the greatest achievements in the history of physics. They unified electricity, magnetism, and optics into a single mathematical framework, and they predicted that electromagnetic disturbances would propagate as waves at speed c = 1/√(ε₀μ₀) — the speed of light.</p>
+
+    <p>The prediction was extraordinary because it had no free parameters. The constants ε₀ (permittivity of free space) and μ₀ (permeability of free space) had been measured independently in laboratory experiments on electrostatics and magnetostatics. When Maxwell combined them, the calculated speed matched the measured speed of light. This was not a coincidence: it was a discovery. Light is an electromagnetic wave.</p>
+
+    <p>But this remained a mathematical prediction. Maxwell had no experimental evidence for EM waves other than light itself. His derivation was deductive — from the equations to the waves — but the equations themselves were only supported by static and quasi-static experiments. The dynamic regime — rapidly oscillating fields propagating through free space — had never been directly tested.</p>
+
+    <p>That is what Hertz did. He produced electromagnetic waves in the laboratory, detected them at a distance, measured their speed, and confirmed it matched c. He demonstrated all their wave properties. He provided the experimental foundation that Maxwell's theory had lacked. Without Hertz's experiments, Maxwell's equations remained beautiful theoretical assertions. With them, they became empirical facts.</p>
+
+    <blockquote>
+      "Maxwell's theory is Maxwell's system of equations."
+      <cite>— Heinrich Hertz, Electric Waves (1893)</cite>
+    </blockquote>
+
+    <p>This remark — terse and precise — reflects Hertz's philosophy of physics. He did not want to know what electromagnetic fields "really are." He wanted to know what equations governed them. He was, in this respect, a proto-positivist: the mathematical structure IS the theory. The physical interpretation is secondary, or superfluous. This philosophical stance is one reason his work also influenced Wittgenstein's early philosophy — through the posthumous Principles of Mechanics, which Wittgenstein read and admired while a student of aeronautics in Manchester in 1908.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Heinrich Hertz Series — Volume II: The Experiment and the Waves<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-waves.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

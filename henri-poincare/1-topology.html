@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henri Poincaré — Topology, Chaos, and the Shape of Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060810;
+    --indigo: #4338ca;
+    --gold: #ca8a04;
+    --text: #d1d5e8;
+    --muted: #6b7280;
+    --card-bg: #0d1117;
+    --card-border: #1e2433;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 1.125rem; line-height: 1.8; min-height: 100vh; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(6,8,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--indigo); padding: 0.6rem 2rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .nav-series { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .nav-links a { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; padding: 0.2rem 0; border-bottom: 1px solid transparent; }
+  .nav-links a:hover { color: var(--indigo); border-bottom-color: var(--indigo); }
+  .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .hero { position: relative; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 4rem; overflow: hidden; }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.15; }
+  .kick { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; position: relative; }
+  .band { display: inline-block; background: var(--indigo); color: #fff; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.25rem 0.8rem; margin-bottom: 1.2rem; position: relative; }
+  h1 { font-family: 'Cinzel', serif; font-size: clamp(2rem, 5.5vw, 3.8rem); font-weight: 900; line-height: 1.1; color: #fff; position: relative; max-width: 800px; }
+  h1 span { color: var(--gold); }
+  .hero-sub { font-family: 'Newsreader', serif; font-style: italic; font-size: 1.2rem; color: var(--muted); margin-top: 1.2rem; max-width: 640px; position: relative; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 3.5rem 0; border-bottom: 1px solid var(--card-border); }
+  section:last-of-type { border-bottom: none; }
+  h2 { font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 600; color: var(--indigo); margin-bottom: 1.4rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--indigo); display: inline-block; }
+  h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold); margin: 2rem 0 0.8rem; }
+  p { margin-bottom: 1.2rem; }
+  p:last-child { margin-bottom: 0; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 2rem; }
+  .card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.6rem; transition: transform 0.22s ease, box-shadow 0.22s ease; position: relative; }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--indigo); }
+  .card-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .card h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: #fff; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.92rem; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  blockquote { border-left: 3px solid var(--gold); margin: 2rem 0; padding: 1rem 1.6rem; background: var(--card-bg); font-style: italic; font-size: 1.15rem; color: #c5cae0; }
+  blockquote cite { display: block; font-style: normal; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 0.7rem; letter-spacing: 0.08em; }
+
+  /* numbered contribution blocks */
+  .contrib { background: var(--card-bg); border: 1px solid var(--card-border); padding: 2rem; margin-bottom: 1.6rem; position: relative; transition: transform 0.22s, box-shadow 0.22s; }
+  .contrib:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--indigo); }
+  .contrib-num { position: absolute; top: 1.2rem; right: 1.4rem; font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--indigo); opacity: 0.18; font-weight: 900; line-height: 1; }
+  .contrib h3 { margin-top: 0; font-size: 1.2rem; }
+  .contrib p { font-size: 0.97rem; color: var(--muted); margin-bottom: 0.8rem; }
+  .contrib p:last-child { margin-bottom: 0; }
+
+  .spectrum-bar { margin: 2rem 0; }
+  .spectrum-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; font-family: 'Space Mono', monospace; font-size: 0.7rem; }
+  .spectrum-label { color: var(--muted); min-width: 120px; }
+  .spectrum-fill { height: 22px; background: linear-gradient(90deg, var(--indigo), var(--gold)); position: relative; transition: width 1.5s ease; display: flex; align-items: center; padding-left: 0.5rem; }
+  .spectrum-fill span { font-size: 0.65rem; color: #fff; white-space: nowrap; }
+
+  footer { border-top: 1px solid var(--card-border); padding: 2.5rem 2rem; text-align: center; }
+  .colophon { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); line-height: 2; }
+  .colophon strong { color: var(--gold); }
+
+  @media (max-width: 600px) { nav { padding: 0.5rem 1rem; gap: 1rem; } .container { padding: 0 1.2rem; } .card-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Poincaré — Vol 2 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-topology.html" class="active">Work</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="glow1"><feGaussianBlur stdDeviation="2" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    </defs>
+    <!-- Poincaré disk model tessellation -->
+    <g transform="translate(220,250)" filter="url(#glow1)">
+      <circle r="180" stroke="#4338ca" stroke-width="1.2" fill="none" opacity="0.5"/>
+      <circle r="120" stroke="#4338ca" stroke-width="0.6" fill="none" opacity="0.3"/>
+      <circle r="60" stroke="#ca8a04" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <circle r="30" stroke="#ca8a04" stroke-width="0.5" fill="none" opacity="0.35"/>
+      <!-- hyperbolic lines (appear as circular arcs in the disk) -->
+      <path d="M-180,0 Q0,120 180,0" stroke="#4338ca" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M-180,0 Q0,-120 180,0" stroke="#4338ca" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M0,-180 Q120,0 0,180" stroke="#ca8a04" stroke-width="0.6" fill="none" opacity="0.25"/>
+      <path d="M0,-180 Q-120,0 0,180" stroke="#ca8a04" stroke-width="0.6" fill="none" opacity="0.25"/>
+      <path d="M-127,-127 Q0,60 127,-127" stroke="#4338ca" stroke-width="0.5" fill="none" opacity="0.2"/>
+      <path d="M127,-127 Q-60,0 -127,127" stroke="#4338ca" stroke-width="0.5" fill="none" opacity="0.2"/>
+    </g>
+    <!-- Attractor on the right -->
+    <polyline id="attrW" points="" stroke="#4338ca" stroke-width="1" fill="none" filter="url(#glow1)" opacity="0.7"/>
+  </svg>
+  <script>
+    (function(){
+      const pts=[];let x=0.1,y=0,z=0;const s=10,r=28,b=8/3,dt=0.009;
+      for(let i=0;i<2000;i++){const dx=s*(y-x),dy=x*(r-z)-y,dz=x*y-b*z;x+=dx*dt;y+=dy*dt;z+=dz*dt;if(i>80)pts.push((640+x*6).toFixed(1)+','+(250+(z-25)*5.5).toFixed(1));}
+      const el=document.getElementById('attrW');el.setAttribute('points',pts.join(' '));
+      const len=el.getTotalLength?el.getTotalLength():4000;
+      el.style.strokeDasharray=len;el.style.strokeDashoffset=len;
+      el.style.transition='stroke-dashoffset 7s ease';
+      setTimeout(()=>{el.style.strokeDashoffset=0;},300);
+    })();
+  </script>
+
+  <div class="kick">Henri Poincaré · The Work</div>
+  <div class="band">Volume II — Topology, Chaos, and the Shape of Space</div>
+  <h1>Five <span>Revolutions</span></h1>
+  <p class="hero-sub">How one mind founded algebraic topology, discovered chaos, nearly invented relativity, and reshaped geometry.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>The Five Contributions</h2>
+    <p>Poincaré's mathematical output spans so many fields that any summary risks being a list. But five contributions stand out as genuinely foundational — not extensions of existing theory, but new fields or radical reframings that redirected the course of mathematics and physics for the next century.</p>
+
+    <!-- CONTRIBUTION 1 -->
+    <div class="contrib">
+      <div class="contrib-num">1</div>
+      <h3>Algebraic Topology — The Mathematics of Shape</h3>
+      <p>Before Poincaré, there was no systematic way to answer the question: when are two geometric objects fundamentally the same shape? A coffee cup and a donut are topologically identical — each has exactly one hole. A sphere and a torus are not. But how do you prove it, rigorously, in general?</p>
+      <p>In his 1895 paper <em>Analysis Situs</em> (and six supplements over the following decade), Poincaré built the machinery to answer this question. He introduced the concept of the <strong>fundamental group</strong> — a way of encoding how loops in a space can be deformed into one another. He developed <strong>homology theory</strong>, assigning sequences of algebraic groups to a topological space that capture its connectivity. He introduced <strong>Betti numbers</strong> — integers that count the number of independent holes of each dimension in a space.</p>
+      <p>These are now the basic tools of algebraic topology. Every physicist working in gauge theories, every mathematician studying manifolds, every data scientist doing topological data analysis is working in the framework Poincaré built. The field he invented is now one of the largest and most active areas of pure mathematics.</p>
+      <p>The fundamental group, in particular, was a stroke of genius. By associating a group — an algebraic object — to a geometric space, Poincaré created a bridge between two domains of mathematics that had seemed entirely separate. Abstract algebra could now be used to prove geometric theorems. The algebra-geometry correspondence, now central to all of modern mathematics, begins here.</p>
+    </div>
+
+    <!-- CONTRIBUTION 2 -->
+    <div class="contrib">
+      <div class="contrib-num">2</div>
+      <h3>The Poincaré Conjecture — The Question of the 3-Sphere</h3>
+      <p>In 1904, in the final supplement to Analysis Situs, Poincaré posed a question that would occupy mathematicians for nearly a century: <em>Is every simply-connected closed 3-manifold homeomorphic to the 3-sphere?</em></p>
+      <p>To decode this: a "simply-connected" space is one where every loop can be contracted to a point — it has no holes in the right sense. A "closed 3-manifold" is a finite, bounded three-dimensional space with no edges. The 3-sphere is the natural three-dimensional analog of the surface of a ball. Poincaré was asking: if a three-dimensional space satisfies these conditions, must it be — up to continuous deformation — a 3-sphere?</p>
+      <p>The corresponding question in two dimensions is trivially true. In dimensions 5 and above, it was proved by Stephen Smale in 1961 (Fields Medal). In dimension 4, it was proved by Michael Freedman in 1982 (Fields Medal). The 3-dimensional case — the original question — resisted all attacks for 99 years.</p>
+      <p>In 2003, Grigori Perelman, a reclusive Russian mathematician, posted a proof to arXiv using Richard Hamilton's Ricci flow technique, modified by Perelman's own "surgery" methods. The proof was verified by multiple independent teams over three years. Perelman was awarded the Fields Medal in 2006 and the Clay Millennium Prize ($1 million) in 2010. He refused both — the Fields Medal because he disagreed with the mathematical community's handling of attribution, the prize money for reasons he never fully explained. He lives in Saint Petersburg, largely in seclusion.</p>
+      <p>The Poincaré conjecture is the only one of the seven Clay Millennium Prize Problems to have been solved. It was solved 99 years after it was posed.</p>
+    </div>
+
+    <!-- CONTRIBUTION 3 -->
+    <div class="contrib">
+      <div class="contrib-num">3</div>
+      <h3>Chaos Theory — The Three-Body Problem and Its Undoing</h3>
+      <p>In 1885, King Oscar II of Sweden offered a prize for a proof that the solar system is stable — that the planets would continue in their orbits indefinitely without any of them escaping or colliding. Poincaré entered the competition with a paper that appeared to prove stability for a simplified version of the three-body problem.</p>
+      <p>Before publication, the editor — Gösta Mittag-Leffler — asked a colleague to review it. That colleague found an error. The error was not minor. Poincaré had missed a class of solutions — what he came to call <strong>homoclinic tangles</strong> — in which the phase-space trajectories of the system form an infinitely complicated, self-intersecting web. In these regions, arbitrarily small changes in initial conditions lead to wildly different long-term behavior.</p>
+      <p>Rather than suppress the finding, Poincaré corrected his paper and paid to have the published copies destroyed — at considerable personal expense. The corrected paper, published in 1890, contained his discovery: that the three-body problem is in general <em>not</em> solvable, and that the solar system's long-term behavior is, in principle, unpredictable.</p>
+
+      <blockquote>
+        "It may happen that small differences in the initial conditions produce very great ones in the final phenomena. A small error in the former will produce an enormous error in the latter. Prediction becomes impossible."
+        <cite>— Henri Poincaré, Science and Method (1908)</cite>
+      </blockquote>
+
+      <p>This is chaos theory. The sensitivity to initial conditions that Poincaré discovered in 1890 is precisely the "butterfly effect" that Edward Lorenz named and popularized in the 1960s — but Lorenz arrived at it by studying weather equations on a computer, seventy years after Poincaré proved it analytically in celestial mechanics. Lorenz's attractor and Poincaré's homoclinic tangles are manifestations of the same underlying phenomenon.</p>
+      <p>The implications are profound. The solar system is not a clockwork. Given the chaotic nature of the gravitational three-body (and N-body) problem, we cannot, even in principle, predict the precise positions of the planets beyond a certain time horizon — estimated at roughly 100 million years, possibly less. The universe is, at a deep level, not predictable from initial conditions alone.</p>
+    </div>
+
+    <!-- CONTRIBUTION 4 -->
+    <div class="contrib">
+      <div class="contrib-num">4</div>
+      <h3>Special Relativity — The Almost-Discovery</h3>
+      <p>By 1905, Poincaré had assembled most of the formal machinery of special relativity. Working from Lorentz's ether theory, he had derived the full Lorentz transformation group, shown that it is a symmetry group of Maxwell's equations, worked out the relativistic law of addition of velocities, introduced the four-dimensional spacetime notation (with time as an imaginary fourth coordinate), and proved that the Lorentz transformations form a group — which he named the <strong>Lorentz group</strong>, though it is now often called the Poincaré group because he was the one who found its structure.</p>
+      <p>His June 1905 paper "Sur la dynamique de l'électron" (On the Dynamics of the Electron) contained all of this. Einstein's July 1905 paper "On the Electrodynamics of Moving Bodies" was written independently, without reference to Poincaré's work — or so Einstein maintained, and most historians accept.</p>
+      <p>What Einstein had that Poincaré did not was conceptual clarity and philosophical boldness. Einstein simply declared, as a postulate, that the speed of light is the same in all inertial reference frames, and that the ether does not exist and cannot exist. He did not derive these from anything — he started from them. From two simple postulates, the entire theory followed by pure logic.</p>
+      <p>Poincaré, by contrast, retained the ether as a mathematical convenience — a conventional framework within which the Lorentz transformations operated. He believed, correctly in hindsight, that no experiment could detect the ether. But he did not conclude that the ether therefore does not exist. He concluded, in his conventionalist fashion, that it is an arbitrary choice of framework.</p>
+      <p>This was his intellectual undoing. By treating the ether as a useful fiction rather than a falsified hypothesis, he left the door open. Einstein walked through it. The credit for special relativity — rightly, in the sense that the conceptual revolution was Einstein's — went to Einstein. Poincaré, who had done more of the mathematics, received less of the credit. He died without resolving his complicated relationship to Einstein's theory, never publicly acknowledging or rejecting it.</p>
+    </div>
+
+    <!-- CONTRIBUTION 5 -->
+    <div class="contrib">
+      <div class="contrib-num">5</div>
+      <h3>Hyperbolic Geometry — The Poincaré Disk</h3>
+      <p>Hyperbolic geometry — the non-Euclidean geometry in which the parallel postulate fails and the angles of a triangle sum to less than 180° — had been discovered by Lobachevsky and Bolyai in the early nineteenth century. But it was Poincaré who gave it its most beautiful and tractable model: the <strong>Poincaré disk</strong>.</p>
+      <p>In this model, the entire hyperbolic plane is represented inside a unit disk. "Lines" in the hyperbolic sense appear as circular arcs that meet the boundary of the disk at right angles. Distances are measured by a metric that makes objects near the boundary infinitely far from the center. The result is a world in which parallel lines diverge, triangles have angle sums less than π, and an infinite space is compressed into a finite picture.</p>
+      <p>The artist M. C. Escher, fascinated by this model after encountering it in a mathematical paper, used it as the basis for his famous Circle Limit woodcuts — the ones in which fish or angels tile the plane, getting progressively smaller toward the boundary of the disk. Escher was drawing the hyperbolic plane, though he did not use that language. Every copy of those prints is a rendering of Poincaré's geometry.</p>
+      <p>The Poincaré disk model is now standard in hyperbolic geometry, complex analysis, and number theory. It also appears in modern physics — the hyperbolic space of special relativity's velocity space is, in structure, a Poincaré disk.</p>
+    </div>
+  </section>
+
+  <!-- EM SPECTRUM ANALOG for fields touched -->
+  <section>
+    <h2>Fields Transformed</h2>
+    <p>A schematic of the mathematical and physical disciplines Poincaré fundamentally altered — not merely contributed to, but changed the structure of.</p>
+    <div class="spectrum-bar">
+      <div class="spectrum-row"><div class="spectrum-label">Algebraic Topology</div><div class="spectrum-fill" style="width:95%"><span>Founded by Poincaré (1895)</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Dynamical Systems</div><div class="spectrum-fill" style="width:90%"><span>Chaos, homoclinic tangles (1890)</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Celestial Mechanics</div><div class="spectrum-fill" style="width:88%"><span>Three-body problem, stability theory</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Complex Analysis</div><div class="spectrum-fill" style="width:82%"><span>Automorphic / Fuchsian functions</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Special Relativity</div><div class="spectrum-fill" style="width:70%"><span>Lorentz group, 4D spacetime notation</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Hyperbolic Geometry</div><div class="spectrum-fill" style="width:75%"><span>Poincaré disk model</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Differential Equations</div><div class="spectrum-fill" style="width:85%"><span>Qualitative theory, phase portraits</span></div></div>
+      <div class="spectrum-row"><div class="spectrum-label">Philosophy of Science</div><div class="spectrum-fill" style="width:80%"><span>Conventionalism (Science &amp; Hypothesis)</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Conjecture in Context</h2>
+    <p>It is worth pausing to appreciate just how difficult the Poincaré conjecture was. The statement is simple enough to explain to a non-mathematician: imagine a three-dimensional space with no edges and no holes — must it be a 3-sphere? The question seems almost obvious. And yet it defied the combined efforts of the mathematical world for nearly a century.</p>
+
+    <p>The difficulty lies in the fact that three dimensions is the hardest case for topological manifold classification. In two dimensions, closed manifolds are classified completely — they are spheres, tori, or connected sums of tori, and the fundamental group determines which. In dimensions 5 and above, general position arguments make many constructions tractable. But in dimension 4, and especially in dimension 3, the tools of high-dimensional topology break down and new methods are required.</p>
+
+    <p>Perelman's proof used Ricci flow — a process that deforms a Riemannian metric by its curvature, analogous to the heat equation for temperature. The key innovation was his "surgery" technique: when Ricci flow develops singularities (pinch points in the manifold), Perelman showed how to cut them out, fill them in with standard pieces, and continue the flow. The long-term behavior of the flow then determines the topology of the original manifold.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">The Conjecture</div>
+        <h4>Posed 1904</h4>
+        <p>Every simply-connected closed 3-manifold is homeomorphic to a 3-sphere. Simple to state; 99 years to prove.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Higher Dimensions</div>
+        <h4>Smale (1961)</h4>
+        <p>Proved in dimensions ≥ 5 using h-cobordism theorem. Fields Medal 1966.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dimension 4</div>
+        <h4>Freedman (1982)</h4>
+        <p>Proved the topological version in 4 dimensions. Fields Medal 1986. Smooth 4D version still unknown.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dimension 3</div>
+        <h4>Perelman (2003)</h4>
+        <p>Proved via Ricci flow with surgery. Refused Fields Medal and $1M Millennium Prize. Lives in seclusion.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Status</div>
+        <h4>Only Solved Millennium Problem</h4>
+        <p>Of the Clay Mathematics Institute's seven Millennium Prize Problems, the Poincaré conjecture is the only one solved.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Method</div>
+        <h4>Ricci Flow Surgery</h4>
+        <p>Hamilton developed Ricci flow. Perelman's geometric surgery innovation made the proof complete and the singularities tractable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Chaos: What It Actually Means</h2>
+    <p>The word "chaos" in its technical sense does not mean random. Chaotic systems are deterministic — given the same starting conditions, they always produce the same outcome. The chaos is in our inability to specify the starting conditions with infinite precision. Because chaotic systems are exquisitely sensitive to initial conditions, any small uncertainty in the initial state — and there is always some uncertainty — grows exponentially over time, until the system's future behavior becomes effectively unpredictable.</p>
+
+    <p>Poincaré's discovery was that even the simplest physical systems — three gravitating bodies — can exhibit this behavior. The solar system is not merely complex; it is chaotic in this technical sense. The positions of the planets cannot be reliably computed beyond a horizon of roughly 100 million years, because small uncertainties in today's positions will have grown, through exponential amplification, into arbitrarily large errors by that time.</p>
+
+    <blockquote>
+      "Sometimes small differences in the initial state of the system lead to enormous differences in the final state. This sensitive dependence on initial conditions is what makes long-range weather prediction impossible."
+      <cite>— Henri Poincaré (paraphrased from Science and Method, 1908)</cite>
+    </blockquote>
+
+    <p>The Lorenz attractor — the iconic butterfly-shaped figure that has become the symbol of chaos theory — is a direct descendant of Poincaré's work. Lorenz discovered it in 1963 while running truncated Navier-Stokes equations on an early computer. The attractor is a strange attractor: a fractal set in phase space on which the system's trajectory wanders forever without repeating, yet without leaving the attractor. Poincaré's homoclinic tangles are the precursors of strange attractors.</p>
+
+    <p>Every time you hear that weather forecasts are unreliable beyond two weeks, you are hearing a consequence of Poincaré's 1890 paper. The atmosphere is a chaotic system, and no computational power can overcome the fundamental limit that Poincaré discovered. The butterfly effect is a poetic name for Poincaré's sensitive dependence on initial conditions.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Henri Poincaré Series — Volume II: Topology, Chaos, and the Shape of Space<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-topology.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

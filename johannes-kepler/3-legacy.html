@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Legacy — Kepler Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #050810;
+    --blue: #1d4ed8;
+    --gold: #ca8a04;
+    --text: #dde4f0;
+    --muted: #8090b0;
+    --card-bg: #080c18;
+    --card-border: #1a2040;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body { background: var(--paper); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 1.125rem; line-height: 1.75; min-height: 100vh; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(5,8,16,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--gold); display: flex; align-items: center; padding: 0 2rem; height: 52px; overflow-x: auto; }
+  nav a { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); text-decoration: none; padding: 0 1.1rem; height: 52px; display: flex; align-items: center; border-right: 1px solid #101830; white-space: nowrap; transition: color 0.2s, background 0.2s; }
+  nav a:first-child { border-left: 1px solid #101830; }
+  nav a:hover { color: var(--gold); background: rgba(202,138,4,0.07); }
+  nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+  nav .series-label { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); margin-right: 1.5rem; letter-spacing: 0.08em; white-space: nowrap; flex-shrink: 0; }
+
+  .hero { position: relative; padding: 5rem 2rem 4rem; text-align: center; overflow: hidden; border-bottom: 1px solid var(--card-border); }
+  .hero-svg { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.09; width: 480px; height: 480px; pointer-events: none; }
+  .orbit-ellipse { fill: none; stroke: var(--blue); stroke-width: 1.5; stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: drawOrbit 2s 0.3s ease forwards; }
+  @keyframes drawOrbit { to { stroke-dashoffset: 0; } }
+
+  .kick { font-family: 'Space Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--gold); display: block; margin-bottom: 1rem; }
+  h1 { font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; color: var(--text); margin-bottom: 0.6rem; }
+  h1 em { color: var(--gold); font-style: normal; }
+  .subtitle { font-family: 'Newsreader', serif; font-size: 1.2rem; font-style: italic; color: var(--muted); margin-bottom: 2rem; }
+  .band { display: inline-flex; align-items: center; font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--paper); background: var(--gold); padding: 0.3rem 1rem; margin-bottom: 2rem; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  h2 { font-family: 'Cinzel', serif; font-size: 1.55rem; font-weight: 600; color: var(--gold); margin: 3rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--card-border); }
+  h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 600; color: var(--blue); margin: 2rem 0 0.6rem; letter-spacing: 0.04em; }
+  p { margin-bottom: 1.2rem; }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+  .card { background: var(--card-bg); border: 1px solid var(--card-border); padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 var(--gold); }
+  .card .card-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+  .card h4 { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.5rem; }
+  .card p { font-size: 0.95rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+  blockquote { border-left: 3px solid var(--gold); margin: 2rem 0; padding: 1rem 1.5rem; background: var(--card-bg); font-style: italic; font-size: 1.1rem; color: var(--text); }
+  blockquote cite { display: block; font-style: normal; font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.7rem; }
+
+  .highlight { background: var(--blue); color: #dbeafe; padding: 1.25rem 1.5rem; margin: 2rem 0; border-left: 4px solid #60a5fa; }
+  .highlight .kick { color: #93c5fd; margin-bottom: 0.4rem; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 2rem 0; }
+  .stat-block { background: var(--card-bg); border: 1px solid var(--gold); padding: 1.25rem; text-align: center; }
+  .stat-number { font-family: 'Space Mono', monospace; font-size: 2rem; color: var(--gold); font-weight: 700; display: block; margin-bottom: 0.3rem; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+
+  .colophon { margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--card-border); font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); line-height: 1.8; }
+  .colophon strong { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1rem; }
+    main { padding: 2rem 1.2rem 4rem; }
+    .hero { padding: 3rem 1.2rem 2.5rem; }
+    .stat-row { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="series-label">Kepler</span>
+  <a href="0-who.html">0 · Who</a>
+  <a href="1-laws.html">1 · Laws</a>
+  <a href="2-world.html">2 · World</a>
+  <a href="3-legacy.html" class="active">3 · Legacy</a>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse class="orbit-ellipse" cx="250" cy="240" rx="180" ry="130"/>
+    <circle fill="var(--gold)" cx="126" cy="240" r="10"/>
+    <circle fill="var(--blue)" cx="430" cy="240" r="6">
+      <animateMotion dur="5s" repeatCount="indefinite" path="M 180,0 A 180,130 0 1 1 180,-0.001 Z" additive="sum"/>
+    </circle>
+  </svg>
+  <span class="kick">Kepler Series · Volume 3</span>
+  <h1>The <em>Legacy</em></h1>
+  <p class="subtitle">From Newton to GPS to 2,600 Exoplanets</p>
+  <span class="band">Every Orbit Ever Calculated Runs on His Laws</span>
+</div>
+
+<main>
+
+  <p>The practical legacy of Kepler's three laws is absolute and total. Every artificial satellite ever placed in orbit was put there using calculations derived from his laws. Every interplanetary spacecraft trajectory — the Voyager probes, Cassini, New Horizons, the Mars rovers' delivery systems — was planned using Keplerian mechanics as its base model. The GPS signals that locate you to within meters depend on precise knowledge of satellite orbits that are calculated using Kepler's laws. The legacy is not historical curiosity. It is the operating system of spaceflight.</p>
+
+  <div class="stat-row">
+    <div class="stat-block">
+      <span class="stat-number">2,662+</span>
+      <span class="stat-label">Exoplanets confirmed by the Kepler Space Telescope</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">9.5y</span>
+      <span class="stat-label">Kepler mission duration (2009–2018)</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">1687</span>
+      <span class="stat-label">Year Newton proved all three laws as consequences of F=GMm/r²</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">Orbits calculated using Keplerian mechanics since 1609</span>
+    </div>
+  </div>
+
+  <h2>Newton's Proof: Why Kepler Was Right</h2>
+
+  <p>Isaac Newton published <em>Philosophiae Naturalis Principia Mathematica</em> in 1687 — fifty-seven years after Kepler's death. In it, Newton proved all three of Kepler's laws as mathematical consequences of a single postulate: that every mass exerts a gravitational force on every other mass, directed along the line between them, proportional to the product of the masses and inversely proportional to the square of the distance.</p>
+
+  <p>The proof of the First Law (elliptical orbits) required showing that the solution to Newton's equations of motion under an inverse-square force is a conic section — an ellipse, parabola, or hyperbola, depending on the initial conditions. For bound orbits (the planet is captured by gravity), the trajectory is always an ellipse. For unbound trajectories (a comet passing through the solar system once), it is a hyperbola. Newton derived this with full mathematical rigor.</p>
+
+  <p>The proof of the Second Law (equal areas) is even more fundamental. Newton showed that the equal-area law holds for any central force — any force directed toward a fixed center, regardless of how the force varies with distance. This is equivalent to the conservation of angular momentum, one of the deepest symmetries in physics. Kepler found it by observing Mars. Newton proved it as a theorem about the geometry of central-force motion.</p>
+
+  <p>The proof of the Third Law (T² ∝ a³) for circular orbits is a straightforward algebraic exercise once you have F = GMm/r². The extension to ellipses requires the result that the period depends only on the semi-major axis, not on the eccentricity — a deeper result that Newton also proved.</p>
+
+  <div class="highlight">
+    <span class="kick">The Connection</span>
+    <p style="margin:0; color:#dbeafe; font-size:1rem;">Kepler found three laws empirically, by fitting equations to Tycho's data. Newton proved all three as mathematical consequences of F = GMm/r². The logical chain runs: Kepler's laws → inverse-square gravity (Newton). This is one of the most perfect examples in scientific history of empirical generalization being explained by deeper theory.</p>
+  </div>
+
+  <h2>The Kepler Space Telescope</h2>
+
+  <p>In 2009, NASA launched the Kepler Space Telescope — named in Kepler's honor — into an Earth-trailing heliocentric orbit. Its mission: to detect planets orbiting other stars using the transit method.</p>
+
+  <p>The transit method is conceptually simple. When a planet passes in front of its star (from our perspective), it blocks a tiny fraction of the star's light. If the planet's orbit is aligned with our line of sight, we see a small dip in the star's brightness at regular intervals — the orbital period. By measuring the depth of the dip (related to the planet's size relative to the star) and the period (directly), and applying Kepler's Third Law (to infer the orbital distance from the period and the star's mass), astronomers can determine the planet's size, orbital distance, and orbital period without ever directly imaging the planet.</p>
+
+  <p>This method works because of Kepler's Third Law. Without that law, the transit signal would tell you the period but not the orbital distance. Kepler's Third Law connects the period to the orbital size, and from the orbital size and the stellar luminosity, you can estimate whether the planet's surface temperature might be compatible with liquid water — the habitable zone concept.</p>
+
+  <p>The Kepler mission, operating until 2018 when it ran out of fuel, confirmed more than 2,662 exoplanets and identified thousands more candidates. It transformed our understanding of the galaxy: planets are common, habitable-zone planets are common, the Milky Way almost certainly contains billions of potentially habitable worlds. Johannes Kepler, who spent his career establishing the mathematical structure of our own solar system, now has his name on a mission that extended that structure across the galaxy.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="card-label">Mission</span>
+      <h4>Kepler Space Telescope</h4>
+      <p>Launched 2009. Monitored ~150,000 stars continuously for four years, looking for the brightness dips that indicate transiting planets.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Method</span>
+      <h4>Transit Photometry + Third Law</h4>
+      <p>Transit gives period; Kepler's Third Law converts period to orbital distance; stellar luminosity gives surface temperature estimate.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Result</span>
+      <h4>2,662+ Confirmed Planets</h4>
+      <p>Plus thousands of candidates awaiting confirmation. Most dramatic expansion of known planetary systems in history.</p>
+    </div>
+    <div class="card">
+      <span class="card-label">Finding</span>
+      <h4>Planets Are Everywhere</h4>
+      <p>The Milky Way contains at least as many planets as stars — likely far more. Earth-sized planets in habitable zones are common.</p>
+    </div>
+  </div>
+
+  <h2>Keplerian Mechanics in Spaceflight</h2>
+
+  <p>Every mission to another body in the solar system uses Keplerian orbital mechanics as its foundational mathematical framework. The Hohmann transfer orbit (the most fuel-efficient way to move between two circular orbits) is derived from Kepler's laws. The gravity-assist maneuver (using a planet's gravity to accelerate a spacecraft — used on Voyager, Cassini, New Horizons, and many others) is calculated using Keplerian mechanics augmented by the perturbation theory that corrects for multi-body gravitational interactions.</p>
+
+  <p>GPS satellite orbits are calculated using Kepler's laws as the zeroth-order model, with corrections for atmospheric drag, solar radiation pressure, and the non-spherical Earth's gravitational field as perturbations. The basic orbital period, eccentricity, and semi-major axis parameters stored in each GPS satellite's almanac are the Keplerian elements — literally the quantities Kepler defined.</p>
+
+  <p>When spacecraft engineers plan a mission to Mars, they calculate the Hohmann transfer ellipse that connects Earth's orbit to Mars's orbit, find the launch window when Earth and Mars are properly aligned, calculate the flight time, and plan the orbital insertion burn at Mars. Every step of this uses Kepler's laws. The mission to Mars is Kepler's legacy made physical — a machine, launched from Earth, arriving at another planet because a German astronomer working in a cold study in Prague filled pages with calculations about the orbit of Mars.</p>
+
+  <h2>The Asteroid and Other Honors</h2>
+
+  <p>Minor planet (1134) Kepler, discovered in 1929, is named for him. The Kepler crater on the Moon, approximately 32 km in diameter, has been known by that name since the 17th century — placed there by Giovanni Battista Riccioli in his 1651 lunar nomenclature. The Kepler crater on Mars is also named for him.</p>
+
+  <p>In Weil der Stadt, his birthplace, there is a statue of him in the market square. The Johannes Kepler University in Linz — where he worked as district mathematician — is named for him. In Regensburg, where he died, there is a museum and memorial. His <em>Epitome of Copernican Astronomy</em> was the most-read astronomy textbook of the 17th century; it was on the Index of Forbidden Books and was read everywhere.</p>
+
+  <h2>Kepler and the Philosophy of Science</h2>
+
+  <p>Beyond the specific laws, Kepler's legacy includes a methodological principle that was genuinely new in his time: the insistence that a physical theory must match observation precisely, not approximately. His rejection of the circular orbit for Mars on the grounds of an eight-arcminute discrepancy — and his willingness to say "if Tycho's measurements are right and my circular model is off by eight arcminutes, then circular orbits are wrong" — established a standard of empirical rigor that became the foundation of modern physics.</p>
+
+  <p>This standard is easy to state but historically unusual. Before Kepler, eight arcminutes of discrepancy between a model and observation would typically be attributed to measurement error or acceptable approximation. Kepler instead attributed it to theoretical error. This is the modern scientific attitude — the theory must fit the data, not the data the theory — and Kepler was among its earliest and most consequential practitioners.</p>
+
+  <blockquote>
+    "The diversity of the phenomena of nature is so great, and the treasures hidden in the heavens so rich, precisely in order that the human mind shall never be lacking in fresh nourishment."
+    <cite>— Johannes Kepler, Mysterium Cosmographicum (1596)</cite>
+  </blockquote>
+
+  <h2>A Summary of the Chain of Causation</h2>
+
+  <p>Tycho Brahe, a Danish nobleman with a copper nose and an extraordinary island observatory, spent twenty years measuring the positions of planets with unprecedented precision. Johannes Kepler, a premature baby from Württemberg who survived smallpox, poverty, religious displacement, and his mother's witch trial, spent a decade working through Tycho's data and discovered that planets move in ellipses, sweep equal areas in equal times, and that T² ∝ a³.</p>
+
+  <p>Isaac Newton, fifty-seven years after Kepler's death, proved all three laws as consequences of F = GMm/r², establishing modern physics. Engineers in the 20th and 21st centuries used these laws to plan every satellite orbit, every interplanetary mission, every GPS calculation. A space telescope named for Kepler used his Third Law to find thousands of planets around other stars. The chain runs from a cold-study in Prague to the surface of Mars, from a sickly child in 16th-century Württemberg to the confirmed existence of thousands of worlds around distant suns.</p>
+
+  <p>Kepler described his own motivation with characteristic intensity: he wanted to know what God had been thinking when He designed the solar system. He found out. And what God had been thinking, it turns out, was mathematics.</p>
+
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Author: David Lee Wise / ROOT0 / TriPod LLC<br>
+    License: CC-BY-ND-4.0<br>
+    Series: Johannes Kepler · Volume 3 of 3<br>
+    Filed: C:/repos/library/johannes-kepler/3-legacy.html
+  </div>
+
+</main>
+</body>
+</html>

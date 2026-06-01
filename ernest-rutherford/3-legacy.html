@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernest Rutherford — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#050a08; --green:#15803d; --gold:#ca8a04; --text:#d4e8dc; --muted:#5a7a66; --border:#0d1f14; --card-bg:#081209; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(5,10,8,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--gold); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); border-color:var(--green); }
+  .hero { position:relative; width:100%; min-height:480px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#041408 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.65; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--gold); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(21,128,61,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--gold); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:600px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--green); color:#e8f5ee; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--gold); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--gold); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--gold); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--green); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--green); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--green); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin:2rem 0; }
+  .stat { background:var(--card-bg); padding:1.5rem 1.25rem; text-align:center; }
+  .stat-num { font-family:'Cinzel',serif; font-weight:800; font-size:2.4rem; color:var(--gold); display:block; line-height:1; margin-bottom:0.3rem; }
+  .stat-label { font-family:'Space Mono',monospace; font-size:0.63rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--green); text-decoration:none; }
+  .colophon a:hover { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Ernest Rutherford</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-nucleus.html">Vol. 1 — The Nucleus</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ca8a04" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#ca8a04" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow3">
+        <feGaussianBlur stdDeviation="4" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Atom schematic - the mental image everyone has -->
+    <circle cx="450" cy="240" r="180" fill="none" stroke="#15803d" stroke-width="1" opacity="0.2"/>
+    <!-- Nucleus -->
+    <circle cx="450" cy="240" r="50" fill="url(#coreGlow)" opacity="0.6">
+      <animate attributeName="r" values="45;58;45" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="450" cy="240" r="20" fill="#ca8a04" opacity="0.9" filter="url(#glow3)"/>
+    <!-- Electron orbits -->
+    <ellipse cx="450" cy="240" rx="180" ry="60" fill="none" stroke="#15803d" stroke-width="1.5" opacity="0.4"/>
+    <ellipse cx="450" cy="240" rx="120" ry="180" fill="none" stroke="#15803d" stroke-width="1.5" opacity="0.35" transform="rotate(60,450,240)"/>
+    <ellipse cx="450" cy="240" rx="120" ry="180" fill="none" stroke="#15803d" stroke-width="1.5" opacity="0.3" transform="rotate(120,450,240)"/>
+    <!-- Orbiting electrons -->
+    <circle r="8" fill="#86efac" filter="url(#glow3)">
+      <animateMotion dur="6s" repeatCount="indefinite">
+        <mpath href="#orb1"/>
+      </animateMotion>
+    </circle>
+    <path id="orb1" d="M630,240 A180,60 0 1,1 270,240 A180,60 0 1,1 630,240" fill="none"/>
+    <circle r="7" fill="#4ade80" filter="url(#glow3)">
+      <animateMotion dur="9s" repeatCount="indefinite" begin="2s">
+        <mpath href="#orb2"/>
+      </animateMotion>
+    </circle>
+    <path id="orb2" d="M450,60 A120,180 0 1,1 450,420 A120,180 0 1,1 450,60" fill="none" transform="rotate(60,450,240)"/>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 3 — The Legacy · Nuclear Age</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">From Gold Foil to Nuclear Power</p>
+    <p class="hero-lead">The atom everyone pictures. The nucleus every physicist studies. The nuclear age — from power to medicine to weapons — all begins here.</p>
+  </div>
+</div>
+
+<div class="band">Nuclear Physics · Nuclear Power · Cancer Therapy · PET Scans · Element 104 · New Zealand $100 Note</div>
+
+<main>
+
+  <section id="atomic-picture">
+    <span class="section-label">The Mental Image</span>
+    <h2>The Rutherford Atom: Everyone's Mental Picture</h2>
+    <p>When a non-scientist is asked to draw an atom, they almost invariably draw the same picture: a small nucleus at the centre with electrons orbiting around it, like planets around the sun. This is the <strong>Rutherford model</strong> of the atom, introduced in 1911. It is, in the strictest quantum mechanical sense, incomplete — electrons don't actually orbit in the simple classical sense — but it is the correct qualitative picture of atomic architecture. The nucleus is there. It is tiny. It contains almost all the mass. The electrons are far away, in a largely empty space.</p>
+    <p>No other scientific discovery has so thoroughly shaped the popular mental image of a physical phenomenon. The Rutherford model is what textbooks show, what posters depict, what logos use, what children draw. It preceded by several decades the full quantum mechanical treatment (which makes the spatial picture considerably more complicated) and it continues to dominate popular understanding. The reason is simple: it is the correct first approximation, and the correct first approximation of something as fundamental as atomic structure is a permanent contribution to human knowledge.</p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">104</span><span class="stat-label">Rutherfordium — Element named for him</span></div>
+      <div class="stat"><span class="stat-num">1911</span><span class="stat-label">Nuclear model published</span></div>
+      <div class="stat"><span class="stat-num">$100</span><span class="stat-label">New Zealand note bearing his face</span></div>
+      <div class="stat"><span class="stat-num">~300</span><span class="stat-label">Nuclear reactors worldwide using his physics</span></div>
+    </div>
+  </section>
+
+  <section id="nuclear-physics">
+    <span class="section-label">Scientific Legacy</span>
+    <h2>Nuclear Physics: A Field He Founded</h2>
+    <p>Rutherford did not merely contribute to nuclear physics — he invented it as a coherent field of study. Before him, there was "radioactivity" (Becquerel's term, systematised by the Curies) — a set of puzzling phenomena involving mysterious emanations from certain heavy elements. Rutherford turned this collection of observations into a science: he discovered its mechanisms (transmutation), its systematics (half-life, decay series), its structure (the nucleus), and its modifiability (artificial transmutation). He named two of its most important constituents (alpha particles = helium nuclei, proton) and predicted a third (the neutron).</p>
+    <p>Nuclear physics is one of the most productive branches of twentieth-century science. It has produced: our understanding of stellar nucleosynthesis (how stars forge the elements); the Standard Model of particle physics (which grew directly out of nuclear physics investigations); nuclear medicine; nuclear power; nuclear weapons; radioactive dating techniques used throughout geology, archaeology, and astronomy; and a host of industrial and scientific measurement techniques.</p>
+
+    <h3>The Nuclear Reaction Chain</h3>
+    <p>The direct chain of reasoning from Rutherford's gold foil experiment to the nuclear era is traceable and short:</p>
+    <p><strong>1911:</strong> Rutherford's nuclear model — atoms have nuclei. <strong>1917:</strong> Rutherford's first artificial transmutation — nuclei can be changed artificially. <strong>1932:</strong> Chadwick discovers the neutron (Rutherford's prediction) — a neutral probe that can penetrate nuclei without Coulomb repulsion. <strong>1934:</strong> Szilard conceives the chain reaction concept. <strong>1938:</strong> Hahn, Strassmann, and Meitner discover fission. <strong>1942:</strong> Fermi builds the first nuclear reactor. <strong>1945:</strong> Nuclear weapons. <strong>1951:</strong> First electricity from nuclear power. The timeline from gold foil to nuclear electricity: 40 years.</p>
+  </section>
+
+  <section id="nuclear-power">
+    <span class="section-label">Applications</span>
+    <h2>Nuclear Power: A Prediction He Disbelieved</h2>
+    <p>In a 1933 speech, Rutherford called the extraction of practical energy from the atom "moonshine" — a pipedream of science fiction, not something achievable in the real world. It is one of history's notable wrong predictions, made by one of the field's founders. His scepticism was not unreasonable: at the time, no one had demonstrated a chain reaction, and the energy released in individual nuclear reactions, while large per atom, seemed impossibly difficult to harness in bulk.</p>
+    <p>Within five years of his death, nuclear fission had been discovered and a chain reaction had been shown to be feasible. Within eight years of his death, the first nuclear reactor was operating. Within fifteen years, the first nuclear power station was generating electricity. Rutherford was wrong about the timeline by a factor of roughly ten.</p>
+    <p>Today there are approximately 440 nuclear power reactors operating worldwide, providing about 10% of global electricity. France derives approximately 70% of its electricity from nuclear power. The fundamental physics enabling every one of these reactors — the structure of the nucleus, the mechanism of fission, the possibility of a chain reaction — descends directly from Rutherford's foundational work.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The energy produced by the breaking down of the atom is a very poor kind of thing. Anyone who expects a source of power from the transformation of these atoms is talking moonshine."</blockquote>
+      <cite>— Ernest Rutherford, 1933 — one of science's most wrong predictions</cite>
+    </div>
+  </section>
+
+  <section id="medicine">
+    <span class="section-label">Medical Applications</span>
+    <h2>Nuclear Medicine: Healing With Rutherford's Particles</h2>
+    <p>The alpha, beta, and gamma radiation that Rutherford identified and named forms the basis of a substantial fraction of modern medical diagnostics and therapy.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Diagnostics</span>
+        <h4>PET Scans</h4>
+        <p>Positron Emission Tomography uses beta-plus (positron) emitters. The positron annihilates with an electron, producing gamma rays detected externally. Gamma radiation — Rutherford's third type — is the signal.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Therapy</span>
+        <h4>Cancer Radiotherapy</h4>
+        <p>Targeted radiation — gamma, X-ray, and particle beams — destroys tumour cells. Radioactive isotopes injected or implanted near tumours deliver precisely dosed radiation. Alpha emitters increasingly used for targeted therapy.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Diagnostics</span>
+        <h4>Nuclear Scintigraphy</h4>
+        <p>Gamma-emitting isotopes (technetium-99m is most common) injected into the body allow internal organs and bone to be imaged by detecting the emitted gammas externally.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Dating</span>
+        <h4>Carbon-14 Dating</h4>
+        <p>Radioactive half-life — Rutherford's concept from 1903 — is the basis of radiocarbon dating and all radiometric geological dating methods. Ages from thousands to billions of years.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="honours">
+    <span class="section-label">Naming and Honours</span>
+    <h2>What Bears His Name</h2>
+    <p>Rutherford's name is permanently embedded in the vocabulary of physics, chemistry, and the general culture in a way matched by very few scientists.</p>
+
+    <h3>Rutherfordium (Element 104)</h3>
+    <p>Element 104, a transactinide element synthesised in 1964, was officially named <strong>Rutherfordium</strong> (symbol Rf) in 1997. It is a fitting tribute: the synthetic elements beyond uranium are all products of nuclear reactions — the technology that Rutherford made possible. Rutherfordium is the first transactinide element and the heaviest element named after a New Zealander.</p>
+
+    <h3>The New Zealand $100 Note</h3>
+    <p>Rutherford's portrait has appeared on the New Zealand one-hundred-dollar banknote since 1992. It is the highest-denomination New Zealand banknote and the only one bearing a scientist. The design includes imagery of the atom and the nuclear model. It is, arguably, the most-used scientific tribute in the world: New Zealanders carry Rutherford in their wallets.</p>
+
+    <h3>The Rutherford (Unit)</h3>
+    <p>The Rutherford (symbol Rd) is a unit of radioactivity — defined as one million radioactive disintegrations per second — named in his honour. It has largely been superseded by the becquerel (one disintegration per second) in SI units, but it remains in use in some contexts.</p>
+
+    <h3>Rutherford Medal and Lectures</h3>
+    <p>The Royal Society awards the Rutherford Medal for outstanding contributions to nuclear physics. The New Zealand Royal Society awards the Rutherford Medal for scientific excellence more broadly. The Institute of Physics awards the Rutherford Medal and Prize. Cambridge's Cavendish Laboratory continues to bear the culture he shaped.</p>
+  </section>
+
+  <section id="stamp-collecting">
+    <span class="section-label">The Verdict</span>
+    <h2>"All Science Is Either Physics or Stamp Collecting"</h2>
+    <p>Rutherford's most famous remark — attributed to him in various forms — encapsulates both his greatness and his limitation. The greatness: he understood that the most fundamental questions in science are about the structure of matter and the forces that govern it, and that everything else, however interesting and practically important, is ultimately description rather than explanation. The limitation: a man who identified two types of radiation, named them Greek letters, and built a career on classification is perhaps not in the strongest position to dismiss taxonomy.</p>
+    <p>But the real measure of a scientist is not what they say but what they do. Rutherford discovered the alpha and beta nature of radiation. He identified transmutation. He formulated the half-life. He discovered the nucleus. He named the proton. He predicted the neutron. He performed the first artificial nuclear reaction. He trained James Chadwick, Niels Bohr, Hans Geiger, and a dozen other physicists who would transform the field. He ran the Cavendish Laboratory at the height of its influence. He was buried next to Newton.</p>
+    <p>Every hospital that operates a PET scanner, every nuclear power station that generates electricity, every archaeologist who uses carbon-14 dating, every oncologist who targets a tumour with radiation, every physicist who studies the Standard Model — all are working within the framework of nuclear physics that Ernest Rutherford, from the farms of Nelson, New Zealand, built with his own hands and his extraordinarily physical intuition about what the atom was made of.</p>
+
+    <div class="pull-quote">
+      <blockquote>"All science is either physics or stamp collecting."</blockquote>
+      <cite>— Ernest Rutherford — physicist, Nobel laureate, Baron of Nelson, buried next to Newton</cite>
+    </div>
+  </section>
+
+  <section id="legacy-map">
+    <span class="section-label">The Full Map</span>
+    <h2>From Gold Foil to the Modern World</h2>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Nuclear Structure</span>
+        <h4>Protons, Neutrons, Nuclei</h4>
+        <p>The nuclear model is foundational to chemistry, physics, and all sciences of matter. Every periodic table entry is defined by nuclear proton number.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Energy</span>
+        <h4>Nuclear Power</h4>
+        <p>~440 reactors worldwide, ~10% of global electricity. France, Sweden, Slovakia depend on nuclear for majority of power. All rest on Rutherford's physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Weapons</span>
+        <h4>Nuclear Deterrence</h4>
+        <p>Nine nuclear-armed states. Rutherford's work is the direct ancestor of both the fission and fusion weapons that have shaped geopolitics since 1945.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Medicine</span>
+        <h4>Radiotherapy &amp; Imaging</h4>
+        <p>Millions of cancer patients treated annually with radiation. Millions of PET, SPECT, and scintigraphy scans performed. All use radiation Rutherford named.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Geology &amp; Archaeology</span>
+        <h4>Radiometric Dating</h4>
+        <p>Half-life — Rutherford's concept — allows us to date rocks billions of years old and artefacts thousands of years old. The geological timescale rests on it.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Fundamental Physics</span>
+        <h4>The Standard Model</h4>
+        <p>Grew from nuclear and particle physics investigations that Rutherford began. Quarks, gluons, and the nuclear forces are the modern answer to questions he first posed.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Ernest Rutherford Series — Vol. 3: The Legacy<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

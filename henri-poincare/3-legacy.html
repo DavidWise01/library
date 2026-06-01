@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henri Poincaré — Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#060810;--indigo:#4338ca;--gold:#ca8a04;--text:#d1d5e8;--muted:#6b7280;--card-bg:#0d1117;--card-border:#1e2433;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--text);font-family:'Newsreader',Georgia,serif;font-size:1.125rem;line-height:1.8;min-height:100vh;}
+  nav{position:sticky;top:0;z-index:100;background:rgba(6,8,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--indigo);padding:0.6rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .nav-series{font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+  .nav-links a{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;padding:0.2rem 0;border-bottom:1px solid transparent;}
+  .nav-links a:hover{color:var(--indigo);border-bottom-color:var(--indigo);}
+  .nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .hero{position:relative;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 2rem 4rem;overflow:hidden;}
+  .hero-svg{position:absolute;inset:0;width:100%;height:100%;opacity:0.14;}
+  .kick{font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;position:relative;}
+  .band{display:inline-block;background:var(--indigo);color:#fff;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.8rem;margin-bottom:1.2rem;position:relative;}
+  h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,3.8rem);font-weight:900;line-height:1.1;color:#fff;position:relative;max-width:800px;}
+  h1 span{color:var(--gold);}
+  .hero-sub{font-family:'Newsreader',serif;font-style:italic;font-size:1.2rem;color:var(--muted);margin-top:1.2rem;max-width:640px;position:relative;}
+  .container{max-width:900px;margin:0 auto;padding:0 2rem;}
+  section{padding:3.5rem 0;border-bottom:1px solid var(--card-border);}
+  section:last-of-type{border-bottom:none;}
+  h2{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:600;color:var(--indigo);margin-bottom:1.4rem;padding-bottom:0.5rem;border-bottom:2px solid var(--indigo);display:inline-block;}
+  h3{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold);margin:2rem 0 0.8rem;}
+  p{margin-bottom:1.2rem;}
+  p:last-child{margin-bottom:0;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-top:2rem;}
+  .card{background:var(--card-bg);border:1px solid var(--card-border);padding:1.6rem;transition:transform 0.22s ease,box-shadow 0.22s ease;}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--indigo);}
+  .card-label{font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+  .card h4{font-family:'Cinzel',serif;font-size:1rem;color:#fff;margin-bottom:0.5rem;}
+  .card p{font-size:0.92rem;color:var(--muted);line-height:1.6;margin:0;}
+  blockquote{border-left:3px solid var(--gold);margin:2rem 0;padding:1rem 1.6rem;background:var(--card-bg);font-style:italic;font-size:1.15rem;color:#c5cae0;}
+  blockquote cite{display:block;font-style:normal;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);margin-top:0.7rem;letter-spacing:0.08em;}
+  .legacy-block{background:var(--card-bg);border:1px solid var(--card-border);border-left:4px solid var(--indigo);padding:1.8rem;margin-bottom:1.6rem;transition:transform 0.22s,box-shadow 0.22s;}
+  .legacy-block:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--indigo);}
+  .legacy-block h3{margin-top:0;color:#fff;font-size:1.1rem;}
+  .legacy-block .domain{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .legacy-block p{font-size:0.95rem;color:var(--muted);margin-bottom:0.8rem;}
+  .legacy-block p:last-child{margin-bottom:0;}
+  .stat-row{display:flex;gap:2rem;flex-wrap:wrap;margin:2rem 0;}
+  .stat{flex:1;min-width:140px;text-align:center;padding:1.4rem 1rem;background:var(--card-bg);border:1px solid var(--card-border);}
+  .stat-num{font-family:'Cinzel',serif;font-size:2.4rem;color:var(--gold);line-height:1;}
+  .stat-label{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-top:0.4rem;}
+  footer{border-top:1px solid var(--card-border);padding:2.5rem 2rem;text-align:center;}
+  .colophon{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);line-height:2;}
+  .colophon strong{color:var(--gold);}
+  @media(max-width:600px){nav{padding:0.5rem 1rem;gap:1rem;}.container{padding:0 1.2rem;}.card-grid{grid-template-columns:1fr;}.stat-row{gap:1rem;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-series">Poincaré — Vol 4 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html">Who He Was</a>
+    <a href="1-topology.html">Work</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html" class="active">Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs><filter id="gw3"><feGaussianBlur stdDeviation="2.5" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <polyline id="attrLeg" points="" stroke="#4338ca" stroke-width="1.3" fill="none" filter="url(#gw3)" opacity="0.85"/>
+    <polyline id="attrLeg2" points="" stroke="#ca8a04" stroke-width="0.7" fill="none" filter="url(#gw3)" opacity="0.55"/>
+    <!-- Expanding rings from center to suggest legacy spreading -->
+    <circle cx="450" cy="240" r="60" stroke="#4338ca" stroke-width="0.5" fill="none" opacity="0.25"><animate attributeName="r" values="60;180;60" dur="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.25;0;0.25" dur="6s" repeatCount="indefinite"/></circle>
+    <circle cx="450" cy="240" r="100" stroke="#ca8a04" stroke-width="0.4" fill="none" opacity="0.2"><animate attributeName="r" values="100;220;100" dur="8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.2;0;0.2" dur="8s" repeatCount="indefinite"/></circle>
+  </svg>
+  <script>
+    (function(){
+      const pts=[],pts2=[];let x=0.1,y=0,z=0,x2=0.101,y2=0.001,z2=0;const s=10,r=28,b=8/3,dt=0.009;
+      for(let i=0;i<2500;i++){
+        const dx=s*(y-x),dy=x*(r-z)-y,dz=x*y-b*z;x+=dx*dt;y+=dy*dt;z+=dz*dt;
+        const dx2=s*(y2-x2),dy2=x2*(r-z2)-y2,dz2=x2*y2-b*z2;x2+=dx2*dt;y2+=dy2*dt;z2+=dz2*dt;
+        if(i>80){pts.push((200+x*6).toFixed(1)+','+(240+(z-25)*5).toFixed(1));pts2.push((200+x2*5.5).toFixed(1)+','+(240+(z2-25)*4.5).toFixed(1));}
+      }
+      ['attrLeg','attrLeg2'].forEach((id,i)=>{
+        const el=document.getElementById(id);
+        el.setAttribute('points',[pts,pts2][i].join(' '));
+        const len=el.getTotalLength?el.getTotalLength():5000;
+        el.style.strokeDasharray=len;el.style.strokeDashoffset=len;
+        el.style.transition=`stroke-dashoffset ${7+i*2}s ease`;
+        setTimeout(()=>{el.style.strokeDashoffset=0;},200+i*600);
+      });
+    })();
+  </script>
+
+  <div class="kick">Henri Poincaré · The Legacy</div>
+  <div class="band">Volume IV — What He Left Behind</div>
+  <h1>The <span>Inheritance</span></h1>
+  <p class="hero-sub">From weather forecasting to particle physics, from the Fields Medal to the butterfly effect — the world Poincaré built.</p>
+</div>
+
+<main class="container">
+
+  <section>
+    <h2>What He Built That Still Stands</h2>
+    <p>Poincaré died in 1912. In the century since, virtually every significant development in the areas he worked has built on foundations he laid. This is not a matter of distant historical credit — it is a matter of direct intellectual lineage. Modern algebraic topology is the direct descendant of his Analysis Situs. Chaos theory is the formalization and extension of his three-body work. The Poincaré group is central to the Standard Model of particle physics. His topology conjecture was the defining open problem of 3-manifold theory until 2003. The limits on weather forecasting are his limits.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">99</div><div class="stat-label">Years the conjecture stood unsolved</div></div>
+      <div class="stat"><div class="stat-num">~2wk</div><div class="stat-label">Forecast horizon his chaos limits</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Hilbert spaces — used in QM</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">Millennium Prize solved (his)</div></div>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Mathematics</div>
+      <h3>Algebraic Topology</h3>
+      <p>Poincaré's Analysis Situs launched a field that now employs thousands of mathematicians worldwide. The fundamental group, homology, cohomology, homotopy theory, fiber bundles, characteristic classes — all of these are generalizations or refinements of the concepts he introduced in 1895 and the decade that followed.</p>
+      <p>Modern applications of algebraic topology include: topological data analysis (TDA), which uses persistent homology to extract structure from high-dimensional data sets; materials science, where topological invariants classify phases of matter; quantum computing, where topological quantum codes provide error correction; and the mathematical structure of quantum field theory, where fiber bundles and characteristic classes encode gauge symmetries.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Dynamical Systems and Climate</div>
+      <h3>Chaos Theory and the Butterfly Effect</h3>
+      <p>The fundamental limit on weather forecasting — approximately ten to fourteen days — is a consequence of Poincaré's 1890 discovery. The atmosphere is a chaotic system in exactly the sense Poincaré identified: small errors in initial conditions grow exponentially, eventually overwhelming any prediction. No amount of computational power can overcome this limit, because the issue is not our ability to compute but the physical structure of the system.</p>
+      <p>This has direct practical consequences. Weather services worldwide invest enormously in improving initial condition measurements — better satellite data, denser sensor networks, more sophisticated data assimilation — precisely because better initial conditions is the only lever available. The dynamics themselves, Poincaré showed us, are irreducibly chaotic.</p>
+      <p>Beyond weather: chaos theory now shapes ecology (population dynamics), cardiology (heart rhythm irregularities), economics (market fluctuations), and engineering (structural resonance). The Lorenz attractor — the icon of chaos — is a visual representation of what Poincaré found analytically in the phase space of the three-body problem.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Physics — Symmetry and Particle Physics</div>
+      <h3>The Poincaré Group</h3>
+      <p>The Poincaré group is the symmetry group of flat spacetime — the set of all transformations (rotations, boosts, translations) that leave the laws of physics invariant. It consists of the Lorentz group (rotations and boosts) combined with spacetime translations. Poincaré identified its mathematical structure in his 1905 electrodynamics paper; Einstein's special relativity made it the fundamental symmetry of physics.</p>
+      <p>In modern particle physics, every elementary particle is classified by its transformation properties under the Poincaré group. Mass and spin — the two quantum numbers that define a particle type — correspond precisely to the two Casimir operators of the Poincaré group. Eugene Wigner showed this in 1939, in what is now called Wigner's classification. Every time a physicist says "this particle has spin 1/2" or "this particle has mass m," they are invoking the representation theory of the Poincaré group.</p>
+    </div>
+
+    <div class="legacy-block">
+      <div class="domain">Mathematics — The Conjecture Solved</div>
+      <h3>The Poincaré Conjecture and Perelman</h3>
+      <p>When Grigori Perelman posted his proof to arXiv in 2002–2003, he did not submit it to a journal. He did not announce it with fanfare. He posted three preprints, gave a series of lectures in the United States, and then largely withdrew from public mathematical life. The verification of his proof took three years and involved independent teams at multiple universities.</p>
+      <p>Perelman's proof used Ricci flow — a geometric evolution equation introduced by Richard Hamilton — combined with Perelman's own "surgery" procedure for handling singularities. The method proved not just the Poincaré conjecture but the more general Geometrization conjecture of William Thurston, which provides a complete classification of compact 3-manifolds. Poincaré's conjecture was the special case.</p>
+      <p>Perelman was awarded the Fields Medal in 2006. He declined it. He was awarded the $1 million Clay Millennium Prize in 2010. He declined that too, citing his disagreement with the mathematical establishment and the treatment of Richard Hamilton's contributions. He lives in Saint Petersburg, reportedly in relative poverty, by choice.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Solar System Is Not Clockwork</h2>
+    <p>One of the most profound legacies of Poincaré's work on the three-body problem is what it means for our picture of the universe. For two centuries after Newton, the solar system was the paradigm of a clockwork mechanism — deterministic, predictable, perfectly regular. Laplace famously claimed that an intellect knowing all the forces and positions of nature at one instant could predict all of nature's future and past.</p>
+
+    <p>Poincaré's work destroys Laplace's demon, not by introducing randomness but by showing that perfect determinism and practical unpredictability are compatible. Even in a perfectly deterministic Newtonian universe, the solar system's long-term behavior is chaotic. Small uncertainties in initial conditions grow exponentially. After 100 million years, the error bars on planetary positions become comparable to the orbits themselves. Mercury might be ejected from the solar system within a few billion years — the probability estimates vary, but the possibility is real.</p>
+
+    <blockquote>
+      "If we knew exactly the laws of nature and the situation of the universe at the initial moment, we could predict exactly the situation of the same universe at a subsequent moment. But even if the natural laws had no longer any secret for us, we could know the initial situation only approximately... Prediction becomes impossible."
+      <cite>— Henri Poincaré, Science and Method (1908)</cite>
+    </blockquote>
+
+    <p>This is a statement about epistemology — about the limits of knowledge — not about physics itself. The universe may be perfectly deterministic (or may not, given quantum mechanics). But the determinism is irrelevant to our practical ability to predict, because we cannot measure initial conditions with infinite precision, and the exponential growth of error that chaos entails means finite precision is always ultimately insufficient for long-term prediction.</p>
+  </section>
+
+  <section>
+    <h2>Mathematics Beyond Poincaré's Horizon</h2>
+    <p>Poincaré could not have anticipated the full extent of what he was starting. Several of the most important mathematical developments of the twentieth century were direct extensions of his work, pursued by people who acknowledged the lineage directly.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Topology</div>
+        <h4>Morse Theory</h4>
+        <p>Marston Morse (1930s) developed a way to analyze topology through critical points of smooth functions — a direct extension of Poincaré's qualitative approach to dynamical systems.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Topology</div>
+        <h4>Fiber Bundles</h4>
+        <p>Whitney, Steenrod (1940s). The mathematical framework for gauge field theories in physics. Uses Poincaré's fundamental group and characteristic classes.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dynamical Systems</div>
+        <h4>KAM Theory</h4>
+        <p>Kolmogorov-Arnold-Moser (1950s–60s): not all three-body trajectories are chaotic. Some persist as quasi-periodic orbits. A nuanced extension of Poincaré's chaos work.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Physics</div>
+        <h4>Gauge Theories</h4>
+        <p>Yang-Mills (1954), the Standard Model (1970s): the language of fiber bundles and gauge symmetry that Poincaré's topology made possible is the mathematical core of modern particle physics.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Data Science</div>
+        <h4>Topological Data Analysis</h4>
+        <p>Persistent homology (2000s): a computational method using Poincaré's homology theory to find structure in high-dimensional data. Used in biology, materials science, neuroscience.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Philosophy</div>
+        <h4>Conventionalism's Children</h4>
+        <p>Poincaré's conventionalism influenced Carnap, Reichenbach, and the Vienna Circle. Through them, the philosophy of science that dominates twentieth-century epistemology.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Universalist Question</h2>
+    <p>Poincaré is routinely called "the last universalist" — the last mathematician who had mastery of all of mathematics simultaneously. This is probably true, and the observation carries a wistfulness about the nature of intellectual progress. The discipline has grown so vast, so ramified, so specialized, that no single human mind can now hold it all. A Fields Medalist today is typically an expert in one or two sub-areas of a single branch of mathematics. Poincaré worked in topology, dynamical systems, celestial mechanics, complex analysis, number theory, mathematical physics, and philosophy — and in each of these he was at the frontier.</p>
+
+    <p>This is not a decline — it is a measure of how much Poincaré and his contemporaries built. Mathematics has grown so large precisely because of the foundations they laid. The universalist is no longer possible because the universe has expanded beyond what any mind can contain. This is a success, not a failure. But it means that Poincaré represents something that cannot recur — a final moment when the totality was graspable by one person.</p>
+
+    <blockquote>
+      "The scientist does not study nature because it is useful to do so. He studies it because he takes pleasure in it, and he takes pleasure in it because it is beautiful. If nature were not beautiful, it would not be worth knowing, and life would not be worth living."
+      <cite>— Henri Poincaré, The Value of Science (1905)</cite>
+    </blockquote>
+
+    <p>His final book, <em>Last Thoughts</em>, was published posthumously in 1913. He had been working on it until near the end. It contains his most mature reflections on mathematics, science, and the nature of reality — the thoughts of a man who had spent fifty years thinking carefully about the deepest questions and who knew he was running out of time. It reads, in places, like a letter to the future: a description of a world that he understood was going to change in ways he could not fully anticipate, but whose foundations he had done more than anyone else to build.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Henri Poincaré Series — Volume IV: Legacy<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-topology.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>

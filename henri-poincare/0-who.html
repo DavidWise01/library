@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henri Poincaré — Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Newsreader:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #060810;
+    --indigo: #4338ca;
+    --gold: #ca8a04;
+    --text: #d1d5e8;
+    --muted: #6b7280;
+    --card-bg: #0d1117;
+    --card-border: #1e2433;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* ── STICKY NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6,8,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--indigo);
+    padding: 0.6rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .nav-series {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--indigo);
+    border-bottom-color: var(--indigo);
+  }
+  .nav-links a.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.18;
+  }
+  .kick {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .band {
+    display: inline-block;
+    background: var(--indigo);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.8rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    position: relative;
+    max-width: 800px;
+  }
+  h1 span { color: var(--gold); }
+  .hero-sub {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-top: 1.2rem;
+    max-width: 640px;
+    position: relative;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 3.5rem 0; border-bottom: 1px solid var(--card-border); }
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--indigo);
+    margin-bottom: 1.4rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--indigo);
+    display: inline-block;
+  }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin: 2rem 0 0.8rem;
+  }
+  p { margin-bottom: 1.2rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 1.6rem;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    position: relative;
+  }
+  .card:hover {
+    transform: translate(-3px,-3px);
+    box-shadow: 6px 6px 0 var(--indigo);
+  }
+  .card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .card h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 2rem; }
+  .tl-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: 2.7rem;
+    top: 2.2rem;
+    bottom: -2rem;
+    width: 1px;
+    background: var(--card-border);
+  }
+  .tl-item:last-child::before { display: none; }
+  .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    min-width: 3.5rem;
+    padding-top: 0.3rem;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .tl-dot {
+    width: 10px; height: 10px;
+    background: var(--indigo);
+    border-radius: 50%;
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+  }
+  .tl-body { flex: 1; }
+  .tl-body strong {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: #fff;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .tl-body p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+  /* ── PULL QUOTE ── */
+  blockquote {
+    border-left: 3px solid var(--gold);
+    margin: 2rem 0;
+    padding: 1rem 1.6rem;
+    background: var(--card-bg);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: #c5cae0;
+  }
+  blockquote cite {
+    display: block;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  .stat {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    padding: 1.4rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  /* ── COLOPHON ── */
+  footer {
+    border-top: 1px solid var(--card-border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .colophon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    line-height: 2;
+  }
+  .colophon strong { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 1rem; gap: 1rem; }
+    .container { padding: 0 1.2rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .stat-row { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav>
+  <div class="nav-series">Poincaré — Vol 1 of 4</div>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Who He Was</a>
+    <a href="1-topology.html">Work</a>
+    <a href="2-world.html">World</a>
+    <a href="3-legacy.html">Legacy</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <!-- Animated strange attractor SVG -->
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <filter id="glow0">
+        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Chaotic attractor trajectory — animated polyline that traces progressively -->
+    <polyline id="attractor" points="" stroke="#4338ca" stroke-width="1.2" fill="none" filter="url(#glow0)" opacity="0.85"/>
+    <polyline id="attractor2" points="" stroke="#ca8a04" stroke-width="0.7" fill="none" filter="url(#glow0)" opacity="0.6"/>
+    <!-- Orbital decoration circles -->
+    <circle cx="450" cy="260" r="180" stroke="#4338ca" stroke-width="0.4" fill="none" opacity="0.2"/>
+    <circle cx="450" cy="260" r="120" stroke="#ca8a04" stroke-width="0.3" fill="none" opacity="0.15"/>
+    <circle cx="450" cy="260" r="240" stroke="#4338ca" stroke-width="0.2" fill="none" opacity="0.1"/>
+  </svg>
+  <script>
+    // Generate Lorenz-like attractor points projected to 2D for the SVG
+    (function() {
+      const pts1 = [], pts2 = [];
+      let x=0.1, y=0, z=0, x2=0.101, y2=0.001, z2=0;
+      const s=10, r=28, b=8/3, dt=0.008;
+      const cx=450, cy=260, scale=7;
+      for(let i=0;i<3000;i++){
+        const dx=s*(y-x), dy=x*(r-z)-y, dz=x*y-b*z;
+        x+=dx*dt; y+=dy*dt; z+=dz*dt;
+        const dx2=s*(y2-x2), dy2=x2*(r-z2)-y2, dz2=x2*y2-b*z2;
+        x2+=dx2*dt; y2+=dy2*dt; z2+=dz2*dt;
+        if(i>100){
+          pts1.push((cx+x*scale).toFixed(1)+','+(cy+(z-25)*scale*0.55).toFixed(1));
+          pts2.push((cx+x2*scale*0.8).toFixed(1)+','+(cy+(z2-25)*scale*0.5).toFixed(1));
+        }
+      }
+      document.getElementById('attractor').setAttribute('points', pts1.join(' '));
+      document.getElementById('attractor2').setAttribute('points', pts2.join(' '));
+
+      // Animate the stroke-dashoffset to trace the path
+      const a1 = document.getElementById('attractor');
+      const a2 = document.getElementById('attractor2');
+      [a1,a2].forEach((el,i) => {
+        const len = el.getTotalLength ? el.getTotalLength() : 5000;
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = len;
+        el.style.transition = `stroke-dashoffset ${8+i*2}s ease-in-out`;
+        setTimeout(()=>{ el.style.strokeDashoffset = 0; }, 200+i*500);
+      });
+    })();
+  </script>
+
+  <div class="kick">Henri Poincaré · 1854 – 1912</div>
+  <div class="band">Volume I — Who He Was</div>
+  <h1>The Last <span>Universalist</span></h1>
+  <p class="hero-sub">Mathematician, physicist, philosopher — the final human mind to master all of science at once.</p>
+</div>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="container">
+
+  <!-- OVERVIEW -->
+  <section>
+    <h2>The Man</h2>
+    <p>Jules Henri Poincaré was born on April 29, 1854, in Nancy, in the Lorraine region of northeastern France — a city of bourgeois tradition and intellectual seriousness. His family was distinguished: his cousin Raymond Poincaré would become President of the French Republic; his father Léon was a professor of medicine at the University of Nancy. The household was cultivated, ambitious, and deeply attached to French national identity at a moment — just after the Franco-Prussian War — when France's relationship to Germany, and to its own self-understanding, was raw and uncertain.</p>
+
+    <p>Henri was not an obvious prodigy in the ordinary sense. He was clumsy. He could not draw. He was near-blind as a child — at age five, a severe bout of diphtheria left him partially paralyzed for several months and damaged his vision permanently. He could not properly see what he wrote on a blackboard. In gymnasium, while other students took notes laboriously, Poincaré listened and retained everything. His memory was not just good — it was essentially photographic for text and structural for mathematics. He could recall whole pages of books he had read years before, and could hold complex mathematical arguments in his head without writing them down.</p>
+
+    <p>He entered the École Polytechnique in 1873, finishing first in his class in mathematics — but barely passing the drawing requirement, which was mandatory. He then transferred to the École des Mines, training as a mining engineer, and completed his doctorate in mathematics in 1879. He was appointed lecturer at the University of Caen, then in 1881 joined the Faculty of Sciences in Paris, where he would remain for the rest of his life — eventually holding the chair of Mathematical Physics and the Theory of Probability at the Sorbonne, and later chair of Celestial Mechanics at the Bureau des Longitudes.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Published papers</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Books authored</div></div>
+      <div class="stat"><div class="stat-num">58</div><div class="stat-label">Years lived</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">Millennium Prize (solved)</div></div>
+    </div>
+  </section>
+
+  <!-- HOW HE WORKED -->
+  <section>
+    <h2>How He Worked</h2>
+    <p>Poincaré's working method was the subject of fascination during his own lifetime and has been studied ever since. He worked in precisely timed bursts — two hours in the morning, two hours in the evening. He did not sit at his desk between those intervals. He walked, attended dinners, kept his social engagements. He did not believe in grinding — in fact he was suspicious of it. Mathematics, in his view, was not about sustained mechanical effort. It was about the unconscious.</p>
+
+    <blockquote>
+      "It is through science that we prove, but through intuition that we discover."
+      <cite>— Henri Poincaré, Science and Method (1908)</cite>
+    </blockquote>
+
+    <p>He wrote famously about the night he drank too much black coffee and could not sleep — and in that sleepless night the Fuchsian functions came to him all at once, without warning, in a blaze of complete clarity. He attributed this to unconscious incubation: the mind continues working below the threshold of awareness, and mathematical insight surfaces when the subconscious has finished its work. His introspective accounts of mathematical discovery are among the most vivid and philosophically serious ever written, and they remain influential in cognitive science and the philosophy of mathematics.</p>
+
+    <p>He was extraordinarily fast. Where other mathematicians would spend weeks on a single problem, Poincaré would produce papers in days. His output was staggering — more than five hundred research papers, thirty books, and scores of philosophical essays. He ranged freely across mathematical physics, celestial mechanics, differential equations, complex analysis, topology, and the philosophy of science. In each of these fields he was not a tourist but a founder. This is what earned him the title "the last universalist" — the last person, it is generally agreed, who could command the entirety of mathematics and physics as a single intellectual domain.</p>
+
+    <h3>Near-Blindness and Spatial Intuition</h3>
+    <p>The near-blindness is worth dwelling on. Unable to rely on visual inspection of geometric figures, Poincaré developed an unusual spatial intuition — a way of understanding topological and geometric structures not through drawing or seeing but through something more abstract, more structural. This may have contributed to his extraordinary facility with topology, a field that deals with properties of spaces that persist under continuous deformation — not the precise measurements of geometry but the deeper qualitative structure underneath. He did not need to see clearly to see truly.</p>
+
+    <h3>The Breadth: A Partial Inventory</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-label">Pure Mathematics</div>
+        <h4>Topology</h4>
+        <p>Founded algebraic topology. Introduced the fundamental group, homology theory, Betti numbers. Posed the Poincaré conjecture in 1904.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Dynamical Systems</div>
+        <h4>Chaos Theory</h4>
+        <p>Discovered sensitive dependence on initial conditions while studying the three-body problem. Chaos theory, seventy years before Lorenz named it.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Physics</div>
+        <h4>Special Relativity (Nearly)</h4>
+        <p>Wrote the Lorentz transformations, used 4D spacetime, derived relativistic velocity addition. Did not take the final conceptual step Einstein took.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Philosophy</div>
+        <h4>Conventionalism</h4>
+        <p>Argued that the axioms of geometry and the principles of physics are conventions, not empirical facts. Science and Hypothesis (1902) influenced a generation.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Applied Mathematics</div>
+        <h4>Celestial Mechanics</h4>
+        <p>Developed new methods for studying the stability of the solar system. Proved — inadvertently — that it cannot be proven stable.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Analysis</div>
+        <h4>Automorphic Functions</h4>
+        <p>Developed the theory of Fuchsian and Kleinian functions — a major breakthrough in complex analysis, achieved largely in a single sleepless night.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIOGRAPHY: LIFE EVENTS -->
+  <section>
+    <h2>Life in Time</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1854</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Born in Nancy, France</strong>
+          <p>April 29, 1854. Nancy, Lorraine. Son of Léon Poincaré, professor of medicine. A cultivated bourgeois household with strong national and intellectual identity.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1859</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Diphtheria — Near-Blindness</strong>
+          <p>Age 5. Severe diphtheria leaves him partially paralyzed for months and permanently damages his vision. He compensates with exceptional memory and auditory learning.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1873</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>École Polytechnique</strong>
+          <p>Enters the most prestigious scientific school in France. Finishes first in mathematics — barely passes the mandatory drawing requirement due to his poor eyesight.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1879</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Doctorate Awarded</strong>
+          <p>PhD from University of Paris on differential equations. Appointed lecturer at University of Caen. His career as a professional mathematician begins.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1881</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Joins the Sorbonne</strong>
+          <p>Appointed to the Faculty of Sciences in Paris. He will remain there the rest of his life. The Fuchsian functions work — inspired by that sleepless night of black coffee — is already complete.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1885</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>King Oscar's Prize — Three-Body Problem</strong>
+          <p>King Oscar II of Sweden offers a prize for a proof of solar system stability. Poincaré submits an entry. His first version claims stability — then discovers his own error. The corrected version reveals chaos.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1895</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Analysis Situs — Topology Founded</strong>
+          <p>Publishes "Analysis Situs," the foundational paper of what will become algebraic topology. Introduces homology, the fundamental group, and the mathematical framework for studying shape and space.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1900</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Paris International Congress of Mathematicians</strong>
+          <p>Attends the ICM where David Hilbert presents his 23 problems. Poincaré also gives a famous address on the role of intuition in mathematics. Two giants at the summit of the discipline.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1902</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Science and Hypothesis Published</strong>
+          <p>The first of his popular philosophy-of-science books. Translated into German and read by a young Einstein. Argues that the axioms of geometry are conventions, not truths.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1904</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>The Poincaré Conjecture</strong>
+          <p>Poses the question in the fifth complement to Analysis Situs: is every simply-connected closed 3-manifold homeomorphic to a 3-sphere? The question will remain open for 99 years.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1905</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>The Relativity Near-Miss</strong>
+          <p>Poincaré publishes "Sur la dynamique de l'électron" — containing the Lorentz group, the relativistic velocity addition formula, and 4-dimensional spacetime notation. Einstein publishes special relativity the same year, making the conceptual leap Poincaré did not.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1908</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Science and Method</strong>
+          <p>Publishes his most introspective work — containing his famous account of mathematical discovery, the role of the unconscious, and the sleepless coffee-fueled night of the Fuchsian functions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1912</div>
+        <div class="tl-dot"></div>
+        <div class="tl-body">
+          <strong>Death — Paris, July 17</strong>
+          <p>Dies at 58 from complications of prostate surgery. At his death, he holds more honors than any other living scientist. The mathematical community is stunned. There is no one left who knew it all.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RELATIVITY QUESTION -->
+  <section>
+    <h2>The Einstein Question</h2>
+    <p>The most-debated question in the history of physics attribution concerns Henri Poincaré and Albert Einstein. By 1905, Poincaré had published most of the mathematical machinery of what we now call special relativity. He had derived the Lorentz transformations, shown they form a group (the Poincaré group), worked out the relativistic addition of velocities, introduced the notation of four-dimensional spacetime, and argued that the ether — the hypothetical medium for electromagnetic waves — could never be detected by any experiment, making it a convention rather than a physical reality.</p>
+
+    <p>Einstein, in his 1905 paper "On the Electrodynamics of Moving Bodies," made the conceptual leap that Poincaré did not: he simply postulated, without hesitation, that the ether does not exist, that the speed of light is constant for all observers in all inertial frames, and that simultaneity is relative. He did not derive these conclusions — he asserted them as first principles and built the theory outward from them. This move — confident, radical, philosophically clean — is what distinguishes Einstein's theory from Poincaré's near-theory.</p>
+
+    <blockquote>
+      "Poincaré had all the ingredients of relativity, but he could not bring himself to throw away the ether. Einstein had no such hesitation — he simply discarded it."
+      <cite>— Abraham Pais, Subtle is the Lord (1982)</cite>
+    </blockquote>
+
+    <p>Poincaré never explicitly credited Einstein's contribution, and Einstein never explicitly credited Poincaré's — a mutual silence that historians have analyzed at great length. What is clear is that Poincaré's conventionalist philosophy, paradoxically, may have prevented him from making the final leap. Because he believed the principles of physics were human conventions rather than discovered truths, he was less motivated to insist that one convention (the constancy of c, the absence of ether) was more than an arbitrary choice. Einstein, who believed physics described reality directly, had every reason to make that choice the cornerstone of a theory.</p>
+
+    <p>The credit went to Einstein. Poincaré is remembered as the man who nearly discovered special relativity — which is both unfair and, in the deep sense, accurate.</p>
+  </section>
+
+  <!-- CHARACTER -->
+  <section>
+    <h2>Character and Reputation</h2>
+    <p>Poincaré was, by all accounts, a warm, generous, and unpretentious man — rare qualities in the competitive world of Parisian academic mathematics. He was deeply patriotic — he served briefly in the army-support corps during the Franco-Prussian War as a teenager, and in later life he was a moderate Dreyfusard, supporting Alfred Dreyfus against the antisemitic military establishment. He was not a polemicist, but he had quiet moral convictions.</p>
+
+    <p>He was elected to the Académie française in 1908 — the body that governs the French language — in addition to his scientific memberships, an honor that reflected the quality of his prose. His popular science books — <em>Science and Hypothesis</em>, <em>The Value of Science</em>, <em>Science and Method</em>, <em>Last Thoughts</em> — were genuine literary works: lucid, philosophical, accessible without being condescending. They sold widely and were translated into dozens of languages. Einstein read <em>Science and Hypothesis</em> as a young man and acknowledged its influence.</p>
+
+    <p>His death in July 1912, at fifty-eight, was a shock to the mathematical world. He had seemed inexhaustible — still producing new work, still lecturing, still at the height of his powers. The prostate surgery that killed him was, by the standards of 1912, a serious but not necessarily fatal procedure. He simply did not survive it. France mourned a national genius. The international mathematical community mourned the end of an era — the era in which a single human mind could hold all of mathematics at once.</p>
+
+    <blockquote>
+      "A strange thing happened to me one evening when, contrary to my custom, I had taken black coffee and could not sleep. Ideas rose in crowds; I felt them collide until pairs interlocked, so to speak, making a stable combination. By the next morning I had established the existence of a class of Fuchsian functions."
+      <cite>— Henri Poincaré, Science and Method (1908)</cite>
+    </blockquote>
+  </section>
+
+</main>
+
+<!-- ── FOOTER / COLOPHON ── -->
+<footer>
+  <div class="colophon">
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Henri Poincaré Series — Volume I: Who He Was<br>
+    Licensed under <strong>CC-BY-ND-4.0</strong><br>
+    <br>
+    Series: 0-who.html · 1-topology.html · 2-world.html · 3-legacy.html
+  </div>
+</footer>
+
+</body>
+</html>
