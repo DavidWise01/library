@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO · Vol. 1 — The Awakening</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#030803;
+  --matrix:#00ff41;
+  --dim:#0a3a14;
+  --red:#e0203a;
+  --blue:#1f6fe0;
+  --ink:#cdeccd;
+  --mute:#5f8f65;
+  --glow:rgba(0,255,65,.35);
+}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0}
+html{
+  scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.75;
+  overflow-x:hidden;
+  position:relative}
+.rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.18}
+.rain .col{
+  position:absolute;
+  top:-120%;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  line-height:1.05;
+  color:var(--matrix);
+  text-shadow:0 0 8px var(--glow);
+  white-space:pre;
+  writing-mode:vertical-rl;
+  letter-spacing:2px;
+  animation:fall linear infinite}
+@keyframes fall{
+  0%{
+  transform:translateY(-10%);
+  opacity:0}
+8%{
+  opacity:1}
+90%{
+  opacity:1}
+100%{
+  transform:translateY(150vh);
+  opacity:0}
+}
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px}
+section{
+  position:relative;
+  z-index:2}
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(3,8,3,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--dim)}
+nav .nav-in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap}
+nav .brand{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 10px var(--glow)}
+nav .links{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-left:auto}
+nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  text-decoration:none;
+  padding:5px 10px;
+  border:1px solid transparent;
+  border-radius:2px;
+  transition:all .2s}
+nav a:hover{
+  color:var(--matrix);
+  border-color:var(--dim)}
+nav a.active{
+  color:var(--paper);
+  background:var(--matrix);
+  text-shadow:none;
+  font-weight:700}
+.hero{
+  min-height:88vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 24px;
+  position:relative}
+.kick{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 8px var(--glow)}
+.hero .vol{
+  margin-bottom:18px}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-weight:800;
+  font-size:clamp(2.6rem,9vw,6rem);
+  line-height:.92;
+  color:#eafff0;
+  letter-spacing:.04em;
+  text-shadow:0 0 24px var(--glow),0 0 2px var(--matrix)}
+.hero .sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.6vw,1.6rem);
+  color:var(--ink);
+  max-width:660px;
+  margin:22px auto 0}
+.hero-art{
+  width:min(520px,86vw);
+  height:300px;
+  margin:30px auto 10px;
+  display:block}
+.band{
+  background:var(--matrix);
+  color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  padding:3px 10px;
+  display:inline-block;
+  font-size:.74rem;
+  box-shadow:0 0 18px var(--glow)}
+h2{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  color:#eafff0;
+  margin:18px 0 18px;
+  letter-spacing:.03em;
+  text-shadow:0 0 16px var(--glow)}
+h3{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:1.35rem;
+  color:var(--matrix);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--glow)}
+p{
+  margin:0 0 18px}
+.block{
+  padding:70px 0;
+  border-top:1px solid var(--dim)}
+.lead{
+  font-size:1.22rem}
+em,i{
+  color:#e9fff0}
+strong{
+  color:var(--matrix);
+  font-weight:700}
+.pull{
+  border-left:3px solid var(--matrix);
+  padding:14px 0 14px 26px;
+  margin:32px 0;
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:1.5rem;
+  color:#eafff0;
+  text-shadow:0 0 12px rgba(0,255,65,.18)}
+.pull cite{
+  display:block;
+  margin-top:10px;
+  font-style:normal;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  margin-top:14px}
+.card{
+  border:1px solid var(--matrix);
+  background:rgba(0,255,65,.025);
+  padding:22px;
+  border-radius:3px;
+  transition:transform .22s ease,box-shadow .22s ease}
+.card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--matrix),0 0 28px var(--glow)}
+.card .tag{
+  font-family:'Space Mono',monospace;
+  font-size:.66rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--mute);
+  display:block;
+  margin-bottom:6px}
+.card p{
+  font-size:.98rem;
+  margin-bottom:0}
+.term{
+  border:1px solid var(--dim);
+  background:#020602;
+  font-family:'Space Mono',monospace;
+  font-size:.86rem;
+  color:var(--matrix);
+  padding:22px;
+  border-radius:4px;
+  margin:30px 0;
+  box-shadow:inset 0 0 40px rgba(0,255,65,.06);
+  text-shadow:0 0 6px var(--glow);
+  overflow-x:auto}
+.term .prompt{
+  color:var(--mute)}
+.term .cursor{
+  display:inline-block;
+  width:9px;
+  height:1.05em;
+  background:var(--matrix);
+  vertical-align:-2px;
+  animation:blink 1s steps(1) infinite;
+  box-shadow:0 0 8px var(--glow)}
+@keyframes blink{
+  50%{
+  opacity:0}
+}
+footer{
+  position:relative;
+  z-index:2;
+  border-top:1px solid var(--matrix);
+  margin-top:40px;
+  padding:46px 24px;
+  text-align:center;
+  background:rgba(0,255,65,.02)}
+footer .colophon{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--mute);
+  line-height:2}
+footer .colophon b{
+  color:var(--matrix)}
+.pager{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin:40px 0 0;
+  flex-wrap:wrap}
+.pager a{
+  font-family:'Space Mono',monospace;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--matrix);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  padding:12px 16px;
+  border-radius:2px;
+  transition:all .2s}
+.pager a:hover{
+  border-color:var(--matrix);
+  box-shadow:0 0 18px var(--glow);
+  transform:translate(-2px,-2px)}
+/* ---- PILL CHOICE CENTERPIECE ---- */
+.choice{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:26px;
+  margin:38px 0}
+.pill{
+  border:2px solid;
+  border-radius:6px;
+  padding:34px 26px;
+  text-align:center;
+  position:relative;
+  transition:transform .25s ease,box-shadow .25s ease;
+  cursor:default}
+.pill .cap{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.2em;
+  font-size:.72rem;
+  display:block;
+  margin-bottom:14px}
+.pill h3{
+  font-family:'Cinzel',serif;
+  font-size:1.7rem;
+  margin-bottom:12px}
+.pill p{
+  font-size:1rem}
+.pill .capsule{
+  width:74px;
+  height:30px;
+  border-radius:16px;
+  margin:0 auto 18px;
+  box-shadow:0 0 30px currentColor;
+  animation:pulsepill 2.6s ease-in-out infinite}
+@keyframes pulsepill{
+  0%,100%{
+  transform:scale(1);
+  opacity:.85}
+50%{
+  transform:scale(1.08);
+  opacity:1}
+}
+.pill.blue{
+  border-color:var(--blue);
+  color:#bcd6ff;
+  background:rgba(31,111,224,.06)}
+.pill.blue h3{
+  color:#7fb0ff}
+.pill.blue .cap{
+  color:#5f8fd8}
+.pill.blue .capsule{
+  background:var(--blue)}
+.pill.blue:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--blue),0 0 34px rgba(31,111,224,.5)}
+.pill.red{
+  border-color:var(--red);
+  color:#ffc3cc;
+  background:rgba(224,32,58,.06)}
+.pill.red h3{
+  color:#ff6677}
+.pill.red .cap{
+  color:#c8404e}
+.pill.red .capsule{
+  background:var(--red)}
+.pill.red:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--red),0 0 34px rgba(224,32,58,.5)}
+.facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:1px;
+  background:var(--dim);
+  border:1px solid var(--dim);
+  margin:30px 0}
+.facts div{
+  background:var(--paper);
+  padding:18px}
+.facts dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+  margin-bottom:6px}
+.facts dd{
+  font-family:'Cinzel',serif;
+  color:#eafff0;
+  font-size:1.05rem}
+/* hero anim: dissolving pill / mirror ripple */
+.ripple{
+  transform-origin:center;
+  animation:rip 4s ease-in-out infinite}
+@keyframes rip{
+  0%{
+  r:6;
+  opacity:1}
+100%{
+  r:120;
+  opacity:0}
+}
+.dissolve{
+  animation:diss 5s ease-in-out infinite}
+@keyframes diss{
+  0%,40%{
+  opacity:1}
+100%{
+  opacity:.05}
+}
+@media(max-width:640px){
+  body{
+  font-size:16.5px}
+.choice{
+  grid-template-columns:1fr}
+nav .brand{
+  font-size:.66rem}
+}
+</style>
+</head>
+<body>
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">ROOT0 LIBRARY · NEO</span>
+    <div class="links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-awakening.html" class="active">1 · Awakening</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-the-one.html">3 · The One</a>
+      <a href="4-legacy.html">4 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vol kick">Volume 1 of 5 — The Neo Omnibus</div>
+  <svg class="hero-art" viewBox="0 0 520 300" role="img" aria-label="A pill dissolving over a rippling mirror">
+    <defs>
+      <radialGradient id="mir" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#00ff41" stop-opacity=".5"/>
+        <stop offset="1" stop-color="#00ff41" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <!-- mirror ripples -->
+    <circle cx="260" cy="160" r="6" fill="none" stroke="#00ff41" stroke-width="1.5" class="ripple" style="animation-delay:0s"/>
+    <circle cx="260" cy="160" r="6" fill="none" stroke="#00ff41" stroke-width="1.5" class="ripple" style="animation-delay:1.3s"/>
+    <circle cx="260" cy="160" r="6" fill="none" stroke="#00ff41" stroke-width="1.5" class="ripple" style="animation-delay:2.6s"/>
+    <ellipse cx="260" cy="160" rx="150" ry="70" fill="url(#mir)"/>
+    <!-- red & blue pills -->
+    <g class="dissolve">
+      <rect x="150" y="70" width="70" height="28" rx="14" fill="#e0203a"/>
+      <rect x="300" y="70" width="70" height="28" rx="14" fill="#1f6fe0"/>
+    </g>
+    <text x="260" y="290" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">CHOOSE.</text>
+  </svg>
+  <h1>THE AWAKENING</h1>
+  <p class="sub">“You take the blue pill, the story ends. You take the red pill, you stay in Wonderland, and I show you how deep the rabbit hole goes.”</p>
+</header>
+
+<div class="wrap">
+
+<section class="block">
+  <span class="band">The Choice</span>
+  <h2>Two Pills</h2>
+  <p class="lead">They met in a derelict hotel, in a leather chair, with the rain hammering the windows. Morpheus offered Neo the only honest deal in the entire film: a choice with no salesmanship, no guarantee, and no take-backs. He held out both hands.</p>
+  <p>In one palm, blue. In the other, red. This was not a fight or a trick. It was an invitation to <em>know</em> — and a warning that knowing could not be undone.</p>
+
+  <div class="choice">
+    <div class="pill blue">
+      <span class="capsule"></span>
+      <span class="cap">Left Hand</span>
+      <h3>The Blue Pill</h3>
+      <p>“You wake up in your bed and believe whatever you want to believe.” The story ends. The dream resumes. You go back to being Thomas Anderson, and you never knew any of this. Comfort. Ignorance. Safety. A life inside the lie.</p>
+    </div>
+    <div class="pill red">
+      <span class="capsule"></span>
+      <span class="cap">Right Hand</span>
+      <h3>The Red Pill</h3>
+      <p>“You stay in Wonderland, and I show you how deep the rabbit hole goes.” The truth — nothing more. No promise that the truth is kind. A tracer program to locate his body in the real world. The end of the dream and the beginning of the war.</p>
+    </div>
+  </div>
+  <p>“Remember,” Morpheus said, “all I’m offering is the truth — nothing more.” Neo took the red pill. The single most consequential gesture in the entire mythos: a hand reaching for the harder, uglier, freer thing.</p>
+</section>
+
+<section class="block">
+  <span class="band">Dissolution</span>
+  <h2>The Mirror</h2>
+  <p>The pill went down. The room began to come apart. Neo touched a cracked mirror beside him and the crack <em>healed itself</em> — then the silver of the glass turned to liquid chrome and crawled up his arm, swallowing him, pouring down his throat. He screamed. The walls melted into light and code.</p>
+  <p>This is the hinge of the film: the membrane between the simulated world and the real one. The mirror — the oldest symbol of self-recognition — dissolves the false self so the true one can wake. Far away, in a tower none of them had ever seen with their waking eyes, an alarm went off. They had found him.</p>
+  <div class="pull">“Have you ever had a dream, Neo, that you were so sure was real? What if you were unable to wake from that dream? How would you know the difference between the dream world and the real world?”<cite>Morpheus</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">The Real</span>
+  <h2>Waking in the Pod</h2>
+  <p>He woke for the first time — truly woke — into horror. He was naked, hairless, submerged to the neck in red gel, sealed inside a translucent <strong>pod</strong>. Cables fed into his spine, his skull, his arms. And around him, stretching to a vanishing point in every direction, were <em>towers upon towers of identical pods</em>, each holding a sleeping human being, an endless field of farmed minds.</p>
+  <p>The cables detached. The pod flushed him out into a chute, into freezing water, and a claw lifted his shaking, atrophied body up toward the light of a hovercraft. He had never used his eyes before. “Why do my eyes hurt?” he would ask. “You’ve never used them,” Morpheus would answer.</p>
+  <p>Then came the words that name the ruined planet he had been born onto without ever seeing it:</p>
+  <div class="pull">“Welcome… to the desert of the real.”<cite>Morpheus, aboard the Nebuchadnezzar</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">The Construct</span>
+  <h2>What Is Real?</h2>
+  <p>To explain the unexplainable, Morpheus took Neo into the <strong>Construct</strong> — a blank-white loading program, a space of infinite nothing where the crew could load anything they needed: clothing, weapons, training, a pair of red leather chairs and an old television set. Here Morpheus delivered the lesson that anchors the philosophy of the entire franchise:</p>
+  <div class="pull">“What is real? How do you define ‘real’? If you’re talking about what you can feel, what you can smell, what you can taste and see, then ‘real’ is simply electrical signals interpreted by your brain.”<cite>Morpheus, in the Construct</cite></div>
+  <p>He showed Neo the truth of the world he came from: that it was the late twentieth century, as it had existed at the peak of human civilization — but only as a <em>memory</em>, a simulation, “a neural-interactive simulation that we call the Matrix.” Neo learned what he was. He vomited. It was, Morpheus said, a perfectly ordinary reaction.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Truth</span>
+  <h2>Coppertop</h2>
+  <p>Then the worst of it. Why does the Matrix exist? Because in the real world, humanity lost a war against the machines it had built. Desperate to cut off the machines’ solar power, humans <strong>scorched the sky</strong> — blackened it permanently. The machines adapted. They found another power source. Us.</p>
+  <p>Morpheus held up a single copper-top battery. The human body, he explained, generates more bioelectricity than a 120-volt battery and over 25,000 BTUs of body heat. The machines now <em>grow</em> human beings in vast fields, liquefy the dead to feed the living through intravenous tubes, and harvest the energy of billions — keeping every mind docile and content inside a dream of 1999 so the crop never struggles.</p>
+  <div class="facts">
+    <div><dt>The Dream</dt><dd>Simulated 1999</dd></div>
+    <div><dt>The Purpose</dt><dd>Pacify &amp; harvest</dd></div>
+    <div><dt>The Yield</dt><dd>Bioelectricity + heat</dd></div>
+    <div><dt>The Sky</dt><dd>Scorched, sunless</dd></div>
+    <div><dt>The Crop</dt><dd>Humanity, in fields</dd></div>
+    <div><dt>The Lie</dt><dd>That any of it is real</dd></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">Training</span>
+  <h2>I Know Kung Fu</h2>
+  <p>Freeing the mind is one thing; learning to bend a world you now know is fake is another. The crew loaded combat disciplines directly into Neo’s brain through the spike in his skull. He flickered, opened his eyes, and spoke the four most quotable words of his training:</p>
+  <div class="pull">“I know kung fu.”<cite>Neo, after the upload</cite></div>
+  <p>The lessons came fast, each one chipping at the certainty that the simulation’s rules were laws of nature rather than mere code:</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Program</span><h3>The Jump</h3><p>Leaping between rooftops a city block apart. “Nobody makes the first jump,” the crew laughed as Neo plummeted. Falling taught him the lesson too: it is the <em>mind</em> that makes it real, and the mind can be retrained.</p></div>
+    <div class="card"><span class="tag">Program</span><h3>The Dojo</h3><p>Sparring Morpheus in a wooden training room. “Stop trying to hit me and hit me!” The fight was never about muscle. “Do you believe that my being stronger or faster has anything to do with my muscles in this place?”</p></div>
+    <div class="card"><span class="tag">Program</span><h3>The Woman in Red</h3><p>The agent-training simulation, used to teach a hard truth: anyone still plugged into the Matrix can become an Agent. The crowd, the smile, the red dress — turn around, and she is the gun. Everyone is the enemy until they are unplugged.</p></div>
+    <div class="card"><span class="tag">Program</span><h3>Agent Sparring</h3><p>The lesson Neo could not yet pass. The Agents move faster than thought, bend the rules at will, and have never been beaten in a fair fight. “No one has ever done this before.” “That’s why it’s going to work.”</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Oracle</span>
+  <h2>Know Thyself</h2>
+  <p>Before he could become anything, Neo had to meet the <strong>Oracle</strong> — a program in the shape of a warm, chain-smoking grandmother baking cookies in a public-housing kitchen. Morpheus believed Neo was The One. The Oracle’s job, it seemed, was to tell him whether that was true.</p>
+  <p>Over the door of her kitchen hung a sign in Latin: <em>Temet Nosce</em> — “Know thyself.” She told him he was waiting for something — perhaps his next life. She told him he had the gift, but seemed to be waiting for something. And then the line that would haunt the rest of the saga: not yet. <em>“Sorry, kid. You got the gift, but it looks like you’re waiting for something. Your next life, maybe.”</em></p>
+  <p>She was, it would turn out, less a fortune-teller than a guide — telling each person not what is true, but what they need to hear to make true. That ambiguity is the seed of Volume 3. For now, the awakening is complete. Neo is out of the dream, trained, doubted, and standing at the edge of the war. In Volume 2, we map the world he woke into.</p>
+
+  <div class="pager">
+    <a href="0-who.html">← Vol. 0 · Who He Was</a>
+    <a href="2-world.html">Vol. 2 · His World →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <b>ROOT0-ATTRIBUTION-v1.0</b><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <b>CC-BY-ND-4.0</b><br>
+    The Neo Omnibus · Volume 1 of 5 · “The Awakening”<br>
+    Neo and The Matrix are fictional works of the Wachowskis &amp; Warner Bros.<br>
+    This museum entry is critical / educational commentary.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var glyphs='ｱｲｳｴｵｶｷｸｹｺﾈﾊﾜｦｾﾐﾑﾒﾓ01010アイウ7E3F9C2A01';
+  var rain=document.getElementById('rain');
+  var n=Math.min(28,Math.floor(window.innerWidth/42));
+  for(var i=0;i<n;i++){
+    var col=document.createElement('div');col.className='col';
+    col.style.left=(i/n*100)+'%';
+    var dur=(5+Math.random()*9).toFixed(2);
+    col.style.animationDuration=dur+'s';
+    col.style.animationDelay=(-Math.random()*dur)+'s';
+    col.style.fontSize=(13+Math.random()*9).toFixed(0)+'px';
+    var len=10+Math.floor(Math.random()*22);var s='';
+    for(var j=0;j<len;j++){s+=glyphs[Math.floor(Math.random()*glyphs.length)]+'\n';}
+    col.textContent=s;rain.appendChild(col);
+  }
+})();
+</script>
+</body>
+</html>

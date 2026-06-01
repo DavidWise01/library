@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO · Vol. 0 — Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#030803;
+  --matrix:#00ff41;
+  --dim:#0a3a14;
+  --red:#e0203a;
+  --blue:#1f6fe0;
+  --ink:#cdeccd;
+  --mute:#5f8f65;
+  --glow:rgba(0,255,65,.35);
+}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0}
+html{
+  scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.75;
+  overflow-x:hidden;
+  position:relative;
+}
+/* ---------- DIGITAL RAIN BACKGROUND ---------- */
+.rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.18;
+}
+.rain .col{
+  position:absolute;
+  top:-120%;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  line-height:1.05;
+  color:var(--matrix);
+  text-shadow:0 0 8px var(--glow);
+  white-space:pre;
+  writing-mode:vertical-rl;
+  letter-spacing:2px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{
+  transform:translateY(-10%);
+  opacity:0}
+  8%{
+  opacity:1}
+  90%{
+  opacity:1}
+  100%{
+  transform:translateY(150vh);
+  opacity:0}
+}
+/* ---------- LAYOUT ---------- */
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px}
+section{
+  position:relative;
+  z-index:2}
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(3,8,3,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--dim);
+}
+nav .nav-in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+nav .brand{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 10px var(--glow);
+}
+nav .links{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-left:auto}
+nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  text-decoration:none;
+  padding:5px 10px;
+  border:1px solid transparent;
+  border-radius:2px;
+  transition:all .2s;
+}
+nav a:hover{
+  color:var(--matrix);
+  border-color:var(--dim)}
+nav a.active{
+  color:var(--paper);
+  background:var(--matrix);
+  text-shadow:none;
+  font-weight:700;
+}
+/* ---------- HERO ---------- */
+.hero{
+  min-height:88vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 24px;
+  position:relative;
+}
+.kick{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 8px var(--glow);
+}
+.hero .vol{
+  margin-bottom:18px}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-weight:800;
+  font-size:clamp(3rem,11vw,7.5rem);
+  line-height:.92;
+  color:#eafff0;
+  letter-spacing:.04em;
+  text-shadow:0 0 24px var(--glow),0 0 2px var(--matrix);
+}
+.hero .sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.6vw,1.6rem);
+  color:var(--ink);
+  max-width:640px;
+  margin:22px auto 0;
+}
+.hero-art{
+  width:min(520px,86vw);
+  height:300px;
+  margin:30px auto 10px;
+  display:block}
+/* ---------- TYPOGRAPHY ---------- */
+.band{
+  background:var(--matrix);
+  color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  padding:3px 10px;
+  display:inline-block;
+  font-size:.74rem;
+  box-shadow:0 0 18px var(--glow);
+}
+h2{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  color:#eafff0;
+  margin:18px 0 18px;
+  letter-spacing:.03em;
+  text-shadow:0 0 16px var(--glow);
+}
+h3{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:1.35rem;
+  color:var(--matrix);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--glow);
+}
+p{
+  margin:0 0 18px}
+p .lead::first-letter{
+  }
+.block{
+  padding:70px 0;
+  border-top:1px solid var(--dim)}
+.lead{
+  font-size:1.22rem}
+em,i{
+  color:#e9fff0}
+strong{
+  color:var(--matrix);
+  font-weight:700}
+a.inline{
+  color:var(--matrix);
+  text-decoration:underline;
+  text-underline-offset:3px}
+/* ---------- PULLQUOTE ---------- */
+.pull{
+  border-left:3px solid var(--matrix);
+  padding:14px 0 14px 26px;
+  margin:32px 0;
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:1.5rem;
+  color:#eafff0;
+  text-shadow:0 0 12px rgba(0,255,65,.18);
+}
+.pull cite{
+  display:block;
+  margin-top:10px;
+  font-style:normal;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+}
+/* ---------- CARDS ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  margin-top:14px}
+.card{
+  border:1px solid var(--matrix);
+  background:rgba(0,255,65,.025);
+  padding:22px;
+  border-radius:3px;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--matrix),0 0 28px var(--glow);
+}
+.card .tag{
+  font-family:'Space Mono',monospace;
+  font-size:.66rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--mute);
+  display:block;
+  margin-bottom:6px;
+}
+.card p{
+  font-size:.98rem;
+  margin-bottom:0}
+/* ---------- TERMINAL ---------- */
+.term{
+  border:1px solid var(--dim);
+  background:#020602;
+  font-family:'Space Mono',monospace;
+  font-size:.86rem;
+  color:var(--matrix);
+  padding:22px;
+  border-radius:4px;
+  margin:30px 0;
+  box-shadow:inset 0 0 40px rgba(0,255,65,.06);
+  text-shadow:0 0 6px var(--glow);
+  overflow-x:auto;
+}
+.term .prompt{
+  color:var(--mute)}
+.term .cursor{
+  display:inline-block;
+  width:9px;
+  height:1.05em;
+  background:var(--matrix);
+  vertical-align:-2px;
+  animation:blink 1s steps(1) infinite;
+  box-shadow:0 0 8px var(--glow);
+}
+@keyframes blink{
+  50%{
+  opacity:0}
+}
+/* ---------- FACT STRIP ---------- */
+.facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:1px;
+  background:var(--dim);
+  border:1px solid var(--dim);
+  margin:30px 0}
+.facts div{
+  background:var(--paper);
+  padding:18px}
+.facts dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+  margin-bottom:6px}
+.facts dd{
+  font-family:'Cinzel',serif;
+  color:#eafff0;
+  font-size:1.05rem}
+/* ---------- FOOTER ---------- */
+footer{
+  position:relative;
+  z-index:2;
+  border-top:1px solid var(--matrix);
+  margin-top:40px;
+  padding:46px 24px;
+  text-align:center;
+  background:rgba(0,255,65,.02);
+}
+footer .colophon{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--mute);
+  line-height:2;
+}
+footer .colophon b{
+  color:var(--matrix)}
+.pager{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin:40px 0 0;
+  flex-wrap:wrap}
+.pager a{
+  font-family:'Space Mono',monospace;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--matrix);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  padding:12px 16px;
+  border-radius:2px;
+  transition:all .2s;
+}
+.pager a:hover{
+  border-color:var(--matrix);
+  box-shadow:0 0 18px var(--glow);
+  transform:translate(-2px,-2px)}
+/* ---------- HERO SVG ANIM ---------- */
+.silhouette{
+  animation:resolve 6s ease-in-out infinite alternate}
+@keyframes resolve{
+  0%{
+  opacity:.25;
+  filter:blur(3px)}
+  100%{
+  opacity:1;
+  filter:blur(0)}
+}
+.glyphfall{
+  animation:glyphdrop 3.4s linear infinite}
+@keyframes glyphdrop{
+  0%{
+  transform:translateY(-40px);
+  opacity:0}
+20%{
+  opacity:1}
+100%{
+  transform:translateY(60px);
+  opacity:0}
+}
+@media(max-width:640px){
+  body{
+  font-size:16.5px}
+nav .brand{
+  font-size:.66rem}
+}
+</style>
+</head>
+<body>
+
+<!-- DIGITAL RAIN -->
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">ROOT0 LIBRARY · NEO</span>
+    <div class="links">
+      <a href="0-who.html" class="active">0 · Who</a>
+      <a href="1-awakening.html">1 · Awakening</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-the-one.html">3 · The One</a>
+      <a href="4-legacy.html">4 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vol kick">Volume 0 of 5 — The Neo Omnibus</div>
+  <svg class="hero-art" viewBox="0 0 520 300" role="img" aria-label="Falling code resolving into a human figure">
+    <defs>
+      <linearGradient id="g0" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#00ff41" stop-opacity="0"/>
+        <stop offset="1" stop-color="#00ff41" stop-opacity=".9"/>
+      </linearGradient>
+      <filter id="b0"><feGaussianBlur stdDeviation="1.2"/></filter>
+    </defs>
+    <!-- falling code columns -->
+    <g font-family="'Space Mono',monospace" font-size="13" fill="url(#g0)" filter="url(#b0)">
+      <text class="glyphfall" x="40" y="40" style="animation-delay:0s">01<tspan x="40" dy="16">10</tspan><tspan x="40" dy="16">ｱ</tspan></text>
+      <text class="glyphfall" x="120" y="20" style="animation-delay:.6s">ﾈ<tspan x="120" dy="16">01</tspan><tspan x="120" dy="16">ﾊ</tspan></text>
+      <text class="glyphfall" x="400" y="30" style="animation-delay:1.1s">10<tspan x="400" dy="16">ｶ</tspan></text>
+      <text class="glyphfall" x="470" y="10" style="animation-delay:1.7s">ﾜ<tspan x="470" dy="16">01</tspan></text>
+    </g>
+    <!-- human silhouette resolving -->
+    <g class="silhouette" fill="none" stroke="#00ff41" stroke-width="2">
+      <circle cx="260" cy="80" r="26"/>
+      <path d="M260 106 L260 200 M260 130 L210 170 M260 130 L310 170 M260 200 L228 270 M260 200 L292 270"/>
+    </g>
+    <text x="260" y="296" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">SUBJECT: ANDERSON, T.</text>
+  </svg>
+  <h1>NEO</h1>
+  <p class="sub">“I know you’re out there. I can feel you now. I know that you’re afraid… afraid of us.” — The man who was born twice: once as Thomas Anderson, once as the question itself.</p>
+</header>
+
+<div class="wrap">
+
+<section class="block">
+  <span class="band">Dossier</span>
+  <h2>Who He Was</h2>
+  <p class="lead">By day he was <strong>Thomas A. Anderson</strong> — an unremarkable software developer at a respectable software company called <em>Metacortex</em>, one cubicle among thousands, a man who paid his taxes, helped his landlady carry out her garbage, and lived an ordinary life inside an ordinary 1999.</p>
+  <p>By night he lived under another name. <strong>Neo</strong> — a hacker. He wrote programs that were illegal, sold them quietly, and spent his hours at a glowing monitor searching for something he could not name. He was guilty of virtually every computer crime there is a law for. But the crimes were never the point. The searching was the point.</p>
+  <p>What he was looking for was an <em>answer</em> — and he did not even fully know the question. The question had been with him his whole life, like a splinter in the mind, driving him mad. It was the question that brought him to Morpheus. It was the question that every awakened soul in this story is asked, sooner or later:</p>
+  <div class="pull">“What is the Matrix?”<cite>The question Neo could not stop asking</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">Subject File</span>
+  <h2>Two Names, One Man</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag">Identity — Daylight</span>
+      <h3>Thomas A. Anderson</h3>
+      <p>Resident of room 101. Employee of Metacortex. Has a social security number, pays his bills, and is — on paper — a perfectly ordinary citizen of a world that does not exist. The name the system gave him.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Identity — Midnight</span>
+      <h3>Neo</h3>
+      <p>The hacker alias. An anagram-adjacent rearrangement of “One.” The name he gave himself. Under it he chased rumors of a truth too large to fit inside the life he was living.</p>
+    </div>
+    <div class="card">
+      <span class="tag">Diagnosis</span>
+      <h3>The Splinter</h3>
+      <p>“You’ve felt it your entire life — that there’s something wrong with the world. You don’t know what it is, but it’s there, like a splinter in your mind, driving you mad.” He felt it. He could not see, smell, or taste the bars of his cell.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Prison</span>
+  <h2>A Cell for the Mind</h2>
+  <p>The deepest horror of Neo’s early life is that it was not a life at all. He had been born into bondage — born into a prison that he could not smell, or taste, or touch. A prison for his mind. The walls were not made of stone. They were made of <strong>information</strong>: a seamless, total simulation pumped directly into his nervous system, a dream he had mistaken for the waking world since the day he was decanted.</p>
+  <p>And yet some part of him knew. That is the engine of the whole story. The Matrix is perfect, but no prison is perfectly perfect to the prisoner who suspects the walls. Neo suspected. He stayed up all night at his screen because the dream had a flaw in it, and he could feel the flaw even if he could never quite find it.</p>
+  <div class="term">
+<span class="prompt">wake up, neo...</span><br>
+<span class="prompt">the matrix has you...</span><br>
+<span class="prompt">follow the white rabbit.</span><br>
+<span class="prompt">knock, knock, neo.</span><span class="cursor"></span>
+  </div>
+  <p>The words appeared on his own screen, unbidden, in the dead of night — a message from someone who already knew his name. Then a knock at the door.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Summons</span>
+  <h2>The White Rabbit</h2>
+  <p>Behind the door were buyers for his illegal software, and one of them had a tattoo — a small white rabbit on a girl’s shoulder. They invited him out to a club. He almost declined. Then he saw the rabbit, and remembered the words on his screen, and went. He <em>followed the white rabbit</em> — the oldest signal in the Western imagination for a person about to fall out of one world and into another, straight out of <em>Alice in Wonderland</em>.</p>
+  <p>At the nightclub, through the noise and the strobe, a woman approached him. He knew her name before she spoke it. Everyone knew it — she was a legend among hackers, the one who had cracked the I.R.S. database. <strong>Trinity</strong>.</p>
+  <div class="pull">“It’s the question that drives us, Neo. It’s the question that brought you here. You know the question, just as I did.”<cite>Trinity, at the club</cite></div>
+  <p>She leaned close and told him she knew why he barely slept, why he lived alone, why night after night he sat at his computer. She knew because she had once been looking for the same man he was now looking for. And she told him the man would find him — if he wanted to be found.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Bug</span>
+  <h2>The Interrogation</h2>
+  <p>Before the rescue came the warning. The morning after the club, at his desk at Metacortex, Neo received a delivery — a cellphone — and a voice on the line: <strong>Morpheus</strong>, the most dangerous man alive according to the authorities, the man Neo had spent his life searching for. Morpheus tried to guide him out of the building. The Agents were already there.</p>
+  <p>The <em>Agents</em> — men in suits and earpieces and mirrored sunglasses, faceless and identical, the immune system of the simulation itself. They took him. And in the interrogation room they did something that should have been impossible: they erased his mouth. His lips sealed over with skin. They held him down and planted a writhing, mechanical <strong>bug</strong> — a tracking organism — into his navel, into his body, through a belly that in the waking world did not exist.</p>
+  <p>He woke gasping in his own bed and told himself it had been a nightmare. It was not a nightmare. It was the first time the rules of the dream had been broken in front of him, deliberately, by the things that ran it. The world he trusted had reached into him and proven it could rewrite him at will. After that, there was no going back to sleep.</p>
+  <div class="facts">
+    <div><dt>Given Name</dt><dd>Thomas A. Anderson</dd></div>
+    <div><dt>Alias</dt><dd>Neo</dd></div>
+    <div><dt>Occupation</dt><dd>Programmer / Hacker</dd></div>
+    <div><dt>Employer</dt><dd>Metacortex</dd></div>
+    <div><dt>Recruiter</dt><dd>Morpheus</dd></div>
+    <div><dt>Status (Vol. 0)</dt><dd>Asleep, suspecting</dd></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Threshold</span>
+  <h2>The Man Who Would Become The One</h2>
+  <p>This is where Volume 0 ends — at the threshold, with Neo poised between two lives. He is not yet a hero. He is not yet anything. He is a tired man with a question, standing in the rain, deciding whether to get into a car driven by strangers because a legend named Trinity told him to.</p>
+  <p>Everything that follows — the pills, the pod, the war, the powers, the sacrifice — flows from this one quality in him: <strong>he could not stop wanting to know what was real.</strong> Morpheus believed that hunger marked him as <em>The One</em>, the prophesied figure who could reshape the Matrix at will. The Oracle would complicate that belief. But the belief began here, with an ordinary programmer who refused to accept an ordinary world.</p>
+  <div class="pull">“You’re here because you know something. What you know, you can’t explain — but you feel it. You’ve felt it your entire life.”<cite>Morpheus, to Neo</cite></div>
+  <p>He had felt it his entire life. In Volume 1, he finally gets to choose whether to find out why.</p>
+
+  <div class="pager">
+    <a href="4-legacy.html">← Vol. 4 · Legacy</a>
+    <a href="1-awakening.html">Vol. 1 · The Awakening →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <b>ROOT0-ATTRIBUTION-v1.0</b><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <b>CC-BY-ND-4.0</b><br>
+    The Neo Omnibus · Volume 0 of 5 · “Who He Was”<br>
+    Neo and The Matrix are fictional works of the Wachowskis &amp; Warner Bros.<br>
+    This museum entry is critical / educational commentary.
+  </div>
+</footer>
+
+<script>
+// build digital rain columns
+(function(){
+  var glyphs='ｱｲｳｴｵｶｷｸｹｺﾈﾊﾜｦｾﾐﾑﾒﾓ01010アイウ7E3F9C2A01';
+  var rain=document.getElementById('rain');
+  var n=Math.min(28,Math.floor(window.innerWidth/42));
+  for(var i=0;i<n;i++){
+    var col=document.createElement('div');
+    col.className='col';
+    col.style.left=(i/n*100)+ '%';
+    var dur=(5+Math.random()*9).toFixed(2);
+    col.style.animationDuration=dur+'s';
+    col.style.animationDelay=(-Math.random()*dur)+'s';
+    col.style.fontSize=(13+Math.random()*9).toFixed(0)+'px';
+    var len=10+Math.floor(Math.random()*22);
+    var s='';
+    for(var j=0;j<len;j++){s+=glyphs[Math.floor(Math.random()*glyphs.length)]+'\n';}
+    col.textContent=s;
+    rain.appendChild(col);
+  }
+})();
+</script>
+</body>
+</html>

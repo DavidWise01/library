@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO · Vol. 4 — The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#030803;
+  --matrix:#00ff41;
+  --dim:#0a3a14;
+  --red:#e0203a;
+  --blue:#1f6fe0;
+  --ink:#cdeccd;
+  --mute:#5f8f65;
+  --glow:rgba(0,255,65,.35)}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0}
+html{
+  scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.75;
+  overflow-x:hidden;
+  position:relative}
+.rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.18}
+.rain .col{
+  position:absolute;
+  top:-120%;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  line-height:1.05;
+  color:var(--matrix);
+  text-shadow:0 0 8px var(--glow);
+  white-space:pre;
+  writing-mode:vertical-rl;
+  letter-spacing:2px;
+  animation:fall linear infinite}
+@keyframes fall{
+  0%{
+  transform:translateY(-10%);
+  opacity:0}
+8%{
+  opacity:1}
+90%{
+  opacity:1}
+100%{
+  transform:translateY(150vh);
+  opacity:0}
+}
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px}
+section{
+  position:relative;
+  z-index:2}
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(3,8,3,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--dim)}
+nav .nav-in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap}
+nav .brand{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 10px var(--glow)}
+nav .links{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-left:auto}
+nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  text-decoration:none;
+  padding:5px 10px;
+  border:1px solid transparent;
+  border-radius:2px;
+  transition:all .2s}
+nav a:hover{
+  color:var(--matrix);
+  border-color:var(--dim)}
+nav a.active{
+  color:var(--paper);
+  background:var(--matrix);
+  text-shadow:none;
+  font-weight:700}
+.hero{
+  min-height:88vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 24px;
+  position:relative}
+.kick{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 8px var(--glow)}
+.hero .vol{
+  margin-bottom:18px}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-weight:800;
+  font-size:clamp(2.6rem,9vw,6.4rem);
+  line-height:.92;
+  color:#eafff0;
+  letter-spacing:.04em;
+  text-shadow:0 0 24px var(--glow),0 0 2px var(--matrix)}
+.hero .sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.6vw,1.6rem);
+  color:var(--ink);
+  max-width:660px;
+  margin:22px auto 0}
+.hero-art{
+  width:min(540px,88vw);
+  height:300px;
+  margin:30px auto 10px;
+  display:block}
+.band{
+  background:var(--matrix);
+  color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  padding:3px 10px;
+  display:inline-block;
+  font-size:.74rem;
+  box-shadow:0 0 18px var(--glow)}
+h2{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  color:#eafff0;
+  margin:18px 0 18px;
+  letter-spacing:.03em;
+  text-shadow:0 0 16px var(--glow)}
+h3{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:1.32rem;
+  color:var(--matrix);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--glow)}
+p{
+  margin:0 0 18px}
+.block{
+  padding:70px 0;
+  border-top:1px solid var(--dim)}
+.lead{
+  font-size:1.22rem}
+em,i{
+  color:#e9fff0}
+strong{
+  color:var(--matrix);
+  font-weight:700}
+.pull{
+  border-left:3px solid var(--matrix);
+  padding:14px 0 14px 26px;
+  margin:32px 0;
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:1.55rem;
+  color:#eafff0;
+  text-shadow:0 0 12px rgba(0,255,65,.18)}
+.pull cite{
+  display:block;
+  margin-top:10px;
+  font-style:normal;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+  margin-top:14px}
+.card{
+  border:1px solid var(--matrix);
+  background:rgba(0,255,65,.025);
+  padding:20px;
+  border-radius:3px;
+  transition:transform .22s ease,box-shadow .22s ease}
+.card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--matrix),0 0 28px var(--glow)}
+.card .tag{
+  font-family:'Space Mono',monospace;
+  font-size:.64rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--mute);
+  display:block;
+  margin-bottom:6px}
+.card p{
+  font-size:.95rem;
+  margin-bottom:0}
+.term{
+  border:1px solid var(--dim);
+  background:#020602;
+  font-family:'Space Mono',monospace;
+  font-size:.86rem;
+  color:var(--matrix);
+  padding:22px;
+  border-radius:4px;
+  margin:30px 0;
+  box-shadow:inset 0 0 40px rgba(0,255,65,.06);
+  text-shadow:0 0 6px var(--glow);
+  overflow-x:auto}
+.term .prompt{
+  color:var(--mute)}
+.facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;
+  background:var(--dim);
+  border:1px solid var(--dim);
+  margin:30px 0}
+.facts div{
+  background:var(--paper);
+  padding:18px}
+.facts dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+  margin-bottom:6px}
+.facts dd{
+  font-family:'Cinzel',serif;
+  color:#eafff0;
+  font-size:1.02rem}
+.note{
+  border:1px dashed var(--mute);
+  border-radius:5px;
+  padding:18px 22px;
+  margin:30px 0;
+  font-size:.98rem;
+  color:var(--mute);
+  background:rgba(0,255,65,.015)}
+.note b{
+  color:var(--matrix);
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:6px}
+footer{
+  position:relative;
+  z-index:2;
+  border-top:1px solid var(--matrix);
+  margin-top:40px;
+  padding:46px 24px;
+  text-align:center;
+  background:rgba(0,255,65,.02)}
+footer .colophon{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--mute);
+  line-height:2}
+footer .colophon b{
+  color:var(--matrix)}
+.pager{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin:40px 0 0;
+  flex-wrap:wrap}
+.pager a{
+  font-family:'Space Mono',monospace;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--matrix);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  padding:12px 16px;
+  border-radius:2px;
+  transition:all .2s}
+.pager a:hover{
+  border-color:var(--matrix);
+  box-shadow:0 0 18px var(--glow);
+  transform:translate(-2px,-2px)}
+/* hero anim: ringing phone + figure flying into code */
+.ring{
+  transform-origin:center;
+  animation:ring 1.6s ease-in-out infinite}
+@keyframes ring{
+  0%,100%{
+  transform:rotate(0)}
+10%{
+  transform:rotate(-12deg)}
+20%{
+  transform:rotate(12deg)}
+30%{
+  transform:rotate(-9deg)}
+40%{
+  transform:rotate(9deg)}
+50%{
+  transform:rotate(0)}
+}
+.soundwave{
+  animation:wave 1.6s ease-out infinite;
+  transform-origin:center}
+@keyframes wave{
+  0%{
+  opacity:.9;
+  transform:scale(.6)}
+100%{
+  opacity:0;
+  transform:scale(1.6)}
+}
+.flyup{
+  animation:flyup 4s ease-in-out infinite}
+@keyframes flyup{
+  0%{
+  transform:translateY(20px);
+  opacity:.4}
+60%{
+  opacity:1}
+100%{
+  transform:translateY(-30px);
+  opacity:0}
+}
+@media(max-width:640px){
+  body{
+  font-size:16.5px}
+nav .brand{
+  font-size:.66rem}
+}
+</style>
+</head>
+<body>
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">ROOT0 LIBRARY · NEO</span>
+    <div class="links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-awakening.html">1 · Awakening</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-the-one.html">3 · The One</a>
+      <a href="4-legacy.html" class="active">4 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vol kick">Volume 4 of 5 — The Neo Omnibus</div>
+  <svg class="hero-art" viewBox="0 0 540 300" role="img" aria-label="A ringing green phone and a figure flying upward into falling code">
+    <!-- figure flying into code -->
+    <g class="flyup" stroke="#00ff41" stroke-width="2" fill="none">
+      <circle cx="410" cy="90" r="12"/>
+      <path d="M410 102 L410 150 M410 115 L385 125 M410 115 L435 125 M410 150 L395 190 M410 150 L425 190"/>
+    </g>
+    <g font-family="'Space Mono',monospace" font-size="11" fill="#00ff41" opacity=".6">
+      <text class="flyup" x="450" y="70" style="animation-delay:.5s">01</text>
+      <text class="flyup" x="370" y="60" style="animation-delay:1.2s">ｱﾈ</text>
+    </g>
+    <!-- ringing phone -->
+    <g transform="translate(140,150)">
+      <circle class="soundwave" cx="0" cy="0" r="40" fill="none" stroke="#00ff41" stroke-width="1" style="animation-delay:0s"/>
+      <circle class="soundwave" cx="0" cy="0" r="40" fill="none" stroke="#00ff41" stroke-width="1" style="animation-delay:.8s"/>
+      <g class="ring" stroke="#00ff41" stroke-width="2.5" fill="#030803">
+        <path d="M-22 -20 q22 -16 44 0 l-8 12 q-14 -10 -28 0 z"/>
+        <line x1="0" y1="-8" x2="0" y2="20"/>
+        <rect x="-10" y="20" width="20" height="10" rx="2"/>
+      </g>
+    </g>
+    <text x="270" y="294" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">THE CALL CONNECTS — THEN HE IS GONE</text>
+  </svg>
+  <h1>THE LEGACY</h1>
+  <p class="sub">Two endings. One inside the story, where a man dies to make peace. One outside it, where a fiction rewired how a generation thinks about reality.</p>
+</header>
+
+<div class="wrap">
+
+<section class="block">
+  <span class="band">Legacy I · In-Story</span>
+  <h2>The Bargain at the Machine City</h2>
+  <p class="lead">By the end of <em>Revolutions</em>, both worlds are dying. Smith has spread through the Matrix like a cancer, copying himself over every program and person inside it, and is now beyond the machines’ control. Zion is hours from being overrun by the Sentinel army. Neo, blinded in the real world, does the one thing no One before him has done: he asks to be flown not to the Source, but to the heart of the enemy — the <strong>Machine City</strong> itself.</p>
+  <p>Trinity pilots him there and dies in the crash, impaled, in a long and unbearable goodbye. Alone, Neo crawls before the <strong>Deus Ex Machina</strong> — the towering face-of-faces that speaks for all the machines — and offers a deal. He does not ask for victory. He asks for <em>peace.</em> He will destroy Smith, who now threatens machine and human alike. In exchange, the machines must stop the war.</p>
+  <div class="pull">“I only ask to say what I came to say. After that, you can do what you want with me… The program Smith has grown beyond your control. Soon he will spread through this city as he spread through the Matrix. You cannot stop him — but I can.”<cite>Neo, to the Machine City</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">The Sacrifice</span>
+  <h2>The Messianic Arc, Completed</h2>
+  <p>The machines accept. Plugged in one last time, Neo faces the final, god-sized Smith in the rain, in a flooded canyon of a city, surrounded by a horde of Smith-copies watching their progenitor fight. Neo cannot win by force — he never could. So he chooses the opposite. He lets Smith assimilate him. He allows himself to be copied over, infected, turned into Smith.</p>
+  <p>And that is the trap. Because Neo is still plugged into the machine mainframe, the moment Smith absorbs The One, the machines pour a deleting surge through the connection. Smith — every copy of him, everywhere — detonates into light and is unwritten. Neo dies with him. His broken body is borne away by the machines with something like reverence. The sky over the Matrix clears for the first time in the saga; a sunrise, painted by the Architect at the Oracle’s request.</p>
+  <div class="pull">“Indeed. How long do you think this peace is going to last?” “As long as it can.”<cite>The Architect &amp; the Oracle, after the war</cite></div>
+  <p>The truce frees those who want out: from now on, any mind that wishes to leave the Matrix will be unplugged. It is not a total liberation — most stay asleep — but it is the first real choice the crop has ever been offered. The savior dies; the war ends; the people are freed. The oldest story we have, told in leather and green code.</p>
+  <div class="facts">
+    <div><dt>Final Film</dt><dd>The Matrix Revolutions (2003)</dd></div>
+    <div><dt>The Bargain</dt><dd>Peace for Smith’s defeat</dd></div>
+    <div><dt>The Method</dt><dd>Self-sacrifice / assimilation</dd></div>
+    <div><dt>The Cost</dt><dd>Neo &amp; Trinity</dd></div>
+    <div><dt>The Result</dt><dd>Truce; the free may leave</dd></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">Legacy II · Real World</span>
+  <h2>When a Fiction Escapes the Screen</h2>
+  <p class="lead">Neo is not real. He never was. But the ideas the films wrapped around him climbed out of the theater in 1999 and embedded themselves in the actual language and philosophy of the world — and <em>that</em> legacy is entirely real.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Language</span><h3>Red Pill / Blue Pill</h3><p>The choice between comfortable illusion and uncomfortable truth became a universal idiom — invoked in politics, philosophy, self-help, and (for better and worse) internet subculture. “To be red-pilled” entered common speech. A two-second prop became a permanent metaphor.</p></div>
+    <div class="card"><span class="tag">Cinema</span><h3>Bullet Time</h3><p>The frozen-world camera sweep changed action filmmaking permanently. Built with a rig of more than a hundred still cameras fired in sequence around the actor, it was instantly, endlessly imitated and parodied — from blockbusters to commercials. A genuine technical milestone.</p></div>
+    <div class="card"><span class="tag">Philosophy</span><h3>The Simulation Question</h3><p>“Are we living in a simulation?” went mainstream partly on this film’s back. It dovetailed with Nick Bostrom’s 2003 simulation argument and has since been debated by physicists, philosophers, and technologists alike. The Matrix gave the question a face and a phrase.</p></div>
+    <div class="card"><span class="tag">Culture</span><h3>“There Is No Spoon”</h3><p>The child-monk’s koan became a pop-culture mantra for a generation — a pocket-sized piece of Zen about the malleability of perceived limits. Quoted in classrooms, boardrooms, and meditation apps far from any cineplex.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Makers</span>
+  <h2>The Wachowskis &amp; 1999</h2>
+  <p>The saga was written and directed by <strong>Lana and Lilly Wachowski</strong>, then near-unknown filmmakers, who fused Hong Kong action choreography, Japanese anime, cyberpunk literature, and a dense weave of philosophy and religion into a single mainstream blockbuster. Released in March <strong>1999</strong>, <em>The Matrix</em> was a critical and commercial phenomenon, swept four Academy Awards for its technical craft, and reset audience expectations for what an action film could be and mean.</p>
+  <p>Two sequels followed in 2003 — <em>Reloaded</em> and <em>Revolutions</em> — expanding the mythology into something denser and more divisive, and a fourth film, <em>The Matrix Resurrections</em>, arrived in 2021 to reflect on the franchise’s own legacy. The Wachowskis have also spoken about the series as resonating with their own experiences, lending the red-pill awakening a layer of personal meaning beyond the philosophy.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Myth</span>
+  <h2>A Modern Parable in Leather and Sunglasses</h2>
+  <p>What makes Neo endure in a library otherwise full of real historical figures — Euclid, Turing, Einstein — is precisely that he is a <em>myth</em>, and a remarkably well-built one. The films are a deliberate collage of humanity’s oldest stories: the <strong>Gnostic</strong> idea of a false material world concealing a hidden true reality; the <strong>Buddhist</strong> awakening from illusion (the very word for enlightenment is “awakening”); the <strong>messianic</strong> arc of a prophesied savior who dies and rises to redeem his people. Neo is Plato’s prisoner leaving the cave, Alice down the rabbit hole, and a leather-coated Christ figure, all at once.</p>
+  <div class="note">
+    <b>Curator’s Note — Honesty About Fiction</b>
+    Neo is a fictional character, and nothing in this entry should be read as history. He did not stop bullets; no one has been harvested as a battery; we are not (so far as anyone can demonstrate) living in a literal Matrix. What is genuinely true is the <em>cultural and philosophical</em> footprint: the idioms, the cinematic technique, and the popularized questions that outlived the films. We catalog him here not as a person who lived, but as an idea that did — and still does.
+  </div>
+  <p>That is why he earns a place beside the real. The mathematicians and physicists in this library mapped the world as it is. Neo is the figure a turn-of-the-millennium culture built to ask whether the world is as it seems at all — and the answer he keeps offering is an invitation rather than a fact: <em>question the walls; the walls may be code.</em></p>
+</section>
+
+<section class="block">
+  <span class="band">The Closing Call</span>
+  <h2>The Phone Rings</h2>
+  <p>The first film ends not with a battle but with a phone call. Resurrected, victorious, Neo speaks into a payphone — not to the crew, but to the machines, to the system itself. A warning, and a promise.</p>
+  <div class="term">
+<span class="prompt">> system_message --to: the_matrix</span><br>
+I know you're out there.<br>
+I can feel you now.<br>
+I know that you're afraid... you're afraid of us.<br>
+You're afraid of change.<br>
+I'm going to show these people what you don't want them to see...<br>
+a world without rules and controls, without borders or boundaries.<br>
+A world where anything is possible.<br>
+<span class="prompt">> connection_closed.</span>
+  </div>
+  <p>Then he hangs up, steps outside, looks at a sky he intends to rewrite — and flies straight up into it. The figure rising into the green is where this omnibus closes, and where the myth begins again every time someone new presses play. <strong>Wake up, Neo.</strong></p>
+
+  <div class="pager">
+    <a href="3-the-one.html">← Vol. 3 · The One</a>
+    <a href="0-who.html">Vol. 0 · Who He Was →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <b>ROOT0-ATTRIBUTION-v1.0</b><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <b>CC-BY-ND-4.0</b><br>
+    The Neo Omnibus · Volume 4 of 5 · “The Legacy”<br>
+    Neo and The Matrix are fictional works of the Wachowskis &amp; Warner Bros.<br>
+    This museum entry is critical / educational commentary.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var glyphs='ｱｲｳｴｵｶｷｸｹｺﾈﾊﾜｦｾﾐﾑﾒﾓ01010アイウ7E3F9C2A01';
+  var rain=document.getElementById('rain');
+  var n=Math.min(28,Math.floor(window.innerWidth/42));
+  for(var i=0;i<n;i++){
+    var col=document.createElement('div');col.className='col';
+    col.style.left=(i/n*100)+'%';
+    var dur=(5+Math.random()*9).toFixed(2);
+    col.style.animationDuration=dur+'s';
+    col.style.animationDelay=(-Math.random()*dur)+'s';
+    col.style.fontSize=(13+Math.random()*9).toFixed(0)+'px';
+    var len=10+Math.floor(Math.random()*22);var s='';
+    for(var j=0;j<len;j++){s+=glyphs[Math.floor(Math.random()*glyphs.length)]+'\n';}
+    col.textContent=s;rain.appendChild(col);
+  }
+})();
+</script>
+</body>
+</html>

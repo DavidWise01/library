@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO · Vol. 3 — The One</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#030803;
+  --matrix:#00ff41;
+  --dim:#0a3a14;
+  --red:#e0203a;
+  --blue:#1f6fe0;
+  --ink:#cdeccd;
+  --mute:#5f8f65;
+  --glow:rgba(0,255,65,.35)}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0}
+html{
+  scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.75;
+  overflow-x:hidden;
+  position:relative}
+.rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.18}
+.rain .col{
+  position:absolute;
+  top:-120%;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  line-height:1.05;
+  color:var(--matrix);
+  text-shadow:0 0 8px var(--glow);
+  white-space:pre;
+  writing-mode:vertical-rl;
+  letter-spacing:2px;
+  animation:fall linear infinite}
+@keyframes fall{
+  0%{
+  transform:translateY(-10%);
+  opacity:0}
+8%{
+  opacity:1}
+90%{
+  opacity:1}
+100%{
+  transform:translateY(150vh);
+  opacity:0}
+}
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px}
+section{
+  position:relative;
+  z-index:2}
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(3,8,3,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--dim)}
+nav .nav-in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap}
+nav .brand{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 10px var(--glow)}
+nav .links{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-left:auto}
+nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  text-decoration:none;
+  padding:5px 10px;
+  border:1px solid transparent;
+  border-radius:2px;
+  transition:all .2s}
+nav a:hover{
+  color:var(--matrix);
+  border-color:var(--dim)}
+nav a.active{
+  color:var(--paper);
+  background:var(--matrix);
+  text-shadow:none;
+  font-weight:700}
+.hero{
+  min-height:88vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 24px;
+  position:relative}
+.kick{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 8px var(--glow)}
+.hero .vol{
+  margin-bottom:18px}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-weight:800;
+  font-size:clamp(2.8rem,10vw,7rem);
+  line-height:.92;
+  color:#eafff0;
+  letter-spacing:.05em;
+  text-shadow:0 0 24px var(--glow),0 0 2px var(--matrix)}
+.hero .sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.6vw,1.6rem);
+  color:var(--ink);
+  max-width:660px;
+  margin:22px auto 0}
+.hero-art{
+  width:min(540px,88vw);
+  height:300px;
+  margin:30px auto 10px;
+  display:block}
+.band{
+  background:var(--matrix);
+  color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  padding:3px 10px;
+  display:inline-block;
+  font-size:.74rem;
+  box-shadow:0 0 18px var(--glow)}
+h2{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  color:#eafff0;
+  margin:18px 0 18px;
+  letter-spacing:.03em;
+  text-shadow:0 0 16px var(--glow)}
+h3{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:1.32rem;
+  color:var(--matrix);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--glow)}
+p{
+  margin:0 0 18px}
+.block{
+  padding:70px 0;
+  border-top:1px solid var(--dim)}
+.lead{
+  font-size:1.22rem}
+em,i{
+  color:#e9fff0}
+strong{
+  color:var(--matrix);
+  font-weight:700}
+.pull{
+  border-left:3px solid var(--matrix);
+  padding:14px 0 14px 26px;
+  margin:32px 0;
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:1.55rem;
+  color:#eafff0;
+  text-shadow:0 0 12px rgba(0,255,65,.18)}
+.pull cite{
+  display:block;
+  margin-top:10px;
+  font-style:normal;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+  margin-top:14px}
+.card{
+  border:1px solid var(--matrix);
+  background:rgba(0,255,65,.025);
+  padding:20px;
+  border-radius:3px;
+  transition:transform .22s ease,box-shadow .22s ease}
+.card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--matrix),0 0 28px var(--glow)}
+.card .tag{
+  font-family:'Space Mono',monospace;
+  font-size:.64rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--mute);
+  display:block;
+  margin-bottom:6px}
+.card p{
+  font-size:.95rem;
+  margin-bottom:0}
+.term{
+  border:1px solid var(--dim);
+  background:#020602;
+  font-family:'Space Mono',monospace;
+  font-size:.86rem;
+  color:var(--matrix);
+  padding:22px;
+  border-radius:4px;
+  margin:30px 0;
+  box-shadow:inset 0 0 40px rgba(0,255,65,.06);
+  text-shadow:0 0 6px var(--glow);
+  overflow-x:auto}
+.term .prompt{
+  color:var(--mute)}
+.facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;
+  background:var(--dim);
+  border:1px solid var(--dim);
+  margin:30px 0}
+.facts div{
+  background:var(--paper);
+  padding:18px}
+.facts dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+  margin-bottom:6px}
+.facts dd{
+  font-family:'Cinzel',serif;
+  color:#eafff0;
+  font-size:1.02rem}
+footer{
+  position:relative;
+  z-index:2;
+  border-top:1px solid var(--matrix);
+  margin-top:40px;
+  padding:46px 24px;
+  text-align:center;
+  background:rgba(0,255,65,.02)}
+footer .colophon{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--mute);
+  line-height:2}
+footer .colophon b{
+  color:var(--matrix)}
+.pager{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin:40px 0 0;
+  flex-wrap:wrap}
+.pager a{
+  font-family:'Space Mono',monospace;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--matrix);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  padding:12px 16px;
+  border-radius:2px;
+  transition:all .2s}
+.pager a:hover{
+  border-color:var(--matrix);
+  box-shadow:0 0 18px var(--glow);
+  transform:translate(-2px,-2px)}
+/* bullet-time concept block */
+.bullettime{
+  border:1px solid var(--dim);
+  background:rgba(0,255,65,.02);
+  border-radius:6px;
+  padding:28px;
+  margin:34px 0;
+  position:relative;
+  overflow:hidden}
+.bullettime svg{
+  display:block;
+  width:100%;
+  height:160px}
+.bullet{
+  animation:freeze 4s ease-in-out infinite}
+@keyframes freeze{
+  0%{
+  transform:translateX(0)}
+35%{
+  transform:translateX(150px)}
+55%{
+  transform:translateX(160px)}
+100%{
+  transform:translateX(420px)}
+}
+.handstop{
+  transform-origin:center;
+  animation:push 4s ease-in-out infinite}
+@keyframes push{
+  0%,30%{
+  opacity:.4}
+45%,70%{
+  opacity:1}
+100%{
+  opacity:.4}
+}
+/* hero anim: hand stopping bullets + code vision */
+.codecol{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  fill:#00ff41}
+.cvflow{
+  animation:cv 2.5s linear infinite}
+@keyframes cv{
+  0%{
+  transform:translateY(-30px);
+  opacity:0}
+30%{
+  opacity:1}
+100%{
+  transform:translateY(40px);
+  opacity:0}
+}
+@media(max-width:640px){
+  body{
+  font-size:16.5px}
+nav .brand{
+  font-size:.66rem}
+}
+</style>
+</head>
+<body>
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">ROOT0 LIBRARY · NEO</span>
+    <div class="links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-awakening.html">1 · Awakening</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-the-one.html" class="active">3 · The One</a>
+      <a href="4-legacy.html">4 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vol kick">Volume 3 of 5 — The Neo Omnibus</div>
+  <svg class="hero-art" viewBox="0 0 540 300" role="img" aria-label="A raised hand stopping bullets amid falling code">
+    <!-- code vision columns -->
+    <g class="codecol">
+      <text class="cvflow" x="30" y="40" style="animation-delay:0s">10<tspan x="30" dy="14">ｱ</tspan><tspan x="30" dy="14">01</tspan></text>
+      <text class="cvflow" x="500" y="30" style="animation-delay:.8s">ﾈ<tspan x="500" dy="14">10</tspan></text>
+      <text class="cvflow" x="70" y="220" style="animation-delay:1.4s">01<tspan x="70" dy="14">ｶ</tspan></text>
+    </g>
+    <!-- frozen bullets -->
+    <g class="handstop">
+      <line x1="120" y1="120" x2="240" y2="120" stroke="#00ff41" stroke-width="1" opacity=".4"/>
+      <line x1="120" y1="150" x2="245" y2="150" stroke="#00ff41" stroke-width="1" opacity=".4"/>
+      <line x1="120" y1="180" x2="238" y2="180" stroke="#00ff41" stroke-width="1" opacity=".4"/>
+      <circle cx="250" cy="120" r="5" fill="#00ff41"/>
+      <circle cx="255" cy="150" r="5" fill="#00ff41"/>
+      <circle cx="248" cy="180" r="5" fill="#00ff41"/>
+    </g>
+    <!-- the hand -->
+    <g stroke="#00ff41" stroke-width="2" fill="#030803">
+      <path d="M300 110 q40 -10 70 0 q20 5 30 25 q5 25 -10 45 q-30 25 -70 20 q-25 -5 -30 -40 q-2 -30 10 -45 z"/>
+      <path d="M370 110 l25 -5 M385 135 l30 0 M380 160 l28 8"/>
+    </g>
+    <text x="270" y="294" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">“NO.”</text>
+  </svg>
+  <h1>THE ONE</h1>
+  <p class="sub">Once you truly understand that the rules are only code, you are no longer bound by them. This is the secret of every power Neo has.</p>
+</header>
+
+<div class="wrap">
+
+<section class="block">
+  <span class="band">The Prophecy</span>
+  <h2>The Man Who Could Remake the Matrix</h2>
+  <p class="lead">The legend, passed down in Zion, told of a man born inside the Matrix with the power to change whatever he wanted — <strong>to remake the Matrix as he saw fit.</strong> When he died, the prophecy said, the war would end and the people would be freed. Morpheus believed that man was Neo.</p>
+  <p>What does it actually mean to “change the Matrix”? Not magic. Something stranger and more rigorous. The Matrix is a program. Its physics — gravity, bullets, walls, bodies — are nothing but rules written in code. Most people inside obey those rules because they believe the rules are real and inviolable. The One does not. The One <em>knows</em>, in his bones, that they are arbitrary. And what you do not believe in cannot bind you.</p>
+  <div class="pull">“Some of them can be bent. Others can be broken.”<cite>Morpheus, on the rules of the Matrix</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">The Progression</span>
+  <h2>Learning to Break the Rules</h2>
+  <p>Neo’s powers do not arrive all at once. They unfold as his belief deepens — each step a further release from the assumption that the simulation’s laws are laws of nature.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Stage I</span><h3>Dodging Bullets</h3><p>On a rooftop, an Agent empties a pistol at him. Neo bends backward into an impossible arc, faster than a human body should move, and the rounds streak past in slow, visible trails. He is grazed — but he is the first to even try, and survive.</p></div>
+    <div class="card"><span class="tag">Stage II</span><h3>Stopping Them</h3><p>The threshold moment. In the final battle he simply raises one hand — and the bullets <em>halt in mid-air</em>, hang there, then clatter harmlessly to the floor. He has stopped believing they can hurt him, so they cannot. “Why didn’t you tell me?” “Because I didn’t need to.”</p></div>
+    <div class="card"><span class="tag">Stage III</span><h3>Code Vision</h3><p>He stops seeing people, walls, and Agents — and begins to see the Matrix as it truly is: <strong>cascading columns of green falling code.</strong> Everything resolves into the raw symbols beneath. To see the source is to be able to edit it.</p></div>
+    <div class="card"><span class="tag">Stage IV</span><h3>Speed, Strength, Flight</h3><p>Superhuman velocity. Strength that throws Agents through walls. And finally flight — a sonic boom and a streak of motion as he launches into the sky “like Superman,” a man who no longer accepts that he must touch the ground.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Concept</span>
+  <h2>Bullet Time</h2>
+  <p>The signature image of the saga is also its cleanest metaphor: <strong>bullet time</strong> — the world frozen to a crawl while the camera sweeps around a body bent backward over a hail of suspended rounds. In-story, it is what the world looks like to a mind fast enough and free enough to see the gaps in the code. Out-of-story, it changed cinema forever (we return to that in Volume 4).</p>
+  <div class="bullettime">
+    <svg viewBox="0 0 480 160" role="img" aria-label="Bullet-time concept: bullets frozen before a raised hand">
+      <line x1="0" y1="80" x2="480" y2="80" stroke="#0a3a14" stroke-width="1"/>
+      <g class="bullet" style="animation-delay:0s"><circle cx="20" cy="60" r="5" fill="#00ff41"/><line x1="-10" y1="60" x2="14" y2="60" stroke="#00ff41" stroke-width="1" opacity=".5"/></g>
+      <g class="bullet" style="animation-delay:.5s"><circle cx="20" cy="90" r="5" fill="#00ff41"/><line x1="-10" y1="90" x2="14" y2="90" stroke="#00ff41" stroke-width="1" opacity=".5"/></g>
+      <g class="bullet" style="animation-delay:1s"><circle cx="20" cy="105" r="5" fill="#00ff41"/><line x1="-10" y1="105" x2="14" y2="105" stroke="#00ff41" stroke-width="1" opacity=".5"/></g>
+      <g class="handstop" transform="translate(430,80)"><circle r="22" fill="none" stroke="#00ff41" stroke-width="2"/><line x1="-22" y1="0" x2="22" y2="0" stroke="#00ff41" stroke-width="1"/><line x1="0" y1="-22" x2="0" y2="22" stroke="#00ff41" stroke-width="1"/></g>
+      <text x="240" y="150" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">TIME SLOWS WHEN THE MIND SPEEDS UP</text>
+    </svg>
+  </div>
+  <p>The deeper point is the koan a small monk hands Neo at the Oracle’s: <em>“Do not try to bend the spoon — that’s impossible. Instead, only try to realize the truth: there is no spoon.”</em> You do not overpower the rule. You stop believing the rule exists. Then it doesn’t.</p>
+</section>
+
+<section class="block">
+  <span class="band">Death</span>
+  <h2>Resurrection in the Hallway</h2>
+  <p>The proof of The One comes, as it must in any messianic myth, through death. Cornered in a subway, then a wired building, Neo is finally shot point-blank by Agent Smith — three rounds in the chest. He dies. On the ship, his heart-monitor flatlines. The crew despairs.</p>
+  <p>Then Trinity, kneeling over his still body in the chair, says the thing the Oracle once told her: that she would fall in love with The One. She loves him; he cannot be dead. She kisses him.</p>
+  <div class="pull">“Now get up.”<cite>Trinity, to Neo’s body</cite></div>
+  <p>His heart restarts. Inside the Matrix he opens his eyes in the bullet-riddled hallway, rises, and when the Agents unload their weapons into him he lifts one hand and says — <strong>“No.”</strong> The bullets stop in the air and fall. Now he sees the code. He walks into Agent Smith, dives inside him, and Smith ruptures from within into shards of light. The One has arrived.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Sequels</span>
+  <h2>The Burly Brawl &amp; the Architect</h2>
+  <p>The first film answers “Is he The One?” The sequels ask the harder question: <em>what is The One actually for?</em></p>
+  <div class="grid">
+    <div class="card"><span class="tag">Reloaded</span><h3>The Burly Brawl</h3><p>Smith, now a self-replicating virus, copies himself into a literal army. Neo fights a hundred identical Smiths at once in a courtyard — the saga’s most operatic set-piece. He cannot beat them by force; he eventually just flies away. The hero’s strength has found its limit.</p></div>
+    <div class="card"><span class="tag">Reloaded</span><h3>The Architect</h3><p>The cruelest twist: Neo learns The One is not an accident but a <strong>feature of the system</strong>. He is the sixth iteration of a built-in anomaly. The prophecy, Zion, the chosen savior — all of it is a release valve the Architect engineered to keep the Matrix stable. Free will itself was the design.</p></div>
+    <div class="card"><span class="tag">Reloaded / Revolutions</span><h3>The Sixth Iteration</h3><p>Five times before, a version of The One reached the Source and rebooted the system, choosing to save humanity by repopulating a destroyed Zion. The Architect expects Neo to do the same. Neo, uniquely, refuses — and walks back to save Trinity instead. Love breaks the cycle.</p></div>
+    <div class="card"><span class="tag">Revolutions</span><h3>Powers in the Real World</h3><p>Most mysterious of all: Neo discovers he can stop Sentinels with his mind <em>outside</em> the Matrix, in the supposedly real world — blinded, he sees the machines as golden light. The film suggests the boundary between “real” and “simulated” is itself not what it seemed.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Idea</span>
+  <h2>The Rules Are Code</h2>
+  <p>Strip away the leather and the slow-motion and one clean idea remains, the spine of the whole mythos: <strong>a constructed reality is only as binding as your belief in it.</strong> The Agents are stronger because they believe they are. Neo becomes stronger because he stops believing he is weak. The spoon does not bend because there is no spoon.</p>
+  <div class="facts">
+    <div><dt>Title</dt><dd>The One (Neo)</dd></div>
+    <div><dt>Core Power</dt><dd>Editing the Matrix</dd></div>
+    <div><dt>Signature</dt><dd>Stopping bullets</dd></div>
+    <div><dt>Vision</dt><dd>Sees raw code</dd></div>
+    <div><dt>Weakness</dt><dd>Smith / the cycle</dd></div>
+    <div><dt>The Secret</dt><dd>“There is no spoon”</dd></div>
+  </div>
+  <p>It is a profoundly hopeful and profoundly dangerous idea at once — which is exactly why it has outlived the films. In Volume 4, we follow Neo to his ending, and then out of the screen entirely, into the language and the philosophy of the real world.</p>
+
+  <div class="pager">
+    <a href="2-world.html">← Vol. 2 · His World</a>
+    <a href="4-legacy.html">Vol. 4 · The Legacy →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <b>ROOT0-ATTRIBUTION-v1.0</b><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <b>CC-BY-ND-4.0</b><br>
+    The Neo Omnibus · Volume 3 of 5 · “The One”<br>
+    Neo and The Matrix are fictional works of the Wachowskis &amp; Warner Bros.<br>
+    This museum entry is critical / educational commentary.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var glyphs='ｱｲｳｴｵｶｷｸｹｺﾈﾊﾜｦｾﾐﾑﾒﾓ01010アイウ7E3F9C2A01';
+  var rain=document.getElementById('rain');
+  var n=Math.min(28,Math.floor(window.innerWidth/42));
+  for(var i=0;i<n;i++){
+    var col=document.createElement('div');col.className='col';
+    col.style.left=(i/n*100)+'%';
+    var dur=(5+Math.random()*9).toFixed(2);
+    col.style.animationDuration=dur+'s';
+    col.style.animationDelay=(-Math.random()*dur)+'s';
+    col.style.fontSize=(13+Math.random()*9).toFixed(0)+'px';
+    var len=10+Math.floor(Math.random()*22);var s='';
+    for(var j=0;j<len;j++){s+=glyphs[Math.floor(Math.random()*glyphs.length)]+'\n';}
+    col.textContent=s;rain.appendChild(col);
+  }
+})();
+</script>
+</body>
+</html>

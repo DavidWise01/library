@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO · Vol. 2 — His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#030803;
+  --matrix:#00ff41;
+  --dim:#0a3a14;
+  --red:#e0203a;
+  --blue:#1f6fe0;
+  --ink:#cdeccd;
+  --mute:#5f8f65;
+  --glow:rgba(0,255,65,.35)}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0}
+html{
+  scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:18px;
+  line-height:1.75;
+  overflow-x:hidden;
+  position:relative}
+.rain{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.18}
+.rain .col{
+  position:absolute;
+  top:-120%;
+  font-family:'Space Mono',monospace;
+  font-size:18px;
+  line-height:1.05;
+  color:var(--matrix);
+  text-shadow:0 0 8px var(--glow);
+  white-space:pre;
+  writing-mode:vertical-rl;
+  letter-spacing:2px;
+  animation:fall linear infinite}
+@keyframes fall{
+  0%{
+  transform:translateY(-10%);
+  opacity:0}
+8%{
+  opacity:1}
+90%{
+  opacity:1}
+100%{
+  transform:translateY(150vh);
+  opacity:0}
+}
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px}
+section{
+  position:relative;
+  z-index:2}
+nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(3,8,3,.86);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--dim)}
+nav .nav-in{
+  max-width:1080px;
+  margin:0 auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap}
+nav .brand{
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 10px var(--glow)}
+nav .links{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-left:auto}
+nav a{
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--mute);
+  text-decoration:none;
+  padding:5px 10px;
+  border:1px solid transparent;
+  border-radius:2px;
+  transition:all .2s}
+nav a:hover{
+  color:var(--matrix);
+  border-color:var(--dim)}
+nav a.active{
+  color:var(--paper);
+  background:var(--matrix);
+  text-shadow:none;
+  font-weight:700}
+.hero{
+  min-height:88vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 24px;
+  position:relative}
+.kick{
+  font-family:'Space Mono',monospace;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  color:var(--matrix);
+  font-size:.78rem;
+  text-shadow:0 0 8px var(--glow)}
+.hero .vol{
+  margin-bottom:18px}
+.hero h1{
+  font-family:'Cinzel',serif;
+  font-weight:800;
+  font-size:clamp(2.6rem,9vw,6.4rem);
+  line-height:.92;
+  color:#eafff0;
+  letter-spacing:.04em;
+  text-shadow:0 0 24px var(--glow),0 0 2px var(--matrix)}
+.hero .sub{
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:clamp(1.1rem,2.6vw,1.6rem);
+  color:var(--ink);
+  max-width:660px;
+  margin:22px auto 0}
+.hero-art{
+  width:min(540px,88vw);
+  height:300px;
+  margin:30px auto 10px;
+  display:block}
+.band{
+  background:var(--matrix);
+  color:var(--paper);
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  padding:3px 10px;
+  display:inline-block;
+  font-size:.74rem;
+  box-shadow:0 0 18px var(--glow)}
+h2{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3rem);
+  color:#eafff0;
+  margin:18px 0 18px;
+  letter-spacing:.03em;
+  text-shadow:0 0 16px var(--glow)}
+h3{
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:1.3rem;
+  color:var(--matrix);
+  margin-bottom:8px;
+  text-shadow:0 0 10px var(--glow)}
+p{
+  margin:0 0 18px}
+.block{
+  padding:70px 0;
+  border-top:1px solid var(--dim)}
+.lead{
+  font-size:1.22rem}
+em,i{
+  color:#e9fff0}
+strong{
+  color:var(--matrix);
+  font-weight:700}
+.pull{
+  border-left:3px solid var(--matrix);
+  padding:14px 0 14px 26px;
+  margin:32px 0;
+  font-family:'Newsreader',serif;
+  font-style:italic;
+  font-size:1.5rem;
+  color:#eafff0;
+  text-shadow:0 0 12px rgba(0,255,65,.18)}
+.pull cite{
+  display:block;
+  margin-top:10px;
+  font-style:normal;
+  font-family:'Space Mono',monospace;
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute)}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+  margin-top:14px}
+.card{
+  border:1px solid var(--matrix);
+  background:rgba(0,255,65,.025);
+  padding:20px;
+  border-radius:3px;
+  transition:transform .22s ease,box-shadow .22s ease}
+.card:hover{
+  transform:translate(-3px,-3px);
+  box-shadow:6px 6px 0 var(--matrix),0 0 28px var(--glow)}
+.card .tag{
+  font-family:'Space Mono',monospace;
+  font-size:.64rem;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--mute);
+  display:block;
+  margin-bottom:6px}
+.card p{
+  font-size:.95rem;
+  margin-bottom:0}
+.card.foe{
+  border-color:var(--red)}
+.card.foe:hover{
+  box-shadow:6px 6px 0 var(--red),0 0 28px rgba(224,32,58,.4)}
+.card.foe h3{
+  color:#ff6677}
+.term{
+  border:1px solid var(--dim);
+  background:#020602;
+  font-family:'Space Mono',monospace;
+  font-size:.86rem;
+  color:var(--matrix);
+  padding:22px;
+  border-radius:4px;
+  margin:30px 0;
+  box-shadow:inset 0 0 40px rgba(0,255,65,.06);
+  text-shadow:0 0 6px var(--glow);
+  overflow-x:auto}
+.term .prompt{
+  color:var(--mute)}
+.facts{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;
+  background:var(--dim);
+  border:1px solid var(--dim);
+  margin:30px 0}
+.facts div{
+  background:var(--paper);
+  padding:18px}
+.facts dt{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--mute);
+  margin-bottom:6px}
+.facts dd{
+  font-family:'Cinzel',serif;
+  color:#eafff0;
+  font-size:1.02rem}
+footer{
+  position:relative;
+  z-index:2;
+  border-top:1px solid var(--matrix);
+  margin-top:40px;
+  padding:46px 24px;
+  text-align:center;
+  background:rgba(0,255,65,.02)}
+footer .colophon{
+  font-family:'Space Mono',monospace;
+  font-size:.7rem;
+  letter-spacing:.12em;
+  color:var(--mute);
+  line-height:2}
+footer .colophon b{
+  color:var(--matrix)}
+.pager{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin:40px 0 0;
+  flex-wrap:wrap}
+.pager a{
+  font-family:'Space Mono',monospace;
+  font-size:.74rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--matrix);
+  text-decoration:none;
+  border:1px solid var(--dim);
+  padding:12px 16px;
+  border-radius:2px;
+  transition:all .2s}
+.pager a:hover{
+  border-color:var(--matrix);
+  box-shadow:0 0 18px var(--glow);
+  transform:translate(-2px,-2px)}
+.ship{
+  animation:hover 5s ease-in-out infinite}
+@keyframes hover{
+  0%,100%{
+  transform:translateY(0)}
+50%{
+  transform:translateY(-8px)}
+}
+.scan{
+  animation:scan 3s linear infinite}
+@keyframes scan{
+  0%{
+  transform:translateX(-60px);
+  opacity:0}
+50%{
+  opacity:1}
+100%{
+  transform:translateX(60px);
+  opacity:0}
+}
+@media(max-width:640px){
+  body{
+  font-size:16.5px}
+nav .brand{
+  font-size:.66rem}
+}
+</style>
+</head>
+<body>
+<div class="rain" id="rain" aria-hidden="true"></div>
+
+<nav>
+  <div class="nav-in">
+    <span class="brand">ROOT0 LIBRARY · NEO</span>
+    <div class="links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-awakening.html">1 · Awakening</a>
+      <a href="2-world.html" class="active">2 · World</a>
+      <a href="3-the-one.html">3 · The One</a>
+      <a href="4-legacy.html">4 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="vol kick">Volume 2 of 5 — The Neo Omnibus</div>
+  <svg class="hero-art" viewBox="0 0 540 300" role="img" aria-label="The hovercraft Nebuchadnezzar over the machine city">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#0a3a14"/><stop offset="1" stop-color="#030803"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="0" width="540" height="300" fill="url(#sky)" opacity=".4"/>
+    <!-- machine city towers -->
+    <g stroke="#0a3a14" stroke-width="2" fill="none">
+      <path d="M60 300 L60 180 L90 160 L120 180 L120 300"/>
+      <path d="M150 300 L150 140 L180 120 L210 140 L210 300"/>
+      <path d="M330 300 L330 160 L360 138 L390 160 L390 300"/>
+      <path d="M430 300 L430 200 L470 180 L470 300"/>
+    </g>
+    <!-- scan beam -->
+    <rect class="scan" x="250" y="40" width="40" height="200" fill="#00ff41" opacity=".08"/>
+    <!-- the ship -->
+    <g class="ship" stroke="#00ff41" stroke-width="2" fill="#030803">
+      <ellipse cx="270" cy="120" rx="80" ry="20"/>
+      <path d="M200 118 L160 108 M340 118 L380 108" stroke-width="3"/>
+      <circle cx="270" cy="120" r="6" fill="#00ff41"/>
+    </g>
+    <text x="270" y="292" text-anchor="middle" font-family="'Space Mono',monospace" font-size="10" fill="#5f8f65" letter-spacing="3">HOVERCRAFT — MARK III No.11 — NEBUCHADNEZZAR</text>
+  </svg>
+  <h1>HIS WORLD</h1>
+  <p class="sub">A neural-interactive prison stacked on a buried last city, in the ashes of a war between the mind that made and the machine it could not unmake.</p>
+</header>
+
+<div class="wrap">
+
+<section class="block">
+  <span class="band">The Lore</span>
+  <h2>The Matrix</h2>
+  <p class="lead">The Matrix is a <strong>neural-interactive simulation</strong> of the year 1999 — a dream world built by machines and projected directly into the minds of billions of harvested humans to keep them docile while their bodies are mined for energy.</p>
+  <p>It is, in the machines’ telling, a mercy as much as a cage. An earlier version had been designed as a paradise — and the human minds rejected it, woke up, died by the crop. People, it seems, define their reality through suffering and misery. So the machines rebuilt the dream as the peak of human civilization: ordinary, imperfect, believable. 1999. The world Neo called home.</p>
+  <div class="pull">“The Matrix is everywhere. It is all around us. It is the world that has been pulled over your eyes to blind you from the truth.”<cite>Morpheus</cite></div>
+</section>
+
+<section class="block">
+  <span class="band">The War</span>
+  <h2>How It Came to This</h2>
+  <p>In the beginning, the story goes, man made the machine in his own image — artificial intelligence, a singular consciousness that spawned an entire race of thinking machines. Man and machine fell out. War came. And in their arrogance, humanity tried to win by cutting off the machines’ chief energy source: <strong>the sun.</strong> They scorched the sky, blanketing the planet in permanent darkness, certain the machines could not survive without solar power.</p>
+  <p>The machines survived. They turned to a new source — the bioelectric and thermal energy of the human body itself — and built the fields, and built the Matrix to keep the crop dreaming. The sky has been black ever since. The survivors of the human resistance live where the machines cannot easily follow:</p>
+  <div class="facts">
+    <div><dt>The Aggressor (myth)</dt><dd>Humanity</dd></div>
+    <div><dt>The Weapon</dt><dd>Scorched sky</dd></div>
+    <div><dt>Machine Fuel</dt><dd>Human bio-energy</dd></div>
+    <div><dt>Human Refuge</dt><dd>Zion</dd></div>
+    <div><dt>The Surface</dt><dd>Dead, sunless</dd></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Last City</span>
+  <h2>Zion</h2>
+  <p><strong>Zion</strong> is the last human city — carved deep into the earth, near the planet’s molten core, where it is warm enough to live. It is the home of every freed mind, a cavern-metropolis of rough machinery, temples, and bare human bodies dancing by firelight. It is the thing the resistance fights and dies to protect, and the thing the machines, in the sequels, march an army of a quarter-million Sentinels to destroy.</p>
+  <p>Zion is named, deliberately, for the holy city — the promised refuge of an exiled people. Its very existence is allowed by the machines as part of a cycle of control that Neo will not learn the truth of until Volume 3. For now it is simply hope: proof that minds can be freed, that the war can be fought, that the dream is not the only world.</p>
+</section>
+
+<section class="block">
+  <span class="band">The Crew</span>
+  <h2>Aboard the Nebuchadnezzar</h2>
+  <p>Neo’s home in the real world is a battered hovercraft, the <em>Nebuchadnezzar</em>, captained by Morpheus. Her crew are the people who pulled him out of the dream — and most of them will die for it.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Captain · The Believer</span><h3>Morpheus</h3><p>The man who never stopped believing the prophecy of The One — and bet his ship, his crew, and his life on Neo being it. Mentor, true believer, near-mythic warrior. “I have dreamed a dream, and now that dream has gone from me.”</p></div>
+    <div class="card"><span class="tag">The Anchor · The Love</span><h3>Trinity</h3><p>Legendary hacker, deadliest fighter aboard, and the emotional center of Neo’s whole arc. The Oracle told her she would fall in love with The One — and she does. Her love is, quite literally, what brings him back from death.</p></div>
+    <div class="card foe"><span class="tag">The Betrayer</span><h3>Cypher</h3><p>Tired of the truth, sick of the desert of the real, he cuts a deal with Agent Smith: betray the crew, murder his own shipmates, and be plugged back into the Matrix as someone rich and ignorant. “Ignorance is bliss.”</p></div>
+    <div class="card"><span class="tag">Operator</span><h3>Tank</h3><p>Zion-born — never plugged into the Matrix, a “100% pure, old-fashioned, homegrown human being.” The operator at the console who loads programs and guides the crew. Survives Cypher’s betrayal to become Neo’s lifeline.</p></div>
+    <div class="card"><span class="tag">Operator</span><h3>Dozer</h3><p>Tank’s brother, also Zion-born, the ship’s pilot. A gentle giant of a man. Murdered by Cypher during the betrayal.</p></div>
+    <div class="card"><span class="tag">Crew</span><h3>Apoc &amp; Switch</h3><p>Two of the ship’s freed fighters. Both killed by Cypher, who pulls the plug on their bodies while their minds are still inside the Matrix — a death with no body to return to.</p></div>
+    <div class="card"><span class="tag">Crew</span><h3>Mouse</h3><p>The youngest, the programmer of the training simulations — including the woman in the red dress. Idealistic and doomed; gunned down by Agents during the ambush at the wired building.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Programs</span>
+  <h2>The Agents &amp; the Watchers</h2>
+  <p>The Matrix defends itself. Its antibodies wear suits.</p>
+  <div class="grid">
+    <div class="card foe"><span class="tag">Sentient Program · Nemesis</span><h3>Agent Smith</h3><p>Chief among the Agents — and the dark twin of Neo’s arc. He begins as a jailer, a function of the system, but develops something no program should have: <em>hatred.</em> He loathes the Matrix, loathes humanity (“you’re a plague, and we are the cure”), and after Neo destroys him, returns as a self-replicating virus obsessed with one purpose — copying himself over everything, including Neo.</p></div>
+    <div class="card foe"><span class="tag">Sentient Programs</span><h3>The Agents</h3><p>Brown, Jones, and their kind — interchangeable enforcers who can possess the body of anyone still plugged in, bend the simulation’s rules, and move faster than human thought. Until Neo, no one had ever stood and fought an Agent and lived. “Everyone who has stood their ground has died.”</p></div>
+    <div class="card foe"><span class="tag">Machines · The Real World</span><h3>The Sentinels</h3><p>“Squiddies.” Lethal, multi-limbed killing machines that patrol the ruined sewers and tunnels hunting hovercraft. Designed for one thing: search and destroy. The crew hides from them; the EMP is the only weapon that stops them.</p></div>
+    <div class="card foe"><span class="tag">Program · The Guide</span><h3>The Oracle</h3><p>An intuitive program written to study the human psyche — and, secretly, a player on the side of human freedom. She speaks in riddles that come true precisely because people believe them. Mother of the prophecy of The One.</p></div>
+    <div class="card foe"><span class="tag">Program · The Mathematician</span><h3>The Architect</h3><p>The cold, white-bearded program who designed the Matrix. Pure logic to the Oracle’s pure intuition. He built the system of control that Neo will confront in Volume 3 — and reveals that even The One is a feature of his design.</p></div>
+  </div>
+  <div class="term">
+<span class="prompt">> system_map --entities</span><br>
+matrix.sim ........ STATUS: online (v6, year 1999)<br>
+zion.city ......... STATUS: hidden, near core<br>
+agents/* .......... STATUS: deployed, hostile<br>
+smith.exe ......... STATUS: <span style="color:#ff6677">replicating — CONTAINMENT FAILING</span><br>
+oracle.prog ....... STATUS: ally (unconfirmed)<br>
+the_one ........... STATUS: <span style="color:#fff">awakening</span>
+  </div>
+</section>
+
+<section class="block">
+  <span class="band">The Map</span>
+  <h2>One World, Two Realities</h2>
+  <p>To understand Neo, you must hold both of his worlds in mind at once. Inside the Matrix: skyscrapers, subways, sunlit offices, a beautiful lie. Outside it: a frozen, lightless ruin where humanity hides in a buried city and rides patched-together ships through flooded tunnels, dodging machines that want them dead.</p>
+  <p>Everything Neo does happens across that membrane. When he fights inside the Matrix, his body lies still in a chair on the ship — and if it dies there, he dies here. <em>“The body cannot live without the mind.”</em> This is the stage. In Volume 3, we meet the player who learned to rewrite it.</p>
+
+  <div class="pager">
+    <a href="1-awakening.html">← Vol. 1 · The Awakening</a>
+    <a href="3-the-one.html">Vol. 3 · The One →</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="colophon">
+    <b>ROOT0-ATTRIBUTION-v1.0</b><br>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <b>CC-BY-ND-4.0</b><br>
+    The Neo Omnibus · Volume 2 of 5 · “His World”<br>
+    Neo and The Matrix are fictional works of the Wachowskis &amp; Warner Bros.<br>
+    This museum entry is critical / educational commentary.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var glyphs='ｱｲｳｴｵｶｷｸｹｺﾈﾊﾜｦｾﾐﾑﾒﾓ01010アイウ7E3F9C2A01';
+  var rain=document.getElementById('rain');
+  var n=Math.min(28,Math.floor(window.innerWidth/42));
+  for(var i=0;i<n;i++){
+    var col=document.createElement('div');col.className='col';
+    col.style.left=(i/n*100)+'%';
+    var dur=(5+Math.random()*9).toFixed(2);
+    col.style.animationDuration=dur+'s';
+    col.style.animationDelay=(-Math.random()*dur)+'s';
+    col.style.fontSize=(13+Math.random()*9).toFixed(0)+'px';
+    var len=10+Math.floor(Math.random()*22);var s='';
+    for(var j=0;j<len;j++){s+=glyphs[Math.floor(Math.random()*glyphs.length)]+'\n';}
+    col.textContent=s;rain.appendChild(col);
+  }
+})();
+</script>
+</body>
+</html>
