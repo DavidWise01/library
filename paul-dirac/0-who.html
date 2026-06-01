@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Dirac — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#04060c; --blue:#1d4ed8; --red:#dc2626; --text:#cdd8ee; --muted:#5a6a8a; --border:#0c1426; --card-bg:#070b16; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(4,6,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--blue); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--blue); border-color:var(--blue); }
+  .hero { position:relative; width:100%; min-height:460px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#070e1c 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.6; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--blue); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(29,78,216,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--blue); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--blue); color:#eaf0ff; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--blue); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--blue); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--blue); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--blue); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--blue); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--red); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--red); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--blue); text-decoration:none; }
+  .colophon a:hover { color:var(--red); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Paul Dirac</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-equation.html">Vol. 1 — The Equation</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="whoGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="460" fill="url(#whoGlow)"/>
+    <!-- The Dirac equation drawn stroke by stroke -->
+    <g transform="translate(180,250)" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round">
+      <!-- ( i -->
+      <path d="M 20 -50 Q -10 0 20 50" stroke-dasharray="160" stroke-dashoffset="160">
+        <animate attributeName="stroke-dashoffset" from="160" to="0" dur="0.8s" begin="0s" fill="freeze"/>
+      </path>
+      <line x1="55" y1="-30" x2="55" y2="30" stroke-dasharray="60" stroke-dashoffset="60">
+        <animate attributeName="stroke-dashoffset" from="60" to="0" dur="0.4s" begin="0.8s" fill="freeze"/>
+      </line>
+      <circle cx="55" cy="-48" r="3" fill="#1d4ed8" stroke="none" opacity="0">
+        <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.1s" fill="freeze"/>
+      </circle>
+      <!-- gamma -->
+      <path d="M 90 -30 L 110 30 M 130 -30 L 110 30 L 105 55" stroke-dasharray="160" stroke-dashoffset="160" stroke="#5e9bff">
+        <animate attributeName="stroke-dashoffset" from="160" to="0" dur="0.7s" begin="1.3s" fill="freeze"/>
+      </path>
+      <!-- partial -->
+      <path d="M 175 -10 Q 150 -35 165 -5 Q 200 40 175 40 Q 150 35 165 5" stroke-dasharray="200" stroke-dashoffset="200" stroke="#5e9bff">
+        <animate attributeName="stroke-dashoffset" from="200" to="0" dur="0.9s" begin="2.0s" fill="freeze"/>
+      </path>
+      <!-- minus -->
+      <line x1="225" y1="0" x2="265" y2="0" stroke-dasharray="40" stroke-dashoffset="40" stroke="#dc2626">
+        <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.3s" begin="2.9s" fill="freeze"/>
+      </line>
+      <!-- m -->
+      <path d="M 290 30 L 290 -15 Q 305 -25 315 -10 L 315 30 M 315 -10 Q 330 -25 340 -10 L 340 30" stroke-dasharray="180" stroke-dashoffset="180" stroke="#dc2626">
+        <animate attributeName="stroke-dashoffset" from="180" to="0" dur="0.8s" begin="3.2s" fill="freeze"/>
+      </path>
+      <!-- ) -->
+      <path d="M 365 -50 Q 395 0 365 50" stroke-dasharray="160" stroke-dashoffset="160">
+        <animate attributeName="stroke-dashoffset" from="160" to="0" dur="0.7s" begin="4.0s" fill="freeze"/>
+      </path>
+      <!-- psi -->
+      <path d="M 420 -30 L 420 50 M 400 -10 Q 420 25 440 -10" stroke-dasharray="200" stroke-dashoffset="200" stroke="#5e9bff">
+        <animate attributeName="stroke-dashoffset" from="200" to="0" dur="0.9s" begin="4.7s" fill="freeze"/>
+      </path>
+      <!-- = 0 -->
+      <line x1="475" y1="-8" x2="510" y2="-8" stroke-dasharray="40" stroke-dashoffset="40">
+        <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.3s" begin="5.6s" fill="freeze"/>
+      </line>
+      <line x1="475" y1="12" x2="510" y2="12" stroke-dasharray="40" stroke-dashoffset="40">
+        <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.3s" begin="5.8s" fill="freeze"/>
+      </line>
+      <circle cx="545" cy="0" r="22" stroke-dasharray="160" stroke-dashoffset="160">
+        <animate attributeName="stroke-dashoffset" from="160" to="0" dur="0.7s" begin="6.0s" fill="freeze"/>
+      </circle>
+    </g>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 0 — The Person · Bristol 1902 – Tallahassee 1984</span>
+    <h1 class="hero-title">Paul Dirac</h1>
+    <p class="hero-subtitle">The Strangest Man in Physics</p>
+    <p class="hero-lead">The most taciturn of the great physicists, who wrote down an equation of such beauty that it predicted a world no one had ever seen.</p>
+  </div>
+</div>
+
+<div class="band">Bristol Origins · Cambridge · The Lucasian Chair · Nobel 1933 · Silence · Tallahassee</div>
+
+<main>
+
+  <section id="bristol">
+    <span class="section-label">Beginnings</span>
+    <h2>Born in Bristol, 1902</h2>
+    <p>Paul Adrien Maurice Dirac was born in Bristol, England, on 8 August 1902, the son of a Swiss-French father, Charles Dirac, who taught French, and an English mother, Florence. The household was austere and unhappy. Charles Dirac was a domineering father who insisted that Paul speak to him only in French — a language the boy spoke imperfectly — with the result that, rather than make mistakes, the child often chose to say nothing at all. Dirac later attributed his lifelong reticence in part to this regime of enforced silence.</p>
+    <p>He was educated at the Merchant Venturers' Technical College in Bristol, an unusual school for a future theoretical physicist in that it emphasized practical and technical subjects over classics. Dirac first studied <strong>electrical engineering</strong> at the University of Bristol, graduating in 1921, and only afterward turned to mathematics and then to physics. The engineer's habit of approximation and the conviction that a method which works is justified by its results stayed with him; he often said that his engineering training taught him to tolerate equations that were not yet rigorously founded.</p>
+    <p>Unable to find work as an engineer in the postwar slump, he stayed on at Bristol to study applied mathematics, then won a research studentship to <strong>Cambridge</strong> in 1923. There, under the supervision of Ralph Fowler, he entered the world of theoretical physics at the precise moment that world was about to be remade.</p>
+  </section>
+
+  <section id="cambridge">
+    <span class="section-label">Cambridge</span>
+    <h2>The PhD and the Quantum Revolution</h2>
+    <p>Dirac arrived in Cambridge as quantum theory was in ferment. In 1925, Werner Heisenberg's new matrix mechanics reached Cambridge in proof, and Fowler passed a copy to Dirac. Where others struggled with the strange non-commuting quantities, Dirac recognized a deep mathematical structure: the failure of the new quantities to commute, he saw, corresponded precisely to the Poisson brackets of classical mechanics. From this insight he built, almost single-handedly, a complete and elegant formulation of quantum mechanics — work that formed the heart of his doctoral thesis.</p>
+    <p>His 1926 Cambridge PhD thesis was simply titled <em>Quantum Mechanics</em> — the first doctoral thesis ever submitted on the subject. By the time he was twenty-four, Dirac was recognized as one of the principal architects of the new physics, ranked alongside Heisenberg, Schrödinger, Born, and Pauli, despite being younger than all of them and working largely alone. His 1930 textbook, <em>The Principles of Quantum Mechanics</em>, became the canonical statement of the theory and remained in use for decades; Einstein kept it close and called it "the most logically perfect presentation of quantum mechanics in existence."</p>
+  </section>
+
+  <section id="lucasian">
+    <span class="section-label">Newton's Chair</span>
+    <h2>Lucasian Professor at Twenty-Eight</h2>
+    <p>In 1932, at the age of just twenty-eight, Dirac was appointed <strong>Lucasian Professor of Mathematics</strong> at Cambridge — the chair once held by Isaac Newton, and one of the most distinguished academic positions in the world. He held it for thirty-seven years, from 1932 to 1969. To occupy Newton's chair while still in his twenties, on the strength of an equation written four years earlier, marked Dirac as a figure of singular standing in the history of physics.</p>
+    <p>Yet he wore the distinction without ceremony. Dirac was famously indifferent to honours and reportedly considered declining a knighthood because he disliked being addressed by his first name (a knighthood would have made him "Sir Paul"). He held the Lucasian chair as a working position, lecturing from his own textbook almost verbatim year after year, on the grounds that he had already found the best way to say what needed saying and saw no reason to change it.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1902</span>
+        <h4>Born in Bristol</h4>
+        <p>Son of a strict French-teaching father whose insistence on French answers taught the boy a lifelong preference for silence.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1923</span>
+        <h4>Engineer Turned Physicist</h4>
+        <p>Trained first in electrical engineering, then mathematics, before arriving at Cambridge as quantum mechanics was being born.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1926</span>
+        <h4>First PhD on Quantum Mechanics</h4>
+        <p>His doctoral thesis was the first ever written on the new quantum theory he had helped to create.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1932</span>
+        <h4>The Lucasian Chair at 28</h4>
+        <p>Appointed to Newton's professorship at Cambridge, which he held for thirty-seven years.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="silence">
+    <span class="section-label">The Man of Few Words</span>
+    <h2>The Most Taciturn Physicist Who Ever Lived</h2>
+    <p>Dirac's silence was legendary even among colleagues accustomed to eccentric genius. He answered questions with single words, with "yes" or "no," or with nothing at all, and he saw no obligation to elaborate unless asked a further precise question. His Cambridge colleagues coined a unit of measurement in his honour, half-jokingly: a <em>dirac</em>, defined as one word per hour, the lowest rate of speech consistent with remaining a functioning member of a conversation.</p>
+    <p>The stories are numerous and, unusually, mostly true. After a lecture, a member of the audience said, "I don't understand the equation in the top right corner of the board." Dirac said nothing. After a long pause the chairman asked him to respond, and Dirac replied that the man had made a statement, not asked a question, and so there was nothing to answer. On a lecture tour with Heisenberg, who enjoyed dancing, Dirac asked why he danced; told it was pleasant when there were nice girls, Dirac reflected and then asked, "Heisenberg, how do you know beforehand that the girls are nice?"</p>
+    <p>This literal-mindedness was not coldness. It reflected a temperament that took language, like mathematics, to mean exactly what it said and no more. To Dirac, words were instruments of precision; idle speech was a kind of imprecision he preferred to avoid. The biographer Graham Farmelo, who wrote Dirac's definitive life, titled it <em>The Strangest Man</em> — a phrase borrowed from Niels Bohr, who said of his colleague that Dirac was "the strangest man" who ever visited his institute.</p>
+
+    <div class="pull-quote">
+      <blockquote>"My life is mainly concerned with mathematics, and only incidentally with words."</blockquote>
+      <cite>— Paul Dirac, on his reputation for silence</cite>
+    </div>
+  </section>
+
+  <section id="nobel">
+    <span class="section-label">The Prize</span>
+    <h2>The Nobel of 1933 — Shared with Schrödinger</h2>
+    <p>In 1933, Dirac was awarded the <strong>Nobel Prize in Physics</strong>, sharing it with Erwin Schrödinger "for the discovery of new productive forms of atomic theory." At thirty-one, he was among the youngest theoreticians ever to receive the prize. Characteristically, his first instinct was to refuse it, on the grounds that he disliked publicity and the press attention it would bring. Ernest Rutherford talked him out of it, pointing out — accurately — that refusing the Nobel Prize would generate far more publicity than accepting it.</p>
+    <p>Dirac and Schrödinger were a fitting pair: two of the founders of quantum mechanics, both temperamentally drawn to mathematical beauty, both eventually uneasy about aspects of the theory they had helped create. The 1933 prize formally certified what the physics community already knew — that the equation Dirac had written in 1928 had reshaped the foundations of the subject.</p>
+  </section>
+
+  <section id="wigner">
+    <span class="section-label">A Proposal in His Own Words</span>
+    <h2>Marriage, and the Famous Proposal</h2>
+    <p>In 1934, at Princeton, Dirac met Margit Wigner — known as Manci — the vivacious, talkative Hungarian sister of the physicist Eugene Wigner. In almost every respect she was Dirac's opposite: warm, sociable, expressive, impatient with silence. Against all expectation, they married in 1937, and the marriage was a lasting and happy one. Manci drew Dirac into a fuller social and family life than he would ever have managed alone; he, for his part, gave her a devotion expressed in his own peculiar idiom.</p>
+    <p>The story of how he proposed has become one of the best-loved anecdotes in physics. Rather than declaring his feelings, Dirac is reported to have asked Manci: <em>"Would you like to come with me to Wisconsin?"</em> — referring to a forthcoming visit to the University of Wisconsin. It was, in his characteristic way, a proposal of marriage rendered as a logistical question. Manci understood. When she later signed a letter to a colleague, she described herself, with affectionate exasperation, as "Wigner's sister" — the role by which the world tended to know her, married now to the strangest man in physics.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Would you like to come with me to Wisconsin?"</blockquote>
+      <cite>— Paul Dirac's reported marriage proposal to Margit Wigner</cite>
+    </div>
+  </section>
+
+  <section id="tallahassee">
+    <span class="section-label">The Last Years</span>
+    <h2>Florida, and a Death Far from Cambridge</h2>
+    <p>Dirac retired from the Lucasian chair in 1969. Finding Cambridge less congenial in retirement than he had hoped, and drawn by warmer weather and a welcoming physics department, he moved to the United States. In 1971 he became a professor at <strong>Florida State University</strong> in Tallahassee, where he continued to work, lecture, and think about the foundations of physics into his old age.</p>
+    <p>He died in Tallahassee on 20 October 1984, at the age of eighty-two. It was an unexpected resting place for a man who had occupied Newton's chair — an English theoretician of the first rank ending his days in the Florida panhandle. In 1995, more than a decade after his death, a memorial plaque was unveiled in Westminster Abbey near Newton's grave, bearing his name and his equation: a quiet stone honouring a quiet man, inscribed with the single line of mathematics that had made him immortal.</p>
+    <p>The chapters that follow turn from the man to the work: the equation that united relativity and the quantum, the world that shaped him, and the legacy that now reaches into every hospital and every account of the fundamental constituents of matter.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Paul Dirac Series — Vol. 0: The Person<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

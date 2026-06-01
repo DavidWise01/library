@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Babbage — Vol. 3: Legacy</title>
+<meta name="description" content="Mechanical computing is dead — but Babbage's architecture is the von Neumann architecture. The medium died; the concept survived.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#080608;--brass:#92400e;--silver:#94a3b8;--ink:#ece6dd;--ink-dim:#b9b0a4;--panel:#100c0e;--panel-2:#161012;--brass-glow:rgba(146,64,14,.45);--circuit:#3fb27f}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:"Cinzel",serif;line-height:1.15;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  .kick{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--silver)}
+  .mono{font-family:"Space Mono",monospace}
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,6,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--brass)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:1.4rem;padding:.9rem 1.4rem;flex-wrap:wrap}
+  .nav-brand{font-family:"Cinzel",serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--ink)}
+  .nav-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
+  .nav-links a{font-family:"Space Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.13em;padding:.4rem .7rem;border:1px solid transparent;border-radius:3px;color:var(--ink-dim);transition:.2s}
+  .nav-links a:hover{color:var(--ink);border-color:var(--brass)}
+  .nav-links a.active{color:#fff;background:var(--brass);border-color:var(--brass)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+  header.hero{padding:5rem 0 3rem;border-bottom:1px solid rgba(146,64,14,.4)}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800;margin:.6rem 0}
+  .hero .dates{color:var(--silver);font-style:italic;font-size:1.3rem}
+  .lede{font-size:1.32rem;max-width:52ch;color:var(--ink-dim);margin-top:1.4rem}
+  section{padding:3.4rem 0;border-bottom:1px solid rgba(146,64,14,.22)}
+  section h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700;margin-bottom:1.2rem;color:#fff}
+  section h3{font-size:1.25rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--ink)}
+  p{margin:1rem 0;max-width:68ch}
+  em{color:var(--silver)}
+  .band{background:var(--brass);color:#fdf3e7;padding:2.4rem;border-radius:6px;margin:2rem 0;box-shadow:0 0 0 1px var(--brass)}
+  .band h2,.band h3{color:#fff}.band .kick{color:#fbe3c8}.band p{color:#f4dcc4;max-width:64ch}
+  .status{border:1px solid var(--brass);border-radius:6px;padding:2rem;margin:2rem 0;background:var(--panel);position:relative;overflow:hidden}
+  .status .tag{font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--paper);background:var(--silver);padding:.25rem .7rem;border-radius:3px;display:inline-block}
+  .status .tag.dead{background:#b91c1c;color:#fff}
+  .status .tag.alive{background:var(--circuit);color:#04130c}
+  .status h2{margin:.9rem 0 .4rem}
+  .grid{display:grid;gap:1.2rem;margin:1.8rem 0}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--brass);border-radius:6px;padding:1.5rem;transition:transform .22s ease,box-shadow .22s ease}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--brass-glow)}
+  .card h3{margin-top:0;color:var(--ink)}.card .kick{display:block;margin-bottom:.5rem}
+  .card p{font-size:.98rem;color:var(--ink-dim);margin:.5rem 0 0}
+  .figure{display:flex;justify-content:center;padding:2rem 0}
+  .figure svg{max-width:100%;height:auto}
+  figcaption{text-align:center;color:var(--silver);font-style:italic;font-size:.95rem;margin-top:.6rem}
+  blockquote{border-left:3px solid var(--brass);margin:1.8rem 0;padding:.4rem 1.4rem;font-style:italic;color:var(--silver);font-size:1.18rem}
+  .chain{list-style:none;display:flex;flex-direction:column;gap:0;margin:1.6rem 0}
+  .chain li{position:relative;padding:1.1rem 1.2rem;border:1px solid var(--brass);border-radius:6px;background:var(--panel);margin-bottom:1.6rem}
+  .chain li:not(:last-child)::after{content:"↓";position:absolute;bottom:-1.35rem;left:1.4rem;color:var(--brass);font-family:"Space Mono",monospace}
+  .chain .who{font-family:"Cinzel",serif;color:#fff;font-size:1.05rem}
+  .chain .what{color:var(--ink-dim);font-size:.96rem}
+  .chain .yr{font-family:"Space Mono",monospace;color:var(--silver);font-size:.75rem;letter-spacing:.1em}
+  footer.colophon{background:var(--panel-2);border-top:1px solid var(--brass);padding:3rem 0;margin-top:1rem}
+  .colophon .wrap{font-family:"Space Mono",monospace;font-size:.78rem;color:var(--ink-dim);line-height:1.9}
+  .colophon strong{color:var(--silver)}.colophon .sig{color:var(--brass);letter-spacing:.12em}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fadeGear{0%,40%{opacity:1}70%,100%{opacity:.08}}
+  @keyframes traceOn{0%,45%{opacity:0}75%,100%{opacity:1}}
+  @keyframes dash{to{stroke-dashoffset:0}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">BABBAGE</span>
+    <div class="nav-links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-engine.html">1 · Engine</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-legacy.html" class="active">3 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kick">Volume 3 — Legacy</span>
+    <h1>Legacy</h1>
+    <div class="dates">The medium died · the concept survived</div>
+    <p class="lede">Babbage's actual field — mechanical computing — is stone dead. No one will ever again build a serious computer out of gears. And yet his idea is running, right now, on the device you are reading this on. That paradox is the whole point.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Transformation</span>
+    <h2>Gears dissolving into circuits</h2>
+    <figure class="figure">
+      <svg viewBox="0 0 540 280" width="540" role="img" aria-label="Animated brass gears dissolving into glowing circuit traces">
+        <defs>
+          <radialGradient id="brassG" cx="40%" cy="35%" r="75%">
+            <stop offset="0%" stop-color="#c8862f"/><stop offset="55%" stop-color="#92400e"/><stop offset="100%" stop-color="#4a1f06"/>
+          </radialGradient>
+        </defs>
+        <!-- fading gears (mechanical, left) -->
+        <g style="animation:fadeGear 6s ease-in-out infinite">
+          <g style="transform-origin:130px 140px;animation:spin 10s linear infinite">
+            <g transform="translate(130 140)"><circle r="50" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="14" fill="#080608"/><g id="teethL" fill="url(#brassG)" stroke="#1a0d04" stroke-width="1"></g></g>
+          </g>
+          <g style="transform-origin:222px 140px;animation:spin 7s linear infinite reverse">
+            <g transform="translate(222 140)"><circle r="30" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="9" fill="#080608"/></g>
+          </g>
+        </g>
+        <!-- emerging circuit (electronic, right) -->
+        <g fill="none" stroke="var(--circuit)" stroke-width="2" style="animation:traceOn 6s ease-in-out infinite">
+          <path d="M300 140 H360 V90 H420" stroke-dasharray="160" stroke-dashoffset="160" style="animation:dash 4s linear infinite, traceOn 6s ease-in-out infinite"/>
+          <path d="M300 160 H380 V200 H440" stroke-dasharray="180" stroke-dashoffset="180" style="animation:dash 4s linear infinite, traceOn 6s ease-in-out infinite"/>
+          <path d="M360 140 V160" />
+          <rect x="420" y="120" width="70" height="44" rx="3" fill="#04130c" stroke="var(--circuit)"/>
+          <g fill="var(--circuit)" stroke="none">
+            <circle cx="420" cy="90" r="4"/><circle cx="440" cy="200" r="4"/>
+            <circle cx="455" cy="142" r="3"/><circle cx="470" cy="142" r="3"/>
+          </g>
+          <text x="426" y="147" fill="var(--circuit)" stroke="none" font-family="Space Mono, monospace" font-size="11" letter-spacing="2">CPU</text>
+        </g>
+        <text x="60" y="250" fill="var(--brass)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">MECHANICAL (DEAD)</text>
+        <text x="360" y="250" fill="var(--circuit)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">ELECTRONIC (ALIVE)</text>
+      </svg>
+    </figure>
+    <figcaption>The brass fades; the same architecture re-emerges in silicon. Different body, identical idea.</figcaption>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Field Status</span>
+    <div class="status">
+      <span class="tag dead">Status: Dead</span>
+      <h2>Mechanical computing is obsolete — permanently</h2>
+      <p>Let us be blunt, because the rest of this volume depends on it. Babbage's specific discipline — computing by <strong>physical gears, wheels, and rods</strong> — is dead and is never coming back. It died for hard physical reasons: mechanical parts are slow, they are heavy, they wear out, they jam, and they cannot be miniaturized below the size of a machined cog. A gear can switch a "digit" perhaps a few times a second. A modern transistor switches billions of times a second, is smaller than a virus, has no moving parts to wear, and costs essentially nothing to replicate.</p>
+      <p>Electronic computing did not merely <em>beat</em> mechanical computing — it made it <strong>permanently obsolete</strong>, the way the transistor killed the vacuum tube and the jet engine killed the propeller airliner for long-haul flight. No engineer will ever again seriously propose a brass general-purpose computer. The medium Babbage worked in is a closed chapter of history.</p>
+    </div>
+    <p>This is not a sad footnote. It is the most important thing to understand about Babbage. He was right about <em>what</em> to build and wrong only about <em>what to build it from</em> — and "what to build it from" was the one thing he could not have gotten right, because the electron's secrets were a century away. His failure to deliver a working machine and the death of his entire medium are, paradoxically, the backdrop against which his real achievement shines.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Survival</span>
+    <div class="status">
+      <span class="tag alive">Status: Alive · Everywhere</span>
+      <h2>The concept is the von Neumann architecture</h2>
+      <p>Here is the survival. In 1945 John von Neumann described the structure of the modern stored-program computer: a <strong>central processing unit</strong>, a <strong>memory</strong> holding both data and instructions, <strong>input/output</strong>, and <strong>control flow with conditional branching</strong>. Every laptop, phone, server, and embedded chip on Earth is, at its core, a von Neumann machine.</p>
+      <p>Now compare it to the Analytical Engine of 1837: a <em>mill</em> (CPU), a <em>store</em> (memory), <em>punched-card input and a printer</em> (I/O), and <em>card-feed control with conditional branching and loops</em>. It is the same architecture. Babbage drew the von Neumann architecture more than a hundred years before von Neumann — in brass instead of silicon. The body died. The blueprint became the master plan of the entire digital age.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Lineage</span>
+    <h2>The conceptual chain — design to everything</h2>
+    <p>The idea did not leap from Babbage to your phone. It was carried, link by link, by people who each saw a little further than the last. The chain is unbroken:</p>
+    <ul class="chain">
+      <li><span class="yr">1837</span><br><span class="who">Charles Babbage — the design</span><br><span class="what">Specifies a general-purpose programmable machine: processor, memory, I/O, branching. The architecture itself.</span></li>
+      <li><span class="yr">1843</span><br><span class="who">Ada Lovelace — the algorithm</span><br><span class="what">Writes the first program and recognizes the machine is universal — that it manipulates symbols, not just numbers.</span></li>
+      <li><span class="yr">1936</span><br><span class="who">Alan Turing — the theory</span><br><span class="what">Defines computation itself and the universal machine, proving what such a device can and cannot do.</span></li>
+      <li><span class="yr">1945</span><br><span class="who">John von Neumann — the machine</span><br><span class="what">Specifies the stored-program electronic architecture — Babbage's layout, now in electronics.</span></li>
+      <li><span class="yr">1945–46</span><br><span class="who">ENIAC and successors — the build</span><br><span class="what">The first general-purpose electronic computers run. The design finally has a body that works at the speed of electrons.</span></li>
+      <li><span class="yr">Today</span><br><span class="who">Every computer alive — the inheritance</span><br><span class="what">Billions of devices, all von Neumann machines, all running the architecture Babbage drew in 1837.</span></li>
+    </ul>
+    <blockquote>Babbage's design → Lovelace's algorithm → Turing's theory → von Neumann's machine → every computer alive today.</blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Why The Medium Died</span>
+    <h2>Brass versus the electron</h2>
+    <p>It is worth being precise about <em>why</em> mechanical computing lost, because the reasons are not accidents of history — they are physics. Any of them alone would have doomed the gear; together they are an extinction event.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">Speed</span>
+        <h3>Mass has inertia</h3>
+        <p>A gear is a physical object with mass. To switch state it must physically move, decelerate, and stop — a process limited to a few cycles per second. An electron has almost no mass and a transistor switches billions of times a second. The gap is not a factor of ten; it is a factor of a billion.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Wear</span>
+        <h3>Metal fatigues</h3>
+        <p>Moving parts grind, heat, deform, and eventually fail. A mechanical computer is always wearing itself out. A transistor has no moving parts and can switch for years without physical degradation.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Size</span>
+        <h3>You cannot shrink a cog forever</h3>
+        <p>A gear has a minimum practical size set by machining and material strength. Transistors shrank to a few atoms across, letting billions fit on a fingernail. Miniaturization, the engine of all modern computing, is simply impossible with gears.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Cost</span>
+        <h3>Replication is nearly free</h3>
+        <p>Every brass part must be individually machined to tolerance — slow and expensive. Chips are printed by the millions in a single photolithographic process, driving the cost per logic element toward zero.</p>
+      </div>
+    </div>
+    <p>This is why we say the field is not merely declining but <strong>dead</strong>. There is no plausible future in which someone improves the gear enough to compete. The electron won every category, decisively and permanently. Mechanical computing is as finished as the clipper ship or the telegraph key.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Crucial Distinction</span>
+    <h2>A medium is not an idea</h2>
+    <p>And yet — and this is the entire argument of the series — none of that touched the <em>idea</em>. The death of the medium and the survival of the concept are two completely separate facts, and confusing them is the most common mistake people make about Babbage.</p>
+    <p>The <strong>medium</strong> is the physical stuff that does the work: brass gears, or vacuum tubes, or transistors, or — someday — something we have not invented yet. Media come and go. Each is eventually superseded.</p>
+    <p>The <strong>concept</strong> is the abstract architecture: a processor that performs operations, a memory that holds data and instructions, input and output channels, and control flow that can test conditions and repeat steps. This is not made of anything. It is a <em>pattern</em>, and patterns do not wear out, slow down, or become obsolete in the way materials do.</p>
+    <blockquote>Babbage chose a medium that was doomed and an idea that was immortal — and he could not have known which was which.</blockquote>
+    <p>When we run Babbage's idea today, we run it on a medium he never dreamed of. The vacuum tube replaced the gear; the transistor replaced the tube; the integrated circuit replaced the discrete transistor. Through every one of those revolutions, the underlying architecture — his architecture — stayed the same. The body has been reincarnated four times. The soul has never changed.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Monuments</span>
+    <h2>Where the legacy is visible</h2>
+    <div class="grid g3">
+      <div class="card">
+        <span class="kick">London · 1991</span>
+        <h3>Difference Engine No. 2</h3>
+        <p>Built by the Science Museum from his original drawings, to Victorian tolerances. Five tonnes, ~8,000 parts, 31-digit precision — and it computed flawlessly. Living proof that the design, not the dream, was always sound. A second copy stood for years in the Computer History Museum in California.</p>
+      </div>
+      <div class="card">
+        <span class="kick">The Moon</span>
+        <h3>The Babbage crater</h3>
+        <p>A lunar impact crater near the Moon's northwestern limb is named <strong>Babbage</strong> in his honour — his name written on the face of the Moon, alongside the great astronomers whose tables his engine was meant to perfect.</p>
+      </div>
+      <div class="card">
+        <span class="kick">In Every Pocket</span>
+        <h3>The real monument</h3>
+        <p>Not a statue or a museum piece, but the architecture itself — silently executing, billions of times a second, in every device on Earth. The most pervasive monument any inventor has ever had.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Lesson</span>
+    <div class="band">
+      <span class="kick">Medium vs. concept</span>
+      <h2>What Babbage teaches</h2>
+      <p>Babbage is the clearest case in the history of technology of a single truth: <strong>a medium can die while the concept it carried lives forever.</strong> The gears rusted into obsolescence; the architecture became immortal. He proves that being "ahead of your time" can mean your machine never runs and your field goes extinct — and that you can <em>still</em> be the founder of the most important technology of the next two centuries.</p>
+      <p>He never saw his engine compute. He never knew the word "computer" would come to mean a machine rather than a person. But every time a processor fetches an instruction from memory, tests a condition, and branches, it is executing Charles Babbage's idea — in a body he could never have imagined, doing exactly what he said it would do.</p>
+    </div>
+    <p>The mechanical computer is dead. Long live the computer.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Pattern Repeats</span>
+    <h2>Babbage is not unique — but he is the clearest</h2>
+    <p>The history of technology is full of dead media carrying living ideas, and seeing the pattern elsewhere sharpens what makes Babbage matter.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Telegraph → Internet</span><h3>The packet survived</h3><p>The clattering electromechanical telegraph is gone, but its core idea — encoding messages as discrete symbols sent over a network — runs the internet.</p></div>
+      <div class="card"><span class="kick">Vacuum tube → Transistor</span><h3>The switch survived</h3><p>The glowing tube that powered ENIAC is obsolete, but the logical role it played — a controllable switch — lives on in the transistor.</p></div>
+      <div class="card"><span class="kick">Gears → Silicon</span><h3>The architecture survived</h3><p>Babbage's case: the brass machine is extinct, but the processor-memory-I/O-branching architecture is universal.</p></div>
+    </div>
+    <p>What sets Babbage apart is the sheer <em>scale</em> of the gap between the death of his medium and the life of his concept. The telegraph died after a century of service; the gear-based computer died having barely worked at all, in Babbage's hands. And yet the concept it carried did not merely survive — it became the single most widely deployed idea in human history. No one has ever been more completely wrong about the material and more completely right about the design.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">What Endures</span>
+    <h2>The closing ledger</h2>
+    <p>So we can close the accounts on Charles Babbage with unusual clarity. On one side of the ledger, everything physical that he worked toward is gone or was never finished:</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">Written off</span>
+        <h3>What died</h3>
+        <p>The Difference Engine, unfinished in his lifetime. The Analytical Engine, never built at all. The entire discipline of mechanical computing, made permanently obsolete by electronics. The £17,000, spent. The reputation, bruised for a century.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Carried forward</span>
+        <h3>What lived</h3>
+        <p>The architecture of the general-purpose computer. The idea of a stored, modifiable program. Conditional branching and iteration. The first algorithm, written by Lovelace for his machine. And the realization, finally vindicated in 1991, that the design was right all along.</p>
+      </div>
+    </div>
+    <p>The medium died; the concept survived. That single sentence is Babbage's epitaph and his triumph. He worked in brass because brass was all he had, and brass was the one part of his vision that could not last. Everything else — the shape of the idea — outlived him, outlived his century, and now outlives, in some sense, every individual machine that has ever embodied it. It simply moves to the next medium and keeps running.</p>
+    <p>Every processor on Earth, at this moment, is executing the idea Charles Babbage drew in 1837. He never saw it work. It has not stopped since.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Legacy At A Glance</span>
+    <h2>The status board</h2>
+    <p>The final summary of where everything Babbage touched stands today:</p>
+    <table class="map">
+      <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Mechanical computing</td><td>Dead</td><td>Permanently obsolete; beaten on speed, wear, size, and cost by electronics.</td></tr>
+        <tr><td class="b">Difference Engine</td><td>Vindicated</td><td>Built 1991 from his drawings; it worked perfectly.</td></tr>
+        <tr><td class="b">Analytical Engine architecture</td><td>Alive · universal</td><td>It is the von Neumann architecture — in every computer on Earth.</td></tr>
+        <tr><td class="b">Stored program</td><td>Alive</td><td>The defining feature of all modern computing.</td></tr>
+        <tr><td class="b">Conditional branching &amp; loops</td><td>Alive</td><td>Foundational to every program ever written.</td></tr>
+        <tr><td class="b">Lovelace's algorithm</td><td>Honoured</td><td>Recognized as the first computer program.</td></tr>
+        <tr><td class="b">Babbage's name</td><td>On the Moon</td><td>A lunar crater bears his name.</td></tr>
+      </tbody>
+    </table>
+    <p>One column dead, the rest emphatically alive. That asymmetry is the whole story.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">End Of Series</span>
+    <div class="band">
+      <span class="kick">Four volumes, one man</span>
+      <h2>The shape that outlived the metal</h2>
+      <p>We began (Vol. 0) with a difficult, brilliant polymath who designed the computer and finished almost nothing. We saw (Vol. 1) how his two engines worked, and how the Analytical Engine's parts map one-to-one onto a modern CPU, RAM, and I/O. We placed him (Vol. 2) in a Victorian world that gave him every ingredient except the patience to finish. And we close (Vol. 3) on the paradox that defines him: his medium is dead, and his idea is everywhere.</p>
+      <p>Charles Babbage built the wrong machine in the right shape. The metal rusted into obsolescence. The shape became immortal. That is the rarest kind of legacy — not a thing that survives, but an idea that keeps finding new bodies to live in. The mechanical computer is dead. The computer is alive, and it is his.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">A Note On Recognition</span>
+    <h2>The slow vindication</h2>
+    <p>For most of the century after his death, Babbage was a footnote — remembered, if at all, as an eccentric who wasted public money. The pioneers of electronic computing in the 1930s and 1940s often worked without knowing the full extent of his designs; the link from his Analytical Engine to the modern computer was reconstructed largely in hindsight.</p>
+    <p>His rehabilitation came in stages. Historians rediscovered the depth of his designs. Lovelace's notes were re-read and recognized for their startling foresight. And then, most dramatically, the Science Museum's 1991 construction of Difference Engine No. 2 turned an abstract claim — "his plans were sound" — into a five-tonne working machine anyone could watch compute. That single demonstration did more for his reputation than a century of scholarship.</p>
+    <p>Today Babbage is firmly established in the canon as a founder of computing, his name attached to lecture halls, institutes, and a crater on the Moon. The man who died feeling he had failed is now understood to have been simply, and dramatically, early.</p>
+    <blockquote>"He was a hundred years before his time — which is another way of saying the world took a hundred years to catch up to him."</blockquote>
+    <p>And that is where we leave him: not the man who failed to build a machine, but the man who designed the one that would, eventually, build everything else.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Living Architecture</span>
+    <h2>What runs in your pocket right now</h2>
+    <p>To feel the legacy rather than merely read about it, consider the device in your hand. Every action it takes traces directly back to the structure Babbage drew.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">Fetch &amp; execute</span>
+        <h3>The mill, reborn</h3>
+        <p>Your processor pulls an instruction from memory, performs it on its arithmetic-logic unit, and stores the result — the exact cycle Babbage built from steam, gears, and punched cards, now running billions of times a second in silicon.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Load &amp; store</span>
+        <h3>The store, reborn</h3>
+        <p>Data moves constantly between memory and the processor, read without being destroyed, written when changed — the very transfers Babbage engineered in racks and levers, now invisible currents in a chip.</p>
+      </div>
+      <div class="card">
+        <span class="kick">If / then</span>
+        <h3>Branching, reborn</h3>
+        <p>Every decision your software makes — every "if," every menu, every game choice — is a conditional branch, the feature that lifts the Analytical Engine from calculator to computer.</p>
+      </div>
+      <div class="card">
+        <span class="kick">For / while</span>
+        <h3>Looping, reborn</h3>
+        <p>Every repetition, every animation frame, every scroll — iteration, which Babbage achieved by feeding his cards backward, and which structures all software written since.</p>
+      </div>
+    </div>
+    <p>You are, at this moment, operating a Babbage engine. It is not made of brass; it does not run on steam; it would be unrecognizable to him as an object. But as a <em>design</em> — as a pattern of processor, memory, input, output, and control — it is his, exactly and completely. The medium is unrecognizable. The architecture is identical.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Closing The Series</span>
+    <h2>The one sentence</h2>
+    <p>If this four-volume study reduces to a single sentence, let it be this: <strong>the medium died; the concept survived.</strong></p>
+    <p>Charles Babbage worked in mechanical computing, and mechanical computing is dead — beaten beyond resurrection by the electron, on every axis that matters. Had he been merely the inventor of a clever calculating machine, he would deserve a paragraph in a history of obsolete technology, beside the orrery and the slide rule.</p>
+    <p>But he was not merely that. He was the man who first drew the architecture of the general-purpose computer — processor, memory, input, output, and conditional control — and that architecture did not die with its first medium. It moved into vacuum tubes, then transistors, then integrated circuits, and it is moving still. It is the most successful idea in the history of engineering, and it has now outlived its inventor by over a century and a half with no sign of slowing.</p>
+    <p>Babbage chose brass because brass was all 1837 offered. Brass was the part of his vision that was destined to die. Everything else — the shape of the thing — was destined to live forever, in bodies he could never have imagined. He never saw it run. It has not stopped since. That is the legacy of Charles Babbage, and it is running, right now, in your hands.</p>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span class="kick">Colophon</span><br>
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Charles Babbage — A Four-Volume Study · Volume 3 of 4<br>
+    Author / Steward: David Lee Wise<br>
+    Lineage: <span class="sig">David Lee Wise / ROOT0 / TriPod LLC</span><br>
+    License: CC-BY-ND-4.0 (Attribution — NoDerivatives)<br>
+    Typeset in Cinzel, Newsreader &amp; Space Mono.<br>
+    &copy; 2026 — Distribute freely, unmodified, with attribution intact.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var g=document.getElementById('teethL'); if(!g)return;
+  var teeth=14,R=50;
+  for(var i=0;i<teeth;i++){
+    var a=(i/teeth)*Math.PI*2, x=Math.cos(a)*R, y=Math.sin(a)*R;
+    var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',x-5);r.setAttribute('y',y-5);r.setAttribute('width',10);r.setAttribute('height',10);
+    r.setAttribute('transform','rotate('+(a*180/Math.PI)+' '+x+' '+y+')');
+    g.appendChild(r);
+  }
+})();
+</script>
+</body>
+</html>

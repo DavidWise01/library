@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Dirac — Vol. 1: The Equation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#04060c; --blue:#1d4ed8; --red:#dc2626; --text:#cdd8ee; --muted:#5a6a8a; --border:#0c1426; --card-bg:#070b16; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(4,6,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--blue); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--blue); border-color:var(--blue); }
+  .hero { position:relative; width:100%; min-height:460px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#070e1c 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.6; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--blue); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(29,78,216,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--blue); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--blue); color:#eaf0ff; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--blue); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--blue); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--blue); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--blue); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--blue); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--red); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .equation-box { background:var(--card-bg); border:1px solid var(--blue); padding:2.5rem 2rem; margin:2.5rem 0; text-align:center; }
+  .equation-box .eq { font-family:'Space Mono',monospace; font-size:clamp(1.4rem,5vw,2.4rem); color:#fff; letter-spacing:0.04em; }
+  .equation-box .eq-caption { font-family:'Space Mono',monospace; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--blue); margin-top:1.2rem; }
+  .pull-quote { border-left:4px solid var(--red); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--blue); text-decoration:none; }
+  .colophon a:hover { color:var(--red); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Paul Dirac</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-equation.html" class="active">Vol. 1 — The Equation</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="eqGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="460" fill="url(#eqGlow)"/>
+    <!-- Electron-positron pair production: a photon (wavy) strikes and splits into two spiraling tracks -->
+    <!-- incoming photon -->
+    <path d="M 60 230 q 20 -18 40 0 q 20 18 40 0 q 20 -18 40 0 q 20 18 40 0 q 20 -18 40 0 q 20 18 40 0" fill="none" stroke="#dc2626" stroke-width="2.5" opacity="0.85">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <text x="120" y="210" font-family="monospace" font-size="12" fill="#dc2626">γ</text>
+    <!-- vertex -->
+    <circle cx="450" cy="230" r="5" fill="#fff">
+      <animate attributeName="r" values="3;7;3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- electron spiral (curves up) in magnetic field -->
+    <path d="M 450 230 C 520 200 580 150 600 100 S 560 40 500 60" fill="none" stroke="#1d4ed8" stroke-width="2.5">
+      <animate attributeName="stroke-dasharray" values="0,600;600,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <text x="610" y="100" font-family="monospace" font-size="13" fill="#1d4ed8">e⁻</text>
+    <!-- positron spiral (curves down, opposite) -->
+    <path d="M 450 230 C 520 260 580 310 600 360 S 560 420 500 400" fill="none" stroke="#5e9bff" stroke-width="2.5">
+      <animate attributeName="stroke-dasharray" values="0,600;600,0" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <text x="610" y="365" font-family="monospace" font-size="13" fill="#5e9bff">e⁺</text>
+    <!-- energy level diagram: sea + gap -->
+    <g transform="translate(720,140)" opacity="0.6">
+      <line x1="0" y1="0" x2="120" y2="0" stroke="#1d4ed8" stroke-width="2"/>
+      <text x="0" y="-8" font-family="monospace" font-size="9" fill="#1d4ed8">+mc²</text>
+      <line x1="0" y1="80" x2="120" y2="80" stroke="#dc2626" stroke-width="2"/>
+      <text x="0" y="98" font-family="monospace" font-size="9" fill="#dc2626">−mc²</text>
+      <line x1="55" y1="0" x2="55" y2="80" stroke="#5a6a8a" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="62" y="44" font-family="monospace" font-size="8" fill="#5a6a8a">gap 2mc²</text>
+    </g>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 1 — The Equation · Relativity Meets the Quantum</span>
+    <h1 class="hero-title">The Equation</h1>
+    <p class="hero-subtitle">One Line That Predicted Antimatter</p>
+    <p class="hero-lead">In 1928 Dirac sought an equation consistent with both relativity and the quantum. What he found contained spin, demanded antimatter, and reshaped physics.</p>
+  </div>
+</div>
+
+<div class="band">The Dirac Equation · Spin · Antimatter · Bra-Ket · The Delta Function · Monopoles · The Beauty Criterion</div>
+
+<main>
+
+  <section id="the-equation">
+    <span class="section-label">The Synthesis of 1928</span>
+    <h2>The Dirac Equation: Relativity and the Quantum United</h2>
+    <p>By 1928, quantum mechanics described the electron well, and special relativity described fast-moving particles well, but no equation did both at once. Schrödinger's equation was non-relativistic; the relativistic attempt then in circulation, the Klein-Gordon equation, gave nonsensical negative probabilities and could not describe the electron's known magnetic behaviour. Dirac set himself the problem of finding an equation for the electron that was <strong>first-order in time</strong> (as quantum mechanics required for a sensible probability interpretation) yet fully consistent with special relativity, which treats time and space on equal footing.</p>
+    <p>The obstacle was that relativity's energy-momentum relation, <em>E² = p²c² + m²c⁴</em>, is quadratic — it involves a square root that resists a clean first-order equation. Dirac's stroke of genius was to ask what kind of mathematical objects could let him take that square root cleanly. The answer was that the coefficients could not be ordinary numbers; they had to be <strong>matrices</strong> that anticommute. Forcing the algebra to close, he was led to four-component objects and a set of gamma matrices. The result, written in the compact modern notation, is one of the most celebrated lines in physics:</p>
+
+    <div class="equation-box">
+      <div class="eq">(iγᵘ∂ᵤ − m)ψ = 0</div>
+      <div class="eq-caption">The Dirac equation (1928) — special relativity and quantum mechanics in a single line</div>
+    </div>
+
+    <p>Here <em>γᵘ</em> are the four gamma matrices, <em>∂ᵤ</em> is the spacetime derivative, <em>m</em> the electron mass, and <em>ψ</em> a four-component object called a spinor (natural units, ℏ = c = 1). The equation is Lorentz-invariant by construction — it looks the same to every observer in uniform motion — and first-order in both space and time. For the first time, the electron had an equation worthy of it: one that honoured Einstein's relativity and the quantum at once. It instantly predicted the electron's magnetic moment to remarkable accuracy, a result that earlier theories had to insert by hand.</p>
+  </section>
+
+  <section id="spin">
+    <span class="section-label">An Unbidden Gift</span>
+    <h2>Spin Emerges Automatically</h2>
+    <p>The most startling feature of the Dirac equation was something Dirac had not been looking for. The electron was known, from experiment, to possess an intrinsic angular momentum — <strong>spin</strong> — of one-half, and an associated magnetic moment. In earlier quantum mechanics, spin had to be added to the theory by hand, as an extra postulate grafted on to explain the splitting of spectral lines and the Stern-Gerlach experiment. It worked, but it was inelegant: a property with no explanation, merely a fact to be accommodated.</p>
+    <p>In Dirac's equation, spin was not added. It <em>fell out</em>. The four-component structure that the relativistic algebra had forced upon him automatically described a particle with spin one-half and exactly the right magnetic moment. The very requirement of consistency between relativity and quantum mechanics implied, with no further assumption, that the electron must spin. Spin, it turned out, was not a quirk to be patched in but a necessary consequence of marrying the two great theories. This was the first sign that the equation was telling Dirac something deeper than he had asked.</p>
+
+    <div class="pull-quote">
+      <blockquote>"The electron's spin was not put in by hand. It came out of the equation, as if the mathematics knew something the physicist did not."</blockquote>
+      <cite>— on the emergence of spin from the Dirac equation</cite>
+    </div>
+  </section>
+
+  <section id="antimatter">
+    <span class="section-label">The Boldest Prediction in Physics</span>
+    <h2>Antimatter: The Prediction of the Positron</h2>
+    <p>The equation harboured a second, even stranger surprise — and at first it looked like a fatal flaw. Because it descended from the quadratic energy-momentum relation, the Dirac equation admitted solutions of <strong>negative energy</strong> as well as positive. Taken literally, an ordinary electron could cascade downward forever, radiating endless energy as it fell into ever-more-negative states. Nature plainly does not behave this way, and many physicists regarded the negative-energy solutions as a sign the theory was broken.</p>
+    <p>Dirac refused to discard them. In 1930–1931 he proposed that what we call empty space is in fact a <em>sea</em> of negative-energy electrons, completely filled, so that the Pauli exclusion principle forbids ordinary electrons from falling into it. A <em>hole</em> in this sea — a missing negative-energy electron — would behave, he reasoned, like a particle with positive energy and <strong>positive charge</strong>. After briefly and wrongly guessing the proton, Dirac concluded the hole must be a new particle: an "anti-electron," identical to the electron in mass but opposite in charge.</p>
+    <p>In 1932, Carl Anderson, studying cosmic-ray tracks in a cloud chamber, found exactly this: a particle with the mass of an electron but curving the opposite way in a magnetic field — a positively charged electron. He called it the <strong>positron</strong>. It was Dirac's anti-electron, found in nature, and it confirmed one of the most audacious theoretical predictions ever made: a new form of matter deduced from the internal logic of an equation, before any experiment had seen it. The principle generalized: <strong>every particle has an antiparticle</strong>, a mirror-image partner of equal mass and opposite charge. Matter and antimatter annihilate on contact, converting their entire mass into energy. The animation above depicts the reverse process — pair production, in which a photon's energy materializes as an electron and its antiparticle.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">The Problem</span>
+        <h4>Negative-Energy Solutions</h4>
+        <p>The equation allowed states of negative energy that seemed to make ordinary matter unstable — a flaw, or a clue.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Idea</span>
+        <h4>The Dirac Sea and Holes</h4>
+        <p>A filled sea of negative-energy states, with a hole behaving as a positive-charge antiparticle.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1932</span>
+        <h4>Anderson Finds the Positron</h4>
+        <p>Cosmic-ray tracks revealed an electron-mass particle of opposite charge — Dirac's prediction confirmed.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Rule</span>
+        <h4>Every Particle Has a Partner</h4>
+        <p>Antimatter is universal: each particle has an antiparticle of equal mass and opposite charge.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="bra-ket">
+    <span class="section-label">The Grammar of the Quantum</span>
+    <h2>Bra-Ket Notation</h2>
+    <p>Dirac's contributions were not only physical but notational, and one of his inventions is now so universal that students rarely realize it had an author. In formulating quantum mechanics, Dirac introduced the <strong>bra-ket notation</strong>: a state is written as a "ket" <em>|ψ⟩</em>, its dual as a "bra" <em>⟨φ|</em>, and their pairing — the inner product, an amplitude — as a "bracket" <em>⟨φ|ψ⟩</em>. The pun (bra + ket = bracket) is entirely deliberate; Dirac, for all his economy of words, enjoyed it.</p>
+    <p>The notation is more than cute. It cleanly separates the abstract quantum state from any particular representation (position, momentum, energy), making the deep structure of the theory visible and the calculations compact. An operator acts on a ket to give another ket; an expectation value is <em>⟨ψ|Â|ψ⟩</em>; a probability amplitude is just a bracket. Today the bra-ket notation appears in <strong>every quantum mechanics textbook</strong> and in essentially every research paper in quantum theory and quantum information. It is the lingua franca of the quantum world, and it is Dirac's.</p>
+  </section>
+
+  <section id="delta">
+    <span class="section-label">A Tool Mathematicians Had to Catch Up To</span>
+    <h2>The Dirac Delta Function</h2>
+    <p>Among Dirac's working tools was an object that, when he introduced it, no rigorous mathematics existed to justify: the <strong>Dirac delta function</strong>, <em>δ(x)</em>. It is defined to be zero everywhere except at a single point, where it is infinitely tall, in such a way that its total integral is exactly one. As an ordinary function this is nonsense — and mathematicians said so. But as a tool for physics it was indispensable, representing an idealized point mass, a point charge, or an instantaneous impulse, and picking out the value of a function at a point through integration.</p>
+    <p>Dirac, with his engineer's pragmatism, used it because it worked. It took the mathematicians two decades to catch up: in the 1940s and 1950s, Laurent Schwartz developed the rigorous <em>theory of distributions</em>, which gave the delta function a sound foundation as a generalized function. Dirac's intuition had been correct all along. The delta function is now standard equipment across physics, engineering, and signal processing — another case of Dirac trusting a beautiful and useful idea before the formal scaffolding existed to support it.</p>
+  </section>
+
+  <section id="monopole">
+    <span class="section-label">A Prediction Still Unconfirmed</span>
+    <h2>Magnetic Monopoles</h2>
+    <p>Not every Dirac prediction has been vindicated — at least not yet. In 1931, in the same period he was wrestling with antimatter, Dirac considered whether an isolated <strong>magnetic monopole</strong> — a single north or south magnetic pole, with no opposite partner — could exist. In ordinary experience magnetism always comes in dipoles: cut a bar magnet and you get two smaller magnets, never an isolated pole. But Dirac showed something remarkable: <em>if</em> even a single magnetic monopole exists anywhere in the universe, then the quantization of electric charge — the otherwise mysterious fact that all charges come in multiples of a fundamental unit — would follow automatically.</p>
+    <p>This is the celebrated <em>Dirac quantization condition</em>, and it is one of the most tantalizing results in theoretical physics: a deep and elegant connection between two seemingly unrelated facts. It gives a powerful theoretical reason to expect monopoles to exist. Yet despite decades of searching — in cosmic rays, in particle accelerators, in ancient rock — no magnetic monopole has ever been found. It remains a beautiful prediction awaiting either confirmation or a deeper understanding of why nature declined the invitation.</p>
+  </section>
+
+  <section id="beauty">
+    <span class="section-label">Dirac's Deepest Conviction</span>
+    <h2>The Beauty Criterion</h2>
+    <p>Underlying all of Dirac's work was a conviction that grew stronger throughout his life into something close to a methodological creed: that mathematical beauty is a guide to physical truth. He came to believe that <strong>a theory possessing genuine mathematical beauty is more likely to be correct</strong> than an ugly one that happens to fit the data slightly better — and that if a beautiful theory disagreed with experiment, one should suspect the experiment, or an as-yet-missing piece, before abandoning the theory's beauty.</p>
+    <p>This was not mysticism but a hard-won empirical observation about how physics had actually progressed. The Dirac equation itself was the supreme example: pursued for its mathematical elegance and consistency, it had repaid him with spin and antimatter — features of the world that no one had asked it to provide. Dirac took this as evidence that the deep laws of nature are written in beautiful mathematics, and that a physicist's aesthetic sense, properly trained, is a genuine instrument of discovery.</p>
+
+    <div class="pull-quote">
+      <blockquote>"It is more important to have beauty in one's equations than to have them fit experiment."</blockquote>
+      <cite>— Paul Dirac, Scientific American, 1963</cite>
+    </div>
+
+    <p>The principle is double-edged, and Dirac knew it; pursued recklessly it can lead a physicist astray, in love with an elegant theory the world does not share. But as a heuristic in the hands of a master, it had proven extraordinarily fertile. It is perhaps Dirac's most personal legacy — not an equation or a particle, but a way of seeing the relationship between mathematics and the physical world, one that continues to inspire and to provoke working physicists today.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Paul Dirac Series — Vol. 1: The Equation<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

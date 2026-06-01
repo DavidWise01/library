@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Babbage — Vol. 1: The Engines</title>
+<meta name="description" content="The Difference Engine and the Analytical Engine: how Babbage's gears mapped onto the modern CPU, RAM, and I/O.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;--brass:#92400e;--silver:#94a3b8;
+    --ink:#ece6dd;--ink-dim:#b9b0a4;--panel:#100c0e;--panel-2:#161012;
+    --brass-glow:rgba(146,64,14,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:"Cinzel",serif;line-height:1.15;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  .kick{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--silver)}
+  .mono{font-family:"Space Mono",monospace}
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,6,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--brass)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:1.4rem;padding:.9rem 1.4rem;flex-wrap:wrap}
+  .nav-brand{font-family:"Cinzel",serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--ink)}
+  .nav-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
+  .nav-links a{font-family:"Space Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.13em;padding:.4rem .7rem;border:1px solid transparent;border-radius:3px;color:var(--ink-dim);transition:.2s}
+  .nav-links a:hover{color:var(--ink);border-color:var(--brass)}
+  .nav-links a.active{color:#fff;background:var(--brass);border-color:var(--brass)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+  header.hero{padding:5rem 0 3rem;border-bottom:1px solid rgba(146,64,14,.4)}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800;margin:.6rem 0}
+  .hero .dates{color:var(--silver);font-style:italic;font-size:1.3rem}
+  .lede{font-size:1.32rem;max-width:50ch;color:var(--ink-dim);margin-top:1.4rem}
+  section{padding:3.4rem 0;border-bottom:1px solid rgba(146,64,14,.22)}
+  section h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700;margin-bottom:1.2rem;color:#fff}
+  section h3{font-size:1.25rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--ink)}
+  p{margin:1rem 0;max-width:68ch}
+  em{color:var(--silver)}
+  .band{background:var(--brass);color:#fdf3e7;padding:2.4rem;border-radius:6px;margin:2rem 0;box-shadow:0 0 0 1px var(--brass)}
+  .band h2,.band h3{color:#fff}.band .kick{color:#fbe3c8}.band p{color:#f4dcc4;max-width:64ch}
+  .grid{display:grid;gap:1.2rem;margin:1.8rem 0}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--brass);border-radius:6px;padding:1.5rem;transition:transform .22s ease,box-shadow .22s ease}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--brass-glow)}
+  .card h3{margin-top:0;color:var(--ink)}.card .kick{display:block;margin-bottom:.5rem}
+  .card p{font-size:.98rem;color:var(--ink-dim);margin:.5rem 0 0}
+  .figure{display:flex;justify-content:center;padding:2rem 0}
+  .figure svg{max-width:100%;height:auto}
+  figcaption{text-align:center;color:var(--silver);font-style:italic;font-size:.95rem;margin-top:.6rem}
+  blockquote{border-left:3px solid var(--brass);margin:1.8rem 0;padding:.4rem 1.4rem;font-style:italic;color:var(--silver);font-size:1.18rem}
+  table.map{width:100%;border-collapse:collapse;margin:1.8rem 0;font-size:.98rem}
+  table.map th,table.map td{border:1px solid rgba(146,64,14,.5);padding:.8rem 1rem;text-align:left;vertical-align:top}
+  table.map th{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.1em;font-size:.7rem;color:var(--silver);background:var(--panel-2)}
+  table.map td.b{font-family:"Cinzel",serif;color:var(--ink);white-space:nowrap}
+  table.map td .arrow{color:var(--brass);font-family:"Space Mono",monospace}
+  .diff-row{display:flex;gap:6px;margin:.4rem 0;flex-wrap:wrap;font-family:"Space Mono",monospace;font-size:.85rem}
+  .cell{border:1px solid var(--brass);background:var(--panel);padding:.4rem .6rem;border-radius:3px;min-width:48px;text-align:center;color:var(--ink)}
+  .cell.lbl{background:var(--panel-2);color:var(--silver);min-width:120px;text-align:left}
+  footer.colophon{background:var(--panel-2);border-top:1px solid var(--brass);padding:3rem 0;margin-top:1rem}
+  .colophon .wrap{font-family:"Space Mono",monospace;font-size:.78rem;color:var(--ink-dim);line-height:1.9}
+  .colophon strong{color:var(--silver)}.colophon .sig{color:var(--brass);letter-spacing:.12em}
+  .gearspin{transform-origin:center}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes feed{0%{transform:translateX(0)}100%{transform:translateX(-40px)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">BABBAGE</span>
+    <div class="nav-links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-engine.html" class="active">1 · Engine</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-legacy.html">3 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kick">Volume 1 — The Machines</span>
+    <h1>The Engines</h1>
+    <div class="dates">Brass, steam, and the architecture of thought</div>
+    <p class="lede">Two machines, a century apart from the world that could build them. One mechanized arithmetic. The other mechanized <em>computation itself</em> — and its blueprint is, line for line, the computer on your desk.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Mechanism</span>
+    <h2>Gears that compute, cards that command</h2>
+    <figure class="figure">
+      <svg viewBox="0 0 520 280" width="520" role="img" aria-label="Animated gear train with a punched-card feed">
+        <defs>
+          <radialGradient id="brassG" cx="40%" cy="35%" r="75%">
+            <stop offset="0%" stop-color="#c8862f"/><stop offset="55%" stop-color="#92400e"/><stop offset="100%" stop-color="#4a1f06"/>
+          </radialGradient>
+        </defs>
+        <!-- gear train -->
+        <g class="gearspin" style="transform-origin:110px 150px;animation:spin 12s linear infinite">
+          <g transform="translate(110 150)"><circle r="58" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="16" fill="#080608" stroke="#1a0d04" stroke-width="2"/><g id="teethA" fill="url(#brassG)" stroke="#1a0d04" stroke-width="1.5"></g></g>
+        </g>
+        <g class="gearspin" style="transform-origin:225px 150px;animation:spin 9s linear infinite reverse">
+          <g transform="translate(225 150)"><circle r="42" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="12" fill="#080608" stroke="#1a0d04" stroke-width="2"/></g>
+        </g>
+        <!-- punched cards feeding in -->
+        <g style="animation:feed 2.2s steps(1,end) infinite">
+          <g fill="#161012" stroke="var(--brass)" stroke-width="1.5">
+            <rect x="320" y="60" width="44" height="64" rx="3"/>
+            <rect x="372" y="60" width="44" height="64" rx="3"/>
+            <rect x="424" y="60" width="44" height="64" rx="3"/>
+          </g>
+          <g fill="#080608">
+            <circle cx="332" cy="78" r="3"/><circle cx="346" cy="92" r="3"/><circle cx="332" cy="106" r="3"/>
+            <circle cx="386" cy="78" r="3"/><circle cx="398" cy="106" r="3"/><circle cx="384" cy="106" r="3"/>
+            <circle cx="436" cy="92" r="3"/><circle cx="450" cy="78" r="3"/><circle cx="450" cy="106" r="3"/>
+          </g>
+        </g>
+        <text x="320" y="146" fill="var(--silver)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">PUNCHED CARDS →</text>
+        <text x="80" y="232" fill="var(--silver)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">MILL (PROCESSOR)</text>
+      </svg>
+    </figure>
+    <figcaption>Jacquard punched cards feed the program in; the gear train is the mill that runs it.</figcaption>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Engine One</span>
+    <h2>The Difference Engine</h2>
+    <p>The Difference Engine is a calculator built around one elegant trick: the <strong>method of finite differences</strong>. Many useful functions — logarithms, sines, polynomials — can be <em>approximated</em> by polynomials. And the values of a polynomial at evenly spaced points can be generated using nothing but <strong>repeated addition</strong>. No multiplication. No division. Just adding.</p>
+    <h3>How finite differences work</h3>
+    <p>Take the simple polynomial f(n) = n². Write the values, then the differences between successive values, then the differences of those differences:</p>
+    <div class="diff-row"><span class="cell lbl">n</span><span class="cell">0</span><span class="cell">1</span><span class="cell">2</span><span class="cell">3</span><span class="cell">4</span><span class="cell">5</span></div>
+    <div class="diff-row"><span class="cell lbl">f(n) = n²</span><span class="cell">0</span><span class="cell">1</span><span class="cell">4</span><span class="cell">9</span><span class="cell">16</span><span class="cell">25</span></div>
+    <div class="diff-row"><span class="cell lbl">1st difference</span><span class="cell">1</span><span class="cell">3</span><span class="cell">5</span><span class="cell">7</span><span class="cell">9</span></div>
+    <div class="diff-row"><span class="cell lbl">2nd difference</span><span class="cell">2</span><span class="cell">2</span><span class="cell">2</span><span class="cell">2</span></div>
+    <p>The second difference is <em>constant</em>. So to extend the table you never compute n² again — you just add: 2 to the bottom row propagates up, giving the next first difference, which adds to give the next value. The whole table unrolls from addition alone. Babbage's machine encoded each number as a stack of geared wheels — <strong>each wheel position is one decimal digit</strong> — and a turn of the handle carried out the additions and the carries automatically, then drove a printing apparatus so no human ever copied a figure.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Input</span><h3>The constants</h3><p>Set the initial differences on the columns of wheels. That defines which polynomial — which table — you are computing.</p></div>
+      <div class="card"><span class="kick">Process</span><h3>Crank the handle</h3><p>Each cycle adds the difference columns together and handles the tens-carries mechanically across all digits.</p></div>
+      <div class="card"><span class="kick">Output</span><h3>Print, don't copy</h3><p>The result drove a stereotype printing plate directly — eliminating the typesetter's errors as well as the computer's.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Engine Two</span>
+    <h2>The Analytical Engine — the leap to general</h2>
+    <p>Around 1834–1837, Babbage realized that the feedback loops in his Difference Engine hinted at something far larger. If a machine could feed its own results back as new inputs, and if those operations could be <em>selected and reordered by instructions read from outside</em>, then the machine was no longer a calculator. It was a <strong>general-purpose computer</strong> — able to carry out <em>any</em> calculation that could be specified as a sequence of steps.</p>
+    <p>His name for its parts came from the textile mill, the dominant technology of his age — and the mapping to a modern computer is almost eerie:</p>
+    <div class="grid g4">
+      <div class="card"><span class="kick">The Mill</span><h3>Processor</h3><p>The arithmetic unit — where the four operations are actually performed. The ALU.</p></div>
+      <div class="card"><span class="kick">The Store</span><h3>Memory</h3><p>Columns of wheels holding up to a thousand 40-digit numbers, read and written as needed. RAM.</p></div>
+      <div class="card"><span class="kick">The Barrel</span><h3>Control</h3><p>Studded rotating drums sequencing the micro-operations — a hardwired control unit / microcode.</p></div>
+      <div class="card"><span class="kick">The Cards</span><h3>Input</h3><p>Jacquard punched cards: separate <em>operation</em> cards and <em>variable</em> cards. The program.</p></div>
+    </div>
+    <h3>It could branch and it could loop</h3>
+    <p>Crucially, the Analytical Engine supported <strong>conditional branching</strong> — it could test a value and take a different path depending on the result — and <strong>iteration</strong>, by feeding cards backward to repeat a sequence. Branching plus looping plus memory is precisely the combination that makes a machine <em>universal</em>: capable, given enough time and storage, of computing anything computable. This is the threshold between a calculator and a computer, and Babbage's design crossed it in the 1830s.</p>
+    <div class="band">
+      <span class="kick">Ada Lovelace's insight</span>
+      <h2>"The engine weaves algebraic patterns"</h2>
+      <p>Lovelace saw, more clearly than almost anyone for a hundred years, that because the engine manipulated symbols according to rules, it was not bound to numbers at all. Given the right encoding, she wrote, it might process anything — even compose elaborate music. She had identified <em>universality</em>. Her step-by-step method for computing the Bernoulli numbers on the engine stands as the first published computer program.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Rosetta Stone</span>
+    <h2>Babbage's parts, mapped to a modern computer</h2>
+    <p>Strip away the brass and the steam, and the Analytical Engine <em>is</em> a computer in the formal sense. Here is the one-to-one correspondence:</p>
+    <table class="map">
+      <thead><tr><th>Analytical Engine (1837)</th><th></th><th>Modern computer</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="b">The Mill</td><td><span class="arrow">→</span></td><td class="b">CPU / ALU</td><td>Performs arithmetic and logic on operands.</td></tr>
+        <tr><td class="b">The Store</td><td><span class="arrow">→</span></td><td class="b">RAM</td><td>Holds the numbers being worked on, addressable and rewritable.</td></tr>
+        <tr><td class="b">The Barrel</td><td><span class="arrow">→</span></td><td class="b">Control unit / microcode</td><td>Sequences each instruction into low-level steps.</td></tr>
+        <tr><td class="b">Operation cards</td><td><span class="arrow">→</span></td><td class="b">Program / opcodes</td><td>Specify which operation to perform.</td></tr>
+        <tr><td class="b">Variable cards</td><td><span class="arrow">→</span></td><td class="b">Operands / addresses</td><td>Specify which stored numbers to use.</td></tr>
+        <tr><td class="b">Card feed direction</td><td><span class="arrow">→</span></td><td class="b">Branch / loop control</td><td>Conditional jumps and iteration.</td></tr>
+        <tr><td class="b">The Printer / curve plotter</td><td><span class="arrow">→</span></td><td class="b">Output devices</td><td>Renders results to a permanent medium.</td></tr>
+      </tbody>
+    </table>
+    <p>Every row of that table was specified before electricity was tamed, before Boolean logic was applied to circuits, before anyone had built a single working stored-program machine. Babbage drew the floor plan of the computer; the twentieth century only changed the building material.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Inside The Mechanism</span>
+    <h2>How a gear becomes a digit</h2>
+    <p>To understand why these machines are computers and not clocks, you have to see how a meaningless lump of brass is made to <em>mean a number</em>. The trick is positional: a wheel with ten stable positions, marked 0 through 9, <em>is</em> a decimal digit. Stack a column of such wheels and you have a multi-digit number — the lowest wheel is the units, the next the tens, and so on, exactly as in written arithmetic.</p>
+    <h3>Addition</h3>
+    <p>To add, you advance one column's wheels by the amount stored in another. A wheel turning past 9 back to 0 must "carry the one" to the wheel above it. In a hand calculation this is the step where humans most often err; in Babbage's engine it is handled by a mechanical <strong>carry mechanism</strong>. His great refinement was <em>anticipating carry</em> — propagating all the carries across a long number in roughly constant time, rather than rippling them one wheel at a time, which would have been ruinously slow on a 40-digit number.</p>
+    <h3>Storage and transfer</h3>
+    <p>Numbers had to move — from the store to the mill, through an operation, and back. Babbage designed elaborate trains of <strong>racks, levers, and axes</strong> to read a column's value without destroying it, transmit it across the machine, and deposit it elsewhere. This is, in mechanical form, exactly the "load" and "store" of a modern processor moving data between memory and registers.</p>
+    <h3>Timing</h3>
+    <p>Everything had to happen in the right order. A rotating shaft drove the whole machine, and the studded control barrels released each sub-operation at the correct instant in the cycle — the mechanical equivalent of a processor's clock sequencing its micro-operations. Out of brass, levers, and careful timing, Babbage assembled every functional element a computer needs.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Decisive Difference</span>
+    <h2>Why one engine is a calculator and the other is a computer</h2>
+    <p>This distinction is so central it deserves its own section. A pocket calculator and a smartphone are both made of silicon, but only one is a computer. The same gap separates Babbage's two engines.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">Difference Engine</span>
+        <h3>Fixed-function calculator</h3>
+        <p>It does exactly one thing — evaluate polynomials by finite differences — and the "program" is nothing more than the starting numbers you dial in. You cannot make it sort a list, test a condition, or change its behaviour partway through. It is fast and accurate within its single purpose and helpless outside it.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Analytical Engine</span>
+        <h3>General-purpose computer</h3>
+        <p>Its behaviour is dictated by an external program of punched cards. Change the cards, change the task. Because it can store intermediate results, test them, and choose its next action accordingly, it can carry out <em>any</em> algorithm. The hardware is fixed; the function is unlimited. That is the definition of a computer.</p>
+      </div>
+    </div>
+    <p>The leap from the first to the second is the single most important conceptual jump in the prehistory of computing — and Babbage made it alone, in the 1830s, with no precedent to guide him.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Borrowed Idea</span>
+    <div class="band">
+      <span class="kick">From the loom to the engine</span>
+      <h2>The Jacquard loom: a program made of holes</h2>
+      <p>Babbage did not invent the punched card. He recognized its meaning. In 1801 Joseph-Marie Jacquard had built a loom controlled by chains of punched cards: where a hole appeared, a hook could pass and lift a thread; where the card was solid, it could not. By stringing together thousands of cards, a weaver could make the loom reproduce any pattern — even, famously, a woven silk portrait of Jacquard himself, made from some 24,000 cards.</p>
+      <p>Babbage saw that this was nothing less than a way to feed a sequence of <em>instructions</em> into a machine. He adopted the Jacquard card as the input medium of the Analytical Engine, separating <em>operation cards</em> (which arithmetic to do) from <em>variable cards</em> (which numbers to use). The same punched card would go on to drive the tabulating machines of the late nineteenth century and the mainframe computers of the twentieth. A weaving technology became the first programming medium.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">It Actually Worked</span>
+    <h2>Two proofs in metal</h2>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">1853 · Stockholm</span>
+        <h3>The Scheutz engine</h3>
+        <p>Inspired by published accounts of Babbage's design, the Swedish father-and-son team Georg and Edvard Scheutz built a working <strong>difference engine</strong> in 1853 — the first such machine actually completed. It computed and printed mathematical tables, won a gold medal in Paris, and was used to produce real actuarial tables. Babbage's principle was sound; it simply needed someone willing to stop redesigning and start finishing.</p>
+      </div>
+      <div class="card">
+        <span class="kick">1991 · London</span>
+        <h3>Difference Engine No. 2</h3>
+        <p>To mark Babbage's 200th birthday, the London Science Museum built his <strong>Difference Engine No. 2</strong> from his original 1847–1849 drawings, using only manufacturing tolerances available in his own day. Completed in 1991, it weighs about five tonnes, has roughly 8,000 parts, and computes to 31 digits — and <strong>it worked perfectly</strong>. A matching printing apparatus was finished in 2002. The plans had been right the whole time.</p>
+      </div>
+    </div>
+    <blockquote>The design was never the problem. The Victorian world's patience, precision engineering, and money were.</blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Specifications</span>
+    <h2>The Analytical Engine, by the numbers</h2>
+    <p>Babbage never settled on a single final design — he revised the Analytical Engine for the rest of his life — but the scale he aimed at was staggering for an all-mechanical machine driven by a steam engine.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Memory</span><h3>~1,000 numbers</h3><p>The store was to hold on the order of a thousand numbers of 40 decimal digits each — comparable in raw capacity to early electronic computers a century later.</p></div>
+      <div class="card"><span class="kick">Precision</span><h3>40 digits</h3><p>Roughly equivalent to about 133 bits — far more precision per number than most modern processors handle natively.</p></div>
+      <div class="card"><span class="kick">Power</span><h3>Steam</h3><p>The machine was to be driven by a steam engine, the room-filling power source of the industrial age, turning a central shaft.</p></div>
+      <div class="card"><span class="kick">Speed</span><h3>Seconds per operation</h3><p>An addition in perhaps a second; a multiplication in minutes. Glacial by electronic standards — but it would never tire and never err.</p></div>
+      <div class="card"><span class="kick">Output</span><h3>Print &amp; plot</h3><p>A printer for tables, a stereotype apparatus for printing plates, and even a curve plotter for graphical output.</p></div>
+      <div class="card"><span class="kick">Scale</span><h3>Room-sized</h3><p>Had it been built, it would have filled a large room and weighed many tonnes — a cathedral of brass devoted to arithmetic.</p></div>
+    </div>
+    <p>Slow, vast, and hungry for steam — and yet, on paper, a complete general-purpose computer. The only thing wrong with it was that it was made of metal instead of electrons, and metal was the wrong material for the job. That verdict, and what survived it, is the subject of Volume 3.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">A Program In Brass</span>
+    <h2>What "running a program" meant on the engine</h2>
+    <p>To make the abstraction concrete, imagine running Lovelace's Bernoulli-number computation. There is no screen, no keyboard, no electricity. Instead, a clerk threads a long chain of stiff cards into the engine's reader. Some cards are <em>operation</em> cards — "add," "multiply" — and some are <em>variable</em> cards naming which columns in the store to read and where to put the result.</p>
+    <h3>The cycle</h3>
+    <p>The steam engine turns the main shaft. The control barrel releases the first micro-operation. The named numbers are lifted out of the store, transmitted across the machine into the mill, combined, and the result carried back to its destination column. A counting apparatus checks a condition; if a loop must repeat, the card chain is wound <em>backward</em> to re-run a section. When the algorithm finishes, the printer strikes the answer onto paper or a printing plate — untouched by any human hand.</p>
+    <p>Strip away the steam and brass and substitute electrons, and that is precisely the fetch-decode-execute-store cycle of every processor running right now. The vocabulary is Victorian; the logic is eternal.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Fetch</span><h3>Read the card</h3><p>The reader takes the next operation and variable cards — the instruction and its operands.</p></div>
+      <div class="card"><span class="kick">Execute</span><h3>Turn the mill</h3><p>The arithmetic happens on the geared columns of the mill, carries and all.</p></div>
+      <div class="card"><span class="kick">Store</span><h3>Return the result</h3><p>The answer is transmitted back into a named column of the store, ready for the next step or for printing.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Coda</span>
+    <h2>A computer that happened to be made of metal</h2>
+    <p>The lesson of the engines is that "computer" is a matter of <em>structure</em>, not <em>substance</em>. Babbage assembled processor, memory, input, output, control, branching, and looping out of the only material his century offered — precision brass. Every one of those elements survives, unchanged in function, in the machine you are reading this on. He had the architecture exactly right and the material exactly as right as 1837 allowed.</p>
+    <p>Volume 2 turns from the machines to the world that surrounded them: the money, the institutions, and the people who made the engines possible and, in the end, impossible.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Engine Reference</span>
+    <h2>The two engines side by side</h2>
+    <p>For quick reference, the essential contrast that organizes everything in this volume:</p>
+    <table class="map">
+      <thead><tr><th>Property</th><th>Difference Engine</th><th>Analytical Engine</th></tr></thead>
+      <tbody>
+        <tr><td class="b">Proposed</td><td>1822</td><td>1837</td></tr>
+        <tr><td class="b">Type</td><td>Fixed-function calculator</td><td>General-purpose computer</td></tr>
+        <tr><td class="b">Method</td><td>Finite differences (addition only)</td><td>Any algorithm via stored program</td></tr>
+        <tr><td class="b">Programmable?</td><td>No — only initial values set</td><td>Yes — punched-card program</td></tr>
+        <tr><td class="b">Branching / loops?</td><td>No</td><td>Yes — conditional &amp; iterative</td></tr>
+        <tr><td class="b">Memory</td><td>Difference columns only</td><td>The store (~1,000 numbers)</td></tr>
+        <tr><td class="b">Built in his lifetime?</td><td>No (Scheutz built one, 1853)</td><td>No</td></tr>
+        <tr><td class="b">Modern analogue</td><td>Pocket calculator</td><td>The computer itself</td></tr>
+      </tbody>
+    </table>
+    <p>One number sums it up: the gap between these two columns is the gap between a tool that does <em>one</em> thing and a machine that can, in principle, do <em>anything</em>. Babbage crossed it in the 1830s, alone.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Engineering Reality</span>
+    <h2>The hard problems Babbage solved on paper</h2>
+    <p>It is easy to wave at "a machine of gears" and miss how many genuinely difficult engineering problems Babbage had to invent solutions for — problems that have direct descendants in modern hardware design.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">Problem · Carry propagation</span>
+        <h3>Anticipating carry</h3>
+        <p>Adding two 40-digit numbers can trigger a cascade of carries across the whole number. Done naively, this is slow. Babbage devised an "anticipating carriage" to resolve carries in roughly constant time — the mechanical ancestor of the carry-lookahead adder in modern arithmetic units.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Problem · Non-destructive read</span>
+        <h3>Reading without erasing</h3>
+        <p>Transferring a number from the store to the mill must not destroy the original if it is needed again. Babbage designed transfer mechanisms that could either move or copy a value — the distinction between a destructive and non-destructive read that hardware engineers still reason about.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Problem · Sequencing</span>
+        <h3>Microprogrammed control</h3>
+        <p>Each high-level operation breaks into many small mechanical steps that must fire in order. His studded control barrels encoded these sequences physically — strikingly close to the microcode that sequences instructions inside processors today.</p>
+      </div>
+      <div class="card">
+        <span class="kick">Problem · Reuse</span>
+        <h3>Subroutines and loops</h3>
+        <p>By winding the card chain backward, a section of program could be re-run — the engine's version of a loop, and the seed of the idea of reusable routines that structure all software.</p>
+      </div>
+    </div>
+    <p>None of these were obvious. Each is a real solution to a real problem, worked out a century before there was a discipline of computer engineering to pose the problems. Babbage was not merely imagining a computer in outline; he was solving its hardest internal problems in detail.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Coda</span>
+    <h2>Blueprint of a world</h2>
+    <p>Set Babbage's drawings beside a textbook diagram of a modern computer and the resemblance stops being a metaphor. Mill and CPU. Store and RAM. Cards and program. Barrel and control unit. Printer and display. Card feed and branch logic. It is the same machine, drawn twice, a century apart, in two different materials.</p>
+    <p>That is the achievement Volume 1 has tried to make tangible: not that Babbage <em>anticipated</em> the computer in some vague visionary sense, but that he <em>specified</em> it — its parts, their functions, and the hard engineering that joins them. The next two volumes ask why such a complete design produced no working machine in his lifetime (Vol. 2), and how the idea nonetheless conquered the world after his medium died (Vol. 3).</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Difference Engine</span><h3>The calculator</h3><p>Polynomials by addition; vindicated when the Science Museum built No. 2 in 1991 and it ran perfectly.</p></div>
+      <div class="card"><span class="kick">Analytical Engine</span><h3>The computer</h3><p>Mill, store, barrel, cards, branching, looping — a universal machine, a century before electronics.</p></div>
+      <div class="card"><span class="kick">The mapping</span><h3>One to one</h3><p>Each Victorian part has a modern twin: CPU, RAM, microcode, program, branch logic, output.</p></div>
+    </div>
+    <p>The engines, then, are not curiosities of the past but the first chapter of the present. To study them closely is to watch the computer being invented, part by part, in a workshop lit by gas and powered by steam.</p>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span class="kick">Colophon</span><br>
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Charles Babbage — A Four-Volume Study · Volume 1 of 4<br>
+    Author / Steward: David Lee Wise<br>
+    Lineage: <span class="sig">David Lee Wise / ROOT0 / TriPod LLC</span><br>
+    License: CC-BY-ND-4.0 (Attribution — NoDerivatives)<br>
+    Typeset in Cinzel, Newsreader &amp; Space Mono.<br>
+    &copy; 2026 — Distribute freely, unmodified, with attribution intact.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var g=document.getElementById('teethA'); if(!g)return;
+  var teeth=15,R=58;
+  for(var i=0;i<teeth;i++){
+    var a=(i/teeth)*Math.PI*2, x=Math.cos(a)*R, y=Math.sin(a)*R;
+    var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',x-6);r.setAttribute('y',y-6);r.setAttribute('width',12);r.setAttribute('height',12);
+    r.setAttribute('transform','rotate('+(a*180/Math.PI)+' '+x+' '+y+')');
+    g.appendChild(r);
+  }
+})();
+</script>
+</body>
+</html>

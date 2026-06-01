@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erwin Schrödinger — Vol. 0: The Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#060a0c; --teal:#0f766e; --violet:#7c3aed; --text:#cce8e5; --muted:#4a7a75; --border:#0e1e1c; --card-bg:#080e0d; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(6,10,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--teal); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--teal); border-color:var(--violet); }
+  .hero { position:relative; width:100%; min-height:520px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#040c14 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.7; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--teal); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(15,118,110,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--teal); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--teal); color:#e0f5f3; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--teal); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--teal); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--teal); font-style:italic; }
+  .timeline { border-left:2px solid var(--border); padding-left:2rem; margin-top:2rem; }
+  .timeline-item { position:relative; margin-bottom:2.5rem; }
+  .timeline-item::before { content:''; position:absolute; left:-2.45rem; top:0.45rem; width:10px; height:10px; border-radius:50%; background:var(--teal); border:2px solid var(--paper); box-shadow:0 0 8px rgba(15,118,110,0.5); }
+  .timeline-year { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--violet); margin-bottom:0.3rem; }
+  .timeline-title { font-family:'Cinzel',serif; font-weight:600; font-size:1rem; color:#fff; margin-bottom:0.4rem; }
+  .timeline-body { font-size:0.97rem; color:var(--text); opacity:0.88; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--violet); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--teal); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--violet); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); margin:2rem 0; }
+  .stat { background:var(--card-bg); padding:1.5rem 1.25rem; text-align:center; }
+  .stat-num { font-family:'Cinzel',serif; font-weight:800; font-size:2.4rem; color:var(--teal); display:block; line-height:1; margin-bottom:0.3rem; }
+  .stat-label { font-family:'Space Mono',monospace; font-size:0.63rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--teal); text-decoration:none; }
+  .colophon a:hover { color:var(--violet); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Erwin Schrödinger</a>
+  <div class="nav-links">
+    <a href="0-who.html" class="active">Vol. 0 — The Person</a>
+    <a href="1-wave.html">Vol. 1 — The Wave Equation</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="waveGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#0f766e" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#060a0c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow-s">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#waveGlow)"/>
+    <!-- Wave function ψ oscillating -->
+    <!-- Axis -->
+    <line x1="50" y1="260" x2="850" y2="260" stroke="#1e3a38" stroke-width="1" opacity="0.5"/>
+    <!-- Animated wave 1 -->
+    <path d="M50,260 C100,160 180,360 260,260 C340,160 420,360 500,260 C580,160 660,360 740,260 C790,210 820,240 850,260" fill="none" stroke="#0f766e" stroke-width="2.5" opacity="0.8" filter="url(#glow-s)">
+      <animate attributeName="d" dur="4s" repeatCount="indefinite"
+        values="M50,260 C100,160 180,360 260,260 C340,160 420,360 500,260 C580,160 660,360 740,260 C790,210 820,240 850,260;
+                M50,260 C100,360 180,160 260,260 C340,360 420,160 500,260 C580,360 660,160 740,260 C790,310 820,280 850,260;
+                M50,260 C100,160 180,360 260,260 C340,160 420,360 500,260 C580,160 660,360 740,260 C790,210 820,240 850,260"/>
+    </path>
+    <!-- Probability cloud overlay -->
+    <ellipse cx="180" cy="260" rx="80" ry="50" fill="#0f766e" opacity="0.06"/>
+    <ellipse cx="420" cy="260" rx="80" ry="50" fill="#7c3aed" opacity="0.06"/>
+    <ellipse cx="660" cy="260" rx="80" ry="50" fill="#0f766e" opacity="0.06"/>
+    <!-- ψ label -->
+    <text x="55" y="230" font-family="serif" font-size="28" fill="#0f766e" opacity="0.6" font-style="italic">ψ</text>
+    <text x="860" y="265" font-family="monospace" font-size="12" fill="#4a7a75" opacity="0.6">x</text>
+    <!-- Nodes -->
+    <circle cx="260" cy="260" r="5" fill="#7c3aed" opacity="0.7" filter="url(#glow-s)"/>
+    <circle cx="500" cy="260" r="5" fill="#7c3aed" opacity="0.7" filter="url(#glow-s)"/>
+    <circle cx="740" cy="260" r="5" fill="#7c3aed" opacity="0.7" filter="url(#glow-s)"/>
+    <!-- |ψ|² probability cloud dots -->
+    <g opacity="0.5">
+      <circle cx="130" cy="245" r="2" fill="#5eead4"/><circle cx="155" cy="258" r="3" fill="#5eead4"/>
+      <circle cx="180" cy="250" r="4" fill="#5eead4"/><circle cx="205" cy="262" r="3" fill="#5eead4"/>
+      <circle cx="230" cy="248" r="2" fill="#5eead4"/>
+      <circle cx="370" cy="252" r="2" fill="#a78bfa"/><circle cx="400" cy="260" r="4" fill="#a78bfa"/>
+      <circle cx="430" cy="255" r="3" fill="#a78bfa"/><circle cx="460" cy="263" r="2" fill="#a78bfa"/>
+    </g>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">The Wave Equation · 1887–1961</span>
+    <h1 class="hero-title">Erwin<br>Schrödinger</h1>
+    <p class="hero-subtitle">Architect of the Wave Function</p>
+    <p class="hero-lead">Written in a burst of inspiration at a Christmas retreat in Arosa — with a lover, unknown — the equation that became quantum mechanics.</p>
+  </div>
+</div>
+
+<div class="band">Wave Equation 1926 · Nobel 1933 · Schrödinger's Cat · "What is Life?" · Vienna to Dublin</div>
+
+<main>
+
+  <section id="vienna">
+    <span class="section-label">Origins</span>
+    <h2>Vienna, 1887: Austrian-English Beginnings</h2>
+    <p>Erwin Rudolf Josef Alexander Schrödinger was born on <strong>12 August 1887</strong> in Vienna, the only child of Rudolf Schrödinger, a botanist and oil-cloth manufacturer, and Georgine Emilia Brenda Bauer, whose own mother was English. The Austro-English family connection gave young Erwin bilingual childhood fluency in German and English — a facility that would serve him well across a career that took him to Scotland, England, Ireland, and back. He spoke both languages without an accent in either, a rarity in the physics world of the time.</p>
+    <p>Vienna at the turn of the twentieth century was one of the greatest intellectual cities in Europe. The Habsburg capital hosted psychoanalysis (Freud was practicing there), atonal music (Schoenberg was composing), the Vienna Circle (Wittgenstein, Carnap, Schlick), modernist architecture (Loos, Wagner), and the emerging traditions of Austrian economics (Menger, Böhm-Bawerk). It was a city in which intellectual ambition of every kind was in the air, and where the educated middle classes regarded cultural and scientific engagement as part of daily life. Schrödinger absorbed this atmosphere deeply — throughout his career he wrote philosophy, history of science, and speculative biology as well as physics, and he never regarded these as separate from his scientific work.</p>
+    <p>He attended the Akademisches Gymnasium in Vienna — one of the most rigorous secondary schools in the Empire — where he excelled in mathematics, physics, and classical languages. He was equally comfortable with Goethe and Maxwell. He entered the University of Vienna in 1906 and was taught by Friedrich Hasenöhrl, one of the leading physicists in German-speaking Europe, who introduced him to the Austrian tradition of theoretical physics — one strongly influenced by Ludwig Boltzmann's statistical mechanics and by a sophisticated engagement with the philosophy of science.</p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-num">1887</span><span class="stat-label">Born Vienna, Austria</span></div>
+      <div class="stat"><span class="stat-num">1926</span><span class="stat-label">Wave equation written</span></div>
+      <div class="stat"><span class="stat-num">1933</span><span class="stat-label">Nobel Prize in Physics</span></div>
+      <div class="stat"><span class="stat-num">17</span><span class="stat-label">Years at Dublin Institute for Advanced Studies</span></div>
+    </div>
+  </section>
+
+  <section id="early-career">
+    <span class="section-label">The Academic Wanderer</span>
+    <h2>Graz, Stuttgart, Breslau, Zurich: A Career in Motion</h2>
+    <p>Schrödinger's academic career before the wave equation was marked by genuine scientific productivity but also by the dislocations of World War I (in which he served as an artillery officer on the Italian front) and by the instability of postwar Central European academia. He held positions at Jena, Stuttgart, and Breslau before accepting a chair at the University of Zurich in 1921. His work in this period ranged widely: atomic spectra, colour theory (he wrote serious papers on the theory of colour vision — a lifelong interest inherited from his reading of Schopenhauer and Helmholtz), the theory of specific heat, and mathematical physics.</p>
+    <p>At Zurich he encountered the new quantum mechanics being developed by Heisenberg, Born, and Jordan in Göttingen. The physicists meeting in Zurich formed an important secondary node in the quantum revolution — the Swiss-German tradition of Debye, Weyl, and Einstein intersecting with the Northern German tradition of Bohr and Heisenberg. Schrödinger attended the weekly physics colloquium at the Swiss Federal Technical University (the ETH) and was appointed to give a seminar on Heisenberg's matrix mechanics in the autumn of 1925. In preparing the seminar, he found the formalism deeply unsatisfying — it was mathematically correct but physically opaque, a table of numbers without visualisable meaning.</p>
+    <p>The dissatisfaction was creative. He was also reading de Broglie's 1924 thesis, which proposed that particles had wave properties (as Einstein had noted in correspondence). If particles were waves, then there should be a wave equation governing them. Schrödinger set out to find it.</p>
+  </section>
+
+  <section id="arosa">
+    <span class="section-label">December 1925 – January 1926</span>
+    <h2>Arosa: The Christmas Inspiration</h2>
+    <p>The story of how the Schrödinger equation was discovered has become one of the great scientific legends, partly because of its setting and partly because of what the setting implies. In late December 1925, Schrödinger went to the Alpine resort of Arosa in Switzerland for a Christmas holiday. He brought with him the de Broglie thesis, his notes on quantum theory, and — according to the best historical evidence — a lover whose identity remains unknown. His wife Anny did not accompany him; she knew of and apparently accepted his extramarital relationships as part of his nature.</p>
+    <p>Over roughly two weeks at Arosa, Schrödinger wrote down the equation that bears his name. He returned to Zurich in January 1926 and presented it at the ETH colloquium, reportedly to Peter Debye's amused comment that a proper wave equation needed a wave function — and now it had one. Between January and June 1926, Schrödinger published four landmark papers in the <em>Annalen der Physik</em> developing the equation, applying it to the hydrogen atom, proving its equivalence with Heisenberg's matrix mechanics, and working out its physical interpretation. These four papers, published within six months, constitute one of the most concentrated and consequential bursts of scientific output in the history of physics.</p>
+
+    <div class="pull-quote">
+      <blockquote>"I discovered it working with a very beautiful girlfriend. I always work better with a woman around."</blockquote>
+      <cite>— Erwin Schrödinger (reported), on the Arosa inspiration of the wave equation</cite>
+    </div>
+  </section>
+
+  <section id="berlin-fleeing">
+    <span class="section-label">Berlin and Exile, 1927–1938</span>
+    <h2>Berlin, Oxford, Graz: Fleeing the Nazis</h2>
+    <p>In 1927 Schrödinger accepted the most prestigious chair in German physics — the position at the University of Berlin that had belonged to Planck. It placed him at the centre of German theoretical physics alongside Einstein. But the republic that made such appointments possible was already under pressure, and by 1933 it was over. When Hitler became Chancellor in January 1933, Schrödinger was appalled. He was not Jewish (he had Jewish colleagues and friends whom he valued), but he was a convinced anti-Nazi and could not remain in Berlin under the new regime. In the autumn of 1933, he left Germany for Oxford, declaring publicly that he found the situation intolerable.</p>
+    <p>At Oxford, Schrödinger learned that he and Dirac had been jointly awarded the Nobel Prize in Physics for 1933. The Nobel citation honoured him for the discovery of new productive forms of atomic theory — the wave equation. He was forty-six years old. The prize brought both recognition and the practical problem of where to settle: Oxford's college system was not well suited to his unconventional domestic arrangements (he had proposed bringing both his wife and his mistress to live with him, which the Magdalen College authorities found irregular).</p>
+    <p>He spent periods in Oxford and then, after the 1934 Anschluss — Germany's annexation of Austria — he could not safely return to his homeland. He was briefly back in Graz in 1936–1938, then fled immediately when the Anschluss made Austria German. He went first to Rome, then was invited to Dublin by Éamon de Valera — then Taoiseach and himself a mathematician of some accomplishment — to help found the Dublin Institute for Advanced Studies.</p>
+  </section>
+
+  <section id="dublin">
+    <span class="section-label">Dublin, 1940–1956</span>
+    <h2>Dublin: Seventeen Productive Years</h2>
+    <p>The Dublin Institute for Advanced Studies, founded in 1940 partly to attract Schrödinger, became his intellectual home for seventeen years. Ireland, neutral during the war, was a calm haven compared to the continental catastrophe. Schrödinger flourished there. He gave public lectures, wrote philosophy, corresponded with physicists and biologists worldwide, and produced his most widely read work: <em>What is Life?</em> (1944), delivered as a series of lectures at Trinity College Dublin and published in 1944.</p>
+    <p><em>What is Life?</em> is a remarkable book — a theoretical physicist speculating about the molecular basis of heredity, asking what kind of physical structure could carry the information needed for biological reproduction and development. Schrödinger argued that genetic information must be stored in an <strong>"aperiodic crystal"</strong> — a molecule with a regular chemical structure but variable information content, like a code. This was nine years before Watson and Crick's double helix. Both Watson and Crick have stated that reading <em>What is Life?</em> was a direct inspiration for their quest for the structure of DNA. The book's influence on mid-twentieth-century biology was profound and traceable.</p>
+
+    <div class="pull-quote">
+      <blockquote>"We have to ask: is there perhaps some physical structure that is stable enough to carry hereditary information through many generations? I believe the answer is an aperiodic solid — what we might today call a code-script."</blockquote>
+      <cite>— Erwin Schrödinger, "What is Life?" (1944)</cite>
+    </div>
+  </section>
+
+  <section id="personal-life">
+    <span class="section-label">The Person</span>
+    <h2>An Unconventional Life</h2>
+    <p>Schrödinger married Annemarie ("Anny") Bertel in 1920, and the marriage lasted until his death in 1961 — despite, or perhaps because of, a complete understanding that both parties maintained independent emotional and romantic lives. Anny had relationships of her own. Schrödinger had a series of significant relationships with other women, some of which produced children. His domestic arrangements were unusual by almost any convention of the time, but they were openly acknowledged within his social circle and apparently workable for those involved.</p>
+    <p>He was a man of wide culture: he read Sanskrit (and translated Vedantic texts — his engagement with Eastern philosophy influenced his interpretation of quantum mechanics), knew Greek, Latin, English, French, and Spanish, wrote poetry, and engaged seriously with philosophy, history, and biology throughout his life. His book <em>My View of the World</em> (1961) is a philosophical memoir exploring consciousness, the nature of the self, and the relationship between science and human experience. His <em>Nature and the Greeks</em> (1954) traces the intellectual genealogy of science back to pre-Socratic Greek thought.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">The Equation · 1926</span>
+        <h4>The Wave Equation Written</h4>
+        <p>At Arosa in December 1925. Published in four landmark papers in 1926. Won the Nobel Prize in 1933.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Thought Experiment · 1935</span>
+        <h4>Schrödinger's Cat</h4>
+        <p>Designed to show the absurdity of the Copenhagen interpretation applied to macroscopic objects. Became the most famous thought experiment in science.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Book · 1944</span>
+        <h4>"What is Life?"</h4>
+        <p>Predicted genetic information is stored in an "aperiodic crystal." Watson and Crick cited it as a direct inspiration. Nine years before the double helix.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Return · 1956</span>
+        <h4>Vienna in Old Age</h4>
+        <p>Returned to Vienna in 1956 as a triumphant figure, appointed professor at the University of Vienna. Died 4 January 1961, aged 73.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <span class="section-label">Life in Full</span>
+    <h2>A Chronological Record</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">12 August 1887</div>
+        <div class="timeline-title">Born in Vienna, Austria</div>
+        <div class="timeline-body">Only child of Rudolf Schrödinger (botanist) and Georgine Bauer. Austro-English family. Bilingual from childhood.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1906–1910</div>
+        <div class="timeline-title">University of Vienna</div>
+        <div class="timeline-body">Studies physics under Friedrich Hasenöhrl. Absorbs Boltzmann's statistical mechanics tradition and Austrian philosophy of science.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1914–1918</div>
+        <div class="timeline-title">World War I: Artillery Officer</div>
+        <div class="timeline-body">Serves on the Italian front. Publishes scientific papers during the war. The experience reinforces his pacifism and internationalism.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1920</div>
+        <div class="timeline-title">Marries Annemarie Bertel</div>
+        <div class="timeline-body">A partnership of mutual understanding and acknowledged independence. The marriage endures until Schrödinger's death in 1961.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1921</div>
+        <div class="timeline-title">Chair of Physics, University of Zurich</div>
+        <div class="timeline-body">Engages with the quantum mechanics revolution. Attends ETH colloquium. Reads de Broglie's wave thesis with mounting excitement.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">December 1925 – January 1926</div>
+        <div class="timeline-title">Arosa: The Wave Equation Written</div>
+        <div class="timeline-body">At an Alpine retreat at Christmas with a lover. The Schrödinger equation is conceived and drafted over two weeks. Returns to Zurich to present it.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1926</div>
+        <div class="timeline-title">Four Landmark Papers Published</div>
+        <div class="timeline-body">Annalen der Physik: wave equation, hydrogen atom solution, equivalence with matrix mechanics, physical interpretation. One of the greatest bursts of scientific output in physics history.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1927</div>
+        <div class="timeline-title">Chair of Theoretical Physics, Berlin — Planck's Chair</div>
+        <div class="timeline-body">The most prestigious chair in German physics. Works alongside Einstein. Berlin is the centre of world physics in this period.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1933</div>
+        <div class="timeline-title">Leaves Nazi Germany. Nobel Prize in Physics (with Dirac)</div>
+        <div class="timeline-body">Flees Hitler's Germany for Oxford. Receives Nobel Prize in 1933 for the wave equation. Finds Oxford's college system difficult with his domestic arrangements.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1935</div>
+        <div class="timeline-title">Schrödinger's Cat Thought Experiment</div>
+        <div class="timeline-body">Published in a paper attacking the Copenhagen interpretation. Intended as a reductio ad absurdum. Instead becomes the most famous thought experiment in science.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1938</div>
+        <div class="timeline-title">Flees Austrian Anschluss. Arrives in Dublin.</div>
+        <div class="timeline-body">Nazi annexation of Austria makes return to Graz impossible. Éamon de Valera invites Schrödinger to Dublin to found the Institute for Advanced Studies.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1944</div>
+        <div class="timeline-title">"What is Life?" Published</div>
+        <div class="timeline-body">Lectures at Trinity College Dublin, published as a book. Predicts an "aperiodic crystal" as the physical basis of heredity. Influences Watson, Crick, and the molecular biology revolution.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1956</div>
+        <div class="timeline-title">Returns to Vienna</div>
+        <div class="timeline-body">Appointed professor at the University of Vienna. Returns to his home city as a celebrated figure after 18 years of exile.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">4 January 1961</div>
+        <div class="timeline-title">Died in Vienna, Aged 73</div>
+        <div class="timeline-body">From tuberculosis. Buried in Alpbach, Austria. His tombstone bears his equation: iℏ ∂ψ/∂t = Ĥψ.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Erwin Schrödinger Series — Vol. 0: The Person<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

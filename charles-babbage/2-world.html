@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Babbage — Vol. 2: His World</title>
+<meta name="description" content="Victorian England, the Royal Society, the £17,000 funding saga, Ada Lovelace, Darwin, and the actuarial-tables problem that drove Babbage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#080608;--brass:#92400e;--silver:#94a3b8;--ink:#ece6dd;--ink-dim:#b9b0a4;--panel:#100c0e;--panel-2:#161012;--brass-glow:rgba(146,64,14,.45)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,h4{font-family:"Cinzel",serif;line-height:1.15;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  .kick{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--silver)}
+  .mono{font-family:"Space Mono",monospace}
+  nav{position:sticky;top:0;z-index:50;background:rgba(8,6,8,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--brass)}
+  .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:1.4rem;padding:.9rem 1.4rem;flex-wrap:wrap}
+  .nav-brand{font-family:"Cinzel",serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--ink)}
+  .nav-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
+  .nav-links a{font-family:"Space Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.13em;padding:.4rem .7rem;border:1px solid transparent;border-radius:3px;color:var(--ink-dim);transition:.2s}
+  .nav-links a:hover{color:var(--ink);border-color:var(--brass)}
+  .nav-links a.active{color:#fff;background:var(--brass);border-color:var(--brass)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+  header.hero{padding:5rem 0 3rem;border-bottom:1px solid rgba(146,64,14,.4)}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800;margin:.6rem 0}
+  .hero .dates{color:var(--silver);font-style:italic;font-size:1.3rem}
+  .lede{font-size:1.32rem;max-width:50ch;color:var(--ink-dim);margin-top:1.4rem}
+  section{padding:3.4rem 0;border-bottom:1px solid rgba(146,64,14,.22)}
+  section h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700;margin-bottom:1.2rem;color:#fff}
+  section h3{font-size:1.25rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--ink)}
+  p{margin:1rem 0;max-width:68ch}
+  em{color:var(--silver)}
+  .band{background:var(--brass);color:#fdf3e7;padding:2.4rem;border-radius:6px;margin:2rem 0;box-shadow:0 0 0 1px var(--brass)}
+  .band h2,.band h3{color:#fff}.band .kick{color:#fbe3c8}.band p{color:#f4dcc4;max-width:64ch}
+  .grid{display:grid;gap:1.2rem;margin:1.8rem 0}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--brass);border-radius:6px;padding:1.5rem;transition:transform .22s ease,box-shadow .22s ease}
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--brass-glow)}
+  .card h3{margin-top:0;color:var(--ink)}.card .kick{display:block;margin-bottom:.5rem}
+  .card p{font-size:.98rem;color:var(--ink-dim);margin:.5rem 0 0}
+  .figure{display:flex;justify-content:center;padding:2rem 0}
+  .figure svg{max-width:100%;height:auto}
+  figcaption{text-align:center;color:var(--silver);font-style:italic;font-size:.95rem;margin-top:.6rem}
+  blockquote{border-left:3px solid var(--brass);margin:1.8rem 0;padding:.4rem 1.4rem;font-style:italic;color:var(--silver);font-size:1.18rem}
+  .ledger{width:100%;border-collapse:collapse;margin:1.6rem 0;font-family:"Space Mono",monospace;font-size:.9rem}
+  .ledger td,.ledger th{border-bottom:1px solid rgba(146,64,14,.4);padding:.7rem .6rem;text-align:left}
+  .ledger th{color:var(--silver);text-transform:uppercase;letter-spacing:.1em;font-size:.68rem}
+  .ledger .num{text-align:right;color:var(--brass)}
+  footer.colophon{background:var(--panel-2);border-top:1px solid var(--brass);padding:3rem 0;margin-top:1rem}
+  .colophon .wrap{font-family:"Space Mono",monospace;font-size:.78rem;color:var(--ink-dim);line-height:1.9}
+  .colophon strong{color:var(--silver)}.colophon .sig{color:var(--brass);letter-spacing:.12em}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  @keyframes smoke{0%{opacity:.5;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-34px) scale(1.6)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">BABBAGE</span>
+    <div class="nav-links">
+      <a href="0-who.html">0 · Who</a>
+      <a href="1-engine.html">1 · Engine</a>
+      <a href="2-world.html" class="active">2 · World</a>
+      <a href="3-legacy.html">3 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kick">Volume 2 — His World</span>
+    <h1>His World</h1>
+    <div class="dates">Victorian England · Royal Society · the £17,000 that built nothing</div>
+    <p class="lede">Babbage did not work in a vacuum. He worked in a Britain proud, rich, industrial — and mathematically asleep. His genius and his failure were both products of that world.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Setting</span>
+    <h2>The Victorian workshop</h2>
+    <figure class="figure">
+      <svg viewBox="0 0 520 280" width="520" role="img" aria-label="Animated Victorian workshop with steam and gears">
+        <defs>
+          <radialGradient id="brassG" cx="40%" cy="35%" r="75%">
+            <stop offset="0%" stop-color="#c8862f"/><stop offset="55%" stop-color="#92400e"/><stop offset="100%" stop-color="#4a1f06"/>
+          </radialGradient>
+        </defs>
+        <!-- floor + bench -->
+        <rect x="0" y="222" width="520" height="58" fill="#120b0c"/>
+        <rect x="40" y="196" width="300" height="26" fill="#1c1416" stroke="#2a1c1a"/>
+        <!-- steam boiler -->
+        <rect x="360" y="120" width="80" height="102" rx="6" fill="#1c1416" stroke="var(--brass)" stroke-width="2"/>
+        <rect x="392" y="92" width="16" height="32" fill="#1c1416" stroke="var(--brass)" stroke-width="2"/>
+        <!-- smoke puffs -->
+        <g fill="var(--silver)">
+          <circle cx="400" cy="88" r="7" style="animation:smoke 3s ease-out infinite"/>
+          <circle cx="404" cy="88" r="6" style="animation:smoke 3s ease-out infinite 1s"/>
+          <circle cx="396" cy="88" r="5" style="animation:smoke 3s ease-out infinite 2s"/>
+        </g>
+        <!-- gears on the bench -->
+        <g style="transform-origin:120px 170px;animation:spin 11s linear infinite">
+          <g transform="translate(120 170)"><circle r="34" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="10" fill="#080608"/><g id="teethW" fill="url(#brassG)" stroke="#1a0d04" stroke-width="1"></g></g>
+        </g>
+        <g style="transform-origin:188px 178px;animation:spin 8s linear infinite reverse">
+          <g transform="translate(188 178)"><circle r="22" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/><circle r="7" fill="#080608"/></g>
+        </g>
+        <!-- hanging lamp -->
+        <line x1="250" y1="0" x2="250" y2="40" stroke="var(--brass)" stroke-width="2"/>
+        <g style="transform-origin:250px 40px;animation:bob 4s ease-in-out infinite">
+          <circle cx="250" cy="52" r="12" fill="#c8862f" opacity=".85"/>
+          <circle cx="250" cy="52" r="22" fill="#c8862f" opacity=".12"/>
+        </g>
+        <text x="44" y="246" fill="var(--silver)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">THE ENGINEER'S BENCH</text>
+        <text x="360" y="246" fill="var(--silver)" font-family="Space Mono, monospace" font-size="10" letter-spacing="2">STEAM</text>
+      </svg>
+    </figure>
+    <figcaption>Gaslight, steam, and brass — the material and political world Babbage had to bend to his will.</figcaption>
+    <p>Babbage's London was the workshop of the world. Steam powered the mills, the railways, the print presses. Joseph Clement, the master engineer Babbage hired, was among the finest toolmakers alive, and building the Difference Engine pushed the precision of British machining forward in its own right. Yet the very triumph of Victorian industry — its scale, its commerce, its pride — could not quite accommodate a machine that produced no goods, only <em>correct numbers</em>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Problem He Saw</span>
+    <h2>Tables, errors, and shipwrecks</h2>
+    <p>The motive was intensely practical. The Empire ran on printed tables. Sailors fixed their position from tables of lunar distances and logarithms; a single misprinted digit could put a ship on the rocks. Banks and the booming <strong>insurance industry</strong> depended on actuarial tables — life expectancies, annuity values, compound interest — and Babbage himself, early in his career, had compiled life tables for an insurance venture. He knew first-hand how laborious and how error-prone the work was: rooms of human "computers" adding columns by hand, their slips compounding through every later edition.</p>
+    <p>Babbage's pitch to the government was therefore not "I have a beautiful idea" but "I can save the nation from a recurring, expensive, sometimes fatal source of error." It was a public-works argument. And for a while, it worked.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Money</span>
+    <h2>The £17,000 saga</h2>
+    <p>In 1823 the British Treasury agreed to fund the Difference Engine. Over roughly the next two decades the government poured in around <strong>£17,000</strong> — an enormous sum, comparable to the cost of building two warships of the period. For all that money, no complete engine was ever delivered. The project became a Victorian byword for public expenditure with nothing to show for it.</p>
+    <table class="ledger">
+      <thead><tr><th>Year</th><th>Event</th><th class="num">≈ Cost</th></tr></thead>
+      <tbody>
+        <tr><td>1823</td><td>Treasury agrees to fund the Difference Engine</td><td class="num">—</td></tr>
+        <tr><td>1820s–30s</td><td>Joseph Clement fabricates thousands of precision parts</td><td class="num">rising</td></tr>
+        <tr><td>1832</td><td>A working demonstration portion is assembled — and impresses</td><td class="num">—</td></tr>
+        <tr><td>1833</td><td>Dispute with Clement; work halts; Babbage conceives the Analytical Engine instead</td><td class="num">—</td></tr>
+        <tr><td>1842</td><td>Government formally cancels the project</td><td class="num">£17,000 spent</td></tr>
+      </tbody>
+    </table>
+    <p>Why did it fail? Not because the design was wrong. It failed for a tangle of reasons: Babbage's <em>perfectionism</em> — he kept redesigning, and worse, he abandoned the Difference Engine mid-build because he had thought of the far grander Analytical Engine; a bitter <strong>dispute with Clement</strong> over money and the ownership of the specialized tools; the sheer cost of pushing engineering precision past its era; and Babbage's own combative personality, which alienated the very officials whose patience he needed. The Treasury, reasonably enough, eventually asked what it had bought, and concluded: nothing it could use.</p>
+    <blockquote>"He had the misfortune to be a century ahead of the tools, the money, and the temper of his age."</blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Institutions</span>
+    <h2>The Royal Society and the sleeping science of Britain</h2>
+    <p>Babbage was a Fellow of the Royal Society, but he came to despise it. In 1830 he published a furious polemic, <em>Reflections on the Decline of Science in England</em>, attacking the Society as a club of well-connected amateurs who rewarded social rank over genuine research. It made him enemies and helped spur the founding of new, more meritocratic bodies — he was a co-founder of both the <strong>Royal Astronomical Society</strong> and the <strong>Statistical Society of London</strong>.</p>
+    <p>His complaint had a deep root: British mathematics had spent a century in self-imposed isolation. Out of patriotic loyalty to Newton in his priority feud with Leibniz, English mathematicians stuck to Newton's awkward <em>fluxional dot</em> notation while Continental analysts, using Leibniz's flexible <em>d/dx</em>, built modern calculus and ran far ahead. Babbage's youthful Analytical Society had attacked exactly this; his mature self saw the same complacency throttling all of British science. The engines were, in a sense, his answer to a culture that had stopped reaching.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The People</span>
+    <h2>Lovelace and Darwin</h2>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">The Collaborator</span>
+        <h3>Ada Lovelace</h3>
+        <p>The two met in 1833, when Ada was seventeen and saw a demonstration of the Difference Engine portion. A mathematically gifted aristocrat, she became Babbage's intellectual partner. In 1843 she translated an account of the Analytical Engine and added notes more than twice as long as the original — including the Bernoulli-number algorithm now regarded as the first computer program, and the visionary claim that such a machine might one day go far beyond mere arithmetic. Babbage called her "the Enchantress of Number."</p>
+      </div>
+      <div class="card">
+        <span class="kick">The Friend</span>
+        <h3>Charles Darwin</h3>
+        <p>Babbage hosted celebrated Saturday-evening soirées at his London home, where the scientific, literary, and political elite mingled around his half-built engine. Among the regulars was the young <strong>Charles Darwin</strong>, fresh from the <em>Beagle</em>. The two were friends; Babbage's circle was a crossroads of Victorian intellectual life — Dickens, Faraday, Wheatstone, and Lyell all passed through. The engine was as much a salon centrepiece as an instrument.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Trade</span>
+    <h2>Insurance, annuities, and the price of a life</h2>
+    <p>It is worth dwelling on the <strong>actuarial problem</strong>, because it grounds the whole grand project in something starkly human. The early nineteenth century saw an explosion of life-insurance companies and annuity schemes. To price them, you had to answer a brutal question with arithmetic: given a person's age, how long are they likely to live, and what is a fair premium for the risk?</p>
+    <p>The answers lived in <em>life tables</em> — columns showing, for each age, the probability of survival and the present value of future payments. Computing them meant grinding through endless multiplications and compound-interest sums by hand. A single transcription error could mispriced thousands of policies. Babbage, who had been involved in an insurance venture and compiled such tables himself, understood viscerally that the work was both economically vital and humanly unreliable. The Difference Engine was, among other things, a machine to make the price of a life <em>correct</em>.</p>
+    <p>This is the texture of his motivation that romantic accounts often miss. Babbage was not chiefly dreaming of artificial minds. He was trying to fix a concrete, expensive, error-ridden clerical industry that underpinned Victorian finance and empire. The universal computer was, in a sense, a by-product of trying to print better insurance tables.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Allies and Enemies</span>
+    <h2>The politics of a public project</h2>
+    <p>A government-funded invention is never purely a technical undertaking; it is a political one. Babbage's engine survived or stalled on the goodwill of ministers, the patience of the Treasury, and the cooperation of his own engineer — and Babbage was temperamentally unsuited to managing any of the three.</p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">The Engineer</span>
+        <h3>Joseph Clement</h3>
+        <p>A superb toolmaker without whom no part could be made — and, by the custom of the trade, the legal owner of the specialized tools built at public expense. When Babbage tried to move the workshop nearer his home, the dispute over money and tool ownership turned bitter. Clement downed tools and kept them. Years of work effectively froze over a quarrel about who owned the means of production.</p>
+      </div>
+      <div class="card">
+        <span class="kick">The State</span>
+        <h3>A wary Treasury</h3>
+        <p>Successive governments had funded the engine on the promise of error-free tables, but as years passed with no finished machine — and as Babbage abandoned the funded Difference Engine to pursue the unfunded Analytical Engine — official patience drained away. By 1842 Prime Minister Robert Peel's government formally declined further support, reportedly with private contempt for the whole affair.</p>
+      </div>
+    </div>
+    <p>Babbage's combative public attacks — on the Royal Society, on the state of British science, on anyone he judged mediocre — won him admirers among reformers but cost him exactly the institutional patience and political capital his expensive, slow-moving project most needed. He was, in the language of a later age, a brilliant founder who could not manage his stakeholders.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Reckoning</span>
+    <div class="band">
+      <span class="kick">A world not ready</span>
+      <h2>Right idea, wrong century</h2>
+      <p>Everything Babbage needed existed in fragments — precision machining, the punched card (already running the Jacquard looms of Lyon), steam power, a government willing in principle to fund big projects, a mathematician (Lovelace) who understood the implications. What did not exist was a world able to hold all of it together long enough, patiently enough, and cheaply enough, to finish. The Victorian age could build a five-tonne machine of eight thousand parts — the 1991 Science Museum proved it — but it could not, in Babbage's lifetime, summon the will to do so for a device that merely made numbers correct.</p>
+    </div>
+    <p>So the engines remained drawings and demonstration fragments. Babbage died in 1871 embittered, his great works unbuilt, his reputation as much "the man who wasted £17,000" as "the father of computing." It would take more than a century, and an entirely different technology, for the world to understand what he had actually given it. That story is Volume 3.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Age in Brief</span>
+    <h2>The Victorian backdrop, at a glance</h2>
+    <p>Babbage's working life ran from the Regency to the high Victorian era — a stretch in which Britain transformed itself more profoundly than in any comparable period before. To place the engines in their world:</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Power</span><h3>The age of steam</h3><p>Steam drove mills, mines, ships, and — from the 1830s — railways. Babbage naturally assumed steam would drive his engine too; it was simply what "power" meant.</p></div>
+      <div class="card"><span class="kick">Empire</span><h3>Tables for a global state</h3><p>An empire spanning the globe ran on navigation, trade, and finance — all of which depended on the very tables Babbage sought to perfect.</p></div>
+      <div class="card"><span class="kick">Science</span><h3>From amateur to professional</h3><p>Science was shifting from a gentleman's pastime to an organized profession — a transition Babbage actively, and abrasively, pushed forward.</p></div>
+      <div class="card"><span class="kick">Industry</span><h3>Precision engineering</h3><p>Machine tools were becoming accurate enough to make interchangeable parts — though only just barely accurate enough for Babbage's demands.</p></div>
+      <div class="card"><span class="kick">Finance</span><h3>Insurance and statistics</h3><p>The rise of actuarial science and the statistical movement gave urgency, and a customer, to the dream of automatic calculation.</p></div>
+      <div class="card"><span class="kick">Culture</span><h3>Confidence and clutter</h3><p>An age of immense self-confidence, ornate detail, and faith in progress — into which a steam-powered universal computer fit, and yet somehow did not.</p></div>
+    </div>
+    <p>Everything the Analytical Engine needed — power, precision, capital, a customer, even a programmer — existed in Victorian Britain in isolation. The tragedy of Volume 2 is that the age could not, in Babbage's lifetime, hold all of those pieces together long enough to finish the machine.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Counterfactual</span>
+    <h2>Could it have been built?</h2>
+    <p>A natural question hangs over the whole story: if the money had held and Babbage had stopped redesigning, could the Victorians actually have built a working Analytical Engine? The honest answer is a qualified <em>yes</em> — with enormous difficulty.</p>
+    <p>The 1991 construction of Difference Engine No. 2, using only tolerances available in Babbage's day, settled the easier half of the question: his <em>calculating</em> machine was buildable with period engineering. The Analytical Engine was far larger and more intricate, and no full version has ever been completed, but most historians judge that it was within reach of Victorian industry given sustained funding, a stable design, and a more cooperative relationship with his engineers — all three of which Babbage failed to secure.</p>
+    <p>The bottleneck, then, was never fundamentally technological. It was organizational and personal: a perfectionist who would not freeze his design, a feud that lost him his toolmaker, a government that ran out of patience, and a culture that could not see why correct numbers were worth a fortune. The machine was possible. The <em>circumstances</em> were not.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Coda</span>
+    <h2>A world almost ready</h2>
+    <p>Babbage's world gave him the steam, the brass, the punched card, the actuarial problem, and even Ada Lovelace to write the first program. It withheld only patience and money long enough to finish — and so the engines stayed on paper, and Babbage died believing he had failed.</p>
+    <p>He had not. The world simply needed another century, and another medium entirely, to deliver what he had designed. Volume 3 follows the idea after Babbage: how the medium he worked in died completely, and how the concept he drew became the foundation of the entire digital age.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Cast</span>
+    <h2>Babbage's Victorian circle</h2>
+    <p>No inventor works alone, and the people around Babbage shaped what the engines became — and failed to become. A quick guide to the figures in this volume:</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Collaborator</span><h3>Ada Lovelace</h3><p>Mathematician and Byron's daughter; wrote the first program and saw the engine's universality more clearly than anyone.</p></div>
+      <div class="card"><span class="kick">Engineer</span><h3>Joseph Clement</h3><p>The master toolmaker who built the parts — and whose dispute with Babbage over money and tools froze the project.</p></div>
+      <div class="card"><span class="kick">Friend</span><h3>Charles Darwin</h3><p>A regular at Babbage's celebrated soirées; part of a circle that knit together the scientific elite of the age.</p></div>
+      <div class="card"><span class="kick">Ally</span><h3>John Herschel</h3><p>Co-founder of the Analytical Society; the friend with whom Babbage first dreamed of mechanizing the tables.</p></div>
+      <div class="card"><span class="kick">The State</span><h3>The Treasury</h3><p>Funder and, ultimately, abandoner — the £17,000 patron whose patience the project outlasted.</p></div>
+      <div class="card"><span class="kick">The Builders</span><h3>The Scheutzes</h3><p>Swedish father and son who, inspired by Babbage's published ideas, finished a working difference engine in 1853.</p></div>
+    </div>
+    <p>Among them, Lovelace remains the one whose vision most fully matched Babbage's own — and arguably exceeded it. Where Babbage saw a supremely capable calculating machine, Lovelace saw a device that manipulated symbols of any kind, and so might one day reach far beyond mathematics. That insight, more than any gear, is what makes the engine the ancestor of the modern computer.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Notation War</span>
+    <h2>Why British mathematics had fallen behind</h2>
+    <p>To understand the intellectual climate Babbage rebelled against, you have to understand the long shadow of a single feud. In the late seventeenth century, Isaac Newton in England and Gottfried Leibniz on the Continent independently invented the calculus. The bitter, nationalistic priority dispute that followed hardened into something self-defeating: English mathematicians, out of loyalty to Newton, refused to adopt Leibniz's notation.</p>
+    <p>This was not a trivial matter of style. Newton's "fluxional" notation — dots placed over variables — was clumsy and hard to manipulate. Leibniz's notation, the <em>dy/dx</em> and integral signs still used today, was so much more powerful that it let Continental mathematicians develop whole new branches of analysis while the English stagnated. For roughly a century, British mathematics simply could not keep pace, hobbled by its own patriotism.</p>
+    <p>Babbage's first crusade, the Analytical Society of 1812, attacked exactly this — campaigning to replace "the dot-age" of Newtonian notation with "pure d-ism." They largely succeeded, and Continental notation entered the English curriculum. But the episode left Babbage with a lifelong conviction that British science was complacent, insular, and badly in need of reform — the same conviction that drove his later attacks on the Royal Society and, in its way, the engines themselves. The engine was a machine to remove human fallibility from mathematics; the notation war had shown him how stubbornly human institutions cling to inferior methods.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Money In Context</span>
+    <h2>What £17,000 actually meant</h2>
+    <p>The figure £17,000 is easy to read past, but in the 1830s it was a genuinely vast sum of public money — and understanding its scale explains the political fury that eventually engulfed the project.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Warships</span><h3>~Two ships of the line</h3><p>The sum was comparable to the cost of building one or two substantial naval vessels — the most expensive machines the state routinely commissioned.</p></div>
+      <div class="card"><span class="kick">Wages</span><h3>Lifetimes of labour</h3><p>Set against a labourer's annual wage of a few tens of pounds, £17,000 represented hundreds of person-years of work — a fortune by any ordinary measure.</p></div>
+      <div class="card"><span class="kick">Return</span><h3>Nothing delivered</h3><p>For all of it, the Treasury received no finished, usable engine — only a celebrated demonstration fragment and a mountain of precision parts.</p></div>
+    </div>
+    <p>It is no wonder, then, that the affair became a byword for waste, or that ministers grew reluctant to throw further money after it. From the Treasury's chair, the calculus was simple and damning: an enormous, ever-growing bill for a machine that kept being redesigned and never quite arrived. That the design was, in fact, sound — that the money had bought a genuine glimpse of the future — was invisible to accountants who could only see an empty workshop and an empty result.</p>
+    <p>The deepest irony of Volume 2 is here. The very qualities that made Babbage a visionary — his perfectionism, his refusal to settle, his leap from the funded Difference Engine to the grander unfunded Analytical Engine — were precisely the qualities that doomed the public project. He could not stop improving long enough to finish, and a government cannot fund improvement forever with nothing to show. Genius and failure, in his case, sprang from the same root.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Coda</span>
+    <h2>A verdict on the age</h2>
+    <p>Was it Babbage who failed the Victorian age, or the age that failed Babbage? The fairest answer is: both, and neither cleanly. He gave the world a complete design for a machine a century ahead of its time. The world gave him money, materials, and a brilliant collaborator — and then ran out of the one thing he most needed, which was patient persistence in the face of no immediate return.</p>
+    <p>What the period proved, finally, was that having every ingredient is not the same as baking the cake. Steam, brass, capital, the punched card, the actuarial demand, and Ada Lovelace all coexisted in one city in one decade. They simply never came together for long enough. The machine stayed on paper; the man went to his grave embittered; and the idea waited, patiently, for a better age and a better medium. Volume 3 is the story of how it finally got both.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Had</span><h3>Every ingredient</h3><p>Power, precision, capital, the punched card, a paying problem, and a programmer — all present in one decade.</p></div>
+      <div class="card"><span class="kick">Lacked</span><h3>The will to finish</h3><p>Patience, a frozen design, and a working relationship with his engineer — the three things that sink projects.</p></div>
+      <div class="card"><span class="kick">Result</span><h3>Drawings, not engines</h3><p>Demonstration fragments, £17,000 spent, and a design that would not be vindicated for 150 years.</p></div>
+    </div>
+    <p>That is the shape of the Victorian tragedy: not a failure of imagination or of engineering, but a failure of patience and circumstance. The world had everything it needed to build the future and could not quite bring itself to finish. Babbage's genius and his world's limitations were, in the end, equal partners in the long delay.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Bridge To Volume 3</span>
+    <h2>From a frustrated age to an immortal idea</h2>
+    <p>We close Volume 2 with the engines unbuilt and Babbage in his grave, his great project widely regarded as an expensive failure. Everything in this volume has been about constraint — of money, of materials, of institutions, of temperament. The Victorian world, for all its industrial might, could not hold the pieces together.</p>
+    <p>And yet the story does not end in failure, because the <em>idea</em> was never bound to the Victorian world or to its brass. In Volume 3 we follow that idea out of the nineteenth century entirely: into a new medium, a new century, and a new set of minds — Turing, von Neumann, the builders of ENIAC — who would take the architecture Babbage drew and finally give it a body that worked. The medium of his age died. The concept walked out of it intact, and never looked back.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Soirées</span>
+    <h2>The salon where the future gathered</h2>
+    <p>One image deserves to stand for the whole of Babbage's world. On Saturday evenings at his home in Dorset Street, London, Babbage threw open his doors to as many as three hundred guests: scientists, novelists, peers, engineers, mathematicians, and politicians. The centrepiece was the working portion of his Difference Engine, gleaming under the lamps, which he would set in motion for the assembled company.</p>
+    <p>It was, in effect, the first public demonstration of automatic computation, staged as fashionable entertainment. Guests watched brass wheels turn out a column of correct figures and understood, dimly, that they were seeing something new under the sun. Among the regulars were the young Charles Darwin, the physicist Michael Faraday, the geologist Charles Lyell, the engineer Charles Wheatstone, and — most consequentially — the teenaged Ada Lovelace, who saw the engine there and was captivated for life.</p>
+    <p>Contemporary accounts describe the spectacle vividly: the great and the fashionable crowding around a gleaming apparatus that did, silently and without error, what rooms of clerks did slowly and badly. One society memoirist recalled a guest asking the machine to count, then to skip, then to leap — and watching it obey, exactly, as Babbage had promised it would. To Victorian eyes it must have seemed very nearly like magic; to us it reads as the first audience that computing ever had.</p>
+    <p>The soirées capture the paradox of Babbage's position perfectly. He was at the dazzling centre of Victorian intellectual life, lionized, connected, admired — and simultaneously unable to convert any of that brilliance into a finished machine or a patient patron. He could fill a room with the cleverest people in England and demonstrate the future to them, and still die with his engines unbuilt. The world came to his door to marvel. It would not, in the end, stay to help him finish.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Funding Saga, In Order</span>
+    <h2>Two decades of expectation and decline</h2>
+    <p>Laid out as a sequence, the rise and collapse of government support tells its own story — a slow souring of a relationship that began in optimism and ended in mutual exhaustion.</p>
+    <table class="ledger">
+      <thead><tr><th>Year</th><th>Stage of the relationship</th></tr></thead>
+      <tbody>
+        <tr><td>1822</td><td>Babbage proposes the Difference Engine; demonstrates a small model that impresses the scientific establishment.</td></tr>
+        <tr><td>1823</td><td>The Treasury agrees to fund construction — a hopeful partnership between inventor and state.</td></tr>
+        <tr><td>1820s</td><td>Joseph Clement fabricates thousands of precision parts; costs mount steadily as the work pushes the limits of engineering.</td></tr>
+        <tr><td>1832</td><td>A working demonstration portion is completed — the high-water mark, shown off at the famous soirées.</td></tr>
+        <tr><td>1833</td><td>Babbage quarrels with Clement over money and tools; work halts. Babbage conceives the far grander Analytical Engine.</td></tr>
+        <tr><td>1833–42</td><td>The funded Difference Engine languishes while Babbage pursues the unfunded Analytical Engine; official patience erodes.</td></tr>
+        <tr><td>1842</td><td>Robert Peel's government formally declines further support. Roughly £17,000 of public money has been spent, with no usable engine delivered.</td></tr>
+      </tbody>
+    </table>
+    <p>Read top to bottom, it is the anatomy of a project that died not from a single blow but from a slow accumulation of friction: rising costs, a frozen workshop, a shifting design, and a founder whose attention had leapt ahead to something even more ambitious. The state had bargained for finished tables; what it got was a glimpse of a future it could not yet use, and a bill it could no longer justify.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">1823</span><h3>Optimism</h3><p>State and inventor join forces to banish error from the nation's tables.</p></div>
+      <div class="card"><span class="kick">1833</span><h3>Fracture</h3><p>The Clement dispute and the leap to the Analytical Engine stall everything.</p></div>
+      <div class="card"><span class="kick">1842</span><h3>Collapse</h3><p>Funding withdrawn; £17,000 spent; no usable engine delivered.</p></div>
+    </div>
+    <p>And so the Victorian chapter closes with the engines unfinished and the inventor embittered — but with the design, unbeknownst to anyone, entirely sound. The verdict of "failure" would stand for a century and a half, until a museum proved it wrong.</p>
+    <div class="grid g2">
+      <div class="card"><span class="kick">The world's verdict, 1871</span><h3>A costly failure</h3><p>An eccentric who spent a public fortune and delivered no working machine.</p></div>
+      <div class="card"><span class="kick">History's verdict, today</span><h3>A founder, early</h3><p>The man who designed the computer, vindicated in metal in 1991 and in silicon every day since.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span class="kick">Colophon</span><br>
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Charles Babbage — A Four-Volume Study · Volume 2 of 4<br>
+    Author / Steward: David Lee Wise<br>
+    Lineage: <span class="sig">David Lee Wise / ROOT0 / TriPod LLC</span><br>
+    License: CC-BY-ND-4.0 (Attribution — NoDerivatives)<br>
+    Typeset in Cinzel, Newsreader &amp; Space Mono.<br>
+    &copy; 2026 — Distribute freely, unmodified, with attribution intact.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var g=document.getElementById('teethW'); if(!g)return;
+  var teeth=12,R=34;
+  for(var i=0;i<teeth;i++){
+    var a=(i/teeth)*Math.PI*2, x=Math.cos(a)*R, y=Math.sin(a)*R;
+    var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',x-4);r.setAttribute('y',y-4);r.setAttribute('width',8);r.setAttribute('height',8);
+    r.setAttribute('transform','rotate('+(a*180/Math.PI)+' '+x+' '+y+')');
+    g.appendChild(r);
+  }
+})();
+</script>
+</body>
+</html>

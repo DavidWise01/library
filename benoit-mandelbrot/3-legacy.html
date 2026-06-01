@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benoit Mandelbrot — Vol. 3: The Legacy</title>
+<meta name="description" content="Fractal geometry in the world: CGI, fractal antennas, financial modeling and fat tails, medicine, and fractal image compression.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04040c;--cyan:#06b6d4;--orange:#ea580c;
+    --ink:#e8edf2;--muted:#8a97a6;--line:rgba(6,182,212,0.32);
+    --card:#080816;--maxw:1080px;
+  }
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+  html{
+    scroll-behavior:smooth;
+  }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(900px 600px at 80% -10%, rgba(6,182,212,0.10), transparent 60%),radial-gradient(700px 500px at -10% 110%, rgba(234,88,12,0.08), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(4,4,12,0.86);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 22px;
+    flex-wrap:wrap;
+  }
+  .nav-brand{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12px;
+    color:var(--cyan);
+    margin-right:auto;
+  }
+  .nav-inner a.vol{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-decoration:none;
+    color:var(--muted);
+    padding:6px 12px;
+    border:1px solid transparent;
+    border-radius:4px;
+    transition:all .2s ease;
+  }
+  .nav-inner a.vol:hover{
+    color:var(--ink);
+    border-color:var(--line);
+  }
+  .nav-inner a.vol.active{
+    color:var(--paper);
+    background:var(--cyan);
+    border-color:var(--cyan);
+  }
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 22px;
+    position:relative;
+    z-index:1;
+  }
+  header.hero{
+    padding:90px 0 50px;
+  }
+  .kick{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12.5px;
+    color:var(--cyan);
+    display:inline-block;
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:"Cinzel",serif;
+    font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);
+    line-height:1.02;
+    letter-spacing:0.01em;
+    margin-bottom:18px;
+  }
+  h1 .sub{
+    display:block;
+    font-size:0.34em;
+    font-weight:600;
+    color:var(--cyan);
+    letter-spacing:0.18em;
+    margin-top:18px;
+    font-family:"Space Mono",monospace;
+  }
+  .lede{
+    font-size:1.32rem;
+    color:var(--muted);
+    max-width:700px;
+    font-style:italic;
+  }
+  h2{
+    font-family:"Cinzel",serif;
+    font-weight:700;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    margin:14px 0 18px;
+    line-height:1.12;
+  }
+  h3{
+    font-family:"Cinzel",serif;
+    font-weight:600;
+    font-size:1.28rem;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  section{
+    padding:54px 0;
+    border-top:1px solid var(--line);
+  }
+  p{
+    margin-bottom:20px;
+  }
+  em,i{
+    color:#d6e0ea;
+  }
+  strong{
+    color:#fff;
+    font-weight:600;
+  }
+  .band{
+    background:var(--cyan);
+    color:var(--paper);
+    padding:40px 36px;
+    border-radius:10px;
+    margin:38px 0;
+  }
+  .band .kick{
+    color:var(--paper);
+    opacity:.7;
+  }
+  .band p{
+    margin:0;
+    font-size:1.5rem;
+    font-style:italic;
+    font-weight:500;
+    line-height:1.4;
+  }
+  .band cite{
+    display:block;
+    margin-top:16px;
+    font-family:"Space Mono",monospace;
+    font-style:normal;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    opacity:.8;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    margin:30px 0;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 24px;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--cyan);
+    border-color:var(--cyan);
+  }
+  .card .num{
+    font-family:"Space Mono",monospace;
+    color:var(--orange);
+    font-size:12px;
+    letter-spacing:0.2em;
+    display:block;
+    margin-bottom:12px;
+  }
+  .card p{
+    font-size:1rem;
+    color:var(--muted);
+    margin:0;
+  }
+  .figure{
+    margin:38px 0;
+    text-align:center;
+  }
+  .figure svg{
+    max-width:100%;
+    height:auto;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#02020a;
+  }
+  .figcap{
+    font-family:"Space Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:14px;
+  }
+  .domain{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:22px;
+    padding:30px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  .domain .tag{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--orange);
+    padding-top:6px;
+  }
+  .domain h3{
+    margin-bottom:10px;
+  }
+  blockquote{
+    border-left:3px solid var(--orange);
+    margin:24px 0;
+    padding:6px 0 6px 24px;
+    font-style:italic;
+    color:#cdd8e2;
+    font-size:1.12rem;
+  }
+  footer{
+    border-top:1px solid var(--line);
+    margin-top:30px;
+    padding:48px 0 80px;
+  }
+  .colophon{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    line-height:1.9;
+    letter-spacing:0.06em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px;
+    background:var(--card);
+  }
+  .colophon strong{
+    color:var(--cyan);
+    font-weight:700;
+  }
+  .pager{
+    display:flex;
+    justify-content:space-between;
+    margin:34px 0;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .pager a{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:14px 20px;
+    border-radius:8px;
+    transition:all .2s ease;
+    flex:1;
+    text-align:center;
+    min-width:200px;
+  }
+  .pager a:hover{
+    border-color:var(--cyan);
+    transform:translate(-3px,-3px);
+    box-shadow:5px 5px 0 var(--cyan);
+  }
+  @media(max-width:620px){
+    body{
+      font-size:17px;
+    }
+    .domain{
+      grid-template-columns:1fr;
+      gap:8px;
+    }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Mandelbrot // ROOT0</span>
+    <a class="vol" href="0-who.html">0 · Who</a>
+    <a class="vol" href="1-fractals.html">1 · Fractals</a>
+    <a class="vol" href="2-world.html">2 · World</a>
+    <a class="vol active" href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kick">Volume 3 — The Legacy</span>
+    <h1>The Legacy
+      <span class="sub">A Geometry That Quietly Runs the World</span>
+    </h1>
+    <p class="lede">Fractal geometry escaped the math department and went to work — in the movies you watch, the phone in your pocket, the markets that move money, and the body that keeps you alive.</p>
+  </header>
+
+  <div class="figure">
+    <!-- Animated zooming Mandelbrot-set boundary detail -->
+    <svg viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="A zoom into the boundary detail of the Mandelbrot set">
+      <defs>
+        <radialGradient id="z3" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stop-color="#ea580c" stop-opacity="0.9"/>
+          <stop offset="45%" stop-color="#06b6d4" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+        </radialGradient>
+        <clipPath id="frame3"><rect x="0" y="0" width="600" height="360" rx="0"/></clipPath>
+      </defs>
+      <rect width="600" height="360" fill="#02020a"/>
+      <g clip-path="url(#frame3)">
+        <g transform="translate(300,180)">
+          <!-- infinite-zoom illusion: nested rings of spiral filaments scaling up and fading -->
+          <g>
+            <animateTransform attributeName="transform" type="scale" values="0.6;3.2" dur="6s" repeatCount="indefinite"/>
+            <g fill="none" stroke="#7fe9f5" stroke-width="1">
+              <path d="M0,0 m-60,0 a60,60 0 1,0 120,0 a60,60 0 1,0 -120,0"/>
+              <path d="M0,0 m-40,0 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0"/>
+              <path d="M60,0 q25,-25 0,-50 q-40,0 -30,40"/>
+              <path d="M-60,0 q-25,25 0,50 q40,0 30,-40"/>
+            </g>
+            <g fill="url(#z3)">
+              <circle cx="62" cy="0" r="18"/><circle cx="-62" cy="0" r="18"/>
+              <circle cx="0" cy="62" r="12"/><circle cx="0" cy="-62" r="12"/>
+            </g>
+            <animate attributeName="opacity" values="1;1;0" dur="6s" repeatCount="indefinite"/>
+          </g>
+          <!-- second wave offset in time for seamless infinite zoom -->
+          <g>
+            <animateTransform attributeName="transform" type="scale" values="0.6;3.2" dur="6s" begin="3s" repeatCount="indefinite"/>
+            <g fill="none" stroke="#ea580c" stroke-width="1">
+              <path d="M0,0 m-60,0 a60,60 0 1,0 120,0 a60,60 0 1,0 -120,0"/>
+              <path d="M0,0 m-40,0 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0"/>
+            </g>
+            <g fill="url(#z3)">
+              <circle cx="62" cy="0" r="18"/><circle cx="-62" cy="0" r="18"/>
+            </g>
+            <animate attributeName="opacity" values="1;1;0" dur="6s" begin="3s" repeatCount="indefinite"/>
+          </g>
+        </g>
+      </g>
+      <rect x="1" y="1" width="598" height="358" fill="none" stroke="#06b6d4" stroke-opacity="0.3"/>
+      <text x="300" y="340" fill="#8a97a6" font-family="'Space Mono',monospace" font-size="11" letter-spacing="3" text-anchor="middle">ZOOM FOREVER · THE EDGE NEVER SMOOTHS</text>
+    </svg>
+    <div class="figcap">Fig. 4 — Diving into the boundary: detail without end</div>
+  </div>
+
+  <section>
+    <span class="kick">The Reach</span>
+    <h2>From a curiosity to an infrastructure</h2>
+    <p>When Mandelbrot first showed his pictures, many mathematicians shrugged. Pretty, they said, but is it serious? The answer, four decades on, is overwhelming. Fractal geometry turned out to be one of those rare ideas that quietly becomes <em>infrastructure</em> — invisible, load-bearing, everywhere. Below are five places it now lives.</p>
+  </section>
+
+  <section>
+    <div class="domain">
+      <div class="tag">01 · Cinema</div>
+      <div>
+        <h3>CGI: building worlds from rules</h3>
+        <p>Nearly every digital landscape you have ever seen on screen is fractal. Because fractals generate endless natural-looking detail from a compact rule, they are the cheapest, most convincing way to manufacture a world. <strong>Every mountain range, every cloud bank, every forest and coastline</strong> rendered for film is, under the hood, a fractal algorithm.</p>
+        <p>The technique was pioneered in the early 1980s — Loren Carpenter's fractal mountains and the famous "Genesis effect" planet in <em>Star Trek II</em> were among the first. Today the entire visual-effects industry stands on this foundation: terrain generators, cloud and smoke simulations, vegetation, and erosion all trace back to Mandelbrot's insight that roughness can be grown by recursion.</p>
+      </div>
+    </div>
+
+    <div class="domain">
+      <div class="tag">02 · Your Phone</div>
+      <div>
+        <h3>Fractal antennas</h3>
+        <p>The reason a modern phone has no stubby pull-out antenna is, in part, fractal geometry. A <strong>fractal antenna</strong> folds a long conductive path into a tiny self-similar shape, and because it repeats structure at many scales, it naturally resonates at many frequencies at once. That makes one small antenna work across the many bands a phone needs — cellular, Wi-Fi, GPS, Bluetooth.</p>
+        <p>Engineer Nathan Cohen built and patented the first practical fractal antennas in the 1990s. The same trick now hides inside countless wireless devices: maximum bandwidth, minimum space, courtesy of self-similarity.</p>
+      </div>
+    </div>
+
+    <div class="domain">
+      <div class="tag">03 · The Markets</div>
+      <div>
+        <h3>Finance and the fat tails</h3>
+        <p>Mandelbrot's earliest serious application of these ideas was to economics, and it remains his most unsettling. Studying cotton prices at IBM, he found that markets do <em>not</em> follow the gentle bell curve (the normal distribution) that mainstream finance assumed. Real markets have <strong>fat tails</strong>: extreme moves — crashes and spikes — happen far more often than the standard models predict.</p>
+        <p>Where conventional theory treated a 1987 or 2008 crash as a once-in-ten-thousand-years freak, Mandelbrot insisted such violent jumps are <em>built into</em> the fractal, wild nature of markets. Prices are rough, clustered, and prone to sudden discontinuity — they have their own fractal dimension. His 2004 book <em>The (Mis)behavior of Markets</em> warned that the industry was catastrophically underpricing risk. The crisis of 2008 read like a grim vindication.</p>
+      </div>
+    </div>
+
+    <div class="domain">
+      <div class="tag">04 · Medicine</div>
+      <div>
+        <h3>Reading the body's fractals</h3>
+        <p>The body is full of fractals, and their <em>condition</em> carries information. <strong>Fractal analysis</strong> is now used to read the dimension of branching and rhythmic systems as a diagnostic.</p>
+        <p>A healthy <strong>heartbeat</strong> is not a metronome; it has a rich fractal variability, and a loss of that complexity can signal disease. The branching of the <strong>lungs</strong> and the retinal blood vessels can be scored by fractal dimension to detect abnormality. And the irregular boundary of a <strong>tumor</strong> tends to have a higher, more chaotic fractal dimension than healthy tissue — a measurable clue that helps distinguish malignant growths from benign ones.</p>
+      </div>
+    </div>
+
+    <div class="domain">
+      <div class="tag">05 · Compression</div>
+      <div>
+        <h3>Fractal image compression</h3>
+        <p>If an image contains self-similar parts — and most natural images do — you don't have to store the pixels; you can store the <em>rules</em> that regenerate them. <strong>Fractal image compression</strong> encodes a picture as a set of transformations whose repeated application reconstructs the image. Because the encoding is resolution-independent, the image can be enlarged while inventing plausible fractal detail rather than turning blocky.</p>
+        <p>Developed by Michael Barnsley and Alan Sloan in the late 1980s, it was a striking proof of concept: a portrait reduced to a compact recipe and grown back from it — Mandelbrot's "simple rules, repeated without end" turned into a storage technology.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <span class="kick">The Line That Started It All</span>
+    <p>"Clouds are not spheres, mountains are not cones, coastlines are not circles, and bark is not smooth."</p>
+    <cite>— Benoit Mandelbrot</cite>
+  </div>
+
+  <section>
+    <span class="kick">The Pattern Behind the Patterns</span>
+    <h2>Why one idea reached so far</h2>
+    <p>Look at the five domains together and a single thread connects them. In each case, the world supplies <em>roughness, branching, or irregularity</em> that smooth classical mathematics could not handle — and fractal geometry handles it natively.</p>
+    <div class="grid">
+      <div class="card"><span class="num">MAKE</span><h3>Generation</h3><p>CGI and compression use fractals to <em>build and store</em> complexity from simple rules.</p></div>
+      <div class="card"><span class="num">FIT</span><h3>Optimization</h3><p>Fractal antennas exploit self-similarity to do more in less space.</p></div>
+      <div class="card"><span class="num">WARN</span><h3>Risk</h3><p>Fractal market models reveal the fat tails that hide the real danger.</p></div>
+      <div class="card"><span class="num">HEAL</span><h3>Diagnosis</h3><p>Fractal dimension reads health in heartbeats, lungs, and tumor edges.</p></div>
+    </div>
+    <p>Mandelbrot did not invent any one of these applications. What he did was more fundamental: he gave the world a <em>language</em> for irregularity, and once that language existed, engineers, doctors, animators, and economists discovered they had been waiting for it all along.</p>
+  </section>
+
+  <section>
+    <span class="kick">The Standing</span>
+    <h2>The man who measured roughness</h2>
+    <p>Mandelbrot died in 2010, honored with the Wolf Prize, the Japan Prize, the Légion d'honneur, and a place in the public imagination almost unique among mathematicians — his set became a poster, a screensaver, a piece of pop culture. He remained, to the end, a partial outsider to pure mathematics, more beloved by the people who <em>use</em> math than by those who prove theorems. He would not have wanted it any other way.</p>
+    <p>His true monument is a shift in what we are able to <em>see</em>. Before Mandelbrot, the roughness of the world was noise — error to be averaged out, mess to be idealized away. After him, roughness is signal: measurable, meaningful, and beautiful. He took the broken, irregular, discarded parts of reality and showed they had a geometry as deep and lawful as the circle and the line.</p>
+    <blockquote>He spent his life on the things mathematics had thrown away — and proved they were the things that mattered most.</blockquote>
+    <p>That is the legacy: not merely a set of applications, but a permanent enlargement of human vision. Mandelbrot taught us to look at a cloud, a coastline, a market chart, a lung — and to see, instead of chaos, a pattern repeating without end.</p>
+  </section>
+
+  <div class="band">
+    <span class="kick">Where to Begin Again</span>
+    <p>"Bottomless wonders spring from simple rules, which are repeated without end."</p>
+    <cite>— Benoit Mandelbrot · 1924 – 2010</cite>
+  </div>
+
+  <div class="pager">
+    <a href="2-world.html">&#8592; Vol. 2 · His World</a>
+    <a href="0-who.html">Vol. 0 · Who He Was &#8594;</a>
+  </div>
+
+  <footer>
+    <div class="colophon">
+      <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+      Series: Benoit Mandelbrot (1924–2010) — Volume 3 of 4: The Legacy<br>
+      Author / Steward: <strong>David Lee Wise</strong> · ROOT0 · TriPod LLC<br>
+      License: <strong>CC-BY-ND-4.0</strong> — attribution required, no derivatives.<br>
+      Typeset in Cinzel, Newsreader &amp; Space Mono. Self-contained HTML.<br>
+      &#169; 2026 ROOT0 / TriPod LLC. All marks of attribution must remain intact.
+    </div>
+  </footer>
+</div>
+</body>
+</html>

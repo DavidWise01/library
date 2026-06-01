@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benoit Mandelbrot — Vol. 1: The Fractals</title>
+<meta name="description" content="The mathematics of fractals: the Mandelbrot set, fractal dimension, self-similarity, fractals in nature, and the coastline paradox.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04040c;--cyan:#06b6d4;--orange:#ea580c;
+    --ink:#e8edf2;--muted:#8a97a6;--line:rgba(6,182,212,0.32);
+    --card:#080816;--maxw:1080px;
+  }
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+  html{
+    scroll-behavior:smooth;
+  }
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(900px 600px at 80% -10%, rgba(6,182,212,0.10), transparent 60%),radial-gradient(700px 500px at -10% 110%, rgba(234,88,12,0.08), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(4,4,12,0.86);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 22px;
+    flex-wrap:wrap;
+  }
+  .nav-brand{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12px;
+    color:var(--cyan);
+    margin-right:auto;
+  }
+  .nav-inner a.vol{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-decoration:none;
+    color:var(--muted);
+    padding:6px 12px;
+    border:1px solid transparent;
+    border-radius:4px;
+    transition:all .2s ease;
+  }
+  .nav-inner a.vol:hover{
+    color:var(--ink);
+    border-color:var(--line);
+  }
+  .nav-inner a.vol.active{
+    color:var(--paper);
+    background:var(--cyan);
+    border-color:var(--cyan);
+  }
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 22px;
+    position:relative;
+    z-index:1;
+  }
+  header.hero{
+    padding:90px 0 50px;
+  }
+  .kick{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12.5px;
+    color:var(--cyan);
+    display:inline-block;
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:"Cinzel",serif;
+    font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);
+    line-height:1.02;
+    letter-spacing:0.01em;
+    margin-bottom:18px;
+  }
+  h1 .sub{
+    display:block;
+    font-size:0.34em;
+    font-weight:600;
+    color:var(--cyan);
+    letter-spacing:0.18em;
+    margin-top:18px;
+    font-family:"Space Mono",monospace;
+  }
+  .lede{
+    font-size:1.32rem;
+    color:var(--muted);
+    max-width:700px;
+    font-style:italic;
+  }
+  h2{
+    font-family:"Cinzel",serif;
+    font-weight:700;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    margin:14px 0 18px;
+    line-height:1.12;
+  }
+  h3{
+    font-family:"Cinzel",serif;
+    font-weight:600;
+    font-size:1.28rem;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  section{
+    padding:54px 0;
+    border-top:1px solid var(--line);
+  }
+  p{
+    margin-bottom:20px;
+  }
+  em,i{
+    color:#d6e0ea;
+  }
+  strong{
+    color:#fff;
+    font-weight:600;
+  }
+  .eq{
+    font-family:"Space Mono",monospace;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:3px solid var(--orange);
+    border-radius:8px;
+    padding:18px 22px;
+    margin:24px 0;
+    font-size:1.05rem;
+    color:#bfe9f1;
+    overflow-x:auto;
+    letter-spacing:0.02em;
+  }
+  .band{
+    background:var(--cyan);
+    color:var(--paper);
+    padding:40px 36px;
+    border-radius:10px;
+    margin:38px 0;
+  }
+  .band .kick{
+    color:var(--paper);
+    opacity:.7;
+  }
+  .band p{
+    margin:0;
+    font-size:1.5rem;
+    font-style:italic;
+    font-weight:500;
+    line-height:1.4;
+  }
+  .band cite{
+    display:block;
+    margin-top:16px;
+    font-family:"Space Mono",monospace;
+    font-style:normal;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    opacity:.8;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+    margin:30px 0;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 24px;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--cyan);
+    border-color:var(--cyan);
+  }
+  .card .num{
+    font-family:"Space Mono",monospace;
+    color:var(--orange);
+    font-size:12px;
+    letter-spacing:0.2em;
+    display:block;
+    margin-bottom:12px;
+  }
+  .card p{
+    font-size:1rem;
+    color:var(--muted);
+    margin:0;
+  }
+  .figure{
+    margin:38px 0;
+    text-align:center;
+  }
+  .figure svg{
+    max-width:100%;
+    height:auto;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:#02020a;
+  }
+  .figcap{
+    font-family:"Space Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:14px;
+  }
+  .dimtable{
+    width:100%;
+    border-collapse:collapse;
+    margin:26px 0;
+    font-size:0.98rem;
+  }
+  .dimtable th,.dimtable td{
+    text-align:left;
+    padding:14px 16px;
+    border-bottom:1px solid var(--line);
+  }
+  .dimtable th{
+    font-family:"Space Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+  }
+  .dimtable td:last-child{
+    font-family:"Space Mono",monospace;
+    color:var(--orange);
+  }
+  footer{
+    border-top:1px solid var(--line);
+    margin-top:30px;
+    padding:48px 0 80px;
+  }
+  .colophon{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    line-height:1.9;
+    letter-spacing:0.06em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px;
+    background:var(--card);
+  }
+  .colophon strong{
+    color:var(--cyan);
+    font-weight:700;
+  }
+  .pager{
+    display:flex;
+    justify-content:space-between;
+    margin:34px 0;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .pager a{
+    font-family:"Space Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:14px 20px;
+    border-radius:8px;
+    transition:all .2s ease;
+    flex:1;
+    text-align:center;
+    min-width:200px;
+  }
+  .pager a:hover{
+    border-color:var(--cyan);
+    transform:translate(-3px,-3px);
+    box-shadow:5px 5px 0 var(--cyan);
+  }
+  @media(max-width:620px){
+    body{
+      font-size:17px;
+    }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Mandelbrot // ROOT0</span>
+    <a class="vol" href="0-who.html">0 · Who</a>
+    <a class="vol active" href="1-fractals.html">1 · Fractals</a>
+    <a class="vol" href="2-world.html">2 · World</a>
+    <a class="vol" href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kick">Volume 1 — The Mathematics</span>
+    <h1>The Fractals
+      <span class="sub">Infinite Detail From a Single Rule</span>
+    </h1>
+    <p class="lede">A handful of simple ideas — iteration, dimension, and self-similarity — that together describe the shape of almost everything nature actually builds.</p>
+  </header>
+
+  <div class="figure">
+    <!-- Animated Koch snowflake growing recursively -->
+    <svg viewBox="0 0 600 380" width="600" height="380" role="img" aria-label="A Koch snowflake growing recursively from a triangle">
+      <rect width="600" height="380" fill="#02020a"/>
+      <g fill="none" stroke="#06b6d4" stroke-width="1.6" stroke-linejoin="round">
+        <!-- iteration 0: triangle -->
+        <polygon points="300,80 480,300 120,300" opacity="0.18"/>
+        <!-- iteration 1 -->
+        <path opacity="0.45" d="
+          M300,80 L360,160 L420,140 L420,300? "/>
+        <!-- Koch curve, three sides, drawn as one animated path -->
+        <path stroke="#ea580c" stroke-width="1.8" d="
+          M120,300
+          L180,300 L210,248 L240,300 L300,300
+          L330,248 L360,300 L420,300
+          L390,248 L420,196 L450,248 L480,300
+          L420,300 L390,352? ">
+          <animate attributeName="stroke-dasharray" values="0,2000;2000,0" dur="5s" repeatCount="indefinite"/>
+        </path>
+      </g>
+      <!-- a cleaner animated Koch outline overlaid -->
+      <g fill="none" stroke="#7fe9f5" stroke-width="2" stroke-linejoin="round">
+        <path d="M150,290
+          L210,290 L240,238 L270,290 L330,290
+          L360,238 L390,290 L450,290
+          L420,238 L390,186 L360,238 L330,238
+          L300,186 L270,238 L240,238 L210,186
+          L180,238 L150,238 Z">
+          <animate attributeName="opacity" values="0.2;1;0.2" dur="5s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="scale" values="0.96;1.02;0.96" additive="sum" dur="5s" repeatCount="indefinite"/>
+        </path>
+      </g>
+      <text x="300" y="358" fill="#8a97a6" font-family="'Space Mono',monospace" font-size="11" letter-spacing="3" text-anchor="middle">EACH EDGE BECOMES FOUR · FOREVER</text>
+    </svg>
+    <div class="figcap">Fig. 1 — A Koch snowflake: finite area, infinite perimeter</div>
+  </div>
+
+  <section>
+    <span class="kick">Part One</span>
+    <h2>The Mandelbrot set</h2>
+    <p>The most famous fractal of all begins with a formula simple enough to fit on a fingernail. Take a complex number <em>c</em>. Start at zero and repeat one operation over and over:</p>
+    <div class="eq">z&#8320; = 0 &nbsp;&nbsp; z&#8345;&#8330;&#8321; = z&#8345;&#178; + c</div>
+    <p>For each point <em>c</em> in the plane, you watch what the sequence does. Sometimes the numbers stay small and bounded forever, circling near the origin. Sometimes they blow up, racing off toward infinity. The <strong>Mandelbrot set</strong> is simply the collection of all the points <em>c</em> for which the sequence <em>stays bounded</em> — it never escapes.</p>
+    <p>To make the famous picture, you do this for every pixel. Color each point <em>c</em> by whether — and how quickly — it escapes to infinity. Points inside the set are painted black. Points outside are colored by how many iterations they survived before fleeing, and those escape-time bands form the glowing filaments and spirals that surround the set.</p>
+    <p>What emerges is astonishing. The <strong>boundary</strong> of the set is infinitely complex. No matter how far you zoom in, you never reach smoothness; new detail keeps unfolding, and you keep finding spirals, seahorse tails, lightning, and tiny near-perfect copies of the whole set buried in its own edge. It is <em>self-similar at every scale</em>, generated entirely by squaring and adding.</p>
+
+    <div class="grid">
+      <div class="card"><span class="num">STEP 1</span><h3>Pick a point</h3><p>Choose a complex number <em>c</em> — a coordinate in the plane.</p></div>
+      <div class="card"><span class="num">STEP 2</span><h3>Iterate</h3><p>From z&#8320;=0, repeatedly compute z&#178;+c. Watch the orbit.</p></div>
+      <div class="card"><span class="num">STEP 3</span><h3>Test escape</h3><p>If the value ever exceeds radius 2, it escapes — and always will.</p></div>
+      <div class="card"><span class="num">STEP 4</span><h3>Color it</h3><p>Bounded &#8594; black (in the set). Escaped &#8594; colored by iteration count.</p></div>
+    </div>
+  </section>
+
+  <div class="band">
+    <span class="kick">The Core Idea</span>
+    <p>"Bottomless wonders spring from simple rules, which are repeated without end."</p>
+    <cite>— Benoit Mandelbrot</cite>
+  </div>
+
+  <section>
+    <span class="kick">Part Two</span>
+    <h2>Fractal dimension</h2>
+    <p>Here is the strangest, deepest idea Mandelbrot gave us. We are taught that dimension comes in whole numbers: a line is 1-dimensional, a square 2-dimensional, a cube 3-dimensional. Mandelbrot insisted that nature lives <em>between</em> the whole numbers.</p>
+    <p>A coastline is more than a line but less than a filled-in area. A crumpled mountain range is more than a surface but less than a solid. These objects have a <strong>fractional dimension</strong> — a number like 1.25 or 2.3 — that measures precisely how <em>rough</em> they are, how aggressively they fill the space they wander through. The higher the fractional part, the more crinkled and space-filling the object.</p>
+    <p>The classic example is a coastline. The <strong>coast of Britain has a fractal dimension of roughly 1.25</strong>: rougher than a smooth curve (dimension 1), but nowhere near filling a plane (dimension 2). A calmer coast scores lower; a wildly jagged fjord coast scores higher. Dimension became a hard number for something everyone could see but no one could previously measure: roughness itself.</p>
+
+    <table class="dimtable">
+      <thead><tr><th>Object</th><th>Roughly speaking</th><th>Dimension</th></tr></thead>
+      <tbody>
+        <tr><td>A straight line</td><td>Perfectly smooth</td><td>1.00</td></tr>
+        <tr><td>Coast of Britain</td><td>Moderately jagged</td><td>≈ 1.25</td></tr>
+        <tr><td>Koch snowflake curve</td><td>Crinkled at every scale</td><td>≈ 1.26</td></tr>
+        <tr><td>A rugged coastline (Norway)</td><td>Deep fjords, very rough</td><td>≈ 1.52</td></tr>
+        <tr><td>A flat plane</td><td>Completely filled</td><td>2.00</td></tr>
+      </tbody>
+    </table>
+    <p>Mandelbrot's insight was that this number is not a curiosity — it is the fundamental measurement of an irregular object, as basic as length or weight, and it stays roughly constant as you change the scale of your ruler.</p>
+  </section>
+
+  <section>
+    <span class="kick">Part Three</span>
+    <h2>Self-similarity</h2>
+    <p>The beating heart of fractal geometry is <strong>self-similarity</strong>: zoom in, and you find the same structure repeating. A small piece of the object resembles the whole.</p>
+    <p>Snap a twig from a tree and it looks like a small tree. A tributary of a river branches like the whole river system. A floret of cauliflower (or, even more strikingly, Romanesco broccoli) is a miniature of the entire head, and its own florets are miniatures again. This is why fractals feel uncanny — they violate our expectation that zooming in should eventually reveal something <em>different</em>, something simpler. With a fractal, the zoom never bottoms out. The complexity is genuinely endless.</p>
+    <p>Some fractals are <em>exactly</em> self-similar (the Koch snowflake, the Sierpinski triangle), where each part is a perfect shrunken copy. Most natural fractals are <em>statistically</em> self-similar: the pattern isn't identical at every scale, but its <em>statistics</em> — its roughness, its branching ratio — stay the same. That subtler version is what makes the idea so widely applicable to the real world.</p>
+  </section>
+
+  <div class="figure">
+    <!-- Animated recursive fractal tree -->
+    <svg viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="A fractal tree branching recursively, swaying">
+      <rect width="600" height="360" fill="#02020a"/>
+      <g stroke="#06b6d4" stroke-linecap="round" fill="none">
+        <g transform="translate(300,330)">
+          <animateTransform attributeName="transform" type="rotate" values="-2 0 0;2 0 0;-2 0 0" dur="6s" repeatCount="indefinite" additive="sum"/>
+          <line x1="0" y1="0" x2="0" y2="-70" stroke-width="6" stroke="#ea580c"/>
+          <g transform="translate(0,-70)">
+            <g transform="rotate(-28)"><line x1="0" y1="0" x2="0" y2="-52" stroke-width="4"/>
+              <g transform="translate(0,-52)">
+                <g transform="rotate(-26)"><line x1="0" y1="0" x2="0" y2="-38" stroke-width="2.6"/>
+                  <g transform="translate(0,-38) rotate(-22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                  <g transform="translate(0,-38) rotate(22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                </g>
+                <g transform="rotate(26)"><line x1="0" y1="0" x2="0" y2="-38" stroke-width="2.6"/>
+                  <g transform="translate(0,-38) rotate(-22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                  <g transform="translate(0,-38) rotate(22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                </g>
+              </g>
+            </g>
+            <g transform="rotate(28)"><line x1="0" y1="0" x2="0" y2="-52" stroke-width="4"/>
+              <g transform="translate(0,-52)">
+                <g transform="rotate(-26)"><line x1="0" y1="0" x2="0" y2="-38" stroke-width="2.6"/>
+                  <g transform="translate(0,-38) rotate(-22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                  <g transform="translate(0,-38) rotate(22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                </g>
+                <g transform="rotate(26)"><line x1="0" y1="0" x2="0" y2="-38" stroke-width="2.6"/>
+                  <g transform="translate(0,-38) rotate(-22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                  <g transform="translate(0,-38) rotate(22)"><line x1="0" y1="0" x2="0" y2="-26" stroke-width="1.6"/></g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+      <text x="300" y="350" fill="#8a97a6" font-family="'Space Mono',monospace" font-size="11" letter-spacing="3" text-anchor="middle">THE SAME RULE, AT EVERY SCALE</text>
+    </svg>
+    <div class="figcap">Fig. 2 — A recursive fractal tree: each branch a smaller tree</div>
+  </div>
+
+  <section>
+    <span class="kick">Part Four</span>
+    <h2>Fractals in nature</h2>
+    <p>Once you have the eye for it, fractals are everywhere. They are, in a real sense, nature's preferred way of building — because a simple rule repeated at every scale is a cheap, robust recipe for complex, efficient structure.</p>
+    <div class="grid">
+      <div class="card"><span class="num">LAND</span><h3>Coastlines &amp; mountains</h3><p>Jagged at every scale; erosion and uplift produce the same statistics from kilometres down to pebbles.</p></div>
+      <div class="card"><span class="num">SKY</span><h3>Clouds</h3><p>Billows within billows. A cloud's edge has no single "true" length — it is fractal mist.</p></div>
+      <div class="card"><span class="num">LIFE</span><h3>Trees &amp; ferns</h3><p>Branching that repeats from trunk to twig; a fern frond is a colony of miniature fronds.</p></div>
+      <div class="card"><span class="num">BODY</span><h3>Blood vessels &amp; lungs</h3><p>Branching networks that pack maximum surface into minimum volume — fractal by necessity.</p></div>
+      <div class="card"><span class="num">WATER</span><h3>Snowflakes</h3><p>Six-fold branching that echoes itself outward; ice growing by the same rule at every tip.</p></div>
+      <div class="card"><span class="num">FLOW</span><h3>Rivers &amp; lightning</h3><p>Tributaries and forks of electricity trace the same branching geometry of least resistance.</p></div>
+    </div>
+    <p>The lungs are the perfect emblem. To exchange oxygen, you need enormous surface area folded into a small chest. Nature's answer is a fractal: a branching tree of airways dividing some twenty-three times, packing a surface the size of a tennis court into your ribcage. The same fractal logic routes your blood, drains your watersheds, and shapes the clouds overhead.</p>
+  </section>
+
+  <section>
+    <span class="kick">Part Five</span>
+    <h2>"How Long Is the Coast of Britain?"</h2>
+    <p>In <strong>1967</strong>, Mandelbrot published a short paper in the journal <em>Science</em> with a deceptively childish title: <em>"How Long Is the Coast of Britain? Statistical Self-Similarity and Fractional Dimension."</em> It launched fractal geometry as a science.</p>
+    <p>The puzzle: measure a coastline with a long ruler, and you cut across every bay and headland, getting a short total. Measure it with a shorter ruler, and you trace into the bays — the total grows. Use a ruler the size of a pebble, and it grows again. As your ruler shrinks toward zero, the measured length climbs <em>toward infinity</em>. The coastline has no single well-defined length. This is the <strong>coastline paradox</strong>.</p>
+    <p>Mandelbrot's resolution was radical and clarifying: stop asking for the length. The meaningful, stable quantity is the <strong>fractal dimension</strong> — the number describing how fast the length grows as the ruler shrinks. That number <em>is</em> the coast's character. With one paper, the irregular was no longer a defect to be smoothed away in error bars; it was the very thing to be measured.</p>
+  </section>
+
+  <div class="band">
+    <span class="kick">The Manifesto</span>
+    <p>"Clouds are not spheres, mountains are not cones, coastlines are not circles, and bark is not smooth, nor does lightning travel in a straight line."</p>
+    <cite>— Benoit Mandelbrot, The Fractal Geometry of Nature</cite>
+  </div>
+
+  <section>
+    <span class="kick">Putting It Together</span>
+    <h2>One idea, four faces</h2>
+    <p>The Mandelbrot set shows how <em>infinite complexity springs from a trivial rule</em>. Fractal dimension gives us a <em>number for roughness</em>. Self-similarity is the <em>mechanism</em> — the same structure at every scale. And nature, from coastline to lung, turns out to be written in exactly this language. The coastline paper was the spark; the geometry of nature was the fire.</p>
+    <p>What none of this could have become without a machine to draw it — and the human story of how Mandelbrot found that machine — is the subject of Volume 2.</p>
+  </section>
+
+  <div class="pager">
+    <a href="0-who.html">&#8592; Vol. 0 · Who He Was</a>
+    <a href="2-world.html">Vol. 2 · His World &#8594;</a>
+  </div>
+
+  <footer>
+    <div class="colophon">
+      <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+      Series: Benoit Mandelbrot (1924–2010) — Volume 1 of 4: The Fractals<br>
+      Author / Steward: <strong>David Lee Wise</strong> · ROOT0 · TriPod LLC<br>
+      License: <strong>CC-BY-ND-4.0</strong> — attribution required, no derivatives.<br>
+      Typeset in Cinzel, Newsreader &amp; Space Mono. Self-contained HTML.<br>
+      &#169; 2026 ROOT0 / TriPod LLC. All marks of attribution must remain intact.
+    </div>
+  </footer>
+</div>
+</body>
+</html>

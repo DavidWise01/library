@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Hilbert — Vol. 0: Who</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#06080a;
+    --slate:#475569;
+    --gold:#ca8a04;
+    --ink:#e8eaed;
+    --muted:#9aa3ad;
+    --card:#0c1014;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cinzel',serif;line-height:1.18;font-weight:700;}
+  a{color:var(--gold);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .kick{
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.72rem;
+    color:var(--gold);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,8,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--slate);
+  }
+  nav .wrap{
+    max-width:1100px;margin:0 auto;
+    display:flex;align-items:center;gap:1.5rem;
+    padding:0.85rem 1.5rem;flex-wrap:wrap;
+  }
+  nav .brand{font-family:'Cinzel',serif;font-weight:800;letter-spacing:0.05em;font-size:0.95rem;}
+  nav .links{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto;}
+  nav .links a{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;
+    color:var(--muted);padding:0.3rem 0;border-bottom:2px solid transparent;
+  }
+  nav .links a:hover{color:var(--ink);text-decoration:none;}
+  nav .links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  /* LAYOUT */
+  .container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+  header.hero{padding:5.5rem 0 3.5rem;border-bottom:1px solid var(--slate);}
+  header.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;letter-spacing:0.01em;}
+  header.hero .sub{font-size:1.35rem;color:var(--muted);font-style:italic;margin-top:1rem;max-width:62ch;}
+  .volno{font-size:1rem;color:var(--gold);margin-bottom:1.2rem;}
+
+  section{padding:3.2rem 0;border-bottom:1px solid rgba(71,85,105,0.4);}
+  section h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:1.4rem;color:var(--ink);}
+  section h3{font-size:1.25rem;margin:1.8rem 0 0.7rem;color:var(--gold);}
+  p{margin-bottom:1.1rem;max-width:70ch;}
+  p.lead{font-size:1.2rem;}
+  em,i{color:#f0ddb0;}
+  blockquote{
+    border-left:3px solid var(--gold);
+    padding:0.6rem 0 0.6rem 1.4rem;
+    margin:1.6rem 0;font-style:italic;font-size:1.3rem;color:#f0ddb0;
+    max-width:64ch;
+  }
+  blockquote cite{display:block;font-style:normal;font-size:0.8rem;color:var(--muted);margin-top:0.6rem;}
+
+  /* CARDS */
+  .grid{display:grid;gap:1.2rem;margin:1.6rem 0;}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .card{
+    background:var(--card);
+    border:1px solid var(--slate);
+    padding:1.4rem;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--gold);}
+  .card h3{margin-top:0;font-size:1.05rem;color:var(--gold);}
+  .card p{font-size:0.95rem;color:var(--muted);margin-bottom:0;}
+  .card .num{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--slate);}
+
+  /* BAND */
+  .band{
+    background:var(--slate);
+    color:#f4f6f8;
+    padding:3rem 0;
+  }
+  .band h2{color:#fff;}
+  .band p{color:#e2e8f0;}
+  .band .kick{color:#fde68a;}
+
+  /* TIMELINE */
+  .timeline{list-style:none;border-left:2px solid var(--slate);margin:1.5rem 0;padding-left:1.6rem;}
+  .timeline li{margin-bottom:1.4rem;position:relative;}
+  .timeline li::before{content:"";position:absolute;left:-1.92rem;top:0.5rem;width:10px;height:10px;background:var(--gold);border-radius:50%;}
+  .timeline .yr{font-family:'Space Mono',monospace;color:var(--gold);font-size:0.85rem;letter-spacing:0.1em;}
+
+  /* SVG FIGURE */
+  figure.svgfig{margin:2.4rem 0;text-align:center;}
+  figure.svgfig svg{max-width:100%;height:auto;border:1px solid var(--slate);background:#080b0e;padding:1rem;}
+  figcaption{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.16em;margin-top:0.8rem;}
+
+  /* COLOPHON */
+  footer.colophon{
+    background:#04060a;border-top:1px solid var(--slate);
+    padding:3rem 0;font-family:'Space Mono',monospace;font-size:0.72rem;
+    color:var(--muted);letter-spacing:0.05em;line-height:1.9;
+  }
+  footer.colophon .tag{color:var(--gold);}
+  footer.colophon a{color:var(--muted);}
+
+  /* SVG ANIMATION: 23 boxes */
+  .hbox{fill:#0c1014;stroke:var(--slate);stroke-width:1.5;}
+  .hbox-lit{animation:lightup 9.2s infinite;}
+  @keyframes lightup{
+    0%,100%{fill:#0c1014;stroke:var(--slate);}
+    8%,20%{fill:var(--gold);stroke:var(--gold);}
+  }
+  .hnum{font-family:'Space Mono',monospace;font-size:9px;fill:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">HILBERT</span>
+    <div class="links">
+      <a href="0-who.html" class="active">00 · Who</a>
+      <a href="1-problems.html">01 · Problems</a>
+      <a href="2-world.html">02 · World</a>
+      <a href="3-legacy.html">03 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="volno kick">Volume 00 — Who</div>
+    <h1>David Hilbert</h1>
+    <p class="sub">The man who tried to put all of mathematics on an unshakable foundation — and lived to watch a 25-year-old logician prove it could not be done.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <span class="kick">1862 – 1943</span>
+    <h2>A life measured in axioms</h2>
+    <p class="lead">David Hilbert was born on 23 January 1862 in Königsberg, the Prussian city of bridges that had already given mathematics one of its most famous puzzles. He would spend his career trying to make mathematics complete, consistent, and decidable — and his name would end up attached to more of twentieth-century mathematics than almost anyone else's.</p>
+    <p>For 47 years he taught at the University of Göttingen, and during that span he turned a respectable provincial university into the undisputed world center of mathematical research. "Wir müssen wissen" — we must know — was not a slogan he invented late in life. It was the temperament of his entire working existence.</p>
+
+    <figure class="svgfig">
+      <svg viewBox="0 0 600 220" role="img" aria-label="Twenty-three numbered boxes lighting up in sequence">
+        <!-- 23 boxes in a grid, each with staggered animation -->
+        <g id="boxes"></g>
+      </svg>
+      <figcaption>The 23 Problems — lighting up in sequence, 1900</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">Königsberg, 1862</span>
+    <h2>The city of seven bridges</h2>
+    <p>Königsberg was already mathematical folklore before Hilbert was born there. Euler's 1736 solution to the Seven Bridges of Königsberg founded graph theory and topology. Growing up in that city, Hilbert absorbed the local sense that mathematics was a civic inheritance.</p>
+    <p>He studied at the University of Königsberg, took his doctorate in 1885 under Ferdinand von Lindemann, and formed lifelong friendships with Hermann Minkowski and Adolf Hurwitz — a trio who walked and argued mathematics together almost daily. That habit of relentless conversation became the model for the school he would later build.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Göttingen, 1895–1930</span>
+    <h2>Building the world center</h2>
+    <p>In 1895, on the urging of Felix Klein, Hilbert moved to Göttingen — the university of Gauss, Riemann, and Dirichlet. He stayed for the rest of his career. Under Hilbert and Klein, Göttingen became the place every ambitious mathematician on earth wanted to be: a magnet for talent from across Europe and America.</p>
+    <p>His early work alone would have made a great career. The <em>Zahlbericht</em> (1897) reorganized algebraic number theory. The <em>Grundlagen der Geometrie</em> (1899) rebuilt Euclid on a rigorous axiomatic foundation, replacing intuition with formal logic. He solved Gordan's problem in invariant theory so abstractly that Gordan reportedly exclaimed, "This is not mathematics, this is theology."</p>
+
+    <h3>What he believed</h3>
+    <p>Hilbert was the great <em>formalist</em>. He believed that all of mathematics could, in principle, be derived from a finite, consistent set of axioms — and that the consistency of those axioms could be proved by finite, mechanical means. Mathematics, for Hilbert, was a game played with meaningless symbols according to fixed rules, and the job of the mathematician was to prove the game could never produce a contradiction.</p>
+    <p>"No one shall expel us from the paradise that Cantor has created," he declared, defending the infinite against the skeptics. He intended to put that paradise on bedrock.</p>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="num">FOUNDATIONS</div>
+        <h3>Axiomatics</h3>
+        <p>Every branch of mathematics should rest on explicit, independent, consistent axioms.</p>
+      </div>
+      <div class="card">
+        <div class="num">CONSISTENCY</div>
+        <h3>No contradictions</h3>
+        <p>It must be provable, by finitary methods, that the axioms can never derive a falsehood.</p>
+      </div>
+      <div class="card">
+        <div class="num">DECIDABILITY</div>
+        <h3>The Entscheidungsproblem</h3>
+        <p>There should be a definite procedure to decide the truth of any mathematical statement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Paris, 8 August 1900</span>
+    <h2>The 23 Problems</h2>
+    <p>At the International Congress of Mathematicians in Paris, Hilbert delivered a lecture titled simply "Mathematical Problems." He laid out a list of unsolved problems — ten in the lecture, 23 in the printed version — that he believed would shape the coming century.</p>
+    <p>He was right. The list became the most influential single document in the history of mathematics. To solve a Hilbert problem was to enter the front rank of mathematicians. The problems ranged across the continuum hypothesis, the consistency of arithmetic, the Riemann hypothesis, Diophantine equations, and the foundations of physics. Many were solved; some remain open; and at least two were answered in ways Hilbert never anticipated — by showing that no answer of the kind he wanted is possible.</p>
+    <blockquote>
+      "We hear within us the perpetual call: There is the problem. Seek its solution. You can find it by pure reason, for in mathematics there is no <em>ignorabimus</em>."
+      <cite>— David Hilbert, Paris, 1900</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">Königsberg, 8 September 1930</span>
+    <h2>"Wir müssen wissen. Wir werden wissen."</h2>
+    <p>On his retirement, Hilbert was made an honorary citizen of his native Königsberg. He closed his address — broadcast on the radio — with the words that would define him: <em>"Wir müssen wissen. Wir werden wissen."</em> We must know. We will know. The recording survives; you can still hear him laugh, briefly, at the end.</p>
+    <p>It was the high-water mark of mathematical optimism. He was certain that no problem in mathematics was forever beyond reach. There is no <em>ignorabimus</em> — no "we shall not know."</p>
+    <blockquote>
+      "Wir müssen wissen. Wir werden wissen."
+      <cite>— We must know. We will know. (Königsberg, 1930)</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Königsberg, 7 September 1930 — the day before</span>
+    <h2>The cruel coincidence</h2>
+    <p>The bitter irony of intellectual history is that the day <em>before</em> Hilbert's triumphant radio address, at the very same Königsberg conference, a 24-year-old logician named Kurt Gödel quietly announced a result that would dismantle Hilbert's program.</p>
+    <p>Gödel's <em>incompleteness theorems</em>, published in full in 1931, proved that any consistent formal system rich enough to express arithmetic must contain true statements it cannot prove — and that no such system can prove its own consistency. The dream of a finite, complete, self-certifying foundation for mathematics was, in principle, impossible.</p>
+    <p>Hilbert had spent decades pursuing exactly the thing Gödel showed could not exist. Witnesses say his first reaction was anger. But the program was not worthless: in its ruins, Gödel, Turing, Church, and others founded modern logic and computability theory. Hilbert had asked the right questions even when the answers were "no."</p>
+
+    <ul class="timeline">
+      <li><span class="yr">1862</span><br>Born in Königsberg, Prussia.</li>
+      <li><span class="yr">1885</span><br>Doctorate under Lindemann; begins work on invariant theory.</li>
+      <li><span class="yr">1895</span><br>Joins Göttingen at Klein's invitation; stays 47 years.</li>
+      <li><span class="yr">1899</span><br><em>Grundlagen der Geometrie</em> — geometry rebuilt on axioms.</li>
+      <li><span class="yr">1900</span><br>The 23 Problems, Paris ICM — the century's agenda.</li>
+      <li><span class="yr">1920s</span><br>Hilbert's Program: the drive for consistency and completeness.</li>
+      <li><span class="yr">1930</span><br>Retirement; the radio address. "Wir müssen wissen."</li>
+      <li><span class="yr">1931</span><br>Gödel's incompleteness theorems. The program collapses.</li>
+      <li><span class="yr">1933</span><br>Nazi dismissals gut Göttingen's mathematics faculty.</li>
+      <li><span class="yr">1943</span><br>Dies in near-isolation; perhaps a dozen mourners.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Göttingen, 1933–1943</span>
+    <h2>The dark ending</h2>
+    <p>In 1933 the Nazi regime passed the Law for the Restoration of the Professional Civil Service, purging Jewish and politically suspect academics. In a single year, Göttingen's extraordinary mathematics faculty was destroyed — Emmy Noether, Richard Courant, Edmund Landau, Hermann Weyl and many others were forced out or fled. The world center Hilbert had built was hollowed out almost overnight.</p>
+    <p>Asked at a dinner by the Nazi education minister Bernhard Rust whether mathematics at Göttingen had suffered now that it was "freed from Jewish influence," Hilbert answered flatly: <em>"There is no mathematics in Göttingen anymore."</em></p>
+    <p>He died on 14 February 1943, aged 81, increasingly isolated in a city emptied of his colleagues and his students. Fewer than a dozen people are said to have attended his funeral. On his tombstone are carved the words of his radio address.</p>
+    <blockquote>
+      "Wir müssen wissen. Wir werden wissen."
+      <cite>— Engraved on Hilbert's gravestone, Göttingen</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">In his own words</span>
+    <h2>The voice of a formalist</h2>
+    <p>Hilbert wrote and lectured with unusual force and clarity. His aphorisms outlived the technical results they accompanied, and they still circulate as a kind of creed for mathematicians who believe in rigor without losing their sense of wonder.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="num">ON THE INFINITE</div>
+        <h3>Cantor's paradise</h3>
+        <p>"No one shall expel us from the paradise that Cantor has created for us."</p>
+      </div>
+      <div class="card">
+        <div class="num">ON PROBLEMS</div>
+        <h3>No ignorabimus</h3>
+        <p>"In mathematics there is no <em>ignorabimus</em> — we must know, we will know."</p>
+      </div>
+      <div class="card">
+        <div class="num">ON IMAGINATION</div>
+        <h3>A student's choice</h3>
+        <p>Of a student who left mathematics for poetry: "I always thought he did not have enough imagination to be a mathematician."</p>
+      </div>
+      <div class="card">
+        <div class="num">ON PHYSICS</div>
+        <h3>Too hard for physicists</h3>
+        <p>"Physics is much too hard for physicists" — a jab that masked his deep engagement with relativity and quantum theory.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Why he matters</span>
+    <h2>The shape of a career</h2>
+    <p>It is rare for one mathematician to leave a deep mark on so many fields. Hilbert reorganized algebraic number theory, re-founded geometry on rigorous axioms, created the theory of integral equations and the spaces that bear his name, contributed to the mathematics of general relativity, and — through his program and his problems — set the terms of twentieth-century logic and the foundations of computer science.</p>
+    <p>He did this in part through his own work and in part through the school he built. Hilbert believed mathematics was a collective, conversational enterprise, and he made Göttingen the place where that conversation happened at the highest level. His doctoral students and collaborators include some of the most important names of the century, and the institutions they founded after 1933 carried his approach across the world.</p>
+    <p>The arc of his life is a tragedy in the classical sense: a man of immense confidence, brought low not by a flaw but by the discovery that his deepest ambition was, in principle, unattainable — and then by a regime that destroyed the community he had spent his life creating. And yet the questions he asked remain alive, and the answer to many of them is still, faithfully, "we will know."</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The school</span>
+    <h2>A teacher of teachers</h2>
+    <p>Hilbert's influence ran as much through his students as through his theorems. He supervised dozens of doctoral candidates and surrounded himself with brilliant assistants and collaborators. The Göttingen seminar was a crucible: ideas were tested aloud, mercilessly, in conversation. Many of the leading mathematicians of the next generation passed through it.</p>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="num">SUCCESSOR</div>
+        <h3>Hermann Weyl</h3>
+        <p>Hilbert's most celebrated student; later carried the Göttingen tradition to Princeton's Institute for Advanced Study.</p>
+      </div>
+      <div class="card">
+        <div class="num">COLLABORATOR</div>
+        <h3>Paul Bernays</h3>
+        <p>Co-author of the monumental <em>Grundlagen der Mathematik</em>, the definitive statement of Hilbert's foundational program.</p>
+      </div>
+      <div class="card">
+        <div class="num">COLLABORATOR</div>
+        <h3>Richard Courant</h3>
+        <p>Co-author of "Courant–Hilbert," <em>Methods of Mathematical Physics</em> — a text that, by luck, anticipated the math quantum mechanics would need.</p>
+      </div>
+      <div class="card">
+        <div class="num">PROTÉGÉE</div>
+        <h3>Emmy Noether</h3>
+        <p>Whom he fought to install at Göttingen against the university's objections — the founder of modern abstract algebra.</p>
+      </div>
+      <div class="card">
+        <div class="num">THE PHYSICS TURN</div>
+        <h3>General relativity</h3>
+        <p>Hilbert derived the field equations of gravitation by a variational principle in 1915, in parallel with Einstein.</p>
+      </div>
+      <div class="card">
+        <div class="num">THE FRIEND</div>
+        <h3>Hermann Minkowski</h3>
+        <p>Lifelong friend from Königsberg; his spacetime geometry gave relativity its four-dimensional form.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">In one breath</span>
+    <h2>The shortest summary</h2>
+    <p>David Hilbert wanted to make all of mathematics provably complete and consistent. He gave the century its problems, gave physics its Hilbert spaces, and gave logic its sharpest questions. Then Gödel proved his dream impossible, and the Nazis destroyed the school he had built. He kept his creed to the end: <em>we must know, we will know.</em></p>
+    <p>Everything that follows in this series is an expansion of that single paragraph: the problems he posed, the world he made and lost, and the legacy that outlived both his program and his enemies.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Read on</span>
+    <h2>Continue the series</h2>
+    <div class="grid cols-3">
+      <a class="card" href="1-problems.html" style="color:inherit;">
+        <div class="num">VOL 01</div>
+        <h3>The 23 Problems</h3>
+        <p>All twenty-three, with status: solved, partial, unsolved, or independent of ZFC.</p>
+      </a>
+      <a class="card" href="2-world.html" style="color:inherit;">
+        <div class="num">VOL 02</div>
+        <h3>The World</h3>
+        <p>Göttingen, Emmy Noether, Paris 1900, and the Nazi catastrophe of 1933.</p>
+      </a>
+      <a class="card" href="3-legacy.html" style="color:inherit;">
+        <div class="num">VOL 03</div>
+        <h3>The Legacy</h3>
+        <p>Hilbert spaces, the Riemann Hypothesis, Turing, and "We will know."</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="container">
+    <div class="tag">ROOT0-ATTRIBUTION-v1.0</div>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br>
+    The David Hilbert Series — Volume 00: Who · Self-contained HTML<br>
+    "Wir müssen wissen. Wir werden wissen."
+  </div>
+</footer>
+
+<script>
+  // Build the 23-box animated SVG grid programmatically.
+  (function(){
+    var g = document.getElementById('boxes');
+    if(!g) return;
+    var cols = 8, size = 56, gap = 10, ox = 26, oy = 22;
+    var SVGNS = 'http://www.w3.org/2000/svg';
+    for(var i=0;i<23;i++){
+      var col = i % cols, row = Math.floor(i/cols);
+      var x = ox + col*(size+gap);
+      var y = oy + row*(size+gap);
+      var rect = document.createElementNS(SVGNS,'rect');
+      rect.setAttribute('x',x); rect.setAttribute('y',y);
+      rect.setAttribute('width',size); rect.setAttribute('height',size);
+      rect.setAttribute('rx',3);
+      rect.setAttribute('class','hbox hbox-lit');
+      // Stagger the animation so boxes light up 1..23 in sequence.
+      rect.style.animationDelay = (i*0.38)+'s';
+      g.appendChild(rect);
+      var t = document.createElementNS(SVGNS,'text');
+      t.setAttribute('x', x+size/2); t.setAttribute('y', y+size/2+3);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('class','hnum');
+      t.textContent = (i+1);
+      g.appendChild(t);
+    }
+  })();
+</script>
+</body>
+</html>

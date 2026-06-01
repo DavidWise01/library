@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Hilbert — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#06080a;--slate:#475569;--gold:#ca8a04;--ink:#e8eaed;--muted:#9aa3ad;--card:#0c1014;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cinzel',serif;line-height:1.18;font-weight:700;}
+  a{color:var(--gold);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .kick{
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.72rem;
+    color:var(--gold);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,8,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--slate);
+  }
+  nav .wrap{
+    max-width:1100px;margin:0 auto;
+    display:flex;align-items:center;gap:1.5rem;
+    padding:0.85rem 1.5rem;flex-wrap:wrap;
+  }
+  nav .brand{font-family:'Cinzel',serif;font-weight:800;letter-spacing:0.05em;font-size:0.95rem;}
+  nav .links{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto;}
+  nav .links a{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;
+    color:var(--muted);padding:0.3rem 0;border-bottom:2px solid transparent;
+  }
+  nav .links a:hover{color:var(--ink);text-decoration:none;}
+  nav .links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+  header.hero{padding:5.5rem 0 3.5rem;border-bottom:1px solid var(--slate);}
+  header.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;}
+  header.hero .sub{font-size:1.35rem;color:var(--muted);font-style:italic;margin-top:1rem;max-width:62ch;}
+  .volno{font-size:1rem;color:var(--gold);margin-bottom:1.2rem;}
+
+  section{padding:3.2rem 0;border-bottom:1px solid rgba(71,85,105,0.4);}
+  section h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:1.4rem;}
+  section h3{font-size:1.25rem;margin:1.8rem 0 0.7rem;color:var(--gold);}
+  p{margin-bottom:1.1rem;max-width:70ch;}
+  p.lead{font-size:1.2rem;}
+  em,i{color:#f0ddb0;}
+  blockquote{
+    border-left:3px solid var(--gold);
+    padding:0.6rem 0 0.6rem 1.4rem;
+    margin:1.6rem 0;font-style:italic;font-size:1.3rem;color:#f0ddb0;
+    max-width:64ch;
+  }
+  blockquote cite{display:block;font-style:normal;font-size:0.8rem;color:var(--muted);margin-top:0.6rem;}
+
+  .grid{display:grid;gap:1.2rem;margin:1.6rem 0;}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .card{
+    background:var(--card);
+    border:1px solid var(--slate);
+    padding:1.4rem;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--gold);
+  }
+  .card h3{margin-top:0;font-size:1.05rem;color:var(--gold);}
+  .card p{font-size:0.95rem;color:var(--muted);margin-bottom:0;}
+  .card .num{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--slate);}
+
+  .stat{text-align:center;padding:1.6rem 1rem;}
+  .stat .big{
+    font-family:'Cinzel',serif;
+    font-size:2.8rem;font-weight:800;
+    color:var(--gold);line-height:1;
+  }
+  .stat .lbl{
+    font-family:'Space Mono',monospace;
+    font-size:0.66rem;text-transform:uppercase;letter-spacing:0.16em;
+    color:var(--muted);margin-top:0.6rem;
+  }
+
+  .band{
+    background:var(--slate);
+    color:#f4f6f8;
+    padding:3rem 0;
+  }
+  .band h2{color:#fff;}
+  .band p{color:#e2e8f0;}
+  .band .kick{color:#fde68a;}
+
+  figure.svgfig{margin:2.4rem 0;text-align:center;}
+  figure.svgfig svg{
+    max-width:100%;height:auto;
+    border:1px solid var(--slate);
+    background:#080b0e;padding:1rem;
+  }
+  figcaption{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.16em;margin-top:0.8rem;
+  }
+
+  footer.colophon{
+    background:#04060a;border-top:1px solid var(--slate);
+    padding:3rem 0;font-family:'Space Mono',monospace;font-size:0.72rem;
+    color:var(--muted);letter-spacing:0.05em;line-height:1.9;
+  }
+  footer.colophon .tag{color:var(--gold);}
+  footer.colophon a{color:var(--muted);}
+
+  /* SVG: Hilbert space vector projection */
+  .axis{stroke:var(--slate);stroke-width:1.2;}
+  .vec{stroke:var(--gold);stroke-width:2.5;marker-end:url(#arrow);}
+  .proj{stroke:#a78bfa;stroke-width:1.6;stroke-dasharray:5 4;}
+  .spin{transform-origin:300px 150px;animation:rot 16s linear infinite;}
+  @keyframes rot{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .ket{fill:#f0ddb0;font-family:'Space Mono',monospace;font-size:13px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">HILBERT</span>
+    <div class="links">
+      <a href="0-who.html">00 · Who</a>
+      <a href="1-problems.html">01 · Problems</a>
+      <a href="2-world.html">02 · World</a>
+      <a href="3-legacy.html" class="active">03 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="volno kick">Volume 03 — The Legacy</div>
+    <h1>We Will Know</h1>
+    <p class="sub">His program was broken, but his questions built modern logic, his spaces built quantum mechanics, and his hardest problem still stands. The unknown remains worth conquering.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <span class="kick">The scoreboard</span>
+    <h2>A century of work on 23 problems</h2>
+    <div class="grid cols-3">
+      <div class="card stat"><div class="big">~16</div><div class="lbl">Problems solved</div></div>
+      <div class="card stat"><div class="big">#8</div><div class="lbl">Riemann — still open</div></div>
+      <div class="card stat"><div class="big">$1M</div><div class="lbl">Millennium Prize on #8</div></div>
+    </div>
+    <p class="lead">Of the 23 problems, roughly sixteen are considered solved, several remain partially resolved or are judged too vague to "close," and a small handful are genuinely open. Towering above them all is the eighth: the <em>Riemann Hypothesis</em>, still the biggest open problem in mathematics more than 160 years after Riemann posed it and 125 years after Hilbert enshrined it.</p>
+    <p>That a single 1900 lecture could still set research priorities in the 2020s is the measure of Hilbert's judgment. He did not just ask hard questions — he asked <em>fertile</em> ones, whose pursuit created entire disciplines whether or not the original problem was ever solved.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">The framework of reality</span>
+    <h2>Hilbert spaces and quantum mechanics</h2>
+    <p>Hilbert built the theory of infinite-dimensional inner-product spaces to solve problems in analysis. Two decades later, physicists discovered that this abstract machinery <em>is</em> the language of quantum mechanics. In von Neumann's formulation, every quantum state is a vector in a Hilbert space; observables are self-adjoint operators on that space; measurement probabilities are squared inner products.</p>
+    <p>Spin, superposition, entanglement, the uncertainty principle — all are statements about geometry in Hilbert space. When a physicist writes a quantum state as |ψ⟩, that ket lives in a Hilbert space. The mathematics came first, decades before anyone knew nature would need it. It is one of the great instances of "the unreasonable effectiveness of mathematics."</p>
+
+    <figure class="svgfig">
+      <svg viewBox="0 0 600 300" role="img" aria-label="Abstract projection of a state vector onto basis directions in Hilbert space">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#ca8a04"/>
+          </marker>
+        </defs>
+        <g id="hspace"></g>
+      </svg>
+      <figcaption>|ψ⟩ — a state vector and its projections onto a basis</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The machine that answered "no"</span>
+    <h2>The Entscheidungsproblem → Turing → computing</h2>
+    <p>Hilbert's decision problem asked for an algorithm to settle the truth of any logical statement. In 1936, Alan Turing answered it — negatively — by inventing an abstract model of computation, the <em>Turing machine</em>, and proving the <em>halting problem</em> undecidable: no program can in general decide whether an arbitrary program will halt.</p>
+    <p>To say "no algorithm exists," Turing first had to define precisely what an algorithm <em>is</em>. That definition became the theoretical foundation of computer science. Every digital computer is a physical approximation of a universal Turing machine. The line runs straight from Hilbert's third pillar, through Gödel and Church and Turing, to the device you are reading this on.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">1928</div><h3>The question</h3><p>Hilbert &amp; Ackermann pose the Entscheidungsproblem: decide validity mechanically.</p></div>
+      <div class="card"><div class="num">1936</div><h3>The answer</h3><p>Church (λ-calculus) and Turing (machines) independently prove it impossible.</p></div>
+      <div class="card"><div class="num">→ TODAY</div><h3>The field</h3><p>Computability and complexity theory — the backbone of computer science.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Rebuilt on new ground</span>
+    <h2>Formal axiomatics after Gödel</h2>
+    <p>Gödel's incompleteness theorems destroyed Hilbert's dream of a complete, self-certifying foundation. But they did not destroy formal axiomatics — they matured it. Out of the wreckage came <em>proof theory</em>, <em>model theory</em>, <em>set theory</em>, and <em>recursion theory</em>: four pillars of modern mathematical logic, all of which take Hilbert's questions as their starting point.</p>
+    <p>Gerhard Gentzen proved the consistency of arithmetic in 1936 — using transfinite induction, methods stronger than the finitary ones Hilbert had hoped to rely on, exactly as Gödel's theorem requires. Hilbert's program survives in a revised, "relativized" form: we prove the consistency of weaker systems within stronger ones, building an ascending hierarchy rather than a single bedrock. The goal moved; the discipline thrives.</p>
+    <blockquote>
+      "The importance of a scientific work can be measured by the number of earlier publications it makes superfluous to read."
+      <cite>— David Hilbert</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">Göttingen · the gravestone</span>
+    <h2>"Wir müssen wissen. Wir werden wissen."</h2>
+    <p>The words Hilbert spoke on the radio in 1930 — "We must know. We will know." — are carved on his tombstone in Göttingen. He chose them as the creed of his life, and they remain so even though, the very next year, Gödel proved there are truths we provably <em>cannot</em> know within any fixed system.</p>
+    <p>And yet the epitaph is not naïve. It is a statement of method and of nerve: that the right response to the unknown is not resignation but inquiry. Gödel did not prove that mathematics ends; he proved it is inexhaustible. There will always be more to know — which is exactly why we must, and will, keep knowing.</p>
+    <blockquote>
+      "Wir müssen wissen. Wir werden wissen."
+      <cite>— We must know. We will know. — David Hilbert, 1862–1943</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The paradox of the program</span>
+    <h2>How a failure became a foundation</h2>
+    <p>There is a temptation to read Hilbert's story as defeat: he set out to prove mathematics complete and consistent, and Gödel proved he could not. But that reading misses the deeper point. The reason Gödel's theorems are so important is precisely that Hilbert had framed the question so sharply. Without Hilbert's program, there would have been no precise target for Gödel to hit.</p>
+    <p>The same is true across the board. The Entscheidungsproblem had to be posed exactly before Turing could prove it unsolvable — and in proving it, define computation itself. The continuum hypothesis had to be elevated to "Problem 1" before the machinery of forcing could reveal it as independent. Again and again, the value of a Hilbert question lay not in its answer but in the new mathematics required to settle it.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">PROOF THEORY</div><h3>Gentzen</h3><p>Consistency of arithmetic proved (1936) via transfinite induction — Hilbert's goal, reached on new terms.</p></div>
+      <div class="card"><div class="num">MODEL THEORY</div><h3>Tarski &amp; others</h3><p>The study of mathematical structures and the statements true within them — a direct descendant of the foundational questions.</p></div>
+      <div class="card"><div class="num">COMPUTABILITY</div><h3>Turing &amp; Church</h3><p>The theory of what can and cannot be computed — born from the third pillar of Hilbert's program.</p></div>
+    </div>
+    <p>Hilbert's confidence — "there is no <em>ignorabimus</em>" — turned out to be wrong in the narrow technical sense and right in the broad human one. There are statements no fixed system can decide. But mathematics did not stop; it grew, precisely because there is always more to discover. That is the real meaning carved on his tombstone.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The great open question</span>
+    <h2>Problem 8 today: the Riemann Hypothesis</h2>
+    <p>Of all the legacies, the one that remains literally unfinished is the eighth problem. The Riemann Hypothesis concerns the zeros of the Riemann zeta function — and through them, the deep structure of the prime numbers. Riemann conjectured in 1859 that all the non-trivial zeros lie on a single vertical line in the complex plane, Re(s) = 1/2. Hilbert placed it at the center of his list, and it has resisted every assault since.</p>
+    <p>Its importance is hard to overstate. A vast number of theorems in number theory have been proved <em>conditionally</em> — "assuming the Riemann Hypothesis." Billions of zeros have been checked by computer and all lie exactly where Riemann said they would. But a proof, or a disproof, has never come. In 2000 the Clay Mathematics Institute named it one of seven Millennium Prize Problems, each carrying a one-million-dollar reward. It is the only one of Hilbert's 23 that also appears on that modern list — a problem that has stayed at the summit of mathematics across three centuries.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">1859</div><h3>Riemann conjectures</h3><p>In an eight-page paper on the distribution of primes.</p></div>
+      <div class="card"><div class="num">1900</div><h3>Hilbert enshrines it</h3><p>As Problem 8 — among the most important questions in mathematics.</p></div>
+      <div class="card"><div class="num">2000</div><h3>Clay Millennium Prize</h3><p>$1,000,000 offered for a proof. Still unclaimed.</p></div>
+    </div>
+    <p>Hilbert is said to have remarked that if he were to awaken after a thousand years, his first question would be: has the Riemann Hypothesis been proved? It is a fitting symbol for his whole creed — the conviction that the answer is out there, waiting, and that we will, eventually, know it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The unreasonable effectiveness</span>
+    <h2>Mathematics that nature needed</h2>
+    <p>Perhaps the most striking part of Hilbert's legacy is how often his abstract mathematics turned out to describe the physical world. Hilbert spaces were invented to study integral equations; they became the stage on which all of quantum mechanics is performed. The variational methods he developed found their way into general relativity. The "Methods of Mathematical Physics" he wrote with Courant appeared in 1924 — just before quantum mechanics exploded — and contained, almost by accident, much of the mathematics the new physics would require.</p>
+    <p>This pattern, where pure mathematics anticipates physics by decades, is what the physicist Eugene Wigner called "the unreasonable effectiveness of mathematics in the natural sciences." Hilbert is one of its great exemplars. He pursued structure for its own sake, with rigor as his only guide, and the universe kept turning out to be built from the structures he found.</p>
+    <blockquote>
+      "Mathematics knows no races or geographic boundaries; for mathematics, the cultural world is one country."
+      <cite>— David Hilbert</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The tombstone</span>
+    <h2>An epitaph that aged into wisdom</h2>
+    <p>When Hilbert chose "We must know. We will know." for his radio address in 1930, he meant it as a flat rejection of the idea that anything in mathematics is permanently beyond human reach. Within a year, Gödel had shown that, in a strict sense, he was wrong: there are true statements no fixed formal system can ever prove.</p>
+    <p>And yet the words on the gravestone have not aged into irony. They have aged into something deeper. Gödel did not show that mathematics is unknowable; he showed that it is <em>inexhaustible</em>. No finite axiom system can capture all mathematical truth — which means there will always be more to discover, more to prove, more to know. The unending nature of the task is not a defeat of Hilbert's creed but its ultimate vindication. We must keep knowing, because the knowing never ends.</p>
+    <p>That is why a single sentence carved on a stone in Göttingen still serves as a motto for working mathematicians, computer scientists, and physicists nearly a century later. It is not a boast about certainty. It is a commitment to inquiry — the refusal, in the face of any limit, to stop asking.</p>
+    <blockquote>
+      "We must know. We will know."
+      <cite>— The whole of Hilbert, in six words</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">What he left</span>
+    <h2>The Hilbert inheritance</h2>
+    <div class="grid cols-2">
+      <div class="card"><div class="num">MATHEMATICS</div><h3>The agenda</h3><p>23 problems that organized a century; ~16 solved, the Riemann Hypothesis still the great open question.</p></div>
+      <div class="card"><div class="num">PHYSICS</div><h3>Hilbert space</h3><p>The arena of quantum mechanics — every quantum state a vector, every observable an operator.</p></div>
+      <div class="card"><div class="num">COMPUTING</div><h3>Decidability</h3><p>The Entscheidungsproblem gave Turing the question whose answer founded computer science.</p></div>
+      <div class="card"><div class="num">LOGIC</div><h3>Foundations</h3><p>His program's "failure" created proof theory, model theory, and modern mathematical logic.</p></div>
+    </div>
+
+    <div class="grid cols-3">
+      <a class="card" href="0-who.html" style="color:inherit;"><div class="num">VOL 00</div><h3>Who</h3><p>The life: Königsberg to Göttingen, the program and its collapse.</p></a>
+      <a class="card" href="1-problems.html" style="color:inherit;"><div class="num">VOL 01</div><h3>Problems</h3><p>All 23, with their modern status.</p></a>
+      <a class="card" href="2-world.html" style="color:inherit;"><div class="num">VOL 02</div><h3>World</h3><p>Göttingen, Noether, and the catastrophe of 1933.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">In four fields at once</span>
+    <h2>How far the influence reached</h2>
+    <p>Few people in history have left a deep, permanent mark on as many disciplines as Hilbert. Consider the breadth: a working physicist uses Hilbert spaces; a logician works in the fields his program created; a computer scientist relies on the theory of computation born from his decision problem; and a number theorist still chases the eighth of his problems. Each of these is a major science, and Hilbert sits near the root of all four.</p>
+    <div class="grid cols-2">
+      <div class="card" style="background:#3b4252;">
+        <div class="num">QUANTUM PHYSICS</div>
+        <h3>The state vector</h3>
+        <p style="color:#dbe2ea;">Every quantum system lives in a Hilbert space. Superposition is vector addition; measurement is projection; the uncertainty principle is a statement about operators that do not commute.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">COMPUTER SCIENCE</div>
+        <h3>The limits of the machine</h3>
+        <p style="color:#dbe2ea;">Turing answered Hilbert's decision problem by defining computation and proving the halting problem undecidable — the founding result of the field.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">MATHEMATICAL LOGIC</div>
+        <h3>Four new disciplines</h3>
+        <p style="color:#dbe2ea;">Proof theory, model theory, set theory, and recursion theory all grew from the questions Hilbert's program forced into sharp focus.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">NUMBER THEORY</div>
+        <h3>The summit still unclimbed</h3>
+        <p style="color:#dbe2ea;">The Riemann Hypothesis — Problem 8 — remains the great open question, a Millennium Prize problem worth one million dollars.</p>
+      </div>
+    </div>
+    <p>This is the final measure of the man. His program "failed," his school was destroyed, and his hardest problem is still unsolved — and yet the modern world of mathematics, physics, and computing is recognizably his. We are still working on his list.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The series, in sequence</span>
+    <h2>Read from the beginning</h2>
+    <p>This volume is the last of four. Together they trace a single life and its consequences — from a boy in the bridge city of Königsberg to a creed carved on a gravestone, by way of the most influential lecture in the history of mathematics.</p>
+    <ul class="timeline">
+      <li><span class="yr">VOL 00</span><br><a href="0-who.html">Who</a> — the life: Königsberg, Göttingen, the formalist program, and its collapse under Gödel.</li>
+      <li><span class="yr">VOL 01</span><br><a href="1-problems.html">The 23 Problems</a> — the full 1900 list, with each problem's modern status.</li>
+      <li><span class="yr">VOL 02</span><br><a href="2-world.html">The World</a> — Göttingen, Emmy Noether, and the catastrophe of 1933.</li>
+      <li><span class="yr">VOL 03</span><br><a href="3-legacy.html">The Legacy</a> — Hilbert spaces, the Riemann Hypothesis, Turing, and "We will know."</li>
+    </ul>
+    <blockquote>
+      "Wir müssen wissen. Wir werden wissen."
+      <cite>— David Hilbert · 1862–1943 · Göttingen</cite>
+    </blockquote>
+
+    <h3>Further reading</h3>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="num">FOUNDATIONS</div>
+        <h3>Gödel's theorems</h3>
+        <p>The incompleteness results that ended Hilbert's program and opened modern logic.</p>
+      </div>
+      <div class="card">
+        <div class="num">COMPUTATION</div>
+        <h3>Turing 1936</h3>
+        <p>"On Computable Numbers" — the answer to the Entscheidungsproblem and the birth of computer science.</p>
+      </div>
+      <div class="card">
+        <div class="num">OPEN PROBLEM</div>
+        <h3>The Riemann Hypothesis</h3>
+        <p>Problem 8, a Clay Millennium Prize problem — still the great unclimbed summit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="container">
+    <div class="tag">ROOT0-ATTRIBUTION-v1.0</div>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br>
+    The David Hilbert Series — Volume 03: The Legacy · Self-contained HTML<br>
+    Four volumes: Who · Problems · World · Legacy<br>
+    "Wir müssen wissen. Wir werden wissen."
+  </div>
+</footer>
+
+<script>
+  // Hilbert space: a rotating state vector projecting onto two basis axes.
+  (function(){
+    var g=document.getElementById('hspace');
+    if(!g) return;
+    var SVGNS='http://www.w3.org/2000/svg';
+    function el(name,attrs){var e=document.createElementNS(SVGNS,name);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+    var cx=300,cy=150;
+    // Basis axes
+    g.appendChild(el('line',{x1:cx,y1:cy,x2:cx+170,y2:cy,class:'axis'}));
+    g.appendChild(el('line',{x1:cx,y1:cy,x2:cx,y2:cy-150,class:'axis'}));
+    g.appendChild(el('line',{x1:cx,y1:cy,x2:cx-120,y2:cy+90,class:'axis'}));
+    // Axis labels (basis kets)
+    var l1=el('text',{x:cx+150,y:cy+18,class:'ket'}); l1.textContent='|e₁⟩'; g.appendChild(l1);
+    var l2=el('text',{x:cx-14,y:cy-140,class:'ket'}); l2.textContent='|e₂⟩'; g.appendChild(l2);
+    var l3=el('text',{x:cx-150,y:cy+96,class:'ket'}); l3.textContent='|e₃⟩'; g.appendChild(l3);
+
+    // Rotating group: state vector + projection lines
+    var spin=el('g',{class:'spin'});
+    // The state vector |psi>
+    var vx=cx+120, vy=cy-95;
+    spin.appendChild(el('line',{x1:cx,y1:cy,x2:vx,y2:vy,class:'vec'}));
+    // Projection onto horizontal axis
+    spin.appendChild(el('line',{x1:vx,y1:vy,x2:vx,y2:cy,class:'proj'}));
+    // Projection onto vertical axis
+    spin.appendChild(el('line',{x1:vx,y1:vy,x2:cx,y2:vy,class:'proj'}));
+    // The state point
+    spin.appendChild(el('circle',{cx:vx,cy:vy,r:5,fill:'#ca8a04'}));
+    var psi=el('text',{x:vx+8,y:vy-6,class:'ket'}); psi.textContent='|ψ⟩'; spin.appendChild(psi);
+    g.appendChild(spin);
+
+    // Origin dot
+    g.appendChild(el('circle',{cx:cx,cy:cy,r:3,fill:'#475569'}));
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>René Descartes — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;--red:#dc2626;--silver:#94a3b8;
+    --ink:#ece8ee;--dim:#b8b2bf;--card:#0f0c11;--line:rgba(220,38,38,0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:#fff;}
+
+  /* ---------- NAV ---------- */
+  nav.sticky{
+    position:sticky;top:0;z-index:100;
+    background:rgba(8,6,8,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.sticky .wrap{
+    max-width:1100px;margin:0 auto;padding:14px 28px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
+  }
+  nav.sticky .brand{
+    font-family:'Cinzel',serif;font-weight:700;letter-spacing:0.06em;
+    color:var(--ink);font-size:15px;margin-right:auto;
+  }
+  nav.sticky a{
+    font-family:'Space Mono',monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--silver);text-decoration:none;padding:4px 2px;
+    border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  }
+  nav.sticky a:hover{color:var(--ink);}
+  nav.sticky a.active{color:var(--red);border-bottom-color:var(--red);}
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:1100px;margin:0 auto;padding:0 28px;}
+  header.hero{padding:90px 0 50px;text-align:center;}
+  .kick{
+    font-family:'Space Mono',monospace;text-transform:uppercase;
+    letter-spacing:0.22em;font-size:12px;color:var(--red);
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;
+    margin:18px 0 10px;letter-spacing:0.01em;
+  }
+  h2{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.6rem,3.5vw,2.4rem);
+    margin:0 0 6px;letter-spacing:0.02em;
+  }
+  h3{font-family:'Cinzel',serif;font-weight:600;font-size:1.25rem;margin:0 0 8px;letter-spacing:0.02em;}
+  .lede{font-size:1.32rem;color:var(--dim);font-style:italic;max-width:760px;margin:0 auto;}
+  .dates{font-family:'Space Mono',monospace;color:var(--silver);font-size:13px;letter-spacing:0.18em;margin-top:20px;}
+
+  section{padding:46px 0;border-top:1px solid rgba(148,163,184,0.12);}
+  .sec-kick{margin-bottom:14px;}
+  p{margin:0 0 20px;max-width:760px;}
+  p.full{max-width:none;}
+  em,i{color:#f0e6e8;}
+  strong{color:#fff;font-weight:600;}
+
+  /* ---------- BAND ---------- */
+  .band{background:var(--red);color:#fff;padding:40px 28px;margin:46px 0;border-radius:3px;}
+  .band .container{padding:0;}
+  .band .kick{color:#ffe2e2;}
+  .band blockquote{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.2;margin:10px 0 0;
+  }
+  .band cite{
+    display:block;margin-top:16px;font-family:'Space Mono',monospace;
+    font-style:normal;font-size:13px;letter-spacing:0.12em;color:#ffd9d9;
+  }
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:22px;margin-top:10px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:26px 24px;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--red);border-color:var(--red);}
+  .card .num{font-family:'Space Mono',monospace;color:var(--red);font-size:12px;letter-spacing:0.2em;}
+  .card p{font-size:1rem;color:var(--dim);margin:8px 0 0;}
+
+  .pull{
+    border-left:3px solid var(--red);padding:6px 0 6px 22px;margin:30px 0;
+    font-style:italic;font-size:1.18rem;color:#efe6e9;max-width:760px;
+  }
+
+  /* ---------- SVG MAP STAGE ---------- */
+  .svg-stage{
+    background:linear-gradient(180deg,#0c0a0e,#080608);
+    border:1px solid var(--line);border-radius:6px;
+    padding:30px;margin:24px 0;display:flex;justify-content:center;
+  }
+  .svg-stage svg{width:100%;max-width:560px;height:auto;}
+  .sea{fill:rgba(148,163,184,0.06);stroke:rgba(148,163,184,0.25);stroke-width:1;}
+  .land{
+    fill:rgba(220,38,38,0.10);stroke:var(--red);stroke-width:1.8;
+    stroke-dasharray:1400;stroke-dashoffset:1400;
+    animation:coast 4s ease forwards;
+  }
+  @keyframes coast{to{stroke-dashoffset:0;}}
+  .city{fill:var(--red);opacity:0;animation:blink .6s ease forwards;}
+  @keyframes blink{to{opacity:1;}}
+  .pulse{
+    fill:none;stroke:var(--red);stroke-width:1.5;opacity:0;
+    transform-origin:center;animation:ring 2.6s ease-in-out infinite;
+  }
+  @keyframes ring{0%{opacity:.7;r:3;}70%{opacity:0;r:14;}100%{opacity:0;}}
+  .clbl{
+    font-family:'Space Mono',monospace;font-size:10px;fill:var(--silver);
+    opacity:0;animation:blink .6s ease forwards;
+  }
+  .compass{font-family:'Space Mono',monospace;font-size:11px;fill:var(--silver);}
+  .wave{stroke:rgba(148,163,184,0.3);stroke-width:1;fill:none;}
+
+  /* ---------- COLOPHON ---------- */
+  footer.colophon{
+    border-top:2px solid var(--red);margin-top:60px;padding:42px 0 80px;
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--silver);
+    letter-spacing:0.08em;line-height:1.9;
+  }
+  footer.colophon .container{display:flex;flex-direction:column;gap:6px;}
+  footer.colophon .tag{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;}
+  .ser-nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
+  .ser-nav a{
+    color:var(--silver);text-decoration:none;border:1px solid var(--line);
+    padding:7px 12px;border-radius:3px;transition:.2s;
+  }
+  .ser-nav a:hover{color:#fff;border-color:var(--red);background:rgba(220,38,38,0.12);}
+  @media(max-width:560px){body{font-size:17px;}header.hero{padding:60px 0 36px;}}
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <div class="wrap">
+    <span class="brand">DESCARTES · 1596–1650</span>
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-coordinates.html">1 · Coordinates</a>
+    <a href="2-world.html" class="active">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kick">Volume Two — The Setting</div>
+    <h1>His World</h1>
+    <p class="lede">A continent on fire with religious war, a small republic of unusual tolerance, an inquisition watching the heavens — and a handful of people sharp enough to argue with him.</p>
+    <div class="dates">EUROPE · 1596 – 1650 · THE AGE OF WAR AND WONDER</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="svg-stage" aria-label="Animated period map of the Low Countries">
+    <svg viewBox="0 0 520 340" role="img">
+      <rect class="sea" x="0" y="0" width="520" height="340"/>
+      <!-- decorative sea waves -->
+      <path class="wave" d="M30 300 q15 -8 30 0 t30 0 t30 0 t30 0"/>
+      <path class="wave" d="M380 310 q15 -8 30 0 t30 0 t30 0"/>
+      <!-- stylised Low Countries coastline -->
+      <path class="land" d="M120 70
+        C 180 50, 250 60, 300 90
+        C 350 110, 410 120, 440 160
+        C 460 190, 440 230, 400 250
+        C 350 275, 280 270, 230 250
+        C 180 232, 150 200, 130 170
+        C 112 142, 100 100, 120 70 Z"/>
+      <!-- cities -->
+      <circle class="pulse" cx="250" cy="150"/>
+      <circle class="city" cx="250" cy="150" r="4.5" style="animation-delay:3.6s"/>
+      <text class="clbl" x="258" y="148" style="animation-delay:3.6s">AMSTERDAM</text>
+
+      <circle class="city" cx="300" cy="185" r="4" style="animation-delay:3.9s"/>
+      <text class="clbl" x="308" y="189" style="animation-delay:3.9s">UTRECHT</text>
+
+      <circle class="city" cx="210" cy="200" r="4" style="animation-delay:4.1s"/>
+      <text class="clbl" x="150" y="204" style="animation-delay:4.1s">LEIDEN</text>
+
+      <circle class="city" cx="340" cy="135" r="4" style="animation-delay:4.3s"/>
+      <text class="clbl" x="348" y="133" style="animation-delay:4.3s">FRANEKER</text>
+      <!-- compass -->
+      <g class="compass" transform="translate(465,300)">
+        <line x1="0" y1="-18" x2="0" y2="18" class="wave"/>
+        <line x1="-14" y1="0" x2="14" y2="0" class="wave"/>
+        <text x="-4" y="-22">N</text>
+      </g>
+      <text class="compass" x="30" y="40">THE LOW COUNTRIES · c.1630</text>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
+
+<section>
+  <div class="kick sec-kick">The shelter</div>
+  <h2>The Dutch Golden Age</h2>
+  <p>The seventeenth-century <strong>Dutch Republic</strong> was the strangest and most modern place in Europe. A federation of merchant provinces that had broken free from Habsburg Spain, it grew fabulously rich on trade, banking, and shipping. Its cities teemed with printers, painters, refugees, and freethinkers. Rembrandt was painting in Amsterdam; the tulip mania came and went; ships returned from the Indies laden with profit.</p>
+  <p>Crucially for Descartes, the Republic was the <strong>most tolerant country in Europe</strong>. Where France could imprison you and Italy could try you for heresy, the Dutch — pragmatic, commercial, and religiously plural — largely left thinkers alone, provided they did not cause public scandal. It is no accident that Descartes spent twenty years there. Nor is it an accident that the great rationalist <strong>Baruch Spinoza</strong> — born in Amsterdam to a Portuguese-Jewish refugee family — could develop his radical philosophy in the same protected soil a generation later. The Republic was Europe's intellectual greenhouse.</p>
+  <div class="pull">"In what other country could one enjoy such complete liberty?" — Descartes on the Netherlands, where he could walk among a busy crowd "as freely as you could in your forest paths."</div>
+  <p>The toleration was real but not unlimited, and Descartes felt its edges. Dutch Calvinist theologians at the University of Utrecht, led by Gisbertus Voetius, attacked his philosophy as a gateway to atheism, and for a period he faced genuine legal jeopardy in the very country that sheltered him. He survived it through powerful friends and careful diplomacy. The lesson of his Dutch years is double: freedom of thought was possible there in a way it was nowhere else in Europe — and even there it had to be defended, negotiated, and occasionally feared for.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The catastrophe</div>
+  <h2>The Thirty Years' War</h2>
+  <p>Beyond the Dutch borders, the continent was tearing itself apart. The <strong>Thirty Years' War (1618–1648)</strong> began as a conflict between Protestant and Catholic states in the Holy Roman Empire and metastasized into the deadliest European war before the twentieth century. Whole regions of Germany were depopulated; famine and plague followed the armies; perhaps a third of the population of the German lands perished.</p>
+  <p>Descartes touched this war directly. As a young man he served as a gentleman-soldier in its opening campaigns, and it was while quartered in a stove-heated room during that service, in November 1619, that he had the dreams which set his life's course. The war is the dark backdrop to his entire career: a continent demonstrating, in blood, what happens when competing authorities each claim certainty without a method to ground it. Descartes's hunger for a single secure foundation for knowledge cannot be separated from a Europe that had lost all agreement about what was true.</p>
+  <p>The war finally ended in 1648 with the <strong>Peace of Westphalia</strong> — a settlement that, by exhaustion more than agreement, helped birth the modern idea of the sovereign state and a measure of religious coexistence. Descartes lived just long enough to see the guns fall silent, dying less than two years later. His entire adult life had been bracketed by this war: he came of age as it began and died as its consequences were being settled. The longing for certainty that drives every page he wrote was forged in three decades of a continent at war over whose certainty was true.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">1633 — The Chilling Effect</div>
+    <blockquote>When Galileo was condemned, Descartes locked his own book away.</blockquote>
+    <cite>THE WORLD (LE MONDE) · SUPPRESSED BY ITS OWN AUTHOR · 1633</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">The warning</div>
+  <h2>The Galileo affair of 1633</h2>
+  <p>In 1633 the Roman Inquisition tried <strong>Galileo Galilei</strong> for defending the heliocentric model — the claim that the Earth moves around the Sun. He was forced to recant and spent his remaining years under house arrest. The news reached Descartes in the Netherlands like a thunderclap.</p>
+  <p class="full">Descartes had nearly finished a comprehensive treatise on physics and cosmology called <em>Le Monde</em> (<em>The World</em>) — and it, too, assumed a moving Earth. Terrified of sharing Galileo's fate, Descartes <strong>shelved his own manuscript</strong>, withdrawing it from publication entirely. "I would not wish, for anything in the world," he wrote, "to maintain a position against the authority of the Church." It is one of history's great examples of intellectual self-censorship: a major scientific work suppressed not by an inquisitor but by its author's own fear. <em>Le Monde</em> would not appear in full until after his death.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The arenas of the mind</div>
+  <h2>Where the ideas circulated</h2>
+  <p>Descartes lived in the Netherlands but his mind ranged across Europe through letters, books, and a few crucial relationships. His world had distinct theaters.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">PARIS</div>
+      <h3>The intellectual scene</h3>
+      <p>Through his friend the friar <strong>Marin Mersenne</strong>, Descartes stayed plugged into Paris — a hub where mathematicians and natural philosophers exchanged problems and challenges by correspondence, an informal pre-academy of the Scientific Revolution.</p>
+    </div>
+    <div class="card">
+      <div class="num">THE HAGUE</div>
+      <h3>Princess Elisabeth</h3>
+      <p>His correspondence with <strong>Princess Elisabeth of Bohemia</strong> — exiled royalty living in the Dutch Republic — produced the sharpest philosophical exchange of his life. She pressed him relentlessly on the mind-body problem.</p>
+    </div>
+    <div class="card">
+      <div class="num">STOCKHOLM</div>
+      <h3>Queen Christina's court</h3>
+      <p><strong>Queen Christina of Sweden</strong> drew Europe's intellects to her northern court. Her summons honored Descartes — and, with its pre-dawn lessons in the cold, killed him.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The sharpest mind he met</div>
+  <h2>The correspondence with Princess Elisabeth</h2>
+  <p>Of all Descartes's interlocutors, none challenged him as acutely as <strong>Princess Elisabeth of Bohemia</strong>. Beginning in 1643, the philosopher and the exiled princess exchanged a remarkable series of letters. Elisabeth zeroed in on the deepest fault line in Descartes's system: if mind and body are utterly different kinds of substance — one thinking and unextended, the other extended and unthinking — then <strong>how can they possibly interact?</strong> How does an immaterial will move a material arm?</p>
+  <p>Descartes never produced a fully satisfying answer; his appeal to interaction in the pineal gland convinced few, including himself. But Elisabeth's pressure pushed him toward his last major work, <em>The Passions of the Soul</em> (1649), an attempt to account for the emotions as the meeting point of mind and body. She was, by his own admission, the only person who fully understood both his metaphysics and his mathematics. In a century that rarely recorded women as philosophers, the record is unambiguous: his sharpest critic was a princess.</p>
+  <div class="pull">"I have shown that the soul is really joined to the whole body... yet you ask how a thinking substance can move a body. To this I confess I have nothing to reply." — Descartes, conceding ground to Elisabeth.</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The fatal honor</div>
+  <h2>Queen Christina's Stockholm court</h2>
+  <p>If Elisabeth represented the best of his world — rigorous, generous, exacting — <strong>Queen Christina of Sweden</strong> represented its most dangerous flattery. Christina was a genuine intellectual, a young monarch who collected scholars, books, and ideas, and who pulled the luminaries of Europe toward her northern capital. To be summoned by her was the highest secular honor a philosopher could receive.</p>
+  <p>But Stockholm was the inverse of everything that had kept Descartes alive and working. Holland was temperate, tolerant, and private; the Swedish court was frigid, ceremonial, and demanding. Christina wanted her philosophy lessons at five in the morning, in winter, in an unheated library. The summons that honored Descartes above all others delivered him into precisely the conditions his frail constitution could not survive. The seventeenth century's politics of patronage — where a thinker's security depended on pleasing the powerful — proved, in the end, more lethal to him than any inquisitor.</p>
+  <div class="pull">"Men's thoughts seem to freeze here in winter, as does the water." — Descartes, writing from Stockholm in the weeks before his death.</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The neighbors in thought</div>
+  <h2>A century crowded with genius</h2>
+  <p>Descartes did not think in isolation; he stood in a remarkable cohort. The seventeenth century was the hinge of the Scientific Revolution, and his contemporaries and near-contemporaries reshaped the world alongside him.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">ITALY</div>
+      <h3>Galileo Galilei</h3>
+      <p>Whose 1633 condemnation frightened Descartes into shelving <em>Le Monde</em>. The two never met, but Galileo's fate shaped what Descartes dared to publish.</p>
+    </div>
+    <div class="card">
+      <div class="num">AMSTERDAM</div>
+      <h3>Baruch Spinoza</h3>
+      <p>The next great rationalist, sheltered by the same Dutch tolerance. He began from Cartesian premises and pushed them to radical, pantheist conclusions Descartes would have disowned.</p>
+    </div>
+    <div class="card">
+      <div class="num">PARIS</div>
+      <h3>Marin Mersenne</h3>
+      <p>The friar who served as the switchboard of European science, relaying problems and challenges between Descartes, Fermat, Pascal, and the rest.</p>
+    </div>
+    <div class="card">
+      <div class="num">FRANCE</div>
+      <h3>Pierre de Fermat</h3>
+      <p>Who independently developed analytic geometry around the same time — and sparred with Descartes over optics and method, a reminder that the grid's invention was in the air.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">This density is not incidental. The mathematics, the wars, the tolerant republics, and the trembling authorities all belonged to a single connected moment. Descartes's grid, his doubt, and his dualism were one man's answer to pressures that a whole continent was feeling at once — which is exactly why the answer spread so far, so fast.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The machinery of distance</div>
+  <h2>How ideas traveled before the internet</h2>
+  <p>It is worth pausing on <em>how</em> a man hidden in Dutch villages could remain at the center of European thought. There was no internet, no telephone, not even a reliable postal service in the modern sense. The medium was the <strong>handwritten letter</strong>, carried by travelers and couriers across borders that armies were actively contesting.</p>
+  <p>This is why a figure like Mersenne in Paris mattered so enormously: he functioned as a human server, copying and forwarding correspondence so that a question posed in one city could reach a dozen minds in others. Descartes's most important relationships — with Elisabeth, with Mersenne, with his critics and disciples — existed almost entirely on paper. His philosophy was literally <em>posted</em> into being. When we read the <em>Meditations</em> today we are reading a work whose objections and replies were assembled by mailing the draft to Europe's sharpest minds and printing their responses alongside it. The Republic of Letters was a social network three centuries early, and Descartes was one of its central nodes.</p>
+  <div class="pull">His ideas crossed a continent at the speed of a horse and a sailing ship — and still outran everything else of their age.</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The texture of the age</div>
+  <h2>What the seventeenth century felt like</h2>
+  <p>To understand the courage of thinking freely in Descartes's world, it helps to remember how precarious that world was. This was a century of plague and witch trials, of armies living off the land, of authorities who could and did imprison or burn those who crossed them. Certainty was not an abstract philosophical luxury; the lack of it had a body count.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">FAITH</div>
+      <h3>A continent split</h3>
+      <p>The Reformation had shattered Western Christendom into rival confessions, each certain it alone held the truth — and willing to fight for it.</p>
+    </div>
+    <div class="card">
+      <div class="num">POWER</div>
+      <h3>Authority watching</h3>
+      <p>The Inquisition, censors, and theological faculties policed what could be printed. Galileo's house arrest was a warning everyone heard.</p>
+    </div>
+    <div class="card">
+      <div class="num">TRADE</div>
+      <h3>A new wealth</h3>
+      <p>Dutch ships, banks, and printing presses created a zone where money bought a measure of freedom that birth and creed could not.</p>
+    </div>
+    <div class="card">
+      <div class="num">REASON</div>
+      <h3>A new hope</h3>
+      <p>Against this backdrop, the idea that <em>method</em> — not authority — could settle what was true was genuinely radical, and genuinely dangerous.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">Descartes's project reads differently once you feel the weather of his century. The drive to find one foundation that anyone could verify, independent of which church or king held power, was not a parlor game. It was a search for solid ground in a world where the ground had given way.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The map of his life</div>
+  <h2>Four places that made him</h2>
+  <p>Descartes's biography is, in a sense, a tour of seventeenth-century Europe's possibilities and dangers. Each place left its mark on the work.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">FRANCE</div>
+      <h3>Where he was formed</h3>
+      <p>La Flèche gave him the Jesuit rigor and the love of mathematical certainty; Paris, through Mersenne, kept him tied to Europe's sharpest scientific circle.</p>
+    </div>
+    <div class="card">
+      <div class="num">GERMANY</div>
+      <h3>Where he dreamed</h3>
+      <p>A stove-heated room during the Thirty Years' War, November 1619 — the dreams that convinced him he was destined to found a unified science.</p>
+    </div>
+    <div class="card">
+      <div class="num">HOLLAND</div>
+      <h3>Where he worked</h3>
+      <p>Twenty tolerant years in which he wrote nearly everything that matters — and learned that even Dutch freedom had to be defended against hostile theologians.</p>
+    </div>
+    <div class="card">
+      <div class="num">SWEDEN</div>
+      <h3>Where he died</h3>
+      <p>Stockholm's frozen pre-dawn court, where the highest honor of his life became the cause of his death.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">Trace those four places and you trace the shape of his thought: rigor from France, vocation from Germany, freedom from Holland, and from Sweden a final, bitter lesson about the limits of any method in a world run by other people.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The Conditions of Genius</div>
+    <blockquote>He could only think freely where he was free — and that place was rare.</blockquote>
+    <cite>THE DUTCH REPUBLIC · EUROPE'S INTELLECTUAL GREENHOUSE</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">The takeaway</div>
+  <h2>A method born of disorder</h2>
+  <p class="full">Descartes's longing for certainty was not the cool preference of a comfortable scholar. It was the response of a man who had watched a continent tear itself apart over rival certainties, seen the Church silence a great scientist, and found refuge only in one small, tolerant republic by the sea. In a world where every authority claimed truth and none could prove it, he set out to find a foundation any honest mind could verify for itself — a certainty that did not depend on who held power. That his quest produced both the coordinate plane and the cogito is no accident. Both were attempts to build something solid on ground that, everywhere around him, was giving way.</p>
+  <p>It is also why he was so careful. The same world that needed his ideas could have destroyed him for them, and he knew it. He moved house to stay hidden, withheld <em>Le Monde</em>, cultivated powerful protectors, and chose as his motto a line about living unseen. We sometimes read that caution as cowardice; it is better understood as strategy. A bolder, less careful Descartes might have shared Galileo's fate and left the grid undrawn. His survival — long enough to publish, to correspond, to teach a princess and tutor a queen — was itself an achievement of the dangerous century he had to navigate.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">THREAT</div>
+      <h3>The Inquisition</h3>
+      <p>Galileo's 1633 condemnation proved that even a celebrated scientist could be silenced. Descartes shelved his own cosmology in response.</p>
+    </div>
+    <div class="card">
+      <div class="num">THREAT</div>
+      <h3>Hostile theologians</h3>
+      <p>Dutch Calvinist faculties attacked his philosophy as a road to atheism, exposing the limits of even Holland's tolerance.</p>
+    </div>
+    <div class="card">
+      <div class="num">SHIELD</div>
+      <h3>Caution &amp; allies</h3>
+      <p>Constant moves, careful publishing, powerful patrons, and a motto about living hidden kept him alive long enough to finish the work.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The world that made him</div>
+  <h2>A method for an age without agreement</h2>
+  <p>Put the pieces together and Descartes's project makes human sense. He lived through the bloodiest war Europe had known, watched the Church break a great scientist, and could only think freely by retreating to a tolerant little republic on the North Sea. In a world where every authority claimed certainty and none could prove it, he set out to find a method that could ground knowledge for <em>anyone</em>, regardless of creed or country — certainty that did not depend on who held the sword.</p>
+  <p>The final volume follows that method out of the seventeenth century and into ours, where his grid maps every screen and his doubt still frames our deepest questions about the mind.</p>
+  <p class="full">Remember the geography of it. A continent on fire with the Thirty Years' War. A Church that had just broken Galileo and would have broken him. A small, soggy republic on the North Sea that, almost alone, let a man think dangerous thoughts in peace. A princess in exile who understood him better than anyone, and a queen in the frozen north who admired him to death. Descartes's ideas can look like pure abstraction — points and proofs and bloodless doubt. They were forged in the most concrete circumstances imaginable: war, fear, exile, friendship, and cold. The grid was drawn by a man who knew exactly how unstable the world could be.</p>
+  <div class="ser-nav">
+    <a href="0-who.html">0 · Who He Was</a>
+    <a href="1-coordinates.html">1 · The Coordinates</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html">3 · The Legacy →</a>
+  </div>
+</section>
+
+</div>
+
+<footer class="colophon">
+  <div class="container">
+    <span class="tag">ROOT0-ATTRIBUTION-v1.0</span>
+    <span>René Descartes — A Four-Volume Series · Volume 2: His World</span>
+    <span>David Lee Wise / ROOT0 / TriPod LLC</span>
+    <span>Licensed CC-BY-ND-4.0 · Attribution — No Derivatives</span>
+    <span>Typeset in Cinzel, Newsreader &amp; Space Mono.</span>
+  </div>
+</footer>
+
+</body>
+</html>

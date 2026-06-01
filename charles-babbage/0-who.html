@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Babbage — Vol. 0: Who He Was</title>
+<meta name="description" content="Charles Babbage (1791–1871): mathematician, inventor of the Difference Engine and the Analytical Engine, father of the programmable computer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;
+    --brass:#92400e;
+    --silver:#94a3b8;
+    --ink:#ece6dd;
+    --ink-dim:#b9b0a4;
+    --panel:#100c0e;
+    --panel-2:#161012;
+    --brass-glow:rgba(146,64,14,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:"Cinzel",serif;line-height:1.15;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  .kick{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:.22em;
+    font-size:.72rem;
+    color:var(--silver);
+  }
+  .mono{font-family:"Space Mono",monospace}
+
+  /* ---- Sticky nav ---- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(8,6,8,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--brass);
+  }
+  .nav-inner{
+    max-width:1120px;margin:0 auto;
+    display:flex;align-items:center;gap:1.4rem;
+    padding:.9rem 1.4rem;flex-wrap:wrap;
+  }
+  .nav-brand{font-family:"Cinzel",serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--ink)}
+  .nav-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-left:auto}
+  .nav-links a{
+    font-family:"Space Mono",monospace;font-size:.7rem;
+    text-transform:uppercase;letter-spacing:.13em;
+    padding:.4rem .7rem;border:1px solid transparent;border-radius:3px;
+    color:var(--ink-dim);transition:.2s;
+  }
+  .nav-links a:hover{color:var(--ink);border-color:var(--brass)}
+  .nav-links a.active{color:#fff;background:var(--brass);border-color:var(--brass)}
+
+  /* ---- Layout ---- */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+  header.hero{padding:5rem 0 3rem;border-bottom:1px solid rgba(146,64,14,.4)}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800;margin:.6rem 0}
+  .hero .dates{color:var(--silver);font-style:italic;font-size:1.3rem}
+  .lede{font-size:1.32rem;max-width:48ch;color:var(--ink-dim);margin-top:1.4rem}
+
+  section{padding:3.4rem 0;border-bottom:1px solid rgba(146,64,14,.22)}
+  section h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:700;margin-bottom:1.2rem;color:#fff}
+  section h3{font-size:1.25rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--ink)}
+  p{margin:1rem 0;max-width:68ch}
+  p .pull{color:var(--silver);font-style:italic}
+  em{color:var(--silver)}
+
+  /* ---- band ---- */
+  .band{
+    background:var(--brass);color:#fdf3e7;
+    padding:2.4rem;border-radius:6px;margin:2rem 0;
+    box-shadow:0 0 0 1px var(--brass);
+  }
+  .band h2,.band h3{color:#fff}
+  .band .kick{color:#fbe3c8}
+  .band p{color:#f4dcc4;max-width:64ch}
+
+  /* ---- card grid ---- */
+  .grid{display:grid;gap:1.2rem;margin:1.8rem 0}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--brass);
+    border-radius:6px;padding:1.5rem;
+    transition:transform .22s ease, box-shadow .22s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--brass-glow)}
+  .card h3{margin-top:0;color:var(--ink)}
+  .card .kick{display:block;margin-bottom:.5rem}
+  .card p{font-size:.98rem;color:var(--ink-dim);margin:.5rem 0 0}
+
+  /* ---- timeline ---- */
+  .tl{list-style:none;border-left:2px solid var(--brass);margin:1.5rem 0;padding-left:1.6rem}
+  .tl li{position:relative;margin:1.5rem 0}
+  .tl li::before{content:"";position:absolute;left:-1.95rem;top:.5rem;width:11px;height:11px;background:var(--brass);border-radius:50%}
+  .tl .yr{font-family:"Space Mono",monospace;color:var(--silver);font-size:.85rem;letter-spacing:.1em}
+
+  /* ---- svg figure ---- */
+  .figure{display:flex;justify-content:center;padding:2rem 0}
+  .figure svg{max-width:100%;height:auto}
+  figcaption{text-align:center;color:var(--silver);font-style:italic;font-size:.95rem;margin-top:.6rem}
+
+  blockquote{
+    border-left:3px solid var(--brass);
+    margin:1.8rem 0;padding:.4rem 1.4rem;
+    font-style:italic;color:var(--silver);font-size:1.18rem;
+  }
+
+  /* ---- colophon ---- */
+  footer.colophon{
+    background:var(--panel-2);border-top:1px solid var(--brass);
+    padding:3rem 0;margin-top:1rem;
+  }
+  .colophon .wrap{font-family:"Space Mono",monospace;font-size:.78rem;color:var(--ink-dim);line-height:1.9}
+  .colophon strong{color:var(--silver)}
+  .colophon .sig{color:var(--brass);letter-spacing:.12em}
+
+  .gearspin{transform-origin:center;animation:spin 14s linear infinite}
+  .gearspin.rev{animation:spin 10s linear infinite reverse}
+  .gearspin.fast{animation:spin 7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.gearspin{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">BABBAGE</span>
+    <div class="nav-links">
+      <a href="0-who.html" class="active">0 · Who</a>
+      <a href="1-engine.html">1 · Engine</a>
+      <a href="2-world.html">2 · World</a>
+      <a href="3-legacy.html">3 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kick">Volume 0 — The Man</span>
+    <h1>Charles Babbage</h1>
+    <div class="dates">London, 26 December 1791 — London, 18 October 1871</div>
+    <p class="lede">A mathematician who looked at a book of tables full of human errors and decided that calculation itself should be done by machinery. He never finished the machine. He designed the computer anyway.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Apparatus</span>
+    <h2>A man made of gears</h2>
+    <figure class="figure">
+      <svg viewBox="0 0 460 260" width="460" role="img" aria-label="Animated rotating brass gear train">
+        <defs>
+          <radialGradient id="brassG" cx="40%" cy="35%" r="75%">
+            <stop offset="0%" stop-color="#c8862f"/>
+            <stop offset="55%" stop-color="#92400e"/>
+            <stop offset="100%" stop-color="#4a1f06"/>
+          </radialGradient>
+        </defs>
+        <!-- helper: each gear is a group rotating -->
+        <g class="gearspin" style="transform-origin:120px 130px">
+          <g transform="translate(120 130)">
+            <circle r="62" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/>
+            <circle r="18" fill="var(--paper)" stroke="#1a0d04" stroke-width="2"/>
+            <g fill="url(#brassG)" stroke="#1a0d04" stroke-width="1.5">
+              <!-- teeth -->
+              <g id="teethA"></g>
+            </g>
+          </g>
+        </g>
+        <g class="gearspin rev" style="transform-origin:280px 130px">
+          <g transform="translate(280 130)">
+            <circle r="44" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/>
+            <circle r="13" fill="var(--paper)" stroke="#1a0d04" stroke-width="2"/>
+          </g>
+        </g>
+        <g class="gearspin fast" style="transform-origin:372px 96px">
+          <g transform="translate(372 96)">
+            <circle r="28" fill="url(#brassG)" stroke="#1a0d04" stroke-width="2"/>
+            <circle r="9" fill="var(--paper)" stroke="#1a0d04" stroke-width="2"/>
+          </g>
+        </g>
+      </svg>
+    </figure>
+    <figcaption>A brass gear train — the only kind of "logic" Babbage ever had to work with.</figcaption>
+
+    <p>Charles Babbage was born in London on 26 December 1791, the son of a banker. He was sickly as a child, schooled privately, and obsessed early with the question that would consume his life: <em>where do the numbers in printed mathematical tables come from, and why are so many of them wrong?</em></p>
+    <p>In the nineteenth century, navigation, banking, insurance, engineering, and astronomy all depended on printed tables — of logarithms, of sines, of compound interest. Every one of those tables was computed by hand by people literally called "computers," then typeset by hand. Errors crept in at every stage. Ships ran aground on bad longitude figures. Babbage's revolutionary idea was deceptively simple: a machine could both <em>calculate</em> the numbers and <em>print</em> them, removing the human hand — and the human error — entirely.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Cambridge</span>
+    <h2>Reforming British mathematics</h2>
+    <p>Babbage went up to Trinity College, Cambridge, in 1810, and was quickly disappointed: he knew more mathematics than his tutors. British mathematics had stagnated for a century, frozen in loyalty to Isaac Newton. Newton and Leibniz had each invented calculus independently, and in the bitter priority dispute that followed, English mathematicians clung to Newton's clumsy "dot" notation while the Continent raced ahead with Leibniz's far superior <em>d/dx</em> notation.</p>
+    <p>With his friends John Herschel and George Peacock, Babbage founded the <strong>Analytical Society</strong> in 1812 — a student rebellion with a slogan that was also a pun: they were for "the principles of pure <em>d</em>-ism as opposed to the <em>dot</em>-age of the university." They campaigned to import the Continental notation into England, and they largely won. It was Babbage's first crusade against institutional inertia. It would not be his last.</p>
+    <blockquote>"I am thinking that all these tables might be calculated by machinery."</blockquote>
+    <p class="pull">— Babbage's recollection, decades later, of a night in 1812 or 1813 spent checking astronomical tables with Herschel, both exhausted by the errors.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Two Engines</span>
+    <h2>What he tried to build</h2>
+    <div class="grid g2">
+      <div class="card">
+        <span class="kick">1822 · Difference Engine</span>
+        <h3>The calculator</h3>
+        <p>Proposed in 1822 to mechanize the production of mathematical tables. It used the <strong>method of finite differences</strong>, which computes polynomial values using only repeated addition — no multiplication, no division. Each column of gears held a number; each turn of the handle propagated the additions. The British government funded it. Babbage kept improving the design, and it was <strong>never finished</strong>.</p>
+      </div>
+      <div class="card">
+        <span class="kick">1837 · Analytical Engine</span>
+        <h3>The computer</h3>
+        <p>The conceptual leap. A <strong>general-purpose, programmable</strong> machine: steam-powered, with a <em>mill</em> (the processor), a <em>store</em> (the memory), <em>punched-card input</em> borrowed from the Jacquard loom, and a <em>printer</em>. It could loop, branch on conditions, and run any algorithm. It was a computer in everything but electronics — designed a full century before one was built. Never constructed in his lifetime.</p>
+      </div>
+    </div>
+    <p>The distinction matters and is the spine of this whole series: the Difference Engine was an extraordinary <em>calculator</em>. The Analytical Engine was a <em>computer</em>. The first does one fixed class of arithmetic. The second can, in principle, do anything any computer can do — it is, in the modern sense, <em>universal</em>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The First Programmer</span>
+    <div class="band">
+      <span class="kick">Ada Lovelace, 1843</span>
+      <h2>The first program ever written</h2>
+      <p>Augusta Ada King, Countess of Lovelace — daughter of the poet Lord Byron — translated an Italian account of the Analytical Engine and appended her own notes, which ran longer than the original paper. In "Note G" she wrote out, step by step, how the engine would compute the Bernoulli numbers. That sequence of operations is widely regarded as the first algorithm intended to be executed by a machine — the first computer program, written for a computer that did not yet, and would never in their lifetimes, physically exist.</p>
+      <p>More than that: Lovelace grasped what even Babbage sometimes understated — that the engine manipulated <em>symbols</em>, not merely numbers, and might one day compose music or do work no one had yet imagined. She saw the generality. She saw the future.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">A Life in Years</span>
+    <h2>Timeline</h2>
+    <ul class="tl">
+      <li><span class="yr">1791</span><br>Born in London, 26 December, son of a wealthy banker.</li>
+      <li><span class="yr">1810</span><br>Enters Trinity College, Cambridge.</li>
+      <li><span class="yr">1812</span><br>Co-founds the Analytical Society to reform British mathematics.</li>
+      <li><span class="yr">1816</span><br>Elected a Fellow of the Royal Society.</li>
+      <li><span class="yr">1822</span><br>Proposes the Difference Engine; begins government-funded construction.</li>
+      <li><span class="yr">1828–1839</span><br>Lucasian Professor of Mathematics at Cambridge — Newton's old chair — though he rarely lectured.</li>
+      <li><span class="yr">1837</span><br>Conceives the Analytical Engine, the first design for a general-purpose computer.</li>
+      <li><span class="yr">1843</span><br>Ada Lovelace publishes her notes, including the first published algorithm.</li>
+      <li><span class="yr">1864</span><br>Publishes <em>Passages from the Life of a Philosopher</em>, including his war on street music.</li>
+      <li><span class="yr">1871</span><br>Dies in London, 18 October, the engines unbuilt.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Polymath</span>
+    <h2>Far more than the engines</h2>
+    <p>It distorts Babbage to remember him only for two unfinished machines. He was one of the most restlessly inventive minds of the nineteenth century, and his interests sprawled across the whole of science, industry, and public life. He treated the world as a system to be measured, optimized, and improved.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Industry</span><h3>The economist of manufacturing</h3><p>His 1832 book <em>On the Economy of Machinery and Manufactures</em> analyzed factory production, the division of labour, and cost — a founding text of operations research that influenced economists for generations.</p></div>
+      <div class="card"><span class="kick">Railways</span><h3>The cowcatcher and the black box</h3><p>He proposed a "pilot" to clear obstacles from the front of locomotives and devised instruments to record a train's speed and track conditions onto rolls of paper — an ancestor of the flight recorder.</p></div>
+      <div class="card"><span class="kick">Codes</span><h3>The cryptographer</h3><p>He broke the Vigenère cipher, long thought unbreakable, and worked on lock-picking and security — though his cryptographic triumph went largely unpublished and uncredited in his lifetime.</p></div>
+      <div class="card"><span class="kick">Light</span><h3>Lighthouses and signalling</h3><p>He devised a system of occulting (blinking) lights so each lighthouse could send a distinct identifying signal — a scheme later adopted in practice around the world.</p></div>
+      <div class="card"><span class="kick">Statistics</span><h3>The founder of societies</h3><p>Co-founder of the Royal Astronomical Society and the Statistical Society of London, pushing British science toward data, measurement, and professional rigour.</p></div>
+      <div class="card"><span class="kick">Postage</span><h3>The flat rate</h3><p>His statistical analysis showed the cost of a letter lay in handling, not distance — an argument that helped underpin the case for the uniform penny post.</p></div>
+    </div>
+    <p>Almost everything he touched, he tried to turn into a machine, a measurement, or a system. The engines were the grandest expression of a single lifelong instinct: that human labour and human error could and should be replaced by reliable mechanism.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Man Himself</span>
+    <h2>Character, household, and grief</h2>
+    <p>Babbage married Georgiana Whitmore in 1814, against some family resistance, and by all accounts the marriage was happy. It was also marked by terrible loss. Of their eight children, only three survived to adulthood. In 1827 — a single devastating year — Babbage lost his father, his wife Georgiana, and one of his sons. He never remarried. He travelled on the Continent to recover, and returned changed: more solitary, more combative, more wholly absorbed in his work.</p>
+    <p>Those who knew him described a man of immense charm in company and ferocious obstinacy in argument. His Saturday-evening soirées in Dorset Street were among the most sought-after gatherings in London, drawing scientists, writers, statesmen, and aristocrats around the gleaming demonstration fragment of his Difference Engine. Yet the same man could nurse a grievance for decades and pour his energies into feuds — with the government, with the Royal Society, with the organ-grinders of London — that did his reputation lasting damage.</p>
+    <p>He was, in short, difficult, brilliant, generous, and impossible by turns: the kind of personality that makes great leaps and also great enemies. Both traits shaped the fate of his engines.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Eccentric</span>
+    <h2>The war on street musicians</h2>
+    <p>Babbage was brilliant, irascible, and gloriously eccentric. In his later years he became famous — even ridiculous — for a single obsession: his hatred of London's organ-grinders, brass bands, and street musicians, whose racket he claimed had destroyed a quarter of his working life. He counted the interruptions. He took offenders to court. He published a chapter titled "Street Nuisances" in his autobiography. Children followed him in the street playing instruments to torment him.</p>
+    <p>It is easy to laugh, and people did. But the same intolerance for noise, error, and waste that made him an object of public mockery was exactly what drove him to imagine a world where calculation was perfect, automatic, and silent. The man could not abide imprecision — in music or in mathematical tables. He also invented the cowcatcher for locomotives, studied lighthouse signalling, and helped found the Royal Astronomical and Statistical Societies. He was never <em>only</em> the gear man.</p>
+    <blockquote>"On two occasions I have been asked, 'Pray, Mr. Babbage, if you put into the machine wrong figures, will the right answers come out?' I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question."</blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Why He Matters</span>
+    <h2>The unfinished founder</h2>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Vision</span><h3>He saw the computer</h3><p>A century before electronics, he specified processor, memory, input, output, and control — the whole architecture.</p></div>
+      <div class="card"><span class="kick">Failure</span><h3>He built almost none of it</h3><p>Funding collapsed, designs kept changing, and the engines stayed mostly on paper until long after his death.</p></div>
+      <div class="card"><span class="kick">Vindication</span><h3>The plans were right</h3><p>In 1991 the Science Museum built his Difference Engine No. 2 from his drawings. It worked perfectly.</p></div>
+    </div>
+    <p>Babbage failed to build the machine. He did not fail to invent it. The rest of this series traces the engines themselves (Vol. 1), the Victorian world that funded and frustrated him (Vol. 2), and the strange afterlife of a dead technology whose central idea now runs every device on Earth (Vol. 3).</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">In His Own Words</span>
+    <h2>The voice of the engineer</h2>
+    <p>Babbage wrote constantly — papers, books, furious pamphlets, and a sharp, funny, bitter autobiography. The voice that comes through is unmistakable: precise, impatient with foolishness, and quietly certain that he was right and the world was slow.</p>
+    <blockquote>"Errors using inadequate data are much less than those using no data at all."</blockquote>
+    <blockquote>"Whenever any result is sought by its aid, the question will then arise — by what course of calculation can these results be arrived at by the machine in the shortest time?"</blockquote>
+    <blockquote>"The whole of the developments and operations of analysis are now capable of being executed by machinery."</blockquote>
+    <p>That last line, written of the Difference Engine, was an overstatement in 1822 and an understatement two centuries later. He was describing a future he would not live to see — a world in which "the whole of analysis" really would be executed by machinery, on a scale and at a speed beyond any Victorian imagination.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">How To Read This Series</span>
+    <h2>Four volumes, one argument</h2>
+    <div class="grid g2">
+      <div class="card"><span class="kick">Vol. 0 — Who</span><h3>The man</h3><p>You are here. The life, the character, the breadth of a polymath who designed the computer and finished almost nothing.</p></div>
+      <div class="card"><span class="kick">Vol. 1 — Engine</span><h3>The machines</h3><p>How the Difference Engine and the Analytical Engine actually worked, and how their parts map onto a modern CPU, RAM, and I/O.</p></div>
+      <div class="card"><span class="kick">Vol. 2 — World</span><h3>The Victorian age</h3><p>The Royal Society, the £17,000 funding disaster, Lovelace, Darwin, and the actuarial problem that started it all.</p></div>
+      <div class="card"><span class="kick">Vol. 3 — Legacy</span><h3>Dead medium, living idea</h3><p>Mechanical computing is extinct — but its architecture is the von Neumann architecture, running in every device alive.</p></div>
+    </div>
+    <p>The single argument running through all four: Charles Babbage built the wrong machine in the right shape. The shape outlived the machine, the man, and the entire technology he worked in.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">The Brain Preserved</span>
+    <h2>A final eccentricity</h2>
+    <p>Babbage's strangeness did not end with his death. Following the scientific curiosity of his era, half of his brain was preserved after he died in 1871; portions are held to this day by the Royal College of Surgeons and the Science Museum in London. There is something fitting about it — the man who tried to mechanize thought, his own thinking organ kept on a shelf, a relic of a mind that had reached a century into the future.</p>
+    <p>He was buried at Kensal Green Cemetery in London. The obituaries were mixed; many remembered the irascible enemy of organ-grinders and the man who had spent a fortune of public money on a machine that never ran. Few grasped that they were burying the person who had drawn the floor plan of the modern world.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kick">Coda</span>
+    <h2>The founder who never saw it work</h2>
+    <p>There is a particular kind of greatness in being right too early. Babbage never saw a single one of his engines compute a complete table. He never heard the word "computer" used to mean a machine. He died believing, with some justice, that the world had failed his life's work.</p>
+    <p>But the failure was the world's, not the design's. When the Science Museum finally built his Difference Engine No. 2 in 1991 — from his own drawings, to his own tolerances — it worked on the first serious attempt. The plans had been right for a hundred and forty years, waiting only for someone with the patience and the budget to follow them to the end.</p>
+    <p>That is who Charles Babbage was: a difficult, dazzling, heartbroken polymath who saw the computer whole, drew it in brass, and trusted the future to understand. The future did. Read on.</p>
+    <div class="grid g3">
+      <div class="card"><span class="kick">Saw</span><h3>The whole computer</h3><p>Processor, memory, input, output, control, and branching — the complete architecture, a century early.</p></div>
+      <div class="card"><span class="kick">Built</span><h3>Almost nothing</h3><p>Demonstration fragments and drawings; no complete engine ran in his lifetime.</p></div>
+      <div class="card"><span class="kick">Left</span><h3>Everything</h3><p>The blueprint of the machine that now runs the world, vindicated in metal in 1991.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="wrap">
+    <span class="kick">Colophon</span><br>
+    <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+    Charles Babbage — A Four-Volume Study · Volume 0 of 4<br>
+    Author / Steward: David Lee Wise<br>
+    Lineage: <span class="sig">David Lee Wise / ROOT0 / TriPod LLC</span><br>
+    License: CC-BY-ND-4.0 (Attribution — NoDerivatives)<br>
+    Typeset in Cinzel, Newsreader &amp; Space Mono.<br>
+    &copy; 2026 — Distribute freely, unmodified, with attribution intact.
+  </div>
+</footer>
+
+<script>
+// generate gear teeth for the large gear (procedural so the markup stays clean)
+(function(){
+  var g=document.getElementById('teethA');
+  if(!g)return;
+  var teeth=16,R=62;
+  for(var i=0;i<teeth;i++){
+    var a=(i/teeth)*Math.PI*2;
+    var x=Math.cos(a)*R, y=Math.sin(a)*R;
+    var r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    r.setAttribute('x',x-6); r.setAttribute('y',y-6);
+    r.setAttribute('width',12); r.setAttribute('height',12);
+    r.setAttribute('transform','rotate('+(a*180/Math.PI)+' '+x+' '+y+')');
+    g.appendChild(r);
+  }
+})();
+</script>
+</body>
+</html>

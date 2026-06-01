@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erwin Schrödinger — Vol. 2: His World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#060a0c; --teal:#0f766e; --violet:#7c3aed; --text:#cce8e5; --muted:#4a7a75; --border:#0e1e1c; --card-bg:#080e0d; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(6,10,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--teal); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--teal); border-color:var(--violet); }
+  .hero { position:relative; width:100%; min-height:460px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#040c14 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.55; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--teal); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(15,118,110,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--teal); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--teal); color:#e0f5f3; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--teal); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--teal); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--teal); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--violet); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--teal); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--violet); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--teal); text-decoration:none; }
+  .colophon a:hover { color:var(--violet); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Erwin Schrödinger</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-wave.html">Vol. 1 — The Wave Equation</a>
+    <a href="2-world.html" class="active">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="worldGlowS" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#060a0c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="460" fill="url(#worldGlowS)"/>
+    <!-- Timeline line -->
+    <line x1="80" y1="230" x2="820" y2="230" stroke="#1a3a38" stroke-width="2" opacity="0.5"/>
+    <!-- Cities as nodes -->
+    <circle cx="120" cy="230" r="10" fill="#0f766e" opacity="0.9"/>
+    <text x="100" y="215" font-family="monospace" font-size="11" fill="#0f766e">Vienna</text>
+    <circle cx="260" cy="230" r="8" fill="#0f766e" opacity="0.8"/>
+    <text x="235" y="215" font-family="monospace" font-size="10" fill="#0f766e">Zurich</text>
+    <circle cx="400" cy="230" r="10" fill="#7c3aed" opacity="0.9"/>
+    <text x="380" y="215" font-family="monospace" font-size="11" fill="#7c3aed">Berlin</text>
+    <circle cx="520" cy="230" r="8" fill="#0f766e" opacity="0.8"/>
+    <text x="502" y="215" font-family="monospace" font-size="10" fill="#0f766e">Oxford</text>
+    <circle cx="640" cy="230" r="10" fill="#5eead4" opacity="0.9"/>
+    <text x="622" y="215" font-family="monospace" font-size="11" fill="#5eead4">Dublin</text>
+    <circle cx="780" cy="230" r="8" fill="#0f766e" opacity="0.8"/>
+    <text x="757" y="215" font-family="monospace" font-size="10" fill="#0f766e">Vienna</text>
+    <!-- Year labels -->
+    <text x="108" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1887</text>
+    <text x="245" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1921</text>
+    <text x="388" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1927</text>
+    <text x="508" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1933</text>
+    <text x="628" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1940</text>
+    <text x="765" y="250" font-family="monospace" font-size="10" fill="#4a7a75">1956</text>
+    <!-- Wave equation marker -->
+    <text x="220" y="185" font-family="monospace" font-size="13" fill="#7c3aed" opacity="0.8">iℏ∂ψ/∂t = Ĥψ</text>
+    <text x="249" y="200" font-family="monospace" font-size="9" fill="#4a7a75">(1926, Arosa)</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 2 — His World · Vienna to Dublin</span>
+    <h1 class="hero-title">His World</h1>
+    <p class="hero-subtitle">Vienna, Zurich, Berlin, Exile, Dublin</p>
+    <p class="hero-lead">A life shaped by the Vienna intellectual tradition, the quantum revolution of the 1920s, exile from fascism, and a productive refuge in Ireland.</p>
+  </div>
+</div>
+
+<div class="band">Habsburg Vienna · Zurich 1920s · The Quantum Revolution · Exile from Fascism · Dublin Institute · Personal Life</div>
+
+<main>
+
+  <section id="vienna-culture">
+    <span class="section-label">The Vienna Tradition</span>
+    <h2>Vienna: Capital of Intellectual Europe</h2>
+    <p>The Vienna into which Schrödinger was born in 1887 was the capital of the Austro-Hungarian Empire — a city of two million people, the fifth-largest city in the world, and one of the great centres of European culture. The Habsburg court set a tone of artistic and intellectual patronage that permeated bourgeois Viennese life. Music (Brahms, Bruckner, and later Mahler and Schoenberg), visual art (Klimt, Schiele), literature (Schnitzler, Hofmannsthal), philosophy (Mach, Brentano, and the early Vienna Circle), and science (Boltzmann, Mach, Doppler) were all exceptionally distinguished in late-Habsburg Vienna.</p>
+    <p>The physics tradition Schrödinger inherited was particularly shaped by <strong>Ludwig Boltzmann</strong>, whose statistical mechanics provided the mathematical tools for thinking about large numbers of particles and whose philosophical views on the reality of atoms were famously contested. Schrödinger read Boltzmann's work deeply and was influenced by his physical intuitions and by Ernst Mach's positivist philosophy of science — a tradition of asking not just what equations predict but what they mean physically.</p>
+    <p>The Habsburg collapse in 1918 was a catastrophe for this culture. Vienna went from the capital of a sixty-million-person empire to the capital of a rump state of seven million, with an inflated bureaucracy, a ruined currency, and an identity crisis. The intellectual world survived and in some ways intensified — the interwar Vienna of Wittgenstein, Popper, and the Vienna Circle was extraordinarily productive — but the material conditions were grim. Schrödinger was glad to leave for Zurich in 1921.</p>
+  </section>
+
+  <section id="zurich-revolution">
+    <span class="section-label">Zurich, 1921–1927</span>
+    <h2>Zurich and the Quantum Revolution</h2>
+    <p>The University of Zurich (and the adjacent ETH — the Swiss Federal Technical University, where Einstein had studied and later taught) was in the 1920s one of the most important nodes in European theoretical physics. Peter Debye was at the ETH. The regular physics colloquium was attended by both university and ETH physicists, and visiting lecturers of the highest calibre were frequent. It was at this colloquium that the quantum revolution unfolded, week by week, for those fortunate enough to be present.</p>
+    <p>The years 1924–1927 were the most concentrated period of theoretical physics development since Newton's Principia. Einstein published on Bose-Einstein condensation (1924). de Broglie published his wave-particle thesis (1924). Heisenberg published matrix mechanics (1925). Born and Jordan extended it (1925). Pauli derived the exclusion principle (1925). Dirac published his quantum algebra (1925–1926). Schrödinger published wave mechanics (1926). Born gave wave mechanics its probabilistic interpretation (1926). Heisenberg stated the uncertainty principle (1927). Bohr formulated complementarity (1927). In roughly three years, quantum mechanics went from a collection of ad hoc rules to a complete and rigorous theory.</p>
+    <p>Schrödinger was at Zurich for most of this, attending colloquia, corresponding, and reading preprints. His dissatisfaction with Heisenberg's matrix mechanics — which seemed to him abstract and unphysical — drove him to find an alternative that, paradoxically, turned out to be entirely equivalent. His intuition that there should be a wave equation was vindicated; his preference for a non-probabilistic interpretation was not.</p>
+
+    <div class="pull-quote">
+      <blockquote>"If we have to go on with these damned quantum jumps, then I am sorry that I ever got involved in this business."</blockquote>
+      <cite>— Erwin Schrödinger, in debate with Niels Bohr, reported by Heisenberg</cite>
+    </div>
+  </section>
+
+  <section id="berlin">
+    <span class="section-label">Berlin, 1927–1933</span>
+    <h2>Berlin: Planck's Chair and the Rise of Fascism</h2>
+    <p>In 1927, Schrödinger was invited to accept the Chair of Theoretical Physics at the University of Berlin — the chair that had been held by Max Planck for decades and was the most prestigious in German theoretical physics. To be invited to succeed Planck was an extraordinary honour. Schrödinger accepted and settled in Berlin, where he worked alongside Einstein, who was also at Berlin, and was part of the most distinguished theoretical physics group in the world.</p>
+    <p>Berlin in the late 1920s was, despite its difficulties (inflation, political violence, the collapse of the Weimar economy), a city of extraordinary cultural vitality. The physics seminar at Berlin was attended by Einstein, von Laue, Nernst, and Schrödinger — a gathering of Nobel laureates that was essentially without parallel. Schrödinger gave his famous cat paper at a Berlin seminar in 1935 after he had already left; he continued to correspond intensely with Einstein, who shared his unease with Copenhagen's probabilistic interpretation.</p>
+    <p>The appointment of Hitler as Chancellor in January 1933 ended this world rapidly and definitively. Jewish scientists — Einstein, Born, Franck, and many others — were dismissed from their posts or fled immediately. Schrödinger was not Jewish but was openly anti-Nazi, and he found the atmosphere intolerable. In the autumn of 1933, he resigned his Berlin position and left Germany for Oxford, becoming one of the few non-Jewish German academics to leave voluntarily in the early Nazi period.</p>
+  </section>
+
+  <section id="einstein">
+    <span class="section-label">A Great Dialogue</span>
+    <h2>Schrödinger and Einstein: Allies Against Copenhagen</h2>
+    <p>Schrödinger and Einstein were intellectual allies on what both considered the deepest problem in quantum mechanics: was the probabilistic interpretation — the Copenhagen interpretation — really the last word? Both believed not. Einstein's dissatisfaction was encapsulated in his famous remark that "God does not play dice." Schrödinger's dissatisfaction found its most concentrated expression in the cat thought experiment.</p>
+    <p>The two men corresponded extensively in the period around the EPR paper (1935), in which Einstein, Podolsky, and Rosen had argued that quantum mechanics was incomplete. Schrödinger introduced the term <em>Verschränkung</em> (entanglement) in this correspondence — the word that now denotes one of the most fundamental phenomena in quantum mechanics. He used it to describe the correlations between spatially separated quantum systems that the EPR argument highlighted.</p>
+    <p>Neither Einstein nor Schrödinger succeeded in replacing Copenhagen with something more satisfying to them. Bell's theorem (1964) and the subsequent experiments by Aspect (1982) showed that no "hidden variable" theory of the type Einstein preferred could reproduce quantum mechanical predictions. Copenhagen, or something like it, remains the standard framework. The dialogue between Schrödinger and Einstein was historically important but ultimately unsuccessful in its own terms — it did, however, clarify the problem of quantum entanglement and set the agenda for modern quantum foundations research.</p>
+  </section>
+
+  <section id="dublin-world">
+    <span class="section-label">Dublin, 1940–1956</span>
+    <h2>Ireland: Neutral Haven, Productive Refuge</h2>
+    <p>Ireland's neutrality during World War II made Dublin an unusual outpost of calm in a continent convulsed by war. Schrödinger arrived in 1940 and remained for seventeen years, his longest continuous residence anywhere since Vienna. The Dublin Institute for Advanced Studies, modeled partly on Princeton's Institute for Advanced Study, gave him essentially complete freedom — no teaching obligations, adequate funding, access to excellent libraries, and the stimulus of regular seminars and visiting scholars.</p>
+    <p>The Irish context was in some ways intellectually limiting — Dublin was not Berlin or Zurich, and the local physics community was small. But Schrödinger found compensation in the public intellectual life of the city, in the proximity of Trinity College Dublin (where he gave his "What is Life?" lectures), and in the opportunity to pursue the broader philosophical and biological interests that had always accompanied his physics. He wrote prolifically in Dublin: not just "What is Life?" but essays on philosophy, physics, ancient Greek thought, and consciousness.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Intellectual Context</span>
+        <h4>The Vienna Tradition</h4>
+        <p>Boltzmann's statistical mechanics, Mach's positivism, the Vienna Circle's philosophy of science — all shaped Schrödinger's approach to quantum mechanics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Revolution</span>
+        <h4>Zurich, 1924–1926</h4>
+        <p>Three extraordinary years when quantum mechanics was created, with Schrödinger's wave equation as one of the two founding formulations.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Exile</span>
+        <h4>Nazi Germany and After</h4>
+        <p>One of the few non-Jewish academics to leave voluntarily. Spent years in Oxford and Graz before finding a permanent home in Dublin.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Personal Life</span>
+        <h4>Unconventional Domestic Arrangements</h4>
+        <p>Lived with wife and mistress, with mutual knowledge. Had children with at least one other woman. Oxford found this irregular; Dublin accepted it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="personal">
+    <span class="section-label">The Person</span>
+    <h2>Schrödinger's Inner Life: Philosophy, Sanskrit, Poetry</h2>
+    <p>Schrödinger was unusually cultivated even by the high standards of Central European academic physics. He read Sanskrit and translated Vedantic philosophical texts, finding in the Hindu concept of the unity of consciousness (Atman = Brahman) something congenial to his own philosophical instincts about the nature of mind and world. His book "My View of the World" (written in the 1920s, published in 1961) combines physics, Vedanta, and phenomenology in an attempt to understand the relationship between scientific knowledge and human experience.</p>
+    <p>He wrote poetry in German throughout his life — not as a hobby but as a serious parallel activity. He engaged deeply with Schopenhauer's philosophy and with the Greek pre-Socratics. His "Nature and the Greeks" (1954) is a sustained historical argument that the conceptual structure of modern science — the idea of a world governed by universal mathematical laws — derives from the ancient Greek philosophical tradition and cannot be understood without it.</p>
+    <p>He was also notably handsome, charming, and attractive to women — and they to him. The unconventional domestic arrangements of his adult life were managed with a candour unusual in the physics world of the time. His wife Anny remained his partner and companion throughout. His mistress Hilde March also lived with them in various configurations. He had a daughter by Hilde in 1934 (Ruth), and later had two daughters by another woman in Dublin. These arrangements were known to his colleagues and apparently accepted, if sometimes with raised eyebrows.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Erwin Schrödinger Series — Vol. 2: His World<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

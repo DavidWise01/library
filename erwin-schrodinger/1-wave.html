@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erwin Schrödinger — Vol. 1: The Wave Equation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#060a0c; --teal:#0f766e; --violet:#7c3aed; --text:#cce8e5; --muted:#4a7a75; --border:#0e1e1c; --card-bg:#080e0d; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(6,10,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--teal); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--teal); border-color:var(--violet); }
+  .hero { position:relative; width:100%; min-height:520px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#040c14 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.7; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--teal); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(15,118,110,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--teal); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--teal); color:#e0f5f3; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--teal); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--teal); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--teal); font-style:italic; }
+  .equation-box { background:var(--card-bg); border:1px solid var(--teal); border-left:4px solid var(--teal); padding:2rem 2.5rem; margin:2.5rem 0; text-align:center; }
+  .equation-box .eq { font-family:'Space Mono',monospace; font-size:clamp(1.2rem,3vw,2rem); color:#fff; letter-spacing:0.05em; display:block; margin-bottom:0.75rem; }
+  .equation-box .eq-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--muted); }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--border); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--violet); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--teal); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .pull-quote { border-left:4px solid var(--violet); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  .cat-box { background:var(--card-bg); border:2px solid var(--violet); padding:2.5rem; margin:2.5rem 0; }
+  .cat-box h3 { color:var(--violet); margin-top:0; }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--teal); text-decoration:none; }
+  .colophon a:hover { color:var(--violet); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Erwin Schrödinger</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-wave.html" class="active">Vol. 1 — The Wave Equation</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="waveHeroGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.2"/>
+        <stop offset="100%" stop-color="#060a0c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="glow-w">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <rect width="900" height="520" fill="url(#waveHeroGlow)"/>
+    <line x1="50" y1="260" x2="850" y2="260" stroke="#1a3a38" stroke-width="1.5" opacity="0.4"/>
+    <!-- Standing wave (n=3) -->
+    <path d="M100,260 C166,110 233,410 300,260 C366,110 433,410 500,260 C566,110 633,410 700,260 C733,185 766,335 800,260" fill="none" stroke="#0f766e" stroke-width="2.5" filter="url(#glow-w)" opacity="0.85">
+      <animate attributeName="opacity" values="0.85;1;0.85" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <!-- Wave envelope -->
+    <path d="M100,260 C300,80 600,80 800,260" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="8,4" opacity="0.4"/>
+    <path d="M100,260 C300,440 600,440 800,260" fill="none" stroke="#7c3aed" stroke-width="1" stroke-dasharray="8,4" opacity="0.4"/>
+    <!-- Node markers -->
+    <circle cx="300" cy="260" r="6" fill="#7c3aed" filter="url(#glow-w)" opacity="0.9"/>
+    <circle cx="500" cy="260" r="6" fill="#7c3aed" filter="url(#glow-w)" opacity="0.9"/>
+    <circle cx="700" cy="260" r="6" fill="#7c3aed" filter="url(#glow-w)" opacity="0.9"/>
+    <!-- Labels -->
+    <text x="290" y="285" font-family="monospace" font-size="11" fill="#7c3aed" opacity="0.7">node</text>
+    <text x="490" y="285" font-family="monospace" font-size="11" fill="#7c3aed" opacity="0.7">node</text>
+    <text x="690" y="285" font-family="monospace" font-size="11" fill="#7c3aed" opacity="0.7">node</text>
+    <!-- ψ label -->
+    <text x="55" y="210" font-family="serif" font-size="32" fill="#0f766e" opacity="0.7" font-style="italic">ψ</text>
+    <text x="55" y="250" font-family="monospace" font-size="11" fill="#4a7a75" opacity="0.5">n = 3</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 1 — The Work · 1926</span>
+    <h1 class="hero-title">The Wave Equation</h1>
+    <p class="hero-subtitle">iℏ ∂ψ/∂t = Ĥψ</p>
+    <p class="hero-lead">A complex-valued wave function encoding all quantum information. Its square gives probability. Its solutions are the orbitals of every atom.</p>
+  </div>
+</div>
+
+<div class="band">The Schrödinger Equation · Wave Function ψ · Hydrogen Atom · Quantum Numbers · Equivalence with Heisenberg · The Cat</div>
+
+<main>
+
+  <section id="the-equation">
+    <span class="section-label">The Discovery, 1926</span>
+    <h2>The Schrödinger Equation</h2>
+    <p>On 27 January 1926, the journal <em>Annalen der Physik</em> received a paper by Erwin Schrödinger titled "Quantisierung als Eigenwertproblem" (Quantisation as an Eigenvalue Problem). It was the first published statement of what became known as the Schrödinger equation — the fundamental equation of quantum mechanics. Schrödinger published three more papers in the next four months, developing and extending the theory. Together, these four papers constitute one of the most concentrated and consequential scientific outputs in the history of physics.</p>
+
+    <div class="equation-box">
+      <span class="eq">iℏ ∂ψ/∂t = Ĥψ</span>
+      <span class="eq-label">The time-dependent Schrödinger equation — the fundamental equation of quantum mechanics. i = imaginary unit; ℏ = reduced Planck constant; ψ = wave function; Ĥ = Hamiltonian operator (total energy)</span>
+    </div>
+
+    <p>The equation describes how the quantum state of a physical system evolves over time. The key object is <strong>ψ (psi)</strong> — the wave function. This is a complex-valued mathematical function that encodes all information about the quantum state of a system. The equation tells us how ψ changes with time: given ψ at one moment, the equation predicts ψ at any later moment.</p>
+
+    <h3>What the Wave Function Means</h3>
+    <p>The physical interpretation of ψ was supplied not by Schrödinger (who preferred a different, ultimately unsuccessful interpretation) but by Max Born in 1926. Born's rule, now the standard interpretation: <strong>|ψ|²</strong> — the square of the absolute value of the wave function — gives the <em>probability density</em> of finding the particle at a given location when measured. The particle does not have a definite position before measurement; it has a probability distribution, and |ψ|² is that distribution.</p>
+    <p>This probabilistic interpretation was deeply uncongenial to Schrödinger, who had hoped to replace quantum jumps and probability with something more continuous and deterministic — a return to classical wave physics. His preferred interpretation, in which ψ described a real physical wave, was shown by Born to be incorrect: the predictions it made for scattering experiments were wrong. The probabilistic Born rule has been vindicated by every experiment conducted since.</p>
+  </section>
+
+  <section id="hydrogen">
+    <span class="section-label">First Application</span>
+    <h2>The Hydrogen Atom: Quantum Numbers From First Principles</h2>
+    <p>The first and most important application of the Schrödinger equation was to the hydrogen atom — the simplest atom, with one proton and one electron. Schrödinger showed that the time-independent version of his equation, applied to the hydrogen atom's potential energy function (the Coulomb potential of the proton's electric field), could be solved exactly. The solutions are the famous hydrogen wave functions — and the quantum numbers emerge automatically from the mathematics.</p>
+
+    <div class="equation-box">
+      <span class="eq">Ĥψ = Eψ</span>
+      <span class="eq-label">The time-independent Schrödinger equation — its solutions for hydrogen give the atomic orbitals. E = energy eigenvalue; ψ = energy eigenfunction (orbital)</span>
+    </div>
+
+    <p>The solutions require, for mathematical consistency, that the quantum numbers take specific discrete values:</p>
+    <p><strong>n</strong> (principal quantum number) = 1, 2, 3, ... — determines the energy and overall size of the orbital. <strong>l</strong> (angular momentum quantum number) = 0, 1, ..., n−1 — determines the shape (s, p, d, f...). <strong>m</strong> (magnetic quantum number) = −l, ..., 0, ..., l — determines the orientation in space.</p>
+    <p>The energy levels of hydrogen that fall out of the Schrödinger equation are:</p>
+
+    <div class="equation-box">
+      <span class="eq">Eₙ = −13.6 eV / n²</span>
+      <span class="eq-label">Hydrogen energy levels — identical to the Bohr formula, but derived from first principles without ad hoc quantum postulates. eV = electron-volt; n = principal quantum number</span>
+    </div>
+
+    <p>This was a spectacular result. The Bohr model (1913) had derived the same energy levels but by arbitrarily imposing quantum conditions on classical orbits. Schrödinger derived them without any arbitrary assumptions — they fell out automatically from the wave equation and the boundary condition that ψ must remain finite. The quantisation of energy was not a postulate but a consequence.</p>
+
+    <h3>The Atomic Orbitals</h3>
+    <p>The shapes of |ψ|² for different quantum numbers give the <em>orbitals</em> — the probability clouds showing where electrons are likely to be found. The s orbitals (l=0) are spherical. The p orbitals (l=1) are dumbbell-shaped, oriented along x, y, or z. The d orbitals (l=2) have more complex four-lobed and torus shapes. These are not arbitrary — they are the exact shapes of the solutions to the Schrödinger equation for the Coulomb potential. Every chemistry student who draws the shapes of atomic orbitals is drawing solutions to Schrödinger's 1926 equation.</p>
+  </section>
+
+  <section id="matrix-equivalence">
+    <span class="section-label">The Quantum Mechanics Synthesis</span>
+    <h2>Equivalence With Heisenberg's Matrix Mechanics</h2>
+    <p>In the same year that Schrödinger published his wave mechanics, <strong>Werner Heisenberg</strong> had already published an alternative formulation of quantum mechanics: matrix mechanics (1925, developed with Born and Jordan). Matrix mechanics expressed quantum mechanical quantities as infinite-dimensional matrices and gave correct predictions, but was algebraically forbidding and geometrically unvisualizable. Schrödinger was strongly motivated by dissatisfaction with matrix mechanics when he developed wave mechanics, and initially believed they were genuinely different theories.</p>
+    <p>In his third 1926 paper, Schrödinger proved that the two formulations were mathematically equivalent — they gave exactly the same physical predictions from entirely different mathematical starting points. Paul Dirac later provided an even more elegant proof. The equivalence was also demonstrated independently by Pauli. The same quantum mechanics could be formulated as waves (Schrödinger) or matrices (Heisenberg) — or, later, as path integrals (Feynman) — and all would give the same answers.</p>
+    <p>This equivalence is one of the deepest facts about quantum mechanics. It means that the theory is not just a useful approximation but a genuine and robust mathematical structure — one that survives reformulation. Today the most general formulation uses the Dirac notation and abstract Hilbert spaces, which encompasses both the wave and matrix pictures as special cases.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">1925 — Heisenberg</span>
+        <h4>Matrix Mechanics</h4>
+        <p>Quantum observables are infinite matrices. Non-commuting matrices capture uncertainty. Mathematically correct, geometrically opaque.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1926 — Schrödinger</span>
+        <h4>Wave Mechanics</h4>
+        <p>Quantum state is a wave function ψ. Evolution governed by differential equation. Visually intuitive; probabilistic interpretation (Born).</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1926 — Equivalence Proved</span>
+        <h4>Same Theory, Different Math</h4>
+        <p>Schrödinger, Pauli, and Dirac prove both formulations give identical predictions. Two languages for the same physics.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">1930 — Dirac</span>
+        <h4>Bra-Ket Unification</h4>
+        <p>Dirac's abstract Hilbert space formulation (bra-ket notation) encompasses both wave and matrix mechanics as special cases.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="cat">
+    <span class="section-label">Thought Experiment, 1935</span>
+    <h2>Schrödinger's Cat</h2>
+    <div class="cat-box">
+      <h3>The Setup</h3>
+      <p>A cat is sealed in a box with a radioactive atom, a Geiger counter, a flask of poison, and a hammer. If the atom decays, the counter triggers the hammer, smashes the flask, and the cat dies. If it doesn't decay, the cat lives. After one hour, has the atom decayed?</p>
+      <p>According to the Copenhagen interpretation of quantum mechanics, the atom is in a <strong>superposition</strong> of "decayed" and "not decayed" until it is observed. Before observation, neither state is actual. This means, by the mechanism connecting atom to cat, that the cat itself should be in a superposition of "alive" and "dead" — neither definitely alive nor definitely dead until someone opens the box.</p>
+      <p><strong>Schrödinger's point:</strong> This is absurd. A macroscopic cat cannot be in a superposition of alive and dead. Therefore, the Copenhagen interpretation must be incomplete or wrong — it applies only to microscopic quantum systems, and there must be some mechanism (which Copenhagen does not specify) by which superpositions of microscopic systems don't spread to macroscopic ones.</p>
+    </div>
+
+    <p>Schrödinger published the cat thought experiment in a 1935 paper, "Die gegenwärtige Situation in der Quantenmechanik" (The Present Situation in Quantum Mechanics), as part of his ongoing argument with Niels Bohr and the Copenhagen orthodoxy. His intent was purely negative — to show by reduction to absurdity that the Copenhagen interpretation could not be correct as stated.</p>
+    <p>The physics community largely acknowledged the problem Schrödinger was raising — the "measurement problem," now known to be one of the deepest unsolved conceptual problems in physics — but continued to use the Copenhagen interpretation pragmatically because it gave correct predictions. Various resolutions have been proposed: the many-worlds interpretation (Hugh Everett, 1957), decoherence theory (Zeh, Zurek, 1970s–present), quantum Bayesianism (QBism), and others. None is universally accepted. The cat is still alive and dead, in a sense, eighty years later.</p>
+    <p>Schrödinger's cat became, despite his intentions, the most famous thought experiment in science — more widely known even than Galileo's cannonballs or Newton's apple. It appears on T-shirts, in popular articles, in philosophical discussions, in SF novels. It has become the standard lay entry point into quantum mechanics. What Schrödinger designed as a criticism of Copenhagen became its most vivid illustration.</p>
+
+    <div class="pull-quote">
+      <blockquote>"One can even set up quite ridiculous cases. A cat is penned up in a steel chamber, along with... a device... [the cat is] left in a limbo between being alive and dead... The ψ-function for the whole system would express this by having in it the living and the dead cat mixed or smeared out in equal parts."</blockquote>
+      <cite>— Erwin Schrödinger, "Die gegenwärtige Situation in der Quantenmechanik," 1935</cite>
+    </div>
+  </section>
+
+  <section id="what-is-life">
+    <span class="section-label">Biology, 1944</span>
+    <h2>"What is Life?": The Aperiodic Crystal</h2>
+    <p>In 1943, Schrödinger delivered a series of public lectures at Trinity College Dublin under the title "What is Life? The Physical Aspect of the Living Cell." Published as a book in 1944, it asked a question that molecular biologists had not yet framed in physical terms: what kind of physical structure could carry the hereditary information from one generation to the next, stably over billions of years?</p>
+    <p>Schrödinger's answer was remarkable for its precision. He argued that the hereditary substance must be a molecule with two key properties: (1) it must be chemically stable over very long times (meaning it must be a true crystal, with regular bond structure); (2) but it must be capable of encoding complex, non-repetitive information (meaning it could not be a regular crystal with simple repeating units, like salt crystals). He called this a <strong>"aperiodic crystal"</strong> — a molecule with the stability of a crystal but the information-carrying capacity of an irregular code.</p>
+    <p>DNA, announced by Watson and Crick in 1953, is exactly this. The sugar-phosphate backbone is regular and stable (the crystal part); the sequence of bases (A, T, G, C) along the backbone is irregular and information-bearing (the aperiodic part). Schrödinger's 1944 description of what the hereditary molecule must look like is, in its essential structure, a description of DNA — nine years before its discovery.</p>
+
+    <div class="pull-quote">
+      <blockquote>"We have inherited from our forefathers the keen longing for unified, all-embracing knowledge. The very name given to the highest institutions of learning reminds us of the universitas. But the spread of knowledge in the last 100 years has confronted us with a difficult dilemma. We feel clearly that we are only now beginning to acquire reliable material for welding together the sum total of all that is known into a whole."</blockquote>
+      <cite>— Erwin Schrödinger, "What is Life?" (1944) — opening words</cite>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Prediction · 1944</span>
+        <h4>Aperiodic Crystal</h4>
+        <p>Genetic information stored in a molecule that is regular enough to be stable but irregular enough to carry complex information. DNA fits this description exactly.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Confirmed · 1953</span>
+        <h4>Watson and Crick</h4>
+        <p>Both cite reading "What is Life?" as direct motivation for pursuing the structure of DNA. Francis Crick had abandoned physics for biology partly because of Schrödinger's book.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Influence</span>
+        <h4>Molecular Biology Founded</h4>
+        <p>The book helped create the intellectual framework in which molecular biology could develop as a distinct discipline bridging physics and biology.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Legacy</span>
+        <h4>Physicist Meets Life</h4>
+        <p>One of the great examples of disciplinary cross-pollination: a quantum physicist's analysis of heredity helped launch the biological revolution of the 20th century.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Erwin Schrödinger Series — Vol. 1: The Wave Equation<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

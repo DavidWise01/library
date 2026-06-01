@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>René Descartes — Vol. 0: Who He Was</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;
+    --red:#dc2626;
+    --silver:#94a3b8;
+    --ink:#ece8ee;
+    --dim:#b8b2bf;
+    --card:#0f0c11;
+    --line:rgba(220,38,38,0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:#fff;}
+
+  /* ---------- NAV ---------- */
+  nav.sticky{
+    position:sticky;top:0;z-index:100;
+    background:rgba(8,6,8,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.sticky .wrap{
+    max-width:1100px;margin:0 auto;padding:14px 28px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
+  }
+  nav.sticky .brand{
+    font-family:'Cinzel',serif;font-weight:700;letter-spacing:0.06em;
+    color:var(--ink);font-size:15px;margin-right:auto;
+  }
+  nav.sticky a{
+    font-family:'Space Mono',monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--silver);text-decoration:none;padding:4px 2px;
+    border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  }
+  nav.sticky a:hover{color:var(--ink);}
+  nav.sticky a.active{color:var(--red);border-bottom-color:var(--red);}
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:1100px;margin:0 auto;padding:0 28px;}
+  header.hero{padding:90px 0 50px;text-align:center;position:relative;}
+  .kick{
+    font-family:'Space Mono',monospace;text-transform:uppercase;
+    letter-spacing:0.22em;font-size:12px;color:var(--red);
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;
+    margin:18px 0 10px;letter-spacing:0.01em;
+  }
+  h2{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.6rem,3.5vw,2.4rem);
+    margin:0 0 6px;letter-spacing:0.02em;
+  }
+  h3{font-family:'Cinzel',serif;font-weight:600;font-size:1.25rem;margin:0 0 8px;letter-spacing:0.02em;}
+  .lede{font-size:1.32rem;color:var(--dim);font-style:italic;max-width:760px;margin:0 auto;}
+  .dates{font-family:'Space Mono',monospace;color:var(--silver);font-size:13px;letter-spacing:0.18em;margin-top:20px;}
+
+  section{padding:46px 0;border-top:1px solid rgba(148,163,184,0.12);}
+  section .sec-kick{margin-bottom:14px;}
+  p{margin:0 0 20px;max-width:760px;}
+  p.full{max-width:none;}
+  em,i{color:#f0e6e8;}
+  strong{color:#fff;font-weight:600;}
+  a.inline{color:var(--red);text-decoration:none;border-bottom:1px solid var(--line);}
+
+  /* ---------- BAND ---------- */
+  .band{
+    background:var(--red);color:#fff;padding:40px 28px;margin:46px 0;
+    border-radius:3px;
+  }
+  .band .container{padding:0;}
+  .band .kick{color:#ffe2e2;}
+  .band blockquote{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.6rem,4.5vw,2.8rem);line-height:1.18;margin:10px 0 0;
+  }
+  .band cite{display:block;margin-top:16px;font-family:'Space Mono',monospace;font-style:normal;font-size:13px;letter-spacing:0.12em;color:#ffd9d9;}
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:22px;margin-top:10px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:26px 24px;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--red);border-color:var(--red);}
+  .card .num{font-family:'Space Mono',monospace;color:var(--red);font-size:12px;letter-spacing:0.2em;}
+  .card p{font-size:1rem;color:var(--dim);margin:8px 0 0;}
+
+  .pull{border-left:3px solid var(--red);padding:6px 0 6px 22px;margin:30px 0;font-style:italic;font-size:1.18rem;color:#efe6e9;max-width:760px;}
+
+  /* ---------- SVG STAGE ---------- */
+  .svg-stage{
+    background:linear-gradient(180deg,#0c0a0e,#080608);
+    border:1px solid var(--line);border-radius:6px;
+    padding:30px;margin:24px 0;display:flex;justify-content:center;
+  }
+  .svg-stage svg{width:100%;max-width:520px;height:auto;}
+  .gridline{stroke:rgba(148,163,184,0.25);stroke-width:1;}
+  .axis{stroke:var(--silver);stroke-width:1.6;}
+  .drawline{stroke:var(--red);stroke-width:2.4;fill:none;stroke-linecap:round;}
+  .dotpt{fill:var(--red);}
+  .lbl{font-family:'Space Mono',monospace;font-size:11px;fill:var(--silver);}
+
+  /* grid build animation */
+  .gridline{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 2.4s ease forwards;}
+  .axis{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.6s ease forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .dotpt{opacity:0;animation:pop 0.5s ease forwards;}
+  @keyframes pop{from{opacity:0;transform:scale(0);}to{opacity:1;transform:scale(1);}}
+
+  /* ---------- COLOPHON ---------- */
+  footer.colophon{
+    border-top:2px solid var(--red);margin-top:60px;padding:42px 0 80px;
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--silver);
+    letter-spacing:0.08em;line-height:1.9;
+  }
+  footer.colophon .container{display:flex;flex-direction:column;gap:6px;}
+  footer.colophon .tag{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;}
+  .ser-nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
+  .ser-nav a{color:var(--silver);text-decoration:none;border:1px solid var(--line);padding:7px 12px;border-radius:3px;transition:.2s;}
+  .ser-nav a:hover{color:#fff;border-color:var(--red);background:rgba(220,38,38,0.12);}
+  @media(max-width:560px){body{font-size:17px;}header.hero{padding:60px 0 36px;}}
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <div class="wrap">
+    <span class="brand">DESCARTES · 1596–1650</span>
+    <a href="0-who.html" class="active">0 · Who</a>
+    <a href="1-coordinates.html">1 · Coordinates</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kick">Volume Zero — The Man</div>
+    <h1>René Descartes</h1>
+    <p class="lede">The soldier-philosopher who slept until eleven, doubted everything, and gave the world a grid on which every point could be named.</p>
+    <div class="dates">B. 31 MAR 1596 · LA HAYE EN TOURAINE — D. 11 FEB 1650 · STOCKHOLM</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="svg-stage" aria-label="An animated Cartesian grid forming">
+    <svg viewBox="0 0 400 300" role="img">
+      <!-- gridlines -->
+      <g>
+        <line class="gridline" x1="40" y1="40" x2="40" y2="260"/>
+        <line class="gridline" x1="100" y1="40" x2="100" y2="260" style="animation-delay:.1s"/>
+        <line class="gridline" x1="160" y1="40" x2="160" y2="260" style="animation-delay:.2s"/>
+        <line class="gridline" x1="220" y1="40" x2="220" y2="260" style="animation-delay:.3s"/>
+        <line class="gridline" x1="280" y1="40" x2="280" y2="260" style="animation-delay:.4s"/>
+        <line class="gridline" x1="340" y1="40" x2="340" y2="260" style="animation-delay:.5s"/>
+        <line class="gridline" x1="40" y1="40" x2="360" y2="40" style="animation-delay:.1s"/>
+        <line class="gridline" x1="40" y1="100" x2="360" y2="100" style="animation-delay:.2s"/>
+        <line class="gridline" x1="40" y1="160" x2="360" y2="160" style="animation-delay:.3s"/>
+        <line class="gridline" x1="40" y1="220" x2="360" y2="220" style="animation-delay:.4s"/>
+        <line class="gridline" x1="40" y1="260" x2="360" y2="260" style="animation-delay:.5s"/>
+      </g>
+      <!-- axes -->
+      <line class="axis" x1="40" y1="160" x2="368" y2="160" style="animation-delay:.6s"/>
+      <line class="axis" x1="160" y1="40" x2="160" y2="268" style="animation-delay:.6s"/>
+      <circle class="dotpt" cx="220" cy="100" r="5" style="animation-delay:2.6s"/>
+      <circle class="dotpt" cx="280" cy="220" r="5" style="animation-delay:2.9s"/>
+      <text class="lbl" x="226" y="94" style="animation-delay:2.6s">(x, y)</text>
+      <text class="lbl" x="346" y="174">x</text>
+      <text class="lbl" x="166" y="50">y</text>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
+
+<section>
+  <div class="kick sec-kick">I — Origins</div>
+  <h2>A small town, a frail boy</h2>
+  <p>René Descartes was born on <strong>31 March 1596</strong> in the small French town of <strong>La Haye en Touraine</strong> — a place that would one day rename itself simply <em>Descartes</em> in his honor. His mother died when he was an infant, and the boy who survived her was sickly, pale, and prone to staying in bed. That habit, born of weak lungs, became a lifelong ritual: Descartes did his best thinking horizontal, lingering under the blankets until late morning. He would later claim that the long quiet mornings of contemplation were the source of all his philosophy.</p>
+  <p>It is one of history's bitter ironies that a man whose entire intellectual method depended on warm, unhurried mornings would die because a queen made him rise before dawn in the Baltic cold. But that is the end of the story. The beginning is a frail child in Touraine who was given, against the odds, the finest education in Europe.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">II — La Flèche</div>
+  <h2>The Jesuits' star pupil</h2>
+  <p>At around the age of ten Descartes was sent to the <strong>Royal College of La Flèche</strong>, one of the most celebrated Jesuit schools in France. The Jesuits, recognizing both his fragility and his brilliance, granted him the rare privilege of sleeping late — a kindness that shaped his life. There he absorbed the full classical and scholastic curriculum: Latin, Greek, logic, Aristotelian physics, mathematics, and theology.</p>
+  <p>Yet Descartes left La Flèche profoundly dissatisfied. He had been taught a great deal, but he found that almost nothing he learned could be defended against doubt — except mathematics. Geometry alone gave him certainty: clear, indubitable, built from self-evident axioms. The contrast between the wobbling edifice of scholastic opinion and the steel certainty of a geometric proof would become the seed of his philosophy. He resolved to find a method that could make all knowledge as certain as a theorem.</p>
+  <div class="pull">"I entirely abandoned the study of letters. Resolving to seek no knowledge other than that which could be found in myself or else in the great book of the world, I spent the rest of my youth traveling."</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">III — The Soldier</div>
+  <h2>A philosopher in the Thirty Years' War</h2>
+  <p>Restless and well-off enough to choose his own path, the young Descartes did something unexpected for a scholar: he enlisted. He served briefly as a gentleman-soldier, first under Maurice of Nassau in the Dutch Republic and then in the army of Maximilian of Bavaria during the opening years of the <strong>Thirty Years' War</strong> (1618–1648), the catastrophic religious conflict that would consume central Europe.</p>
+  <p>Soldiering for Descartes was less about combat than about seeing the world and finding idle hours to think. The decisive moment of his life came not on a battlefield but in a small, overheated room — the famous <em>poêle</em>, or stove-heated chamber — in Germany on the night of <strong>10 November 1619</strong>. Snowed in and alone, he experienced a series of vivid dreams that he interpreted as a divine sign: he was destined to found a new, unified science of all knowledge, built on a single secure method. He emerged from that room with the program that would occupy the rest of his life.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The First Certainty</div>
+    <blockquote>Cogito, ergo sum.</blockquote>
+    <cite>I THINK, THEREFORE I AM · MEDITATIONS ON FIRST PHILOSOPHY · 1641</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">IV — The Netherlands</div>
+  <h2>Twenty years in the freest country in Europe</h2>
+  <p>In 1628 Descartes made the choice that defined his productive life: he settled in the <strong>Dutch Republic</strong>, where he would live for some twenty years. The Netherlands of the Golden Age was the most tolerant country in Europe — commercially open, religiously diverse, and unusually permissive of dangerous ideas. A man could publish there, or at least think there, with a freedom unavailable in France, Italy, or the Habsburg lands.</p>
+  <p>Descartes moved frequently between Dutch towns, guarding his solitude and his mornings. In this quiet exile he wrote the works that would make him immortal: the <em>Discourse on the Method</em> (1637), with its appended essays on optics, meteorology, and geometry; and the <em>Meditations on First Philosophy</em> (1641), the dense masterpiece of doubt and reconstruction.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">1637</div>
+      <h3>Discourse on the Method</h3>
+      <p>Written in French, not Latin, so that even non-scholars could follow. Its appendix, <em>La Géométrie</em>, quietly fused algebra and geometry forever.</p>
+    </div>
+    <div class="card">
+      <div class="num">1641</div>
+      <h3>The Meditations</h3>
+      <p>Six days of radical doubt. He strips away every belief that can be questioned, reaching bedrock at the one thing that cannot be doubted: that he is doubting.</p>
+    </div>
+    <div class="card">
+      <div class="num">METHOD</div>
+      <h3>Systematic doubt</h3>
+      <p>Treat every belief as false until it survives scrutiny. Build knowledge back up only from foundations that are clear and distinct.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">V — The Daughter</div>
+  <h2>Francine</h2>
+  <p>Descartes never married, but in the Netherlands he fathered a daughter, <strong>Francine</strong>, born in 1635 to a servant named Helena Jans van der Strom. Whatever the philosopher's public reputation for cold rationalism, his private life held one fierce attachment. He arranged to have the child near him and made plans for her education.</p>
+  <p>In <strong>1640</strong> Francine died of scarlet fever. She was five years old. Friends recorded that Descartes — the man who had built his fame on detachment and method — grieved her openly and called her death the <strong>greatest sorrow of his life</strong>. The philosopher of pure reason was, after all, a father who had lost a child. It is the most human fact about him, and it complicates every caricature.</p>
+  <p>The detail is worth holding onto, because the popular image of Descartes is a caricature of bloodless intellect — the man who reduced animals to mere machines and the body to clockwork. Yet the historical record shows someone who kept his daughter close, who wrote warmly to friends, who feared the cold, slept late, and dreaded conflict. The grief over Francine punctures the legend. Whatever the system said about mind and matter, the man who built it wept for a five-year-old.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">A life in dates</div>
+  <h2>The shape of fifty-three years</h2>
+  <p>It helps to see the whole arc at once — how a frail, late-sleeping boy became the hinge of the modern mind, and how the journey ended in the one place least suited to keep him alive.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">1596</div>
+      <h3>Born in Touraine</h3>
+      <p>31 March, La Haye en Touraine. His mother dies in his infancy; the boy is sickly and stays in bed.</p>
+    </div>
+    <div class="card">
+      <div class="num">c.1607</div>
+      <h3>La Flèche</h3>
+      <p>Enters the Jesuit college, granted the rare privilege of sleeping late. Finds certainty only in mathematics.</p>
+    </div>
+    <div class="card">
+      <div class="num">1618–19</div>
+      <h3>Soldier &amp; dreams</h3>
+      <p>Serves in the opening of the Thirty Years' War. November 1619: the dreams in the stove-heated room.</p>
+    </div>
+    <div class="card">
+      <div class="num">1628</div>
+      <h3>To the Netherlands</h3>
+      <p>Settles in the tolerant Dutch Republic, where he will live and write for some twenty years.</p>
+    </div>
+    <div class="card">
+      <div class="num">1637</div>
+      <h3>The Discourse</h3>
+      <p>Publishes the <em>Discourse on the Method</em>, with <em>La Géométrie</em> appended — the birth of coordinate geometry.</p>
+    </div>
+    <div class="card">
+      <div class="num">1640–41</div>
+      <h3>Loss &amp; the Meditations</h3>
+      <p>Francine dies of scarlet fever. The <em>Meditations on First Philosophy</em> appears, with the <em>cogito</em> at its core.</p>
+    </div>
+    <div class="card">
+      <div class="num">1643</div>
+      <h3>Princess Elisabeth</h3>
+      <p>Begins the correspondence with Elisabeth of Bohemia — his sharpest philosophical interlocutor.</p>
+    </div>
+    <div class="card">
+      <div class="num">1649–50</div>
+      <h3>Stockholm</h3>
+      <p>Summoned by Queen Christina; pre-dawn lessons in the cold bring pneumonia. Dies 11 February 1650.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">VI — Stockholm</div>
+  <h2>The queen who would not let him sleep</h2>
+  <p>In 1649, at the height of his fame, Descartes received an invitation he could not refuse: <strong>Queen Christina of Sweden</strong>, a brilliant and willful young monarch with intellectual ambitions, summoned him to her court in Stockholm to serve as her philosophy tutor. Reluctantly — the climate frightened him — he sailed north late in 1649.</p>
+  <p>The arrangement was a disaster. Christina insisted on her lessons at <strong>five o'clock in the morning</strong>, in an unheated library, in the dead of a Swedish winter. For a man who had slept until eleven his entire life, who believed his mornings in bed were the engine of his thought, the regimen was a slow execution. Within weeks the frail lungs that had defined his childhood gave out.</p>
+  <p class="full">Descartes contracted pneumonia and died on <strong>11 February 1650</strong>, far from the warm, tolerant Holland that had sheltered his best years. He was fifty-three. The philosopher of method had been undone by the one variable no method could control: another person's schedule.</p>
+  <p>There is a posthumous coda fit for the strangeness of his life. His remains were eventually moved back to France, but not all of them: his skull went missing for a time and circulated among collectors, while the rest was reburied in Paris. The man who drew the cleanest line between mind and body was, in death, literally divided — his head separated from his frame, the two halves traveling different roads for more than a century.</p>
+  <div class="pull">"It is not enough to have a good mind; the main thing is to apply it well." — Descartes spent his life proving the first half true and Stockholm proving how fragile the second could be.</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The temperament</div>
+  <h2>A cautious, private radical</h2>
+  <p>It is easy to mistake Descartes for a firebrand because his ideas were revolutionary. He was nothing of the kind. By temperament he was <strong>cautious, secretive, and conflict-averse</strong>. He moved house constantly to protect his solitude. He refused to publish work that might draw the Inquisition's eye. He chose his motto from the poet Ovid: <em>bene vixit, qui bene latuit</em> — "he lives well who is well hidden." This was a man who wanted, above all, to be left alone to think.</p>
+  <p>The paradox is that this most private of men produced the most public of legacies. The quiet routine he guarded so fiercely — the late mornings, the moving from town to town, the careful management of who he answered and what he released — was not a retreat from the world but the very condition of his work. He understood something modern about creative labor: that protecting the conditions of thought matters as much as the thinking itself. Stockholm violated every one of those conditions, and it cost him his life.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The portrait in full</div>
+  <h2>Five things to remember</h2>
+  <p>Strip away the legend and a recognizable human being remains — frail, brilliant, cautious, grieving, and quietly revolutionary. These are the threads worth carrying into the rest of the series.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">BODY</div>
+      <h3>The late riser</h3>
+      <p>Sickly from birth, he thought best in bed and slept until eleven. The habit shaped his philosophy — and its violation in Stockholm ended his life.</p>
+    </div>
+    <div class="card">
+      <div class="num">MIND</div>
+      <h3>The doubter</h3>
+      <p>Trained by Jesuits, certain only of mathematics, he set out to make all knowledge as secure as a proof — beginning by doubting everything.</p>
+    </div>
+    <div class="card">
+      <div class="num">PLACE</div>
+      <h3>The exile by choice</h3>
+      <p>Twenty years in the tolerant Dutch Republic, the one country in Europe where he could think and publish with relative freedom.</p>
+    </div>
+    <div class="card">
+      <div class="num">HEART</div>
+      <h3>The grieving father</h3>
+      <p>Francine, his daughter, dead at five. The loss he called the greatest sorrow of his life puncturing the myth of the bloodless rationalist.</p>
+    </div>
+    <div class="card">
+      <div class="num">END</div>
+      <h3>The fatal honor</h3>
+      <p>A queen's summons, pre-dawn lessons in the Baltic cold, and pneumonia. The philosopher of method undone by another person's schedule.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">In his own words</div>
+  <h2>The voice behind the system</h2>
+  <p>For all his reputation as a cold systematizer, Descartes wrote with clarity, modesty, and the occasional flash of wit. A few of his lines have outlived the arguments they came from.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">ON METHOD</div>
+      <p>"It is not enough to have a good mind; the main thing is to apply it well."</p>
+    </div>
+    <div class="card">
+      <div class="num">ON DOUBT</div>
+      <p>"If you would be a real seeker after truth, it is necessary that at least once in your life you doubt, as far as possible, all things."</p>
+    </div>
+    <div class="card">
+      <div class="num">ON READING</div>
+      <p>"The reading of all good books is like a conversation with the finest minds of past centuries."</p>
+    </div>
+    <div class="card">
+      <div class="num">ON HIDING</div>
+      <p>"He lives well who is well hidden." — his chosen motto, borrowed from Ovid.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">The man who emerges from these lines is not a machine but a careful, humane, slightly guarded intellect — someone who valued solitude, prized honest doubt, and believed that the right method could carry an ordinary mind to extraordinary places. The volumes that follow trace where that conviction led.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The works he left</div>
+  <h2>A short shelf of immortality</h2>
+  <p>Descartes did not write many books, but the ones he wrote redirected entire disciplines. These are the works to know.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">1637</div>
+      <h3>Discourse on the Method</h3>
+      <p>His intellectual autobiography and manifesto, written in plain French. Its three appendices on optics, meteorology, and geometry showed the method at work.</p>
+    </div>
+    <div class="card">
+      <div class="num">1637</div>
+      <h3>La Géométrie</h3>
+      <p>The appendix that quietly fused algebra and geometry and founded the coordinate plane. Volume 1 is devoted to it.</p>
+    </div>
+    <div class="card">
+      <div class="num">1641</div>
+      <h3>Meditations on First Philosophy</h3>
+      <p>Six days of radical doubt ending at the cogito. Published with objections from Europe's finest minds and Descartes's replies.</p>
+    </div>
+    <div class="card">
+      <div class="num">1644</div>
+      <h3>Principles of Philosophy</h3>
+      <p>His attempt at a complete textbook of metaphysics and physics, intended to replace the Aristotelian curriculum in the universities.</p>
+    </div>
+    <div class="card">
+      <div class="num">1649</div>
+      <h3>The Passions of the Soul</h3>
+      <p>His last work, spurred by Princess Elisabeth's questions, treating the emotions as the meeting point of mind and body.</p>
+    </div>
+    <div class="card">
+      <div class="num">1664</div>
+      <h3>The World (Le Monde)</h3>
+      <p>The cosmological treatise he suppressed in 1633 after Galileo's condemnation, published only after his death.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">Why he matters</div>
+  <h2>The hinge of the modern mind</h2>
+  <p>Descartes stands at the exact hinge between the medieval and modern worlds. Behind him lies a thousand years of inherited authority; ahead lies the autonomous, doubting, self-grounding reason that would power the Scientific Revolution and the Enlightenment. He is called the <strong>father of modern philosophy</strong> for the <em>cogito</em> — but he is equally the father of modern mathematics for the coordinate plane that bears his name. The next volume takes up that grid, and how it married algebra to geometry forever.</p>
+  <div class="ser-nav">
+    <a href="0-who.html">0 · Who He Was</a>
+    <a href="1-coordinates.html">1 · The Coordinates →</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html">3 · The Legacy</a>
+  </div>
+</section>
+
+</div>
+
+<footer class="colophon">
+  <div class="container">
+    <span class="tag">ROOT0-ATTRIBUTION-v1.0</span>
+    <span>René Descartes — A Four-Volume Series · Volume 0: Who He Was</span>
+    <span>David Lee Wise / ROOT0 / TriPod LLC</span>
+    <span>Licensed CC-BY-ND-4.0 · Attribution — No Derivatives</span>
+    <span>Typeset in Cinzel, Newsreader &amp; Space Mono.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>René Descartes — Vol. 1: The Coordinates</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;--red:#dc2626;--silver:#94a3b8;
+    --ink:#ece8ee;--dim:#b8b2bf;--card:#0f0c11;--line:rgba(220,38,38,0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:#fff;}
+
+  /* ---------- NAV ---------- */
+  nav.sticky{
+    position:sticky;top:0;z-index:100;
+    background:rgba(8,6,8,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.sticky .wrap{
+    max-width:1100px;margin:0 auto;padding:14px 28px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
+  }
+  nav.sticky .brand{
+    font-family:'Cinzel',serif;font-weight:700;letter-spacing:0.06em;
+    color:var(--ink);font-size:15px;margin-right:auto;
+  }
+  nav.sticky a{
+    font-family:'Space Mono',monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--silver);text-decoration:none;padding:4px 2px;
+    border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  }
+  nav.sticky a:hover{color:var(--ink);}
+  nav.sticky a.active{color:var(--red);border-bottom-color:var(--red);}
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:1100px;margin:0 auto;padding:0 28px;}
+  header.hero{padding:90px 0 50px;text-align:center;}
+  .kick{
+    font-family:'Space Mono',monospace;text-transform:uppercase;
+    letter-spacing:0.22em;font-size:12px;color:var(--red);
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;
+    margin:18px 0 10px;letter-spacing:0.01em;
+  }
+  h2{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.6rem,3.5vw,2.4rem);
+    margin:0 0 6px;letter-spacing:0.02em;
+  }
+  h3{font-family:'Cinzel',serif;font-weight:600;font-size:1.25rem;margin:0 0 8px;letter-spacing:0.02em;}
+  .lede{font-size:1.32rem;color:var(--dim);font-style:italic;max-width:760px;margin:0 auto;}
+  .dates{font-family:'Space Mono',monospace;color:var(--silver);font-size:13px;letter-spacing:0.18em;margin-top:20px;}
+
+  section{padding:46px 0;border-top:1px solid rgba(148,163,184,0.12);}
+  .sec-kick{margin-bottom:14px;}
+  p{margin:0 0 20px;max-width:760px;}
+  p.full{max-width:none;}
+  em,i{color:#f0e6e8;}
+  strong{color:#fff;font-weight:600;}
+
+  /* ---------- EQUATIONS ---------- */
+  .eqn{
+    font-family:'Space Mono',monospace;color:var(--red);font-size:1.05em;
+    background:rgba(220,38,38,0.08);padding:1px 7px;border-radius:3px;
+    border:1px solid var(--line);
+  }
+  .eqn-block{
+    font-family:'Space Mono',monospace;text-align:center;
+    font-size:clamp(1.4rem,4vw,2.2rem);color:#fff;
+    background:var(--card);border:1px solid var(--line);border-radius:6px;
+    padding:28px;margin:24px 0;letter-spacing:0.04em;
+  }
+
+  /* ---------- BAND ---------- */
+  .band{background:var(--red);color:#fff;padding:40px 28px;margin:46px 0;border-radius:3px;}
+  .band .container{padding:0;}
+  .band .kick{color:#ffe2e2;}
+  .band blockquote{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.6rem,4.5vw,2.8rem);line-height:1.18;margin:10px 0 0;
+  }
+  .band cite{
+    display:block;margin-top:16px;font-family:'Space Mono',monospace;
+    font-style:normal;font-size:13px;letter-spacing:0.12em;color:#ffd9d9;
+  }
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:22px;margin-top:10px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:26px 24px;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--red);border-color:var(--red);}
+  .card .num{font-family:'Space Mono',monospace;color:var(--red);font-size:12px;letter-spacing:0.2em;}
+  .card p{font-size:1rem;color:var(--dim);margin:8px 0 0;}
+
+  .pull{
+    border-left:3px solid var(--red);padding:6px 0 6px 22px;margin:30px 0;
+    font-style:italic;font-size:1.18rem;color:#efe6e9;max-width:760px;
+  }
+
+  /* ---------- SVG STAGE ---------- */
+  .svg-stage{
+    background:linear-gradient(180deg,#0c0a0e,#080608);
+    border:1px solid var(--line);border-radius:6px;
+    padding:30px;margin:24px 0;display:flex;justify-content:center;
+  }
+  .svg-stage svg{width:100%;max-width:540px;height:auto;}
+  .gridline{stroke:rgba(148,163,184,0.22);stroke-width:1;}
+  .axis{stroke:var(--silver);stroke-width:1.6;}
+  .curve{
+    stroke:var(--red);stroke-width:3;fill:none;stroke-linecap:round;
+    stroke-dasharray:900;stroke-dashoffset:900;
+    animation:drawcurve 3.4s ease forwards;animation-delay:.6s;
+  }
+  @keyframes drawcurve{to{stroke-dashoffset:0;}}
+  .dotpt{fill:var(--red);opacity:0;animation:pop .5s ease forwards;}
+  @keyframes pop{from{opacity:0;}to{opacity:1;}}
+  .lbl{font-family:'Space Mono',monospace;font-size:11px;fill:var(--silver);}
+  .tick{stroke:rgba(148,163,184,0.4);stroke-width:1;}
+
+  /* ---------- COLOPHON ---------- */
+  footer.colophon{
+    border-top:2px solid var(--red);margin-top:60px;padding:42px 0 80px;
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--silver);
+    letter-spacing:0.08em;line-height:1.9;
+  }
+  footer.colophon .container{display:flex;flex-direction:column;gap:6px;}
+  footer.colophon .tag{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;}
+  .ser-nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
+  .ser-nav a{
+    color:var(--silver);text-decoration:none;border:1px solid var(--line);
+    padding:7px 12px;border-radius:3px;transition:.2s;
+  }
+  .ser-nav a:hover{color:#fff;border-color:var(--red);background:rgba(220,38,38,0.12);}
+  @media(max-width:560px){body{font-size:17px;}header.hero{padding:60px 0 36px;}}
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <div class="wrap">
+    <span class="brand">DESCARTES · 1596–1650</span>
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-coordinates.html" class="active">1 · Coordinates</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kick">Volume One — The Idea</div>
+    <h1>The Coordinates</h1>
+    <p class="lede">Two perpendicular lines, two numbers, and suddenly every point in the universe has an address — and every curve becomes an equation.</p>
+    <div class="dates">LA GÉOMÉTRIE · APPENDIX TO THE DISCOURSE · 1637</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="svg-stage" aria-label="Animated coordinate grid with a parabola drawing itself">
+    <svg viewBox="0 0 440 320" role="img">
+      <!-- gridlines -->
+      <g>
+        <line class="gridline" x1="60"  y1="20" x2="60"  y2="300"/>
+        <line class="gridline" x1="120" y1="20" x2="120" y2="300"/>
+        <line class="gridline" x1="180" y1="20" x2="180" y2="300"/>
+        <line class="gridline" x1="240" y1="20" x2="240" y2="300"/>
+        <line class="gridline" x1="300" y1="20" x2="300" y2="300"/>
+        <line class="gridline" x1="360" y1="20" x2="360" y2="300"/>
+        <line class="gridline" x1="20" y1="60"  x2="420" y2="60"/>
+        <line class="gridline" x1="20" y1="120" x2="420" y2="120"/>
+        <line class="gridline" x1="20" y1="180" x2="420" y2="180"/>
+        <line class="gridline" x1="20" y1="240" x2="420" y2="240"/>
+      </g>
+      <!-- axes (origin at 180,180) -->
+      <line class="axis" x1="20" y1="180" x2="426" y2="180"/>
+      <line class="axis" x1="180" y1="14" x2="180" y2="306"/>
+      <text class="lbl" x="408" y="196">x</text>
+      <text class="lbl" x="186" y="26">y</text>
+      <!-- parabola y = x^2/30 - 90 mapped: this path approximates a parabola opening up -->
+      <path class="curve" d="M 60 60 Q 120 220 180 250 Q 240 220 300 60"/>
+      <!-- plotted points along the curve -->
+      <circle class="dotpt" cx="60"  cy="60"  r="4.5" style="animation-delay:1.0s"/>
+      <circle class="dotpt" cx="120" cy="160" r="4.5" style="animation-delay:1.6s"/>
+      <circle class="dotpt" cx="180" cy="250" r="5"   style="animation-delay:2.4s"/>
+      <circle class="dotpt" cx="240" cy="160" r="4.5" style="animation-delay:3.2s"/>
+      <circle class="dotpt" cx="300" cy="60"  r="4.5" style="animation-delay:3.9s"/>
+      <text class="lbl" x="306" y="56" style="animation-delay:3.9s">y = x²</text>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
+
+<section>
+  <div class="kick sec-kick">The breakthrough</div>
+  <h2>A point becomes a pair of numbers</h2>
+  <p>For two thousand years, geometry and algebra had been separate kingdoms. Euclid's geometry was about shapes, lines, and figures drawn in space; algebra was about numbers and the manipulation of symbols. They rarely spoke. Descartes's <em>La Géométrie</em>, the slim third appendix to his 1637 <em>Discourse on the Method</em>, demolished the border between them with a single, devastating idea.</p>
+  <p class="full">Draw two perpendicular lines. Call one the <em>x</em>-axis and the other the <em>y</em>-axis. Now <strong>every point in the plane</strong> can be named by exactly two numbers: how far across, and how far up. That pair — <span class="eqn">(x, y)</span> — is its address. Space itself becomes arithmetic.</p>
+  <div class="pull">"Each problem that I solved became a rule which served afterwards to solve other problems."</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">Discovery One</div>
+  <h2>Cartesian coordinates — unifying algebra and geometry</h2>
+  <p>This is the master stroke from which everything else flows. By assigning numbers to position, Descartes made it possible to <strong>turn geometric questions into algebraic ones, and back again</strong>. A line is no longer just a drawn stroke — it is an equation. A circle is no longer just a compass figure — it is a relationship between coordinates. The humble <strong>unit circle</strong>, the circle of radius one centered at the origin, becomes the clean algebraic statement:</p>
+  <div class="eqn-block">x² + y² = 1</div>
+  <p>Every point <span class="eqn">(x, y)</span> that satisfies that equation lies on the circle; every point that does not, lies off it. Geometry and algebra are now the same subject viewed from two sides. <strong>Every graph, every map, and every screen-coordinate system in existence descends from this one move.</strong> The pixels on the screen you are reading are addressed by Cartesian coordinates right now.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">Discovery Two</div>
+  <h2>Analytic geometry — every curve is an equation</h2>
+  <p>Once a point is a pair of numbers, a <em>curve</em> — which is just a collection of points — becomes a <strong>collection of number-pairs that all obey a single equation</strong>. This is the birth of <strong>analytic geometry</strong>. A straight line is <span class="eqn">y = mx + b</span>. A parabola is <span class="eqn">y = x²</span>. An ellipse, a hyperbola, a spiral — each has its own algebraic signature.</p>
+  <p>The payoff is immense. Hard geometric problems that once required ingenious, one-off constructions could now be solved by routine algebraic manipulation. Conversely, abstract equations could be <em>seen</em> as shapes. This two-way bridge is precisely what made the calculus of Newton and Leibniz possible a generation later: you cannot take the slope of a curve until you can write the curve as an equation.</p>
+  <p class="full">Consider how radical the inversion is. Before Descartes, to study a parabola you drew one and measured it; the figure came first and the truths were read off the drawing. After Descartes, the <em>equation</em> comes first — <span class="eqn">y = x²</span> — and the curve is merely its portrait, one of infinitely many shapes you could summon by changing symbols. Mathematics shifted from a science of figures you inherited to a science of relationships you could generate at will. That is the difference between cataloguing animals and discovering DNA.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">LINE</div>
+      <h3>y = mx + b</h3>
+      <p>A straight line is fully captured by two numbers: its slope <em>m</em> and its intercept <em>b</em>. Geometry collapses into arithmetic.</p>
+    </div>
+    <div class="card">
+      <div class="num">CIRCLE</div>
+      <h3>x² + y² = r²</h3>
+      <p>Every circle of radius <em>r</em> centered at the origin. Change <em>r</em> and the whole family of circles appears at once.</p>
+    </div>
+    <div class="card">
+      <div class="num">PARABOLA</div>
+      <h3>y = ax²</h3>
+      <p>The arc of a thrown ball, the shape of a satellite dish, the path of a comet — all one equation with a single dial to turn.</p>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The Foundation Stone</div>
+    <blockquote>Cogito, ergo sum.</blockquote>
+    <cite>FROM THE METHOD OF DOUBT — THE ONE BELIEF THAT SURVIVES DOUBTING ITSELF</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">Discovery Three</div>
+  <h2>The Cogito and the method of doubt</h2>
+  <p>Descartes applied the same demand for certainty to knowledge itself. In the <em>Meditations</em> he resolves to <strong>doubt everything that can possibly be doubted</strong>: the testimony of the senses (they deceive), the existence of the physical world (he might be dreaming), even mathematics (a deceiving demon might tamper with his reasoning). One belief alone cannot be shaken: even if he is deceived about everything, <em>something</em> must exist to be deceived. The very act of doubting proves a doubter.</p>
+  <p class="full">Hence <strong>"Cogito, ergo sum"</strong> — I think, therefore I am. It is not an inference so much as a self-verifying performance: to deny that you think is already to think. From this single indubitable point, Descartes attempts to rebuild the entire structure of knowledge — the same way he rebuilt geometry from a single point in the plane. The parallel is exact and deliberate: both projects start from one secure foundation and construct everything else upon it.</p>
+  <p>The method had stages. First, accept nothing as true that is not <em>clearly and distinctly</em> perceived. Second, divide every difficulty into as many parts as possible. Third, proceed from the simplest objects to the most complex, in order. Fourth, review so completely that nothing is omitted. It is, in effect, an algorithm for thinking — and it reads uncannily like the way a mathematician decomposes a proof or a programmer decomposes a problem. Descartes wanted reason itself to be as mechanical, as transferable, and as reliable as long division.</p>
+  <div class="pull">"It is possible," he wrote, "that I have no senses and no body — but I cannot for all that doubt that I am something. I am, I exist: that is certain, as often as I conceive it."</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">Discoveries Four, Five &amp; Six</div>
+  <h2>The toolkit he left behind</h2>
+  <p>Beyond the great unifications, Descartes bequeathed a set of conventions so familiar that we forget anyone had to invent them. Open any algebra textbook and you are reading in Descartes's handwriting.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">RULE 4</div>
+      <h3>Rule of Signs</h3>
+      <p><strong>Descartes's rule of signs</strong> bounds how many positive real roots a polynomial can have by counting the sign changes in its coefficients. A quick, elegant diagnostic still taught today.</p>
+    </div>
+    <div class="card">
+      <div class="num">RULE 5</div>
+      <h3>Exponent notation</h3>
+      <p>Writing <span class="eqn">x²</span>, <span class="eqn">x³</span> — a small raised number for repeated multiplication — is <strong>Descartes's convention</strong>. Before him, mathematicians wrote out <em>xx</em> or used clumsy words.</p>
+    </div>
+    <div class="card">
+      <div class="num">RULE 6</div>
+      <h3>x, y, z for unknowns</h3>
+      <p>Using letters from the <strong>end of the alphabet for unknowns</strong> and the beginning (a, b, c) for known constants is Descartes's choice. Every equation you have ever solved inherits it.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:30px">These are not footnotes. The fact that we instinctively call an unknown <em>x</em>, and write its square as <em>x²</em>, and plot the result on a grid of <em>x</em> against <em>y</em>, means that to do basic mathematics at all is to think inside Descartes's notation. He did not just discover truths; he designed the language in which later truths would be written.</p>
+  <p>Notation is never neutral. Good notation does part of the thinking for you — it makes some operations obvious and some errors impossible. By compressing "<em>x</em> multiplied by itself three times" into the single compact symbol <span class="eqn">x³</span>, Descartes made the laws of exponents visible at a glance: you can <em>see</em> that <span class="eqn">x² · x³ = x⁵</span> by simply adding the little numbers. By reserving the alphabet's tail for unknowns, he let anyone read an equation and instantly know which quantities were given and which were to be found. These conventions were so well-chosen that they never needed improving. Nearly four hundred years later, not one of them has been replaced.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">A worked example</div>
+  <h2>Watch the two kingdoms become one</h2>
+  <p>The power of the method is easiest to feel on a concrete case. Take a plain geometric question: <em>where does a line cross a circle?</em> In Euclid's world this is a construction problem — you draw the figures and find the intersection by compass and straightedge, hoping your hand is steady.</p>
+  <p class="full">In Descartes's world it is pure algebra. Write the circle as <span class="eqn">x² + y² = 25</span> and the line as <span class="eqn">y = x + 1</span>. Substitute the line into the circle: <span class="eqn">x² + (x + 1)² = 25</span>. Expand and collect: <span class="eqn">2x² + 2x − 24 = 0</span>, or <span class="eqn">x² + x − 12 = 0</span>. Factor: <span class="eqn">(x + 4)(x − 3) = 0</span>. The line meets the circle at <span class="eqn">x = −4</span> and <span class="eqn">x = 3</span> — two crossing points, found by routine symbol-pushing, with no drawing at all.</p>
+  <p>That is the whole revolution in miniature. A question about <em>shapes</em> became a question about <em>solving an equation</em>, and the answer came out exact and certain. Multiply this little trick across all of geometry — tangents, areas, intersections, distances — and you have the engine that powered the next three centuries of mathematics and physics.</p>
+  <div class="pull">"I resolve to give up only the abstract geometry which concerns itself merely with exercising the mind, in order to study another kind of geometry which has as its object the explanation of the phenomena of nature."</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">Why it was hard</div>
+  <h2>The idea no one had had for two thousand years</h2>
+  <p>From a modern vantage the coordinate plane looks obvious — so obvious that we teach it to twelve-year-olds. That obviousness is the measure of how completely Descartes won. For two millennia, the greatest mathematicians who ever lived — Euclid, Archimedes, Apollonius — worked without it. They were not less brilliant; they simply lacked the bridge.</p>
+  <p class="full">Several things had to come together before the bridge could be built. Algebra had to mature into a symbolic system flexible enough to represent general relationships, which only happened in the late sixteenth century. The notion that a <em>negative</em> number could name a real position had to become respectable. And someone had to make the conceptual leap of treating a continuous geometric line as a complete set of numerical addresses. Descartes — and, independently and at nearly the same time, Pierre de Fermat — assembled these pieces. That two men arrived at it together tells us the moment was ripe; that no one had managed it in the previous twenty centuries tells us how deep the leap really was.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The six gifts</div>
+  <h2>Everything in one place</h2>
+  <p>Gathered together, the contents of one slim appendix and one slim book of meditations amount to a toolkit that reshaped both mathematics and philosophy. Each of these is still in daily use.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">ONE</div>
+      <h3>Coordinates</h3>
+      <p>Every point in a plane is a pair <span class="eqn">(x, y)</span>. Space becomes arithmetic; the unit circle becomes <span class="eqn">x² + y² = 1</span>.</p>
+    </div>
+    <div class="card">
+      <div class="num">TWO</div>
+      <h3>Analytic geometry</h3>
+      <p>Every curve is an equation, and every equation a curve. The two-way bridge that made calculus possible.</p>
+    </div>
+    <div class="card">
+      <div class="num">THREE</div>
+      <h3>The Cogito</h3>
+      <p><em>Cogito ergo sum</em>, reached by the method of doubt — one indubitable foundation to rebuild all knowledge upon.</p>
+    </div>
+    <div class="card">
+      <div class="num">FOUR</div>
+      <h3>Rule of signs</h3>
+      <p>Count the sign changes in a polynomial's coefficients to bound its positive real roots. A diagnostic still taught today.</p>
+    </div>
+    <div class="card">
+      <div class="num">FIVE</div>
+      <h3>Exponents</h3>
+      <p>The raised number — <span class="eqn">x²</span>, <span class="eqn">x³</span> — for repeated multiplication. His convention, now universal.</p>
+    </div>
+    <div class="card">
+      <div class="num">SIX</div>
+      <h3>x, y, z</h3>
+      <p>Letters from the end of the alphabet for unknowns, the start for knowns. The grammar of every equation since.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">No single one of these would have made him immortal. Together, they make him unavoidable — the author of the notation, the geometry, and the philosophy of doubt that the modern world simply assumes.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">From idea to engine</div>
+  <h2>What the grid made possible next</h2>
+  <p>The deepest tribute to an idea is the work it lets others do. Coordinate geometry was not an endpoint; it was a launchpad. Within a single lifetime of its publication, it had become the indispensable language of the new physics and the new mathematics.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">CALCULUS</div>
+      <h3>Newton &amp; Leibniz</h3>
+      <p>The slope of a curve and the area beneath it only become tractable once the curve is an equation on a grid. Calculus is analytic geometry set in motion.</p>
+    </div>
+    <div class="card">
+      <div class="num">PHYSICS</div>
+      <h3>Motion as a graph</h3>
+      <p>Plot position against time and a falling body's law becomes a visible parabola. The grid turned the laws of nature into shapes you could read.</p>
+    </div>
+    <div class="card">
+      <div class="num">COMPUTING</div>
+      <h3>The addressable screen</h3>
+      <p>Every pixel, every rendered polygon, every cursor position is a coordinate. The interface you are reading is analytic geometry made of light.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">Descartes could not have foreseen calculus, computers, or pixels. But he built the floor they all stand on. That is what it means to have a foundational idea: you do not finish the building, you make every later floor possible.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The Unification</div>
+    <blockquote>A point is a pair of numbers. A curve is an equation.</blockquote>
+    <cite>THE TWO SENTENCES THAT FUSED ALGEBRA AND GEOMETRY FOREVER</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">The takeaway</div>
+  <h2>One method, two kingdoms</h2>
+  <p class="full">If you remember nothing else from this volume, remember the move at its heart. By giving every point an address, Descartes turned shape into number and number into shape, so that anything you could draw you could also calculate, and anything you could calculate you could also see. The same instinct — find one secure starting point and build everything from it — drove his philosophy, where the single indubitable cogito plays the role of the origin on the grid. Geometry and metaphysics, in his hands, were two applications of a single method. He did not just solve problems; he built the workshop in which problems would be solved for centuries.</p>
+  <p>Notice, too, the quiet democracy of it. A clever geometric construction depended on the genius of whoever drew it; a parabola sketched by Apollonius could not easily be handed to a beginner. But an equation can be solved by anyone who learns the rules — the brilliance is banked in the method, not the person. Descartes turned mathematics from a craft of inspired individual figures into a procedure that could be taught, checked, and built upon by anyone. That portability is exactly why his grid, and not some rival scheme, became the common language of the sciences.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">BEFORE</div>
+      <h3>Geometry as craft</h3>
+      <p>Each problem solved by a bespoke construction. Genius lived in the individual figure, and could not easily be transferred.</p>
+    </div>
+    <div class="card">
+      <div class="num">AFTER</div>
+      <h3>Geometry as procedure</h3>
+      <p>Each problem reduced to solving an equation by fixed rules. Genius moved into the method, and anyone could wield it.</p>
+    </div>
+    <div class="card">
+      <div class="num">RESULT</div>
+      <h3>A common tongue</h3>
+      <p>A portable, teachable, checkable language that the sciences could all share — the reason the grid spread everywhere.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The synthesis</div>
+  <h2>One grid to map the world</h2>
+  <p>Stand back and the unity of the vision is breathtaking. A point is a pair of numbers. A curve is an equation. An unknown is <em>x</em>. A power is a superscript. Doubt is the test of every belief, and certainty is built upward from a single secure foundation. Across mathematics and philosophy alike, Descartes pursued the same dream: a <strong>universal method</strong> in which everything could be made as clear, distinct, and certain as a line drawn on a grid.</p>
+  <p>The next volume steps away from the equations and into the dangerous, war-torn, intolerant Europe in which one man dared to think this freely — and the few protected places where he could.</p>
+  <p class="full">But hold the central image a moment longer, because it is the thread through everything that follows. A point is an address. A curve is a rule. An unknown waits at the end of the alphabet. Doubt is the test; certainty is the foundation; and on that foundation you build upward, step by clear step, until a whole world stands where there was only confusion before. Descartes did this twice — once for space and once for knowledge — and the two acts were really one. He believed reason itself could be plotted, and he handed us the grid to plot it on.</p>
+  <div class="ser-nav">
+    <a href="0-who.html">0 · Who He Was</a>
+    <a href="1-coordinates.html">1 · The Coordinates</a>
+    <a href="2-world.html">2 · His World →</a>
+    <a href="3-legacy.html">3 · The Legacy</a>
+  </div>
+</section>
+
+</div>
+
+<footer class="colophon">
+  <div class="container">
+    <span class="tag">ROOT0-ATTRIBUTION-v1.0</span>
+    <span>René Descartes — A Four-Volume Series · Volume 1: The Coordinates</span>
+    <span>David Lee Wise / ROOT0 / TriPod LLC</span>
+    <span>Licensed CC-BY-ND-4.0 · Attribution — No Derivatives</span>
+    <span>Typeset in Cinzel, Newsreader &amp; Space Mono.</span>
+  </div>
+</footer>
+
+</body>
+</html>

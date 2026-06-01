@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Hilbert — Vol. 1: The 23 Problems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#06080a;--slate:#475569;--gold:#ca8a04;
+    --ink:#e8eaed;--muted:#9aa3ad;--card:#0c1014;
+    --solved:#16a34a;--partial:#d97706;--unsolved:#dc2626;--indep:#7c3aed;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cinzel',serif;line-height:1.18;font-weight:700;}
+  a{color:var(--gold);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .kick{
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.72rem;
+    color:var(--gold);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,8,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--slate);
+  }
+  nav .wrap{
+    max-width:1100px;margin:0 auto;
+    display:flex;align-items:center;gap:1.5rem;
+    padding:0.85rem 1.5rem;flex-wrap:wrap;
+  }
+  nav .brand{font-family:'Cinzel',serif;font-weight:800;letter-spacing:0.05em;font-size:0.95rem;}
+  nav .links{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto;}
+  nav .links a{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;
+    color:var(--muted);padding:0.3rem 0;border-bottom:2px solid transparent;
+  }
+  nav .links a:hover{color:var(--ink);text-decoration:none;}
+  nav .links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+  header.hero{padding:5.5rem 0 3.5rem;border-bottom:1px solid var(--slate);}
+  header.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;}
+  header.hero .sub{font-size:1.35rem;color:var(--muted);font-style:italic;margin-top:1rem;max-width:62ch;}
+  .volno{font-size:1rem;color:var(--gold);margin-bottom:1.2rem;}
+
+  section{padding:3.2rem 0;border-bottom:1px solid rgba(71,85,105,0.4);}
+  section h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:1.4rem;}
+  section h3{font-size:1.25rem;margin:1.8rem 0 0.7rem;color:var(--gold);}
+  p{margin-bottom:1.1rem;max-width:70ch;}
+  p.lead{font-size:1.2rem;}
+  em,i{color:#f0ddb0;}
+  blockquote{
+    border-left:3px solid var(--gold);
+    padding:0.6rem 0 0.6rem 1.4rem;
+    margin:1.6rem 0;font-style:italic;font-size:1.3rem;color:#f0ddb0;
+    max-width:64ch;
+  }
+  blockquote cite{display:block;font-style:normal;font-size:0.8rem;color:var(--muted);margin-top:0.6rem;}
+
+  .grid{display:grid;gap:1.2rem;margin:1.6rem 0;}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .grid.probs{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+  .card{
+    background:var(--card);
+    border:1px solid var(--slate);
+    padding:1.4rem;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--gold);
+  }
+  .card h3{margin-top:0;font-size:1.05rem;color:var(--gold);}
+  .card p{font-size:0.95rem;color:var(--muted);margin-bottom:0;}
+  .card .num{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--slate);}
+
+  /* problem cells */
+  .prob{position:relative;}
+  .prob .pn{font-family:'Space Mono',monospace;font-size:0.95rem;color:var(--gold);font-weight:700;}
+  .prob .ptitle{
+    font-family:'Cinzel',serif;font-size:0.92rem;
+    margin:0.35rem 0 0.55rem;color:var(--ink);line-height:1.3;
+  }
+  .prob .pdesc{font-size:0.82rem;color:var(--muted);}
+  .status{
+    display:inline-block;font-family:'Space Mono',monospace;
+    font-size:0.6rem;text-transform:uppercase;letter-spacing:0.14em;
+    padding:0.15rem 0.5rem;border:1px solid;border-radius:2px;margin-top:0.7rem;
+  }
+  .s-solved{color:var(--solved);border-color:var(--solved);}
+  .s-partial{color:var(--partial);border-color:var(--partial);}
+  .s-unsolved{color:var(--unsolved);border-color:var(--unsolved);}
+  .s-indep{color:#a78bfa;border-color:var(--indep);}
+  .prob.flag{box-shadow:0 0 0 1px var(--gold) inset;}
+
+  .legend{
+    display:flex;gap:1.2rem;flex-wrap:wrap;
+    font-family:'Space Mono',monospace;font-size:0.68rem;
+    text-transform:uppercase;letter-spacing:0.12em;margin:1rem 0 0;
+  }
+  .legend span{display:flex;align-items:center;gap:0.4rem;}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block;}
+
+  .band{
+    background:var(--slate);
+    color:#f4f6f8;
+    padding:3rem 0;
+  }
+  .band h2{color:#fff;}
+  .band p{color:#e2e8f0;}
+  .band .kick{color:#fde68a;}
+
+  figure.svgfig{margin:2.4rem 0;text-align:center;}
+  figure.svgfig svg{
+    max-width:100%;height:auto;
+    border:1px solid var(--slate);
+    background:#080b0e;padding:1rem;
+  }
+  figcaption{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.16em;margin-top:0.8rem;
+  }
+
+  footer.colophon{
+    background:#04060a;border-top:1px solid var(--slate);
+    padding:3rem 0;font-family:'Space Mono',monospace;font-size:0.72rem;
+    color:var(--muted);letter-spacing:0.05em;line-height:1.9;
+  }
+  footer.colophon .tag{color:var(--gold);}
+  footer.colophon a{color:var(--muted);}
+
+  /* SVG cell animation */
+  .cell{fill:#0c1014;stroke:var(--slate);stroke-width:1.2;animation:pulse 6s infinite;}
+  @keyframes pulse{0%,100%{fill:#0c1014;}50%{fill:#1a1408;stroke:var(--gold);}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">HILBERT</span>
+    <div class="links">
+      <a href="0-who.html">00 · Who</a>
+      <a href="1-problems.html" class="active">01 · Problems</a>
+      <a href="2-world.html">02 · World</a>
+      <a href="3-legacy.html">03 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="volno kick">Volume 01 — The Problems</div>
+    <h1>The 23 Problems</h1>
+    <p class="sub">A single 1900 lecture set the agenda for an entire century of mathematics. Roughly sixteen are now solved; some are independent of the axioms themselves; one is worth a million dollars.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <span class="kick">Paris ICM · 8 August 1900</span>
+    <h2>The list that defined a century</h2>
+    <p class="lead">When Hilbert read out his problems at the Sorbonne, he was not merely listing hard questions. He was making a wager: that mathematics advances by attacking the right problems, and that <em>every</em> well-posed mathematical question has a definite answer.</p>
+    <p>The 23 problems span number theory, geometry, analysis, logic, and physics. Their fates are wildly different. Some fell within a decade. Some took most of the century. Two of them — the ones about foundations — were answered not with a proof but with a demonstration that the very kind of answer Hilbert wanted is impossible. The map below colors each problem by its modern status.</p>
+
+    <figure class="svgfig">
+      <svg viewBox="0 0 600 200" role="img" aria-label="A grid of 23 problem cells">
+        <g id="cells"></g>
+      </svg>
+      <figcaption>Twenty-three cells — the problem space</figcaption>
+    </figure>
+
+    <div class="legend">
+      <span><i class="dot" style="background:var(--solved)"></i> Solved</span>
+      <span><i class="dot" style="background:var(--partial)"></i> Partial</span>
+      <span><i class="dot" style="background:var(--unsolved)"></i> Unsolved</span>
+      <span><i class="dot" style="background:var(--indep)"></i> Independent of ZFC</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">All twenty-three</span>
+    <h2>The complete list, with status</h2>
+    <div class="grid probs" id="problist"></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">The headline cases</span>
+    <h2>Four problems that changed mathematics</h2>
+    <div class="grid cols-2">
+      <div class="card" style="background:#3b4252;">
+        <div class="num">PROBLEM 1 · INDEPENDENT OF ZFC</div>
+        <h3>The Continuum Hypothesis</h3>
+        <p style="color:#dbe2ea;">Is there a set whose size lies strictly between the integers and the reals? Gödel (1940) showed CH cannot be <em>disproved</em> from ZFC; Cohen (1963), inventing forcing, showed it cannot be <em>proved</em> either. The answer is independent of the standard axioms — a possibility Hilbert never imagined.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">PROBLEM 2 · REFUTED</div>
+        <h3>Consistency of Arithmetic</h3>
+        <p style="color:#dbe2ea;">Prove the axioms of arithmetic are consistent. Gödel's second incompleteness theorem (1931) showed no sufficiently strong consistent system can prove its own consistency. Hilbert's central goal was shown to be unreachable on its own terms.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">PROBLEM 8 · UNSOLVED · $1M</div>
+        <h3>The Riemann Hypothesis</h3>
+        <p style="color:#dbe2ea;">Do all non-trivial zeros of the zeta function lie on the critical line Re(s)=1/2? Still open after 160+ years — the greatest unsolved problem in mathematics, and a Clay Millennium Prize worth one million dollars.</p>
+      </div>
+      <div class="card" style="background:#3b4252;">
+        <div class="num">PROBLEM 10 · SOLVED (NEGATIVE)</div>
+        <h3>Diophantine Decision Problem</h3>
+        <p style="color:#dbe2ea;">Is there an algorithm to decide if any polynomial Diophantine equation has integer solutions? Matiyasevich (1970), building on Davis, Putnam, and Robinson, proved <em>no</em> — no such algorithm can exist. The MRDP theorem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">A space named for him</span>
+    <h2>Hilbert spaces</h2>
+    <p>Beyond the problems, Hilbert's name lives in one of the most important structures in all of mathematics and physics: the <em>Hilbert space</em>. Emerging from his work on integral equations around 1900–1912, a Hilbert space is a complete inner-product vector space — possibly infinite-dimensional — in which lengths, angles, and limits all behave as our geometric intuition expects.</p>
+    <p>The payoff came in physics. In the 1920s, John von Neumann recognized that quantum mechanics is naturally formulated in Hilbert space: every quantum state is a vector, observables are operators, and probabilities come from inner products. The mathematics Hilbert built to solve analysis problems turned out to be the native language of the subatomic world.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">DEFINITION</div><h3>Inner product</h3><p>A way to measure length and angle between vectors, generalized to infinitely many dimensions.</p></div>
+      <div class="card"><div class="num">DEFINITION</div><h3>Completeness</h3><p>Every Cauchy sequence converges — no "holes" in the space, so limits always land somewhere.</p></div>
+      <div class="card"><div class="num">APPLICATION</div><h3>Quantum states</h3><p>Each physical state is a unit vector; measurement projects onto an eigenvector.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The grand project</span>
+    <h2>Hilbert's Program — and its death by Gödel</h2>
+    <p>Problems 1 and 2 were not isolated puzzles; they were the public face of <em>Hilbert's Program</em>, his plan to secure all of mathematics on finitary foundations. The program had three pillars:</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">PILLAR I</div><h3>Completeness</h3><p>Every true mathematical statement should be provable within the system.</p></div>
+      <div class="card"><div class="num">PILLAR II</div><h3>Consistency</h3><p>The system should never prove a contradiction — and this should be provable by safe, finitary means.</p></div>
+      <div class="card"><div class="num">PILLAR III</div><h3>Decidability</h3><p>There should be a procedure that decides, for any statement, whether it is provable.</p></div>
+    </div>
+    <p>Gödel's 1931 theorems knocked out pillars I and II in one stroke: any consistent system strong enough for arithmetic is incomplete, and cannot prove its own consistency. The program in its original form was dead. Yet what replaced it — proof theory, model theory, recursion theory — is among the richest mathematics of the century.</p>
+    <blockquote>
+      "The conviction of the solvability of every mathematical problem is a powerful incentive to the worker."
+      <cite>— David Hilbert, 1900</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Pillar III falls too</span>
+    <h2>The Entscheidungsproblem → Turing</h2>
+    <p>The third pillar — decidability — had its own dramatic ending. The <em>Entscheidungsproblem</em> ("decision problem") asked for a mechanical procedure to decide the validity of any first-order logical statement. In 1936, working independently, Alonzo Church and Alan Turing proved that no such procedure exists.</p>
+    <p>To do it, Turing had to invent a precise definition of "mechanical procedure" — the Turing machine — and prove the <em>halting problem</em> undecidable. In answering Hilbert's question with a "no," Turing accidentally founded computer science. The modern computer is, quite literally, a child of Hilbert's failed third pillar.</p>
+    <div class="grid cols-2">
+      <a class="card" href="3-legacy.html" style="color:inherit;"><div class="num">VOL 03</div><h3>Where it all led</h3><p>Hilbert spaces in quantum mechanics, Turing's machines, and the Riemann Hypothesis today.</p></a>
+      <a class="card" href="2-world.html" style="color:inherit;"><div class="num">VOL 02</div><h3>The world he built</h3><p>Göttingen, Noether, and the catastrophe of 1933.</p></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">How to read the list</span>
+    <h2>Why these problems mattered</h2>
+    <p>Hilbert did not choose his problems at random. He chose questions that were <em>hard but not hopeless</em>, that sat at the boundary of the known, and whose pursuit he expected to generate new mathematics regardless of the eventual answer. He famously insisted that a good problem should be clear and easy to understand, yet deep enough to resist easy solution — "for what is clear and easily comprehended attracts; the complicated repels us."</p>
+    <p>That instinct proved astonishingly accurate. The problems that turned out to be "unsolvable" in Hilbert's intended sense — the continuum hypothesis, the consistency of arithmetic, the Diophantine decision problem — were not failures of the list. They were its most profound successes, because the proofs that they could not be settled the way Hilbert hoped created set theory's independence results, Gödel's incompleteness theorems, and the theory of computation.</p>
+
+    <h3>The four fates of a problem</h3>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="num">SOLVED</div>
+        <h3>A definite answer found</h3>
+        <p>Most of the list — from Dehn's #3 to Gelfond–Schneider's #7 — was resolved with a clear yes, no, or construction.</p>
+      </div>
+      <div class="card">
+        <div class="num">PARTIAL / VAGUE</div>
+        <h3>Too broad to "close"</h3>
+        <p>Problems like #6 (axiomatize physics) and #16 are research programs, not single questions — progress is continual but open-ended.</p>
+      </div>
+      <div class="card">
+        <div class="num">UNSOLVED</div>
+        <h3>Genuinely open</h3>
+        <p>#8, the Riemann Hypothesis, remains the great open question — its proof would illuminate the distribution of the primes.</p>
+      </div>
+      <div class="card">
+        <div class="num">INDEPENDENT</div>
+        <h3>Beyond the axioms</h3>
+        <p>#1 cannot be decided from ZFC at all. The answer is neither yes nor no but "it depends on which axioms you adopt."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">Two foundations in one stroke</span>
+    <h2>Problems 1 and 2: the limits of certainty</h2>
+    <p>The first two problems are best understood together, because together they form the heart of Hilbert's foundational ambition — and together they were turned back. Problem 1, the continuum hypothesis, asks a question about the sizes of infinite sets. Problem 2 asks for a proof that the axioms of arithmetic can never lead to contradiction.</p>
+    <p>Hilbert expected both to have clean, positive answers. Instead, Gödel and Cohen showed that the continuum hypothesis is <em>independent</em> of the standard axioms of set theory: you may assume it true or false without contradiction, and standard mathematics cannot decide between them. And Gödel's second incompleteness theorem showed that no consistent system strong enough for arithmetic can prove its own consistency — so Problem 2, as Hilbert posed it, has no solution within the system itself.</p>
+    <p>These are not gaps in our knowledge waiting to be filled. They are theorems about the structure of mathematical truth itself — the most surprising results to come out of the entire list, and arguably the most important.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">A working method</span>
+    <h2>The questions that built fields</h2>
+    <p>Tracing the descendants of individual problems shows how generative the list was. Problem 10's negative solution required the entire apparatus of recursion theory and gave us deep links between number theory and computability. Problem 18's Kepler conjecture drove decades of work on packing and ultimately a landmark computer-assisted, formally verified proof. Problem 6's call to axiomatize physics helped motivate Kolmogorov's axioms for probability and continues to animate mathematical physics today.</p>
+    <p>The lesson Hilbert intended is still taught: progress in mathematics comes from posing the right problems clearly, and then following them wherever they lead — even when, as with Problems 1 and 2, they lead to the discovery that some questions have no answer of the kind we first imagined.</p>
+    <blockquote>
+      "As long as a branch of science offers an abundance of problems, so long is it alive."
+      <cite>— David Hilbert, Paris, 1900</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">Where to go next</span>
+    <h2>Beyond the list</h2>
+    <div class="grid cols-3">
+      <a class="card" href="0-who.html" style="color:inherit;">
+        <div class="num">VOL 00</div>
+        <h3>The man</h3>
+        <p>Königsberg to Göttingen, the rise and fall of the formalist program.</p>
+      </a>
+      <a class="card" href="2-world.html" style="color:inherit;">
+        <div class="num">VOL 02</div>
+        <h3>The world</h3>
+        <p>The community at Göttingen, Emmy Noether, and its destruction in 1933.</p>
+      </a>
+      <a class="card" href="3-legacy.html" style="color:inherit;">
+        <div class="num">VOL 03</div>
+        <h3>The legacy</h3>
+        <p>Hilbert spaces, the still-open Riemann Hypothesis, and the road to Turing.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="container">
+    <div class="tag">ROOT0-ATTRIBUTION-v1.0</div>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br>
+    The David Hilbert Series — Volume 01: The 23 Problems · Self-contained HTML<br>
+    "Wir müssen wissen. Wir werden wissen."
+  </div>
+</footer>
+
+<script>
+  // The 23 problems data with modern status.
+  var PROBLEMS = [
+    {n:1,  t:"Continuum Hypothesis", s:"indep",    d:"Cardinality between integers and reals. Independent of ZFC — Gödel 1940, Cohen 1963.", flag:true},
+    {n:2,  t:"Consistency of Arithmetic", s:"unsolved", d:"Refuted as posed: Gödel's 2nd theorem (1931) — no such finitary self-proof exists.", flag:true},
+    {n:3,  t:"Equal-volume Polyhedra", s:"solved", d:"Dehn (1900): cutting cannot always equate volumes. The first problem solved."},
+    {n:4,  t:"Geodesics & Metrics", s:"partial", d:"Characterize geometries with straight-line geodesics. Considered too vague; partial."},
+    {n:5,  t:"Lie Groups w/o Smoothness", s:"solved", d:"Are continuous groups automatically differentiable? Yes — Gleason, Montgomery–Zippin 1952."},
+    {n:6,  t:"Axiomatize Physics", s:"partial", d:"Treat physics axiomatically. Ongoing; probability axiomatized by Kolmogorov 1933."},
+    {n:7,  t:"Transcendence of a^b", s:"solved", d:"Is 2^√2 transcendental? Yes — Gelfond–Schneider theorem, 1934."},
+    {n:8,  t:"Riemann Hypothesis", s:"unsolved", d:"Zeros of zeta on Re(s)=1/2. UNSOLVED. Clay Millennium Prize, $1,000,000.", flag:true},
+    {n:9,  t:"Reciprocity Laws", s:"solved", d:"General reciprocity in number fields. Solved via Artin reciprocity, 1920s–30s."},
+    {n:10, t:"Diophantine Decision", s:"solved", d:"Algorithm for integer solutions? NO — Matiyasevich 1970 (MRDP). Negative answer.", flag:true},
+    {n:11, t:"Quadratic Forms", s:"solved", d:"Forms with algebraic-number coefficients. Resolved via Hasse–Minkowski."},
+    {n:12, t:"Kronecker's Jugendtraum", s:"partial", d:"Extend class field theory to abelian extensions. Partially solved; still active."},
+    {n:13, t:"7th-degree by 2-var fns", s:"solved", d:"Solve via functions of two variables. Resolved by Kolmogorov–Arnold, 1957."},
+    {n:14, t:"Finiteness of Invariants", s:"solved", d:"Are certain invariant rings finitely generated? NO — Nagata counterexample, 1959."},
+    {n:15, t:"Schubert Calculus", s:"solved", d:"Rigorous foundation for enumerative geometry. Achieved in the 20th century."},
+    {n:16, t:"Topology of Curves & Cycles", s:"partial", d:"Limit cycles of polynomial vector fields. Largely OPEN; deeply hard."},
+    {n:17, t:"Sums of Squares", s:"solved", d:"Are positive rational functions sums of squares? Yes — Artin, 1927."},
+    {n:18, t:"Sphere Packing & Tiling", s:"solved", d:"Densest packing (Kepler) proved by Hales (1998/2014, formalized); space groups done."},
+    {n:19, t:"Analyticity of Variational Sols", s:"solved", d:"Are Lagrangian solutions analytic? Yes — Bernstein, De Giorgi, Nash."},
+    {n:20, t:"Boundary Value Problems", s:"solved", d:"Existence for variational boundary problems. Resolved through 20th-c. PDE theory."},
+    {n:21, t:"Linear ODEs w/ Monodromy", s:"partial", d:"Riemann–Hilbert problem. Positive in many cases; counterexamples (Bolibruch) too."},
+    {n:22, t:"Uniformization", s:"solved", d:"Uniformize analytic relations by automorphic functions. Koebe & Poincaré, 1907."},
+    {n:23, t:"Calculus of Variations", s:"solved", d:"Develop the calculus of variations further. A program, broadly carried out."}
+  ];
+  var STATUS_CLASS = {solved:"s-solved",partial:"s-partial",unsolved:"s-unsolved",indep:"s-indep"};
+  var STATUS_LABEL = {solved:"Solved",partial:"Partial",unsolved:"Unsolved",indep:"Indep. of ZFC"};
+  var STATUS_FILL  = {solved:"#16a34a",partial:"#d97706",unsolved:"#dc2626",indep:"#7c3aed"};
+
+  (function(){
+    var box = document.getElementById('problist');
+    PROBLEMS.forEach(function(p){
+      var d = document.createElement('div');
+      d.className = 'card prob' + (p.flag ? ' flag' : '');
+      d.innerHTML =
+        '<div class="pn">#'+p.n+'</div>'+
+        '<div class="ptitle">'+p.t+'</div>'+
+        '<div class="pdesc">'+p.d+'</div>'+
+        '<span class="status '+STATUS_CLASS[p.s]+'">'+STATUS_LABEL[p.s]+'</span>';
+      box.appendChild(d);
+    });
+  })();
+
+  (function(){
+    var g = document.getElementById('cells');
+    if(!g) return;
+    var cols=8,size=56,gap=10,ox=26,oy=14,SVGNS='http://www.w3.org/2000/svg';
+    PROBLEMS.forEach(function(p,i){
+      var col=i%cols,row=Math.floor(i/cols);
+      var x=ox+col*(size+gap), y=oy+row*(size+gap);
+      var r=document.createElementNS(SVGNS,'rect');
+      r.setAttribute('x',x);r.setAttribute('y',y);
+      r.setAttribute('width',size);r.setAttribute('height',size);
+      r.setAttribute('rx',3);r.setAttribute('class','cell');
+      r.setAttribute('stroke',STATUS_FILL[p.s]);
+      r.style.animationDelay=(i*0.22)+'s';
+      g.appendChild(r);
+      var t=document.createElementNS(SVGNS,'text');
+      t.setAttribute('x',x+size/2);t.setAttribute('y',y+size/2+4);
+      t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-family','Space Mono, monospace');
+      t.setAttribute('font-size','11');
+      t.setAttribute('fill',STATUS_FILL[p.s]);
+      t.textContent=p.n;
+      g.appendChild(t);
+    });
+  })();
+</script>
+</body>
+</html>

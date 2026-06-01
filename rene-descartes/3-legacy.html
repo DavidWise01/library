@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>René Descartes — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#080608;--red:#dc2626;--silver:#94a3b8;
+    --ink:#ece8ee;--dim:#b8b2bf;--card:#0f0c11;--line:rgba(220,38,38,0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red);color:#fff;}
+
+  /* ---------- NAV ---------- */
+  nav.sticky{
+    position:sticky;top:0;z-index:100;
+    background:rgba(8,6,8,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.sticky .wrap{
+    max-width:1100px;margin:0 auto;padding:14px 28px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px;
+  }
+  nav.sticky .brand{
+    font-family:'Cinzel',serif;font-weight:700;letter-spacing:0.06em;
+    color:var(--ink);font-size:15px;margin-right:auto;
+  }
+  nav.sticky a{
+    font-family:'Space Mono',monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--silver);text-decoration:none;padding:4px 2px;
+    border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  }
+  nav.sticky a:hover{color:var(--ink);}
+  nav.sticky a.active{color:var(--red);border-bottom-color:var(--red);}
+
+  /* ---------- LAYOUT ---------- */
+  .container{max-width:1100px;margin:0 auto;padding:0 28px;}
+  header.hero{padding:90px 0 50px;text-align:center;}
+  .kick{
+    font-family:'Space Mono',monospace;text-transform:uppercase;
+    letter-spacing:0.22em;font-size:12px;color:var(--red);
+  }
+  h1{
+    font-family:'Cinzel',serif;font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;
+    margin:18px 0 10px;letter-spacing:0.01em;
+  }
+  h2{
+    font-family:'Cinzel',serif;font-weight:700;
+    font-size:clamp(1.6rem,3.5vw,2.4rem);
+    margin:0 0 6px;letter-spacing:0.02em;
+  }
+  h3{font-family:'Cinzel',serif;font-weight:600;font-size:1.25rem;margin:0 0 8px;letter-spacing:0.02em;}
+  .lede{font-size:1.32rem;color:var(--dim);font-style:italic;max-width:760px;margin:0 auto;}
+  .dates{font-family:'Space Mono',monospace;color:var(--silver);font-size:13px;letter-spacing:0.18em;margin-top:20px;}
+
+  section{padding:46px 0;border-top:1px solid rgba(148,163,184,0.12);}
+  .sec-kick{margin-bottom:14px;}
+  p{margin:0 0 20px;max-width:760px;}
+  p.full{max-width:none;}
+  em,i{color:#f0e6e8;}
+  strong{color:#fff;font-weight:600;}
+  .eqn{
+    font-family:'Space Mono',monospace;color:var(--red);font-size:1.05em;
+    background:rgba(220,38,38,0.08);padding:1px 7px;border-radius:3px;
+    border:1px solid var(--line);
+  }
+
+  /* ---------- BAND ---------- */
+  .band{background:var(--red);color:#fff;padding:40px 28px;margin:46px 0;border-radius:3px;}
+  .band .container{padding:0;}
+  .band .kick{color:#ffe2e2;}
+  .band blockquote{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.6rem,4.5vw,2.8rem);line-height:1.18;margin:10px 0 0;
+  }
+  .band cite{
+    display:block;margin-top:16px;font-family:'Space Mono',monospace;
+    font-style:normal;font-size:13px;letter-spacing:0.12em;color:#ffd9d9;
+  }
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:22px;margin-top:10px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:26px 24px;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+  }
+  .card:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--red);border-color:var(--red);}
+  .card .num{font-family:'Space Mono',monospace;color:var(--red);font-size:12px;letter-spacing:0.2em;}
+  .card p{font-size:1rem;color:var(--dim);margin:8px 0 0;}
+
+  .pull{
+    border-left:3px solid var(--red);padding:6px 0 6px 22px;margin:30px 0;
+    font-style:italic;font-size:1.18rem;color:#efe6e9;max-width:760px;
+  }
+
+  /* ---------- SVG 3D STAGE ---------- */
+  .svg-stage{
+    background:linear-gradient(180deg,#0c0a0e,#080608);
+    border:1px solid var(--line);border-radius:6px;
+    padding:30px;margin:24px 0;display:flex;justify-content:center;
+  }
+  .svg-stage svg{width:100%;max-width:440px;height:auto;}
+  .ax-x{stroke:var(--red);stroke-width:2.4;stroke-linecap:round;}
+  .ax-y{stroke:var(--silver);stroke-width:2.4;stroke-linecap:round;}
+  .ax-z{stroke:#e2e8f0;stroke-width:2.4;stroke-linecap:round;}
+  .albl{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;}
+  .spin{transform-origin:200px 170px;animation:spin3d 14s linear infinite;}
+  @keyframes spin3d{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .origin{fill:#fff;}
+
+  /* ---------- COLOPHON ---------- */
+  footer.colophon{
+    border-top:2px solid var(--red);margin-top:60px;padding:42px 0 80px;
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--silver);
+    letter-spacing:0.08em;line-height:1.9;
+  }
+  footer.colophon .container{display:flex;flex-direction:column;gap:6px;}
+  footer.colophon .tag{color:var(--red);text-transform:uppercase;letter-spacing:0.2em;}
+  .ser-nav{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;}
+  .ser-nav a{
+    color:var(--silver);text-decoration:none;border:1px solid var(--line);
+    padding:7px 12px;border-radius:3px;transition:.2s;
+  }
+  .ser-nav a:hover{color:#fff;border-color:var(--red);background:rgba(220,38,38,0.12);}
+  @media(max-width:560px){body{font-size:17px;}header.hero{padding:60px 0 36px;}}
+</style>
+</head>
+<body>
+
+<nav class="sticky">
+  <div class="wrap">
+    <span class="brand">DESCARTES · 1596–1650</span>
+    <a href="0-who.html">0 · Who</a>
+    <a href="1-coordinates.html">1 · Coordinates</a>
+    <a href="2-world.html">2 · World</a>
+    <a href="3-legacy.html" class="active">3 · Legacy</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="kick">Volume Three — The Afterlife</div>
+    <h1>The Legacy</h1>
+    <p class="lede">He has been dead for nearly four centuries, yet you cannot draw a graph, navigate a map, render a game, or argue about consciousness without standing inside his ideas.</p>
+    <div class="dates">1650 → TODAY · THE CARTESIAN CENTURIES</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="svg-stage" aria-label="Animated 3D xyz axes rotating">
+    <svg viewBox="0 0 400 340" role="img">
+      <g class="spin">
+        <!-- z axis (up) -->
+        <line class="ax-z" x1="200" y1="170" x2="200" y2="60"/>
+        <polygon class="ax-z" points="200,52 195,68 205,68" fill="#e2e8f0" stroke="none"/>
+        <text class="albl" x="208" y="64" fill="#e2e8f0">z</text>
+        <!-- y axis (right-depth) -->
+        <line class="ax-y" x1="200" y1="170" x2="320" y2="230"/>
+        <polygon class="ax-y" points="328,234 312,228 316,240" fill="#94a3b8" stroke="none"/>
+        <text class="albl" x="330" y="240" fill="#94a3b8">y</text>
+        <!-- x axis (left-depth) -->
+        <line class="ax-x" x1="200" y1="170" x2="80" y2="230"/>
+        <polygon class="ax-x" points="72,234 88,228 84,240" fill="#dc2626" stroke="none"/>
+        <text class="albl" x="56" y="240" fill="#dc2626">x</text>
+        <!-- negative stubs -->
+        <line class="ax-z" x1="200" y1="170" x2="200" y2="230" opacity="0.35"/>
+        <line class="ax-y" x1="200" y1="170" x2="80"  y2="110" opacity="0.35"/>
+        <line class="ax-x" x1="200" y1="170" x2="320" y2="110" opacity="0.35"/>
+        <circle class="origin" cx="200" cy="170" r="4"/>
+      </g>
+      <text class="albl" x="118" y="312" fill="#94a3b8" style="font-size:11px;letter-spacing:0.14em">3-SPACE · (x, y, z)</text>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
+
+<section>
+  <div class="kick sec-kick">Everywhere at once</div>
+  <h2>The grid that ate the world</h2>
+  <p>Begin with the most visible inheritance. <strong>Coordinate geometry is everywhere</strong> — so completely woven into modern life that it has become invisible, like air. Consider what runs on the Cartesian plane Descartes drew in 1637:</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">DATA</div>
+      <h3>Every graph</h3>
+      <p>Every chart, plot, and dashboard — the entire visual language of science, finance, and journalism — places data on an <em>x</em>-<em>y</em> grid that is purely Cartesian.</p>
+    </div>
+    <div class="card">
+      <div class="num">GAMES</div>
+      <h3>Every game world</h3>
+      <p>Every video game positions its characters, cameras, and worlds in <span class="eqn">(x, y, z)</span> coordinate space. 3D graphics <em>is</em> applied analytic geometry running millions of times per second.</p>
+    </div>
+    <div class="card">
+      <div class="num">CAD</div>
+      <h3>Every engineering drawing</h3>
+      <p>Every blueprint, CAD model, and machined part is specified in coordinates. Manufacturing a bolt or a bridge begins with Cartesian dimensions.</p>
+    </div>
+    <div class="card">
+      <div class="num">MAPS</div>
+      <h3>Every map projection</h3>
+      <p>Latitude and longitude, GPS, and every map projection translate the round Earth onto coordinate systems descended directly from his grid.</p>
+    </div>
+  </div>
+
+  <p style="margin-top:30px">We even named the thing after him. We say <strong>"Cartesian"</strong> — from <em>Cartesius</em>, the Latinized form of Descartes — as a plain adjective, the way we say "metric" or "digital." A man's name became the word for the most basic way of locating anything in space.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The Word Itself</div>
+    <blockquote>Cartesian.</blockquote>
+    <cite>FROM CARTESIUS — A NAME THAT BECAME THE ADJECTIVE FOR SPACE ITSELF</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">The hard problem</div>
+  <h2>Mind, body, and the machines we build</h2>
+  <p>Descartes's philosophical legacy is just as alive — and far more contested. His <strong>mind-body dualism</strong> — the claim that the thinking mind and the extended body are two fundamentally different substances — set the agenda for the entire modern <strong>philosophy of mind</strong>. Nearly every position since has been a response to Descartes: materialism denies his second substance, idealism denies his first, and functionalism tries to dissolve the question. But all of them are arguing on the field he laid out.</p>
+  <p class="full">The questions ripple straight into the twenty-first century. <strong>Consciousness studies</strong> still wrestles with the "hard problem" — why physical processes are accompanied by subjective experience at all — which is Descartes's mind-body gap in modern dress. And the <strong>AI debates</strong> turn on Cartesian terms: when we ask whether a machine can truly <em>think</em>, whether a large model has any inner experience, or whether intelligence requires a mind distinct from its hardware, we are asking Descartes's question with new equipment. His distinction between mechanical body and thinking mind is the hidden frame around the entire conversation about artificial minds.</p>
+  <div class="pull">To ask "could a computer ever really be conscious?" is to re-open, with silicon, the exact wound Princess Elisabeth pressed into Descartes in 1643.</div>
+  <p>Even the vocabulary we reach for is Cartesian. We speak of "the ghost in the machine" — a phrase coined to <em>mock</em> Descartes — every time we wonder whether there is anyone home inside a body or a chatbot. We distinguish "the mind" from "the brain" as casually as we distinguish software from hardware, and that very distinction is his. When a neuroscientist insists the mind just <em>is</em> the brain, they are not escaping Descartes; they are answering him. The map of the debate was drawn in 1641, and we are still arguing about where to put the borders.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The method survives</div>
+  <h2>Doubt as the engine of science</h2>
+  <p>His <strong>method of doubt</strong> — refuse to accept any claim until it survives rigorous scrutiny, and build only on what is clear and certain — became the temperament of modern science itself. <strong>Scientific skepticism</strong>, the insistence on evidence over authority, the demand to question received wisdom and trust only what can be demonstrated, is Cartesian doubt institutionalized. The whole posture of the Enlightenment — that nothing is exempt from rational examination — descends from the man who decided to doubt everything, including his own senses, until he hit bedrock.</p>
+  <p>There is even a productive irony in his legacy here. Descartes used doubt to <em>reach</em> certainty — he wanted a foundation that could end all argument. Modern science kept his doubt but abandoned his hope of final certainty, treating every result as provisional, open to revision by better evidence. In that sense science is more Cartesian than Descartes: it took his most powerful tool, the willingness to question anything, and turned it into a permanent practice rather than a one-time ritual on the road to bedrock. The doubt outlived the certainty it was meant to secure.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">From plane to space to data</div>
+  <h2>The grid grew extra dimensions</h2>
+  <p>Descartes drew his grid in two dimensions, but the idea has no ceiling. Add a third axis — the <span class="eqn">z</span> rotating in the figure above — and you have three-dimensional space, the home of every physics simulation and every rendered scene. But mathematics did not stop at three. The same logic extends to four dimensions, ten, a thousand: a point in <em>n</em>-dimensional space is just an ordered list of <em>n</em> numbers.</p>
+  <p class="full">This generalization is the quiet foundation of the data age. A machine-learning model represents a word, an image, or a face as a point in a space of hundreds or thousands of dimensions — a "vector" that is nothing but a long Cartesian coordinate. "Nearby" points mean "similar things." Every recommendation engine, every search ranking, every neural network is navigating a high-dimensional Cartesian space, measuring distances and angles between points exactly as Descartes measured them on his flat sheet of paper. He gave us the plane; we built skyscrapers of dimensions on top of it.</p>
+  <div class="pull">A modern AI embedding is a point with two thousand coordinates instead of two — but it is still, unmistakably, a point in Descartes's space.</div>
+</section>
+
+<section>
+  <div class="kick sec-kick">A day in his coordinates</div>
+  <h2>Count how often you stand on his grid</h2>
+  <p>The abstraction becomes vivid when you trace a single ordinary day. You are never more than a moment away from the framework a frail Frenchman drew in 1637.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">MORNING</div>
+      <h3>The phone wakes you</h3>
+      <p>Its screen is a grid of pixels, each addressed by an <span class="eqn">(x, y)</span> coordinate. The map app that shows your commute plots you on latitude and longitude — Cartesian to the core.</p>
+    </div>
+    <div class="card">
+      <div class="num">MIDDAY</div>
+      <h3>A chart at work</h3>
+      <p>The quarterly graph, the spreadsheet plot, the dashboard trend line — every one of them places numbers on an <em>x</em>-<em>y</em> plane to make a pattern visible.</p>
+    </div>
+    <div class="card">
+      <div class="num">EVENING</div>
+      <h3>A game, a stream</h3>
+      <p>The 3D world you move through is built from vertices in <span class="eqn">(x, y, z)</span> space; the recommendation that picked your next show measured distances between points in a high-dimensional Cartesian space.</p>
+    </div>
+    <div class="card">
+      <div class="num">ALWAYS</div>
+      <h3>The questions</h3>
+      <p>And when you wonder whether the assistant you spoke to "understands" anything — whether there is a mind behind the words — you are asking Descartes's question, in his terms, without knowing his name.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The five afterlives</div>
+  <h2>Where his ideas live now</h2>
+  <p>It is rare for one person to seed five distinct, still-thriving fields. Descartes did. Each of these would be a sufficient legacy on its own.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">MATH</div>
+      <h3>Coordinate geometry</h3>
+      <p>Graphs, maps, CAD, game worlds, GPS. The visual and computational language of all quantitative thought.</p>
+    </div>
+    <div class="card">
+      <div class="num">MIND</div>
+      <h3>Dualism &amp; the mind-body problem</h3>
+      <p>The founding question of the philosophy of mind, consciousness studies, and the modern debate over machine intelligence.</p>
+    </div>
+    <div class="card">
+      <div class="num">SCIENCE</div>
+      <h3>Method of doubt</h3>
+      <p>Scientific skepticism — evidence over authority, question everything — became the working temperament of inquiry itself.</p>
+    </div>
+    <div class="card">
+      <div class="num">SETS</div>
+      <h3>The Cartesian product</h3>
+      <p><span class="eqn">A × B</span>: the set of ordered pairs underlying relations, functions, databases, and coordinate space.</p>
+    </div>
+    <div class="card">
+      <div class="num">CULTURE</div>
+      <h3>"Cartesian"</h3>
+      <p>His Latinized name became a plain adjective for grids, coordinates, and rationalist thought. The man dissolved into the vocabulary.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">Few thinkers leave one lasting idea. Descartes left a coordinate system, a philosophy of mind, a scientific temperament, a piece of set theory, and an adjective — and we use all five without pausing to notice whose they were.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The closing thought</div>
+  <h2>Living inside another mind's geometry</h2>
+  <p class="full">There is a strange intimacy in Descartes's legacy. Most historical figures we encounter as objects of study — we read <em>about</em> them. Descartes we encounter differently: we think <em>with</em> his tools, often without realizing they are tools at all, let alone whose. When a child plots her first point on graph paper, when an engineer specifies a part to the thousandth of a millimeter, when a philosopher asks whether a machine could be conscious, when a scientist refuses to accept a claim without evidence — each is briefly inhabiting a structure built by a frail man who liked to stay in bed and died because a queen made him get up early.</p>
+  <p>That is the final measure of his stature. He did not merely add to what we know; he shaped <em>how</em> we know it. Four centuries on, the grid he drew has no edges, the doubt he taught has no expiration, and the question he asked about mind and matter has no settled answer. We are all, still, working inside René Descartes's geometry.</p>
+</section>
+
+<section>
+  <div class="kick sec-kick">The series, in one breath</div>
+  <h2>Four volumes, one figure</h2>
+  <p>Set the volumes side by side and the whole arc resolves: a man, an idea, a world, and an inheritance that never ended.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">VOL 0</div>
+      <h3>Who he was</h3>
+      <p>A frail late-riser from Touraine, Jesuit-trained, briefly a soldier, long an exile in tolerant Holland — and a grieving father, dead in the Stockholm cold.</p>
+    </div>
+    <div class="card">
+      <div class="num">VOL 1</div>
+      <h3>The coordinates</h3>
+      <p>The grid that married algebra and geometry, the cogito that grounded knowledge in doubt, and the notation we still write in.</p>
+    </div>
+    <div class="card">
+      <div class="num">VOL 2</div>
+      <h3>His world</h3>
+      <p>A continent at war, a Church that broke Galileo, a republic that sheltered free thought, and the people sharp enough to argue with him.</p>
+    </div>
+    <div class="card">
+      <div class="num">VOL 3</div>
+      <h3>The legacy</h3>
+      <p>Coordinate geometry, the mind-body problem, scientific skepticism, the Cartesian product, and an adjective that swallowed his name.</p>
+    </div>
+  </div>
+  <p style="margin-top:30px">Born 1596, dead 1650 — fifty-three years, most of them spent quietly thinking in a small country by the sea. From that quiet came the grid beneath every screen and the question beneath every debate about the mind. Not a bad return on a life of sleeping late.</p>
+</section>
+
+<div class="band">
+  <div class="container">
+    <div class="kick">The Unfinished Question</div>
+    <blockquote>Can a machine think? We are still asking him.</blockquote>
+    <cite>MIND-BODY DUALISM · THE FRAME AROUND THE AI DEBATE</cite>
+  </div>
+</div>
+
+<section>
+  <div class="kick sec-kick">The takeaway</div>
+  <h2>The most-used ideas no one credits</h2>
+  <p class="full">The strangest honor in intellectual history is to become invisible — to have your ideas so thoroughly absorbed that people use them without knowing they are yours. Descartes earned exactly that. We plot points, doubt claims, separate mind from brain, and pair elements into ordered tuples, and we do these things as if they were simply features of reality rather than the inventions of a particular seventeenth-century Frenchman. The coordinate plane, the method of doubt, the mind-body distinction, the Cartesian product, the word "Cartesian" itself: five living legacies, each one woven so deep into modern thought that we no longer see the seam. To think in the modern way is, in large part, to think in his.</p>
+  <p>And the work he started is not finished, which is the surest sign that it was real. The hard problem of consciousness is open. The debate over whether machines can think only grows louder as the machines grow stranger. Mathematicians still extend his coordinates into ever-higher dimensions to map data no one in 1637 could have imagined. A truly dead idea is one we have closed the book on; Descartes left books we cannot close. Nearly four hundred years after a queen's cold library took his life, the questions and tools he handed us are still doing their work — and still, quietly, bearing his name.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="num">OPEN</div>
+      <h3>Consciousness</h3>
+      <p>Why does physical process come with inner experience? The "hard problem" is Descartes's mind-body gap, still unresolved.</p>
+    </div>
+    <div class="card">
+      <div class="num">OPEN</div>
+      <h3>Machine minds</h3>
+      <p>Can a system that manipulates symbols truly think or understand? The question grows sharper as the machines grow stranger.</p>
+    </div>
+    <div class="card">
+      <div class="num">OPEN</div>
+      <h3>The shape of data</h3>
+      <p>High-dimensional coordinate spaces now map language, images, and meaning — his grid extended into realms he never saw.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">Pure mathematics</div>
+  <h2>The Cartesian product, and a visual language</h2>
+  <p>The name persists even in the most abstract reaches of mathematics. In <strong>set theory</strong>, the <strong>Cartesian product</strong> <span class="eqn">A × B</span> is the set of all ordered pairs <span class="eqn">(a, b)</span> with <em>a</em> from <em>A</em> and <em>b</em> from <em>B</em> — the exact generalization of pairing an <em>x</em>-value with a <em>y</em>-value to locate a point. Every relational database table, every coordinate space, every product type in a programming language is, formally, a Cartesian product. The idea of pairing elements to build a structured space is so fundamental that it carries his name into the foundations of mathematics.</p>
+  <p>And above all, the <strong>Cartesian plane is the visual language of mathematics</strong>. When a student first "sees" a function as a curve, when a physicist sketches a trajectory, when an economist draws supply and demand crossing, they are all speaking a common pictorial tongue that Descartes invented. He gave abstraction a place to stand and a way to be seen.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="num">SET THEORY</div>
+      <h3>A × B</h3>
+      <p>The Cartesian product underpins relations, functions, databases, and the very definition of coordinate space.</p>
+    </div>
+    <div class="card">
+      <div class="num">PEDAGOGY</div>
+      <h3>Seeing math</h3>
+      <p>The graph is how we teach functions, calculus, and statistics. Mathematics became <em>visible</em>, and therefore teachable, on his plane.</p>
+    </div>
+    <div class="card">
+      <div class="num">COMPUTING</div>
+      <h3>Coordinate space</h3>
+      <p>Pixels, vertices, vectors, tensors — the entire numerical scaffolding of computing lives on coordinate axes.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="kick sec-kick">The measure of the man</div>
+  <h2>A debt we no longer notice</h2>
+  <p>The truest sign of Descartes's stature is that we have stopped crediting him. Newton credited him by name; Spinoza wrote against him; the Enlightenment defined itself in his shadow. But today his ideas are simply the medium we think in. To plot a point, to doubt a claim, to ask whether a machine can have a mind, to write <em>x²</em> or call an unknown <em>x</em> — these are not homages to Descartes. They are just how thinking is done now.</p>
+  <p class="full">A frail boy from Touraine who liked to stay in bed, a soldier who dreamed in a stove-heated room, a careful man who hid his own book from the Inquisition and died because a queen would not let him sleep — he reorganized the relationship between space and number, mind and body, doubt and certainty. Four centuries on, every screen you look at is addressed in his coordinates, and every argument about whether we can build a thinking machine is fought on his terms. The grid he drew has no edges. We are all still living inside it.</p>
+  <div class="pull">"I think, therefore I am." — The first certainty, and still the one we cannot get past.</div>
+
+  <div class="ser-nav">
+    <a href="0-who.html">0 · Who He Was</a>
+    <a href="1-coordinates.html">1 · The Coordinates</a>
+    <a href="2-world.html">2 · His World</a>
+    <a href="3-legacy.html">3 · The Legacy</a>
+  </div>
+</section>
+
+</div>
+
+<footer class="colophon">
+  <div class="container">
+    <span class="tag">ROOT0-ATTRIBUTION-v1.0</span>
+    <span>René Descartes — A Four-Volume Series · Volume 3: The Legacy</span>
+    <span>David Lee Wise / ROOT0 / TriPod LLC</span>
+    <span>Licensed CC-BY-ND-4.0 · Attribution — No Derivatives</span>
+    <span>Typeset in Cinzel, Newsreader &amp; Space Mono.</span>
+  </div>
+</footer>
+
+</body>
+</html>

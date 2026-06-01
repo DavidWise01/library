@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benoit Mandelbrot — Vol. 0: Who He Was</title>
+<meta name="description" content="Benoit Mandelbrot (1924–2010): the mathematician who coined the word fractal and revealed the hidden geometry of nature.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#04040c;
+    --cyan:#06b6d4;
+    --orange:#ea580c;
+    --ink:#e8edf2;
+    --muted:#8a97a6;
+    --line:rgba(6,182,212,0.32);
+    --card:#080816;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:
+      radial-gradient(900px 600px at 80% -10%, rgba(6,182,212,0.10), transparent 60%),
+      radial-gradient(700px 500px at -10% 110%, rgba(234,88,12,0.08), transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(4,4,12,0.86);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;gap:8px;
+    padding:14px 22px;flex-wrap:wrap;
+  }
+  .nav-brand{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12px;color:var(--cyan);
+    margin-right:auto;
+  }
+  .nav-inner a.vol{
+    font-family:"Space Mono",monospace;
+    font-size:12px;letter-spacing:0.08em;
+    text-decoration:none;color:var(--muted);
+    padding:6px 12px;border:1px solid transparent;
+    border-radius:4px;transition:all .2s ease;
+  }
+  .nav-inner a.vol:hover{color:var(--ink);border-color:var(--line);}
+  .nav-inner a.vol.active{color:var(--paper);background:var(--cyan);border-color:var(--cyan);}
+  /* LAYOUT */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;position:relative;z-index:1;}
+  header.hero{padding:90px 0 50px;}
+  .kick{
+    font-family:"Space Mono",monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:12.5px;
+    color:var(--cyan);
+    display:inline-block;margin-bottom:22px;
+  }
+  h1{
+    font-family:"Cinzel",serif;
+    font-weight:800;
+    font-size:clamp(2.6rem,7vw,5rem);
+    line-height:1.02;
+    letter-spacing:0.01em;
+    margin-bottom:18px;
+  }
+  h1 .sub{display:block;font-size:0.34em;font-weight:600;color:var(--cyan);letter-spacing:0.18em;margin-top:18px;font-family:"Space Mono",monospace;}
+  .lede{font-size:1.32rem;color:var(--muted);max-width:680px;font-style:italic;}
+  h2{
+    font-family:"Cinzel",serif;
+    font-weight:700;
+    font-size:clamp(1.7rem,3.6vw,2.5rem);
+    margin:14px 0 18px;
+    line-height:1.12;
+  }
+  h3{font-family:"Cinzel",serif;font-weight:600;font-size:1.28rem;margin:0 0 10px;color:var(--ink);}
+  section{padding:54px 0;border-top:1px solid var(--line);}
+  p{margin-bottom:20px;}
+  p .lead-cap::first-letter{font-size:1em;}
+  em,i{color:#d6e0ea;}
+  strong{color:#fff;font-weight:600;}
+  a.inline{color:var(--cyan);text-decoration:none;border-bottom:1px solid var(--line);}
+  /* BAND */
+  .band{
+    background:var(--cyan);
+    color:var(--paper);
+    padding:40px 36px;
+    border-radius:10px;
+    margin:38px 0;
+  }
+  .band .kick{color:var(--paper);opacity:.7;}
+  .band p{margin:0;font-size:1.5rem;font-style:italic;font-weight:500;line-height:1.4;}
+  .band cite{display:block;margin-top:16px;font-family:"Space Mono",monospace;font-style:normal;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;opacity:.8;}
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:30px 0;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:26px 24px;
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--cyan);
+    border-color:var(--cyan);
+  }
+  .card .num{font-family:"Space Mono",monospace;color:var(--orange);font-size:12px;letter-spacing:0.2em;display:block;margin-bottom:12px;}
+  .card p{font-size:1rem;color:var(--muted);margin:0;}
+  /* TIMELINE */
+  .tl{list-style:none;margin:30px 0;padding:0;}
+  .tl li{
+    display:grid;grid-template-columns:120px 1fr;gap:20px;
+    padding:18px 0;border-bottom:1px solid var(--line);
+  }
+  .tl .yr{font-family:"Space Mono",monospace;color:var(--cyan);font-size:15px;letter-spacing:0.06em;}
+  .tl .ev{color:var(--ink);}
+  .tl .ev span{display:block;color:var(--muted);font-size:0.95rem;margin-top:4px;}
+  /* SVG FIGURE */
+  .figure{margin:38px 0;text-align:center;}
+  .figure svg{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#02020a;}
+  .figcap{font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:14px;}
+  /* COLOPHON */
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:48px 0 80px;}
+  .colophon{
+    font-family:"Space Mono",monospace;
+    font-size:12px;line-height:1.9;letter-spacing:0.06em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:10px;padding:26px;
+    background:var(--card);
+  }
+  .colophon strong{color:var(--cyan);font-weight:700;}
+  .pager{display:flex;justify-content:space-between;margin:34px 0;gap:14px;flex-wrap:wrap;}
+  .pager a{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:0.1em;
+    text-decoration:none;color:var(--ink);border:1px solid var(--line);
+    padding:14px 20px;border-radius:8px;transition:all .2s ease;flex:1;text-align:center;min-width:200px;
+  }
+  .pager a:hover{border-color:var(--cyan);transform:translate(-3px,-3px);box-shadow:5px 5px 0 var(--cyan);}
+  @media(max-width:620px){
+    .tl li{grid-template-columns:80px 1fr;}
+    body{font-size:17px;}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">Mandelbrot // ROOT0</span>
+    <a class="vol active" href="0-who.html">0 · Who</a>
+    <a class="vol" href="1-fractals.html">1 · Fractals</a>
+    <a class="vol" href="2-world.html">2 · World</a>
+    <a class="vol" href="3-legacy.html">3 · Legacy</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="kick">Volume 0 — The Man</span>
+    <h1>Benoit Mandelbrot
+      <span class="sub">1924 — 2010 · The Geometer of Roughness</span>
+    </h1>
+    <p class="lede">He looked at clouds, coastlines, and stock charts and saw the same hidden order — a geometry the textbooks had no name for. So he gave it one.</p>
+  </header>
+
+  <div class="figure">
+    <!-- Animated Mandelbrot set silhouette with zoom pulse -->
+    <svg viewBox="0 0 600 360" width="600" height="360" role="img" aria-label="Mandelbrot set silhouette pulsing with a zoom animation">
+      <defs>
+        <radialGradient id="halo0" cx="38%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.85"/>
+          <stop offset="55%" stop-color="#06b6d4" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="sea0" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#06b6d4"/>
+          <stop offset="100%" stop-color="#ea580c"/>
+        </linearGradient>
+      </defs>
+      <rect width="600" height="360" fill="#02020a"/>
+      <circle cx="225" cy="180" r="150" fill="url(#halo0)">
+        <animate attributeName="r" values="120;165;120" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="6s" repeatCount="indefinite"/>
+      </circle>
+      <g transform="translate(225,180)">
+        <g>
+          <animateTransform attributeName="transform" type="scale" values="0.92;1.06;0.92" dur="6s" repeatCount="indefinite" additive="sum"/>
+          <!-- main cardioid + bulb silhouette, scaled -->
+          <path fill="url(#sea0)" stroke="#7fe9f5" stroke-width="1.2" d="
+            M 70 0
+            C 70 38, 38 78, -18 80
+            C -64 82, -96 52, -98 8
+            C -100 -36, -70 -78, -18 -80
+            C 36 -82, 70 -40, 70 0 Z
+            M -98 0
+            C -132 22, -150 6, -150 0
+            C -150 -6, -132 -22, -98 0 Z
+            M -10 78
+            C -6 110, -24 120, -34 112
+            C -44 104, -40 84, -22 82 Z
+            M -10 -78
+            C -6 -110, -24 -120, -34 -112
+            C -44 -104, -40 -84, -22 -82 Z"/>
+        </g>
+      </g>
+      <!-- zoom reticle -->
+      <g stroke="#ea580c" stroke-width="1.4" fill="none" opacity="0.8">
+        <rect x="120" y="150" width="60" height="60" rx="3">
+          <animate attributeName="x" values="120;150;120" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="width" values="60;30;60" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="y" values="150;165;150" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="height" values="60;30;60" dur="6s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      <text x="300" y="338" fill="#8a97a6" font-family="'Space Mono',monospace" font-size="11" letter-spacing="3">z &#8594; z&#178; + c</text>
+    </svg>
+    <div class="figcap">Fig. 0 — The Mandelbrot set, pulsing toward its infinite boundary</div>
+  </div>
+
+  <section>
+    <span class="kick">The Short Version</span>
+    <h2>A boy who fled, a man who refused the straight line</h2>
+    <p>Benoit B. Mandelbrot was a mathematician who spent his life paying attention to the things mathematics had thrown away — the rough, the broken, the irregular, the things that wouldn't sit still on a graph. Where classical geometry offered smooth circles and clean cones, Mandelbrot pointed at the world and asked the obvious question that nobody had taken seriously: why doesn't any of it look like that?</p>
+    <p>He coined the word <strong>fractal</strong> in 1975, from the Latin <em>fractus</em> — broken, fractured. With it he named a whole class of shapes that are jagged at every scale, that repeat their own structure as you zoom in, and that turn out to be the native language of nature: the branching of a tree, the coast of a continent, the turbulence of a fluid, the wandering of a price.</p>
+    <p>His most famous object, the <strong>Mandelbrot set</strong>, first imaged in 1980, became one of the most recognizable pictures in all of science — an infinitely intricate black shape, encrusted with spirals and miniature copies of itself, born from an equation a child could write down.</p>
+  </section>
+
+  <section>
+    <span class="kick">Origins</span>
+    <h2>Warsaw, 1924</h2>
+    <p>Mandelbrot was born on <strong>20 November 1924 in Warsaw, Poland</strong>, into a Lithuanian Jewish family with a deep scholarly streak. His mother was a physician; an uncle, Szolem Mandelbrojt, was a distinguished mathematician in Paris who would later loom large — both as inspiration and as a foil, since the young Benoit instinctively distrusted the abstract, formal mathematics his uncle championed.</p>
+    <p>The family lived through the gathering storm of the 1930s. As the threat to Jews in Poland grew, they made a decision that almost certainly saved their lives: in <strong>1936 they fled to France</strong>, settling in Paris near his uncle.</p>
+    <p>Then came the war.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="num">BORN</span>
+        <h3>Warsaw, 20 Nov 1924</h3>
+        <p>Into a Lithuanian Jewish family. Mother a physician; uncle Szolem a noted Paris mathematician.</p>
+      </div>
+      <div class="card">
+        <span class="num">FLED</span>
+        <h3>France, 1936</h3>
+        <p>The family escaped Poland ahead of catastrophe, settling near Paris.</p>
+      </div>
+      <div class="card">
+        <span class="num">DIED</span>
+        <h3>Cambridge, 14 Oct 2010</h3>
+        <p>Aged 85, having given the world an entirely new geometry.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <span class="kick">In His Own Words</span>
+    <p>"Why is geometry often described as cold and dry? One reason lies in its inability to describe the shape of a cloud, a mountain, a coastline, or a tree."</p>
+    <cite>— Benoit Mandelbrot, The Fractal Geometry of Nature (1982)</cite>
+  </div>
+
+  <section>
+    <span class="kick">Survival</span>
+    <h2>Hiding through the occupation</h2>
+    <p>When France fell and the Nazi occupation began, being a Jewish family meant living under constant threat. The Mandelbrots dispersed and hid, moving through the countryside of Vichy France. The young Benoit spent stretches of the war in the rural south, sometimes posing as an apprentice toolmaker, sometimes a student, always keeping his head down. His formal schooling was shattered and irregular.</p>
+    <p>That broken education shaped his mind in a way no curriculum could have. Cut off from systematic drilling, he taught himself to <em>see</em> mathematics — to translate algebra into shapes in his head, to reach answers through geometric intuition rather than rote manipulation. It was a survival skill that became a superpower. For the rest of his life Mandelbrot trusted the eye over the formula, the picture over the proof.</p>
+    <p>He survived. Many in his extended family and community did not.</p>
+  </section>
+
+  <section>
+    <span class="kick">Education</span>
+    <h2>Polytechnique, Caltech, and a restless start</h2>
+    <p>After the war, his geometric gift carried him through the brutal entrance examinations of France's elite schools. He entered the <strong>École Polytechnique</strong>, studying under figures including Gaston Julia and Paul Lévy — names that would echo later, since Julia's work on iterated complex maps was the seed from which the Mandelbrot set eventually grew.</p>
+    <p>He crossed the Atlantic to the <strong>California Institute of Technology (Caltech)</strong>, earning a master's degree in aeronautics, and returned to Paris for a doctorate. A spell at the <strong>Massachusetts Institute of Technology (MIT)</strong> and a year at the Institute for Advanced Study in Princeton followed. He was brilliant, wide-ranging, and — by the standards of the academy — impossible to categorize. He kept wandering between disciplines: mathematics, physics, economics, linguistics, information theory. To a university that wanted a specialist, he looked unfocused. He was, in fact, looking for a single idea big enough to hold all of it.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>The eye first</h3>
+        <p>A fragmented wartime education left him reasoning in pictures. He could "see" the solution to an equation as a shape.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Anti-specialist</h3>
+        <p>He roamed across fields the academy kept separate — and was distrusted for it. The roaming was the point.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>The right tool</h3>
+        <p>He needed a machine that could draw what he imagined. In 1958 he found the one place that had them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="kick">The Home That Fit</span>
+    <h2>IBM Research, 1958–1987</h2>
+    <p>In <strong>1958 Mandelbrot joined IBM's Thomas J. Watson Research Center</strong> in Yorktown Heights, New York. He would stay for nearly three decades, eventually as an IBM Fellow. It was the making of him.</p>
+    <p>A university would have demanded he pick a lane. IBM did the opposite. The corporate research lab gave him two things the academy couldn't: the <strong>freedom to pursue strange, unfashionable ideas</strong> with no obligation to fit a department, and <strong>access to the most powerful computers in the world</strong> at a time when almost no one else could touch them.</p>
+    <p>That combination was everything. Mandelbrot's fractals are not just abstract definitions; they are <em>images</em> of staggering complexity that no human hand could draw. They only become visible when a machine iterates a simple rule millions of times and paints the result. The computer didn't just help Mandelbrot — it was the instrument through which his whole vision became real, the way the telescope was the instrument of astronomy.</p>
+    <p>A practical IBM problem lit the fuse: engineers were puzzled by bursts of noise on telephone lines used to transmit data. Mandelbrot found the noise had a self-similar structure — clusters within clusters within clusters, the same pattern at every timescale. The same mathematics, he realized, described the flooding of the Nile, the fluctuation of cotton prices, and the meandering of a coastline.</p>
+  </section>
+
+  <section>
+    <span class="kick">The Word and the Set</span>
+    <h2>Naming the broken world</h2>
+    <p>In <strong>1975</strong> Mandelbrot needed a word for these shapes and coined <strong>"fractal"</strong> from the Latin <em>fractus</em>, meaning broken or fractured. The word captured both their roughness and their fractional, non-whole-number dimension. His 1977 book <em>Fractals</em> and especially his 1982 masterwork <em>The Fractal Geometry of Nature</em> brought the idea to the world.</p>
+    <p>Then, in <strong>1980</strong>, using IBM's computers, he produced the first crude images of the set that now bears his name. Each pass on better hardware revealed more detail, and what emerged was breathtaking: a shape of infinite complexity, self-similar yet never exactly repeating, generated by relentlessly iterating the simplest of formulas — <em>z &#8594; z&#178; + c</em>. It became the emblem of an entire revolution in how we picture nature.</p>
+
+    <ul class="tl">
+      <li><span class="yr">1924</span><span class="ev">Born in Warsaw, Poland<span>Into a Lithuanian Jewish family of physicians and scholars.</span></span></li>
+      <li><span class="yr">1936</span><span class="ev">Family flees to France<span>Escaping the rising danger to Jews; they settle near Paris.</span></span></li>
+      <li><span class="yr">1939–45</span><span class="ev">Hidden during WWII<span>Surviving the occupation in rural Vichy France; schooling shattered.</span></span></li>
+      <li><span class="yr">1944+</span><span class="ev">École Polytechnique<span>Trains under Julia and Lévy; later Caltech (aeronautics) and a PhD in Paris.</span></span></li>
+      <li><span class="yr">1958</span><span class="ev">Joins IBM Research<span>Freedom plus computers — the conditions fractals needed to exist.</span></span></li>
+      <li><span class="yr">1975</span><span class="ev">Coins "fractal"<span>From Latin <em>fractus</em>, broken. Names a hidden geometry.</span></span></li>
+      <li><span class="yr">1980</span><span class="ev">The Mandelbrot set imaged<span>An infinitely intricate shape from a one-line equation.</span></span></li>
+      <li><span class="yr">1982</span><span class="ev">The Fractal Geometry of Nature<span>The manifesto that reaches the wider world.</span></span></li>
+      <li><span class="yr">1987</span><span class="ev">Leaves IBM for Yale<span>Becomes Sterling Professor of Mathematical Sciences.</span></span></li>
+      <li><span class="yr">2010</span><span class="ev">Dies in Cambridge, Massachusetts<span>Aged 85. Leaves a new geometry behind him.</span></span></li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="kick">After IBM</span>
+    <h2>Yale, honors, and a late legend</h2>
+    <p>In 1987 Mandelbrot left IBM and finally joined the academy on his own terms, becoming <strong>Sterling Professor of Mathematical Sciences at Yale</strong> — where, famously, he became the oldest professor in Yale's history to receive tenure. Honors accumulated: the Wolf Prize in Physics, the Japan Prize, the Légion d'honneur, and a long parade of honorary degrees. Yet he always remained something of an outsider to pure mathematics, prized more widely by physicists, engineers, economists, and artists than by the theorem-provers he had grown up among.</p>
+    <p>He died on <strong>14 October 2010 in Cambridge, Massachusetts</strong>, at the age of 85. His memoir, fittingly titled <em>The Fractalist</em>, was published posthumously.</p>
+  </section>
+
+  <section>
+    <span class="kick">The Cast of Mind</span>
+    <h2>How he actually thought</h2>
+    <p>To understand Mandelbrot the man, it helps to understand the unusual machinery of his mind. He was not a builder of proofs in the conventional sense; he was a <em>seer</em> of patterns, a connector of fields that no one else thought belonged together. His genius was less about depth in one place than about breadth — the ability to recognize the same shape recurring across physics, finance, biology, and art.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Visual, not formal</h3>
+        <p>He reasoned in pictures and distrusted abstraction for its own sake. A diagram was, to him, not a crutch but the primary evidence.</p>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>The professional maverick</h3>
+        <p>He cultivated being an outsider. Crossing disciplines freely, he found the connections that specialists, locked in their silos, could not.</p>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>Hungry for the real</h3>
+        <p>He cared less about internal mathematical elegance than about whether an idea described the actual, messy, rough world we live in.</p>
+      </div>
+      <div class="card">
+        <span class="num">04</span>
+        <h3>Tirelessly self-promoting</h3>
+        <p>He fought hard for credit and recognition — a trait that irritated rivals but helped carry fractals into the public imagination.</p>
+      </div>
+    </div>
+    <p>That last trait drew criticism. Some peers felt Mandelbrot claimed too much, that he gathered scattered earlier results — from Cantor, Koch, Sierpinski, Julia, Fatou, Hausdorff and Richardson — under his own banner. There is truth to the charge: many of the individual pieces predated him. But the synthesis was genuinely his. He saw that these mathematical "monsters," long dismissed as pathological curiosities, were in fact <em>the rule rather than the exception</em> — the true geometry of nature. Assembling that vision, naming it, and fighting for it took exactly the combination of insight and stubbornness he possessed.</p>
+  </section>
+
+  <div class="band">
+    <span class="kick">The Mission, In One Line</span>
+    <p>"Clouds are not spheres, mountains are not cones, coastlines are not circles, and bark is not smooth, nor does lightning travel in a straight line."</p>
+    <cite>— Benoit Mandelbrot</cite>
+  </div>
+
+  <section>
+    <span class="kick">Why He Matters</span>
+    <h2>The geometry of the real</h2>
+    <p>For more than two thousand years, geometry had been the study of idealized smoothness — the inheritance of Euclid. It was magnificent and it was, for describing the actual world, almost useless. Mandelbrot's revolution was to insist that <em>roughness itself</em> could be measured, described, and put to work. He gave science a vocabulary for irregularity.</p>
+    <p>The reach of that idea is the subject of the volumes that follow. Volume 1 unpacks the mathematics of fractals themselves. Volume 2 returns to the human story — the Warsaw, the war, the Paris, the IBM lab — and the machine that made it visible. Volume 3 follows fractal geometry out into the world it now quietly runs: the movies, your phone, the markets, the body.</p>
+    <p>Mandelbrot's true gift was permission. He gave the rest of us permission to take the messy, broken, irregular world seriously — and to find, inside the mess, a deep and beautiful order.</p>
+    <p>The boy who fled Warsaw, who hid through a war, who never quite fit any department or fashion, spent his life refusing the straight line. In the end the straight line was the thing the world had least of, and the roughness he chronicled was the thing it had most. He did not just describe a new geometry. He taught us to see the one that had been in front of us the whole time.</p>
+  </section>
+
+  <div class="pager">
+    <a href="3-legacy.html">&#8592; Vol. 3 · The Legacy</a>
+    <a href="1-fractals.html">Vol. 1 · The Fractals &#8594;</a>
+  </div>
+
+  <footer>
+    <div class="colophon">
+      <strong>ROOT0-ATTRIBUTION-v1.0</strong><br>
+      Series: Benoit Mandelbrot (1924–2010) — Volume 0 of 4: Who He Was<br>
+      Author / Steward: <strong>David Lee Wise</strong> · ROOT0 · TriPod LLC<br>
+      License: <strong>CC-BY-ND-4.0</strong> — attribution required, no derivatives.<br>
+      Typeset in Cinzel, Newsreader &amp; Space Mono. Self-contained HTML.<br>
+      &#169; 2026 ROOT0 / TriPod LLC. All marks of attribution must remain intact.
+    </div>
+  </footer>
+</div>
+</body>
+</html>

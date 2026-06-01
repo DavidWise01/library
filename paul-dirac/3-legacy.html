@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Dirac — Vol. 3: The Legacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#04060c; --blue:#1d4ed8; --red:#dc2626; --text:#cdd8ee; --muted:#5a6a8a; --border:#0c1426; --card-bg:#070b16; }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--text); font-family:'Newsreader',Georgia,serif; font-size:1.1rem; line-height:1.75; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(4,6,12,0.96); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0.75rem 2rem; display:flex; align-items:center; flex-wrap:wrap; }
+  .nav-brand { font-family:'Cinzel',serif; font-weight:700; font-size:0.9rem; color:var(--blue); letter-spacing:0.08em; margin-right:2rem; text-decoration:none; }
+  .nav-links { display:flex; gap:0.25rem; flex-wrap:wrap; }
+  .nav-links a { font-family:'Space Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); text-decoration:none; padding:0.35rem 0.85rem; border:1px solid transparent; transition:all 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color:var(--blue); border-color:var(--blue); }
+  .hero { position:relative; width:100%; min-height:460px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden; background:radial-gradient(ellipse at 50% 60%,#070e1c 0%,var(--paper) 70%); padding:4rem 2rem 3rem; }
+  .hero-svg { position:absolute; inset:0; width:100%; height:100%; opacity:0.6; }
+  .hero-content { position:relative; z-index:2; text-align:center; max-width:780px; }
+  .kick { font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--blue); margin-bottom:1.2rem; display:block; }
+  .hero-title { font-family:'Cinzel',serif; font-weight:800; font-size:clamp(2.8rem,7vw,5rem); line-height:1.05; color:#fff; text-shadow:0 0 60px rgba(29,78,216,0.5); margin-bottom:0.5rem; }
+  .hero-subtitle { font-family:'Cinzel',serif; font-weight:500; font-size:clamp(1rem,2.5vw,1.4rem); color:var(--blue); letter-spacing:0.06em; margin-bottom:1.5rem; }
+  .hero-lead { font-family:'Newsreader',serif; font-style:italic; font-size:1.15rem; color:var(--text); max-width:620px; margin:0 auto; opacity:0.85; }
+  .band { background:var(--blue); color:#eaf0ff; padding:0.6rem 2rem; text-align:center; font-family:'Space Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em; font-weight:700; }
+  main { max-width:1080px; margin:0 auto; padding:4rem 2rem; }
+  section { margin-bottom:5rem; }
+  .section-label { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--blue); margin-bottom:0.75rem; display:block; }
+  h2 { font-family:'Cinzel',serif; font-weight:700; font-size:clamp(1.6rem,3.5vw,2.4rem); color:#fff; margin-bottom:1.5rem; line-height:1.2; }
+  h3 { font-family:'Cinzel',serif; font-weight:600; font-size:1.2rem; color:var(--blue); margin-bottom:0.75rem; margin-top:2rem; }
+  p { margin-bottom:1.2rem; color:var(--text); }
+  strong { color:#fff; font-weight:600; }
+  em { color:var(--blue); font-style:italic; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:2rem; }
+  .card { background:var(--card-bg); border:1px solid var(--blue); padding:1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .card:hover { transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--blue); }
+  .card-tag { font-family:'Space Mono',monospace; font-size:0.65rem; text-transform:uppercase; letter-spacing:0.15em; color:var(--red); margin-bottom:0.6rem; display:block; }
+  .card h4 { font-family:'Cinzel',serif; font-weight:600; font-size:1.05rem; color:#fff; margin-bottom:0.6rem; }
+  .card p { font-size:0.9rem; opacity:0.82; margin:0; }
+  .equation-box { background:var(--card-bg); border:1px solid var(--blue); padding:2.5rem 2rem; margin:2.5rem 0; text-align:center; }
+  .equation-box .eq { font-family:'Space Mono',monospace; font-size:clamp(1.3rem,4vw,2rem); color:#fff; letter-spacing:0.04em; }
+  .equation-box .eq-caption { font-family:'Space Mono',monospace; font-size:0.66rem; text-transform:uppercase; letter-spacing:0.16em; color:var(--blue); margin-top:1.2rem; }
+  .pull-quote { border-left:4px solid var(--red); padding:1.5rem 2rem; margin:3rem 0; background:var(--card-bg); }
+  .pull-quote blockquote { font-family:'Newsreader',serif; font-style:italic; font-size:1.4rem; line-height:1.5; color:#fff; margin-bottom:0.75rem; }
+  .pull-quote cite { font-family:'Space Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+  hr.divider { border:none; border-top:1px solid var(--border); margin:4rem 0; }
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; max-width:1080px; margin:0 auto; }
+  .colophon { font-family:'Space Mono',monospace; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); line-height:2; }
+  .colophon a { color:var(--blue); text-decoration:none; }
+  .colophon a:hover { color:var(--red); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="0-who.html">Paul Dirac</a>
+  <div class="nav-links">
+    <a href="0-who.html">Vol. 0 — The Person</a>
+    <a href="1-equation.html">Vol. 1 — The Equation</a>
+    <a href="2-world.html">Vol. 2 — His World</a>
+    <a href="3-legacy.html" class="active">Vol. 3 — The Legacy</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <svg class="hero-svg" viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="petGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#1d4ed8" stop-opacity="0.22"/>
+        <stop offset="100%" stop-color="#04060c" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="900" height="460" fill="url(#petGlow)"/>
+    <!-- PET scanner detector ring -->
+    <g transform="translate(450,230)">
+      <circle cx="0" cy="0" r="170" fill="none" stroke="#1d4ed8" stroke-width="2" opacity="0.4"/>
+      <!-- detector blocks around the ring -->
+      <g fill="#1d4ed8" opacity="0.7">
+        <rect x="-12" y="-185" width="24" height="22" rx="3"/>
+        <rect x="73" y="-168" width="24" height="22" rx="3" transform="rotate(30)"/>
+        <rect x="135" y="-110" width="24" height="22" rx="3" transform="rotate(60)"/>
+        <rect x="163" y="-12" width="22" height="24" rx="3"/>
+        <rect x="135" y="88" width="24" height="22" rx="3" transform="rotate(120)"/>
+        <rect x="73" y="146" width="24" height="22" rx="3" transform="rotate(150)"/>
+        <rect x="-12" y="163" width="24" height="22" rx="3"/>
+        <rect x="-97" y="146" width="24" height="22" rx="3" transform="rotate(210)"/>
+        <rect x="-159" y="88" width="24" height="22" rx="3" transform="rotate(240)"/>
+        <rect x="-185" y="-12" width="22" height="24" rx="3"/>
+        <rect x="-159" y="-110" width="24" height="22" rx="3" transform="rotate(300)"/>
+        <rect x="-97" y="-168" width="24" height="22" rx="3" transform="rotate(330)"/>
+      </g>
+      <!-- annihilation event at center: two back-to-back 511 keV gamma rays -->
+      <circle cx="0" cy="0" r="4" fill="#dc2626">
+        <animate attributeName="r" values="2;6;2" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <!-- gamma ray pair 1 -->
+      <line x1="0" y1="0" x2="0" y2="0" stroke="#dc2626" stroke-width="2.5">
+        <animate attributeName="x2" values="0;120" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="y2" values="0;-118" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0" dur="1.8s" repeatCount="indefinite"/>
+      </line>
+      <line x1="0" y1="0" x2="0" y2="0" stroke="#dc2626" stroke-width="2.5">
+        <animate attributeName="x2" values="0;-120" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="y2" values="0;118" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0" dur="1.8s" repeatCount="indefinite"/>
+      </line>
+      <!-- gamma ray pair 2, offset timing -->
+      <line x1="0" y1="0" x2="0" y2="0" stroke="#5e9bff" stroke-width="2">
+        <animate attributeName="x2" values="0;130" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+        <animate attributeName="y2" values="0;60" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+      </line>
+      <line x1="0" y1="0" x2="0" y2="0" stroke="#5e9bff" stroke-width="2">
+        <animate attributeName="x2" values="0;-130" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+        <animate attributeName="y2" values="0;-60" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0" dur="1.8s" begin="0.9s" repeatCount="indefinite"/>
+      </line>
+    </g>
+    <text x="380" y="60" font-family="monospace" font-size="12" fill="#dc2626" opacity="0.85">e⁺ + e⁻ → 2γ  (511 keV)</text>
+  </svg>
+  <div class="hero-content">
+    <span class="kick">Vol. 3 — The Legacy · Antimatter in Every Hospital</span>
+    <h1 class="hero-title">The Legacy</h1>
+    <p class="hero-subtitle">From Pure Mathematics to the PET Scanner</p>
+    <p class="hero-lead">The antimatter Dirac deduced from an equation now saves lives in every hospital, and his formulation underlies every particle in the Standard Model.</p>
+  </div>
+</div>
+
+<div class="band">Antimatter Is Real · PET Scanners · Quantum Field Theory · The Standard Model · Dirac Notation · Beautiful Mathematics</div>
+
+<main>
+
+  <section id="antimatter-real">
+    <span class="section-label">From Speculation to Fact</span>
+    <h2>Antimatter Is Real — and It Works for Us</h2>
+    <p>When Dirac proposed the anti-electron in 1931, antimatter was a daring inference from the structure of an equation — a kind of matter no one had ever observed, deduced from a stubborn refusal to throw away awkward solutions. Within a year it was found in cosmic rays. Today antimatter is not a curiosity but a tool, manufactured routinely, characterized to extraordinary precision, and put to work in laboratories and hospitals every day. Dirac's mathematical speculation has become a fact of engineering.</p>
+    <p>Antiprotons are produced and stored at facilities like CERN, where antihydrogen — an antiproton orbited by a positron — has been assembled and trapped, and its spectrum measured to test whether matter and antimatter obey the same laws (so far, they appear to, to remarkable precision). Positrons are generated by the decay of certain radioactive isotopes and used in materials science to probe defects in solids. But the most consequential, most human application of antimatter is medical, and it is performed millions of times a year.</p>
+  </section>
+
+  <section id="pet">
+    <span class="section-label">The Positron in the Clinic</span>
+    <h2>The PET Scanner: Dirac's Equation in Every Hospital</h2>
+    <p>Positron Emission Tomography — the <strong>PET scan</strong> — is one of the most important diagnostic technologies in modern medicine, and it runs entirely on Dirac's antimatter. A patient is given a small dose of a radioactive tracer, most commonly a glucose analogue (FDG) labelled with fluorine-18, an isotope that decays by emitting <strong>positrons</strong> — the very anti-electrons Dirac predicted. The tracer concentrates in metabolically active tissue: tumours, which consume glucose voraciously, light up; so do the brain and the heart.</p>
+    <p>Each emitted positron travels a tiny distance, then meets an ordinary electron in the body's tissue. The two <em>annihilate</em> — matter and antimatter destroying each other exactly as Dirac's theory describes — converting their combined mass into energy in the form of two gamma-ray photons of 511 keV each, flying off in precisely opposite directions. A ring of detectors surrounding the patient registers these pairs in coincidence; from the lines connecting simultaneous detections, a computer reconstructs a three-dimensional image of where the annihilations occurred, and thus where the tracer collected. The animation above shows exactly this: annihilation events at the centre throwing back-to-back gamma rays out to a detector ring.</p>
+
+    <div class="equation-box">
+      <div class="eq">e⁺ + e⁻ → γ + γ</div>
+      <div class="eq-caption">Electron-positron annihilation — the physical event a PET scan detects</div>
+    </div>
+
+    <p>It is worth pausing on what this means. The clean, opposite-direction emission of two equal-energy photons — the signal that makes PET imaging possible — is a direct consequence of the conservation laws governing matter-antimatter annihilation, the process Dirac's equation first made conceivable. Every PET scan that detects a cancer early, that maps the spread of disease, that distinguishes living from dead heart muscle, or that images the metabolic signature of Alzheimer's, is a working demonstration of the reality of antimatter. A line of mathematics written in 1928 is now, quite literally, a fixture of hospital basements around the world.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">The Tracer</span>
+        <h4>Positron-Emitting Isotopes</h4>
+        <p>Fluorine-18 and similar isotopes decay by emitting positrons — Dirac's anti-electrons — concentrated in active tissue.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Event</span>
+        <h4>Annihilation</h4>
+        <p>Each positron meets an electron; both vanish into two 511 keV gamma rays flying in opposite directions.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Detector</span>
+        <h4>Coincidence Ring</h4>
+        <p>A ring of detectors registers the simultaneous photon pairs and traces the line between them.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">The Image</span>
+        <h4>Three-Dimensional Map</h4>
+        <p>Reconstruction reveals tumours, brain activity, and cardiac viability with metabolic precision.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="qft">
+    <span class="section-label">The Framework of Modern Physics</span>
+    <h2>Quantum Field Theory Is Built on Dirac's Formulation</h2>
+    <p>Dirac's influence on the deepest theories of physics goes far beyond the single equation that bears his name. He was, more than any other individual, the founder of <strong>quantum field theory</strong> — the framework that unites quantum mechanics with special relativity and treats particles as excitations of underlying fields filling all of space. In 1927, before even the antimatter prediction, Dirac wrote the first paper applying quantum principles to the electromagnetic field, quantizing light itself and giving the first proper quantum-mechanical account of how atoms emit and absorb photons. This was the birth of quantum electrodynamics, the most precisely tested theory in all of science.</p>
+    <p>The conceptual move at the heart of quantum field theory — that the fundamental objects are fields, and that particles and antiparticles are their quanta — flows directly from Dirac's work. His equation does not merely describe a single electron; correctly interpreted, it is the equation of the <em>electron field</em>, whose excitations are electrons and positrons. The reconciliation of his negative-energy puzzle was ultimately achieved not by the literal "sea" picture but by reinterpreting the theory as a quantum field theory, in which antiparticles appear naturally and on an equal footing with particles. Every modern account of fundamental interactions is a quantum field theory, and every one of them stands on foundations Dirac laid.</p>
+
+    <div class="pull-quote">
+      <blockquote>"Quantum field theory is the language in which the laws of nature are now written — and Dirac wrote its first sentences."</blockquote>
+      <cite>— on Dirac's role in founding quantum field theory</cite>
+    </div>
+  </section>
+
+  <section id="standard-model">
+    <span class="section-label">Every Particle of Matter</span>
+    <h2>The Standard Model Speaks Dirac's Language</h2>
+    <p>The <strong>Standard Model of particle physics</strong> is the crowning achievement of twentieth-century physics — the theory that describes all known fundamental particles and three of the four fundamental forces. Within it, every particle of matter — the electrons, the quarks that make up protons and neutrons, the neutrinos, and their heavier cousins — is a <strong>fermion</strong>, a spin-one-half particle. And every such particle is described by a <em>Dirac-type equation</em>. The matter content of the universe, as our best theory understands it, obeys equations of the form Dirac first wrote down for the electron in 1928.</p>
+    <p>This is a remarkable universality. When physicists at the Large Hadron Collider study quarks, or when neutrino observatories deep underground watch for the faint signatures of those ghostly particles, the mathematical objects they manipulate are Dirac spinors, and the equations governing them are generalizations of the Dirac equation incorporating the additional forces. The structure Dirac discovered — that a relativistic spin-one-half particle requires a four-component spinor obeying a first-order equation with anticommuting matrices — turned out to be the structure of <em>all</em> elementary matter, not just the electron.</p>
+    <p>And the antimatter that came with it is just as universal. Every fermion in the Standard Model has its antiparticle, exactly as Dirac's reasoning implied: the positron for the electron, antiquarks for quarks, antineutrinos for neutrinos. The puzzle of why the observable universe is made overwhelmingly of matter rather than antimatter — when the equations treat them so symmetrically — is one of the great open questions of cosmology, and it is a question that exists <em>because</em> of Dirac. He gave physics the symmetry whose breaking we now struggle to explain.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag">Matter</span>
+        <h4>All Fermions Are Dirac Particles</h4>
+        <p>Electrons, quarks, and neutrinos are spin-½ fermions described by generalizations of the Dirac equation.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Antimatter</span>
+        <h4>A Partner for Everything</h4>
+        <p>Every fundamental matter particle has an antiparticle — the universal rule that began with the positron.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Forces</span>
+        <h4>Quantum Field Theory</h4>
+        <p>The electromagnetic, weak, and strong forces are all described by quantum field theories Dirac helped found.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Mystery</span>
+        <h4>The Matter Asymmetry</h4>
+        <p>Why is the universe made of matter, not antimatter? A question that exists because Dirac made them equal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="notation">
+    <span class="section-label">The Universal Language</span>
+    <h2>Dirac Notation Is Everywhere</h2>
+    <p>Beyond the grand theories, Dirac's mark is on the daily practice of physics through his notation. The <strong>bra-ket notation</strong> he introduced — states as kets <em>|ψ⟩</em>, their duals as bras <em>⟨φ|</em>, inner products as brackets <em>⟨φ|ψ⟩</em> — is the universal language of quantum mechanics. It appears in every textbook, every lecture, and every research paper from atomic physics to quantum computing. When a quantum-computing engineer writes a qubit state as a superposition of <em>|0⟩</em> and <em>|1⟩</em>, they are using Dirac's notation, almost certainly without thinking of him.</p>
+    <p>Likewise the <strong>Dirac delta function</strong> is now standard equipment across physics, engineering, and the mathematics of signals and systems. These notational and conceptual tools have a reach that, in sheer frequency of use, may exceed even the equation: not every physicist works with relativistic electrons, but every physicist writes brackets. Dirac's gift for finding the cleanest possible expression of an idea — the same instinct that made him so sparing with words — left the discipline a vocabulary it cannot do without.</p>
+  </section>
+
+  <section id="beauty-legacy">
+    <span class="section-label">The Enduring Conviction</span>
+    <h2>"God Used Beautiful Mathematics in Creating the World"</h2>
+    <p>Dirac's final and most philosophical legacy is the conviction that guided all his work: that the deep laws of nature are written in beautiful mathematics, and that beauty is therefore a reliable guide to truth. He expressed it in many ways across his life, none more memorable than the line inscribed in the history of physics: <strong>"God used beautiful mathematics in creating the world."</strong> For Dirac — not a conventionally religious man — this was less a theological statement than the deepest summary of his experience of physics: that the universe's fundamental description is not merely accurate but elegant, and that pursuing elegance had repeatedly led him to truth.</p>
+
+    <div class="pull-quote">
+      <blockquote>"God used beautiful mathematics in creating the world."</blockquote>
+      <cite>— Paul Dirac</cite>
+    </div>
+
+    <p>The proof of the conviction was his own career. He had pursued an equation for its mathematical beauty and consistency, and it had handed him spin and antimatter — features of reality he had never set out to find. He had trusted a delta function no rigorous mathematics yet justified, and the mathematicians caught up. He had refused to discard ugly negative-energy solutions, and they opened a door to half the matter content of the universe. Again and again, the demand for beauty had outrun the demand for mere agreement with present data and had proven, in the end, more reliable.</p>
+    <p>This is the legacy that perhaps matters most to working physicists today. The Dirac equation is taught in every graduate course; the positron lights up every PET scan; quantum field theory and the Standard Model rest on his foundations; his notation fills every blackboard. But the idea that mathematical beauty is a compass pointing toward physical truth — that the universe is, at bottom, elegantly made, and that a trained aesthetic sense is a genuine instrument of discovery — is the deepest and most personal thing Paul Dirac left behind. From a silent man came an equation that spoke a universe into view, and a creed that still guides the search for the laws beneath the world.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="colophon">
+    ROOT0-ATTRIBUTION-v1.0 | David Lee Wise / ROOT0 / TriPod LLC | CC-BY-ND-4.0<br>
+    Paul Dirac Series — Vol. 3: The Legacy<br>
+    <a href="../index.html">The Library of Exact Minds</a> · All volumes research-grade, human-authored
+  </div>
+</footer>
+
+</body>
+</html>

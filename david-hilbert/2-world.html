@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David Hilbert — Vol. 2: The World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#06080a;--slate:#475569;--gold:#ca8a04;--ink:#e8eaed;--muted:#9aa3ad;--card:#0c1014;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:19px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cinzel',serif;line-height:1.18;font-weight:700;}
+  a{color:var(--gold);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .kick{
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.72rem;
+    color:var(--gold);
+  }
+  .mono{font-family:'Space Mono',monospace;}
+
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,8,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--slate);
+  }
+  nav .wrap{
+    max-width:1100px;margin:0 auto;
+    display:flex;align-items:center;gap:1.5rem;
+    padding:0.85rem 1.5rem;flex-wrap:wrap;
+  }
+  nav .brand{font-family:'Cinzel',serif;font-weight:800;letter-spacing:0.05em;font-size:0.95rem;}
+  nav .links{display:flex;gap:1.1rem;flex-wrap:wrap;margin-left:auto;}
+  nav .links a{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;
+    color:var(--muted);padding:0.3rem 0;border-bottom:2px solid transparent;
+  }
+  nav .links a:hover{color:var(--ink);text-decoration:none;}
+  nav .links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+  .container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
+  header.hero{padding:5.5rem 0 3.5rem;border-bottom:1px solid var(--slate);}
+  header.hero h1{font-size:clamp(2.6rem,7vw,5rem);font-weight:800;}
+  header.hero .sub{font-size:1.35rem;color:var(--muted);font-style:italic;margin-top:1rem;max-width:62ch;}
+  .volno{font-size:1rem;color:var(--gold);margin-bottom:1.2rem;}
+
+  section{padding:3.2rem 0;border-bottom:1px solid rgba(71,85,105,0.4);}
+  section h2{font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:1.4rem;}
+  section h3{font-size:1.25rem;margin:1.8rem 0 0.7rem;color:var(--gold);}
+  p{margin-bottom:1.1rem;max-width:70ch;}
+  p.lead{font-size:1.2rem;}
+  em,i{color:#f0ddb0;}
+  blockquote{
+    border-left:3px solid var(--gold);
+    padding:0.6rem 0 0.6rem 1.4rem;
+    margin:1.6rem 0;font-style:italic;font-size:1.3rem;color:#f0ddb0;
+    max-width:64ch;
+  }
+  blockquote cite{display:block;font-style:normal;font-size:0.8rem;color:var(--muted);margin-top:0.6rem;}
+
+  .grid{display:grid;gap:1.2rem;margin:1.6rem 0;}
+  .grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .card{
+    background:var(--card);
+    border:1px solid var(--slate);
+    padding:1.4rem;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .card:hover{
+    transform:translate(-3px,-3px);
+    box-shadow:6px 6px 0 var(--gold);
+  }
+  .card h3{margin-top:0;font-size:1.05rem;color:var(--gold);}
+  .card p{font-size:0.95rem;color:var(--muted);margin-bottom:0;}
+  .card .num{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--slate);}
+
+  .timeline{
+    list-style:none;border-left:2px solid var(--slate);
+    margin:1.5rem 0;padding-left:1.6rem;
+  }
+  .timeline li{margin-bottom:1.4rem;position:relative;}
+  .timeline li::before{
+    content:"";position:absolute;
+    left:-1.92rem;top:0.5rem;
+    width:10px;height:10px;
+    background:var(--gold);border-radius:50%;
+  }
+  .timeline .yr{font-family:'Space Mono',monospace;color:var(--gold);font-size:0.85rem;letter-spacing:0.1em;}
+
+  .band{
+    background:var(--slate);
+    color:#f4f6f8;
+    padding:3rem 0;
+  }
+  .band h2{color:#fff;}
+  .band p{color:#e2e8f0;}
+  .band .kick{color:#fde68a;}
+
+  figure.svgfig{margin:2.4rem 0;text-align:center;}
+  figure.svgfig svg{
+    max-width:100%;height:auto;
+    border:1px solid var(--slate);
+    background:#080b0e;padding:1rem;
+  }
+  figcaption{
+    font-family:'Space Mono',monospace;
+    font-size:0.7rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:0.16em;margin-top:0.8rem;
+  }
+
+  footer.colophon{
+    background:#04060a;border-top:1px solid var(--slate);
+    padding:3rem 0;font-family:'Space Mono',monospace;font-size:0.72rem;
+    color:var(--muted);letter-spacing:0.05em;line-height:1.9;
+  }
+  footer.colophon .tag{color:var(--gold);}
+  footer.colophon a{color:var(--muted);}
+
+  /* SVG: Göttingen institute silhouette */
+  .lit-window{fill:#1a1408;animation:flick 4.5s infinite;}
+  @keyframes flick{0%,100%{fill:#1a1408;}45%,55%{fill:var(--gold);}}
+  .roofline{fill:none;stroke:var(--slate);stroke-width:2;}
+  .wall{fill:#0c1014;stroke:var(--slate);stroke-width:1.5;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">HILBERT</span>
+    <div class="links">
+      <a href="0-who.html">00 · Who</a>
+      <a href="1-problems.html">01 · Problems</a>
+      <a href="2-world.html" class="active">02 · World</a>
+      <a href="3-legacy.html">03 · Legacy</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="volno kick">Volume 02 — The World</div>
+    <h1>Göttingen</h1>
+    <p class="sub">For four decades, a small Saxon town was the gravitational center of mathematics. Then, in a single year, the regime tore it apart.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <span class="kick">Königsberg → Göttingen</span>
+    <h2>An inheritance of giants</h2>
+    <p class="lead">Hilbert's two cities tell the story of nineteenth-century German mathematics. He was formed in Königsberg, the bridge city of Euler's puzzle. He came into his powers in Göttingen, the town of Gauss.</p>
+    <p>When Hilbert arrived in 1895, Göttingen already carried a staggering lineage. <em>Carl Friedrich Gauss</em>, the "prince of mathematicians," had worked there. <em>Bernhard Riemann</em>, whose geometry would later underpin general relativity, had been his student there. <em>Peter Gustav Lejeune Dirichlet</em> had held the chair between them. To take a position at Göttingen was to stand in that line.</p>
+    <p>Hilbert and Felix Klein were determined to make the inheritance pay. They recruited aggressively, built institutes, attracted funding, and made Göttingen a destination for the best minds in the world. Students arrived from across Europe, Britain, America, and Japan. "Göttingen" became shorthand for the research frontier itself.</p>
+
+    <figure class="svgfig">
+      <svg viewBox="0 0 600 240" role="img" aria-label="Silhouette of the Göttingen mathematics institute at night, windows lighting up">
+        <g id="institute"></g>
+      </svg>
+      <figcaption>The Mathematics Institute, Göttingen — windows burning late</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">Paris, 8 August 1900</span>
+    <h2>The lecture that became a century</h2>
+    <p>At the second International Congress of Mathematicians, in the heat of a Paris August, Hilbert stood before the assembled mathematicians of the world and gave a long, discursive lecture on the nature of mathematical problems. He spoke of the importance of good problems, of the boundary between the known and the unknown, and of his faith that no problem need remain forever unsolved.</p>
+    <p>Then he read his list. What might have been a forgettable survey became, almost immediately, the agenda for the next hundred years. The 23 problems organized careers, founded fields, and gave the twentieth century its sense of direction. No other lecture in the history of mathematics has cast so long a shadow.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">A fight worth having</span>
+    <h2>Emmy Noether at Göttingen</h2>
+    <p>One of Hilbert's finest acts was a fight he nearly lost. <em>Emmy Noether</em> — arguably the greatest algebraist of the twentieth century — came to Göttingen in 1915. Hilbert and Klein wanted her to teach as a <em>Privatdozent</em>, but the university's philosophy faculty objected: women could not be lecturers.</p>
+    <p>Hilbert was contemptuous of the objection. At the faculty meeting he is reported to have said: <em>"I do not see that the sex of the candidate is an argument against her admission as a Privatdozent. After all, we are a university, not a bathhouse."</em> For years, while the bureaucracy stalled, lectures were announced under Hilbert's name and delivered by Noether. She finally gained her <em>Habilitation</em> in 1919.</p>
+    <p>At Göttingen, Noether transformed abstract algebra and proved <em>Noether's theorem</em>, linking symmetries to conservation laws — one of the deepest results in mathematical physics. She was among the first forced out in 1933.</p>
+    <blockquote>
+      "We are a university, not a bathhouse."
+      <cite>— Hilbert, on the objection to hiring Emmy Noether</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">1933</span>
+    <h2>One year of destruction</h2>
+    <p>On 7 April 1933 the Nazi government enacted the Law for the Restoration of the Professional Civil Service. It removed Jewish and politically undesirable people from public employment — including the universities. Göttingen, with its many Jewish and liberal mathematicians, was devastated.</p>
+    <p>Within a single year, the greatest concentration of mathematical talent on earth was scattered. Emmy Noether, Richard Courant, Edmund Landau, Hermann Weyl, Paul Bernays, and many others were dismissed or driven into exile. Most went to the United States and Britain, seeding a generation of foreign mathematics with the riches stripped from Göttingen.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">EXILED</div><h3>Emmy Noether</h3><p>To Bryn Mawr, USA. Died 1935. The founder of modern abstract algebra.</p></div>
+      <div class="card"><div class="num">EXILED</div><h3>Richard Courant</h3><p>To NYU, where he built the Courant Institute. Hilbert's collaborator on the famed "Courant–Hilbert."</p></div>
+      <div class="card"><div class="num">EXILED</div><h3>Hermann Weyl</h3><p>To the Institute for Advanced Study, Princeton. Hilbert's most distinguished successor.</p></div>
+      <div class="card"><div class="num">EXILED</div><h3>Edmund Landau</h3><p>Stripped of his right to teach; boycotted by Nazi students. A leading number theorist.</p></div>
+      <div class="card"><div class="num">EXILED</div><h3>Paul Bernays</h3><p>Hilbert's co-author on the foundations of mathematics. Forced out; emigrated to Zürich.</p></div>
+      <div class="card"><div class="num">REMAINED</div><h3>David Hilbert</h3><p>Aged 71, kept his chair but watched his life's work dismantled around him.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">The dinner, c. 1934</span>
+    <h2>"There is no mathematics in Göttingen anymore"</h2>
+    <p>The most famous anecdote of Hilbert's last years is also the most desolate. At a banquet, the Nazi Minister of Education, Bernhard Rust, seated beside the old man, asked him a courtier's question — whether the Mathematics Institute at Göttingen had really suffered now that it had been "freed from the Jewish influence."</p>
+    <p>Hilbert's reply was quiet and total: <em>"There is no mathematics in Göttingen anymore."</em></p>
+    <p>It was not bitterness so much as a plain statement of fact. The faculty he and Klein had spent four decades assembling no longer existed. The world center was gone.</p>
+    <blockquote>
+      "Mathematics in Göttingen? There is really none any more."
+      <cite>— David Hilbert to Minister Bernhard Rust</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The final years</span>
+    <h2>Isolation and death</h2>
+    <p>Hilbert lived on in Göttingen through the war, increasingly cut off. The colleagues who had once filled his seminars were in America, in Britain, or dead. His own powers had faded. He died on 14 February 1943, aged 81. Wartime conditions and the destruction of his circle meant that only a small number of people — by most accounts fewer than a dozen — attended his funeral.</p>
+    <p>His tombstone in Göttingen bears the words from his 1930 radio address — the creed of a man who never stopped believing that the unknown could be conquered, even after he had been shown otherwise.</p>
+
+    <ul class="timeline">
+      <li><span class="yr">1895</span><br>Hilbert joins Göttingen; the building of the world center begins.</li>
+      <li><span class="yr">1900</span><br>Paris ICM — the 23 Problems.</li>
+      <li><span class="yr">1915–19</span><br>The fight to install Emmy Noether as a lecturer.</li>
+      <li><span class="yr">1930</span><br>Retirement; the Königsberg radio address.</li>
+      <li><span class="yr">7 Apr 1933</span><br>Civil Service Law; the purge of the universities begins.</li>
+      <li><span class="yr">1933–34</span><br>Göttingen's mathematics faculty destroyed; the dinner with Rust.</li>
+      <li><span class="yr">14 Feb 1943</span><br>Hilbert dies in near-isolation.</li>
+    </ul>
+
+    <div class="grid cols-2">
+      <a class="card" href="3-legacy.html" style="color:inherit;"><div class="num">VOL 03</div><h3>The legacy</h3><p>What survived: Hilbert spaces, the Riemann Hypothesis, Turing, and the tombstone.</p></a>
+      <a class="card" href="1-problems.html" style="color:inherit;"><div class="num">VOL 01</div><h3>The 23 Problems</h3><p>The full list and its fates, a century on.</p></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The lineage of a place</span>
+    <h2>Why Göttingen was Göttingen</h2>
+    <p>It is worth pausing on what was actually lost in 1933. Göttingen was not merely a strong department; it was, for a generation, the single most important center of mathematical and physical research on earth. Its strength lay in concentration — the right people, arguing the right questions, in the same corridors, day after day.</p>
+    <p>The physics side was as formidable as the mathematics. Max Born and James Franck were there; the young Werner Heisenberg, Wolfgang Pauli, and Robert Oppenheimer all passed through. The town's reputation was such that American and British students treated a year at Göttingen as a rite of passage. When the regime emptied the place, it did not just harm German science — it transferred that concentration, almost intact, to Princeton, New York, Cambridge, and beyond.</p>
+    <div class="grid cols-3">
+      <div class="card"><div class="num">BEFORE HILBERT</div><h3>Gauss · Riemann · Dirichlet</h3><p>The nineteenth-century chain that made Göttingen a name before Hilbert ever arrived.</p></div>
+      <div class="card"><div class="num">THE PARTNERSHIP</div><h3>Hilbert &amp; Klein</h3><p>Felix Klein's institution-building and Hilbert's research magnetism together built the world center.</p></div>
+      <div class="card"><div class="num">THE PHYSICISTS</div><h3>Born · Franck · Heisenberg</h3><p>Quantum mechanics grew partly in Göttingen's lecture rooms, alongside Hilbert's mathematics.</p></div>
+    </div>
+    <p>Hilbert's flat answer to Minister Rust — "There is no mathematics in Göttingen anymore" — was therefore not an exaggeration. The thing that had made the town extraordinary was precisely the community of people, and that community had been deliberately destroyed. The buildings remained. The mathematics had left.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The diaspora</span>
+    <h2>Where the talent went</h2>
+    <p>The mathematicians and physicists driven out of Göttingen and the other German universities did not vanish. They re-rooted, mostly in the English-speaking world, and in doing so they shifted the center of gravity of world science across the Atlantic. The intellectual capital that Germany expelled in 1933 became the seed of American scientific dominance for the rest of the century.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="num">PRINCETON</div>
+        <h3>The Institute for Advanced Study</h3>
+        <p>Hermann Weyl, Albert Einstein, John von Neumann, and Kurt Gödel converged there — an institution that became, in some sense, Göttingen reborn.</p>
+      </div>
+      <div class="card">
+        <div class="num">NEW YORK</div>
+        <h3>The Courant Institute</h3>
+        <p>Richard Courant rebuilt applied mathematics at NYU, carrying Hilbert's "Methods of Mathematical Physics" into a new world.</p>
+      </div>
+      <div class="card">
+        <div class="num">BRYN MAWR</div>
+        <h3>Emmy Noether's last years</h3>
+        <p>The greatest algebraist of the age taught in Pennsylvania until her sudden death in 1935, two years after her dismissal.</p>
+      </div>
+      <div class="card">
+        <div class="num">BRITAIN &amp; BEYOND</div>
+        <h3>A scattered generation</h3>
+        <p>Others reached Cambridge, Manchester, Istanbul, and Palestine — every destination enriched, Germany impoverished.</p>
+      </div>
+    </div>
+    <p>It is one of history's grim ironies that the regime which boasted of purifying German science delivered the gift of a generation of genius to its future adversaries. The atomic age, the computer age, and much of postwar mathematics were built in part by people the Reich had thrown away.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="container">
+    <span class="kick">The man in the ruins</span>
+    <h2>Hilbert's last decade</h2>
+    <p>Hilbert himself was not Jewish and was not dismissed. He kept his chair and his home. But he was old — 71 in 1933 — and his great work was behind him. He watched, largely powerless, as the institute he and Klein had built was hollowed out colleague by colleague.</p>
+    <p>The famous exchange with Minister Rust was not the only sign of his desolation. Friends recalled an old man bewildered that the world he had ordered around mathematics could be dismantled by politics. He had believed, deeply, in the universality and permanence of mathematical truth; he had not reckoned on the fragility of the human institutions that sustain it.</p>
+    <p>He died on 14 February 1943, in the middle of the war, with most of his circle gone or in exile. The small funeral was a final measure of how completely the community had been destroyed. On the stone they carved the words of his proudest moment: <em>Wir müssen wissen. Wir werden wissen.</em></p>
+    <blockquote>
+      "There is no mathematics in Göttingen anymore."
+      <cite>— David Hilbert, to the Nazi Minister of Education</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">What it cost, what it meant</span>
+    <h2>A warning carved into history</h2>
+    <p>The destruction of Göttingen is studied today not only as a chapter in Hilbert's biography but as a parable about the conditions science needs to flourish. Genius is not enough; it requires institutions, freedom, and a community in which ideas can circulate without fear. When a regime decides that the identity of the thinker matters more than the truth of the thought, even the strongest intellectual tradition can be destroyed in months.</p>
+    <p>Hilbert had built Göttingen on the opposite principle — that mathematics belongs to no race and no nation, that "the cultural world is one country." His fight to admit Emmy Noether was an expression of that creed; so was his refusal to flatter Minister Rust. The town's fall was the defeat of everything he stood for, and he lived just long enough to see it.</p>
+
+    <div class="grid cols-3">
+      <a class="card" href="0-who.html" style="color:inherit;">
+        <div class="num">VOL 00</div>
+        <h3>The man</h3>
+        <p>The full life of David Hilbert, from Königsberg to the gravestone.</p>
+      </a>
+      <a class="card" href="1-problems.html" style="color:inherit;">
+        <div class="num">VOL 01</div>
+        <h3>The problems</h3>
+        <p>All 23 and their fates — the agenda Göttingen set for the century.</p>
+      </a>
+      <a class="card" href="3-legacy.html" style="color:inherit;">
+        <div class="num">VOL 03</div>
+        <h3>The legacy</h3>
+        <p>What survived the wreckage: Hilbert spaces, computability, and the open Riemann Hypothesis.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="kick">The two cities, year by year</span>
+    <h2>A timeline of place</h2>
+    <p>Hilbert's life can be told almost entirely through two cities — Königsberg, where he was formed, and Göttingen, where he reigned and which he watched fall. The arc runs from a confident, expanding mathematical Europe to its catastrophic fracture.</p>
+    <ul class="timeline">
+      <li><span class="yr">1862</span><br>Born in Königsberg, the city of Euler's seven bridges.</li>
+      <li><span class="yr">1885</span><br>Doctorate at Königsberg; the friendships with Minkowski and Hurwitz formed.</li>
+      <li><span class="yr">1895</span><br>Moves to Göttingen — the university of Gauss, Riemann, and Dirichlet.</li>
+      <li><span class="yr">1900</span><br>Paris ICM: the 23 Problems make Göttingen the center of the mathematical world.</li>
+      <li><span class="yr">1915</span><br>Recruits Emmy Noether; fights the faculty for years to keep her.</li>
+      <li><span class="yr">1930</span><br>Honorary citizen of Königsberg; the radio address, "Wir müssen wissen."</li>
+      <li><span class="yr">1933</span><br>The Civil Service Law empties Göttingen of its greatest minds in a single year.</li>
+      <li><span class="yr">c. 1934</span><br>The dinner with Minister Rust: "There is no mathematics in Göttingen anymore."</li>
+      <li><span class="yr">1943</span><br>Dies in wartime Göttingen; a tiny funeral for the man who built a world center.</li>
+    </ul>
+    <blockquote>
+      "Mathematics knows no races or geographic boundaries; for mathematics, the cultural world is one country."
+      <cite>— David Hilbert — the creed Göttingen was built on, and the regime destroyed</cite>
+    </blockquote>
+
+    <h3>Further reading</h3>
+    <div class="grid cols-3">
+      <div class="card">
+        <div class="num">BIOGRAPHY</div>
+        <h3>Reid, <em>Hilbert</em></h3>
+        <p>Constance Reid's classic life of Hilbert, drawing on the recollections of those who knew Göttingen in its prime.</p>
+      </div>
+      <div class="card">
+        <div class="num">HISTORY</div>
+        <h3>The Göttingen exodus</h3>
+        <p>Accounts of the 1933 dismissals and the scientific diaspora that reshaped American and British research.</p>
+      </div>
+      <div class="card">
+        <div class="num">PRIMARY</div>
+        <h3>The 1900 address</h3>
+        <p>Hilbert's "Mathematical Problems," delivered in Paris — the lecture that crowned Göttingen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="container">
+    <div class="tag">ROOT0-ATTRIBUTION-v1.0</div>
+    David Lee Wise / ROOT0 / TriPod LLC<br>
+    Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC-BY-ND-4.0</a><br>
+    The David Hilbert Series — Volume 02: The World · Self-contained HTML<br>
+    "Wir müssen wissen. Wir werden wissen."
+  </div>
+</footer>
+
+<script>
+  // Build the Göttingen institute silhouette with flickering windows.
+  (function(){
+    var g = document.getElementById('institute');
+    if(!g) return;
+    var SVGNS='http://www.w3.org/2000/svg';
+    function el(name,attrs){var e=document.createElementNS(SVGNS,name);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+    // Ground line
+    g.appendChild(el('line',{x1:20,y1:210,x2:580,y2:210,stroke:'#475569','stroke-width':1.5}));
+    // Main building block
+    g.appendChild(el('rect',{x:120,y:90,width:360,height:120,class:'wall'}));
+    // Roof (triangular pediment)
+    var roof=el('polyline',{points:'120,90 300,40 480,90',class:'roofline'});
+    g.appendChild(roof);
+    // Two side towers
+    g.appendChild(el('rect',{x:80,y:120,width:40,height:90,class:'wall'}));
+    g.appendChild(el('rect',{x:480,y:120,width:40,height:90,class:'wall'}));
+    // Door
+    g.appendChild(el('rect',{x:288,y:165,width:24,height:45,fill:'#04060a',stroke:'#475569','stroke-width':1.2}));
+    // Windows grid with staggered flicker
+    var wx=[150,190,230,330,370,410], wy=[105,150];
+    var idx=0;
+    wy.forEach(function(yy){
+      wx.forEach(function(xx){
+        var w=el('rect',{x:xx,y:yy,width:22,height:26,rx:1,class:'lit-window'});
+        w.style.animationDelay=((idx%7)*0.5)+'s';
+        g.appendChild(w); idx++;
+      });
+    });
+    // Tower windows
+    [ {x:90,y:135},{x:90,y:170},{x:490,y:135},{x:490,y:170} ].forEach(function(p,i){
+      var w=el('rect',{x:p.x,y:p.y,width:20,height:24,rx:1,class:'lit-window'});
+      w.style.animationDelay=(i*0.8+0.3)+'s';
+      g.appendChild(w);
+    });
+    // Label
+    var lbl=el('text',{x:300,y:232,'text-anchor':'middle','font-family':'Space Mono, monospace','font-size':'11',fill:'#9aa3ad','letter-spacing':'2'});
+    lbl.textContent='GÖTTINGEN · MATHEMATISCHES INSTITUT';
+    g.appendChild(lbl);
+  })();
+</script>
+</body>
+</html>
